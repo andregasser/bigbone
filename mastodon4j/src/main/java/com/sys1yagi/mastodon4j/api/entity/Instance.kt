@@ -12,6 +12,9 @@ data class Instance(
         @SerializedName("title")
         val title: String = "",
 
+        @SerializedName("short_description")
+        val shortDescription: String = "",
+
         @SerializedName("description")
         val description: String = "",
 
