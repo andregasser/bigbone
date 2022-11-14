@@ -40,7 +40,11 @@ class PublicTest {
     "user_count": 123456,
     "status_count": 512023,
     "domain_count": 13002
-  }
+  },
+  "thumbnail": "https://www.server.com/testimage.svg",
+  "registrations": true,
+  "approval_required": false,
+  "invites_enabled": true
 }
 """
                     assertEquals(TestUtil.normalizeLineBreaks(it), TestUtil.normalizeLineBreaks(expected))

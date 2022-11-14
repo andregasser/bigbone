@@ -30,8 +30,20 @@ data class Instance(
         @SerializedName("stats")
         val stats: InstanceStats? = null,
 
+        @SerializedName("thumbnail")
+        val thumbnail: String = "",
+
         @SerializedName("languages")
         val languages: List<String> = emptyList(),
+
+        @SerializedName("registrations")
+        val registrations: Boolean = false,
+
+        @SerializedName("approval_required")
+        val approvalRequired: Boolean = false,
+
+        @SerializedName("invites_enabled")
+        val invitesEnabled: Boolean = false,
 
         @SerializedName("contact_account")
         val contact_account: Account? = null) {
