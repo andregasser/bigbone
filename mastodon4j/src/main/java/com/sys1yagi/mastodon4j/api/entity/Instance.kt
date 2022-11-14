@@ -27,6 +27,9 @@ data class Instance(
         @SerializedName("urls")
         val urls: InstanceUrls? = null,
 
+        @SerializedName("stats")
+        val stats: InstanceStats? = null,
+
         @SerializedName("languages")
         val languages: List<String> = emptyList(),
 

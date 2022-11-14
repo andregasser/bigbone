@@ -1,7 +1,13 @@
 {
   "uri": "test.com",
   "title": "test.com",
+  "short_description": "short description",
   "description": "description",
   "email": "owner@test.com",
-  "version": "1.3.2"
+  "version": "1.3.2",
+  "stats": {
+    "user_count": 123456,
+    "status_count": 512023,
+    "domain_count": 13002
+  }
 }

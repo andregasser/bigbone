@@ -2,7 +2,10 @@ package com.sys1yagi.mastodon4j.api.method
 
 import com.sys1yagi.mastodon4j.api.exception.Mastodon4jRequestException
 import com.sys1yagi.mastodon4j.testtool.MockClient
+import com.sys1yagi.mastodon4j.testtool.TestUtil
 import org.amshove.kluent.shouldEqualTo
+import org.junit.Assert
+import org.junit.Assert.assertEquals
 import org.junit.Test
 import java.util.concurrent.atomic.AtomicInteger
 
@@ -26,14 +29,21 @@ class PublicTest {
         val publicMethod = Public(client)
         publicMethod.getInstance()
                 .doOnJson {
-                    it shouldEqualTo """{
+                    val expected = """{
   "uri": "test.com",
   "title": "test.com",
+  "short_description": "short description",
   "description": "description",
   "email": "owner@test.com",
-  "version": "1.3.2"
+  "version": "1.3.2",
+  "stats": {
+    "user_count": 123456,
+    "status_count": 512023,
+    "domain_count": 13002
+  }
 }
 """
+                    assertEquals(TestUtil.normalizeLineBreaks(it), TestUtil.normalizeLineBreaks(expected))
                 }
                 .execute()
     }
