@@ -37,11 +37,11 @@ open class MastodonRequest<T>(
         val response = executor()
         if (response.isSuccessful) {
             try {
-                val body = response.body().string()
-                val element = JsonParser().parse(body)
+                val body = response.body?.string()
+                val element = JsonParser.parseString(body)
                 if (element.isJsonObject) {
-                    action(body)
-                    return mapper(body) as T
+                    action(body!!)
+                    return mapper(body!!) as T
                 } else {
                     val list = arrayListOf<Any>()
                     element.asJsonArray.forEach {

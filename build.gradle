@@ -1,9 +1,9 @@
 buildscript {
-    ext.kotlin_version = '1.2.51'
+    ext.kotlin_version = '1.6.21'
     ext.supportTestVersion = '0.5'
-    ext.okhttpVersion = '3.6.0'
-    ext.rxJavaVersion = '2.0.8'
-    ext.gsonVersion = '2.8.0'
+    ext.okhttpVersion = '4.9.1'
+    ext.rxJavaVersion = '2.2.21'
+    ext.gsonVersion = '2.10'
 
     repositories {
         jcenter()
@@ -15,7 +15,6 @@ buildscript {
     }
 }
 apply plugin: 'kotlin'
-apply plugin: 'maven'
 
 group = "com.sys1yagi"
 version = '1.7.0'
@@ -31,12 +30,11 @@ repositories {
     mavenCentral()
 }
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 }
 
 subprojects {
     apply plugin: 'java'
-    apply plugin: 'maven'
 
     sourceCompatibility = 1.8
     targetCompatibility = 1.8

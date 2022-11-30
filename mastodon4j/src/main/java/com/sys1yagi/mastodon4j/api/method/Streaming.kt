@@ -17,12 +17,12 @@ class Streaming(private val client: MastodonClient) {
     fun federatedPublic(handler: Handler): Shutdownable {
         val response = client.get("streaming/public")
         if (response.isSuccessful) {
-            val reader = response.body().byteStream().bufferedReader()
+            val reader = response.body?.byteStream()?.bufferedReader()
             val dispatcher = Dispatcher()
             dispatcher.invokeLater(Runnable {
                 while (true) {
                     try{
-                        val line = reader.readLine()
+                        val line = reader?.readLine()
                         if (line == null || line.isEmpty()) {
                             continue
                         }
@@ -61,12 +61,12 @@ class Streaming(private val client: MastodonClient) {
     fun localPublic(handler: Handler): Shutdownable {
         val response = client.get("streaming/public/local")
         if (response.isSuccessful) {
-            val reader = response.body().byteStream().bufferedReader()
+            val reader = response.body?.byteStream()?.bufferedReader()
             val dispatcher = Dispatcher()
             dispatcher.invokeLater(Runnable {
                 while (true) {
                     try{
-                        val line = reader.readLine()
+                        val line = reader?.readLine()
                         if (line == null || line.isEmpty()) {
                             continue
                         }
@@ -108,12 +108,12 @@ class Streaming(private val client: MastodonClient) {
                 Parameter().append("tag", tag)
         )
         if (response.isSuccessful) {
-            val reader = response.body().byteStream().bufferedReader()
+            val reader = response.body?.byteStream()?.bufferedReader()
             val dispatcher = Dispatcher()
             dispatcher.invokeLater(Runnable {
                 while (true) {
                     try{
-                        val line = reader.readLine()
+                        val line = reader?.readLine()
                         if (line == null || line.isEmpty()) {
                             continue
                         }
@@ -155,12 +155,12 @@ class Streaming(private val client: MastodonClient) {
                 Parameter().append("tag", tag)
         )
         if (response.isSuccessful) {
-            val reader = response.body().byteStream().bufferedReader()
+            val reader = response.body?.byteStream()?.bufferedReader()
             val dispatcher = Dispatcher()
             dispatcher.invokeLater(Runnable {
                 while (true) {
                     try{
-                        val line = reader.readLine()
+                        val line = reader?.readLine()
                         if (line == null || line.isEmpty()) {
                             continue
                         }
@@ -201,12 +201,12 @@ class Streaming(private val client: MastodonClient) {
                 "streaming/user"
         )
         if (response.isSuccessful) {
-            val reader = response.body().byteStream().bufferedReader()
+            val reader = response.body?.byteStream()?.bufferedReader()
             val dispatcher = Dispatcher()
             dispatcher.invokeLater(Runnable {
                 while (true) {
                     try{
-                        val line = reader.readLine()
+                        val line = reader?.readLine()
                         if (line == null || line.isEmpty()) {
                             continue
                         }
@@ -265,12 +265,12 @@ class Streaming(private val client: MastodonClient) {
                 }
         )
         if (response.isSuccessful) {
-            val reader = response.body().byteStream().bufferedReader()
+            val reader = response.body?.byteStream()?.bufferedReader()
             val dispatcher = Dispatcher()
             dispatcher.invokeLater(Runnable {
                 while (true) {
                     try{
-                        val line = reader.readLine()
+                        val line = reader?.readLine()
                         if (line == null || line.isEmpty()) {
                             continue
                         }

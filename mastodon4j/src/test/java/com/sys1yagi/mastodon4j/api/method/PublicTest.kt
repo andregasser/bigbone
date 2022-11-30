@@ -3,6 +3,7 @@ package com.sys1yagi.mastodon4j.api.method
 import com.sys1yagi.mastodon4j.api.exception.Mastodon4jRequestException
 import com.sys1yagi.mastodon4j.testtool.MockClient
 import com.sys1yagi.mastodon4j.testtool.TestUtil
+import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldEqualTo
 import org.junit.Assert
 import org.junit.Assert.assertEquals
@@ -16,11 +17,11 @@ class PublicTest {
         val publicMethod = Public(client)
 
         val instance = publicMethod.getInstance().execute()
-        instance.uri shouldEqualTo "test.com"
-        instance.title shouldEqualTo "test.com"
-        instance.description shouldEqualTo "description"
-        instance.email shouldEqualTo "owner@test.com"
-        instance.version shouldEqualTo "1.3.2"
+        instance.uri shouldBeEqualTo "test.com"
+        instance.title shouldBeEqualTo "test.com"
+        instance.description shouldBeEqualTo "description"
+        instance.email shouldBeEqualTo "owner@test.com"
+        instance.version shouldBeEqualTo "1.3.2"
     }
 
     @Test
@@ -28,8 +29,8 @@ class PublicTest {
         val client = MockClient.mock("instance.json")
         val publicMethod = Public(client)
         publicMethod.getInstance()
-                .doOnJson {
-                    val expected = """{
+            .doOnJson {
+                val expected = """{
   "uri": "test.com",
   "title": "test.com",
   "short_description": "short description",
@@ -47,9 +48,9 @@ class PublicTest {
   "invites_enabled": true
 }
 """
-                    assertEquals(TestUtil.normalizeLineBreaks(it), TestUtil.normalizeLineBreaks(expected))
-                }
-                .execute()
+                assertEquals(TestUtil.normalizeLineBreaks(it), TestUtil.normalizeLineBreaks(expected))
+            }
+            .execute()
     }
 
     @Test(expected = Mastodon4jRequestException::class)
@@ -65,10 +66,10 @@ class PublicTest {
 
         val publicMethod = Public(client)
         val result = publicMethod.getSearch("test").execute()
-        result.statuses.size shouldEqualTo 0
-        result.accounts.size shouldEqualTo 6
-        result.hashtags.size shouldEqualTo 5
-        result.hashtags.size shouldEqualTo 5
+        result.statuses.size shouldBeEqualTo 0
+        result.accounts.size shouldBeEqualTo 6
+        result.hashtags.size shouldBeEqualTo 5
+        result.hashtags.size shouldBeEqualTo 5
     }
 
     @Test(expected = Mastodon4jRequestException::class)
@@ -83,12 +84,12 @@ class PublicTest {
         val client = MockClient.mock("public_timeline.json", maxId = 3L, sinceId = 1L)
         val publicMethod = Public(client)
         val statuses = publicMethod.getLocalPublic().execute()
-        statuses.part.size shouldEqualTo 20
+        statuses.part.size shouldBeEqualTo 20
         statuses.link?.let {
-            it.nextPath shouldEqualTo "<https://mstdn.jp/api/v1/timelines/public?limit=20&local=true&max_id=3>"
-            it.maxId shouldEqualTo 3L
-            it.prevPath shouldEqualTo "<https://mstdn.jp/api/v1/timelines/public?limit=20&local=true&since_id=1>"
-            it.sinceId shouldEqualTo 1L
+            it.nextPath shouldBeEqualTo "<https://mstdn.jp/api/v1/timelines/public?limit=20&local=true&max_id=3>"
+            it.maxId shouldBeEqualTo 3L
+            it.prevPath shouldBeEqualTo "<https://mstdn.jp/api/v1/timelines/public?limit=20&local=true&since_id=1>"
+            it.sinceId shouldBeEqualTo 1L
         }
     }
 
@@ -98,11 +99,11 @@ class PublicTest {
         val client = MockClient.mock("public_timeline.json", maxId = 3L, sinceId = 1L)
         val publicMethod = Public(client)
         publicMethod.getLocalPublic()
-                .doOnJson {
-                    atomicInt.incrementAndGet()
-                }
-                .execute()
-        atomicInt.get() shouldEqualTo 20
+            .doOnJson {
+                atomicInt.incrementAndGet()
+            }
+            .execute()
+        atomicInt.get() shouldBeEqualTo 20
     }
 
     @Test(expected = Mastodon4jRequestException::class)
@@ -117,7 +118,7 @@ class PublicTest {
         val client = MockClient.mock("tag.json", maxId = 3L, sinceId = 1L)
         val publicMethod = Public(client)
         val statuses = publicMethod.getLocalTag("mastodon").execute()
-        statuses.part.size shouldEqualTo 20
+        statuses.part.size shouldBeEqualTo 20
     }
 
     @Test(expected = Mastodon4jRequestException::class)

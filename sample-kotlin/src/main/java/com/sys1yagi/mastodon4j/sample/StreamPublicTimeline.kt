@@ -35,9 +35,9 @@ object StreamPublicTimeline {
             shutdownable.shutdown()
         } catch(e: Mastodon4jRequestException) {
             println("error")
-            println(e.response?.code())
-            println(e.response?.message())
-            println(e.response?.body()?.string())
+            println(e.response?.code)
+            println(e.response?.message)
+            println(e.response?.body?.string())
             return
         }
     }

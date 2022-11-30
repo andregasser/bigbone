@@ -5,7 +5,7 @@ import okhttp3.Response
 class Mastodon4jRequestException : Exception {
     val response: Response?
 
-    constructor(response: Response) : super(response.message()) {
+    constructor(response: Response) : super(response.message) {
         this.response = response
     }
 

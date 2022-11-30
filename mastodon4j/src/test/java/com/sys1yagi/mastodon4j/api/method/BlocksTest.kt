@@ -2,6 +2,7 @@ package com.sys1yagi.mastodon4j.api.method
 
 import com.sys1yagi.mastodon4j.api.exception.Mastodon4jRequestException
 import com.sys1yagi.mastodon4j.testtool.MockClient
+import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldEqualTo
 import org.junit.Test
 
@@ -13,9 +14,9 @@ class BlocksTest {
         val blocks = Blocks(client)
         val pageable = blocks.getBlocks().execute()
         val block = pageable.part.first()
-        block.acct shouldEqualTo "test@test.com"
-        block.displayName shouldEqualTo "test"
-        block.userName shouldEqualTo "test"
+        block.acct shouldBeEqualTo "test@test.com"
+        block.displayName shouldBeEqualTo "test"
+        block.userName shouldBeEqualTo "test"
     }
 
     @Test(expected = Mastodon4jRequestException::class)

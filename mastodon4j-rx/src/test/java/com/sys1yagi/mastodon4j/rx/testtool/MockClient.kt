@@ -1,23 +1,25 @@
 package com.sys1yagi.mastodon4j.rx.testtool
 
 import com.google.gson.Gson
-import com.sys1yagi.kmockito.invoked
-import com.sys1yagi.kmockito.mock
 import com.sys1yagi.mastodon4j.MastodonClient
+import io.mockk.every
+import io.mockk.mockk
 import okhttp3.*
-import org.mockito.ArgumentMatchers
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.ResponseBody.Companion.toResponseBody
 
 object MockClient {
     fun mock(jsonName: String, maxId: Long? = null, sinceId: Long? = null): MastodonClient {
-        val client: MastodonClient = mock()
+        val client: MastodonClient = mockk()
         val response: Response = Response.Builder()
                 .code(200)
+                .message("OK")
                 .request(Request.Builder().url("https://test.com/").build())
                 .protocol(Protocol.HTTP_1_1)
-                .body(ResponseBody.create(
-                        MediaType.parse("application/json; charset=utf-8"),
-                        AssetsUtil.readFromAssets(jsonName)
-                ))
+                .body(
+                    AssetsUtil.readFromAssets(jsonName)
+                        .toResponseBody("application/json; charset=utf-8".toMediaTypeOrNull())
+                )
                 .apply {
                     val linkHeader = arrayListOf<String>().apply {
                         maxId?.let {
@@ -32,8 +34,8 @@ object MockClient {
                     }
                 }
                 .build()
-        client.get(ArgumentMatchers.anyString(), ArgumentMatchers.any()).invoked.thenReturn(response)
-        client.getSerializer().invoked.thenReturn(Gson())
+        every { client.get(ofType<String>(), any()) } returns response
+        every { client.getSerializer() } returns Gson()
         return client
     }
 }

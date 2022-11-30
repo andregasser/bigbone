@@ -1,37 +1,29 @@
 package com.sys1yagi.mastodon4j.testtool
 
 import com.google.gson.Gson
-import com.nhaarman.mockito_kotlin.eq
-import com.sys1yagi.kmockito.any
-import com.sys1yagi.kmockito.invoked
-import com.sys1yagi.kmockito.mock
 import com.sys1yagi.mastodon4j.MastodonClient
+import io.mockk.every
+import io.mockk.mockk
 import okhttp3.*
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.ResponseBody.Companion.asResponseBody
+import okhttp3.ResponseBody.Companion.toResponseBody
 import okio.BufferedSource
-import org.mockito.ArgumentMatchers
 import java.net.SocketTimeoutException
 
 object MockClient {
 
-    private fun setResponse(client: MastodonClient, response: Response) {
-        client.get(ArgumentMatchers.anyString(), eq(null)).invoked.thenReturn(response)
-        client.get(ArgumentMatchers.anyString(), any()).invoked.thenReturn(response)
-        client.post(ArgumentMatchers.anyString(), any()).invoked.thenReturn(response)
-        client.postUrl(ArgumentMatchers.anyString(), any()).invoked.thenReturn(response)
-        client.patch(ArgumentMatchers.anyString(), any()).invoked.thenReturn(response)
-        client.getSerializer().invoked.thenReturn(Gson())
-    }
-
     fun mock(jsonName: String, maxId: Long? = null, sinceId: Long? = null): MastodonClient {
-        val client: MastodonClient = mock()
+        val clientMock: MastodonClient = mockk()
         val response: Response = Response.Builder()
                 .code(200)
+                .message("OK")
                 .request(Request.Builder().url("https://test.com/").build())
                 .protocol(Protocol.HTTP_1_1)
-                .body(ResponseBody.create(
-                        MediaType.parse("application/json; charset=utf-8"),
-                        AssetsUtil.readFromAssets(jsonName)
-                ))
+                .body(
+                    AssetsUtil.readFromAssets(jsonName)
+                        .toResponseBody("application/json; charset=utf-8".toMediaTypeOrNull())
+                )
                 .apply {
                     val linkHeader = arrayListOf<String>().apply {
                         maxId?.let {
@@ -46,25 +38,40 @@ object MockClient {
                     }
                 }
                 .build()
-        setResponse(client, response)
-        return client
+
+        every { clientMock.get(ofType<String>(), isNull(inverse = false)) } returns response
+        every { clientMock.get(ofType<String>(), any()) } returns response
+        every { clientMock.post(ofType<String>(), any()) } returns response
+        every { clientMock.postUrl(ofType<String>(), any()) } returns response
+        every { clientMock.patch(ofType<String>(), any()) } returns response
+        every { clientMock.getSerializer() } returns Gson()
+        return clientMock
     }
 
     fun ioException(): MastodonClient {
-        val client: MastodonClient = mock()
-        val source: BufferedSource = mock()
-        source.readString(any()).invoked.thenThrow(SocketTimeoutException())
+        val clientMock: MastodonClient = mockk()
+        val source: BufferedSource = mockk()
+        every { source.readString(any()) } throws SocketTimeoutException()
         val response: Response = Response.Builder()
                 .code(200)
+                .message("OK")
                 .request(Request.Builder().url("https://test.com/").build())
                 .protocol(Protocol.HTTP_1_1)
-                .body(ResponseBody.create(
-                        MediaType.parse("application/json; charset=utf-8"),
-                        1024,
-                        source
-                ))
+                .body(
+                    source
+                        .asResponseBody(
+                            "application/json; charset=utf-8".toMediaTypeOrNull(),
+                            1024
+                        )
+                )
                 .build()
-        setResponse(client, response)
-        return client
+
+        every { clientMock.get(ofType<String>(), isNull(inverse = false)) } returns response
+        every { clientMock.get(ofType<String>(), any()) } returns response
+        every { clientMock.post(ofType<String>(), any()) } returns response
+        every { clientMock.postUrl(ofType<String>(), any()) } returns response
+        every { clientMock.patch(ofType<String>(), any()) } returns response
+        every { clientMock.getSerializer() } returns Gson()
+        return clientMock
     }
 }

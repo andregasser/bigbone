@@ -9,8 +9,9 @@ import com.sys1yagi.mastodon4j.api.entity.auth.AppRegistration
 import com.sys1yagi.mastodon4j.api.exception.Mastodon4jRequestException
 import com.sys1yagi.mastodon4j.extension.fromJson
 import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
-import java.io.IOException
+import okhttp3.RequestBody.Companion.toRequestBody
 
 /**
  * see more https://github.com/tootsuite/documentation/blob/master/Using-the-API/API.md#apps
@@ -23,18 +24,17 @@ class Apps(private val client: MastodonClient) {
         return MastodonRequest(
                 {
                     client.post("apps",
-                            RequestBody.create(
-                                    MediaType.parse("application/x-www-form-urlencoded; charset=utf-8"),
-                                    arrayListOf(
-                                            "client_name=$clientName",
-                                            "scopes=$scope",
-                                            "redirect_uris=$redirectUris"
-                                    ).apply {
-                                        website?.let {
-                                            add("website=${it}")
-                                        }
-                                    }.joinToString(separator = "&")
-                            ))
+                        arrayListOf(
+                                "client_name=$clientName",
+                                "scopes=$scope",
+                                "redirect_uris=$redirectUris"
+                        ).apply {
+                            website?.let {
+                                add("website=${it}")
+                            }
+                        }.joinToString(separator = "&")
+                            .toRequestBody("application/x-www-form-urlencoded; charset=utf-8".toMediaTypeOrNull())
+                    )
                 },
                 {
                     client.getSerializer().fromJson(it, AppRegistration::class.java).apply {
@@ -75,10 +75,9 @@ class Apps(private val client: MastodonClient) {
         return MastodonRequest(
                 {
                     client.postUrl(url,
-                            RequestBody.create(
-                                    MediaType.parse("application/x-www-form-urlencoded; charset=utf-8"),
-                                    parameters
-                            ))
+                        parameters
+                            .toRequestBody("application/x-www-form-urlencoded; charset=utf-8".toMediaTypeOrNull())
+                    )
                 },
                 {
                     client.getSerializer().fromJson(it, AccessToken::class.java)
@@ -107,10 +106,9 @@ class Apps(private val client: MastodonClient) {
         return MastodonRequest(
                 {
                     client.postUrl(url,
-                            RequestBody.create(
-                                    MediaType.parse("application/x-www-form-urlencoded; charset=utf-8"),
-                                    parameters
-                            ))
+                        parameters
+                            .toRequestBody("application/x-www-form-urlencoded; charset=utf-8".toMediaTypeOrNull())
+                    )
                 },
                 {
                     client.getSerializer().fromJson(it, AccessToken::class.java)

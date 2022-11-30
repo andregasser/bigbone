@@ -3,21 +3,19 @@ apply plugin: 'kotlin'
 apply plugin: "jacoco"
 
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    compile "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
-    compile project(':mastodon4j')
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
+    implementation "com.squareup.okhttp3:okhttp:$okhttpVersion"
+    implementation project(':mastodon4j')
 
-    testCompile 'junit:junit:4.12'
-    testCompile 'org.amshove.kluent:kluent:1.19'
-    testCompile('com.github.sys1yagi:kmockito:0.1.2') {
-        exclude group: 'org.mockito', module: 'mockito-core'
-        exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib'
-    }
-    testCompile("com.squareup.okhttp3:mockwebserver:$okhttpVersion") {
+    testImplementation 'junit:junit:4.12'
+    testImplementation "io.mockk:mockk:1.13.3"
+    testImplementation 'org.amshove.kluent:kluent:1.72'
+    testImplementation("com.squareup.okhttp3:mockwebserver:$okhttpVersion") {
         exclude group: 'com.squareup.okio', 'module': 'okio'
         exclude group: 'com.squareup.okhttp', 'module': 'okhttp'
     }
-    testCompile 'org.mockito:mockito-core:2.7.22'
+    testImplementation "com.google.code.gson:gson:$gsonVersion"
 }
 
 buildscript {

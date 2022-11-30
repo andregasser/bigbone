@@ -2,6 +2,7 @@ package com.sys1yagi.mastodon4j.api.method
 
 import com.sys1yagi.mastodon4j.api.exception.Mastodon4jRequestException
 import com.sys1yagi.mastodon4j.testtool.MockClient
+import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldEqualTo
 import org.junit.Test
 
@@ -11,9 +12,9 @@ class AccountsTest {
         val client = MockClient.mock("account.json")
         val accounts = Accounts(client)
         val account = accounts.getAccount(1L).execute()
-        account.acct shouldEqualTo "test@test.com"
-        account.displayName shouldEqualTo "test"
-        account.userName shouldEqualTo "test"
+        account.acct shouldBeEqualTo "test@test.com"
+        account.displayName shouldBeEqualTo "test"
+        account.userName shouldBeEqualTo "test"
     }
 
     @Test(expected = Mastodon4jRequestException::class)
@@ -28,9 +29,9 @@ class AccountsTest {
         val client = MockClient.mock("account.json")
         val accounts = Accounts(client)
         val account = accounts.getVerifyCredentials().execute()
-        account.acct shouldEqualTo "test@test.com"
-        account.displayName shouldEqualTo "test"
-        account.userName shouldEqualTo "test"
+        account.acct shouldBeEqualTo "test@test.com"
+        account.displayName shouldBeEqualTo "test"
+        account.userName shouldBeEqualTo "test"
     }
 
     @Test(expected = Mastodon4jRequestException::class)
@@ -47,9 +48,9 @@ class AccountsTest {
         val client = MockClient.mock("account.json")
         val accounts = Accounts(client)
         val account = accounts.updateCredential("test", "test", "test", "test").execute()
-        account.acct shouldEqualTo "test@test.com"
-        account.displayName shouldEqualTo "test"
-        account.userName shouldEqualTo "test"
+        account.acct shouldBeEqualTo "test@test.com"
+        account.displayName shouldBeEqualTo "test"
+        account.userName shouldBeEqualTo "test"
     }
 
     @Test(expected = Mastodon4jRequestException::class)
@@ -65,9 +66,9 @@ class AccountsTest {
         val accounts = Accounts(client)
         val pageable = accounts.getFollowers(1L).execute()
         val account = pageable.part.first()
-        account.acct shouldEqualTo "test@test.com"
-        account.displayName shouldEqualTo "test"
-        account.userName shouldEqualTo "test"
+        account.acct shouldBeEqualTo "test@test.com"
+        account.displayName shouldBeEqualTo "test"
+        account.userName shouldBeEqualTo "test"
     }
 
     @Test(expected = Mastodon4jRequestException::class)
@@ -83,9 +84,9 @@ class AccountsTest {
         val accounts = Accounts(client)
         val pageable = accounts.getFollowing(1L).execute()
         val account = pageable.part.first()
-        account.acct shouldEqualTo "test@test.com"
-        account.displayName shouldEqualTo "test"
-        account.userName shouldEqualTo "test"
+        account.acct shouldBeEqualTo "test@test.com"
+        account.displayName shouldBeEqualTo "test"
+        account.userName shouldBeEqualTo "test"
     }
 
     @Test(expected = Mastodon4jRequestException::class)
@@ -101,7 +102,7 @@ class AccountsTest {
         val accounts = Accounts(client)
         val pageable = accounts.getStatuses(1, false).execute()
         val status = pageable.part.first()
-        status.id shouldEqualTo 11111L
+        status.id shouldBeEqualTo 11111L
     }
 
     @Test(expected = Mastodon4jRequestException::class)
@@ -116,12 +117,12 @@ class AccountsTest {
         val client = MockClient.mock("relationship.json")
         val accounts = Accounts(client)
         val relationship = accounts.postFollow(1L).execute()
-        relationship.id shouldEqualTo 3361
-        relationship.isFollowing shouldEqualTo true
-        relationship.isFollowedBy shouldEqualTo false
-        relationship.isBlocking shouldEqualTo false
-        relationship.isMuting shouldEqualTo false
-        relationship.isRequested shouldEqualTo false
+        relationship.id shouldBeEqualTo 3361
+        relationship.isFollowing shouldBeEqualTo true
+        relationship.isFollowedBy shouldBeEqualTo false
+        relationship.isBlocking shouldBeEqualTo false
+        relationship.isMuting shouldBeEqualTo false
+        relationship.isRequested shouldBeEqualTo false
     }
 
     @Test(expected = Mastodon4jRequestException::class)
@@ -136,12 +137,12 @@ class AccountsTest {
         val client = MockClient.mock("relationship.json")
         val accounts = Accounts(client)
         val relationship = accounts.postUnFollow(1L).execute()
-        relationship.id shouldEqualTo 3361
-        relationship.isFollowing shouldEqualTo true
-        relationship.isFollowedBy shouldEqualTo false
-        relationship.isBlocking shouldEqualTo false
-        relationship.isMuting shouldEqualTo false
-        relationship.isRequested shouldEqualTo false
+        relationship.id shouldBeEqualTo 3361
+        relationship.isFollowing shouldBeEqualTo true
+        relationship.isFollowedBy shouldBeEqualTo false
+        relationship.isBlocking shouldBeEqualTo false
+        relationship.isMuting shouldBeEqualTo false
+        relationship.isRequested shouldBeEqualTo false
     }
 
     @Test(expected = Mastodon4jRequestException::class)
@@ -156,12 +157,12 @@ class AccountsTest {
         val client = MockClient.mock("relationship.json")
         val accounts = Accounts(client)
         val relationship = accounts.postBlock(1L).execute()
-        relationship.id shouldEqualTo 3361
-        relationship.isFollowing shouldEqualTo true
-        relationship.isFollowedBy shouldEqualTo false
-        relationship.isBlocking shouldEqualTo false
-        relationship.isMuting shouldEqualTo false
-        relationship.isRequested shouldEqualTo false
+        relationship.id shouldBeEqualTo 3361
+        relationship.isFollowing shouldBeEqualTo true
+        relationship.isFollowedBy shouldBeEqualTo false
+        relationship.isBlocking shouldBeEqualTo false
+        relationship.isMuting shouldBeEqualTo false
+        relationship.isRequested shouldBeEqualTo false
     }
 
     @Test(expected = Mastodon4jRequestException::class)
@@ -176,12 +177,12 @@ class AccountsTest {
         val client = MockClient.mock("relationship.json")
         val accounts = Accounts(client)
         val relationship = accounts.postUnblock(1L).execute()
-        relationship.id shouldEqualTo 3361
-        relationship.isFollowing shouldEqualTo true
-        relationship.isFollowedBy shouldEqualTo false
-        relationship.isBlocking shouldEqualTo false
-        relationship.isMuting shouldEqualTo false
-        relationship.isRequested shouldEqualTo false
+        relationship.id shouldBeEqualTo 3361
+        relationship.isFollowing shouldBeEqualTo true
+        relationship.isFollowedBy shouldBeEqualTo false
+        relationship.isBlocking shouldBeEqualTo false
+        relationship.isMuting shouldBeEqualTo false
+        relationship.isRequested shouldBeEqualTo false
     }
 
     @Test(expected = Mastodon4jRequestException::class)
@@ -196,12 +197,12 @@ class AccountsTest {
         val client = MockClient.mock("relationship.json")
         val accounts = Accounts(client)
         val relationship = accounts.postMute(1L).execute()
-        relationship.id shouldEqualTo 3361
-        relationship.isFollowing shouldEqualTo true
-        relationship.isFollowedBy shouldEqualTo false
-        relationship.isBlocking shouldEqualTo false
-        relationship.isMuting shouldEqualTo false
-        relationship.isRequested shouldEqualTo false
+        relationship.id shouldBeEqualTo 3361
+        relationship.isFollowing shouldBeEqualTo true
+        relationship.isFollowedBy shouldBeEqualTo false
+        relationship.isBlocking shouldBeEqualTo false
+        relationship.isMuting shouldBeEqualTo false
+        relationship.isRequested shouldBeEqualTo false
     }
 
     @Test(expected = Mastodon4jRequestException::class)
@@ -217,12 +218,12 @@ class AccountsTest {
         val client = MockClient.mock("relationship.json")
         val accounts = Accounts(client)
         val relationship = accounts.postUnmute(1L).execute()
-        relationship.id shouldEqualTo 3361
-        relationship.isFollowing shouldEqualTo true
-        relationship.isFollowedBy shouldEqualTo false
-        relationship.isBlocking shouldEqualTo false
-        relationship.isMuting shouldEqualTo false
-        relationship.isRequested shouldEqualTo false
+        relationship.id shouldBeEqualTo 3361
+        relationship.isFollowing shouldBeEqualTo true
+        relationship.isFollowedBy shouldBeEqualTo false
+        relationship.isBlocking shouldBeEqualTo false
+        relationship.isMuting shouldBeEqualTo false
+        relationship.isRequested shouldBeEqualTo false
     }
 
     @Test(expected = Mastodon4jRequestException::class)
@@ -238,12 +239,12 @@ class AccountsTest {
         val accounts = Accounts(client)
         val relationships = accounts.getRelationships(listOf(1L)).execute()
         val relationship = relationships.first()
-        relationship.id shouldEqualTo 3361
-        relationship.isFollowing shouldEqualTo true
-        relationship.isFollowedBy shouldEqualTo false
-        relationship.isBlocking shouldEqualTo false
-        relationship.isMuting shouldEqualTo false
-        relationship.isRequested shouldEqualTo false
+        relationship.id shouldBeEqualTo 3361
+        relationship.isFollowing shouldBeEqualTo true
+        relationship.isFollowedBy shouldBeEqualTo false
+        relationship.isBlocking shouldBeEqualTo false
+        relationship.isMuting shouldBeEqualTo false
+        relationship.isRequested shouldBeEqualTo false
     }
 
     @Test(expected = Mastodon4jRequestException::class)
@@ -259,9 +260,9 @@ class AccountsTest {
         val accounts = Accounts(client)
         val result = accounts.getAccountSearch("test").execute()
         val account = result.first()
-        account.acct shouldEqualTo "A"
-        account.displayName shouldEqualTo ""
-        account.userName shouldEqualTo "A"
+        account.acct shouldBeEqualTo "A"
+        account.displayName shouldBeEqualTo ""
+        account.userName shouldBeEqualTo "A"
     }
 
     @Test(expected = Mastodon4jRequestException::class)

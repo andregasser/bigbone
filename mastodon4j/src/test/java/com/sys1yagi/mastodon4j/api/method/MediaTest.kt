@@ -4,6 +4,7 @@ import com.sys1yagi.mastodon4j.api.exception.Mastodon4jRequestException
 import com.sys1yagi.mastodon4j.extension.emptyRequestBody
 import com.sys1yagi.mastodon4j.testtool.MockClient
 import okhttp3.MultipartBody
+import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldEqualTo
 import org.amshove.kluent.shouldNotBe
 import org.junit.Test
@@ -14,12 +15,12 @@ class MediaTest {
         val client = MockClient.mock("attachment.json")
         val media = Media(client)
         val attachment = media.postMedia(MultipartBody.Part.create(emptyRequestBody())).execute()
-        attachment.id shouldEqualTo 10
-        attachment.type shouldEqualTo "video"
-        attachment.url shouldEqualTo "youtube"
+        attachment.id shouldBeEqualTo 10
+        attachment.type shouldBeEqualTo "video"
+        attachment.url shouldBeEqualTo "youtube"
         attachment.remoteUrl shouldNotBe null
-        attachment.previewUrl shouldEqualTo "preview"
-        attachment.textUrl shouldNotBe  null
+        attachment.previewUrl shouldBeEqualTo "preview"
+        attachment.textUrl shouldNotBe null
     }
 
     @Test(expected = Mastodon4jRequestException::class)

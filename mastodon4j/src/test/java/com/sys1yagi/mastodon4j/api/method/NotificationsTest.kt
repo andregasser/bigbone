@@ -2,6 +2,7 @@ package com.sys1yagi.mastodon4j.api.method
 
 import com.sys1yagi.mastodon4j.api.exception.Mastodon4jRequestException
 import com.sys1yagi.mastodon4j.testtool.MockClient
+import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldEqualTo
 import org.amshove.kluent.shouldNotBe
 import org.junit.Test
@@ -15,7 +16,7 @@ class NotificationsTest {
         val notifications = Notifications(client)
         val pageable = notifications.getNotifications().execute()
         val notification = pageable.part.first()
-        notification.type shouldEqualTo "favourite"
+        notification.type shouldBeEqualTo "favourite"
         notification.account shouldNotBe null
         notification.status shouldNotBe null
     }
