@@ -1,5 +1,6 @@
 # mastodon4j
 
+![Build](https://github.com/andregasser/mastodon4j/actions/workflows/build.yml/badge.svg)
 [![](https://jitpack.io/v/sys1yagi/mastodon4j.svg)](https://jitpack.io/#sys1yagi/mastodon4j)
 [![codecov](https://codecov.io/gh/sys1yagi/mastodon4j/branch/master/graph/badge.svg)](https://codecov.io/gh/sys1yagi/mastodon4j)
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-mastodon4j-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/5637)
