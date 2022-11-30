@@ -1,17 +1,23 @@
 buildscript {
-    ext.kotlin_version = '1.6.21'
+    ext.kotlin_version = '1.7.21'
     ext.supportTestVersion = '0.5'
     ext.okhttpVersion = '4.9.1'
     ext.rxJavaVersion = '2.2.21'
     ext.gsonVersion = '2.10'
+    ext.gradleVersionsPluginVersion = '0.44.0'
+    ext.kotlinxCoroutinesCoreVersion = '1.6.4'
+    ext.junitVersion = '5.9.1'
+    ext.kluentVersion = '1.72'
+    ext.mockkVersion = '1.13.3'
 
     repositories {
         jcenter()
+        maven { url 'https://jitpack.io' }
     }
 
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'com.github.ben-manes:gradle-versions-plugin:0.14.0'
+        classpath "com.github.ben-manes:gradle-versions-plugin:$gradleVersionsPluginVersion"
     }
 }
 apply plugin: 'kotlin'
@@ -29,6 +35,7 @@ allprojects {
 repositories {
     mavenCentral()
 }
+
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 }
