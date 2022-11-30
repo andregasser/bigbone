@@ -3,8 +3,7 @@ package com.sys1yagi.mastodon4j.api.entity
 import com.google.gson.Gson
 import com.sys1yagi.mastodon4j.testtool.AssetsUtil
 import org.amshove.kluent.shouldBeEqualTo
-import org.amshove.kluent.shouldEqualTo
-import org.junit.Test
+import org.junit.jupiter.api.Test
 
 class StatusTest {
 

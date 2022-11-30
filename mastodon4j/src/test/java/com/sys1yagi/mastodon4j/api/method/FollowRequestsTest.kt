@@ -3,8 +3,8 @@ package com.sys1yagi.mastodon4j.api.method
 import com.sys1yagi.mastodon4j.api.exception.Mastodon4jRequestException
 import com.sys1yagi.mastodon4j.testtool.MockClient
 import org.amshove.kluent.shouldBeEqualTo
-import org.amshove.kluent.shouldEqualTo
-import org.junit.Test
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
 
 class FollowRequestsTest {
     @Test
@@ -19,10 +19,12 @@ class FollowRequestsTest {
         account.userName shouldBeEqualTo "test"
     }
 
-    @Test(expected = Mastodon4jRequestException::class)
+    @Test
     fun getFollowRequestsWithException() {
-        val client = MockClient.ioException()
-        val followRequests = FollowRequests(client)
-        followRequests.getFollowRequests().execute()
+        Assertions.assertThrows(Mastodon4jRequestException::class.java) {
+            val client = MockClient.ioException()
+            val followRequests = FollowRequests(client)
+            followRequests.getFollowRequests().execute()
+        }
     }
 }

@@ -8,7 +8,7 @@ dependencies {
     implementation "com.squareup.okhttp3:okhttp:$okhttpVersion"
     implementation project(':mastodon4j')
 
-    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.9.1'
     testImplementation "io.mockk:mockk:1.13.3"
     testImplementation 'org.amshove.kluent:kluent:1.72'
     testImplementation("com.squareup.okhttp3:mockwebserver:$okhttpVersion") {
@@ -16,6 +16,10 @@ dependencies {
         exclude group: 'com.squareup.okhttp', 'module': 'okhttp'
     }
     testImplementation "com.google.code.gson:gson:$gsonVersion"
+}
+
+test {
+    useJUnitPlatform()
 }
 
 buildscript {

@@ -3,8 +3,8 @@ package com.sys1yagi.mastodon4j.api.method
 import com.sys1yagi.mastodon4j.api.exception.Mastodon4jRequestException
 import com.sys1yagi.mastodon4j.testtool.MockClient
 import org.amshove.kluent.shouldBeEqualTo
-import org.amshove.kluent.shouldEqualTo
-import org.junit.Test
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
 
 class AccountsTest {
     @Test
@@ -17,11 +17,13 @@ class AccountsTest {
         account.userName shouldBeEqualTo "test"
     }
 
-    @Test(expected = Mastodon4jRequestException::class)
+    @Test
     fun getAccountWithException() {
-        val client = MockClient.ioException()
-        val accounts = Accounts(client)
-        accounts.getAccount(1L).execute()
+        Assertions.assertThrows(Mastodon4jRequestException::class.java) {
+            val client = MockClient.ioException()
+            val accounts = Accounts(client)
+            accounts.getAccount(1L).execute()
+        }
     }
 
     @Test
@@ -34,11 +36,13 @@ class AccountsTest {
         account.userName shouldBeEqualTo "test"
     }
 
-    @Test(expected = Mastodon4jRequestException::class)
+    @Test
     fun getVerifyCredentialsWithException() {
-        val client = MockClient.ioException()
-        val accounts = Accounts(client)
-        accounts.getVerifyCredentials().execute()
+        Assertions.assertThrows(Mastodon4jRequestException::class.java) {
+            val client = MockClient.ioException()
+            val accounts = Accounts(client)
+            accounts.getVerifyCredentials().execute()
+        }
     }
 
     // TODO getVerifyCredentialsWith401
@@ -53,11 +57,13 @@ class AccountsTest {
         account.userName shouldBeEqualTo "test"
     }
 
-    @Test(expected = Mastodon4jRequestException::class)
+    @Test
     fun updateCredentialWithException() {
-        val client = MockClient.ioException()
-        val accounts = Accounts(client)
-        accounts.updateCredential("test", "test", "test", "test").execute()
+        Assertions.assertThrows(Mastodon4jRequestException::class.java) {
+            val client = MockClient.ioException()
+            val accounts = Accounts(client)
+            accounts.updateCredential("test", "test", "test", "test").execute()
+        }
     }
 
     @Test
@@ -71,11 +77,13 @@ class AccountsTest {
         account.userName shouldBeEqualTo "test"
     }
 
-    @Test(expected = Mastodon4jRequestException::class)
+    @Test
     fun getFollowersWithException() {
-        val client = MockClient.ioException()
-        val accounts = Accounts(client)
-        accounts.getFollowers(1L).execute()
+        Assertions.assertThrows(Mastodon4jRequestException::class.java) {
+            val client = MockClient.ioException()
+            val accounts = Accounts(client)
+            accounts.getFollowers(1L).execute()
+        }
     }
 
     @Test
@@ -89,11 +97,13 @@ class AccountsTest {
         account.userName shouldBeEqualTo "test"
     }
 
-    @Test(expected = Mastodon4jRequestException::class)
+    @Test
     fun getFollowingWithException() {
-        val client = MockClient.ioException()
-        val accounts = Accounts(client)
-        accounts.getFollowing(1L).execute()
+        Assertions.assertThrows(Mastodon4jRequestException::class.java) {
+            val client = MockClient.ioException()
+            val accounts = Accounts(client)
+            accounts.getFollowing(1L).execute()
+        }
     }
 
     @Test
@@ -105,11 +115,13 @@ class AccountsTest {
         status.id shouldBeEqualTo 11111L
     }
 
-    @Test(expected = Mastodon4jRequestException::class)
+    @Test
     fun getStatusesWithException() {
-        val client = MockClient.ioException()
-        val accounts = Accounts(client)
-        accounts.getStatuses(1, false).execute()
+        Assertions.assertThrows(Mastodon4jRequestException::class.java) {
+            val client = MockClient.ioException()
+            val accounts = Accounts(client)
+            accounts.getStatuses(1, false).execute()
+        }
     }
 
     @Test
@@ -125,11 +137,13 @@ class AccountsTest {
         relationship.isRequested shouldBeEqualTo false
     }
 
-    @Test(expected = Mastodon4jRequestException::class)
+    @Test
     fun postFollowWithException() {
-        val client = MockClient.ioException()
-        val accounts = Accounts(client)
-        accounts.postFollow(1L).execute()
+        Assertions.assertThrows(Mastodon4jRequestException::class.java) {
+            val client = MockClient.ioException()
+            val accounts = Accounts(client)
+            accounts.postFollow(1L).execute()
+        }
     }
 
     @Test
@@ -145,11 +159,13 @@ class AccountsTest {
         relationship.isRequested shouldBeEqualTo false
     }
 
-    @Test(expected = Mastodon4jRequestException::class)
+    @Test
     fun postUnFollowWithException() {
-        val client = MockClient.ioException()
-        val accounts = Accounts(client)
-        accounts.postUnFollow(1L).execute()
+        Assertions.assertThrows(Mastodon4jRequestException::class.java) {
+            val client = MockClient.ioException()
+            val accounts = Accounts(client)
+            accounts.postUnFollow(1L).execute()
+        }
     }
 
     @Test
@@ -165,11 +181,13 @@ class AccountsTest {
         relationship.isRequested shouldBeEqualTo false
     }
 
-    @Test(expected = Mastodon4jRequestException::class)
+    @Test
     fun postBlockWithException() {
-        val client = MockClient.ioException()
-        val accounts = Accounts(client)
-        accounts.postBlock(1L).execute()
+        Assertions.assertThrows(Mastodon4jRequestException::class.java) {
+            val client = MockClient.ioException()
+            val accounts = Accounts(client)
+            accounts.postBlock(1L).execute()
+        }
     }
 
     @Test
@@ -185,11 +203,13 @@ class AccountsTest {
         relationship.isRequested shouldBeEqualTo false
     }
 
-    @Test(expected = Mastodon4jRequestException::class)
+    @Test
     fun postUnblockWithException() {
-        val client = MockClient.ioException()
-        val accounts = Accounts(client)
-        accounts.postUnblock(1L).execute()
+        Assertions.assertThrows(Mastodon4jRequestException::class.java) {
+            val client = MockClient.ioException()
+            val accounts = Accounts(client)
+            accounts.postUnblock(1L).execute()
+        }
     }
 
     @Test
@@ -205,13 +225,14 @@ class AccountsTest {
         relationship.isRequested shouldBeEqualTo false
     }
 
-    @Test(expected = Mastodon4jRequestException::class)
+    @Test
     fun postMuteWithException() {
-        val client = MockClient.ioException()
-        val accounts = Accounts(client)
-        accounts.postMute(1L).execute()
+        Assertions.assertThrows(Mastodon4jRequestException::class.java) {
+            val client = MockClient.ioException()
+            val accounts = Accounts(client)
+            accounts.postMute(1L).execute()
+        }
     }
-
 
     @Test
     fun postUnmute() {
@@ -226,11 +247,13 @@ class AccountsTest {
         relationship.isRequested shouldBeEqualTo false
     }
 
-    @Test(expected = Mastodon4jRequestException::class)
+    @Test
     fun postUnmuteWithException() {
-        val client = MockClient.ioException()
-        val accounts = Accounts(client)
-        accounts.postUnmute(1L).execute()
+        Assertions.assertThrows(Mastodon4jRequestException::class.java) {
+            val client = MockClient.ioException()
+            val accounts = Accounts(client)
+            accounts.postUnmute(1L).execute()
+        }
     }
 
     @Test
@@ -247,11 +270,13 @@ class AccountsTest {
         relationship.isRequested shouldBeEqualTo false
     }
 
-    @Test(expected = Mastodon4jRequestException::class)
+    @Test
     fun getRelationshipsWithException() {
-        val client = MockClient.ioException()
-        val accounts = Accounts(client)
-        accounts.getRelationships(listOf(1L)).execute()
+        Assertions.assertThrows(Mastodon4jRequestException::class.java) {
+            val client = MockClient.ioException()
+            val accounts = Accounts(client)
+            accounts.getRelationships(listOf(1L)).execute()
+        }
     }
 
     @Test
@@ -265,10 +290,12 @@ class AccountsTest {
         account.userName shouldBeEqualTo "A"
     }
 
-    @Test(expected = Mastodon4jRequestException::class)
+    @Test
     fun getAccountSearchWithException() {
-        val client = MockClient.ioException()
-        val accounts = Accounts(client)
-        accounts.getAccountSearch("test").execute()
+        Assertions.assertThrows(Mastodon4jRequestException::class.java) {
+            val client = MockClient.ioException()
+            val accounts = Accounts(client)
+            accounts.getAccountSearch("test").execute()
+        }
     }
 }

@@ -3,8 +3,8 @@ package com.sys1yagi.mastodon4j.api.method
 import com.sys1yagi.mastodon4j.api.exception.Mastodon4jRequestException
 import com.sys1yagi.mastodon4j.testtool.MockClient
 import org.amshove.kluent.shouldBeEqualTo
-import org.amshove.kluent.shouldEqualTo
-import org.junit.Test
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
 
 class ReportsTest {
     @Test
@@ -17,17 +17,21 @@ class ReportsTest {
         report.actionTaken shouldBeEqualTo "test"
     }
 
-    @Test(expected = Mastodon4jRequestException::class)
+    @Test
     fun getReportsWithException() {
-        val client = MockClient.ioException()
-        val reports = Reports(client)
-        reports.getReports().execute()
+        Assertions.assertThrows(Mastodon4jRequestException::class.java) {
+            val client = MockClient.ioException()
+            val reports = Reports(client)
+            reports.getReports().execute()
+        }
     }
 
-    @Test(expected = Mastodon4jRequestException::class)
+    @Test
     fun postReportWithException() {
-        val client = MockClient.ioException()
-        val reports = Reports(client)
-        reports.postReport(10, 20, "test").execute()
+        Assertions.assertThrows(Mastodon4jRequestException::class.java) {
+            val client = MockClient.ioException()
+            val reports = Reports(client)
+            reports.postReport(10, 20, "test").execute()
+        }
     }
 }

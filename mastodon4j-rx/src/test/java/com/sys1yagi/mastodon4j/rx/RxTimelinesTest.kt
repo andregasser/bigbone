@@ -1,7 +1,7 @@
 package com.sys1yagi.mastodon4j.rx
 
 import com.sys1yagi.mastodon4j.rx.testtool.MockClient
-import org.junit.Test
+import org.junit.jupiter.api.Test
 
 class RxTimelinesTest {
 

@@ -2,7 +2,8 @@ package com.sys1yagi.mastodon4j.entity
 
 import com.sys1yagi.mastodon4j.api.Scope
 import org.amshove.kluent.shouldBeEqualTo
-import org.junit.Test
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
 
 class ScopeTest {
     @Test
@@ -21,8 +22,10 @@ class ScopeTest {
         Scope(Scope.Name.ALL).validate()
     }
 
-    @Test(expected = IllegalArgumentException::class)
+    @Test
     fun validateDuplication() {
-        Scope(Scope.Name.READ, Scope.Name.READ).validate()
+        Assertions.assertThrows(java.lang.IllegalArgumentException::class.java) {
+            Scope(Scope.Name.READ, Scope.Name.READ).validate()
+        }
     }
 }

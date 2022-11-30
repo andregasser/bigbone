@@ -1,10 +1,8 @@
 package com.sys1yagi.mastodon4j.api
 
+import org.amshove.kluent.fail
 import org.amshove.kluent.shouldBeEqualTo
-import org.amshove.kluent.shouldEqualTo
-import org.junit.Test
-
-import org.junit.Assert.*
+import org.junit.jupiter.api.Test
 
 class LinkTest {
     @Test
@@ -17,7 +15,7 @@ class LinkTest {
 """
             )
             if (link == null) {
-                fail()
+                fail("link is null")
                 return
             }
             link.maxId shouldBeEqualTo 1552
@@ -32,7 +30,7 @@ class LinkTest {
 """
             )
             if (link == null) {
-                fail()
+                fail("link is null")
                 return
             }
             link.maxId shouldBeEqualTo 1553
@@ -48,7 +46,7 @@ class LinkTest {
 """
             )
             if (link == null) {
-                fail()
+                fail("link is null")
                 return
             }
             link.maxId shouldBeEqualTo 0

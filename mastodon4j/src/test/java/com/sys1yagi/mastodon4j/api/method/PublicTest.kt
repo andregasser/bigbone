@@ -4,10 +4,9 @@ import com.sys1yagi.mastodon4j.api.exception.Mastodon4jRequestException
 import com.sys1yagi.mastodon4j.testtool.MockClient
 import com.sys1yagi.mastodon4j.testtool.TestUtil
 import org.amshove.kluent.shouldBeEqualTo
-import org.amshove.kluent.shouldEqualTo
-import org.junit.Assert
-import org.junit.Assert.assertEquals
-import org.junit.Test
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Test
 import java.util.concurrent.atomic.AtomicInteger
 
 class PublicTest {
@@ -53,11 +52,13 @@ class PublicTest {
             .execute()
     }
 
-    @Test(expected = Mastodon4jRequestException::class)
+    @Test
     fun getInstanceWithException() {
-        val client = MockClient.ioException()
-        val publicMethod = Public(client)
-        publicMethod.getInstance().execute()
+        Assertions.assertThrows(Mastodon4jRequestException::class.java) {
+            val client = MockClient.ioException()
+            val publicMethod = Public(client)
+            publicMethod.getInstance().execute()
+        }
     }
 
     @Test
@@ -72,11 +73,13 @@ class PublicTest {
         result.hashtags.size shouldBeEqualTo 5
     }
 
-    @Test(expected = Mastodon4jRequestException::class)
+    @Test
     fun getSearchWithException() {
-        val client = MockClient.ioException()
-        val publicMethod = Public(client)
-        publicMethod.getSearch("test").execute()
+        Assertions.assertThrows(Mastodon4jRequestException::class.java) {
+            val client = MockClient.ioException()
+            val publicMethod = Public(client)
+            publicMethod.getSearch("test").execute()
+        }
     }
 
     @Test
@@ -106,11 +109,13 @@ class PublicTest {
         atomicInt.get() shouldBeEqualTo 20
     }
 
-    @Test(expected = Mastodon4jRequestException::class)
+    @Test
     fun getLocalPublicWithException() {
-        val client = MockClient.ioException()
-        val publicMethod = Public(client)
-        publicMethod.getLocalPublic().execute()
+        Assertions.assertThrows(Mastodon4jRequestException::class.java) {
+            val client = MockClient.ioException()
+            val publicMethod = Public(client)
+            publicMethod.getLocalPublic().execute()
+        }
     }
 
     @Test
@@ -121,11 +126,12 @@ class PublicTest {
         statuses.part.size shouldBeEqualTo 20
     }
 
-    @Test(expected = Mastodon4jRequestException::class)
+    @Test
     fun getLocalTagWithException() {
-        val client = MockClient.ioException()
-        val publicMethod = Public(client)
-        publicMethod.getLocalTag("mastodon").execute()
+        Assertions.assertThrows(Mastodon4jRequestException::class.java) {
+            val client = MockClient.ioException()
+            val publicMethod = Public(client)
+            publicMethod.getLocalTag("mastodon").execute()
+        }
     }
-
 }

@@ -5,9 +5,9 @@ import com.sys1yagi.mastodon4j.extension.emptyRequestBody
 import com.sys1yagi.mastodon4j.testtool.MockClient
 import okhttp3.MultipartBody
 import org.amshove.kluent.shouldBeEqualTo
-import org.amshove.kluent.shouldEqualTo
 import org.amshove.kluent.shouldNotBe
-import org.junit.Test
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
 
 class MediaTest {
     @Test
@@ -23,10 +23,12 @@ class MediaTest {
         attachment.textUrl shouldNotBe null
     }
 
-    @Test(expected = Mastodon4jRequestException::class)
+    @Test
     fun postMediaWithException() {
-        val client = MockClient.ioException()
-        val media = Media(client)
-        media.postMedia(MultipartBody.Part.create(emptyRequestBody())).execute()
+        Assertions.assertThrows(Mastodon4jRequestException::class.java) {
+            val client = MockClient.ioException()
+            val media = Media(client)
+            media.postMedia(MultipartBody.Part.create(emptyRequestBody())).execute()
+        }
     }
 }

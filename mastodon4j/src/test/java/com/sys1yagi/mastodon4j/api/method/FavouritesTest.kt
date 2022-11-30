@@ -3,11 +3,8 @@ package com.sys1yagi.mastodon4j.api.method
 import com.sys1yagi.mastodon4j.api.exception.Mastodon4jRequestException
 import com.sys1yagi.mastodon4j.testtool.MockClient
 import org.amshove.kluent.shouldBeEqualTo
-import org.amshove.kluent.shouldEqualTo
-import org.junit.Test
-
-import org.junit.Assert.*
-import java.net.SocketTimeoutException
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
 
 class FavouritesTest {
     @Test
@@ -20,11 +17,12 @@ class FavouritesTest {
         status.id shouldBeEqualTo 1111
     }
 
-    @Test(expected = Mastodon4jRequestException::class)
+    @Test
     fun exception() {
-        val client = MockClient.ioException()
-
-        val favorites = Favourites(client)
-        favorites.getFavourites().execute()
+        Assertions.assertThrows(Mastodon4jRequestException::class.java) {
+            val client = MockClient.ioException()
+            val favorites = Favourites(client)
+            favorites.getFavourites().execute()
+        }
     }
 }

@@ -7,7 +7,8 @@ import com.sys1yagi.mastodon4j.testtool.MockClient
 import io.mockk.every
 import io.mockk.mockk
 import org.amshove.kluent.shouldBeEqualTo
-import org.junit.Test
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
 
 class AppsTest {
     @Test
@@ -27,15 +28,16 @@ class AppsTest {
         registration.redirectUri shouldBeEqualTo "urn:ietf:wg:oauth:2.0:oob"
     }
 
-    @Test(expected = Mastodon4jRequestException::class)
+    @Test
     fun createAppWithException() {
-        val client = MockClient.ioException()
-
-        val apps = Apps(client)
-        apps.createApp(
-            clientName = "mastodon-android-sys1yagi",
-            scope = Scope(Scope.Name.ALL)
-        ).execute()
+        Assertions.assertThrows(Mastodon4jRequestException::class.java) {
+            val client = MockClient.ioException()
+            val apps = Apps(client)
+            apps.createApp(
+                clientName = "mastodon-android-sys1yagi",
+                scope = Scope(Scope.Name.ALL)
+            ).execute()
+        }
     }
 
     @Test
@@ -59,12 +61,14 @@ class AppsTest {
         accessToken.createdAt shouldBeEqualTo 1493188835
     }
 
-    @Test(expected = Mastodon4jRequestException::class)
+    @Test
     fun getAccessTokenWithException() {
-        val client: MastodonClient = MockClient.ioException()
-        every { client.getInstanceName() } returns "mastodon.cloud"
-        val apps = Apps(client)
-        apps.getAccessToken("test", "test", code = "test").execute()
+        Assertions.assertThrows(Mastodon4jRequestException::class.java) {
+            val client: MastodonClient = MockClient.ioException()
+            every { client.getInstanceName() } returns "mastodon.cloud"
+            val apps = Apps(client)
+            apps.getAccessToken("test", "test", code = "test").execute()
+        }
     }
 
     @Test
@@ -79,11 +83,13 @@ class AppsTest {
         accessToken.createdAt shouldBeEqualTo 1493188835
     }
 
-    @Test(expected = Mastodon4jRequestException::class)
+    @Test
     fun postUserNameAndPasswordWithException() {
-        val client: MastodonClient = MockClient.ioException()
-        every { client.getInstanceName() } returns "mastodon.cloud"
-        val apps = Apps(client)
-        apps.postUserNameAndPassword("test", "test", Scope(Scope.Name.ALL), "test", "test").execute()
+        Assertions.assertThrows(Mastodon4jRequestException::class.java) {
+            val client: MastodonClient = MockClient.ioException()
+            every { client.getInstanceName() } returns "mastodon.cloud"
+            val apps = Apps(client)
+            apps.postUserNameAndPassword("test", "test", Scope(Scope.Name.ALL), "test", "test").execute()
+        }
     }
 }

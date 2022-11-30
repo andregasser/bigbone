@@ -3,11 +3,9 @@ package com.sys1yagi.mastodon4j.api.method
 import com.sys1yagi.mastodon4j.api.exception.Mastodon4jRequestException
 import com.sys1yagi.mastodon4j.testtool.MockClient
 import org.amshove.kluent.shouldBeEqualTo
-import org.amshove.kluent.shouldEqualTo
 import org.amshove.kluent.shouldNotBe
-import org.junit.Test
-
-import org.junit.Assert.*
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
 
 class StatusesTest {
     @Test
@@ -18,11 +16,13 @@ class StatusesTest {
         status.id shouldBeEqualTo 11111L
     }
 
-    @Test(expected = Mastodon4jRequestException::class)
+    @Test
     fun getStatusWithException() {
-        val client = MockClient.ioException()
-        val statuses = Statuses(client)
-        statuses.getStatus(1L).execute()
+        Assertions.assertThrows(Mastodon4jRequestException::class.java) {
+            val client = MockClient.ioException()
+            val statuses = Statuses(client)
+            statuses.getStatus(1L).execute()
+        }
     }
 
     @Test
@@ -34,11 +34,13 @@ class StatusesTest {
         context.descendants.size shouldBeEqualTo 1
     }
 
-    @Test(expected = Mastodon4jRequestException::class)
+    @Test
     fun getContextWithException() {
-        val client = MockClient.ioException()
-        val statuses = Statuses(client)
-        statuses.getContext(1L).execute()
+        Assertions.assertThrows(Mastodon4jRequestException::class.java) {
+            val client = MockClient.ioException()
+            val statuses = Statuses(client)
+            statuses.getContext(1L).execute()
+        }
     }
 
     @Test
@@ -52,11 +54,13 @@ class StatusesTest {
         card.image shouldNotBe null
     }
 
-    @Test(expected = Mastodon4jRequestException::class)
+    @Test
     fun getCardWithExcetpion() {
-        val client = MockClient.ioException()
-        val statuses = Statuses(client)
-        statuses.getCard(1L).execute()
+        Assertions.assertThrows(Mastodon4jRequestException::class.java) {
+            val client = MockClient.ioException()
+            val statuses = Statuses(client)
+            statuses.getCard(1L).execute()
+        }
     }
 
     @Test
@@ -70,11 +74,13 @@ class StatusesTest {
         account.userName shouldBeEqualTo "test"
     }
 
-    @Test(expected = Mastodon4jRequestException::class)
+    @Test
     fun getRebloggedByWithException() {
-        val client = MockClient.ioException()
-        val statuses = Statuses(client)
-        statuses.getRebloggedBy(1L).execute()
+        Assertions.assertThrows(Mastodon4jRequestException::class.java) {
+            val client = MockClient.ioException()
+            val statuses = Statuses(client)
+            statuses.getRebloggedBy(1L).execute()
+        }
     }
 
     @Test
@@ -88,11 +94,13 @@ class StatusesTest {
         account.userName shouldBeEqualTo "test"
     }
 
-    @Test(expected = Mastodon4jRequestException::class)
+    @Test
     fun getFavouritedByWithException() {
-        val client = MockClient.ioException()
-        val statuses = Statuses(client)
-        statuses.getFavouritedBy(1L).execute()
+        Assertions.assertThrows(Mastodon4jRequestException::class.java) {
+            val client = MockClient.ioException()
+            val statuses = Statuses(client)
+            statuses.getFavouritedBy(1L).execute()
+        }
     }
 
     @Test
@@ -103,11 +111,13 @@ class StatusesTest {
         status.id shouldBeEqualTo 11111L
     }
 
-    @Test(expected = Mastodon4jRequestException::class)
+    @Test
     fun postStatusWithException() {
-        val client = MockClient.ioException()
-        val statuses = Statuses(client)
-        statuses.postStatus("a", null, null, false, null).execute()
+        Assertions.assertThrows(Mastodon4jRequestException::class.java) {
+            val client = MockClient.ioException()
+            val statuses = Statuses(client)
+            statuses.postStatus("a", null, null, false, null).execute()
+        }
     }
 
     @Test
@@ -118,11 +128,13 @@ class StatusesTest {
         status.id shouldBeEqualTo 11111L
     }
 
-    @Test(expected = Mastodon4jRequestException::class)
+    @Test
     fun postReblogWithException() {
-        val client = MockClient.ioException()
-        val statuses = Statuses(client)
-        statuses.postReblog(1L).execute()
+        Assertions.assertThrows(Mastodon4jRequestException::class.java) {
+            val client = MockClient.ioException()
+            val statuses = Statuses(client)
+            statuses.postReblog(1L).execute()
+        }
     }
 
     @Test
@@ -133,11 +145,13 @@ class StatusesTest {
         status.id shouldBeEqualTo 11111L
     }
 
-    @Test(expected = Mastodon4jRequestException::class)
+    @Test
     fun postUnreblogWithException() {
-        val client = MockClient.ioException()
-        val statuses = Statuses(client)
-        statuses.postUnreblog(1L).execute()
+        Assertions.assertThrows(Mastodon4jRequestException::class.java) {
+            val client = MockClient.ioException()
+            val statuses = Statuses(client)
+            statuses.postUnreblog(1L).execute()
+        }
     }
 
     @Test
@@ -148,11 +162,13 @@ class StatusesTest {
         status.id shouldBeEqualTo 11111L
     }
 
-    @Test(expected = Mastodon4jRequestException::class)
+    @Test
     fun postFavouriteWithException() {
-        val client = MockClient.ioException()
-        val statuses = Statuses(client)
-        statuses.postFavourite(1L).execute()
+        Assertions.assertThrows(Mastodon4jRequestException::class.java) {
+            val client = MockClient.ioException()
+            val statuses = Statuses(client)
+            statuses.postFavourite(1L).execute()
+        }
     }
 
     @Test
@@ -163,10 +179,12 @@ class StatusesTest {
         status.id shouldBeEqualTo 11111L
     }
 
-    @Test(expected = Mastodon4jRequestException::class)
+    @Test
     fun postUnfavouriteWithException() {
-        val client = MockClient.ioException()
-        val statuses = Statuses(client)
-        statuses.postUnfavourite(1L).execute()
+        Assertions.assertThrows(Mastodon4jRequestException::class.java) {
+            val client = MockClient.ioException()
+            val statuses = Statuses(client)
+            statuses.postUnfavourite(1L).execute()
+        }
     }
 }
