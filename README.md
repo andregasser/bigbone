@@ -1,15 +1,14 @@
 # mastodon4j
 
 [![](https://jitpack.io/v/sys1yagi/mastodon4j.svg)](https://jitpack.io/#sys1yagi/mastodon4j)
-[![wercker status](https://app.wercker.com/status/498944e68f1f37a697fcbab383b0299c/s/master "wercker status")](https://app.wercker.com/project/byKey/498944e68f1f37a697fcbab383b0299c)
 [![codecov](https://codecov.io/gh/sys1yagi/mastodon4j/branch/master/graph/badge.svg)](https://codecov.io/gh/sys1yagi/mastodon4j)
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-mastodon4j-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/5637)
 
-mastodon4j is [mastodon](https://github.com/tootsuite/mastodon) client for Java and Kotlin.
+mastodon4j is a [mastodon](https://docs.joinmastodon.org/) client for Java and Kotlin.
 
 # Official API Doc
 
-https://github.com/tootsuite/documentation/blob/master/Using-the-API/API.md
+https://docs.joinmastodon.org/client/intro/
 
 # Sample App
 
@@ -19,7 +18,7 @@ __Android App__
 
 # Get Started
 
-Mastodon4j publish in jitpack.
+Mastodon4j is published in jitpack.
 Add it in your root build.gradle at the end of repositories:
 
 ```groovy
@@ -71,7 +70,7 @@ try {
 
 ## Register App
 
-If you want to access the auth required API, you need create client credential and get access token. see more [docs](https://github.com/tootsuite/documentation/blob/master/Using-the-API/API.md#apps)
+If you want to access the auth required API, you need create client credential and get access token. see more [docs](https://docs.joinmastodon.org/methods/apps/)
 
 __kotlin__
 
