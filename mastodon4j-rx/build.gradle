@@ -1,35 +1,16 @@
-apply plugin: 'java'
-apply plugin: 'kotlin'
-apply plugin: "jacoco"
+plugins {
+    id 'com.sys1yagi.mastodon-library'
+}
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    implementation "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
-    implementation "com.squareup.okhttp3:okhttp:$okhttpVersion"
-    implementation project(':mastodon4j')
+    api project(':mastodon4j')
+    api libs.rxjava
+    api libs.okhttp
 
-    testImplementation "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
-    testImplementation "io.mockk:mockk:$mockkVersion"
-    testImplementation "org.amshove.kluent:kluent:$kluentVersion"
-    testImplementation("com.squareup.okhttp3:mockwebserver:$okhttpVersion") {
-        exclude group: 'com.squareup.okio', 'module': 'okio'
-        exclude group: 'com.squareup.okhttp', 'module': 'okhttp'
-    }
-    testImplementation "com.google.code.gson:gson:$gsonVersion"
-}
+    implementation libs.kotlin.jdk8
 
-test {
-    useJUnitPlatform()
-}
-
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-    }
-}
-repositories {
-    mavenCentral()
+    testImplementation libs.junit.jupiter
+    testImplementation libs.mockk
+    testImplementation libs.mockk.dsl
+    testImplementation libs.gson
 }

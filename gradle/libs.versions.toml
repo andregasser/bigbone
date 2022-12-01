@@ -1,0 +1,35 @@
+[versions]
+# This project version
+mastodon4j = "1.7.1-SNAPSHOT"
+
+# 3rd party dependencies
+gson = "2.10"
+junit-jupiter = "5.9.1"
+kluent = "1.72"
+kotlin = "1.7.21"
+kotlin-coroutines = "1.6.4"
+mockk = "1.13.3"
+okhttp = "4.9.1"
+okio = "2.8.0"
+rxjava = "2.2.21"
+
+# Gradle plugins
+jacoco = "0.8.8"
+dependency-analysis = "1.17.0"
+
+[libraries]
+junit-jupiter = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junit-jupiter" }
+gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
+kluent = { module = "org.amshove.kluent:kluent", version.ref = "kluent" }
+kotlin-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin-coroutines" }
+kotlin-jdk8 = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
+mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+mockk-dsl = { module = "io.mockk:mockk-dsl", version.ref = "mockk" }
+okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
+okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
+okhttp-mockwebserver = { module = "com.squareup.okhttp3:mockwebserver", version.ref = "okhttp" }
+rxjava = { module="io.reactivex.rxjava2:rxjava", version.ref="rxjava"}
+
+[plugins]
+kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+dependency-analysis = { id = "com.autonomousapps.dependency-analysis", version.ref = "dependency-analysis" }

@@ -3,8 +3,8 @@ package com.sys1yagi.mastodon4j.api.method
 import com.sys1yagi.mastodon4j.api.exception.Mastodon4jRequestException
 import com.sys1yagi.mastodon4j.testtool.MockClient
 import org.amshove.kluent.shouldBeEqualTo
-import org.junit.Test
 import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
 
 class FollowsTest {
     @Test
@@ -18,7 +18,7 @@ class FollowsTest {
         account.userName shouldBeEqualTo "test"
     }
 
-    @Test(expected = Mastodon4jRequestException::class)
+    @Test
     fun postRemoteFollowWithException() {
         Assertions.assertThrows(Mastodon4jRequestException::class.java) {
             val client = MockClient.ioException()
