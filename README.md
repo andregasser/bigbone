@@ -1,21 +1,14 @@
 # mastodon4j
 
 ![Build](https://github.com/andregasser/mastodon4j/actions/workflows/build.yml/badge.svg)
-[![](https://jitpack.io/v/sys1yagi/mastodon4j.svg)](https://jitpack.io/#sys1yagi/mastodon4j)
-[![codecov](https://codecov.io/gh/sys1yagi/mastodon4j/branch/master/graph/badge.svg)](https://codecov.io/gh/sys1yagi/mastodon4j)
-[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-mastodon4j-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/5637)
+[![codecov](https://codecov.io/gh/andregasser/mastodon4j/branch/master/graph/badge.svg?token=3AFHQQH547)](https://codecov.io/gh/andregasser/mastodon4j)
+
 
 mastodon4j is a [mastodon](https://docs.joinmastodon.org/) client for Java and Kotlin.
 
 # Official API Doc
 
 https://docs.joinmastodon.org/client/intro/
-
-# Sample App
-
-__Android App__
-
-- https://github.com/sys1yagi/DroiDon
 
 # Get Started
 
@@ -32,11 +25,11 @@ allprojects {
 ```
 
 ```groovy
-compile 'com.github.sys1yagi.mastodon4j:mastodon4j:$version'
-compile 'com.github.sys1yagi.mastodon4j:mastodon4j-rx:$version'
+compile 'com.github.andregasser.mastodon4j:mastodon4j:$version'
+compile 'com.github.andregasser.mastodon4j:mastodon4j-rx:$version'
 ```
 
-Check latest version on Jitpack [![](https://jitpack.io/v/sys1yagi/mastodon4j.svg)](https://jitpack.io/#sys1yagi/mastodon4j)
+Check latest version on Jitpack [![](https://jitpack.io/v/andregasser/mastodon4j.svg)](https://jitpack.io/#andregasser/mastodon4j)
 
 # Usage
 
@@ -328,9 +321,11 @@ v1.0.0 or later
 
 # Contribution
 
-## Reporting Issues
+## Pull Requests
+I am happy to handle any pull requests that come in. Thanks for your contribution!
 
-Found a problem? Want a new feature? First of all see if your issue or idea has already been reported. If don't, just open a new clear and descriptive [issues](https://github.com/sys1yagi/mastodon4j/issues)
+## Reporting Issues
+Please checkout the [issues](https://github.com/andregasser/mastodon4j/issues) page for reporting issues. 
 
 # License
 
