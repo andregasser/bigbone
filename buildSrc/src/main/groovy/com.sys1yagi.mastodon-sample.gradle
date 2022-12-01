@@ -1,0 +1,14 @@
+plugins {
+    id 'com.sys1yagi.mastodon-base'
+    id 'kotlin'
+    id 'maven-publish'
+    id 'jacoco'
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+}

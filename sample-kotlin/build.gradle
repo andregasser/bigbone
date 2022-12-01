@@ -1,26 +1,12 @@
-version 'unspecified'
-
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-    }
-}
-
-apply plugin: 'kotlin'
-
-repositories {
-    mavenCentral()
+plugins {
+    id 'com.sys1yagi.mastodon-sample'
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinxCoroutinesCoreVersion"
-    implementation "com.google.code.gson:gson:$gsonVersion"
-    implementation "com.squareup.okhttp3:okhttp:$okhttpVersion"
-    implementation "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
     implementation project(':mastodon4j')
     implementation project(':mastodon4j-rx')
+    implementation libs.gson
+    implementation libs.okhttp
+    implementation libs.rxjava
+    implementation libs.kotlin.coroutines
 }

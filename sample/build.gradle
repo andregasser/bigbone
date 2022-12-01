@@ -1,15 +1,9 @@
-apply plugin: 'java'
-
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
-
-repositories {
-    mavenCentral()
+plugins {
+    id 'com.sys1yagi.mastodon-sample'
 }
 
 dependencies {
     implementation project(':mastodon4j')
-    implementation "com.squareup.okhttp3:okhttp:$okhttpVersion"
-    implementation "com.google.code.gson:gson:$gsonVersion"
-    testImplementation "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
+    implementation libs.gson
+    implementation libs.okhttp
 }

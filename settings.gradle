@@ -2,6 +2,8 @@ plugins {
     id("com.gradle.enterprise") version("3.9")
 }
 
+rootProject.name = "mastodon4j-parent"
+
 gradleEnterprise {
     if (System.getenv("CI") != null) {
         buildScan {
@@ -12,7 +14,12 @@ gradleEnterprise {
     }
 }
 
-include ':mastodon4j', ':mastodon4j-rx'
+dependencyResolutionManagement {
+    repositories {
+        mavenCentral()
+    }
+}
+
+include 'mastodon4j', 'mastodon4j-rx'
 include 'sample'
 include 'sample-kotlin'
-

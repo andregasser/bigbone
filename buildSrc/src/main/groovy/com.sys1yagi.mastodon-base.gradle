@@ -1,0 +1,18 @@
+plugins {
+    id 'java'
+}
+
+group = "com.sys1yagi"
+version = libs.versions.mastodon4j.get()
+
+java {
+    withSourcesJar()
+    withJavadocJar()
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(8)
+    }
+}
+
+tasks.withType(Test).configureEach {
+    useJUnitPlatform()
+}
