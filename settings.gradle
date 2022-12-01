@@ -20,6 +20,7 @@ dependencyResolutionManagement {
     }
 }
 
-include 'mastodon4j', 'mastodon4j-rx'
+include 'mastodon4j'
+include 'mastodon4j-rx'
 include 'sample'
 include 'sample-kotlin'
