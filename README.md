@@ -25,8 +25,8 @@ allprojects {
 ```
 
 ```groovy
-compile 'com.github.andregasser.mastodon4j:mastodon4j:$version'
-compile 'com.github.andregasser.mastodon4j:mastodon4j-rx:$version'
+implementation 'com.github.andregasser.mastodon4j:mastodon4j:$version'
+implementation 'com.github.andregasser.mastodon4j:mastodon4j-rx:$version'
 ```
 
 Check latest version on Jitpack [![](https://jitpack.io/v/andregasser/mastodon4j.svg)](https://jitpack.io/#andregasser/mastodon4j)
