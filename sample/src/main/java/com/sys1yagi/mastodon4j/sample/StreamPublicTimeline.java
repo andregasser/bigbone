@@ -37,7 +37,7 @@ public class StreamPublicTimeline {
         Streaming streaming = new Streaming(client);
         try {
             Shutdownable shutdownable = streaming.localPublic(handler);
-            Thread.sleep(10000L);
+            Thread.sleep(10_000L);
             shutdownable.shutdown();
         } catch (Exception e) {
             e.printStackTrace();

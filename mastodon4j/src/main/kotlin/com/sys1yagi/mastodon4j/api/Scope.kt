@@ -5,7 +5,7 @@ package com.sys1yagi.mastodon4j.api
  */
 class Scope
 @JvmOverloads
-constructor(vararg private val scopes: Name = arrayOf(Name.ALL)) {
+constructor(private vararg val scopes: Name = arrayOf(Name.ALL)) {
     enum class Name(val scopeName: String) {
         READ("read"),
         WRITE("write"),
@@ -14,12 +14,8 @@ constructor(vararg private val scopes: Name = arrayOf(Name.ALL)) {
     }
 
     fun validate() {
-        if (scopes.size != scopes.distinct().size) {
-            throw IllegalArgumentException("There is a duplicate scope. : $this")
-        }
+        require(scopes.size == scopes.distinct().size) { "There is a duplicate scope. : $this" }
     }
 
-    override fun toString(): String {
-        return scopes.joinToString(separator = " ", transform = { it.scopeName })
-    }
+    override fun toString(): String = scopes.joinToString(separator = " ", transform = { it.scopeName })
 }

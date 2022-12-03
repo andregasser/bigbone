@@ -16,6 +16,7 @@ rxjava = "2.2.21"
 # Gradle plugins
 jacoco = "0.8.8"
 dependency-analysis = "1.17.0"
+detekt = "1.22.0"
 
 [libraries]
 junit-jupiter = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junit-jupiter" }
@@ -33,3 +34,4 @@ rxjava = { module="io.reactivex.rxjava2:rxjava", version.ref="rxjava"}
 [plugins]
 kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 dependency-analysis = { id = "com.autonomousapps.dependency-analysis", version.ref = "dependency-analysis" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }

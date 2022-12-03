@@ -46,7 +46,8 @@ class AppsTest {
         every { client.getInstanceName() } returns "mastodon.cloud"
 
         val url = Apps(client).getOAuthUrl("client_id", Scope(Scope.Name.ALL))
-        url shouldBeEqualTo "https://mastodon.cloud/oauth/authorize?client_id=client_id&redirect_uri=urn:ietf:wg:oauth:2.0:oob&response_type=code&scope=read write follow"
+        url shouldBeEqualTo "https://mastodon.cloud/oauth/authorize?client_id=client_id" +
+                "&redirect_uri=urn:ietf:wg:oauth:2.0:oob&response_type=code&scope=read write follow"
     }
 
     @Test
@@ -58,7 +59,7 @@ class AppsTest {
         accessToken.accessToken shouldBeEqualTo "test"
         accessToken.scope shouldBeEqualTo "read write follow"
         accessToken.tokenType shouldBeEqualTo "bearer"
-        accessToken.createdAt shouldBeEqualTo 1493188835
+        accessToken.createdAt shouldBeEqualTo 1_493_188_835
     }
 
     @Test
@@ -80,7 +81,7 @@ class AppsTest {
         accessToken.accessToken shouldBeEqualTo "test"
         accessToken.scope shouldBeEqualTo "read write follow"
         accessToken.tokenType shouldBeEqualTo "bearer"
-        accessToken.createdAt shouldBeEqualTo 1493188835
+        accessToken.createdAt shouldBeEqualTo 1_493_188_835
     }
 
     @Test

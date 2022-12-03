@@ -6,7 +6,6 @@ import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldNotBe
 import org.junit.jupiter.api.Test
 
-
 class AttachmentTest {
     @Test
     fun deserialize() {

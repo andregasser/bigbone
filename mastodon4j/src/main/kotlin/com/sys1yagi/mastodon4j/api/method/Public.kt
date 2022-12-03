@@ -8,15 +8,13 @@ import com.sys1yagi.mastodon4j.api.Range
 import com.sys1yagi.mastodon4j.api.entity.Instance
 import com.sys1yagi.mastodon4j.api.entity.Results
 import com.sys1yagi.mastodon4j.api.entity.Status
-import com.sys1yagi.mastodon4j.api.exception.Mastodon4jRequestException
-import com.sys1yagi.mastodon4j.extension.fromJson
-import com.sys1yagi.mastodon4j.extension.genericType
-import com.sys1yagi.mastodon4j.extension.toPageable
 
 class Public(private val client: MastodonClient) {
     /**
+     * Retrieve instance details.
+     *
      * GET /api/v1/instance
-     * @see https://github.com/tootsuite/documentation/blob/master/Using-the-API/API.md#instances
+     * @see https://docs.joinmastodon.org/entities/V1_Instance/
      */
     fun getInstance(): MastodonRequest<Instance> {
         return MastodonRequest(
@@ -30,10 +28,12 @@ class Public(private val client: MastodonClient) {
     }
 
     /**
+     * Search for content in accounts, statuses and hashtags.
+     *
      * GET /api/v1/search
      * q: The search query
      * resolve: Whether to resolve non-local accounts
-     * @see https://github.com/tootsuite/documentation/blob/master/Using-the-API/API.md#search
+     * @see https://docs.joinmastodon.org/methods/search/
      */
     @JvmOverloads
     fun getSearch(query: String, resolve: Boolean = false): MastodonRequest<Results> {
@@ -56,7 +56,8 @@ class Public(private val client: MastodonClient) {
     }
 
     /**
-     *  GET /api/v1/timelines/public
+     *
+     * GET /api/v1/timelines/public
      * @see https://github.com/tootsuite/documentation/blob/master/Using-the-API/API.md#timelines
      */
     private fun getPublic(local: Boolean, range: Range): MastodonRequest<Pageable<Status>> {

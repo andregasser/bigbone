@@ -2,11 +2,9 @@ package com.sys1yagi.mastodon4j.rx
 
 import com.sys1yagi.mastodon4j.MastodonClient
 import com.sys1yagi.mastodon4j.api.Scope
-import com.sys1yagi.mastodon4j.api.entity.Status
 import com.sys1yagi.mastodon4j.api.entity.auth.AccessToken
 import com.sys1yagi.mastodon4j.api.entity.auth.AppRegistration
 import com.sys1yagi.mastodon4j.api.method.Apps
-import com.sys1yagi.mastodon4j.api.method.Timelines
 import com.sys1yagi.mastodon4j.rx.extensions.onErrorIfNotDisposed
 import io.reactivex.Single
 

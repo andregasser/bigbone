@@ -6,10 +6,10 @@ import com.sys1yagi.mastodon4j.api.entity.Status
 import com.sys1yagi.mastodon4j.api.exception.Mastodon4jRequestException
 import com.sys1yagi.mastodon4j.api.method.Streaming
 
-
 object StreamPublicTimeline {
 
-    @JvmStatic fun main(args: Array<String>) {
+    @JvmStatic
+    fun main(args: Array<String>) {
         val instanceName = args[0]
         val credentialFilePath = args[1]
 
@@ -20,9 +20,7 @@ object StreamPublicTimeline {
                 println(status.content)
             }
 
-            override fun onNotification(notification: Notification) {
-
-            }
+            override fun onNotification(notification: Notification) {}
 
             override fun onDelete(id: Long) {
 
@@ -31,9 +29,9 @@ object StreamPublicTimeline {
         val streaming = Streaming(client)
         try {
             val shutdownable = streaming.localPublic(handler)
-            Thread.sleep(10000L)
+            Thread.sleep(10_000L)
             shutdownable.shutdown()
-        } catch(e: Mastodon4jRequestException) {
+        } catch (e: Mastodon4jRequestException) {
             println("error")
             println(e.response?.code)
             println(e.response?.message)

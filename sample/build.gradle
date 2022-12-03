@@ -2,6 +2,10 @@ plugins {
     id 'com.sys1yagi.mastodon-sample'
 }
 
+tasks.named("detekt") configure {
+    enabled = false
+}
+
 dependencies {
     implementation project(':mastodon4j')
     implementation libs.gson

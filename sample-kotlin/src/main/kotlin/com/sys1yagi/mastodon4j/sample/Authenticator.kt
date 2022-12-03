@@ -33,8 +33,8 @@ object Authenticator {
         } else {
             println("app registration found...")
         }
-        val clientId = properties[CLIENT_ID]?.toString() ?: throw IllegalStateException("client id not found")
-        val clientSecret = properties[CLIENT_SECRET]?.toString() ?: throw IllegalStateException("client secret not found")
+        val clientId = properties[CLIENT_ID]?.toString() ?: error("client id not found")
+        val clientSecret = properties[CLIENT_SECRET]?.toString() ?: error("client secret not found")
 
         if (properties[ACCESS_TOKEN] == null) {
             println("get access token for $instanceName...")

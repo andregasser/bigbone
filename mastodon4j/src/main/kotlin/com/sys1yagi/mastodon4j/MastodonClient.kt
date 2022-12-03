@@ -2,10 +2,13 @@ package com.sys1yagi.mastodon4j
 
 import com.google.gson.Gson
 import com.sys1yagi.mastodon4j.api.exception.Mastodon4jRequestException
-import okhttp3.*
+import okhttp3.Interceptor
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody
+import okhttp3.Response
 import java.io.IOException
 import java.util.concurrent.TimeUnit
-
 
 open class MastodonClient
 private constructor(
@@ -13,6 +16,8 @@ private constructor(
         private val client: OkHttpClient,
         private val gson: Gson
 ) {
+    private var debug = false
+    val baseUrl = "https://${instanceName}/api/v1"
 
     class Builder(private val instanceName: String,
                   private val okHttpClientBuilder: OkHttpClient.Builder,
@@ -44,8 +49,6 @@ private constructor(
         }
     }
 
-    private var debug = false
-
     fun debugPrint(log: String) {
         if (debug) {
             println(log)
@@ -68,8 +71,6 @@ private constructor(
             return chain.proceed(compressedRequest)
         }
     }
-
-    val baseUrl = "https://${instanceName}/api/v1"
 
     open fun getSerializer() = gson
 

@@ -4,8 +4,10 @@ import com.google.gson.Gson
 import com.sys1yagi.mastodon4j.MastodonClient
 import io.mockk.every
 import io.mockk.mockk
-import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.Protocol
+import okhttp3.Request
+import okhttp3.Response
 import okhttp3.ResponseBody.Companion.asResponseBody
 import okhttp3.ResponseBody.Companion.toResponseBody
 import okio.BufferedSource

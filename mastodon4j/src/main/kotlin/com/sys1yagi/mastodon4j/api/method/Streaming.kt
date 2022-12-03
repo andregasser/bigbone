@@ -5,12 +5,9 @@ import com.sys1yagi.mastodon4j.Parameter
 import com.sys1yagi.mastodon4j.api.Dispatcher
 import com.sys1yagi.mastodon4j.api.Handler
 import com.sys1yagi.mastodon4j.api.Shutdownable
-import com.sys1yagi.mastodon4j.api.entity.MastodonList
 import com.sys1yagi.mastodon4j.api.entity.Notification
 import com.sys1yagi.mastodon4j.api.entity.Status
 import com.sys1yagi.mastodon4j.api.exception.Mastodon4jRequestException
-import java.util.concurrent.locks.ReentrantLock
-import kotlin.concurrent.withLock
 
 class Streaming(private val client: MastodonClient) {
     @Throws(Mastodon4jRequestException::class)

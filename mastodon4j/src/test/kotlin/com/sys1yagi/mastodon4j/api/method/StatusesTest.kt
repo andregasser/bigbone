@@ -13,7 +13,7 @@ class StatusesTest {
         val client = MockClient.mock("status.json")
         val statuses = Statuses(client)
         val status = statuses.getStatus(1L).execute()
-        status.id shouldBeEqualTo 11111L
+        status.id shouldBeEqualTo 11_111L
     }
 
     @Test
@@ -108,7 +108,7 @@ class StatusesTest {
         val client = MockClient.mock("status.json")
         val statuses = Statuses(client)
         val status = statuses.postStatus("a", null, null, false, null).execute()
-        status.id shouldBeEqualTo 11111L
+        status.id shouldBeEqualTo 11_111L
     }
 
     @Test
@@ -125,7 +125,7 @@ class StatusesTest {
         val client = MockClient.mock("status.json")
         val statuses = Statuses(client)
         val status = statuses.postReblog(1L).execute()
-        status.id shouldBeEqualTo 11111L
+        status.id shouldBeEqualTo 11_111L
     }
 
     @Test
@@ -142,7 +142,7 @@ class StatusesTest {
         val client = MockClient.mock("status.json")
         val statuses = Statuses(client)
         val status = statuses.postUnreblog(1L).execute()
-        status.id shouldBeEqualTo 11111L
+        status.id shouldBeEqualTo 11_111L
     }
 
     @Test
@@ -159,7 +159,7 @@ class StatusesTest {
         val client = MockClient.mock("status.json")
         val statuses = Statuses(client)
         val status = statuses.postFavourite(1L).execute()
-        status.id shouldBeEqualTo 11111L
+        status.id shouldBeEqualTo 11_111L
     }
 
     @Test
@@ -176,7 +176,7 @@ class StatusesTest {
         val client = MockClient.mock("status.json")
         val statuses = Statuses(client)
         val status = statuses.postUnfavourite(1L).execute()
-        status.id shouldBeEqualTo 11111L
+        status.id shouldBeEqualTo 11_111L
     }
 
     @Test

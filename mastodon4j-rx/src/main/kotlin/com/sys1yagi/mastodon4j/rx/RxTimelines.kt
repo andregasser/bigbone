@@ -5,7 +5,6 @@ import com.sys1yagi.mastodon4j.api.Pageable
 import com.sys1yagi.mastodon4j.api.Range
 import com.sys1yagi.mastodon4j.api.entity.Status
 import com.sys1yagi.mastodon4j.api.method.Timelines
-import com.sys1yagi.mastodon4j.rx.extensions.onErrorIfNotDisposed
 import com.sys1yagi.mastodon4j.rx.extensions.single
 import io.reactivex.Single
 

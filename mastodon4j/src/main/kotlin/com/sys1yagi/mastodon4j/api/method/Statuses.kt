@@ -5,7 +5,10 @@ import com.sys1yagi.mastodon4j.MastodonRequest
 import com.sys1yagi.mastodon4j.Parameter
 import com.sys1yagi.mastodon4j.api.Pageable
 import com.sys1yagi.mastodon4j.api.Range
-import com.sys1yagi.mastodon4j.api.entity.*
+import com.sys1yagi.mastodon4j.api.entity.Account
+import com.sys1yagi.mastodon4j.api.entity.Card
+import com.sys1yagi.mastodon4j.api.entity.Context
+import com.sys1yagi.mastodon4j.api.entity.Status
 import com.sys1yagi.mastodon4j.api.exception.Mastodon4jRequestException
 import com.sys1yagi.mastodon4j.extension.emptyRequestBody
 import okhttp3.MediaType.Companion.toMediaTypeOrNull

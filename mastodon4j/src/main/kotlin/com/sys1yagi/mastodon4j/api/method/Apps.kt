@@ -6,11 +6,7 @@ import com.sys1yagi.mastodon4j.Parameter
 import com.sys1yagi.mastodon4j.api.Scope
 import com.sys1yagi.mastodon4j.api.entity.auth.AccessToken
 import com.sys1yagi.mastodon4j.api.entity.auth.AppRegistration
-import com.sys1yagi.mastodon4j.api.exception.Mastodon4jRequestException
-import com.sys1yagi.mastodon4j.extension.fromJson
-import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 
 /**
@@ -19,7 +15,12 @@ import okhttp3.RequestBody.Companion.toRequestBody
 class Apps(private val client: MastodonClient) {
     // POST /api/v1/apps
     @JvmOverloads
-    fun createApp(clientName: String, redirectUris: String = "urn:ietf:wg:oauth:2.0:oob", scope: Scope = Scope(Scope.Name.ALL), website: String? = null): MastodonRequest<AppRegistration> {
+    fun createApp(
+        clientName: String,
+        redirectUris: String = "urn:ietf:wg:oauth:2.0:oob",
+        scope: Scope = Scope(Scope.Name.ALL),
+        website: String? = null
+    ): MastodonRequest<AppRegistration> {
         scope.validate()
         return MastodonRequest(
                 {

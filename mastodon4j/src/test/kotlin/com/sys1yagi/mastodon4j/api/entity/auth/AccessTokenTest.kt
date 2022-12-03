@@ -14,7 +14,7 @@ class AccessTokenTest {
         accessToken.accessToken shouldBeEqualTo "test"
         accessToken.tokenType shouldBeEqualTo "bearer"
         accessToken.scope shouldBeEqualTo "read write follow"
-        accessToken.createdAt shouldBeEqualTo 1493188835L
+        accessToken.createdAt shouldBeEqualTo 1_493_188_835L
     }
 
     @Test

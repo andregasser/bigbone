@@ -112,7 +112,7 @@ class AccountsTest {
         val accounts = Accounts(client)
         val pageable = accounts.getStatuses(1, false).execute()
         val status = pageable.part.first()
-        status.id shouldBeEqualTo 11111L
+        status.id shouldBeEqualTo 11_111L
     }
 
     @Test

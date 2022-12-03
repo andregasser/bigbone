@@ -46,21 +46,13 @@ class RxStreaming(client: MastodonClient) {
         }
     }
 
-    fun localPublic(): Flowable<Status> {
-        return statusStream(streaming::localPublic)
-    }
+    fun localPublic(): Flowable<Status> = statusStream(streaming::localPublic)
 
-    fun federatedPublic(): Flowable<Status> {
-        return statusStream(streaming::federatedPublic)
-    }
+    fun federatedPublic(): Flowable<Status> = statusStream(streaming::federatedPublic)
 
-    fun localHashtag(tag: String): Flowable<Status> {
-        return tagStream(tag, streaming::localHashtag)
-    }
+    fun localHashtag(tag: String): Flowable<Status> = tagStream(tag, streaming::localHashtag)
 
-    fun federatedHashtag(tag: String): Flowable<Status> {
-        return tagStream(tag, streaming::federatedHashtag)
-    }
+    fun federatedHashtag(tag: String): Flowable<Status> = tagStream(tag, streaming::federatedHashtag)
 
     // TODO user streaming
 }

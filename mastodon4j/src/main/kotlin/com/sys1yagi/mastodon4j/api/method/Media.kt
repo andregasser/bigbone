@@ -3,8 +3,6 @@ package com.sys1yagi.mastodon4j.api.method
 import com.sys1yagi.mastodon4j.MastodonClient
 import com.sys1yagi.mastodon4j.MastodonRequest
 import com.sys1yagi.mastodon4j.api.entity.Attachment
-import com.sys1yagi.mastodon4j.api.exception.Mastodon4jRequestException
-import com.sys1yagi.mastodon4j.extension.fromJson
 import okhttp3.MultipartBody
 
 /**

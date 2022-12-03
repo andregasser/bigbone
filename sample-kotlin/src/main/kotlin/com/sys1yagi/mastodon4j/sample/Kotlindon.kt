@@ -9,6 +9,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 
 object Kotlindon {
+    private const val FIVE_SECONDS = 5000L
+
     @JvmStatic
     fun main(args: Array<String>) {
         val instanceName = args[0]
@@ -36,7 +38,7 @@ object Kotlindon {
                     pageable = result
                 }
                 println("wait next load...")
-                delay(5000)
+                delay(FIVE_SECONDS)
             }
         }
     }

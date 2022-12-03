@@ -3,8 +3,8 @@ package com.sys1yagi.mastodon4j.sample
 import com.sys1yagi.mastodon4j.rx.RxStreaming
 import io.reactivex.schedulers.Schedulers
 
-
 object RxStreamPublicTimeline {
+    private const val TEN_SECONDS = 10_000L
 
     @JvmStatic fun main(args: Array<String>) {
         val instanceName = args[0]
@@ -21,7 +21,7 @@ object RxStreamPublicTimeline {
                 .subscribe {
                     println("${it.createdAt}: ${it.account?.acct} < ${it.content.replace("<.*?>".toRegex(), "")}")
                 }
-        Thread.sleep(10000L)
+        Thread.sleep(TEN_SECONDS)
         disposable.dispose()
     }
 }
