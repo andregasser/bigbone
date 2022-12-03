@@ -89,8 +89,8 @@ comments:
     excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']
     searchProtectedProperty: false
 
-#complexity:
-#  active: true
+complexity:
+  active: true
 #  CognitiveComplexMethod:
 #    active: false
 #    threshold: 15
@@ -122,9 +122,9 @@ comments:
 #  LabeledExpression:
 #    active: false
 #    ignoredLabels: []
-#  LargeClass:
-#    active: true
-#    threshold: 600
+  LargeClass:
+    active: true
+    threshold: 600
 #  LongMethod:
 #    active: true
 #    threshold: 60
@@ -194,64 +194,64 @@ comments:
 #  SuspendFunWithFlowReturnType:
 #    active: true
 
-#empty-blocks:
-#  active: true
-#  EmptyCatchBlock:
-#    active: true
-#    allowedExceptionNameRegex: '_|(ignore|expected).*'
-#  EmptyClassBlock:
-#    active: true
-#  EmptyDefaultConstructor:
-#    active: true
-#  EmptyDoWhileBlock:
-#    active: true
-#  EmptyElseBlock:
-#    active: true
-#  EmptyFinallyBlock:
-#    active: true
-#  EmptyForBlock:
-#    active: true
+empty-blocks:
+  active: true
+  EmptyCatchBlock:
+    active: true
+    allowedExceptionNameRegex: '_|(ignore|expected).*'
+  EmptyClassBlock:
+    active: true
+  EmptyDefaultConstructor:
+    active: true
+  EmptyDoWhileBlock:
+    active: true
+  EmptyElseBlock:
+    active: true
+  EmptyFinallyBlock:
+    active: true
+  EmptyForBlock:
+    active: true
 #  EmptyFunctionBlock:
 #    active: true
 #    ignoreOverridden: false
-#  EmptyIfBlock:
-#    active: true
-#  EmptyInitBlock:
-#    active: true
-#  EmptyKtFile:
-#    active: true
-#  EmptySecondaryConstructor:
-#    active: true
-#  EmptyTryBlock:
-#    active: true
-#  EmptyWhenBlock:
-#    active: true
-#  EmptyWhileBlock:
-#    active: true
+  EmptyIfBlock:
+    active: true
+  EmptyInitBlock:
+    active: true
+  EmptyKtFile:
+    active: true
+  EmptySecondaryConstructor:
+    active: true
+  EmptyTryBlock:
+    active: true
+  EmptyWhenBlock:
+    active: true
+  EmptyWhileBlock:
+    active: true
 
-#exceptions:
-#  active: true
-#  ExceptionRaisedInUnexpectedLocation:
-#    active: true
-#    methodNames:
-#      - 'equals'
-#      - 'finalize'
-#      - 'hashCode'
-#      - 'toString'
-#  InstanceOfCheckForException:
-#    active: true
-#    excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']
-#  NotImplementedDeclaration:
-#    active: false
-#  ObjectExtendsThrowable:
-#    active: false
-#  PrintStackTrace:
-#    active: true
-#  RethrowCaughtException:
-#    active: true
-#  ReturnFromFinally:
-#    active: true
-#    ignoreLabeled: false
+exceptions:
+  active: true
+  ExceptionRaisedInUnexpectedLocation:
+    active: true
+    methodNames:
+      - 'equals'
+      - 'finalize'
+      - 'hashCode'
+      - 'toString'
+  InstanceOfCheckForException:
+    active: true
+    excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']
+  NotImplementedDeclaration:
+    active: true
+  ObjectExtendsThrowable:
+    active: true
+  PrintStackTrace:
+    active: true
+  RethrowCaughtException:
+    active: true
+  ReturnFromFinally:
+    active: true
+    ignoreLabeled: false
 #  SwallowedException:
 #    active: true
 #    ignoredExceptionTypes:
@@ -260,25 +260,25 @@ comments:
 #      - 'NumberFormatException'
 #      - 'ParseException'
 #    allowedExceptionNameRegex: '_|(ignore|expected).*'
-#  ThrowingExceptionFromFinally:
-#    active: true
-#  ThrowingExceptionInMain:
-#    active: false
-#  ThrowingExceptionsWithoutMessageOrCause:
-#    active: true
-#    excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']
-#    exceptions:
-#      - 'ArrayIndexOutOfBoundsException'
-#      - 'Exception'
-#      - 'IllegalArgumentException'
-#      - 'IllegalMonitorStateException'
-#      - 'IllegalStateException'
-#      - 'IndexOutOfBoundsException'
-#      - 'NullPointerException'
-#      - 'RuntimeException'
-#      - 'Throwable'
-#  ThrowingNewInstanceOfSameException:
-#    active: true
+  ThrowingExceptionFromFinally:
+    active: true
+  ThrowingExceptionInMain:
+    active: true
+  ThrowingExceptionsWithoutMessageOrCause:
+    active: true
+    excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']
+    exceptions:
+      - 'ArrayIndexOutOfBoundsException'
+      - 'Exception'
+      - 'IllegalArgumentException'
+      - 'IllegalMonitorStateException'
+      - 'IllegalStateException'
+      - 'IndexOutOfBoundsException'
+      - 'NullPointerException'
+      - 'RuntimeException'
+      - 'Throwable'
+  ThrowingNewInstanceOfSameException:
+    active: true
 #  TooGenericExceptionCaught:
 #    active: true
 #    excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']
@@ -292,208 +292,208 @@ comments:
 #      - 'RuntimeException'
 #      - 'Throwable'
 #    allowedExceptionNameRegex: '_|(ignore|expected).*'
-#  TooGenericExceptionThrown:
-#    active: true
-#    exceptionNames:
-#      - 'Error'
-#      - 'Exception'
-#      - 'RuntimeException'
-#      - 'Throwable'
+  TooGenericExceptionThrown:
+    active: true
+    exceptionNames:
+      - 'Error'
+      - 'Exception'
+      - 'RuntimeException'
+      - 'Throwable'
 
-#naming:
-#  active: true
-#  BooleanPropertyNaming:
-#    active: false
-#    allowedPattern: '^(is|has|are)'
-#    ignoreOverridden: true
-#  ClassNaming:
-#    active: true
-#    classPattern: '[A-Z][a-zA-Z0-9]*'
-#  ConstructorParameterNaming:
-#    active: true
-#    parameterPattern: '[a-z][A-Za-z0-9]*'
-#    privateParameterPattern: '[a-z][A-Za-z0-9]*'
-#    excludeClassPattern: '$^'
-#    ignoreOverridden: true
-#  EnumNaming:
-#    active: true
-#    enumEntryPattern: '[A-Z][_a-zA-Z0-9]*'
+naming:
+  active: true
+  BooleanPropertyNaming:
+    active: true
+    allowedPattern: '^(is|has|are)'
+    ignoreOverridden: true
+  ClassNaming:
+    active: true
+    classPattern: '[A-Z][a-zA-Z0-9]*'
+  ConstructorParameterNaming:
+    active: true
+    parameterPattern: '[a-z][A-Za-z0-9]*'
+    privateParameterPattern: '[a-z][A-Za-z0-9]*'
+    excludeClassPattern: '$^'
+    ignoreOverridden: true
+  EnumNaming:
+    active: true
+    enumEntryPattern: '[A-Z][_a-zA-Z0-9]*'
 #  ForbiddenClassName:
 #    active: false
 #    forbiddenName: []
-#  FunctionMaxLength:
-#    active: false
-#    maximumFunctionNameLength: 30
-#  FunctionMinLength:
-#    active: false
-#    minimumFunctionNameLength: 3
-#  FunctionNaming:
-#    active: true
-#    excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']
-#    functionPattern: '[a-z][a-zA-Z0-9]*'
-#    excludeClassPattern: '$^'
-#    ignoreOverridden: true
-#  FunctionParameterNaming:
-#    active: true
-#    parameterPattern: '[a-z][A-Za-z0-9]*'
-#    excludeClassPattern: '$^'
-#    ignoreOverridden: true
-#  InvalidPackageDeclaration:
-#    active: true
-#    rootPackage: ''
-#    requireRootInDeclaration: false
+  FunctionMaxLength:
+    active: true
+    maximumFunctionNameLength: 50
+  FunctionMinLength:
+    active: true
+    minimumFunctionNameLength: 3
+  FunctionNaming:
+    active: true
+    excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']
+    functionPattern: '[a-z][a-zA-Z0-9]*'
+    excludeClassPattern: '$^'
+    ignoreOverridden: true
+  FunctionParameterNaming:
+    active: true
+    parameterPattern: '[a-z][A-Za-z0-9]*'
+    excludeClassPattern: '$^'
+    ignoreOverridden: true
+  InvalidPackageDeclaration:
+    active: true
+    rootPackage: ''
+    requireRootInDeclaration: false
 #  LambdaParameterNaming:
 #    active: false
 #    parameterPattern: '[a-z][A-Za-z0-9]*|_'
-#  MatchingDeclarationName:
-#    active: true
-#    mustBeFirst: true
-#  MemberNameEqualsClassName:
-#    active: true
-#    ignoreOverridden: true
-#  NoNameShadowing:
-#    active: true
+  MatchingDeclarationName:
+    active: true
+    mustBeFirst: true
+  MemberNameEqualsClassName:
+    active: true
+    ignoreOverridden: true
+  NoNameShadowing:
+    active: true
 #  NonBooleanPropertyPrefixedWithIs:
 #    active: false
-#  ObjectPropertyNaming:
-#    active: true
-#    constantPattern: '[A-Za-z][_A-Za-z0-9]*'
-#    propertyPattern: '[A-Za-z][_A-Za-z0-9]*'
-#    privatePropertyPattern: '(_)?[A-Za-z][_A-Za-z0-9]*'
-#  PackageNaming:
-#    active: true
-#    packagePattern: '[a-z]+(\.[a-z][A-Za-z0-9]*)*'
-#  TopLevelPropertyNaming:
-#    active: true
-#    constantPattern: '[A-Z][_A-Z0-9]*'
-#    propertyPattern: '[A-Za-z][_A-Za-z0-9]*'
-#    privatePropertyPattern: '_?[A-Za-z][_A-Za-z0-9]*'
+  ObjectPropertyNaming:
+    active: true
+    constantPattern: '[A-Za-z][_A-Za-z0-9]*'
+    propertyPattern: '[A-Za-z][_A-Za-z0-9]*'
+    privatePropertyPattern: '(_)?[A-Za-z][_A-Za-z0-9]*'
+  PackageNaming:
+    active: true
+    packagePattern: '[a-z]+(\.[a-z][A-Za-z0-9]*)*'
+  TopLevelPropertyNaming:
+    active: true
+    constantPattern: '[A-Z][_A-Z0-9]*'
+    propertyPattern: '[A-Za-z][_A-Za-z0-9]*'
+    privatePropertyPattern: '_?[A-Za-z][_A-Za-z0-9]*'
 #  VariableMaxLength:
 #    active: false
 #    maximumVariableNameLength: 64
 #  VariableMinLength:
 #    active: false
 #    minimumVariableNameLength: 1
-#  VariableNaming:
-#    active: true
-#    variablePattern: '[a-z][A-Za-z0-9]*'
-#    privateVariablePattern: '(_)?[a-z][A-Za-z0-9]*'
-#    excludeClassPattern: '$^'
-#    ignoreOverridden: true
+  VariableNaming:
+    active: true
+    variablePattern: '[a-z][A-Za-z0-9]*'
+    privateVariablePattern: '(_)?[a-z][A-Za-z0-9]*'
+    excludeClassPattern: '$^'
+    ignoreOverridden: true
 
-#performance:
-#  active: true
-#  ArrayPrimitive:
-#    active: true
+performance:
+  active: true
+  ArrayPrimitive:
+    active: true
 #  CouldBeSequence:
 #    active: false
 #    threshold: 3
-#  ForEachOnRange:
-#    active: true
-#    excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']
-#  SpreadOperator:
-#    active: true
-#    excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']
+  ForEachOnRange:
+    active: true
+    excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']
+  SpreadOperator:
+    active: true
+    excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']
 #  UnnecessaryPartOfBinaryExpression:
 #    active: false
-#  UnnecessaryTemporaryInstantiation:
-#    active: true
+  UnnecessaryTemporaryInstantiation:
+    active: true
 
-#potential-bugs:
-#  active: true
-#  AvoidReferentialEquality:
-#    active: true
-#    forbiddenTypePatterns:
-#      - 'kotlin.String'
-#  CastToNullableType:
-#    active: false
-#  Deprecation:
-#    active: false
-#  DontDowncastCollectionTypes:
-#    active: false
-#  DoubleMutabilityForCollection:
-#    active: true
-#    mutableTypes:
-#      - 'kotlin.collections.MutableList'
-#      - 'kotlin.collections.MutableMap'
-#      - 'kotlin.collections.MutableSet'
-#      - 'java.util.ArrayList'
-#      - 'java.util.LinkedHashSet'
-#      - 'java.util.HashSet'
-#      - 'java.util.LinkedHashMap'
-#      - 'java.util.HashMap'
-#  ElseCaseInsteadOfExhaustiveWhen:
-#    active: false
-#  EqualsAlwaysReturnsTrueOrFalse:
-#    active: true
-#  EqualsWithHashCodeExist:
-#    active: true
-#  ExitOutsideMain:
-#    active: false
-#  ExplicitGarbageCollectionCall:
-#    active: true
-#  HasPlatformType:
-#    active: true
-#  IgnoredReturnValue:
-#    active: true
-#    restrictToConfig: true
-#    returnValueAnnotations:
-#      - '*.CheckResult'
-#      - '*.CheckReturnValue'
-#    ignoreReturnValueAnnotations:
-#      - '*.CanIgnoreReturnValue'
-#    returnValueTypes:
-#      - 'kotlin.sequences.Sequence'
-#      - 'kotlinx.coroutines.flow.*Flow'
-#      - 'java.util.stream.*Stream'
-#    ignoreFunctionCall: []
-#  ImplicitDefaultLocale:
+potential-bugs:
+  active: true
+  AvoidReferentialEquality:
+    active: true
+    forbiddenTypePatterns:
+      - 'kotlin.String'
+  CastToNullableType:
+    active: true
+  Deprecation:
+    active: true
+  DontDowncastCollectionTypes:
+    active: true
+  DoubleMutabilityForCollection:
+    active: true
+    mutableTypes:
+      - 'kotlin.collections.MutableList'
+      - 'kotlin.collections.MutableMap'
+      - 'kotlin.collections.MutableSet'
+      - 'java.util.ArrayList'
+      - 'java.util.LinkedHashSet'
+      - 'java.util.HashSet'
+      - 'java.util.LinkedHashMap'
+      - 'java.util.HashMap'
+  ElseCaseInsteadOfExhaustiveWhen:
+    active: true
+  EqualsAlwaysReturnsTrueOrFalse:
+    active: true
+  EqualsWithHashCodeExist:
+    active: true
+  ExitOutsideMain:
+    active: true
+  ExplicitGarbageCollectionCall:
+    active: true
+  HasPlatformType:
+    active: true
+  IgnoredReturnValue:
+    active: true
+    restrictToConfig: true
+    returnValueAnnotations:
+      - '*.CheckResult'
+      - '*.CheckReturnValue'
+    ignoreReturnValueAnnotations:
+      - '*.CanIgnoreReturnValue'
+    returnValueTypes:
+      - 'kotlin.sequences.Sequence'
+      - 'kotlinx.coroutines.flow.*Flow'
+      - 'java.util.stream.*Stream'
+    ignoreFunctionCall: []
+# ImplicitDefaultLocale:
 #    active: true
 #  ImplicitUnitReturnType:
 #    active: false
 #    allowExplicitReturnType: true
-#  InvalidRange:
-#    active: true
-#  IteratorHasNextCallsNextMethod:
-#    active: true
-#  IteratorNotThrowingNoSuchElementException:
-#    active: true
+  InvalidRange:
+    active: true
+  IteratorHasNextCallsNextMethod:
+    active: true
+  IteratorNotThrowingNoSuchElementException:
+    active: true
 #  LateinitUsage:
-#    active: false
+#    active: true
 #    excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']
 #    ignoreOnClassesPattern: ''
-#  MapGetWithNotNullAssertionOperator:
-#    active: true
-#  MissingPackageDeclaration:
-#    active: false
-#    excludes: ['**/*.kts']
-#  NullCheckOnMutableProperty:
-#    active: false
-#  NullableToStringCall:
-#    active: false
-#  UnconditionalJumpStatementInLoop:
-#    active: false
-#  UnnecessaryNotNullCheck:
-#    active: false
-#  UnnecessaryNotNullOperator:
-#    active: true
-#  UnnecessarySafeCall:
-#    active: true
-#  UnreachableCatchBlock:
-#    active: true
-#  UnreachableCode:
-#    active: true
-#  UnsafeCallOnNullableType:
-#    active: true
-#    excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']
-#  UnsafeCast:
-#    active: true
-#  UnusedUnaryOperator:
-#    active: true
-#  UselessPostfixExpression:
-#    active: true
-#  WrongEqualsTypeParameter:
-#    active: true
+  MapGetWithNotNullAssertionOperator:
+    active: true
+  MissingPackageDeclaration:
+    active: true
+    excludes: ['**/*.kts']
+  NullCheckOnMutableProperty:
+    active: true
+  NullableToStringCall:
+    active: true
+  UnconditionalJumpStatementInLoop:
+    active: true
+  UnnecessaryNotNullCheck:
+    active: true
+  UnnecessaryNotNullOperator:
+    active: true
+  UnnecessarySafeCall:
+    active: true
+  UnreachableCatchBlock:
+    active: true
+  UnreachableCode:
+    active: true
+  UnsafeCallOnNullableType:
+    active: true
+    excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']
+  UnsafeCast:
+    active: true
+  UnusedUnaryOperator:
+    active: true
+  UselessPostfixExpression:
+    active: true
+  WrongEqualsTypeParameter:
+    active: true
 
 style:
   active: true
@@ -540,13 +540,13 @@ style:
 #    active: false
 #    imports: []
 #    forbiddenPatterns: ''
-#  ForbiddenMethodCall:
-#    active: false
-#    methods:
-#      - reason: 'print does not allow you to configure the output stream. Use a logger instead.'
-#        value: 'kotlin.io.print'
-#      - reason: 'println does not allow you to configure the output stream. Use a logger instead.'
-#        value: 'kotlin.io.println'
+  ForbiddenMethodCall:
+    active: true
+    methods:
+      - reason: 'print does not allow you to configure the output stream. Use a logger instead.'
+        value: 'kotlin.io.print'
+      - reason: 'println does not allow you to configure the output stream. Use a logger instead.'
+        value: 'kotlin.io.println'
 #  ForbiddenSuppress:
 #    active: false
 #    rules: []
