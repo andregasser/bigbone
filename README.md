@@ -31,8 +31,7 @@ implementation 'com.github.andregasser.mastodon4j:mastodon4j-rx:$version'
 
 Usage examples for Mastodon4j can be found in [USAGE.md](USAGE.md).
 
-
-# Official API Doc
+## API Documentation
 
 The official Mastodon API can be found here: https://docs.joinmastodon.org/client/intro/
 
