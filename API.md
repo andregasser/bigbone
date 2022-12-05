@@ -1,6 +1,13 @@
 # Implementation Progress
 
+**Mastodon4j** currently implements the checkmarked methods of the Mastodon API documented here: https://docs.joinmastodon.org/methods/
+
+Methods listed without checkmark, or those missing from the list, are not yet implemented.
+An optional version number preceding a list, or listed after an individual endpoint, identifies the first Mastodon4j version to implement this method.
+
 ## Methods
+
+### Accounts
 
 - [x] GET `/api/v1/accounts/:id`
 - [x] GET `/api/v1/accounts/verify_credentials`
@@ -16,22 +23,64 @@
 - [x] POST `/api/v1/accounts/:id/unmute`
 - [x] GET `/api/v1/accounts/relationships`
 - [x] GET `/api/v1/accounts/search`
+
+### Apps
+
 - [x] POST `/api/v1/apps`
+
+### Blocks
+
 - [x] GET `/api/v1/blocks`
+
+### Favourites
+
 - [x] GET `/api/v1/favourites`
+
+### Follow Requests
+
 - [x] GET `/api/v1/follow_requests`
 - [x] POST `/api/v1/follow_requests/:id/authorize`
 - [x] POST `/api/v1/follow_requests/:id/reject`
+
+### Follows
+
 - [x] POST `/api/v1/follows`
+
+### Instance
+
 - [x] GET `/api/v1/instance`
+
+### Media
+
 - [x] POST `/api/v1/media`
+
+### Mutes
+
 - [x] GET `/api/v1/mutes`
+
+### Notifications
+
 - [x] GET `/api/v1/notifications`
 - [x] GET `/api/v1/notifications/:id`
 - [x] POST `/api/v1/notifications/clear`
+
+### OAuth
+
+- [x] Generate Url for OAuth `/oauth/authorize`
+- [x] POST password authorize `/oauth/token` (v0.0.2)
+- [x] POST `/oauth/token`
+
+### Reports
+
 - [x] GET `/api/v1/reports`
 - [x] POST `/api/v1/reports`
+
+### Search
+
 - [x] GET `/api/v1/search`
+
+### Statuses
+
 - [x] GET `/api/v1/statuses/:id`
 - [x] GET `/api/v1/statuses/:id/context`
 - [x] GET `/api/v1/statuses/:id/card`
@@ -43,13 +92,10 @@
 - [x] POST `/api/v1/statuses/:id/unreblog`
 - [x] POST `/api/v1/statuses/:id/favourite`
 - [x] POST `/api/v1/statuses/:id/unfavourite`
-- [x] GET `/api/v1/timelines/home`
-- [x] GET `/api/v1/timelines/public`
-- [x] GET `/api/v1/timelines/tag/:hashtag`
 
-## Streaming
+### Streaming
 
-v1.0.0 or later
+(since v1.0.0)
 
 - [x] `GET /api/v1/streaming/user`
 - [x] `GET /api/v1/streaming/public`
@@ -57,15 +103,18 @@ v1.0.0 or later
 - [x] `GET /api/v1/streaming/hashtag`
 - [x] `GET /api/v1/streaming/hashtag/local`
 
-## Auth
+### Timelines
 
-- [x] Generate Url for OAuth `/oauth/authorize`
-- [x] POST password authorize `/oauth/token` v0.0.2 or later
-- [x] POST `/oauth/token`
+- [x] GET `/api/v1/timelines/home`
+- [x] GET `/api/v1/timelines/public`
+- [x] GET `/api/v1/timelines/tag/:hashtag`
+
 
 ## Rx
 
-v0.0.2 or later
+Additionally, the following implementations using RxJava exist:
+
+(since v0.0.2)
 
 - [x] RxAccounts
 - [x] RxApps
@@ -82,9 +131,9 @@ v0.0.2 or later
 - [x] RxStatuses
 - [x] RxTimelines
 
-## Rx Streaming
+### Rx Streaming
 
-v1.0.0 or later
+(since v1.0.0)
 
 - [ ] `GET /api/v1/streaming/user`
 - [x] `GET /api/v1/streaming/public`
