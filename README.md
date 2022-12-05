@@ -1,19 +1,17 @@
-# mastodon4j
+# Mastodon4j
 
 ![Build](https://github.com/andregasser/mastodon4j/actions/workflows/build.yml/badge.svg)
 [![codecov](https://codecov.io/gh/andregasser/mastodon4j/branch/master/graph/badge.svg?token=3AFHQQH547)](https://codecov.io/gh/andregasser/mastodon4j)
 
+**Mastodon4j** is a [Mastodon](https://docs.joinmastodon.org/) client for Java and Kotlin.
 
-mastodon4j is a [mastodon](https://docs.joinmastodon.org/) client for Java and Kotlin.
-
-# Official API Doc
-
-https://docs.joinmastodon.org/client/intro/
 
 # Get Started
 
-Mastodon4j is published in jitpack.
-Add it in your root build.gradle at the end of repositories:
+Mastodon4j is published on Jitpack. Check the latest version here:
+[![](https://jitpack.io/v/andregasser/mastodon4j.svg)](https://jitpack.io/#andregasser/mastodon4j)
+
+To use Mastodon4j via Jitpack, add it to your root build.gradle at the end of repositories:
 
 ```groovy
 allprojects {
@@ -24,18 +22,21 @@ allprojects {
 }
 ```
 
+Then, add Mastodon4j dependencies to your module Gradle file:
+
 ```groovy
 implementation 'com.github.andregasser.mastodon4j:mastodon4j:$version'
 implementation 'com.github.andregasser.mastodon4j:mastodon4j-rx:$version'
 ```
 
-Check latest version on Jitpack [![](https://jitpack.io/v/andregasser/mastodon4j.svg)](https://jitpack.io/#andregasser/mastodon4j)
+Usage examples for Mastodon4j can be found in [USAGE.md](USAGE.md).
 
 
+# Official API Doc
 
-# Versioning
+The official Mastodon API can be found here: https://docs.joinmastodon.org/client/intro/
 
-[Semantic Versioning 2.0.0](http://semver.org/spec/v2.0.0.html)
+Implementation progress by Mastodon4j can be found in [API.md](API.md). Mastodon4j uses [Semantic Versioning 2.0.0](http://semver.org/spec/v2.0.0.html).
 
 
 # Contribution
@@ -44,7 +45,7 @@ Check latest version on Jitpack [![](https://jitpack.io/v/andregasser/mastodon4j
 I am happy to handle any pull requests that come in. Thanks for your contribution!
 
 ## Reporting Issues
-Please checkout the [issues](https://github.com/andregasser/mastodon4j/issues) page for reporting issues. 
+Please check out the [issues](https://github.com/andregasser/mastodon4j/issues) page for reporting issues. 
 
 # License
 
