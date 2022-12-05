@@ -1,19 +1,17 @@
-# mastodon4j
+# Mastodon4j
 
 ![Build](https://github.com/andregasser/mastodon4j/actions/workflows/build.yml/badge.svg)
 [![codecov](https://codecov.io/gh/andregasser/mastodon4j/branch/master/graph/badge.svg?token=3AFHQQH547)](https://codecov.io/gh/andregasser/mastodon4j)
 
+**Mastodon4j** is a [Mastodon](https://docs.joinmastodon.org/) client for Java and Kotlin.
 
-mastodon4j is a [mastodon](https://docs.joinmastodon.org/) client for Java and Kotlin.
-
-# Official API Doc
-
-https://docs.joinmastodon.org/client/intro/
 
 # Get Started
 
-Mastodon4j is published in jitpack.
-Add it in your root build.gradle at the end of repositories:
+Mastodon4j is published on Jitpack. Check the latest version here:
+[![](https://jitpack.io/v/andregasser/mastodon4j.svg)](https://jitpack.io/#andregasser/mastodon4j)
+
+To use Mastodon4j via Jitpack, add it to your root build.gradle at the end of repositories:
 
 ```groovy
 allprojects {
@@ -24,300 +22,21 @@ allprojects {
 }
 ```
 
+Then, add Mastodon4j dependencies to your module Gradle file:
+
 ```groovy
 implementation 'com.github.andregasser.mastodon4j:mastodon4j:$version'
 implementation 'com.github.andregasser.mastodon4j:mastodon4j-rx:$version'
 ```
 
-Check latest version on Jitpack [![](https://jitpack.io/v/andregasser/mastodon4j.svg)](https://jitpack.io/#andregasser/mastodon4j)
+Usage examples for Mastodon4j can be found in [USAGE.md](USAGE.md).
 
-# Usage
+## API Documentation
 
-## Get Public Timeline
+The official Mastodon API can be found here: https://docs.joinmastodon.org/client/intro/
 
-__kotlin__
+Implementation progress by Mastodon4j can be found in [API.md](API.md). Mastodon4j uses [Semantic Versioning 2.0.0](http://semver.org/spec/v2.0.0.html).
 
-```kotlin
-val client: MastodonClient = MastodonClient.Builder("mstdn.jp", OkHttpClient.Builder(), Gson()).build()
-        
-val timelines = Timelines(client)
-val statuses: List<Status> = timelines.getPublic().execute()
-```
-
-__java__
-
-```java
-MastodonClient client = new MastodonClient.Builder("mstdn.jp", new OkHttpClient.Builder(), new Gson()).build();
-Timelines timelines = new Timelines(client);
-
-try {
-  List<Status> statuses = timelines.getPublic(new Range()).execute();
-  statuses.forEach(status->{
-    System.out.println("=============");
-    System.out.println(status.getAccount().getDisplayName());
-    System.out.println(status.getContent());
-  });
-} catch (Mastodon4jRequestException e) {
-  e.printStackTrace();
-}
-```
-
-## Register App
-
-If you want to access the auth required API, you need create client credential and get access token. see more [docs](https://docs.joinmastodon.org/methods/apps/)
-
-__kotlin__
-
-```kotlin
-val client: MastodonClient = MastodonClient.Builder("mstdn.jp", OkHttpClient.Builder(), Gson()).build()
-val apps = Apps(client)
-val appRegistration = apps.createApp(
-	clientName = "client name",
-	redirectUris = "urn:ietf:wg:oauth:2.0:oob",
-	scope = Scope(Scope.Name.ALL),
-	website = "https://sample.com"
-).execute()
-save(appRegistration) // appRegistration needs to be saved.
-```
-
-AppRegistration has client id and client secret.
-
-__java__
-
-```java
-MastodonClient client = new MastodonClient.Builder("mstdn.jp", new OkHttpClient.Builder(), new Gson()).build();
-Apps apps = new Apps(client);
-try {
-	AppRegistration registration = apps.createApp(
-	    "mastodon4j-sample-app",
-	    "urn:ietf:wg:oauth:2.0:oob",
-	    new Scope(Scope.Name.ALL),
-        "https://sample.com"
-    ).execute();
-    System.out.println("instance=" + registration.getInstanceName());
-    System.out.println("client_id=" + registration.getClientId());
-    System.out.println("client_secret=" + registration.getClientSecret());
-} catch (Mastodon4jRequestException e) {
-	int statusCode = e.getResponse().code();
-	// error handling.
-}
-```
-
-## OAuth login and get Access Token
-
-__kotlin__
-
-```kotlin
-val client: MastodonClient = MastodonClient.Builder("mstdn.jp", OkHttpClient.Builder(), Gson()).build()
-val clientId = appRegistration.clientId
-val apps = Apps(client)
-
-val url = apps.getOAuthUrl(clientId, Scope(Scope.Name.ALL))
-// url like bellow
-// https://:instance_name/oauth/authorize?client_id=:client_id&redirect_uri=:redirect_uri&response_type=code&scope=read 
-// open url and OAuth login and get auth code
-
-val authCode = //...
-val clientSecret = appRegistration.clientSecret
-val redirectUri = appRegistration.redirectUri
-val accessToken = apps.getAccessToken(
-			clientId,
-			clientSecret,
-			redirectUri,
-			authCode,
-			"authorization_code"
-		)
-// 	accessToken needs to be saved.
-```
-
-## Get Home Timeline
-
-__kotlin__
-
-```kotlin
-// Need parameter of accessToken
-val client: MastodonClient = MastodonClient.Builder("mstdn.jp", OkHttpClient.Builder(), Gson())
-  .accessToken(accessToken)
-  .build()
-
-val statuses: List<Status> = timelines.getHome().execute()
-```
-
-## Get raw json
-
-v0.0.7 or later
-
-__kotlin__
-
-```kotlin
-val client = //...
-val publicMethod = Public(client)
-
-publicMethod.getLocalPublic()
-  .doOnJson { jsonString -> 
-    // You can get raw json for each element.
-    println(jsonString)
-  }
-  .execute() 
-```
-
-## Streaming API
-
-v1.0.0 or later
-
-__kotlin__
-
-```kotlin
-val client: MastodonClient = MastodonClient.Builder("mstdn.jp", OkHttpClient.Builder(), Gson())
-  .accessToken(accessToken)
-  .useStreamingApi()
-  .build()
-
-val handler = object : Handler {
-  override fun onStatus(status: Status) {
-    println(status.content)
-  }
-  override fun onNotification(notification: Notification) {/* no op */}
-  override fun onDelete(id: Long) {/* no op */}
-}
-
-val streaming = Streaming(client)
-try {
-  val shutdownable = streaming.localPublic(handler)
-  Thread.sleep(10000L)
-  shutdownable.shutdown()
-} catch(e: Mastodon4jRequestException) {
-  e.printStackTrace()
-}
-```
-
-__java__
-
-```java
-MastodonClient client = new MastodonClient.Builder("mstdn.jp", new OkHttpClient.Builder(), new Gson())
-        .accessToken(accessToken)
-        .useStreamingApi()
-        .build();
-Handler handler = new Handler() {
-    @Override
-    public void onStatus(@NotNull Status status) {
-        System.out.println(status.getContent());
-    }
-
-    @Override
-    public void onNotification(@NotNull Notification notification) {/* no op */}
-    @Override
-    public void onDelete(long id) {/* no op */}
-};
-
-Streaming streaming = new Streaming(client);
-try {
-    Shutdownable shutdownable = streaming.localPublic(handler);
-    Thread.sleep(10000L);
-    shutdownable.shutdown();
-} catch (Exception e) {
-    e.printStackTrace();
-}
-```
-
-
-# Versioning
-
-[Semantic Versioning 2.0.0](http://semver.org/spec/v2.0.0.html)
-
-# Implementation Progress
-
-## Methods
-
-- [x] GET `/api/v1/accounts/:id`
-- [x] GET `/api/v1/accounts/verify_credentials`
-- [x] PATCH `/api/v1/accounts/update_credentials`
-- [x] GET `/api/v1/accounts/:id/followers`
-- [x] GET `/api/v1/accounts/:id/following`
-- [x] GET `/api/v1/accounts/:id/statuses`
-- [x] POST `/api/v1/accounts/:id/follow`
-- [x] POST `/api/v1/accounts/:id/unfollow`
-- [x] POST `/api/v1/accounts/:id/block`
-- [x] POST `/api/v1/accounts/:id/unblock`
-- [x] POST `/api/v1/accounts/:id/mute`
-- [x] POST `/api/v1/accounts/:id/unmute`
-- [x] GET `/api/v1/accounts/relationships`
-- [x] GET `/api/v1/accounts/search`
-- [x] POST `/api/v1/apps`
-- [x] GET `/api/v1/blocks`
-- [x] GET `/api/v1/favourites`
-- [x] GET `/api/v1/follow_requests`
-- [x] POST `/api/v1/follow_requests/:id/authorize`
-- [x] POST `/api/v1/follow_requests/:id/reject`
-- [x] POST `/api/v1/follows`
-- [x] GET `/api/v1/instance`
-- [x] POST `/api/v1/media`
-- [x] GET `/api/v1/mutes`
-- [x] GET `/api/v1/notifications`
-- [x] GET `/api/v1/notifications/:id`
-- [x] POST `/api/v1/notifications/clear`
-- [x] GET `/api/v1/reports`
-- [x] POST `/api/v1/reports`
-- [x] GET `/api/v1/search`
-- [x] GET `/api/v1/statuses/:id`
-- [x] GET `/api/v1/statuses/:id/context`
-- [x] GET `/api/v1/statuses/:id/card`
-- [x] GET `/api/v1/statuses/:id/reblogged_by`
-- [x] GET `/api/v1/statuses/:id/favourited_by`
-- [x] POST `/api/v1/statuses`
-- [x] DELETE `/api/v1/statuses/:id`
-- [x] POST `/api/v1/statuses/:id/reblog`
-- [x] POST `/api/v1/statuses/:id/unreblog`
-- [x] POST `/api/v1/statuses/:id/favourite`
-- [x] POST `/api/v1/statuses/:id/unfavourite`
-- [x] GET `/api/v1/timelines/home`
-- [x] GET `/api/v1/timelines/public`
-- [x] GET `/api/v1/timelines/tag/:hashtag`
-
-## Streaming
-
-v1.0.0 or later
-
-- [x] `GET /api/v1/streaming/user`
-- [x] `GET /api/v1/streaming/public`
-- [x] `GET /api/v1/streaming/public/local`
-- [x] `GET /api/v1/streaming/hashtag`
-- [x] `GET /api/v1/streaming/hashtag/local`
-
-## Auth
-
-- [x] Generate Url for OAuth `/oauth/authorize`
-- [x] POST password authorize `/oauth/token` v0.0.2 or later
-- [x] POST `/oauth/token`
-
-## Rx
-
-v0.0.2 or later
-
-- [x] RxAccounts
-- [x] RxApps
-- [x] RxBlocks
-- [x] RxFavourites
-- [x] RxFollowRequests
-- [x] RxFollows
-- [x] RxInstances
-- [x] RxMedia
-- [x] RxMutes
-- [x] RxNotifications
-- [x] RxReports
-- [x] RxSearch
-- [x] RxStatuses
-- [x] RxTimelines
-
-## Rx Streaming
-
-v1.0.0 or later
-
-- [ ] `GET /api/v1/streaming/user`
-- [x] `GET /api/v1/streaming/public`
-- [x] `GET /api/v1/streaming/public/local`
-- [x] `GET /api/v1/streaming/hashtag`
-- [x] `GET /api/v1/streaming/hashtag/local`
 
 # Contribution
 
@@ -325,7 +44,7 @@ v1.0.0 or later
 I am happy to handle any pull requests that come in. Thanks for your contribution!
 
 ## Reporting Issues
-Please checkout the [issues](https://github.com/andregasser/mastodon4j/issues) page for reporting issues. 
+Please check out the [issues](https://github.com/andregasser/mastodon4j/issues) page for reporting issues. 
 
 # License
 
