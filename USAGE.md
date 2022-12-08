@@ -13,21 +13,26 @@ Code examples in this guide make use of the following variables for simplicity.
 Their values should generally *not* be hard-coded in an actual application.
 
 ```kotlin
-val instanceHostname:String = ... // hostname of a Mastodon server, e.g. "mastodon.social"
-val userMail:String = ... // mail address of an account
-val userPassword:String = ... // password of an account
+// hostname of a Mastodon server, e.g. "mastodon.social"
+val instanceHostname:String = ...
+
+// mail address of an account
+val userMail:String = ...
+
+// password of an account
+val userPassword:String = ...
 ```
 
 Additionally, this guide uses the following values that should be replaced in your application:
 
 ```kotlin
-redirectUris = "urn:ietf:wg:oauth:2.0:oob"
 // This out-of-band URI will display a generated auth code for you to copy and paste.
 // The actual value used instead should be a URL that will be interpreted by your application.
+redirectUris = "urn:ietf:wg:oauth:2.0:oob"
 
-scope = Scope()
 // This is equal to the full range of scopes currently supported by Mastodon4j.
 // Instead of this, you should request as little as possible for your application.
+scope = Scope()
 ```
 
 ## Registering an App
