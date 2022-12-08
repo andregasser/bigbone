@@ -1,7 +1,7 @@
 # First steps with Mastodon4j
 
 Following this guide will allow you to:
-* register your Mastodon app
+* register your Mastodon application
 * authenticate as a user
 * read some of the most recent statuses available for that user
 * post a status as that user
@@ -9,13 +9,25 @@ Following this guide will allow you to:
 See the [official Mastodon docs](https://docs.joinmastodon.org/methods/apps/) for further API methods,
 and this project's code for implementation details.
 
-Code examples in this file make use of the following variables for simplicity.
-Their values should generally *not* be hard-coded in an actual app.
+Code examples in this guide make use of the following variables for simplicity.
+Their values should generally *not* be hard-coded in an actual application.
 
 ```kotlin
 val instanceHostname:String = ... // hostname of a Mastodon server, e.g. "mastodon.social"
 val userMail:String = ... // mail address of an account
 val userPassword:String = ... // password of an account
+```
+
+Additionally, this guide uses the following values that should be replaced in your application:
+
+```kotlin
+redirectUris = "urn:ietf:wg:oauth:2.0:oob"
+// This out-of-band URI will display a generated auth code for you to copy and paste.
+// The actual value used instead should be a URL that will be interpreted by your application.
+
+scope = Scope()
+// This is equal to the full range of scopes currently supported by Mastodon4j.
+// Instead of this, you should request as little as possible for your application.
 ```
 
 ## Registering an App
@@ -78,25 +90,28 @@ val accessToken = apps.postUserNameAndPassword(
 __Kotlin__
 
 ```kotlin
-val client: MastodonClient = MastodonClient.Builder(instanceHostname, OkHttpClient.Builder(), Gson()).build()
-val clientId = appRegistration.clientId
+// using client and appRegistration as defined above
+
 val apps = Apps(client)
+val url = apps.getOAuthUrl(appRegistration.clientId, Scope())
 
-val url = apps.getOAuthUrl(clientId, Scope(Scope.Name.ALL))
-// url like bellow
-// https://:instance_name/oauth/authorize?client_id=:client_id&redirect_uri=:redirect_uri&response_type=code&scope=read 
-// open url and OAuth login and get auth code
+// This URL will have the following format:
+// https://<instance_name>/oauth/authorize?client_id=<client_id>&redirect_uri=<redirect_uri>&response_type=code&scope=<scope> 
 
-val authCode = //...
-val clientSecret = appRegistration.clientSecret
-val redirectUri = appRegistration.redirectUri
+// Opening this URL will allow the user to perform an OAuth login, after which
+// the previously defined redirect_uri will be called with an auth code in the query like this:
+// <redirect_uri>?code=<auth_code>
+
+val authCode:String = ... // retrieved from redirect_uri query parameter
+
+// we use this auth code to get an access token
 val accessToken = apps.getAccessToken(
-			clientId,
-			clientSecret,
-			redirectUri,
-			authCode,
-			"authorization_code"
-		)
+	appRegistration.clientId,
+	appRegistration.clientSecret,
+	appRegistration.redirectUri,
+	authCode,
+	"authorization_code"
+)
 ```
 
 ## Get Home Timeline
