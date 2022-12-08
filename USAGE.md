@@ -82,11 +82,11 @@ __Kotlin__
 	
 val apps = Apps(client)
 val accessToken = apps.postUserNameAndPassword(
-	appRegistration.clientId,
-	appRegistration.clientSecret,
-	Scope(),
-	userMail,
-	userPassword
+	clientId = appRegistration.clientId,
+	clientSecret = appRegistration.clientSecret,
+	scope = Scope(),
+	userName = userMail,
+	password = userPassword)
 ).execute()
 ```
 
@@ -111,11 +111,11 @@ val authCode:String = ... // retrieved from redirect_uri query parameter
 
 // we use this auth code to get an access token
 val accessToken = apps.getAccessToken(
-	appRegistration.clientId,
-	appRegistration.clientSecret,
-	appRegistration.redirectUri,
-	authCode,
-	"authorization_code"
+	clientId = appRegistration.clientId,
+	clientSecret = appRegistration.clientSecret,
+	redirectUri = appRegistration.redirectUri,
+	code = authCode, 
+	grantType = "authorization_code"
 )
 ```
 
