@@ -1,120 +1,177 @@
-# Usage
+# First steps with Mastodon4j
 
-## Get Public Timeline
+Following this guide will allow you to:
+* register your Mastodon application
+* authenticate as a user
+* read some of the most recent statuses available for that user
+* post a status as that user
 
-__kotlin__
+See the [official Mastodon docs](https://docs.joinmastodon.org/methods/apps/) for further API methods,
+and this project's code for implementation details.
 
-```kotlin
-val client: MastodonClient = MastodonClient.Builder("mstdn.jp", OkHttpClient.Builder(), Gson()).build()
-        
-val timelines = Timelines(client)
-val statuses: List<Status> = timelines.getPublic().execute()
-```
-
-__java__
-
-```java
-MastodonClient client = new MastodonClient.Builder("mstdn.jp", new OkHttpClient.Builder(), new Gson()).build();
-Timelines timelines = new Timelines(client);
-
-try {
-  List<Status> statuses = timelines.getPublic(new Range()).execute();
-  statuses.forEach(status->{
-    System.out.println("=============");
-    System.out.println(status.getAccount().getDisplayName());
-    System.out.println(status.getContent());
-  });
-} catch (Mastodon4jRequestException e) {
-  e.printStackTrace();
-}
-```
-
-## Register App
-
-If you want to access the auth required API, you need create client credential and get access token. see more [docs](https://docs.joinmastodon.org/methods/apps/)
-
-__kotlin__
+Code examples in this guide make use of the following variables for simplicity.
+Their values should generally *not* be hard-coded in an actual application.
 
 ```kotlin
-val client: MastodonClient = MastodonClient.Builder("mstdn.jp", OkHttpClient.Builder(), Gson()).build()
+// hostname of a Mastodon server, e.g. "mastodon.social"
+val instanceHostname:String = ...
+
+// mail address of an account
+val userMail:String = ...
+
+// password of an account
+val userPassword:String = ...
+```
+
+Additionally, this guide uses the following values that should be replaced in your application:
+
+```kotlin
+// This out-of-band URI will display a generated auth code for you to copy and paste.
+// The actual value used instead should be a URL that will be interpreted by your application.
+redirectUris = "urn:ietf:wg:oauth:2.0:oob"
+
+// This is equal to the full range of scopes currently supported by Mastodon4j.
+// Instead of this, you should request as little as possible for your application.
+scope = Scope()
+```
+
+## Registering an App
+
+To access the API of a Mastodon server, we first need to create client credentials. 
+
+__Kotlin__
+
+```kotlin
+val client: MastodonClient = MastodonClient.Builder(instanceHostname, OkHttpClient.Builder(), Gson()).build()
 val apps = Apps(client)
 val appRegistration = apps.createApp(
-	clientName = "client name",
+	clientName = "mastodon4j-sample-app",
 	redirectUris = "urn:ietf:wg:oauth:2.0:oob",
-	scope = Scope(Scope.Name.ALL),
-	website = "https://sample.com"
+	scope = Scope(),
+	website = "https://example.org/"
 ).execute()
-save(appRegistration) // appRegistration needs to be saved.
 ```
 
-AppRegistration has client id and client secret.
-
-__java__
+__Java__
 
 ```java
-MastodonClient client = new MastodonClient.Builder("mstdn.jp", new OkHttpClient.Builder(), new Gson()).build();
+MastodonClient client = new MastodonClient.Builder(instanceHostname, new OkHttpClient.Builder(), new Gson()).build();
 Apps apps = new Apps(client);
 try {
-	AppRegistration registration = apps.createApp(
+	AppRegistration appRegistration = apps.createApp(
 	    "mastodon4j-sample-app",
 	    "urn:ietf:wg:oauth:2.0:oob",
-	    new Scope(Scope.Name.ALL),
-        "https://sample.com"
-    ).execute();
-    System.out.println("instance=" + registration.getInstanceName());
-    System.out.println("client_id=" + registration.getClientId());
-    System.out.println("client_secret=" + registration.getClientSecret());
+	    new Scope(),
+	    "https://example.org/"
+	).execute();
 } catch (Mastodon4jRequestException e) {
-	int statusCode = e.getResponse().code();
-	// error handling.
+	// error handling
 }
 ```
 
-## OAuth login and get Access Token
+## Login and get Access Token
 
-__kotlin__
+Using client ID and secret available in appRegistration, we can now get an access token to act on behalf of a user.
+
+### Using available user credentials
+
+__Kotlin__
 
 ```kotlin
-val client: MastodonClient = MastodonClient.Builder("mstdn.jp", OkHttpClient.Builder(), Gson()).build()
-val clientId = appRegistration.clientId
+// using client and appRegistration as defined above
+	
 val apps = Apps(client)
+val accessToken = apps.postUserNameAndPassword(
+	clientId = appRegistration.clientId,
+	clientSecret = appRegistration.clientSecret,
+	scope = Scope(),
+	userName = userMail,
+	password = userPassword)
+).execute()
+```
 
-val url = apps.getOAuthUrl(clientId, Scope(Scope.Name.ALL))
-// url like bellow
-// https://:instance_name/oauth/authorize?client_id=:client_id&redirect_uri=:redirect_uri&response_type=code&scope=read 
-// open url and OAuth login and get auth code
+### Using OAuth
 
-val authCode = //...
-val clientSecret = appRegistration.clientSecret
-val redirectUri = appRegistration.redirectUri
+__Kotlin__
+
+```kotlin
+// using client and appRegistration as defined above
+
+val apps = Apps(client)
+val url = apps.getOAuthUrl(appRegistration.clientId, Scope())
+
+// This URL will have the following format:
+// https://<instance_name>/oauth/authorize?client_id=<client_id>&redirect_uri=<redirect_uri>&response_type=code&scope=<scope> 
+
+// Opening this URL will allow the user to perform an OAuth login, after which
+// the previously defined redirect_uri will be called with an auth code in the query like this:
+// <redirect_uri>?code=<auth_code>
+
+val authCode:String = ... // retrieved from redirect_uri query parameter
+
+// we use this auth code to get an access token
 val accessToken = apps.getAccessToken(
-			clientId,
-			clientSecret,
-			redirectUri,
-			authCode,
-			"authorization_code"
-		)
-// 	accessToken needs to be saved.
+	clientId = appRegistration.clientId,
+	clientSecret = appRegistration.clientSecret,
+	redirectUri = appRegistration.redirectUri,
+	code = authCode, 
+	grantType = "authorization_code"
+)
 ```
 
 ## Get Home Timeline
 
-__kotlin__
+Using the received access token, we can retrieve statuses from the user's home timeline and display them.
+
+__Kotlin__
 
 ```kotlin
-// Need parameter of accessToken
-val client: MastodonClient = MastodonClient.Builder("mstdn.jp", OkHttpClient.Builder(), Gson())
-  .accessToken(accessToken)
-  .build()
+// creating a new client using previously received access token
+val client: MastodonClient = MastodonClient.Builder(instanceHostname, OkHttpClient.Builder(), Gson())
+	.accessToken(accessToken)
+	.build()
 
-val statuses: List<Status> = timelines.getHome().execute()
+// get 5 statuses
+val result = Timelines(client).getHome(Range(limit = 5)).execute()
+
+// sort and display these statuses
+result.part.sortedBy { it.createdAt }.forEach {
+	val byline = "by ${it.account?.displayName?:"Unknown"} on ${it.createdAt}"
+	val stats = "Favourited: ${it.favouritesCount}, Reblogged: ${it.reblogsCount}"
+	val content = it.content
+	
+	// use these and more as necessary
+}
+```
+
+## Post a status
+
+We can also post a status as the user.
+
+__Kotlin__
+
+```kotlin
+try {
+	// using previously defined client with access token
+	val status = Statuses(client).postStatus(
+		status = "Hello World! #HelloWorld",
+		inReplyToId = null,
+		mediaIds = null,
+		sensitive = false,
+		spoilerText = null,
+		visibility = Status.Visibility.Unlisted
+	)
+	status.execute()
+} catch (e: Exception) {
+	// error handling
+}
 ```
 
 ## Get raw json
 
 v0.0.7 or later
 
-__kotlin__
+__Kotlin__
 
 ```kotlin
 val client = //...
@@ -132,10 +189,10 @@ publicMethod.getLocalPublic()
 
 v1.0.0 or later
 
-__kotlin__
+__Kotlin__
 
 ```kotlin
-val client: MastodonClient = MastodonClient.Builder("mstdn.jp", OkHttpClient.Builder(), Gson())
+val client: MastodonClient = MastodonClient.Builder(instanceHostname, OkHttpClient.Builder(), Gson())
   .accessToken(accessToken)
   .useStreamingApi()
   .build()
@@ -158,10 +215,10 @@ try {
 }
 ```
 
-__java__
+__Java__
 
 ```java
-MastodonClient client = new MastodonClient.Builder("mstdn.jp", new OkHttpClient.Builder(), new Gson())
+MastodonClient client = new MastodonClient.Builder(instanceHostname, new OkHttpClient.Builder(), new Gson())
         .accessToken(accessToken)
         .useStreamingApi()
         .build();
