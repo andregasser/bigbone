@@ -1,6 +1,6 @@
 [versions]
 # This project version
-mastodon4j = "1.7.1-SNAPSHOT"
+mastodon4j = "1.8.0-SNAPSHOT"
 
 # 3rd party dependencies
 gson = "2.10"
