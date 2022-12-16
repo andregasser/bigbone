@@ -142,22 +142,44 @@ try {
 }
 ```
 
-## Get raw json
-
-v0.0.7 or later
+## Get Raw JSON
+The examples in this section demonstrate, how raw JSON responses can be processed by using the `doOnJson` method. `doOnJson`is invoked for every single JSON object that is returned.
 
 __Kotlin__
 
 ```kotlin
-val client = //...
-val publicMethod = Public(client)
+object GetRawJson {
+    @JvmStatic
+    fun main(args: Array<String>) {
+        val instanceName = args[0]
+        val credentialFilePath = args[1]
+        val client = Authenticator.appRegistrationIfNeeded(instanceName, credentialFilePath)
+        runBlocking {
+            val public = Public(client)
+            public.getLocalPublic().doOnJson {
+                println(it)
+            }.execute()
+        }
+    }
+}
+```
 
-publicMethod.getLocalPublic()
-  .doOnJson { jsonString -> 
-    // You can get raw json for each element.
-    println(jsonString)
-  }
-  .execute() 
+__Java__
+
+```java
+public class GetRawJson {
+    public static void main(String[] args) {
+        try {
+            String instanceName = args[0];
+            String credentialFilePath = args[1];
+            MastodonClient client = Authenticator.appRegistrationIfNeeded(instanceName, credentialFilePath, false);
+            Public publicMethod = new Public(client);
+            publicMethod.getLocalPublic().doOnJson(System.out::println).execute();
+        } catch (IOException | Mastodon4jRequestException e) {
+            e.printStackTrace();
+        }
+    }
+}
 ```
 
 ## Streaming API

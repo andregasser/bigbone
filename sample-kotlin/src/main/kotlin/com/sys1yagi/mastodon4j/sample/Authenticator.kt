@@ -8,12 +8,12 @@ import com.sys1yagi.mastodon4j.api.entity.auth.AppRegistration
 import com.sys1yagi.mastodon4j.api.method.Apps
 import okhttp3.OkHttpClient
 import java.io.File
-import java.util.*
+import java.util.Properties
 
 object Authenticator {
-    const val CLIENT_ID = "client_id"
-    const val CLIENT_SECRET = "client_secret"
-    const val ACCESS_TOKEN = "access_token"
+    private const val CLIENT_ID = "client_id"
+    private const val CLIENT_SECRET = "client_secret"
+    private const val ACCESS_TOKEN = "access_token"
 
     fun appRegistrationIfNeeded(instanceName: String, credentialFilePath: String, useStreaming: Boolean = false): MastodonClient {
         val file = File(credentialFilePath)
@@ -27,8 +27,8 @@ object Authenticator {
         if (properties[CLIENT_ID] == null) {
             println("try app registration...")
             val appRegistration = appRegistration(instanceName)
-            properties.put(CLIENT_ID, appRegistration.clientId)
-            properties.put(CLIENT_SECRET, appRegistration.clientSecret)
+            properties[CLIENT_ID] = appRegistration.clientId
+            properties[CLIENT_SECRET] = appRegistration.clientSecret
             properties.store(file.outputStream(), "app registration")
         } else {
             println("app registration found...")
@@ -48,7 +48,7 @@ object Authenticator {
                     email,
                     pass
             )
-            properties.put(ACCESS_TOKEN, accessToken.accessToken)
+            properties[ACCESS_TOKEN] = accessToken.accessToken
             properties.store(file.outputStream(), "app registration")
         } else {
             println("access token found...")
@@ -63,18 +63,18 @@ object Authenticator {
                 .build()
     }
 
-    fun getAccessToken(instanceName: String,
-                       clientId: String,
-                       clientSecret: String,
-                       email: String,
-                       password: String
+    private fun getAccessToken(instanceName: String,
+                               clientId: String,
+                               clientSecret: String,
+                               email: String,
+                               password: String
     ): AccessToken {
         val client = MastodonClient.Builder(instanceName, OkHttpClient.Builder(), Gson()).build()
         val apps = Apps(client)
         return apps.postUserNameAndPassword(clientId, clientSecret, Scope(), email, password).execute()
     }
 
-    fun appRegistration(instanceName: String): AppRegistration {
+    private fun appRegistration(instanceName: String): AppRegistration {
         val client = MastodonClient.Builder(instanceName, OkHttpClient.Builder(), Gson()).build()
         val apps = Apps(client)
         return apps.createApp(
