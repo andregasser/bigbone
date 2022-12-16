@@ -38,6 +38,12 @@ class RxApps(client: MastodonClient) {
         }
     }
 
+    @Deprecated(
+        "This method uses grant_type 'password' which is undocumented in Mastodon API" +
+                " and should not be used in production code.",
+        ReplaceWith("getAccessToken()"),
+        DeprecationLevel.WARNING
+    )
     fun postUserNameAndPassword(
             clientId: String,
             clientSecret: String,

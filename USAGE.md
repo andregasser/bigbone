@@ -9,18 +9,12 @@ Following this guide will allow you to:
 See the [official Mastodon docs](https://docs.joinmastodon.org/methods/apps/) for further API methods,
 and this project's code for implementation details.
 
-Code examples in this guide make use of the following variables for simplicity.
-Their values should generally *not* be hard-coded in an actual application.
+Code examples in this guide make use of the following variable for simplicity.
+Its value should generally *not* be hard-coded in an actual application.
 
 ```kotlin
 // hostname of a Mastodon server, e.g. "mastodon.social"
 val instanceHostname:String = ...
-
-// mail address of an account
-val userMail:String = ...
-
-// password of an account
-val userPassword:String = ...
 ```
 
 Additionally, this guide uses the following values that should be replaced in your application:
@@ -72,25 +66,6 @@ try {
 ## Login and get Access Token
 
 Using client ID and secret available in appRegistration, we can now get an access token to act on behalf of a user.
-
-### Using available user credentials
-
-__Kotlin__
-
-```kotlin
-// using client and appRegistration as defined above
-	
-val apps = Apps(client)
-val accessToken = apps.postUserNameAndPassword(
-	clientId = appRegistration.clientId,
-	clientSecret = appRegistration.clientSecret,
-	scope = Scope(),
-	userName = userMail,
-	password = userPassword)
-).execute()
-```
-
-### Using OAuth
 
 __Kotlin__
 
