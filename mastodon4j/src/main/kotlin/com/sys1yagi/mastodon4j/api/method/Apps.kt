@@ -6,8 +6,6 @@ import com.sys1yagi.mastodon4j.Parameter
 import com.sys1yagi.mastodon4j.api.Scope
 import com.sys1yagi.mastodon4j.api.entity.auth.AccessToken
 import com.sys1yagi.mastodon4j.api.entity.auth.AppRegistration
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody.Companion.toRequestBody
 
 /**
  * Register client applications that can be used to obtain OAuth tokens.
@@ -34,16 +32,14 @@ class Apps(private val client: MastodonClient) {
         return MastodonRequest(
             {
                 client.post("apps",
-                    arrayListOf(
-                        "client_name=$clientName",
-                        "scopes=$scope",
-                        "redirect_uris=$redirectUris"
-                    ).apply {
+                    Parameter().apply {
+                        append("client_name", clientName)
+                        append("scopes", scope.toString())
+                        append("redirect_uris", redirectUris)
                         website?.let {
-                            add("website=${it}")
+                            append("website", it)
                         }
-                    }.joinToString(separator = "&")
-                        .toRequestBody("application/x-www-form-urlencoded; charset=utf-8".toMediaTypeOrNull())
+                    }
                 )
             },
             {
@@ -87,19 +83,17 @@ class Apps(private val client: MastodonClient) {
         grantType: String = "authorization_code"
     ): MastodonRequest<AccessToken> {
         val url = "https://${client.getInstanceName()}/oauth/token"
-        val parameters = listOf(
-            "client_id=$clientId",
-            "client_secret=$clientSecret",
-            "redirect_uri=$redirectUri",
-            "code=$code",
-            "grant_type=$grantType"
-        ).joinToString(separator = "&")
+
+        val parameters = Parameter().apply {
+            append("client_id", clientId)
+            append("client_secret", clientSecret)
+            append("redirect_uri", redirectUri)
+            append("code", code)
+            append("grant_type", grantType)
+        }
         return MastodonRequest(
             {
-                client.postUrl(url,
-                    parameters
-                        .toRequestBody("application/x-www-form-urlencoded; charset=utf-8".toMediaTypeOrNull())
-                )
+                client.postUrl(url, parameters)
             },
             {
                 client.getSerializer().fromJson(it, AccessToken::class.java)
@@ -133,14 +127,11 @@ class Apps(private val client: MastodonClient) {
             append("username", userName)
             append("password", password)
             append("grant_type", "password")
-        }.build()
+        }
 
         return MastodonRequest(
             {
-                client.postUrl(url,
-                    parameters
-                        .toRequestBody("application/x-www-form-urlencoded; charset=utf-8".toMediaTypeOrNull())
-                )
+                client.postUrl(url, parameters)
             },
             {
                 client.getSerializer().fromJson(it, AccessToken::class.java)

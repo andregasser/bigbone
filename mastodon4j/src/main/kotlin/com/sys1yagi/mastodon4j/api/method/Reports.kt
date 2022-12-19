@@ -7,8 +7,6 @@ import com.sys1yagi.mastodon4j.api.Pageable
 import com.sys1yagi.mastodon4j.api.Range
 import com.sys1yagi.mastodon4j.api.entity.Report
 import com.sys1yagi.mastodon4j.api.exception.Mastodon4jRequestException
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody.Companion.toRequestBody
 
 /**
  * See more https://github.com/tootsuite/documentation/blob/master/Using-the-API/API.md#reports
@@ -19,15 +17,15 @@ class Reports(private val client: MastodonClient) {
     @Throws(Mastodon4jRequestException::class)
     fun getReports(range: Range = Range()): MastodonRequest<Pageable<Report>> {
         return MastodonRequest<Pageable<Report>>(
-                {
-                    client.get(
-                            "reports",
-                            range.toParameter()
-                    )
-                },
-                {
-                    client.getSerializer().fromJson(it, Report::class.java)
-                }
+            {
+                client.get(
+                    "reports",
+                    range.toParameter()
+                )
+            },
+            {
+                client.getSerializer().fromJson(it, Report::class.java)
+            }
         ).toPageable()
     }
 
@@ -43,17 +41,14 @@ class Reports(private val client: MastodonClient) {
             append("account_id", accountId)
             append("status_ids", statusId)
             append("comment", comment)
-        }.build()
+        }
         return MastodonRequest<Report>(
-                {
-                    client.post("reports",
-                        parameters
-                            .toRequestBody("application/x-www-form-urlencoded; charset=utf-8".toMediaTypeOrNull())
-                    )
-                },
-                {
-                    client.getSerializer().fromJson(it, Report::class.java)
-                }
+            {
+                client.post("reports", parameters)
+            },
+            {
+                client.getSerializer().fromJson(it, Report::class.java)
+            }
         )
     }
 }

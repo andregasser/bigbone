@@ -17,7 +17,7 @@ class Media(private val client: MastodonClient) {
                 .build()
         return MastodonRequest<Attachment>(
                 {
-                    client.post("media", requestBody)
+                    client.postRequestBody("media", requestBody)
                 },
                 {
                     client.getSerializer().fromJson(it, Attachment::class.java)
