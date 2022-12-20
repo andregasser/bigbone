@@ -31,7 +31,7 @@ class Apps(private val client: MastodonClient) {
         scope.validate()
         return MastodonRequest(
             {
-                client.post("apps",
+                client.post("api/v1/apps",
                     Parameter().apply {
                         append("client_name", clientName)
                         append("scopes", scope.toString())
@@ -82,8 +82,6 @@ class Apps(private val client: MastodonClient) {
         code: String,
         grantType: String = "authorization_code"
     ): MastodonRequest<AccessToken> {
-        val url = "https://${client.getInstanceName()}/oauth/token"
-
         val parameters = Parameter().apply {
             append("client_id", clientId)
             append("client_secret", clientSecret)
@@ -93,7 +91,7 @@ class Apps(private val client: MastodonClient) {
         }
         return MastodonRequest(
             {
-                client.postUrl(url, parameters)
+                client.post("oauth/token", parameters)
             },
             {
                 client.getSerializer().fromJson(it, AccessToken::class.java)
@@ -119,7 +117,6 @@ class Apps(private val client: MastodonClient) {
         userName: String,
         password: String
     ): MastodonRequest<AccessToken> {
-        val url = "https://${client.getInstanceName()}/oauth/token"
         val parameters = Parameter().apply {
             append("client_id", clientId)
             append("client_secret", clientSecret)
@@ -131,7 +128,7 @@ class Apps(private val client: MastodonClient) {
 
         return MastodonRequest(
             {
-                client.postUrl(url, parameters)
+                client.post("oauth/token", parameters)
             },
             {
                 client.getSerializer().fromJson(it, AccessToken::class.java)

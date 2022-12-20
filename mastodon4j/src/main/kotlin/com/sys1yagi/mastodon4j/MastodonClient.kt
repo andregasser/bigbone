@@ -3,13 +3,9 @@ package com.sys1yagi.mastodon4j
 import com.google.gson.Gson
 import com.sys1yagi.mastodon4j.api.exception.Mastodon4jRequestException
 import com.sys1yagi.mastodon4j.extension.emptyRequestBody
-import okhttp3.Interceptor
+import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
-import okhttp3.Response
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 
@@ -20,7 +16,7 @@ private constructor(
     private val gson: Gson
 ) {
     private var debug = false
-    private val baseUrl = "https://${instanceName}/api/v1"
+    private val baseUrl = "https://${instanceName}"
 
     private fun debugPrint(log: String) {
         if (debug) {
@@ -76,29 +72,8 @@ private constructor(
      *
      * @see post
      */
-    open fun postRequestBody(path: String, body: RequestBody) =
-        postUrlRequestBody("$baseUrl/$path", body)
-
-    /**
-     * Get a response from the Mastodon instance defined for this client using the POST method.
-     * @param url a full URL to the API endpoint to call
-     * @param parameters the parameters to use for this request; may be null
-     */
-    open fun postUrl(url: String, parameters: Parameter): Response {
-        val parameterBody = parameters
-            .build()
-            .toRequestBody("application/x-www-form-urlencoded; charset=utf-8".toMediaTypeOrNull())
-        return postUrlRequestBody(url, parameterBody)
-    }
-
-    /**
-     * Get a response from the Mastodon instance defined for this client using the POST method.
-     * @param url a full URL to the API endpoint to call
-     * @param body the RequestBody to use for this request
-     *
-     * @see postUrl
-     */
-    private fun postUrlRequestBody(url: String, body: RequestBody): Response {
+    open fun postRequestBody(path: String, body: RequestBody): Response {
+        val url = "$baseUrl/$path"
         try {
             debugPrint(url)
             val call = client.newCall(

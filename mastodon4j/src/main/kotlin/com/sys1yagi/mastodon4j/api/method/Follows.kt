@@ -19,7 +19,7 @@ class Follows(private val client: MastodonClient) {
         }
         return MastodonRequest<Account>(
             {
-                client.post("follows", parameters)
+                client.post("api/v1/follows", parameters)
             },
             {
                 client.getSerializer().fromJson(it, Account::class.java)

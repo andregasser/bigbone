@@ -15,7 +15,7 @@ class MastodonLists(private val client: MastodonClient) {
         return MastodonRequest<Pageable<MastodonList>>(
                 {
                     client.get(
-                            "lists"
+                            "api/v1/lists"
                     )
                 },
                 {
@@ -30,7 +30,7 @@ class MastodonLists(private val client: MastodonClient) {
         return MastodonRequest<Pageable<Status>>(
                 {
                     client.get(
-                            "timelines/list/$listID",
+                            "api/v1/timelines/list/$listID",
                             range.toParameter()
                     )
                 },

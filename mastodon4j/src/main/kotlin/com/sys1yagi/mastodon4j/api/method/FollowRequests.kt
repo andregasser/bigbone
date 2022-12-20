@@ -15,7 +15,7 @@ class FollowRequests(private val client: MastodonClient) {
     @JvmOverloads
     fun getFollowRequests(range: Range = Range()): MastodonRequest<Pageable<Account>> {
         return MastodonRequest<Pageable<Account>>(
-            { client.get("follow_requests", range.toParameter()) },
+            { client.get("api/v1/follow_requests", range.toParameter()) },
             {
                 client.getSerializer().fromJson(it, Account::class.java)
             }
@@ -25,7 +25,7 @@ class FollowRequests(private val client: MastodonClient) {
     //  POST /api/v1/follow_requests/:id/authorize
     @Throws(Mastodon4jRequestException::class)
     fun postAuthorize(accountId: Long) {
-        val response = client.post("follow_requests/$accountId/authorize")
+        val response = client.post("api/v1/follow_requests/$accountId/authorize")
         if (!response.isSuccessful) {
             throw Mastodon4jRequestException(response)
         }
@@ -34,7 +34,7 @@ class FollowRequests(private val client: MastodonClient) {
     //  POST /api/v1/follow_requests/:id/reject
     @Throws(Mastodon4jRequestException::class)
     fun postReject(accountId: Long) {
-        val response = client.post("follow_requests/$accountId/reject")
+        val response = client.post("api/v1/follow_requests/$accountId/reject")
         if (!response.isSuccessful) {
             throw Mastodon4jRequestException(response)
         }

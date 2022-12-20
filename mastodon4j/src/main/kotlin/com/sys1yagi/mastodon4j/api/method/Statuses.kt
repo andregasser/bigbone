@@ -21,7 +21,7 @@ class Statuses(private val client: MastodonClient) {
     fun getStatus(statusId: Long): MastodonRequest<Status> {
         return MastodonRequest<Status>(
             {
-                client.get("statuses/$statusId")
+                client.get("api/v1/statuses/$statusId")
             },
             {
                 client.getSerializer().fromJson(it, Status::class.java)
@@ -34,7 +34,7 @@ class Statuses(private val client: MastodonClient) {
     fun getContext(statusId: Long): MastodonRequest<Context> {
         return MastodonRequest<Context>(
             {
-                client.get("statuses/$statusId/context")
+                client.get("api/v1/statuses/$statusId/context")
             },
             {
                 client.getSerializer().fromJson(it, Context::class.java)
@@ -47,7 +47,7 @@ class Statuses(private val client: MastodonClient) {
     fun getCard(statusId: Long): MastodonRequest<Card> {
         return MastodonRequest<Card>(
             {
-                client.get("statuses/$statusId/card")
+                client.get("api/v1/statuses/$statusId/card")
             },
             {
                 client.getSerializer().fromJson(it, Card::class.java)
@@ -62,7 +62,7 @@ class Statuses(private val client: MastodonClient) {
         return MastodonRequest<Pageable<Account>>(
             {
                 client.get(
-                    "statuses/$statusId/reblogged_by",
+                    "api/v1/statuses/$statusId/reblogged_by",
                     range.toParameter()
                 )
             },
@@ -79,7 +79,7 @@ class Statuses(private val client: MastodonClient) {
         return MastodonRequest<Pageable<Account>>(
             {
                 client.get(
-                    "statuses/$statusId/favourited_by",
+                    "api/v1/statuses/$statusId/favourited_by",
                     range.toParameter()
                 )
             },
@@ -125,7 +125,7 @@ class Statuses(private val client: MastodonClient) {
 
         return MastodonRequest<Status>(
             {
-                client.post("statuses", parameters)
+                client.post("api/v1/statuses", parameters)
             },
             {
                 client.getSerializer().fromJson(it, Status::class.java)
@@ -136,7 +136,7 @@ class Statuses(private val client: MastodonClient) {
     //  DELETE /api/v1/statuses/:id
     @Throws(Mastodon4jRequestException::class)
     fun deleteStatus(statusId: Long) {
-        val response = client.delete("statuses/$statusId")
+        val response = client.delete("api/v1/statuses/$statusId")
         if (!response.isSuccessful) {
             throw Mastodon4jRequestException(response)
         }
@@ -147,7 +147,7 @@ class Statuses(private val client: MastodonClient) {
     fun postReblog(statusId: Long): MastodonRequest<Status> {
         return MastodonRequest<Status>(
             {
-                client.post("statuses/$statusId/reblog")
+                client.post("api/v1/statuses/$statusId/reblog")
             },
             {
                 client.getSerializer().fromJson(it, Status::class.java)
@@ -160,7 +160,7 @@ class Statuses(private val client: MastodonClient) {
     fun postUnreblog(statusId: Long): MastodonRequest<Status> {
         return MastodonRequest<Status>(
             {
-                client.post("statuses/$statusId/unreblog")
+                client.post("api/v1/statuses/$statusId/unreblog")
             },
             {
                 client.getSerializer().fromJson(it, Status::class.java)
@@ -173,7 +173,7 @@ class Statuses(private val client: MastodonClient) {
     fun postFavourite(statusId: Long): MastodonRequest<Status> {
         return MastodonRequest<Status>(
             {
-                client.post("statuses/$statusId/favourite")
+                client.post("api/v1/statuses/$statusId/favourite")
             },
             {
                 client.getSerializer().fromJson(it, Status::class.java)
@@ -186,7 +186,7 @@ class Statuses(private val client: MastodonClient) {
     fun postUnfavourite(statusId: Long): MastodonRequest<Status> {
         return MastodonRequest<Status>(
             {
-                client.post("statuses/$statusId/unfavourite")
+                client.post("api/v1/statuses/$statusId/unfavourite")
             },
             {
                 client.getSerializer().fromJson(it, Status::class.java)

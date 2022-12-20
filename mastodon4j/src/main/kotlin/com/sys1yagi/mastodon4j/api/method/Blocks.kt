@@ -16,7 +16,7 @@ class Blocks(private val client: MastodonClient) {
     fun getBlocks(range: Range = Range()):MastodonRequest<Pageable<Account>> {
         return MastodonRequest<Pageable<Account>>(
                 {
-                    client.get("blocks", range.toParameter())
+                    client.get("api/v1/blocks", range.toParameter())
                 },
                 {
                     client.getSerializer().fromJson(it, Account::class.java)

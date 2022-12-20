@@ -19,7 +19,7 @@ class Reports(private val client: MastodonClient) {
         return MastodonRequest<Pageable<Report>>(
             {
                 client.get(
-                    "reports",
+                    "api/v1/reports",
                     range.toParameter()
                 )
             },
@@ -44,7 +44,7 @@ class Reports(private val client: MastodonClient) {
         }
         return MastodonRequest<Report>(
             {
-                client.post("reports", parameters)
+                client.post("api/v1/reports", parameters)
             },
             {
                 client.getSerializer().fromJson(it, Report::class.java)
