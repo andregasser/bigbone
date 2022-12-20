@@ -7,14 +7,13 @@ import com.sys1yagi.mastodon4j.api.Shutdownable;
 import com.sys1yagi.mastodon4j.api.entity.Notification;
 import com.sys1yagi.mastodon4j.api.entity.Status;
 import com.sys1yagi.mastodon4j.api.method.Streaming;
-import okhttp3.OkHttpClient;
 import org.jetbrains.annotations.NotNull;
 
 public class StreamPublicTimeline {
     public static void main(String[] args) {
         // require authentication even if public streaming
         String accessToken = "PUT YOUR ACCESS TOKEN";
-        MastodonClient client = new MastodonClient.Builder("mstdn.jp", new OkHttpClient.Builder(), new Gson())
+        MastodonClient client = new MastodonClient.Builder("mstdn.jp", new Gson())
                 .accessToken(accessToken)
                 .useStreamingApi()
                 .build();

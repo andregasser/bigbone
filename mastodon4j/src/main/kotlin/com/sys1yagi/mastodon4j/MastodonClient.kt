@@ -160,9 +160,9 @@ private constructor(
     }
 
     class Builder(private val instanceName: String,
-                  private val okHttpClientBuilder: OkHttpClient.Builder,
                   private val gson: Gson) {
 
+        private val okHttpClientBuilder = OkHttpClient.Builder()
         private var accessToken: String? = null
         private var debug = false
 

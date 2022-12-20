@@ -7,11 +7,10 @@ import com.sys1yagi.mastodon4j.api.Range;
 import com.sys1yagi.mastodon4j.api.entity.Status;
 import com.sys1yagi.mastodon4j.api.exception.Mastodon4jRequestException;
 import com.sys1yagi.mastodon4j.api.method.Public;
-import okhttp3.OkHttpClient;
 
 public class GetPublicTimelines {
     public static void main(String[] args) {
-        MastodonClient client = new MastodonClient.Builder("mstdn.jp", new OkHttpClient.Builder(), new Gson()).build();
+        MastodonClient client = new MastodonClient.Builder("mstdn.jp", new Gson()).build();
         Public publicMethod = new Public(client);
 
         try {

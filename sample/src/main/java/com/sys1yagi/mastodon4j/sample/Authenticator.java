@@ -7,7 +7,6 @@ import com.sys1yagi.mastodon4j.api.entity.auth.AccessToken;
 import com.sys1yagi.mastodon4j.api.entity.auth.AppRegistration;
 import com.sys1yagi.mastodon4j.api.exception.Mastodon4jRequestException;
 import com.sys1yagi.mastodon4j.api.method.Apps;
-import okhttp3.OkHttpClient;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -52,7 +51,7 @@ final class Authenticator {
         } else {
             System.out.println("access token found...");
         }
-        MastodonClient.Builder builder = new MastodonClient.Builder(instanceName, new OkHttpClient.Builder(), new Gson())
+        MastodonClient.Builder builder = new MastodonClient.Builder(instanceName, new Gson())
             .accessToken(properties.get(ACCESS_TOKEN).toString());
         if (useStreaming) {
             builder.useStreamingApi();
@@ -61,13 +60,13 @@ final class Authenticator {
     }
 
     private static AccessToken getAccessToken(String instanceName, String clientId, String clientSecret, String email, String password) throws Mastodon4jRequestException {
-        MastodonClient client = new MastodonClient.Builder(instanceName, new OkHttpClient.Builder(), new Gson()).build();
+        MastodonClient client = new MastodonClient.Builder(instanceName, new Gson()).build();
         Apps apps = new Apps(client);
         return apps.postUserNameAndPassword(clientId, clientSecret, new Scope(), email, password).execute();
     }
 
     private static AppRegistration appRegistration(String instanceName) throws Mastodon4jRequestException {
-        MastodonClient client = new MastodonClient.Builder(instanceName, new OkHttpClient.Builder(), new Gson()).build();
+        MastodonClient client = new MastodonClient.Builder(instanceName, new Gson()).build();
         Apps apps = new Apps(client);
         return apps.createApp("kotlindon", "urn:ietf:wg:oauth:2.0:oob", new Scope(), null).execute();
     }

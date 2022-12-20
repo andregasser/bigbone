@@ -7,11 +7,10 @@ import com.sys1yagi.mastodon4j.api.Scope;
 import com.sys1yagi.mastodon4j.api.entity.auth.AppRegistration;
 import com.sys1yagi.mastodon4j.api.exception.Mastodon4jRequestException;
 import com.sys1yagi.mastodon4j.api.method.Apps;
-import okhttp3.OkHttpClient;
 
 public class GetAppRegistration {
     public static void main(String[] args) {
-        MastodonClient client = new MastodonClient.Builder("mstdn.jp", new OkHttpClient.Builder(), new Gson()).build();
+        MastodonClient client = new MastodonClient.Builder("mstdn.jp", new Gson()).build();
         Apps apps = new Apps(client);
         try {
             AppRegistration registration = apps.createApp(
