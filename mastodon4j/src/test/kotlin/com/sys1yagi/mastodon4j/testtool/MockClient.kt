@@ -2,7 +2,6 @@ package com.sys1yagi.mastodon4j.testtool
 
 import com.google.gson.Gson
 import com.sys1yagi.mastodon4j.MastodonClient
-import com.sys1yagi.mastodon4j.Parameter
 import io.mockk.every
 import io.mockk.mockk
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -44,7 +43,7 @@ object MockClient {
 
         every { clientMock.get(ofType<String>(), isNull(inverse = false)) } returns response
         every { clientMock.get(ofType<String>(), any()) } returns response
-        every { clientMock.post(ofType<String>(), Parameter()) } returns response
+        every { clientMock.post(ofType<String>(), any()) } returns response
         every { clientMock.postRequestBody(ofType<String>(), any()) } returns response
         every { clientMock.postUrl(ofType<String>(), any()) } returns response
         every { clientMock.patch(ofType<String>(), any()) } returns response
@@ -72,7 +71,7 @@ object MockClient {
 
         every { clientMock.get(ofType<String>(), isNull(inverse = false)) } returns response
         every { clientMock.get(ofType<String>(), any()) } returns response
-        every { clientMock.post(ofType<String>(), Parameter()) } returns response
+        every { clientMock.post(ofType<String>(), any()) } returns response
         every { clientMock.postRequestBody(ofType<String>(), any()) } returns response
         every { clientMock.postUrl(ofType<String>(), any()) } returns response
         every { clientMock.patch(ofType<String>(), any()) } returns response
