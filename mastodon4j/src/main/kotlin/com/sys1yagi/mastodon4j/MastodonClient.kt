@@ -15,15 +15,6 @@ private constructor(
     private val client: OkHttpClient,
     private val gson: Gson
 ) {
-    private var debug = false
-    private val baseUrl = "https://${instanceName}"
-
-    private fun debugPrint(log: String) {
-        if (debug) {
-            println(log)
-        }
-    }
-
     open fun getSerializer() = gson
 
     open fun getInstanceName() = instanceName
@@ -31,18 +22,13 @@ private constructor(
     /**
      * Get a response from the Mastodon instance defined for this client using the GET method.
      * @param path an absolute path to the API endpoint to call
-     * @param parameters the parameters to use for this request; may be null
+     * @param query the parameters to use as query string for this request; may be null
      */
-    open fun get(path: String, parameters: Parameter? = null): Response {
+    open fun get(path: String, query: Parameter? = null): Response {
         try {
-            val url = "$baseUrl/$path"
-            debugPrint(url)
-            val urlWithParams = parameters?.let {
-                "$url?${it.build()}"
-            } ?: url
             val call = client.newCall(
                 Request.Builder()
-                    .url(urlWithParams)
+                    .url(fullUrl(instanceName, path, query))
                     .get()
                     .build())
             return call.execute()
@@ -54,14 +40,10 @@ private constructor(
     /**
      * Get a response from the Mastodon instance defined for this client using the POST method.
      * @param path an absolute path to the API endpoint to call
-     * @param parameters the parameters to use for this request; may be null
+     * @param parameters the parameters to use in the request body for this request; may be null
      */
     open fun post(path: String, parameters: Parameter? = null): Response {
-        val parameterBody = parameters
-            ?.build()?.toRequestBody("application/x-www-form-urlencoded; charset=utf-8".toMediaTypeOrNull())
-            ?: emptyRequestBody()
-
-        return postRequestBody(path, parameterBody)
+        return postRequestBody(path, parameterBody(parameters))
     }
 
     /**
@@ -73,12 +55,10 @@ private constructor(
      * @see post
      */
     open fun postRequestBody(path: String, body: RequestBody): Response {
-        val url = "$baseUrl/$path"
         try {
-            debugPrint(url)
             val call = client.newCall(
                 Request.Builder()
-                    .url(url)
+                    .url(fullUrl(instanceName, path))
                     .post(body)
                     .build())
             return call.execute()
@@ -92,20 +72,14 @@ private constructor(
     /**
      * Get a response from the Mastodon instance defined for this client using the PATCH method.
      * @param path an absolute path to the API endpoint to call
-     * @param parameters the parameters to use for this request
+     * @param parameters the parameters to use in the request body for this request
      */
     open fun patch(path: String, parameters: Parameter): Response {
-        val parameterBody = parameters
-            .build()
-            .toRequestBody("application/x-www-form-urlencoded; charset=utf-8".toMediaTypeOrNull())
-
         try {
-            val url = "$baseUrl/$path"
-            debugPrint(url)
             val call = client.newCall(
                 Request.Builder()
-                    .url(url)
-                    .patch(parameterBody)
+                    .url(fullUrl(instanceName, path))
+                    .patch(parameterBody(parameters))
                     .build()
             )
             return call.execute()
@@ -120,11 +94,9 @@ private constructor(
      */
     open fun delete(path: String): Response {
         try {
-            val url = "$baseUrl/$path"
-            debugPrint(url)
             val call = client.newCall(
                 Request.Builder()
-                    .url(url)
+                    .url(fullUrl(instanceName, path))
                     .delete()
                     .build()
             )
@@ -139,7 +111,6 @@ private constructor(
 
         private val okHttpClientBuilder = OkHttpClient.Builder()
         private var accessToken: String? = null
-        private var debug = false
 
         fun accessToken(accessToken: String) = apply {
             this.accessToken = accessToken
@@ -149,18 +120,12 @@ private constructor(
             okHttpClientBuilder.readTimeout(60, TimeUnit.SECONDS)
         }
 
-        fun debug() = apply {
-            this.debug = true
-        }
-
         fun build(): MastodonClient {
             return MastodonClient(
                 instanceName,
                 okHttpClientBuilder.addNetworkInterceptor(AuthorizationInterceptor(accessToken)).build(),
                 gson
-            ).also {
-                it.debug = debug
-            }
+            )
         }
     }
 
@@ -178,6 +143,27 @@ private constructor(
                 }
                 .build()
             return chain.proceed(compressedRequest)
+        }
+    }
+
+    companion object {
+        fun fullUrl(instanceName: String, path: String, query: Parameter? = null): HttpUrl {
+            val urlBuilder = HttpUrl.Builder()
+                .scheme("https")
+                .host(instanceName)
+                .addEncodedPathSegments(path)
+
+            query?.let {
+                urlBuilder.encodedQuery(it.toString())
+            }
+
+            return urlBuilder.build()
+        }
+
+        fun parameterBody(parameters: Parameter?): RequestBody {
+            return parameters
+                ?.build()?.toRequestBody("application/x-www-form-urlencoded; charset=utf-8".toMediaTypeOrNull())
+                ?: emptyRequestBody()
         }
     }
 }
