@@ -17,3 +17,7 @@ java {
 tasks.withType(Test).configureEach {
     useJUnitPlatform()
 }
+
+dependencies {
+    detektPlugins libs.detekt.formatting
+}
