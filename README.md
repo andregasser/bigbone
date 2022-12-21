@@ -46,6 +46,10 @@ I am happy to handle any pull requests that come in. Thanks for your contributio
 ## Reporting Issues
 Please check out the [issues](https://github.com/andregasser/mastodon4j/issues) page for reporting issues. 
 
+Thanks to all the people who have contributed so far:
+
+[![Profile images of all the contributors](https://contrib.rocks/image?repo=andregasser/bigbone)](https://github.com/andregasser/bigbone/graphs/contributors)
+
 # License
 
 ```
