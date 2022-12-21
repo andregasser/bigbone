@@ -3,9 +3,14 @@ package com.sys1yagi.mastodon4j
 import com.google.gson.Gson
 import com.sys1yagi.mastodon4j.api.exception.Mastodon4jRequestException
 import com.sys1yagi.mastodon4j.extension.emptyRequestBody
-import okhttp3.*
+import okhttp3.HttpUrl
+import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
+import okhttp3.Response
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 
@@ -42,9 +47,8 @@ private constructor(
      * @param path an absolute path to the API endpoint to call
      * @param parameters the parameters to use in the request body for this request; may be null
      */
-    open fun post(path: String, parameters: Parameter? = null): Response {
-        return postRequestBody(path, parameterBody(parameters))
-    }
+    open fun post(path: String, parameters: Parameter? = null): Response =
+        postRequestBody(path, parameterBody(parameters))
 
     /**
      * Get a response from the Mastodon instance defined for this client using the POST method. Use this method if
@@ -162,7 +166,8 @@ private constructor(
 
         fun parameterBody(parameters: Parameter?): RequestBody {
             return parameters
-                ?.build()?.toRequestBody("application/x-www-form-urlencoded; charset=utf-8".toMediaTypeOrNull())
+                ?.build()
+                ?.toRequestBody("application/x-www-form-urlencoded; charset=utf-8".toMediaTypeOrNull())
                 ?: emptyRequestBody()
         }
     }
