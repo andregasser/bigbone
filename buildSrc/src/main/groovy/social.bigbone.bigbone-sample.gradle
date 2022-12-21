@@ -1,5 +1,5 @@
 plugins {
-    id 'com.sys1yagi.mastodon-base'
+    id 'social.bigbone.bigbone-base'
     id 'kotlin'
     id 'maven-publish'
     id 'jacoco'

@@ -3,8 +3,8 @@ plugins {
     id 'io.gitlab.arturbosch.detekt'
 }
 
-group = "com.sys1yagi"
-version = libs.versions.mastodon4j.get()
+group = "social.bigbone"
+version = libs.versions.bigbone.get()
 
 java {
     withSourcesJar()

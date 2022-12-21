@@ -1,16 +1,15 @@
 plugins {
-    id 'com.sys1yagi.mastodon-library'
+    id 'social.bigbone.bigbone-library'
 }
 
 dependencies {
-    api project(':mastodon4j')
-    api libs.rxjava
     api libs.okhttp
-
+    api libs.gson
     implementation libs.kotlin.jdk8
 
     testImplementation libs.junit.jupiter
+    testImplementation libs.okio
+    testImplementation libs.kluent
     testImplementation libs.mockk
     testImplementation libs.mockk.dsl
-    testImplementation libs.gson
 }
