@@ -154,7 +154,7 @@ private constructor(
                 .addEncodedPathSegments(path)
 
             query?.let {
-                urlBuilder.encodedQuery(it.toString())
+                urlBuilder.encodedQuery(it.build())
             }
 
             return urlBuilder.build()

@@ -59,14 +59,14 @@ class Apps(private val client: MastodonClient) {
      * @see <a href="https://docs.joinmastodon.org/methods/oauth/#authorize">Mastodon oauth API methods #authorize</a>
      */
     fun getOAuthUrl(clientId: String, scope: Scope, redirectUri: String = "urn:ietf:wg:oauth:2.0:oob"): String {
-        val endpoint = "/oauth/authorize"
-        val parameters = listOf(
-            "client_id=$clientId",
-            "redirect_uri=$redirectUri",
-            "response_type=code",
-            "scope=$scope"
-        ).joinToString(separator = "&")
-        return "https://${client.getInstanceName()}$endpoint?$parameters"
+        val endpoint = "oauth/authorize"
+        val parameters = Parameter()
+            .append("client_id", clientId)
+            .append("redirect_uri", redirectUri)
+            .append("response_type", "code")
+            .append("scope", scope.toString())
+
+        return MastodonClient.fullUrl(client.getInstanceName(), endpoint, parameters).toString()
     }
 
     /**
