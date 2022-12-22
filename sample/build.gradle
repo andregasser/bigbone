@@ -1,5 +1,6 @@
 plugins {
     id 'com.sys1yagi.mastodon-sample'
+    id 'checkstyle'
 }
 
 tasks.named("detekt") configure {
