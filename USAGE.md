@@ -1,4 +1,4 @@
-# First steps with Mastodon4j
+# First steps with Bigbone
 
 Following this guide will allow you to:
 * register your Mastodon application
@@ -24,7 +24,7 @@ Additionally, this guide uses the following values that should be replaced in yo
 // The actual value used instead should be a URL that will be interpreted by your application.
 redirectUris = "urn:ietf:wg:oauth:2.0:oob"
 
-// This is equal to the full range of scopes currently supported by Mastodon4j.
+// This is equal to the full range of scopes currently supported by Bigbone.
 // Instead of this, you should request as little as possible for your application.
 scope = Scope()
 ```
@@ -39,7 +39,7 @@ __Kotlin__
 val client: MastodonClient = MastodonClient.Builder(instanceHostname, OkHttpClient.Builder(), Gson()).build()
 val apps = Apps(client)
 val appRegistration = apps.createApp(
-	clientName = "mastodon4j-sample-app",
+	clientName = "bigbone-sample-app",
 	redirectUris = "urn:ietf:wg:oauth:2.0:oob",
 	scope = Scope(),
 	website = "https://example.org/"
@@ -53,12 +53,12 @@ MastodonClient client = new MastodonClient.Builder(instanceHostname, new OkHttpC
 Apps apps = new Apps(client);
 try {
 	AppRegistration appRegistration = apps.createApp(
-	    "mastodon4j-sample-app",
+	    "bigbone-sample-app",
 	    "urn:ietf:wg:oauth:2.0:oob",
 	    new Scope(),
 	    "https://example.org/"
 	).execute();
-} catch (Mastodon4jRequestException e) {
+} catch (BigboneRequestException e) {
 	// error handling
 }
 ```
@@ -175,7 +175,7 @@ public class GetRawJson {
             MastodonClient client = Authenticator.appRegistrationIfNeeded(instanceName, credentialFilePath, false);
             Public publicMethod = new Public(client);
             publicMethod.getLocalPublic().doOnJson(System.out::println).execute();
-        } catch (IOException | Mastodon4jRequestException e) {
+        } catch (IOException | BigboneRequestException e) {
             e.printStackTrace();
         }
     }
@@ -207,7 +207,7 @@ try {
   val shutdownable = streaming.localPublic(handler)
   Thread.sleep(10000L)
   shutdownable.shutdown()
-} catch(e: Mastodon4jRequestException) {
+} catch(e: BigboneRequestException) {
   e.printStackTrace()
 }
 ```

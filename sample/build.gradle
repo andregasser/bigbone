@@ -1,5 +1,6 @@
 plugins {
-    id 'com.sys1yagi.mastodon-sample'
+    id 'social.bigbone.bigbone-sample'
+    id 'checkstyle'
 }
 
 tasks.named("detekt") configure {
@@ -7,7 +8,7 @@ tasks.named("detekt") configure {
 }
 
 dependencies {
-    implementation project(':mastodon4j')
+    implementation project(':bigbone')
     implementation libs.gson
     implementation libs.okhttp
 }

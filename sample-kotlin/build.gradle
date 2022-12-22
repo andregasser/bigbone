@@ -1,10 +1,10 @@
 plugins {
-    id 'com.sys1yagi.mastodon-sample'
+    id 'social.bigbone.bigbone-sample'
 }
 
 dependencies {
-    implementation project(':mastodon4j')
-    implementation project(':mastodon4j-rx')
+    implementation project(':bigbone')
+    implementation project(':bigbone-rx')
     implementation libs.gson
     implementation libs.okhttp
     implementation libs.rxjava

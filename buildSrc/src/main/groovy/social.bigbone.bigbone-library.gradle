@@ -1,0 +1,33 @@
+plugins {
+    id 'social.bigbone.bigbone-base'
+    id 'java-library'
+    id 'kotlin'
+    id 'maven-publish'
+    id 'jacoco'
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "build"
+            url = rootProject.file("build/repo")
+        }
+    }
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+}
+
+jacoco {
+    toolVersion = libs.versions.jacoco.get()
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        csv.enabled false
+        html.destination file("${buildDir}/reports/jacoco")
+    }
+}
