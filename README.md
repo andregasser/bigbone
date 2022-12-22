@@ -8,10 +8,13 @@
 
 # Get Started
 
-Bigbone is published on Jitpack. Check the latest version here:
+Bigbone has not been published as a released version yet. But you can include a snapshot build of our library in your project if you want.
+But prepare for breaking changes, as we are in the process of changing some fundamental things. 
+
+Bigbone is available on Jitpack. Check the latest snapshot version here:
 [![](https://jitpack.io/v/andregasser/bigbone.svg)](https://jitpack.io/#andregasser/bigbone)
 
-To use Bigbone via Jitpack, add it to your root build.gradle at the end of repositories:
+To use Bigbone via Jitpack, add it to your root `build.gradle` at the end of repositories:
 
 ```groovy
 allprojects {
@@ -22,13 +25,14 @@ allprojects {
 }
 ```
 
-Then, add Bigbone dependencies to your module Gradle file:
+Then, add Bigbone dependencies to your module `build.gradle` file:
 
 ```groovy
-implementation 'com.github.andregasser.bigbone:bigbone:$version'
-implementation 'com.github.andregasser.bigbone:bigbone-rx:$version'
+implementation 'com.github.andregasser.bigbone:bigbone:master-SNAPSHOT'
+implementation 'com.github.andregasser.bigbone:bigbone-rx:master-SNAPSHOT'
 ```
 
+If you want to better understand how JitPack works, checkout their documentation [here](https://jitpack.io/docs/).
 Usage examples for Bigbone can be found in [USAGE.md](USAGE.md).
 
 ## Mastodon API 
