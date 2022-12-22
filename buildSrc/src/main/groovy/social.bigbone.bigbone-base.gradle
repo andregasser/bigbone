@@ -1,0 +1,19 @@
+plugins {
+    id 'java'
+    id 'io.gitlab.arturbosch.detekt'
+}
+
+group = "social.bigbone"
+version = libs.versions.bigbone.get()
+
+java {
+    withSourcesJar()
+    withJavadocJar()
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(8)
+    }
+}
+
+tasks.withType(Test).configureEach {
+    useJUnitPlatform()
+}

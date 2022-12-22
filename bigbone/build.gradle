@@ -1,0 +1,15 @@
+plugins {
+    id 'social.bigbone.bigbone-library'
+}
+
+dependencies {
+    api libs.okhttp
+    api libs.gson
+    implementation libs.kotlin.jdk8
+
+    testImplementation libs.junit.jupiter
+    testImplementation libs.okio
+    testImplementation libs.kluent
+    testImplementation libs.mockk
+    testImplementation libs.mockk.dsl
+}

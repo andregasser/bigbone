@@ -1,6 +1,6 @@
 # Implementation Progress
 
-Mastodon4j does not yet implement all the endpoints that are offered by the [Mastodon API](https://docs.joinmastodon.org/methods/). We use this page to
+Bigbone does not yet implement all the endpoints that are offered by the [Mastodon API](https://docs.joinmastodon.org/methods/). We use this page to
 summarize which endpoints have been implemented and to what extent. 
 
 We use the __Status__ column to provide information about the current implementation status of this endpoint. Values are as follows:

@@ -1,0 +1,16 @@
+plugins {
+    id 'social.bigbone.bigbone-library'
+}
+
+dependencies {
+    api project(':bigbone')
+    api libs.rxjava
+    api libs.okhttp
+
+    implementation libs.kotlin.jdk8
+
+    testImplementation libs.junit.jupiter
+    testImplementation libs.mockk
+    testImplementation libs.mockk.dsl
+    testImplementation libs.gson
+}

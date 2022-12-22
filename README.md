@@ -1,17 +1,20 @@
-# Mastodon4j
+# Bigbone
 
-![Build](https://github.com/andregasser/mastodon4j/actions/workflows/build.yml/badge.svg)
-[![codecov](https://codecov.io/gh/andregasser/mastodon4j/branch/master/graph/badge.svg?token=3AFHQQH547)](https://codecov.io/gh/andregasser/mastodon4j)
+![Build](https://github.com/andregasser/bigbone/actions/workflows/build.yml/badge.svg)
+[![codecov](https://codecov.io/gh/andregasser/bigbone/branch/master/graph/badge.svg?token=3AFHQQH547)](https://codecov.io/gh/andregasser/bigbone)
 
-**Mastodon4j** is a [Mastodon](https://docs.joinmastodon.org/) client for Java and Kotlin.
+**Bigbone** is a [Mastodon](https://docs.joinmastodon.org/) client for Java and Kotlin.
 
 
 # Get Started
 
-Mastodon4j is published on Jitpack. Check the latest version here:
-[![](https://jitpack.io/v/andregasser/mastodon4j.svg)](https://jitpack.io/#andregasser/mastodon4j)
+Bigbone has not been published as a released version yet. But you can include a snapshot build of our library in your project if you want.
+But prepare for breaking changes, as we are in the process of changing some fundamental things. 
 
-To use Mastodon4j via Jitpack, add it to your root build.gradle at the end of repositories:
+Bigbone is available on Jitpack. Check the latest snapshot version here:
+[![](https://jitpack.io/v/andregasser/bigbone.svg)](https://jitpack.io/#andregasser/bigbone)
+
+To use Bigbone via Jitpack, add it to your root `build.gradle` at the end of repositories:
 
 ```groovy
 allprojects {
@@ -22,56 +25,40 @@ allprojects {
 }
 ```
 
-Then, add Mastodon4j dependencies to your module Gradle file:
+Then, add Bigbone dependencies to your module `build.gradle` file:
 
 ```groovy
-implementation 'com.github.andregasser.mastodon4j:mastodon4j:$version'
-implementation 'com.github.andregasser.mastodon4j:mastodon4j-rx:$version'
+implementation 'com.github.andregasser.bigbone:bigbone:master-SNAPSHOT'
+implementation 'com.github.andregasser.bigbone:bigbone-rx:master-SNAPSHOT'
 ```
 
-Usage examples for Mastodon4j can be found in [USAGE.md](USAGE.md).
+If you want to better understand how JitPack works, checkout their documentation [here](https://jitpack.io/docs/).
+Usage examples for Bigbone can be found in [USAGE.md](USAGE.md).
 
-## API Documentation
+## Mastodon API 
 
-The official Mastodon API can be found here: https://docs.joinmastodon.org/client/intro/
+Bigbone aims to implement the Mastodon API. The official Mastodon API can be found here: https://docs.joinmastodon.org/client/intro/
+More information about the current implementation progress can be found in [API.md](API.md). For more details about future releases 
+and our roadmap please have a look in the __Issues__ or __Projects__ section. 
 
-Implementation progress by Mastodon4j can be found in [API.md](API.md). Mastodon4j uses [Semantic Versioning 2.0.0](http://semver.org/spec/v2.0.0.html).
+## Releases
+We did not yet release a publicly available version. But we are working on it and hope to release an initial version 2.0.0 soon. Until then,
+you can experiment with our snapshot builds on JitPack.
 
+Bigbone uses [Semantic Versioning 2.0.0](http://semver.org/spec/v2.0.0.html).
 
 # Contribution
-
-## Pull Requests
-I am happy to handle any pull requests that come in. Thanks for your contribution!
-
-## Reporting Issues
-Please check out the [issues](https://github.com/andregasser/mastodon4j/issues) page for reporting issues. 
+Contributors are very welcome. If you think you can contribute, please do so! We will happily review any request we get. You can either
+create a pull request or [create an issue](https://github.com/andregasser/bigbone/issues). 
 
 Thanks to all the people who have contributed so far:
 
 [![Profile images of all the contributors](https://contrib.rocks/image?repo=andregasser/bigbone)](https://github.com/andregasser/bigbone/graphs/contributors)
 
 # License
+Bigbone is a fork of the original library published by Toshihiro Yagi. Unfortunately, it became abandoned and has not seen any updates
+since a long time. I have therefore decided to revive and enhance it in an independent way. My personal hope is, that this library will
+satisfy developers working on the Mastodon related topics. 
 
-```
-MIT License
-
-Copyright (c) 2017 Toshihiro Yagi
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-```
+My personal thanks goes to Toshihiro and his contributors back then for building a basis we can now build upon.
+The original license file can be found in the [LICENSE](LICENSE) file.
