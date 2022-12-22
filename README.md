@@ -51,6 +51,10 @@ Bigbone uses [Semantic Versioning 2.0.0](http://semver.org/spec/v2.0.0.html).
 Contributors are very welcome. If you think you can contribute, please do so! We will happily review any request we get. You can either
 create a pull request or [create an issue](https://github.com/andregasser/bigbone/issues). 
 
+Thanks to all the people who have contributed so far:
+
+[![Profile images of all the contributors](https://contrib.rocks/image?repo=andregasser/bigbone)](https://github.com/andregasser/bigbone/graphs/contributors)
+
 # License
 Bigbone is a fork of the original library published by Toshihiro Yagi. Unfortunately, it became abandoned and has not seen any updates
 since a long time. I have therefore decided to revive and enhance it in an independent way. My personal hope is, that this library will

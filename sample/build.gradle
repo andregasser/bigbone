@@ -1,5 +1,6 @@
 plugins {
     id 'social.bigbone.bigbone-sample'
+    id 'checkstyle'
 }
 
 tasks.named("detekt") configure {
