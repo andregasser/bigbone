@@ -3,7 +3,7 @@ package social.bigbone.api.method
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import social.bigbone.api.exception.Mastodon4jRequestException
+import social.bigbone.api.exception.BigboneRequestException
 import social.bigbone.testtool.MockClient
 
 class MutesTest {
@@ -20,7 +20,7 @@ class MutesTest {
 
     @Test
     fun getMutesWithException() {
-        Assertions.assertThrows(Mastodon4jRequestException::class.java) {
+        Assertions.assertThrows(BigboneRequestException::class.java) {
             val client = MockClient.ioException()
             val mutes = Mutes(client)
             mutes.getMutes().execute()

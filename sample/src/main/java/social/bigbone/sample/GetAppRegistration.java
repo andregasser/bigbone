@@ -6,7 +6,7 @@ import okhttp3.OkHttpClient;
 import social.bigbone.MastodonClient;
 import social.bigbone.api.Scope;
 import social.bigbone.api.entity.auth.AppRegistration;
-import social.bigbone.api.exception.Mastodon4jRequestException;
+import social.bigbone.api.exception.BigboneRequestException;
 import social.bigbone.api.method.Apps;
 
 public class GetAppRegistration {
@@ -23,7 +23,7 @@ public class GetAppRegistration {
             System.out.println("instance=" + registration.getInstanceName());
             System.out.println("client_id=" + registration.getClientId());
             System.out.println("client_secret=" + registration.getClientSecret());
-        } catch (Mastodon4jRequestException e) {
+        } catch (BigboneRequestException e) {
             int statusCode = e.getResponse().code();
         }
     }

@@ -5,7 +5,7 @@ import social.bigbone.MastodonRequest
 import social.bigbone.api.Pageable
 import social.bigbone.api.Range
 import social.bigbone.api.entity.Account
-import social.bigbone.api.exception.Mastodon4jRequestException
+import social.bigbone.api.exception.BigboneRequestException
 import social.bigbone.extension.emptyRequestBody
 
 /**
@@ -24,20 +24,20 @@ class FollowRequests(private val client: MastodonClient) {
     }
 
     //  POST /api/v1/follow_requests/:id/authorize
-    @Throws(Mastodon4jRequestException::class)
+    @Throws(BigboneRequestException::class)
     fun postAuthorize(accountId: Long) {
         val response = client.post("follow_requests/$accountId/authorize", emptyRequestBody())
         if (!response.isSuccessful) {
-            throw Mastodon4jRequestException(response)
+            throw BigboneRequestException(response)
         }
     }
 
     //  POST /api/v1/follow_requests/:id/reject
-    @Throws(Mastodon4jRequestException::class)
+    @Throws(BigboneRequestException::class)
     fun postReject(accountId: Long) {
         val response = client.post("follow_requests/$accountId/reject", emptyRequestBody())
         if (!response.isSuccessful) {
-            throw Mastodon4jRequestException(response)
+            throw BigboneRequestException(response)
         }
     }
 }

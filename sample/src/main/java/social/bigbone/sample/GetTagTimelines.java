@@ -7,7 +7,7 @@ import social.bigbone.api.Pageable;
 import social.bigbone.api.Range;
 import social.bigbone.api.entity.Status;
 import social.bigbone.api.method.Public;
-import social.bigbone.api.exception.Mastodon4jRequestException;
+import social.bigbone.api.exception.BigboneRequestException;
 
 public class GetTagTimelines {
     public static void main(String[] args) {
@@ -22,7 +22,7 @@ public class GetTagTimelines {
                 System.out.println(status.getContent());
                 System.out.println(status.isReblogged());
             });
-        } catch (Mastodon4jRequestException e) {
+        } catch (BigboneRequestException e) {
             e.printStackTrace();
         }
     }

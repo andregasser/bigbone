@@ -6,7 +6,7 @@ import social.bigbone.api.Pageable
 import social.bigbone.api.Range
 import social.bigbone.api.entity.MastodonList
 import social.bigbone.api.entity.Status
-import social.bigbone.api.exception.Mastodon4jRequestException
+import social.bigbone.api.exception.BigboneRequestException
 
 class MastodonLists(private val client: MastodonClient) {
 
@@ -25,7 +25,7 @@ class MastodonLists(private val client: MastodonClient) {
     }
 
     //GET /api/v1/timelines/list/:list_id
-    @Throws(Mastodon4jRequestException::class)
+    @Throws(BigboneRequestException::class)
     fun getListTimeLine(listID: Long, range: Range = Range()): MastodonRequest<Pageable<Status>> {
         return MastodonRequest<Pageable<Status>>(
                 {

@@ -1,7 +1,7 @@
 # Bigbone
 
 ![Build](https://github.com/andregasser/bigbone/actions/workflows/build.yml/badge.svg)
-[![codecov](https://codecov.io/gh/andregasser/bigbone/branch/master/graph/badge.svg?token=3AFHQQH547)](https://codecov.io/gh/andregasser/mastodon4j)
+[![codecov](https://codecov.io/gh/andregasser/bigbone/branch/master/graph/badge.svg?token=3AFHQQH547)](https://codecov.io/gh/andregasser/bigbone)
 
 **Bigbone** is a [Mastodon](https://docs.joinmastodon.org/) client for Java and Kotlin.
 
@@ -52,5 +52,5 @@ Bigbone is a fork of the original library published by Toshihiro Yagi. Unfortuna
 since a long time. I have therefore decided to revive and enhance it in an independent way. My personal hope is, that this library will
 satisfy developers working on the Mastodon related topics. 
 
-My personal thanks goes to Tishihiro and his contributors back then for building a basis we can now build upon.
-The original license file can be found in the [LICENSE.md](LICENSE.md) file.
+My personal thanks goes to Toshihiro and his contributors back then for building a basis we can now build upon.
+The original license file can be found in the [LICENSE](LICENSE) file.

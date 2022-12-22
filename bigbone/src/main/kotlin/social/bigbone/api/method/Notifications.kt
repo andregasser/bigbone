@@ -5,7 +5,7 @@ import social.bigbone.MastodonRequest
 import social.bigbone.api.Pageable
 import social.bigbone.api.Range
 import social.bigbone.api.entity.Notification
-import social.bigbone.api.exception.Mastodon4jRequestException
+import social.bigbone.api.exception.BigboneRequestException
 import social.bigbone.extension.emptyRequestBody
 
 /**
@@ -45,13 +45,13 @@ class Notifications(private val client: MastodonClient) {
     }
 
     //  POST /api/v1/notifications/clear
-    @Throws(Mastodon4jRequestException::class)
+    @Throws(BigboneRequestException::class)
     fun clearNotifications() {
         val response = client.post("notifications/clear",
                 emptyRequestBody()
         )
         if (!response.isSuccessful) {
-            throw Mastodon4jRequestException(response)
+            throw BigboneRequestException(response)
         }
     }
 }

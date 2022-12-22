@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import social.bigbone.MastodonClient
 import social.bigbone.api.Scope
-import social.bigbone.api.exception.Mastodon4jRequestException
+import social.bigbone.api.exception.BigboneRequestException
 import social.bigbone.testtool.MockClient
 
 class AppsTest {
@@ -30,7 +30,7 @@ class AppsTest {
 
     @Test
     fun createAppWithException() {
-        Assertions.assertThrows(Mastodon4jRequestException::class.java) {
+        Assertions.assertThrows(BigboneRequestException::class.java) {
             val client = MockClient.ioException()
             val apps = Apps(client)
             apps.createApp(
@@ -64,7 +64,7 @@ class AppsTest {
 
     @Test
     fun getAccessTokenWithException() {
-        Assertions.assertThrows(Mastodon4jRequestException::class.java) {
+        Assertions.assertThrows(BigboneRequestException::class.java) {
             val client: MastodonClient = MockClient.ioException()
             every { client.getInstanceName() } returns "mastodon.cloud"
             val apps = Apps(client)
@@ -86,7 +86,7 @@ class AppsTest {
 
     @Test
     fun postUserNameAndPasswordWithException() {
-        Assertions.assertThrows(Mastodon4jRequestException::class.java) {
+        Assertions.assertThrows(BigboneRequestException::class.java) {
             val client: MastodonClient = MockClient.ioException()
             every { client.getInstanceName() } returns "mastodon.cloud"
             val apps = Apps(client)

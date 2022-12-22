@@ -6,7 +6,7 @@ import social.bigbone.MastodonClient;
 import social.bigbone.api.Scope;
 import social.bigbone.api.entity.auth.AccessToken;
 import social.bigbone.api.entity.auth.AppRegistration;
-import social.bigbone.api.exception.Mastodon4jRequestException;
+import social.bigbone.api.exception.BigboneRequestException;
 import social.bigbone.api.method.Apps;
 
 import java.io.File;
@@ -21,7 +21,7 @@ final class Authenticator {
 
     private Authenticator() {}
 
-    static MastodonClient appRegistrationIfNeeded(String instanceName, String credentialFilePath, boolean useStreaming) throws IOException, Mastodon4jRequestException {
+    static MastodonClient appRegistrationIfNeeded(String instanceName, String credentialFilePath, boolean useStreaming) throws IOException, BigboneRequestException {
         File file = new File(credentialFilePath);
         if (!file.exists()) {
             System.out.println("create $credentialFilePath.");
@@ -61,13 +61,13 @@ final class Authenticator {
         return builder.build();
     }
 
-    private static AccessToken getAccessToken(String instanceName, String clientId, String clientSecret, String email, String password) throws Mastodon4jRequestException {
+    private static AccessToken getAccessToken(String instanceName, String clientId, String clientSecret, String email, String password) throws BigboneRequestException {
         MastodonClient client = new MastodonClient.Builder(instanceName, new OkHttpClient.Builder(), new Gson()).build();
         Apps apps = new Apps(client);
         return apps.postUserNameAndPassword(clientId, clientSecret, new Scope(), email, password).execute();
     }
 
-    private static AppRegistration appRegistration(String instanceName) throws Mastodon4jRequestException {
+    private static AppRegistration appRegistration(String instanceName) throws BigboneRequestException {
         MastodonClient client = new MastodonClient.Builder(instanceName, new OkHttpClient.Builder(), new Gson()).build();
         Apps apps = new Apps(client);
         return apps.createApp("kotlindon", "urn:ietf:wg:oauth:2.0:oob", new Scope(), null).execute();

@@ -4,7 +4,7 @@ import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import social.bigbone.api.exception.Mastodon4jRequestException
+import social.bigbone.api.exception.BigboneRequestException
 import social.bigbone.testtool.MockClient
 import social.bigbone.testtool.TestUtil
 import java.util.concurrent.atomic.AtomicInteger
@@ -54,7 +54,7 @@ class PublicTest {
 
     @Test
     fun getInstanceWithException() {
-        Assertions.assertThrows(Mastodon4jRequestException::class.java) {
+        Assertions.assertThrows(BigboneRequestException::class.java) {
             val client = MockClient.ioException()
             val publicMethod = Public(client)
             publicMethod.getInstance().execute()
@@ -75,7 +75,7 @@ class PublicTest {
 
     @Test
     fun getSearchWithException() {
-        Assertions.assertThrows(Mastodon4jRequestException::class.java) {
+        Assertions.assertThrows(BigboneRequestException::class.java) {
             val client = MockClient.ioException()
             val publicMethod = Public(client)
             publicMethod.getSearch("test").execute()
@@ -111,7 +111,7 @@ class PublicTest {
 
     @Test
     fun getLocalPublicWithException() {
-        Assertions.assertThrows(Mastodon4jRequestException::class.java) {
+        Assertions.assertThrows(BigboneRequestException::class.java) {
             val client = MockClient.ioException()
             val publicMethod = Public(client)
             publicMethod.getLocalPublic().execute()
@@ -128,7 +128,7 @@ class PublicTest {
 
     @Test
     fun getLocalTagWithException() {
-        Assertions.assertThrows(Mastodon4jRequestException::class.java) {
+        Assertions.assertThrows(BigboneRequestException::class.java) {
             val client = MockClient.ioException()
             val publicMethod = Public(client)
             publicMethod.getLocalTag("mastodon").execute()

@@ -3,7 +3,7 @@ package social.bigbone.sample
 import social.bigbone.api.Handler
 import social.bigbone.api.entity.Notification
 import social.bigbone.api.entity.Status
-import social.bigbone.api.exception.Mastodon4jRequestException
+import social.bigbone.api.exception.BigboneRequestException
 import social.bigbone.api.method.Streaming
 
 object StreamPublicTimeline {
@@ -29,7 +29,7 @@ object StreamPublicTimeline {
             val shutdownable = streaming.localPublic(handler)
             Thread.sleep(10_000L)
             shutdownable.shutdown()
-        } catch (e: Mastodon4jRequestException) {
+        } catch (e: BigboneRequestException) {
             println("error")
             println(e.response?.code)
             println(e.response?.message)

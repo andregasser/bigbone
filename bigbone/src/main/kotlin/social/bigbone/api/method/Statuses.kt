@@ -11,7 +11,7 @@ import social.bigbone.api.entity.Account
 import social.bigbone.api.entity.Card
 import social.bigbone.api.entity.Context
 import social.bigbone.api.entity.Status
-import social.bigbone.api.exception.Mastodon4jRequestException
+import social.bigbone.api.exception.BigboneRequestException
 import social.bigbone.extension.emptyRequestBody
 
 /**
@@ -20,7 +20,7 @@ import social.bigbone.extension.emptyRequestBody
 class Statuses(private val client: MastodonClient) {
 
     //  GET /api/v1/statuses/:id
-    @Throws(Mastodon4jRequestException::class)
+    @Throws(BigboneRequestException::class)
     fun getStatus(statusId: Long): MastodonRequest<Status> {
         return MastodonRequest<Status>(
                 {
@@ -33,7 +33,7 @@ class Statuses(private val client: MastodonClient) {
     }
 
     //  GET /api/v1/statuses/:id/context
-    @Throws(Mastodon4jRequestException::class)
+    @Throws(BigboneRequestException::class)
     fun getContext(statusId: Long): MastodonRequest<Context> {
         return MastodonRequest<Context>(
                 {
@@ -46,7 +46,7 @@ class Statuses(private val client: MastodonClient) {
     }
 
     //  GET /api/v1/statuses/:id/card
-    @Throws(Mastodon4jRequestException::class)
+    @Throws(BigboneRequestException::class)
     fun getCard(statusId: Long): MastodonRequest<Card> {
         return MastodonRequest<Card>(
                 {
@@ -60,7 +60,7 @@ class Statuses(private val client: MastodonClient) {
 
     //  GET /api/v1/reblogged_by
     @JvmOverloads
-    @Throws(Mastodon4jRequestException::class)
+    @Throws(BigboneRequestException::class)
     fun getRebloggedBy(statusId: Long, range: Range = Range()): MastodonRequest<Pageable<Account>> {
         return MastodonRequest<Pageable<Account>>(
                 {
@@ -77,7 +77,7 @@ class Statuses(private val client: MastodonClient) {
 
     //  GET /api/v1/favourited_by
     @JvmOverloads
-    @Throws(Mastodon4jRequestException::class)
+    @Throws(BigboneRequestException::class)
     fun getFavouritedBy(statusId: Long, range: Range = Range()): MastodonRequest<Pageable<Account>> {
         return MastodonRequest<Pageable<Account>>(
                 {
@@ -102,7 +102,7 @@ class Statuses(private val client: MastodonClient) {
      * visibility (optional): either "direct", "private", "unlisted" or "public"
      */
     @JvmOverloads
-    @Throws(Mastodon4jRequestException::class)
+    @Throws(BigboneRequestException::class)
     fun postStatus(
             status: String,
             inReplyToId: Long?,
@@ -140,16 +140,16 @@ class Statuses(private val client: MastodonClient) {
     }
 
     //  DELETE /api/v1/statuses/:id
-    @Throws(Mastodon4jRequestException::class)
+    @Throws(BigboneRequestException::class)
     fun deleteStatus(statusId: Long) {
         val response = client.delete("statuses/$statusId")
         if (!response.isSuccessful) {
-            throw Mastodon4jRequestException(response)
+            throw BigboneRequestException(response)
         }
     }
 
     //  POST /api/v1/statuses/:id/reblog
-    @Throws(Mastodon4jRequestException::class)
+    @Throws(BigboneRequestException::class)
     fun postReblog(statusId: Long): MastodonRequest<Status> {
         return MastodonRequest<Status>(
                 {
@@ -162,7 +162,7 @@ class Statuses(private val client: MastodonClient) {
     }
 
     //  POST /api/v1/statuses/:id/unreblog
-    @Throws(Mastodon4jRequestException::class)
+    @Throws(BigboneRequestException::class)
     fun postUnreblog(statusId: Long): MastodonRequest<Status> {
         return MastodonRequest<Status>(
                 {
@@ -175,7 +175,7 @@ class Statuses(private val client: MastodonClient) {
     }
 
     //  POST /api/v1/statuses/:id/favourite
-    @Throws(Mastodon4jRequestException::class)
+    @Throws(BigboneRequestException::class)
     fun postFavourite(statusId: Long): MastodonRequest<Status> {
         return MastodonRequest<Status>(
                 {
@@ -188,7 +188,7 @@ class Statuses(private val client: MastodonClient) {
     }
 
     //  POST /api/v1/statuses/:id/unfavourite
-    @Throws(Mastodon4jRequestException::class)
+    @Throws(BigboneRequestException::class)
     fun postUnfavourite(statusId: Long): MastodonRequest<Status> {
         return MastodonRequest<Status>(
                 {

@@ -6,7 +6,7 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody
 import okhttp3.Response
-import social.bigbone.api.exception.Mastodon4jRequestException
+import social.bigbone.api.exception.BigboneRequestException
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 
@@ -90,7 +90,7 @@ private constructor(
                             .build())
             return call.execute()
         } catch (e: IOException) {
-            throw Mastodon4jRequestException(e)
+            throw BigboneRequestException(e)
         }
     }
 
@@ -104,9 +104,9 @@ private constructor(
                             .build())
             return call.execute()
         } catch (e: IllegalArgumentException) {
-            throw Mastodon4jRequestException(e)
+            throw BigboneRequestException(e)
         } catch (e: IOException) {
-            throw Mastodon4jRequestException(e)
+            throw BigboneRequestException(e)
         }
     }
 
@@ -125,7 +125,7 @@ private constructor(
             )
             return call.execute()
         } catch (e: IOException) {
-            throw Mastodon4jRequestException(e)
+            throw BigboneRequestException(e)
         }
     }
 
@@ -141,7 +141,7 @@ private constructor(
             )
             return call.execute()
         } catch (e: IOException) {
-            throw Mastodon4jRequestException(e)
+            throw BigboneRequestException(e)
         }
     }
 }

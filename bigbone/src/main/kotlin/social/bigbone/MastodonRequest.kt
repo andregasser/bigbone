@@ -2,7 +2,7 @@ package social.bigbone
 
 import com.google.gson.JsonParser
 import okhttp3.Response
-import social.bigbone.api.exception.Mastodon4jRequestException
+import social.bigbone.api.exception.BigboneRequestException
 import social.bigbone.extension.toPageable
 import java.lang.Exception
 
@@ -32,7 +32,7 @@ open class MastodonRequest<T>(
     }
 
     @Suppress("UNCHECKED_CAST")
-    @Throws(Mastodon4jRequestException::class)
+    @Throws(BigboneRequestException::class)
     fun execute(): T {
         val response = executor()
         if (response.isSuccessful) {
@@ -56,10 +56,10 @@ open class MastodonRequest<T>(
                     }
                 }
             } catch (e: Exception) {
-                throw Mastodon4jRequestException(e)
+                throw BigboneRequestException(e)
             }
         } else {
-            throw Mastodon4jRequestException(response)
+            throw BigboneRequestException(response)
         }
     }
 }

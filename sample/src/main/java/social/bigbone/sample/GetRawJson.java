@@ -1,7 +1,7 @@
 package social.bigbone.sample;
 
 import social.bigbone.MastodonClient;
-import social.bigbone.api.exception.Mastodon4jRequestException;
+import social.bigbone.api.exception.BigboneRequestException;
 import social.bigbone.api.method.Public;
 
 import java.io.IOException;
@@ -14,7 +14,7 @@ public class GetRawJson {
             MastodonClient client = Authenticator.appRegistrationIfNeeded(instanceName, credentialFilePath, false);
             Public publicMethod = new Public(client);
             publicMethod.getLocalPublic().doOnJson(System.out::println).execute();
-        } catch (IOException | Mastodon4jRequestException e) {
+        } catch (IOException | BigboneRequestException e) {
             e.printStackTrace();
         }
     }
