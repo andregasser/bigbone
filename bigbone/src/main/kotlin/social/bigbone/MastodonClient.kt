@@ -12,16 +12,18 @@ import java.util.concurrent.TimeUnit
 
 open class MastodonClient
 private constructor(
-        private val instanceName: String,
-        private val client: OkHttpClient,
-        private val gson: Gson
+    private val instanceName: String,
+    private val client: OkHttpClient,
+    private val gson: Gson
 ) {
     private var debug = false
-    val baseUrl = "https://${instanceName}/api/v1"
+    val baseUrl = "https://$instanceName/api/v1"
 
-    class Builder(private val instanceName: String,
-                  private val okHttpClientBuilder: OkHttpClient.Builder,
-                  private val gson: Gson) {
+    class Builder(
+        private val instanceName: String,
+        private val okHttpClientBuilder: OkHttpClient.Builder,
+        private val gson: Gson
+    ) {
 
         private var accessToken: String? = null
         private var debug = false
@@ -40,9 +42,9 @@ private constructor(
 
         fun build(): MastodonClient {
             return MastodonClient(
-                    instanceName,
-                    okHttpClientBuilder.addNetworkInterceptor(AuthorizationInterceptor(accessToken)).build(),
-                    gson
+                instanceName,
+                okHttpClientBuilder.addNetworkInterceptor(AuthorizationInterceptor(accessToken)).build(),
+                gson
             ).also {
                 it.debug = debug
             }
@@ -60,14 +62,14 @@ private constructor(
         override fun intercept(chain: Interceptor.Chain): Response {
             val originalRequest = chain.request()
             val compressedRequest = originalRequest.newBuilder()
-                    .headers(originalRequest.headers)
-                    .method(originalRequest.method, originalRequest.body)
-                    .apply {
-                        accessToken?.let {
-                            header("Authorization", String.format("Bearer %s", it));
-                        }
+                .headers(originalRequest.headers)
+                .method(originalRequest.method, originalRequest.body)
+                .apply {
+                    accessToken?.let {
+                        header("Authorization", String.format("Bearer %s", it))
                     }
-                    .build()
+                }
+                .build()
             return chain.proceed(compressedRequest)
         }
     }
@@ -84,10 +86,11 @@ private constructor(
                 "$url?${it.build()}"
             } ?: url
             val call = client.newCall(
-                    Request.Builder()
-                            .url(urlWithParams)
-                            .get()
-                            .build())
+                Request.Builder()
+                    .url(urlWithParams)
+                    .get()
+                    .build()
+            )
             return call.execute()
         } catch (e: IOException) {
             throw BigboneRequestException(e)
@@ -98,10 +101,11 @@ private constructor(
         try {
             debugPrint(url)
             val call = client.newCall(
-                    Request.Builder()
-                            .url(url)
-                            .post(body)
-                            .build())
+                Request.Builder()
+                    .url(url)
+                    .post(body)
+                    .build()
+            )
             return call.execute()
         } catch (e: IllegalArgumentException) {
             throw BigboneRequestException(e)
@@ -111,17 +115,17 @@ private constructor(
     }
 
     open fun post(path: String, body: RequestBody) =
-            postUrl("$baseUrl/$path", body)
+        postUrl("$baseUrl/$path", body)
 
     open fun patch(path: String, body: RequestBody): Response {
         try {
             val url = "$baseUrl/$path"
             debugPrint(url)
             val call = client.newCall(
-                    Request.Builder()
-                            .url(url)
-                            .patch(body)
-                            .build()
+                Request.Builder()
+                    .url(url)
+                    .patch(body)
+                    .build()
             )
             return call.execute()
         } catch (e: IOException) {
@@ -134,10 +138,10 @@ private constructor(
             val url = "$baseUrl/$path"
             debugPrint(url)
             val call = client.newCall(
-                    Request.Builder()
-                            .url(url)
-                            .delete()
-                            .build()
+                Request.Builder()
+                    .url(url)
+                    .delete()
+                    .build()
             )
             return call.execute()
         } catch (e: IOException) {

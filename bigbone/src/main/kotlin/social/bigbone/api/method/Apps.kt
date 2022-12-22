@@ -33,14 +33,15 @@ class Apps(private val client: MastodonClient) {
         scope.validate()
         return MastodonRequest(
             {
-                client.post("apps",
+                client.post(
+                    "apps",
                     arrayListOf(
                         "client_name=$clientName",
                         "scopes=$scope",
                         "redirect_uris=$redirectUris"
                     ).apply {
                         website?.let {
-                            add("website=${it}")
+                            add("website=$it")
                         }
                     }.joinToString(separator = "&")
                         .toRequestBody("application/x-www-form-urlencoded; charset=utf-8".toMediaTypeOrNull())
@@ -96,7 +97,8 @@ class Apps(private val client: MastodonClient) {
         ).joinToString(separator = "&")
         return MastodonRequest(
             {
-                client.postUrl(url,
+                client.postUrl(
+                    url,
                     parameters
                         .toRequestBody("application/x-www-form-urlencoded; charset=utf-8".toMediaTypeOrNull())
                 )
@@ -114,7 +116,7 @@ class Apps(private val client: MastodonClient) {
      */
     @Deprecated(
         "This method uses grant_type 'password' which is undocumented in Mastodon API" +
-                " and should not be used in production code.",
+            " and should not be used in production code.",
         ReplaceWith("getAccessToken()"),
         DeprecationLevel.WARNING
     )
@@ -137,7 +139,8 @@ class Apps(private val client: MastodonClient) {
 
         return MastodonRequest(
             {
-                client.postUrl(url,
+                client.postUrl(
+                    url,
                     parameters
                         .toRequestBody("application/x-www-form-urlencoded; charset=utf-8".toMediaTypeOrNull())
                 )

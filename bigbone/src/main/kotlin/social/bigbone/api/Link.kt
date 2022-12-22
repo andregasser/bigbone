@@ -1,11 +1,11 @@
 package social.bigbone.api
 
 class Link(
-        val linkHeader: String,
-        val nextPath: String,
-        val prevPath: String,
-        val maxId: Long,
-        val sinceId: Long
+    val linkHeader: String,
+    val nextPath: String,
+    val prevPath: String,
+    val maxId: Long,
+    val sinceId: Long
 ) {
     companion object {
         @JvmStatic

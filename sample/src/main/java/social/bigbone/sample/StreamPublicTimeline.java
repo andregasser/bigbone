@@ -15,9 +15,9 @@ public class StreamPublicTimeline {
         // require authentication even if public streaming
         String accessToken = "PUT YOUR ACCESS TOKEN";
         MastodonClient client = new MastodonClient.Builder("mstdn.jp", new OkHttpClient.Builder(), new Gson())
-                .accessToken(accessToken)
-                .useStreamingApi()
-                .build();
+            .accessToken(accessToken)
+            .useStreamingApi()
+            .build();
         Handler handler = new Handler() {
             @Override
             public void onStatus(@NotNull Status status) {

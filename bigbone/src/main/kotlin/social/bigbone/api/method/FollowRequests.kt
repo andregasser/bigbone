@@ -16,10 +16,10 @@ class FollowRequests(private val client: MastodonClient) {
     @JvmOverloads
     fun getFollowRequests(range: Range = Range()): MastodonRequest<Pageable<Account>> {
         return MastodonRequest<Pageable<Account>>(
-                { client.get("follow_requests", range.toParameter()) },
-                {
-                    client.getSerializer().fromJson(it, Account::class.java)
-                }
+            { client.get("follow_requests", range.toParameter()) },
+            {
+                client.getSerializer().fromJson(it, Account::class.java)
+            }
         ).toPageable()
     }
 

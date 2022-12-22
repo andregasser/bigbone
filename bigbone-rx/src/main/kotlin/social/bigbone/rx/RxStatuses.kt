@@ -71,12 +71,12 @@ class RxStatuses(client: MastodonClient) {
     }
 
     fun postStatus(
-            status: String,
-            inReplyToId: Long? = null,
-            mediaIds: List<Long>? = null,
-            sensitive: Boolean = false,
-            spoilerText: String? = null,
-            visibility: Status.Visibility = Status.Visibility.Public
+        status: String,
+        inReplyToId: Long? = null,
+        mediaIds: List<Long>? = null,
+        sensitive: Boolean = false,
+        spoilerText: String? = null,
+        visibility: Status.Visibility = Status.Visibility.Public
     ): Single<Status> {
         return Single.create {
             try {

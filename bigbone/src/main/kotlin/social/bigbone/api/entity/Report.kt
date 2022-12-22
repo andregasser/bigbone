@@ -9,5 +9,5 @@ class Report(
     @SerializedName("id")
     val id: Long = 0L, // The ID of the report
     @SerializedName("action_taken")
-    val actionTaken: String = "" //	The action taken in response to the report
+    val actionTaken: String = "" // The action taken in response to the report
 )

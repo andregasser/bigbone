@@ -7,7 +7,7 @@ fun <T> single(f: () -> T): Single<T> {
         try {
             val result = f()
             it.onSuccess(result)
-        } catch(throwable: Throwable) {
+        } catch (throwable: Throwable) {
             it.onErrorIfNotDisposed(throwable)
         }
     }

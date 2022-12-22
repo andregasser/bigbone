@@ -17,18 +17,19 @@ class Follows(private val client: MastodonClient) {
      */
     fun postRemoteFollow(uri: String): MastodonRequest<Account> {
         val parameters = Parameter()
-                .append("uri", uri)
-                .build()
+            .append("uri", uri)
+            .build()
         return MastodonRequest<Account>(
-                {
-                    client.post("follows",
-                        parameters
-                            .toRequestBody("application/x-www-form-urlencoded; charset=utf-8".toMediaTypeOrNull())
-                    )
-                },
-                {
-                    client.getSerializer().fromJson(it, Account::class.java)
-                }
+            {
+                client.post(
+                    "follows",
+                    parameters
+                        .toRequestBody("application/x-www-form-urlencoded; charset=utf-8".toMediaTypeOrNull())
+                )
+            },
+            {
+                client.getSerializer().fromJson(it, Account::class.java)
+            }
         )
     }
 }

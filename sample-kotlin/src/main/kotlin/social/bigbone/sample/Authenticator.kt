@@ -42,11 +42,12 @@ object Authenticator {
             val email = System.`in`.bufferedReader().readLine()
             println("please input your password...")
             val pass = System.`in`.bufferedReader().readLine()
-            val accessToken = getAccessToken(instanceName,
-                    clientId,
-                    clientSecret,
-                    email,
-                    pass
+            val accessToken = getAccessToken(
+                instanceName,
+                clientId,
+                clientSecret,
+                email,
+                pass
             )
             properties[ACCESS_TOKEN] = accessToken.accessToken
             properties.store(file.outputStream(), "app registration")
@@ -54,20 +55,21 @@ object Authenticator {
             println("access token found...")
         }
         return MastodonClient.Builder(instanceName, OkHttpClient.Builder(), Gson())
-                .accessToken(properties[ACCESS_TOKEN].toString())
-                .apply {
-                    if (useStreaming) {
-                        useStreamingApi()
-                    }
+            .accessToken(properties[ACCESS_TOKEN].toString())
+            .apply {
+                if (useStreaming) {
+                    useStreamingApi()
                 }
-                .build()
+            }
+            .build()
     }
 
-    private fun getAccessToken(instanceName: String,
-                               clientId: String,
-                               clientSecret: String,
-                               email: String,
-                               password: String
+    private fun getAccessToken(
+        instanceName: String,
+        clientId: String,
+        clientSecret: String,
+        email: String,
+        password: String
     ): AccessToken {
         val client = MastodonClient.Builder(instanceName, OkHttpClient.Builder(), Gson()).build()
         val apps = Apps(client)
@@ -78,8 +80,8 @@ object Authenticator {
         val client = MastodonClient.Builder(instanceName, OkHttpClient.Builder(), Gson()).build()
         val apps = Apps(client)
         return apps.createApp(
-                "kotlindon",
-                scope = Scope()
+            "kotlindon",
+            scope = Scope()
         ).execute()
     }
 }

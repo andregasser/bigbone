@@ -15,12 +15,12 @@ class Favourites(private val client: MastodonClient) {
     @JvmOverloads
     fun getFavourites(range: Range = Range()): MastodonRequest<Pageable<Status>> {
         return MastodonRequest<Pageable<Status>>(
-                {
-                    client.get("favourites", range.toParameter())
-                },
-                {
-                    client.getSerializer().fromJson(it, Status::class.java)
-                }
+            {
+                client.get("favourites", range.toParameter())
+            },
+            {
+                client.getSerializer().fromJson(it, Status::class.java)
+            }
         ).toPageable()
     }
 }
