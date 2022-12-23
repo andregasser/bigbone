@@ -19,7 +19,7 @@ class RxPublic(client: MastodonClient) {
             try {
                 val instance = publicMethod.getInstance()
                 it.onSuccess(instance.execute())
-            } catch(throwable: Throwable) {
+            } catch (throwable: Throwable) {
                 it.onErrorIfNotDisposed(throwable)
             }
         }

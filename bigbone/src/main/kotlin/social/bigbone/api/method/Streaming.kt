@@ -101,8 +101,8 @@ class Streaming(private val client: MastodonClient) {
     @Throws(BigboneRequestException::class)
     fun federatedHashtag(tag: String, handler: Handler): Shutdownable {
         val response = client.get(
-                "api/v1/streaming/hashtag",
-                Parameter().append("tag", tag)
+            "api/v1/streaming/hashtag",
+            Parameter().append("tag", tag)
         )
         if (response.isSuccessful) {
             val reader = response.body?.byteStream()?.bufferedReader()
@@ -148,8 +148,8 @@ class Streaming(private val client: MastodonClient) {
     @Throws(BigboneRequestException::class)
     fun localHashtag(tag: String, handler: Handler): Shutdownable {
         val response = client.get(
-                "api/v1/streaming/hashtag/local",
-                Parameter().append("tag", tag)
+            "api/v1/streaming/hashtag/local",
+            Parameter().append("tag", tag)
         )
         if (response.isSuccessful) {
             val reader = response.body?.byteStream()?.bufferedReader()
@@ -195,7 +195,7 @@ class Streaming(private val client: MastodonClient) {
     @Throws(BigboneRequestException::class)
     fun user(handler: Handler): Shutdownable {
         val response = client.get(
-                "api/v1/streaming/user"
+            "api/v1/streaming/user"
         )
         if (response.isSuccessful) {
             val reader = response.body?.byteStream()?.bufferedReader()
@@ -256,10 +256,10 @@ class Streaming(private val client: MastodonClient) {
     @Throws(BigboneRequestException::class)
     fun userList(handler: Handler, listID: String): Shutdownable {
         val response = client.get(
-                "api/v1/streaming/list",
-                Parameter().apply {
-                    append("list", listID)
-                }
+            "api/v1/streaming/list",
+            Parameter().apply {
+                append("list", listID)
+            }
         )
         if (response.isSuccessful) {
             val reader = response.body?.byteStream()?.bufferedReader()

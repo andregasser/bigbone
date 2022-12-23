@@ -12,16 +12,16 @@ class Media(private val client: MastodonClient) {
     //  POST /api/v1/media
     fun postMedia(file: MultipartBody.Part): MastodonRequest<Attachment> {
         val requestBody = MultipartBody.Builder()
-                .setType(MultipartBody.FORM)
-                .addPart(file)
-                .build()
+            .setType(MultipartBody.FORM)
+            .addPart(file)
+            .build()
         return MastodonRequest<Attachment>(
-                {
-                    client.post("api/v1/media", requestBody)
-                },
-                {
-                    client.getSerializer().fromJson(it, Attachment::class.java)
-                }
+            {
+                client.post("api/v1/media", requestBody)
+            },
+            {
+                client.getSerializer().fromJson(it, Attachment::class.java)
+            }
         )
     }
 }

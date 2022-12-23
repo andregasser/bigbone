@@ -19,15 +19,15 @@ class Reports(private val client: MastodonClient) {
     @Throws(BigboneRequestException::class)
     fun getReports(range: Range = Range()): MastodonRequest<Pageable<Report>> {
         return MastodonRequest<Pageable<Report>>(
-                {
-                    client.get(
-                            "api/v1/reports",
-                            range.toParameter()
-                    )
-                },
-                {
-                    client.getSerializer().fromJson(it, Report::class.java)
-                }
+            {
+                client.get(
+                    "api/v1/reports",
+                    range.toParameter()
+                )
+            },
+            {
+                client.getSerializer().fromJson(it, Report::class.java)
+            }
         ).toPageable()
     }
 
@@ -45,15 +45,16 @@ class Reports(private val client: MastodonClient) {
             append("comment", comment)
         }.build()
         return MastodonRequest<Report>(
-                {
-                    client.post("api/v1/reports",
-                        parameters
-                            .toRequestBody("application/x-www-form-urlencoded; charset=utf-8".toMediaTypeOrNull())
-                    )
-                },
-                {
-                    client.getSerializer().fromJson(it, Report::class.java)
-                }
+            {
+                client.post(
+                    "api/v1/reports",
+                    parameters
+                        .toRequestBody("application/x-www-form-urlencoded; charset=utf-8".toMediaTypeOrNull())
+                )
+            },
+            {
+                client.getSerializer().fromJson(it, Report::class.java)
+            }
         )
     }
 }

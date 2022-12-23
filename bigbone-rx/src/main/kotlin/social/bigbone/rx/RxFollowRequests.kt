@@ -17,7 +17,7 @@ class RxFollowRequests(client: MastodonClient) {
             try {
                 val accounts = followRequests.getFollowRequests(range)
                 it.onSuccess(accounts.execute())
-            } catch(throwable: Throwable) {
+            } catch (throwable: Throwable) {
                 it.onErrorIfNotDisposed(throwable)
             }
         }
@@ -28,7 +28,7 @@ class RxFollowRequests(client: MastodonClient) {
             try {
                 followRequests.postAuthorize(accountId)
                 it.onComplete()
-            } catch(throwable: Throwable) {
+            } catch (throwable: Throwable) {
                 it.onErrorIfNotDisposed(throwable)
             }
         }
@@ -39,7 +39,7 @@ class RxFollowRequests(client: MastodonClient) {
             try {
                 followRequests.postReject(accountId)
                 it.onComplete()
-            } catch(throwable: Throwable) {
+            } catch (throwable: Throwable) {
                 it.onErrorIfNotDisposed(throwable)
             }
         }

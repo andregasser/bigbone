@@ -15,12 +15,12 @@ class Blocks(private val client: MastodonClient) {
     @JvmOverloads
     fun getBlocks(range: Range = Range()): MastodonRequest<Pageable<Account>> {
         return MastodonRequest<Pageable<Account>>(
-                {
-                    client.get("api/v1/blocks", range.toParameter())
-                },
-                {
-                    client.getSerializer().fromJson(it, Account::class.java)
-                }
+            {
+                client.get("api/v1/blocks", range.toParameter())
+            },
+            {
+                client.getSerializer().fromJson(it, Account::class.java)
+            }
         ).toPageable()
     }
 }

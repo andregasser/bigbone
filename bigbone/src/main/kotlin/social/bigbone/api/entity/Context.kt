@@ -12,4 +12,3 @@ class Context(
     @SerializedName("descendants")
     val descendants: List<Status> = emptyList()
 )
-
