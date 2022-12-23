@@ -20,8 +20,3 @@ pmd {
     ruleSetFiles = files("${rootProject.projectDir}/config/pmd/ruleset.xml")
     ruleSets = []
 }
-
-//checkstyle {
-//    project.ext.checkstyleVersion = libs.versions.checkstyle
-//    toolVersion = libs.versions.checkstyle
-//}
