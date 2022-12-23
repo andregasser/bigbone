@@ -1,6 +1,7 @@
 plugins {
     id 'social.bigbone.bigbone-sample'
     id 'checkstyle'
+    id 'pmd'
 }
 
 tasks.named("detekt") configure {
@@ -11,4 +12,11 @@ dependencies {
     implementation project(':bigbone')
     implementation libs.gson
     implementation libs.okhttp
+}
+
+pmd {
+    toolVersion = "6.52.0"
+    consoleOutput = true
+    ruleSetFiles = files("${rootProject.projectDir}/config/pmd/ruleset.xml")
+    ruleSets = []
 }
