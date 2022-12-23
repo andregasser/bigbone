@@ -12,42 +12,42 @@ import social.bigbone.api.exception.BigboneRequestException
 class Streaming(private val client: MastodonClient) {
     @Throws(BigboneRequestException::class)
     fun federatedPublic(handler: Handler): Shutdownable {
-        val response = client.get("streaming/public")
+        val response = client.get("api/v1/streaming/public")
         if (response.isSuccessful) {
             val reader = response.body?.byteStream()?.bufferedReader()
             val dispatcher = Dispatcher()
-            dispatcher.invokeLater(Runnable {
+            dispatcher.invokeLater {
                 while (true) {
-                    try{
+                    try {
                         val line = reader?.readLine()
                         if (line == null || line.isEmpty()) {
                             continue
                         }
                         val type = line.split(":")[0].trim()
-                        if(type != "event"){
+                        if (type != "event") {
                             continue
                         }
                         val event = line.split(":")[1].trim()
                         val payload = reader.readLine()
                         val payloadType = payload.split(":")[0].trim()
-                        if(payloadType != "data"){
+                        if (payloadType != "data") {
                             continue
                         }
                         if (event == "update") {
                             val start = payload.indexOf(":") + 1
                             val json = payload.substring(start).trim()
                             val status = client.getSerializer().fromJson(
-                                    json,
-                                    Status::class.java
+                                json,
+                                Status::class.java
                             )
                             handler.onStatus(status)
                         }
-                    }catch (e:java.io.InterruptedIOException){
+                    } catch (e: java.io.InterruptedIOException) {
                         break
                     }
                 }
                 reader.close()
-            })
+            }
             return Shutdownable(dispatcher)
         } else {
             throw BigboneRequestException(response)
@@ -56,42 +56,42 @@ class Streaming(private val client: MastodonClient) {
 
     @Throws(BigboneRequestException::class)
     fun localPublic(handler: Handler): Shutdownable {
-        val response = client.get("streaming/public/local")
+        val response = client.get("api/v1/streaming/public/local")
         if (response.isSuccessful) {
             val reader = response.body?.byteStream()?.bufferedReader()
             val dispatcher = Dispatcher()
-            dispatcher.invokeLater(Runnable {
+            dispatcher.invokeLater {
                 while (true) {
-                    try{
+                    try {
                         val line = reader?.readLine()
                         if (line == null || line.isEmpty()) {
                             continue
                         }
                         val type = line.split(":")[0].trim()
-                        if(type != "event"){
+                        if (type != "event") {
                             continue
                         }
                         val event = line.split(":")[1].trim()
                         val payload = reader.readLine()
                         val payloadType = payload.split(":")[0].trim()
-                        if(payloadType != "data"){
+                        if (payloadType != "data") {
                             continue
                         }
                         if (event == "update") {
                             val start = payload.indexOf(":") + 1
                             val json = payload.substring(start).trim()
                             val status = client.getSerializer().fromJson(
-                                    json,
-                                    Status::class.java
+                                json,
+                                Status::class.java
                             )
                             handler.onStatus(status)
                         }
-                    }catch (e:java.io.InterruptedIOException){
+                    } catch (e: java.io.InterruptedIOException) {
                         break
                     }
                 }
                 reader.close()
-            })
+            }
             return Shutdownable(dispatcher)
         } else {
             throw BigboneRequestException(response)
@@ -101,44 +101,44 @@ class Streaming(private val client: MastodonClient) {
     @Throws(BigboneRequestException::class)
     fun federatedHashtag(tag: String, handler: Handler): Shutdownable {
         val response = client.get(
-                "streaming/hashtag",
+                "api/v1/streaming/hashtag",
                 Parameter().append("tag", tag)
         )
         if (response.isSuccessful) {
             val reader = response.body?.byteStream()?.bufferedReader()
             val dispatcher = Dispatcher()
-            dispatcher.invokeLater(Runnable {
+            dispatcher.invokeLater {
                 while (true) {
-                    try{
+                    try {
                         val line = reader?.readLine()
                         if (line == null || line.isEmpty()) {
                             continue
                         }
                         val type = line.split(":")[0].trim()
-                        if(type != "event"){
+                        if (type != "event") {
                             continue
                         }
                         val event = line.split(":")[1].trim()
                         val payload = reader.readLine()
                         val payloadType = payload.split(":")[0].trim()
-                        if(payloadType != "data"){
+                        if (payloadType != "data") {
                             continue
                         }
                         if (event == "update") {
                             val start = payload.indexOf(":") + 1
                             val json = payload.substring(start).trim()
                             val status = client.getSerializer().fromJson(
-                                    json,
-                                    Status::class.java
+                                json,
+                                Status::class.java
                             )
                             handler.onStatus(status)
                         }
-                    }catch (e:java.io.InterruptedIOException){
+                    } catch (e: java.io.InterruptedIOException) {
                         break
                     }
                 }
                 reader.close()
-            })
+            }
             return Shutdownable(dispatcher)
         } else {
             throw BigboneRequestException(response)
@@ -148,44 +148,44 @@ class Streaming(private val client: MastodonClient) {
     @Throws(BigboneRequestException::class)
     fun localHashtag(tag: String, handler: Handler): Shutdownable {
         val response = client.get(
-                "streaming/hashtag/local",
+                "api/v1/streaming/hashtag/local",
                 Parameter().append("tag", tag)
         )
         if (response.isSuccessful) {
             val reader = response.body?.byteStream()?.bufferedReader()
             val dispatcher = Dispatcher()
-            dispatcher.invokeLater(Runnable {
+            dispatcher.invokeLater {
                 while (true) {
-                    try{
+                    try {
                         val line = reader?.readLine()
                         if (line == null || line.isEmpty()) {
                             continue
                         }
                         val type = line.split(":")[0].trim()
-                        if(type != "event"){
+                        if (type != "event") {
                             continue
                         }
                         val event = line.split(":")[1].trim()
                         val payload = reader.readLine()
                         val payloadType = payload.split(":")[0].trim()
-                        if(payloadType != "data"){
+                        if (payloadType != "data") {
                             continue
                         }
                         if (event == "update") {
                             val start = payload.indexOf(":") + 1
                             val json = payload.substring(start).trim()
                             val status = client.getSerializer().fromJson(
-                                    json,
-                                    Status::class.java
+                                json,
+                                Status::class.java
                             )
                             handler.onStatus(status)
                         }
-                    }catch (e:java.io.InterruptedIOException){
+                    } catch (e: java.io.InterruptedIOException) {
                         break
                     }
                 }
                 reader.close()
-            })
+            }
             return Shutdownable(dispatcher)
         } else {
             throw BigboneRequestException(response)
@@ -195,26 +195,26 @@ class Streaming(private val client: MastodonClient) {
     @Throws(BigboneRequestException::class)
     fun user(handler: Handler): Shutdownable {
         val response = client.get(
-                "streaming/user"
+                "api/v1/streaming/user"
         )
         if (response.isSuccessful) {
             val reader = response.body?.byteStream()?.bufferedReader()
             val dispatcher = Dispatcher()
-            dispatcher.invokeLater(Runnable {
+            dispatcher.invokeLater {
                 while (true) {
-                    try{
+                    try {
                         val line = reader?.readLine()
                         if (line == null || line.isEmpty()) {
                             continue
                         }
                         val type = line.split(":")[0].trim()
-                        if(type != "event"){
+                        if (type != "event") {
                             continue
                         }
                         val event = line.split(":")[1].trim()
                         val payload = reader.readLine()
                         val payloadType = payload.split(":")[0].trim()
-                        if(payloadType != "data"){
+                        if (payloadType != "data") {
                             continue
                         }
 
@@ -222,31 +222,31 @@ class Streaming(private val client: MastodonClient) {
                         val json = payload.substring(start).trim()
                         if (event == "update") {
                             val status = client.getSerializer().fromJson(
-                                    json,
-                                    Status::class.java
+                                json,
+                                Status::class.java
                             )
                             handler.onStatus(status)
                         }
                         if (event == "notification") {
                             val notification = client.getSerializer().fromJson(
-                                    json,
-                                    Notification::class.java
+                                json,
+                                Notification::class.java
                             )
                             handler.onNotification(notification)
                         }
                         if (event == "delete") {
                             val id = client.getSerializer().fromJson(
-                                    json,
-                                    Long::class.java
+                                json,
+                                Long::class.java
                             )
                             handler.onDelete(id)
                         }
-                    }catch (e:java.io.InterruptedIOException){
+                    } catch (e: java.io.InterruptedIOException) {
                         break
                     }
                 }
                 reader.close()
-            })
+            }
             return Shutdownable(dispatcher)
         } else {
             throw BigboneRequestException(response)
@@ -256,7 +256,7 @@ class Streaming(private val client: MastodonClient) {
     @Throws(BigboneRequestException::class)
     fun userList(handler: Handler, listID: String): Shutdownable {
         val response = client.get(
-                "streaming/list",
+                "api/v1/streaming/list",
                 Parameter().apply {
                     append("list", listID)
                 }
@@ -264,21 +264,21 @@ class Streaming(private val client: MastodonClient) {
         if (response.isSuccessful) {
             val reader = response.body?.byteStream()?.bufferedReader()
             val dispatcher = Dispatcher()
-            dispatcher.invokeLater(Runnable {
+            dispatcher.invokeLater {
                 while (true) {
-                    try{
+                    try {
                         val line = reader?.readLine()
                         if (line == null || line.isEmpty()) {
                             continue
                         }
                         val type = line.split(":")[0].trim()
-                        if(type != "event"){
+                        if (type != "event") {
                             continue
                         }
                         val event = line.split(":")[1].trim()
                         val payload = reader.readLine()
                         val payloadType = payload.split(":")[0].trim()
-                        if(payloadType != "data"){
+                        if (payloadType != "data") {
                             continue
                         }
 
@@ -286,31 +286,31 @@ class Streaming(private val client: MastodonClient) {
                         val json = payload.substring(start).trim()
                         if (event == "update") {
                             val status = client.getSerializer().fromJson(
-                                    json,
-                                    Status::class.java
+                                json,
+                                Status::class.java
                             )
                             handler.onStatus(status)
                         }
                         if (event == "notification") {
                             val notification = client.getSerializer().fromJson(
-                                    json,
-                                    Notification::class.java
+                                json,
+                                Notification::class.java
                             )
                             handler.onNotification(notification)
                         }
                         if (event == "delete") {
                             val id = client.getSerializer().fromJson(
-                                    json,
-                                    Long::class.java
+                                json,
+                                Long::class.java
                             )
                             handler.onDelete(id)
                         }
-                    }catch (e:java.io.InterruptedIOException){
+                    } catch (e: java.io.InterruptedIOException) {
                         break
                     }
                 }
                 reader.close()
-            })
+            }
             return Shutdownable(dispatcher)
         } else {
             throw BigboneRequestException(response)

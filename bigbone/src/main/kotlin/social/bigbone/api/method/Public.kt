@@ -19,7 +19,7 @@ class Public(private val client: MastodonClient) {
     fun getInstance(): MastodonRequest<Instance> {
         return MastodonRequest(
                 {
-                    client.get("instance")
+                    client.get("api/v1/instance")
                 },
                 { json ->
                     client.getSerializer().fromJson(json, Instance::class.java)
@@ -40,7 +40,7 @@ class Public(private val client: MastodonClient) {
         return MastodonRequest<Results>(
                 {
                     client.get(
-                            "search",
+                            "api/v1/search",
                             Parameter().apply {
                                 append("q", query)
                                 if (resolve) {
@@ -67,7 +67,7 @@ class Public(private val client: MastodonClient) {
         }
         return MastodonRequest<Pageable<Status>>(
                 {
-                    client.get("timelines/public", parameter)
+                    client.get("api/v1/timelines/public", parameter)
                 },
                 {
                     client.getSerializer().fromJson(it, Status::class.java)
@@ -93,7 +93,7 @@ class Public(private val client: MastodonClient) {
         return MastodonRequest<Pageable<Status>>(
                 {
                     client.get(
-                            "timelines/tag/$tag",
+                            "api/v1/timelines/tag/$tag",
                             parameter
                     )
                 },

@@ -16,15 +16,13 @@ class StatusTest {
         status.content shouldBeEqualTo "Test Status"
         val account = status.account
         requireNotNull(account)
-        account?.let {
-            it.id shouldBeEqualTo 14_476L
-        }
+        account.id shouldBeEqualTo 14_476L
         status.isReblogged shouldBeEqualTo false
     }
 
     @Test
     fun constructor() {
-        val status: Status = Status(id = 123, visibility = Status.Visibility.Private.value)
+        val status = Status(id = 123, visibility = Status.Visibility.Private.value)
         status.id shouldBeEqualTo 123L
         status.visibility shouldBeEqualTo Status.Visibility.Private.value
         status.content shouldBeEqualTo ""

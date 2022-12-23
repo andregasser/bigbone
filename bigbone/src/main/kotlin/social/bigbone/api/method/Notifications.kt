@@ -22,7 +22,7 @@ class Notifications(private val client: MastodonClient) {
         return MastodonRequest<Pageable<Notification>>(
                 {
                     client.get(
-                            "notifications",
+                            "api/v1/notifications",
                             parameter
                     )
                 },
@@ -36,7 +36,7 @@ class Notifications(private val client: MastodonClient) {
     fun getNotification(id: Long): MastodonRequest<Notification> {
         return MastodonRequest<Notification>(
                 {
-                    client.get("notifications/$id")
+                    client.get("api/v1/notifications/$id")
                 },
                 {
                     client.getSerializer().fromJson(it, Notification::class.java)
@@ -47,7 +47,7 @@ class Notifications(private val client: MastodonClient) {
     //  POST /api/v1/notifications/clear
     @Throws(BigboneRequestException::class)
     fun clearNotifications() {
-        val response = client.post("notifications/clear",
+        val response = client.post("api/v1/notifications/clear",
                 emptyRequestBody()
         )
         if (!response.isSuccessful) {

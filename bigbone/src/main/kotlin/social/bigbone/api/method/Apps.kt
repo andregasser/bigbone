@@ -33,7 +33,7 @@ class Apps(private val client: MastodonClient) {
         scope.validate()
         return MastodonRequest(
             {
-                client.post("apps",
+                client.post("api/v1/apps",
                     arrayListOf(
                         "client_name=$clientName",
                         "scopes=$scope",

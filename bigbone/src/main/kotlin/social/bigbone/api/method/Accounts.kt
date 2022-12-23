@@ -19,7 +19,7 @@ class Accounts(private val client: MastodonClient) {
     // GET /api/v1/accounts/:id
     fun getAccount(accountId: Long): MastodonRequest<Account> {
         return MastodonRequest(
-                { client.get("accounts/$accountId") },
+                { client.get("api/v1/accounts/$accountId") },
                 { client.getSerializer().fromJson(it, Account::class.java) }
         )
     }
@@ -27,7 +27,7 @@ class Accounts(private val client: MastodonClient) {
     //  GET /api/v1/accounts/verify_credentials
     fun getVerifyCredentials(): MastodonRequest<Account> {
         return MastodonRequest(
-                { client.get("accounts/verify_credentials") },
+                { client.get("api/v1/accounts/verify_credentials") },
                 { client.getSerializer().fromJson(it, Account::class.java) }
         )
     }
@@ -56,7 +56,7 @@ class Accounts(private val client: MastodonClient) {
         }.build()
         return MastodonRequest(
                 {
-                    client.patch("accounts/update_credentials",
+                    client.patch("api/v1/accounts/update_credentials",
                         parameters
                             .toRequestBody("application/x-www-form-urlencoded; charset=utf-8".toMediaTypeOrNull())
                     )
@@ -73,7 +73,7 @@ class Accounts(private val client: MastodonClient) {
         return MastodonRequest<Pageable<Account>>(
                 {
                     client.get(
-                            "accounts/$accountId/followers",
+                            "api/v1/accounts/$accountId/followers",
                             range.toParameter()
                     )
                 },
@@ -89,7 +89,7 @@ class Accounts(private val client: MastodonClient) {
         return MastodonRequest<Pageable<Account>>(
                 {
                     client.get(
-                            "accounts/$accountId/following",
+                            "api/v1/accounts/$accountId/following",
                             range.toParameter())
                 },
                 {
@@ -120,7 +120,7 @@ class Accounts(private val client: MastodonClient) {
         return MastodonRequest<Pageable<Status>>(
                 {
                     client.get(
-                            "accounts/$accountId/statuses",
+                            "api/v1/accounts/$accountId/statuses",
                             parameters
                     )
                 },
@@ -134,7 +134,7 @@ class Accounts(private val client: MastodonClient) {
     fun postFollow(accountId: Long): MastodonRequest<Relationship> {
         return MastodonRequest<Relationship>(
                 {
-                    client.post("accounts/$accountId/follow", emptyRequestBody())
+                    client.post("api/v1/accounts/$accountId/follow", emptyRequestBody())
                 },
                 {
                     client.getSerializer().fromJson(it, Relationship::class.java)
@@ -146,7 +146,7 @@ class Accounts(private val client: MastodonClient) {
     fun postUnFollow(accountId: Long): MastodonRequest<Relationship> {
         return MastodonRequest<Relationship>(
                 {
-                    client.post("accounts/$accountId/unfollow", emptyRequestBody())
+                    client.post("api/v1/accounts/$accountId/unfollow", emptyRequestBody())
                 },
                 {
                     client.getSerializer().fromJson(it, Relationship::class.java)
@@ -158,7 +158,7 @@ class Accounts(private val client: MastodonClient) {
     fun postBlock(accountId: Long): MastodonRequest<Relationship> {
         return MastodonRequest<Relationship>(
                 {
-                    client.post("accounts/$accountId/block", emptyRequestBody())
+                    client.post("api/v1/accounts/$accountId/block", emptyRequestBody())
                 },
                 {
                     client.getSerializer().fromJson(it, Relationship::class.java)
@@ -170,7 +170,7 @@ class Accounts(private val client: MastodonClient) {
     fun postUnblock(accountId: Long): MastodonRequest<Relationship> {
         return MastodonRequest<Relationship>(
                 {
-                    client.post("accounts/$accountId/unblock", emptyRequestBody())
+                    client.post("api/v1/accounts/$accountId/unblock", emptyRequestBody())
                 },
                 {
                     client.getSerializer().fromJson(it, Relationship::class.java)
@@ -182,7 +182,7 @@ class Accounts(private val client: MastodonClient) {
     fun postMute(accountId: Long): MastodonRequest<Relationship> {
         return MastodonRequest<Relationship>(
                 {
-                    client.post("accounts/$accountId/mute", emptyRequestBody())
+                    client.post("api/v1/accounts/$accountId/mute", emptyRequestBody())
                 },
                 {
                     client.getSerializer().fromJson(it, Relationship::class.java)
@@ -194,7 +194,7 @@ class Accounts(private val client: MastodonClient) {
     fun postUnmute(accountId: Long): MastodonRequest<Relationship> {
         return MastodonRequest<Relationship>(
                 {
-                    client.post("accounts/$accountId/unmute", emptyRequestBody())
+                    client.post("api/v1/accounts/$accountId/unmute", emptyRequestBody())
                 },
                 {
                     client.getSerializer().fromJson(it, Relationship::class.java)
@@ -207,7 +207,7 @@ class Accounts(private val client: MastodonClient) {
         return MastodonRequest(
                 {
                     client.get(
-                            "accounts/relationships",
+                            "api/v1/accounts/relationships",
                             Parameter().append("id", accountIds)
                     )
                 },
@@ -227,7 +227,7 @@ class Accounts(private val client: MastodonClient) {
         return MastodonRequest(
                 {
                     client.get(
-                            "accounts/search",
+                            "api/v1/accounts/search",
                             Parameter()
                                     .append("q", query)
                                     .append("limit", limit)

@@ -41,7 +41,7 @@ open class MastodonRequest<T>(
                 val element = JsonParser.parseString(body)
                 if (element.isJsonObject) {
                     action(body!!)
-                    return mapper(body!!) as T
+                    return mapper(body) as T
                 } else {
                     val list = arrayListOf<Any>()
                     element.asJsonArray.forEach {
@@ -49,10 +49,10 @@ open class MastodonRequest<T>(
                         action(json)
                         list.add(mapper(json))
                     }
-                    if (isPageable) {
-                        return list.toPageable(response) as T
+                    return if (isPageable) {
+                        list.toPageable(response) as T
                     } else {
-                        return list as T
+                        list as T
                     }
                 }
             } catch (e: Exception) {

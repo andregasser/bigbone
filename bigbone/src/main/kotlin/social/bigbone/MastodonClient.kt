@@ -17,7 +17,7 @@ private constructor(
         private val gson: Gson
 ) {
     private var debug = false
-    val baseUrl = "https://${instanceName}/api/v1"
+    val baseUrl = "https://${instanceName}"
 
     class Builder(private val instanceName: String,
                   private val okHttpClientBuilder: OkHttpClient.Builder,
@@ -64,7 +64,7 @@ private constructor(
                     .method(originalRequest.method, originalRequest.body)
                     .apply {
                         accessToken?.let {
-                            header("Authorization", String.format("Bearer %s", it));
+                            header("Authorization", String.format("Bearer %s", it))
                         }
                     }
                     .build()
@@ -84,10 +84,10 @@ private constructor(
                 "$url?${it.build()}"
             } ?: url
             val call = client.newCall(
-                    Request.Builder()
-                            .url(urlWithParams)
-                            .get()
-                            .build())
+                Request.Builder()
+                    .url(urlWithParams)
+                    .get()
+                    .build())
             return call.execute()
         } catch (e: IOException) {
             throw BigboneRequestException(e)
@@ -111,17 +111,17 @@ private constructor(
     }
 
     open fun post(path: String, body: RequestBody) =
-            postUrl("$baseUrl/$path", body)
+        postUrl("$baseUrl/$path", body)
 
     open fun patch(path: String, body: RequestBody): Response {
         try {
             val url = "$baseUrl/$path"
             debugPrint(url)
             val call = client.newCall(
-                    Request.Builder()
-                            .url(url)
-                            .patch(body)
-                            .build()
+                Request.Builder()
+                    .url(url)
+                    .patch(body)
+                    .build()
             )
             return call.execute()
         } catch (e: IOException) {
