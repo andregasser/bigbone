@@ -20,35 +20,36 @@ class Notifications(private val client: MastodonClient) {
             parameter.append("exclude_types", excludeTypes.map { it.value })
         }
         return MastodonRequest<Pageable<Notification>>(
-                {
-                    client.get(
-                            "notifications",
-                            parameter
-                    )
-                },
-                {
-                    client.getSerializer().fromJson(it, Notification::class.java)
-                }
+            {
+                client.get(
+                    "notifications",
+                    parameter
+                )
+            },
+            {
+                client.getSerializer().fromJson(it, Notification::class.java)
+            }
         ).toPageable()
     }
 
     // GET /api/v1/notifications/:id
     fun getNotification(id: Long): MastodonRequest<Notification> {
         return MastodonRequest<Notification>(
-                {
-                    client.get("notifications/$id")
-                },
-                {
-                    client.getSerializer().fromJson(it, Notification::class.java)
-                }
+            {
+                client.get("notifications/$id")
+            },
+            {
+                client.getSerializer().fromJson(it, Notification::class.java)
+            }
         )
     }
 
     //  POST /api/v1/notifications/clear
     @Throws(BigboneRequestException::class)
     fun clearNotifications() {
-        val response = client.post("notifications/clear",
-                emptyRequestBody()
+        val response = client.post(
+            "notifications/clear",
+            emptyRequestBody()
         )
         if (!response.isSuccessful) {
             throw BigboneRequestException(response)

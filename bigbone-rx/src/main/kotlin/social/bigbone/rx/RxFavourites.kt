@@ -16,7 +16,7 @@ class RxFavourites(client: MastodonClient) {
             try {
                 val statuses = favourites.getFavourites(range)
                 it.onSuccess(statuses.execute())
-            } catch(throwable: Throwable) {
+            } catch (throwable: Throwable) {
                 it.onErrorIfNotDisposed(throwable)
             }
         }

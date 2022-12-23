@@ -14,12 +14,12 @@ class Mutes(private val client: MastodonClient) {
     @JvmOverloads
     fun getMutes(range: Range = Range()): MastodonRequest<Pageable<Account>> {
         return MastodonRequest<Pageable<Account>>(
-                {
-                    client.get("mutes", range.toParameter())
-                },
-                {
-                    client.getSerializer().fromJson(it, Account::class.java)
-                }
+            {
+                client.get("mutes", range.toParameter())
+            },
+            {
+                client.getSerializer().fromJson(it, Account::class.java)
+            }
         ).toPageable()
     }
 }

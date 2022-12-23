@@ -18,8 +18,7 @@ class AppsTest {
 
         val apps = Apps(client)
         val registration = apps.createApp(
-            clientName = "mastodon-android-sys1yagi",
-            scope = Scope(Scope.Name.ALL)
+            clientName = "mastodon-android-sys1yagi", scope = Scope(Scope.Name.ALL)
         ).execute()
 
         registration.instanceName shouldBeEqualTo "mastodon.cloud"
@@ -34,8 +33,7 @@ class AppsTest {
             val client = MockClient.ioException()
             val apps = Apps(client)
             apps.createApp(
-                clientName = "mastodon-android-sys1yagi",
-                scope = Scope(Scope.Name.ALL)
+                clientName = "mastodon-android-sys1yagi", scope = Scope(Scope.Name.ALL)
             ).execute()
         }
     }
@@ -47,7 +45,7 @@ class AppsTest {
 
         val url = Apps(client).getOAuthUrl("client_id", Scope(Scope.Name.ALL))
         url shouldBeEqualTo "https://mastodon.cloud/oauth/authorize?client_id=client_id" +
-                "&redirect_uri=urn:ietf:wg:oauth:2.0:oob&response_type=code&scope=read write follow"
+            "&redirect_uri=urn:ietf:wg:oauth:2.0:oob&response_type=code&scope=read write follow"
     }
 
     @Test

@@ -23,12 +23,12 @@ class Statuses(private val client: MastodonClient) {
     @Throws(BigboneRequestException::class)
     fun getStatus(statusId: Long): MastodonRequest<Status> {
         return MastodonRequest<Status>(
-                {
-                    client.get("statuses/$statusId")
-                },
-                {
-                    client.getSerializer().fromJson(it, Status::class.java)
-                }
+            {
+                client.get("statuses/$statusId")
+            },
+            {
+                client.getSerializer().fromJson(it, Status::class.java)
+            }
         )
     }
 
@@ -36,12 +36,12 @@ class Statuses(private val client: MastodonClient) {
     @Throws(BigboneRequestException::class)
     fun getContext(statusId: Long): MastodonRequest<Context> {
         return MastodonRequest<Context>(
-                {
-                    client.get("statuses/$statusId/context")
-                },
-                {
-                    client.getSerializer().fromJson(it, Context::class.java)
-                }
+            {
+                client.get("statuses/$statusId/context")
+            },
+            {
+                client.getSerializer().fromJson(it, Context::class.java)
+            }
         )
     }
 
@@ -49,12 +49,12 @@ class Statuses(private val client: MastodonClient) {
     @Throws(BigboneRequestException::class)
     fun getCard(statusId: Long): MastodonRequest<Card> {
         return MastodonRequest<Card>(
-                {
-                    client.get("statuses/$statusId/card")
-                },
-                {
-                    client.getSerializer().fromJson(it, Card::class.java)
-                }
+            {
+                client.get("statuses/$statusId/card")
+            },
+            {
+                client.getSerializer().fromJson(it, Card::class.java)
+            }
         )
     }
 
@@ -63,15 +63,15 @@ class Statuses(private val client: MastodonClient) {
     @Throws(BigboneRequestException::class)
     fun getRebloggedBy(statusId: Long, range: Range = Range()): MastodonRequest<Pageable<Account>> {
         return MastodonRequest<Pageable<Account>>(
-                {
-                    client.get(
-                            "statuses/$statusId/reblogged_by",
-                            range.toParameter()
-                    )
-                },
-                {
-                    client.getSerializer().fromJson(it, Account::class.java)
-                }
+            {
+                client.get(
+                    "statuses/$statusId/reblogged_by",
+                    range.toParameter()
+                )
+            },
+            {
+                client.getSerializer().fromJson(it, Account::class.java)
+            }
         ).toPageable()
     }
 
@@ -80,15 +80,15 @@ class Statuses(private val client: MastodonClient) {
     @Throws(BigboneRequestException::class)
     fun getFavouritedBy(statusId: Long, range: Range = Range()): MastodonRequest<Pageable<Account>> {
         return MastodonRequest<Pageable<Account>>(
-                {
-                    client.get(
-                            "statuses/$statusId/favourited_by",
-                            range.toParameter()
-                    )
-                },
-                {
-                    client.getSerializer().fromJson(it, Account::class.java)
-                }
+            {
+                client.get(
+                    "statuses/$statusId/favourited_by",
+                    range.toParameter()
+                )
+            },
+            {
+                client.getSerializer().fromJson(it, Account::class.java)
+            }
         ).toPageable()
     }
 
@@ -104,12 +104,12 @@ class Statuses(private val client: MastodonClient) {
     @JvmOverloads
     @Throws(BigboneRequestException::class)
     fun postStatus(
-            status: String,
-            inReplyToId: Long?,
-            mediaIds: List<Long>?,
-            sensitive: Boolean,
-            spoilerText: String?,
-            visibility: Status.Visibility = Status.Visibility.Public
+        status: String,
+        inReplyToId: Long?,
+        mediaIds: List<Long>?,
+        sensitive: Boolean,
+        spoilerText: String?,
+        visibility: Status.Visibility = Status.Visibility.Public
     ): MastodonRequest<Status> {
         val parameters = Parameter().apply {
             append("status", status)
@@ -127,15 +127,16 @@ class Statuses(private val client: MastodonClient) {
         }.build()
 
         return MastodonRequest<Status>(
-                {
-                    client.post("statuses",
-                        parameters
-                            .toRequestBody("application/x-www-form-urlencoded; charset=utf-8".toMediaTypeOrNull())
-                    )
-                },
-                {
-                    client.getSerializer().fromJson(it, Status::class.java)
-                }
+            {
+                client.post(
+                    "statuses",
+                    parameters
+                        .toRequestBody("application/x-www-form-urlencoded; charset=utf-8".toMediaTypeOrNull())
+                )
+            },
+            {
+                client.getSerializer().fromJson(it, Status::class.java)
+            }
         )
     }
 
@@ -152,12 +153,12 @@ class Statuses(private val client: MastodonClient) {
     @Throws(BigboneRequestException::class)
     fun postReblog(statusId: Long): MastodonRequest<Status> {
         return MastodonRequest<Status>(
-                {
-                    client.post("statuses/$statusId/reblog", emptyRequestBody())
-                },
-                {
-                    client.getSerializer().fromJson(it, Status::class.java)
-                }
+            {
+                client.post("statuses/$statusId/reblog", emptyRequestBody())
+            },
+            {
+                client.getSerializer().fromJson(it, Status::class.java)
+            }
         )
     }
 
@@ -165,12 +166,12 @@ class Statuses(private val client: MastodonClient) {
     @Throws(BigboneRequestException::class)
     fun postUnreblog(statusId: Long): MastodonRequest<Status> {
         return MastodonRequest<Status>(
-                {
-                    client.post("statuses/$statusId/unreblog", emptyRequestBody())
-                },
-                {
-                    client.getSerializer().fromJson(it, Status::class.java)
-                }
+            {
+                client.post("statuses/$statusId/unreblog", emptyRequestBody())
+            },
+            {
+                client.getSerializer().fromJson(it, Status::class.java)
+            }
         )
     }
 
@@ -178,12 +179,12 @@ class Statuses(private val client: MastodonClient) {
     @Throws(BigboneRequestException::class)
     fun postFavourite(statusId: Long): MastodonRequest<Status> {
         return MastodonRequest<Status>(
-                {
-                    client.post("statuses/$statusId/favourite", emptyRequestBody())
-                },
-                {
-                    client.getSerializer().fromJson(it, Status::class.java)
-                }
+            {
+                client.post("statuses/$statusId/favourite", emptyRequestBody())
+            },
+            {
+                client.getSerializer().fromJson(it, Status::class.java)
+            }
         )
     }
 
@@ -191,12 +192,12 @@ class Statuses(private val client: MastodonClient) {
     @Throws(BigboneRequestException::class)
     fun postUnfavourite(statusId: Long): MastodonRequest<Status> {
         return MastodonRequest<Status>(
-                {
-                    client.post("statuses/$statusId/unfavourite", emptyRequestBody())
-                },
-                {
-                    client.getSerializer().fromJson(it, Status::class.java)
-                }
+            {
+                client.post("statuses/$statusId/unfavourite", emptyRequestBody())
+            },
+            {
+                client.getSerializer().fromJson(it, Status::class.java)
+            }
         )
     }
 }

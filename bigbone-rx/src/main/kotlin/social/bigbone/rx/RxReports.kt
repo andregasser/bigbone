@@ -21,7 +21,6 @@ class RxReports(client: MastodonClient) {
         }
     }
 
-
     fun postReport(accountId: Long, statusId: Long, comment: String): Single<Report> {
         return Single.create {
             try {

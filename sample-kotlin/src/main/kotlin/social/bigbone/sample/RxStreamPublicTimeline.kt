@@ -6,7 +6,8 @@ import social.bigbone.rx.RxStreaming
 object RxStreamPublicTimeline {
     private const val TEN_SECONDS = 10_000L
 
-    @JvmStatic fun main(args: Array<String>) {
+    @JvmStatic
+    fun main(args: Array<String>) {
         val instanceName = args[0]
         val credentialFilePath = args[1]
 
@@ -17,10 +18,10 @@ object RxStreamPublicTimeline {
 
         println("init")
         val disposable = streaming.localPublic()
-                .subscribeOn(Schedulers.io())
-                .subscribe {
-                    println("${it.createdAt}: ${it.account?.acct} < ${it.content.replace("<.*?>".toRegex(), "")}")
-                }
+            .subscribeOn(Schedulers.io())
+            .subscribe {
+                println("${it.createdAt}: ${it.account?.acct} < ${it.content.replace("<.*?>".toRegex(), "")}")
+            }
         Thread.sleep(TEN_SECONDS)
         disposable.dispose()
     }

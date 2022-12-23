@@ -14,7 +14,7 @@ class RxFollows(client: MastodonClient) {
             try {
                 val account = follows.postRemoteFollow(uri)
                 it.onSuccess(account.execute())
-            } catch(throwable: Throwable) {
+            } catch (throwable: Throwable) {
                 it.onErrorIfNotDisposed(throwable)
             }
         }
