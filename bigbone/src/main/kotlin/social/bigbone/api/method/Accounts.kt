@@ -1,7 +1,5 @@
 package social.bigbone.api.method
 
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody.Companion.toRequestBody
 import social.bigbone.MastodonClient
 import social.bigbone.MastodonRequest
 import social.bigbone.Parameter
@@ -10,7 +8,6 @@ import social.bigbone.api.Range
 import social.bigbone.api.entity.Account
 import social.bigbone.api.entity.Relationship
 import social.bigbone.api.entity.Status
-import social.bigbone.extension.emptyRequestBody
 
 /**
  * See more https://github.com/tootsuite/documentation/blob/master/Using-the-API/API.md#accounts
@@ -53,14 +50,10 @@ class Accounts(private val client: MastodonClient) {
             header?.let {
                 append("header", it)
             }
-        }.build()
+        }
         return MastodonRequest(
             {
-                client.patch(
-                    "api/v1/accounts/update_credentials",
-                    parameters
-                        .toRequestBody("application/x-www-form-urlencoded; charset=utf-8".toMediaTypeOrNull())
-                )
+                client.patch("api/v1/accounts/update_credentials", parameters)
             },
             {
                 client.getSerializer().fromJson(it, Account::class.java)
@@ -136,7 +129,7 @@ class Accounts(private val client: MastodonClient) {
     fun postFollow(accountId: Long): MastodonRequest<Relationship> {
         return MastodonRequest<Relationship>(
             {
-                client.post("api/v1/accounts/$accountId/follow", emptyRequestBody())
+                client.post("api/v1/accounts/$accountId/follow")
             },
             {
                 client.getSerializer().fromJson(it, Relationship::class.java)
@@ -148,7 +141,7 @@ class Accounts(private val client: MastodonClient) {
     fun postUnFollow(accountId: Long): MastodonRequest<Relationship> {
         return MastodonRequest<Relationship>(
             {
-                client.post("api/v1/accounts/$accountId/unfollow", emptyRequestBody())
+                client.post("api/v1/accounts/$accountId/unfollow")
             },
             {
                 client.getSerializer().fromJson(it, Relationship::class.java)
@@ -160,7 +153,7 @@ class Accounts(private val client: MastodonClient) {
     fun postBlock(accountId: Long): MastodonRequest<Relationship> {
         return MastodonRequest<Relationship>(
             {
-                client.post("api/v1/accounts/$accountId/block", emptyRequestBody())
+                client.post("api/v1/accounts/$accountId/block")
             },
             {
                 client.getSerializer().fromJson(it, Relationship::class.java)
@@ -172,7 +165,7 @@ class Accounts(private val client: MastodonClient) {
     fun postUnblock(accountId: Long): MastodonRequest<Relationship> {
         return MastodonRequest<Relationship>(
             {
-                client.post("api/v1/accounts/$accountId/unblock", emptyRequestBody())
+                client.post("api/v1/accounts/$accountId/unblock")
             },
             {
                 client.getSerializer().fromJson(it, Relationship::class.java)
@@ -184,7 +177,7 @@ class Accounts(private val client: MastodonClient) {
     fun postMute(accountId: Long): MastodonRequest<Relationship> {
         return MastodonRequest<Relationship>(
             {
-                client.post("api/v1/accounts/$accountId/mute", emptyRequestBody())
+                client.post("api/v1/accounts/$accountId/mute")
             },
             {
                 client.getSerializer().fromJson(it, Relationship::class.java)
@@ -196,7 +189,7 @@ class Accounts(private val client: MastodonClient) {
     fun postUnmute(accountId: Long): MastodonRequest<Relationship> {
         return MastodonRequest<Relationship>(
             {
-                client.post("api/v1/accounts/$accountId/unmute", emptyRequestBody())
+                client.post("api/v1/accounts/$accountId/unmute")
             },
             {
                 client.getSerializer().fromJson(it, Relationship::class.java)

@@ -6,7 +6,6 @@ import social.bigbone.api.Pageable
 import social.bigbone.api.Range
 import social.bigbone.api.entity.Notification
 import social.bigbone.api.exception.BigboneRequestException
-import social.bigbone.extension.emptyRequestBody
 
 /**
  * See more https://github.com/tootsuite/documentation/blob/master/Using-the-API/API.md#notifications
@@ -47,10 +46,7 @@ class Notifications(private val client: MastodonClient) {
     //  POST /api/v1/notifications/clear
     @Throws(BigboneRequestException::class)
     fun clearNotifications() {
-        val response = client.post(
-            "api/v1/notifications/clear",
-            emptyRequestBody()
-        )
+        val response = client.post("api/v1/notifications/clear")
         if (!response.isSuccessful) {
             throw BigboneRequestException(response)
         }

@@ -1,7 +1,5 @@
 package social.bigbone.sample;
 
-import com.google.gson.Gson;
-import okhttp3.OkHttpClient;
 import org.jetbrains.annotations.NotNull;
 import social.bigbone.MastodonClient;
 import social.bigbone.api.Handler;
@@ -16,7 +14,7 @@ public class StreamPublicTimeline {
     public static void main(final String[] args) {
         // require authentication even if public streaming
         final String accessToken = "PUT YOUR ACCESS TOKEN";
-        final MastodonClient client = new MastodonClient.Builder("mstdn.jp", new OkHttpClient.Builder(), new Gson())
+        final MastodonClient client = new MastodonClient.Builder("mstdn.jp")
                 .accessToken(accessToken)
                 .useStreamingApi()
                 .build();

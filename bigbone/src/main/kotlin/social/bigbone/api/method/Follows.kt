@@ -1,7 +1,5 @@
 package social.bigbone.api.method
 
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody.Companion.toRequestBody
 import social.bigbone.MastodonClient
 import social.bigbone.MastodonRequest
 import social.bigbone.Parameter
@@ -18,14 +16,9 @@ class Follows(private val client: MastodonClient) {
     fun postRemoteFollow(uri: String): MastodonRequest<Account> {
         val parameters = Parameter()
             .append("uri", uri)
-            .build()
         return MastodonRequest<Account>(
             {
-                client.post(
-                    "api/v1/follows",
-                    parameters
-                        .toRequestBody("application/x-www-form-urlencoded; charset=utf-8".toMediaTypeOrNull())
-                )
+                client.post("api/v1/follows", parameters)
             },
             {
                 client.getSerializer().fromJson(it, Account::class.java)

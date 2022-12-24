@@ -1,7 +1,5 @@
 package social.bigbone.api.method
 
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody.Companion.toRequestBody
 import social.bigbone.MastodonClient
 import social.bigbone.MastodonRequest
 import social.bigbone.Parameter
@@ -12,7 +10,6 @@ import social.bigbone.api.entity.Card
 import social.bigbone.api.entity.Context
 import social.bigbone.api.entity.Status
 import social.bigbone.api.exception.BigboneRequestException
-import social.bigbone.extension.emptyRequestBody
 
 /**
  * See more https://github.com/tootsuite/documentation/blob/master/Using-the-API/API.md#statuses
@@ -124,15 +121,11 @@ class Statuses(private val client: MastodonClient) {
                 append("spoiler_text", it)
             }
             append("visibility", visibility.value)
-        }.build()
+        }
 
         return MastodonRequest<Status>(
             {
-                client.post(
-                    "api/v1/statuses",
-                    parameters
-                        .toRequestBody("application/x-www-form-urlencoded; charset=utf-8".toMediaTypeOrNull())
-                )
+                client.post("api/v1/statuses", parameters)
             },
             {
                 client.getSerializer().fromJson(it, Status::class.java)
@@ -154,7 +147,7 @@ class Statuses(private val client: MastodonClient) {
     fun postReblog(statusId: Long): MastodonRequest<Status> {
         return MastodonRequest<Status>(
             {
-                client.post("api/v1/statuses/$statusId/reblog", emptyRequestBody())
+                client.post("api/v1/statuses/$statusId/reblog")
             },
             {
                 client.getSerializer().fromJson(it, Status::class.java)
@@ -167,7 +160,7 @@ class Statuses(private val client: MastodonClient) {
     fun postUnreblog(statusId: Long): MastodonRequest<Status> {
         return MastodonRequest<Status>(
             {
-                client.post("api/v1/statuses/$statusId/unreblog", emptyRequestBody())
+                client.post("api/v1/statuses/$statusId/unreblog")
             },
             {
                 client.getSerializer().fromJson(it, Status::class.java)
@@ -180,7 +173,7 @@ class Statuses(private val client: MastodonClient) {
     fun postFavourite(statusId: Long): MastodonRequest<Status> {
         return MastodonRequest<Status>(
             {
-                client.post("api/v1/statuses/$statusId/favourite", emptyRequestBody())
+                client.post("api/v1/statuses/$statusId/favourite")
             },
             {
                 client.getSerializer().fromJson(it, Status::class.java)
@@ -193,7 +186,7 @@ class Statuses(private val client: MastodonClient) {
     fun postUnfavourite(statusId: Long): MastodonRequest<Status> {
         return MastodonRequest<Status>(
             {
-                client.post("api/v1/statuses/$statusId/unfavourite", emptyRequestBody())
+                client.post("api/v1/statuses/$statusId/unfavourite")
             },
             {
                 client.getSerializer().fromJson(it, Status::class.java)
