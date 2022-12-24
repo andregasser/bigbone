@@ -1,7 +1,5 @@
 package social.bigbone.sample
 
-import com.google.gson.Gson
-import okhttp3.OkHttpClient
 import social.bigbone.MastodonClient
 import social.bigbone.api.Scope
 import social.bigbone.api.entity.auth.AccessToken
@@ -54,7 +52,7 @@ object Authenticator {
         } else {
             println("access token found...")
         }
-        return MastodonClient.Builder(instanceName, OkHttpClient.Builder(), Gson())
+        return MastodonClient.Builder(instanceName)
             .accessToken(properties[ACCESS_TOKEN].toString())
             .apply {
                 if (useStreaming) {
@@ -71,13 +69,13 @@ object Authenticator {
         email: String,
         password: String
     ): AccessToken {
-        val client = MastodonClient.Builder(instanceName, OkHttpClient.Builder(), Gson()).build()
+        val client = MastodonClient.Builder(instanceName).build()
         val apps = Apps(client)
         return apps.postUserNameAndPassword(clientId, clientSecret, Scope(), email, password).execute()
     }
 
     private fun appRegistration(instanceName: String): AppRegistration {
-        val client = MastodonClient.Builder(instanceName, OkHttpClient.Builder(), Gson()).build()
+        val client = MastodonClient.Builder(instanceName).build()
         val apps = Apps(client)
         return apps.createApp(
             "kotlindon",

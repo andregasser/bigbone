@@ -1,7 +1,5 @@
 package social.bigbone.sample;
 
-import com.google.gson.Gson;
-import okhttp3.OkHttpClient;
 import social.bigbone.MastodonClient;
 import social.bigbone.api.Scope;
 import social.bigbone.api.entity.auth.AccessToken;
@@ -54,7 +52,7 @@ final class Authenticator {
         } else {
             System.out.println("access token found...");
         }
-        final MastodonClient.Builder builder = new MastodonClient.Builder(instanceName, new OkHttpClient.Builder(), new Gson())
+        final MastodonClient.Builder builder = new MastodonClient.Builder(instanceName)
             .accessToken(properties.get(ACCESS_TOKEN).toString());
         if (useStreaming) {
             builder.useStreamingApi();
@@ -63,13 +61,13 @@ final class Authenticator {
     }
 
     private static AccessToken getAccessToken(final String instanceName, final String clientId, final String clientSecret, final String email, final String password) throws BigboneRequestException {
-        final MastodonClient client = new MastodonClient.Builder(instanceName, new OkHttpClient.Builder(), new Gson()).build();
+        final MastodonClient client = new MastodonClient.Builder(instanceName).build();
         final Apps apps = new Apps(client);
         return apps.postUserNameAndPassword(clientId, clientSecret, new Scope(), email, password).execute();
     }
 
     private static AppRegistration appRegistration(final String instanceName) throws BigboneRequestException {
-        final MastodonClient client = new MastodonClient.Builder(instanceName, new OkHttpClient.Builder(), new Gson()).build();
+        final MastodonClient client = new MastodonClient.Builder(instanceName).build();
         final Apps apps = new Apps(client);
         return apps.createApp("kotlindon", "urn:ietf:wg:oauth:2.0:oob", new Scope(), null).execute();
     }

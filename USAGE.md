@@ -36,7 +36,7 @@ To access the API of a Mastodon server, we first need to create client credentia
 __Kotlin__
 
 ```kotlin
-val client: MastodonClient = MastodonClient.Builder(instanceHostname, OkHttpClient.Builder(), Gson()).build()
+val client: MastodonClient = MastodonClient.Builder(instanceHostname).build()
 val apps = Apps(client)
 val appRegistration = apps.createApp(
 	clientName = "bigbone-sample-app",
@@ -49,7 +49,7 @@ val appRegistration = apps.createApp(
 __Java__
 
 ```java
-MastodonClient client = new MastodonClient.Builder(instanceHostname, new OkHttpClient.Builder(), new Gson()).build();
+MastodonClient client = new MastodonClient.Builder(instanceHostname).build();
 Apps apps = new Apps(client);
 try {
 	AppRegistration appRegistration = apps.createApp(
@@ -102,7 +102,7 @@ __Kotlin__
 
 ```kotlin
 // creating a new client using previously received access token
-val client: MastodonClient = MastodonClient.Builder(instanceHostname, OkHttpClient.Builder(), Gson())
+val client: MastodonClient = MastodonClient.Builder(instanceHostname)
 	.accessToken(accessToken)
 	.build()
 
@@ -189,7 +189,7 @@ v1.0.0 or later
 __Kotlin__
 
 ```kotlin
-val client: MastodonClient = MastodonClient.Builder(instanceHostname, OkHttpClient.Builder(), Gson())
+val client: MastodonClient = MastodonClient.Builder(instanceHostname)
   .accessToken(accessToken)
   .useStreamingApi()
   .build()
@@ -215,7 +215,7 @@ try {
 __Java__
 
 ```java
-MastodonClient client = new MastodonClient.Builder(instanceHostname, new OkHttpClient.Builder(), new Gson())
+MastodonClient client = new MastodonClient.Builder(instanceHostname)
         .accessToken(accessToken)
         .useStreamingApi()
         .build();
