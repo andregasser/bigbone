@@ -17,7 +17,7 @@ private constructor(
     private val gson: Gson
 ) {
     private var debug = false
-    val baseUrl = "https://$instanceName/api/v1"
+    val baseUrl = "https://$instanceName"
 
     class Builder(
         private val instanceName: String,

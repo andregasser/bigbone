@@ -18,7 +18,7 @@ class Timelines(private val client: MastodonClient) {
         return MastodonRequest<Pageable<Status>>(
             {
                 client.get(
-                    "timelines/home",
+                    "api/v1/timelines/home",
                     range.toParameter()
                 )
             },

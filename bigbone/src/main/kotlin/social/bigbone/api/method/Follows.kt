@@ -22,7 +22,7 @@ class Follows(private val client: MastodonClient) {
         return MastodonRequest<Account>(
             {
                 client.post(
-                    "follows",
+                    "api/v1/follows",
                     parameters
                         .toRequestBody("application/x-www-form-urlencoded; charset=utf-8".toMediaTypeOrNull())
                 )

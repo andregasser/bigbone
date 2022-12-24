@@ -12,11 +12,11 @@ import social.bigbone.api.exception.BigboneRequestException
 class Streaming(private val client: MastodonClient) {
     @Throws(BigboneRequestException::class)
     fun federatedPublic(handler: Handler): Shutdownable {
-        val response = client.get("streaming/public")
+        val response = client.get("api/v1/streaming/public")
         if (response.isSuccessful) {
             val reader = response.body?.byteStream()?.bufferedReader()
             val dispatcher = Dispatcher()
-            dispatcher.invokeLater(Runnable {
+            dispatcher.invokeLater {
                 while (true) {
                     try {
                         val line = reader?.readLine()
@@ -47,7 +47,7 @@ class Streaming(private val client: MastodonClient) {
                     }
                 }
                 reader.close()
-            })
+            }
             return Shutdownable(dispatcher)
         } else {
             throw BigboneRequestException(response)
@@ -56,11 +56,11 @@ class Streaming(private val client: MastodonClient) {
 
     @Throws(BigboneRequestException::class)
     fun localPublic(handler: Handler): Shutdownable {
-        val response = client.get("streaming/public/local")
+        val response = client.get("api/v1/streaming/public/local")
         if (response.isSuccessful) {
             val reader = response.body?.byteStream()?.bufferedReader()
             val dispatcher = Dispatcher()
-            dispatcher.invokeLater(Runnable {
+            dispatcher.invokeLater {
                 while (true) {
                     try {
                         val line = reader?.readLine()
@@ -91,7 +91,7 @@ class Streaming(private val client: MastodonClient) {
                     }
                 }
                 reader.close()
-            })
+            }
             return Shutdownable(dispatcher)
         } else {
             throw BigboneRequestException(response)
@@ -101,13 +101,13 @@ class Streaming(private val client: MastodonClient) {
     @Throws(BigboneRequestException::class)
     fun federatedHashtag(tag: String, handler: Handler): Shutdownable {
         val response = client.get(
-            "streaming/hashtag",
+            "api/v1/streaming/hashtag",
             Parameter().append("tag", tag)
         )
         if (response.isSuccessful) {
             val reader = response.body?.byteStream()?.bufferedReader()
             val dispatcher = Dispatcher()
-            dispatcher.invokeLater(Runnable {
+            dispatcher.invokeLater {
                 while (true) {
                     try {
                         val line = reader?.readLine()
@@ -138,7 +138,7 @@ class Streaming(private val client: MastodonClient) {
                     }
                 }
                 reader.close()
-            })
+            }
             return Shutdownable(dispatcher)
         } else {
             throw BigboneRequestException(response)
@@ -148,13 +148,13 @@ class Streaming(private val client: MastodonClient) {
     @Throws(BigboneRequestException::class)
     fun localHashtag(tag: String, handler: Handler): Shutdownable {
         val response = client.get(
-            "streaming/hashtag/local",
+            "api/v1/streaming/hashtag/local",
             Parameter().append("tag", tag)
         )
         if (response.isSuccessful) {
             val reader = response.body?.byteStream()?.bufferedReader()
             val dispatcher = Dispatcher()
-            dispatcher.invokeLater(Runnable {
+            dispatcher.invokeLater {
                 while (true) {
                     try {
                         val line = reader?.readLine()
@@ -185,7 +185,7 @@ class Streaming(private val client: MastodonClient) {
                     }
                 }
                 reader.close()
-            })
+            }
             return Shutdownable(dispatcher)
         } else {
             throw BigboneRequestException(response)
@@ -195,12 +195,12 @@ class Streaming(private val client: MastodonClient) {
     @Throws(BigboneRequestException::class)
     fun user(handler: Handler): Shutdownable {
         val response = client.get(
-            "streaming/user"
+            "api/v1/streaming/user"
         )
         if (response.isSuccessful) {
             val reader = response.body?.byteStream()?.bufferedReader()
             val dispatcher = Dispatcher()
-            dispatcher.invokeLater(Runnable {
+            dispatcher.invokeLater {
                 while (true) {
                     try {
                         val line = reader?.readLine()
@@ -246,7 +246,7 @@ class Streaming(private val client: MastodonClient) {
                     }
                 }
                 reader.close()
-            })
+            }
             return Shutdownable(dispatcher)
         } else {
             throw BigboneRequestException(response)
@@ -256,7 +256,7 @@ class Streaming(private val client: MastodonClient) {
     @Throws(BigboneRequestException::class)
     fun userList(handler: Handler, listID: String): Shutdownable {
         val response = client.get(
-            "streaming/list",
+            "api/v1/streaming/list",
             Parameter().apply {
                 append("list", listID)
             }
@@ -264,7 +264,7 @@ class Streaming(private val client: MastodonClient) {
         if (response.isSuccessful) {
             val reader = response.body?.byteStream()?.bufferedReader()
             val dispatcher = Dispatcher()
-            dispatcher.invokeLater(Runnable {
+            dispatcher.invokeLater {
                 while (true) {
                     try {
                         val line = reader?.readLine()
@@ -310,7 +310,7 @@ class Streaming(private val client: MastodonClient) {
                     }
                 }
                 reader.close()
-            })
+            }
             return Shutdownable(dispatcher)
         } else {
             throw BigboneRequestException(response)

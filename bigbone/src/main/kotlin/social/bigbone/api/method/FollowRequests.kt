@@ -16,7 +16,7 @@ class FollowRequests(private val client: MastodonClient) {
     @JvmOverloads
     fun getFollowRequests(range: Range = Range()): MastodonRequest<Pageable<Account>> {
         return MastodonRequest<Pageable<Account>>(
-            { client.get("follow_requests", range.toParameter()) },
+            { client.get("api/v1/follow_requests", range.toParameter()) },
             {
                 client.getSerializer().fromJson(it, Account::class.java)
             }
@@ -26,7 +26,7 @@ class FollowRequests(private val client: MastodonClient) {
     //  POST /api/v1/follow_requests/:id/authorize
     @Throws(BigboneRequestException::class)
     fun postAuthorize(accountId: Long) {
-        val response = client.post("follow_requests/$accountId/authorize", emptyRequestBody())
+        val response = client.post("api/v1/follow_requests/$accountId/authorize", emptyRequestBody())
         if (!response.isSuccessful) {
             throw BigboneRequestException(response)
         }
@@ -35,7 +35,7 @@ class FollowRequests(private val client: MastodonClient) {
     //  POST /api/v1/follow_requests/:id/reject
     @Throws(BigboneRequestException::class)
     fun postReject(accountId: Long) {
-        val response = client.post("follow_requests/$accountId/reject", emptyRequestBody())
+        val response = client.post("api/v1/follow_requests/$accountId/reject", emptyRequestBody())
         if (!response.isSuccessful) {
             throw BigboneRequestException(response)
         }

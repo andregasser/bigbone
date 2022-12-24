@@ -34,7 +34,7 @@ class Apps(private val client: MastodonClient) {
         return MastodonRequest(
             {
                 client.post(
-                    "apps",
+                    "api/v1/apps",
                     arrayListOf(
                         "client_name=$clientName",
                         "scopes=$scope",
