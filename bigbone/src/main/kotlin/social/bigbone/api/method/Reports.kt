@@ -1,7 +1,5 @@
 package social.bigbone.api.method
 
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody.Companion.toRequestBody
 import social.bigbone.MastodonClient
 import social.bigbone.MastodonRequest
 import social.bigbone.Parameter
@@ -43,14 +41,10 @@ class Reports(private val client: MastodonClient) {
             append("account_id", accountId)
             append("status_ids", statusId)
             append("comment", comment)
-        }.build()
+        }
         return MastodonRequest<Report>(
             {
-                client.post(
-                    "api/v1/reports",
-                    parameters
-                        .toRequestBody("application/x-www-form-urlencoded; charset=utf-8".toMediaTypeOrNull())
-                )
+                client.post("api/v1/reports", parameters)
             },
             {
                 client.getSerializer().fromJson(it, Report::class.java)

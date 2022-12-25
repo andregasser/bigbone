@@ -1,7 +1,5 @@
 package social.bigbone.api.method
 
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody.Companion.toRequestBody
 import social.bigbone.MastodonClient
 import social.bigbone.MastodonRequest
 import social.bigbone.Parameter
@@ -31,21 +29,18 @@ class Apps(private val client: MastodonClient) {
         website: String? = null
     ): MastodonRequest<AppRegistration> {
         scope.validate()
+
+        val parameters = Parameter()
+            .append("client_name", clientName)
+            .append("scopes", scope.toString())
+            .append("redirect_uris", redirectUris)
+        website?.let {
+            parameters.append("website", it)
+        }
+
         return MastodonRequest(
             {
-                client.post(
-                    "api/v1/apps",
-                    arrayListOf(
-                        "client_name=$clientName",
-                        "scopes=$scope",
-                        "redirect_uris=$redirectUris"
-                    ).apply {
-                        website?.let {
-                            add("website=$it")
-                        }
-                    }.joinToString(separator = "&")
-                        .toRequestBody("application/x-www-form-urlencoded; charset=utf-8".toMediaTypeOrNull())
-                )
+                client.post("api/v1/apps", parameters)
             },
             {
                 client.getSerializer().fromJson(it, AppRegistration::class.java).apply {
@@ -64,14 +59,13 @@ class Apps(private val client: MastodonClient) {
      * @see <a href="https://docs.joinmastodon.org/methods/oauth/#authorize">Mastodon oauth API methods #authorize</a>
      */
     fun getOAuthUrl(clientId: String, scope: Scope, redirectUri: String = "urn:ietf:wg:oauth:2.0:oob"): String {
-        val endpoint = "/oauth/authorize"
-        val parameters = listOf(
-            "client_id=$clientId",
-            "redirect_uri=$redirectUri",
-            "response_type=code",
-            "scope=$scope"
-        ).joinToString(separator = "&")
-        return "https://${client.getInstanceName()}$endpoint?$parameters"
+        val endpoint = "oauth/authorize"
+        val params = Parameter()
+            .append("client_id", clientId)
+            .append("redirect_uri", redirectUri)
+            .append("response_type", "code")
+            .append("scope", scope.toString())
+        return MastodonClient.fullUrl(client.getInstanceName(), endpoint, params).toString()
     }
 
     /**
@@ -87,21 +81,16 @@ class Apps(private val client: MastodonClient) {
         code: String,
         grantType: String = "authorization_code"
     ): MastodonRequest<AccessToken> {
-        val url = "https://${client.getInstanceName()}/oauth/token"
-        val parameters = listOf(
-            "client_id=$clientId",
-            "client_secret=$clientSecret",
-            "redirect_uri=$redirectUri",
-            "code=$code",
-            "grant_type=$grantType"
-        ).joinToString(separator = "&")
+        val parameters = Parameter()
+            .append("client_id", clientId)
+            .append("client_secret", clientSecret)
+            .append("redirect_uri", redirectUri)
+            .append("code", code)
+            .append("grant_type", grantType)
+
         return MastodonRequest(
             {
-                client.postUrl(
-                    url,
-                    parameters
-                        .toRequestBody("application/x-www-form-urlencoded; charset=utf-8".toMediaTypeOrNull())
-                )
+                client.post("oauth/token", parameters)
             },
             {
                 client.getSerializer().fromJson(it, AccessToken::class.java)
@@ -127,23 +116,16 @@ class Apps(private val client: MastodonClient) {
         userName: String,
         password: String
     ): MastodonRequest<AccessToken> {
-        val url = "https://${client.getInstanceName()}/oauth/token"
-        val parameters = Parameter().apply {
-            append("client_id", clientId)
-            append("client_secret", clientSecret)
-            append("scope", scope.toString())
-            append("username", userName)
-            append("password", password)
-            append("grant_type", "password")
-        }.build()
-
+        val parameters = Parameter()
+            .append("client_id", clientId)
+            .append("client_secret", clientSecret)
+            .append("scope", scope.toString())
+            .append("username", userName)
+            .append("password", password)
+            .append("grant_type", "password")
         return MastodonRequest(
             {
-                client.postUrl(
-                    url,
-                    parameters
-                        .toRequestBody("application/x-www-form-urlencoded; charset=utf-8".toMediaTypeOrNull())
-                )
+                client.post("oauth/token", parameters)
             },
             {
                 client.getSerializer().fromJson(it, AccessToken::class.java)

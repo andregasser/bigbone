@@ -1,8 +1,5 @@
 package social.bigbone.sample;
 
-
-import com.google.gson.Gson;
-import okhttp3.OkHttpClient;
 import social.bigbone.MastodonClient;
 import social.bigbone.api.Scope;
 import social.bigbone.api.entity.auth.AppRegistration;
@@ -12,7 +9,7 @@ import social.bigbone.api.method.Apps;
 @SuppressWarnings({"PMD.SystemPrintln", "PMD.AvoidPrintStackTrace"})
 public class GetAppRegistration {
     public static void main(final String[] args) {
-        final MastodonClient client = new MastodonClient.Builder("mstdn.jp", new OkHttpClient.Builder(), new Gson()).build();
+        final MastodonClient client = new MastodonClient.Builder("mstdn.jp").build();
         final Apps apps = new Apps(client);
         try {
             final AppRegistration registration = apps.createApp(
