@@ -5,6 +5,21 @@
 
 **Bigbone** is a [Mastodon](https://docs.joinmastodon.org/) client for Java and Kotlin.
 
+# Why Bigbone
+Bigbone is a fork of the original [Mastodon4J](https://github.com/sys1yagi/mastodon4j) library published by Toshihiro Yagi. Unfortunately, it became abandoned
+and has not seen any updates since 2018. I have therefore (more or less spontaneously) decided to revive it. Initially, I did not have any plans on doing
+something like this, but slipped more or less into this role. 
+
+Since Elon Musk's Twitter acquisition, Mastodon has gained tremendous popularity. A project that is so well received by the community deserves to have 
+up-to-date client libraries. That's why I took on this task and try to develop the library in a good sense. This is the call of duty. 
+
+The name has mostly symbolic character. We chose the name Bigbone for this library because Mastodons represent impressive animals from the Pleistocene, built 
+of big and heavy bones. At the same time, we hope this library will build some sort of "skeleton" for your Mastodon-related projects. Interestingly, there is 
+also [Big Bone Lick State Park in Kentucky](https://parks.ky.gov/union/parks/historic/big-bone-lick-state-historic-site) where American Mastodons have been 
+excavated.
+
+My personal thanks goes to Toshihiro and his contributors back then for building [Mastodon4J](https://github.com/sys1yagi/mastodon4j). The library they have
+built in the past serves as a basis for our own development efforts. Thank you!
 
 # Get Started
 
@@ -39,7 +54,7 @@ Usage examples for Bigbone can be found in [USAGE.md](USAGE.md).
 
 Bigbone aims to implement the Mastodon API. The official Mastodon API can be found here: https://docs.joinmastodon.org/client/intro/
 More information about the current implementation progress can be found in [API.md](API.md). For more details about future releases 
-and our roadmap please have a look in the __Issues__ or __Projects__ section. 
+and our roadmap please have a look in the **Issues** or **Projects** section. 
 
 ## Releases
 We did not yet release a publicly available version. But we are working on it and hope to release an initial version 2.0.0 soon. Until then,
@@ -56,9 +71,5 @@ Thanks to all the people who have contributed so far:
 [![Profile images of all the contributors](https://contrib.rocks/image?repo=andregasser/bigbone)](https://github.com/andregasser/bigbone/graphs/contributors)
 
 # License
-Bigbone is a fork of the original library published by Toshihiro Yagi. Unfortunately, it became abandoned and has not seen any updates
-since a long time. I have therefore decided to revive and enhance it in an independent way. My personal hope is, that this library will
-satisfy developers working on the Mastodon related topics. 
-
-My personal thanks goes to Toshihiro and his contributors back then for building a basis we can now build upon.
-The original license file can be found in the [LICENSE](LICENSE) file.
+Bigbone is published under the MIT license. For more information on rights and obligations related to the MIT license, we would like to refer to
+[this page](https://fossa.com/blog/open-source-licenses-101-mit-license/) here. The license file can be found in the [LICENSE](LICENSE) file.
