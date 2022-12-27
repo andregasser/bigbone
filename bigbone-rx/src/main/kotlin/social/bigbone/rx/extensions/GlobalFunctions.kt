@@ -1,6 +1,6 @@
 package social.bigbone.rx.extensions
 
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Single
 
 fun <T> single(f: () -> T): Single<T> {
     return Single.create {

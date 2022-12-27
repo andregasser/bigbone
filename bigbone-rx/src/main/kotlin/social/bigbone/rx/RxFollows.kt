@@ -1,6 +1,6 @@
 package social.bigbone.rx
 
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Single
 import social.bigbone.MastodonClient
 import social.bigbone.api.entity.Account
 import social.bigbone.api.method.Follows
