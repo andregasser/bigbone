@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName
  * see more https://github.com/tootsuite/documentation/blob/master/Using-the-API/API.md#status
  */
 class Status(
-    @SerializedName("id") val id: Long = 0L,
+    @SerializedName("id") val id: String = "0",
     @SerializedName("uri") val uri: String = "",
     @SerializedName("url") val url: String = "",
     @SerializedName("account") val account: Account? = null,

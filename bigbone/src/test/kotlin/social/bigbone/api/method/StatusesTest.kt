@@ -12,8 +12,8 @@ class StatusesTest {
     fun getStatus() {
         val client = MockClient.mock("status.json")
         val statuses = Statuses(client)
-        val status = statuses.getStatus(1L).execute()
-        status.id shouldBeEqualTo 11_111L
+        val status = statuses.getStatus("1").execute()
+        status.id shouldBeEqualTo "11111"
     }
 
     @Test
@@ -21,7 +21,7 @@ class StatusesTest {
         Assertions.assertThrows(BigboneRequestException::class.java) {
             val client = MockClient.ioException()
             val statuses = Statuses(client)
-            statuses.getStatus(1L).execute()
+            statuses.getStatus("1").execute()
         }
     }
 
@@ -29,7 +29,7 @@ class StatusesTest {
     fun getContext() {
         val client = MockClient.mock("context.json")
         val statuses = Statuses(client)
-        val context = statuses.getContext(1L).execute()
+        val context = statuses.getContext("1").execute()
         context.ancestors.size shouldBeEqualTo 2
         context.descendants.size shouldBeEqualTo 1
     }
@@ -39,7 +39,7 @@ class StatusesTest {
         Assertions.assertThrows(BigboneRequestException::class.java) {
             val client = MockClient.ioException()
             val statuses = Statuses(client)
-            statuses.getContext(1L).execute()
+            statuses.getContext("1").execute()
         }
     }
 
@@ -47,7 +47,7 @@ class StatusesTest {
     fun getCard() {
         val client = MockClient.mock("card.json")
         val statuses = Statuses(client)
-        val card = statuses.getCard(1L).execute()
+        val card = statuses.getCard("1").execute()
         card.url shouldBeEqualTo "The url associated with the card"
         card.title shouldBeEqualTo "The title of the card"
         card.description shouldBeEqualTo "The card description"
@@ -59,7 +59,7 @@ class StatusesTest {
         Assertions.assertThrows(BigboneRequestException::class.java) {
             val client = MockClient.ioException()
             val statuses = Statuses(client)
-            statuses.getCard(1L).execute()
+            statuses.getCard("1").execute()
         }
     }
 
@@ -67,7 +67,7 @@ class StatusesTest {
     fun getRebloggedBy() {
         val client = MockClient.mock("reblogged_by.json")
         val statuses = Statuses(client)
-        val pageable = statuses.getRebloggedBy(1L).execute()
+        val pageable = statuses.getRebloggedBy("1").execute()
         val account = pageable.part.first()
         account.acct shouldBeEqualTo "test@test.com"
         account.displayName shouldBeEqualTo "test"
@@ -79,7 +79,7 @@ class StatusesTest {
         Assertions.assertThrows(BigboneRequestException::class.java) {
             val client = MockClient.ioException()
             val statuses = Statuses(client)
-            statuses.getRebloggedBy(1L).execute()
+            statuses.getRebloggedBy("1").execute()
         }
     }
 
@@ -87,7 +87,7 @@ class StatusesTest {
     fun getFavouritedBy() {
         val client = MockClient.mock("reblogged_by.json")
         val statuses = Statuses(client)
-        val pageable = statuses.getFavouritedBy(1L).execute()
+        val pageable = statuses.getFavouritedBy("1").execute()
         val account = pageable.part.first()
         account.acct shouldBeEqualTo "test@test.com"
         account.displayName shouldBeEqualTo "test"
@@ -99,7 +99,7 @@ class StatusesTest {
         Assertions.assertThrows(BigboneRequestException::class.java) {
             val client = MockClient.ioException()
             val statuses = Statuses(client)
-            statuses.getFavouritedBy(1L).execute()
+            statuses.getFavouritedBy("1").execute()
         }
     }
 
@@ -108,7 +108,7 @@ class StatusesTest {
         val client = MockClient.mock("status.json")
         val statuses = Statuses(client)
         val status = statuses.postStatus("a", null, null, false, null).execute()
-        status.id shouldBeEqualTo 11_111L
+        status.id shouldBeEqualTo "11111"
     }
 
     @Test
@@ -124,8 +124,8 @@ class StatusesTest {
     fun postReblog() {
         val client = MockClient.mock("status.json")
         val statuses = Statuses(client)
-        val status = statuses.postReblog(1L).execute()
-        status.id shouldBeEqualTo 11_111L
+        val status = statuses.postReblog("1").execute()
+        status.id shouldBeEqualTo "11111"
     }
 
     @Test
@@ -133,7 +133,7 @@ class StatusesTest {
         Assertions.assertThrows(BigboneRequestException::class.java) {
             val client = MockClient.ioException()
             val statuses = Statuses(client)
-            statuses.postReblog(1L).execute()
+            statuses.postReblog("1").execute()
         }
     }
 
@@ -141,8 +141,8 @@ class StatusesTest {
     fun postUnreblog() {
         val client = MockClient.mock("status.json")
         val statuses = Statuses(client)
-        val status = statuses.postUnreblog(1L).execute()
-        status.id shouldBeEqualTo 11_111L
+        val status = statuses.postUnreblog("1").execute()
+        status.id shouldBeEqualTo "11111"
     }
 
     @Test
@@ -150,7 +150,7 @@ class StatusesTest {
         Assertions.assertThrows(BigboneRequestException::class.java) {
             val client = MockClient.ioException()
             val statuses = Statuses(client)
-            statuses.postUnreblog(1L).execute()
+            statuses.postUnreblog("1").execute()
         }
     }
 
@@ -158,8 +158,8 @@ class StatusesTest {
     fun postFavourite() {
         val client = MockClient.mock("status.json")
         val statuses = Statuses(client)
-        val status = statuses.postFavourite(1L).execute()
-        status.id shouldBeEqualTo 11_111L
+        val status = statuses.postFavourite("1").execute()
+        status.id shouldBeEqualTo "11111"
     }
 
     @Test
@@ -167,7 +167,7 @@ class StatusesTest {
         Assertions.assertThrows(BigboneRequestException::class.java) {
             val client = MockClient.ioException()
             val statuses = Statuses(client)
-            statuses.postFavourite(1L).execute()
+            statuses.postFavourite("1").execute()
         }
     }
 
@@ -175,8 +175,8 @@ class StatusesTest {
     fun postUnfavourite() {
         val client = MockClient.mock("status.json")
         val statuses = Statuses(client)
-        val status = statuses.postUnfavourite(1L).execute()
-        status.id shouldBeEqualTo 11_111L
+        val status = statuses.postUnfavourite("1").execute()
+        status.id shouldBeEqualTo "11111"
     }
 
     @Test
@@ -184,7 +184,7 @@ class StatusesTest {
         Assertions.assertThrows(BigboneRequestException::class.java) {
             val client = MockClient.ioException()
             val statuses = Statuses(client)
-            statuses.postUnfavourite(1L).execute()
+            statuses.postUnfavourite("1").execute()
         }
     }
 }

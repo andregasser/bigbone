@@ -13,7 +13,7 @@ class ReportsTest {
         val reports = Reports(client)
         val pageable = reports.getReports().execute()
         val report = pageable.part.first()
-        report.id shouldBeEqualTo 100L
+        report.id shouldBeEqualTo "100"
         report.actionTaken shouldBeEqualTo "test"
     }
 
@@ -31,7 +31,7 @@ class ReportsTest {
         Assertions.assertThrows(BigboneRequestException::class.java) {
             val client = MockClient.ioException()
             val reports = Reports(client)
-            reports.postReport(10, 20, "test").execute()
+            reports.postReport("10", 20, "test").execute()
         }
     }
 }
