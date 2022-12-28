@@ -14,7 +14,7 @@ import social.bigbone.api.method.Statuses
 class RxStatuses(client: MastodonClient) {
     val statuses = Statuses(client)
 
-    fun getStatus(statusId: Long): Single<Status> {
+    fun getStatus(statusId: String): Single<Status> {
         return Single.create {
             try {
                 val status = statuses.getStatus(statusId)
@@ -25,7 +25,7 @@ class RxStatuses(client: MastodonClient) {
         }
     }
 
-    fun getContext(statusId: Long): Single<Context> {
+    fun getContext(statusId: String): Single<Context> {
         return Single.create {
             try {
                 val context = statuses.getContext(statusId)
@@ -36,7 +36,7 @@ class RxStatuses(client: MastodonClient) {
         }
     }
 
-    fun getCard(statusId: Long): Single<Card> {
+    fun getCard(statusId: String): Single<Card> {
         return Single.create {
             try {
                 val context = statuses.getCard(statusId)
@@ -47,7 +47,7 @@ class RxStatuses(client: MastodonClient) {
         }
     }
 
-    fun getRebloggedBy(statusId: Long, range: Range = Range()): Single<Pageable<Account>> {
+    fun getRebloggedBy(statusId: String, range: Range = Range()): Single<Pageable<Account>> {
         return Single.create {
             try {
                 val accounts = statuses.getRebloggedBy(statusId, range)
@@ -59,7 +59,7 @@ class RxStatuses(client: MastodonClient) {
     }
 
     //  GET /api/v1/favourited_by
-    fun getFavouritedBy(statusId: Long, range: Range = Range()): Single<Pageable<Account>> {
+    fun getFavouritedBy(statusId: String, range: Range = Range()): Single<Pageable<Account>> {
         return Single.create {
             try {
                 val accounts = statuses.getFavouritedBy(statusId, range)
@@ -72,8 +72,8 @@ class RxStatuses(client: MastodonClient) {
 
     fun postStatus(
         status: String,
-        inReplyToId: Long? = null,
-        mediaIds: List<Long>? = null,
+        inReplyToId: String? = null,
+        mediaIds: List<String>? = null,
         sensitive: Boolean = false,
         spoilerText: String? = null,
         visibility: Status.Visibility = Status.Visibility.Public
@@ -88,7 +88,7 @@ class RxStatuses(client: MastodonClient) {
         }
     }
 
-    fun deleteStatus(statusId: Long): Completable {
+    fun deleteStatus(statusId: String): Completable {
         return Completable.create {
             try {
                 statuses.deleteStatus(statusId)
@@ -99,7 +99,7 @@ class RxStatuses(client: MastodonClient) {
         }
     }
 
-    fun postReblog(statusId: Long): Single<Status> {
+    fun postReblog(statusId: String): Single<Status> {
         return Single.create {
             try {
                 val status = statuses.postReblog(statusId)
@@ -110,7 +110,7 @@ class RxStatuses(client: MastodonClient) {
         }
     }
 
-    fun postUnreblog(statusId: Long): Single<Status> {
+    fun postUnreblog(statusId: String): Single<Status> {
         return Single.create {
             try {
                 val status = statuses.postUnreblog(statusId)
@@ -121,7 +121,7 @@ class RxStatuses(client: MastodonClient) {
         }
     }
 
-    fun postFavourite(statusId: Long): Single<Status> {
+    fun postFavourite(statusId: String): Single<Status> {
         return Single.create {
             try {
                 val status = statuses.postFavourite(statusId)
@@ -132,7 +132,7 @@ class RxStatuses(client: MastodonClient) {
         }
     }
 
-    fun postUnfavourite(statusId: Long): Single<Status> {
+    fun postUnfavourite(statusId: String): Single<Status> {
         return Single.create {
             try {
                 val status = statuses.postUnfavourite(statusId)

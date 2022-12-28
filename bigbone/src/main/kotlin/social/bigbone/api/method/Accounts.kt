@@ -14,7 +14,7 @@ import social.bigbone.api.entity.Status
  */
 class Accounts(private val client: MastodonClient) {
     // GET /api/v1/accounts/:id
-    fun getAccount(accountId: Long): MastodonRequest<Account> {
+    fun getAccount(accountId: String): MastodonRequest<Account> {
         return MastodonRequest(
             { client.get("api/v1/accounts/$accountId") },
             { client.getSerializer().fromJson(it, Account::class.java) }
@@ -63,7 +63,7 @@ class Accounts(private val client: MastodonClient) {
 
     //  GET /api/v1/accounts/:id/followers
     @JvmOverloads
-    fun getFollowers(accountId: Long, range: Range = Range()): MastodonRequest<Pageable<Account>> {
+    fun getFollowers(accountId: String, range: Range = Range()): MastodonRequest<Pageable<Account>> {
         return MastodonRequest<Pageable<Account>>(
             {
                 client.get(
@@ -79,7 +79,7 @@ class Accounts(private val client: MastodonClient) {
 
     //  GET /api/v1/accounts/:id/following
     @JvmOverloads
-    fun getFollowing(accountId: Long, range: Range = Range()): MastodonRequest<Pageable<Account>> {
+    fun getFollowing(accountId: String, range: Range = Range()): MastodonRequest<Pageable<Account>> {
         return MastodonRequest<Pageable<Account>>(
             {
                 client.get(
@@ -96,7 +96,7 @@ class Accounts(private val client: MastodonClient) {
     //  GET /api/v1/accounts/:id/statuses
     @JvmOverloads
     fun getStatuses(
-        accountId: Long,
+        accountId: String,
         onlyMedia: Boolean = false,
         excludeReplies: Boolean = false,
         pinned: Boolean = false,
@@ -126,7 +126,7 @@ class Accounts(private val client: MastodonClient) {
     }
 
     //  POST /api/v1/accounts/:id/follow
-    fun postFollow(accountId: Long): MastodonRequest<Relationship> {
+    fun postFollow(accountId: String): MastodonRequest<Relationship> {
         return MastodonRequest<Relationship>(
             {
                 client.post("api/v1/accounts/$accountId/follow")
@@ -138,7 +138,7 @@ class Accounts(private val client: MastodonClient) {
     }
 
     //  POST /api/v1/accounts/:id/unfollow
-    fun postUnFollow(accountId: Long): MastodonRequest<Relationship> {
+    fun postUnFollow(accountId: String): MastodonRequest<Relationship> {
         return MastodonRequest<Relationship>(
             {
                 client.post("api/v1/accounts/$accountId/unfollow")
@@ -150,7 +150,7 @@ class Accounts(private val client: MastodonClient) {
     }
 
     //  POST /api/v1/accounts/:id/block
-    fun postBlock(accountId: Long): MastodonRequest<Relationship> {
+    fun postBlock(accountId: String): MastodonRequest<Relationship> {
         return MastodonRequest<Relationship>(
             {
                 client.post("api/v1/accounts/$accountId/block")
@@ -162,7 +162,7 @@ class Accounts(private val client: MastodonClient) {
     }
 
     //  POST /api/v1/accounts/:id/unblock
-    fun postUnblock(accountId: Long): MastodonRequest<Relationship> {
+    fun postUnblock(accountId: String): MastodonRequest<Relationship> {
         return MastodonRequest<Relationship>(
             {
                 client.post("api/v1/accounts/$accountId/unblock")
@@ -174,7 +174,7 @@ class Accounts(private val client: MastodonClient) {
     }
 
     //  POST /api/v1/accounts/:id/mute
-    fun postMute(accountId: Long): MastodonRequest<Relationship> {
+    fun postMute(accountId: String): MastodonRequest<Relationship> {
         return MastodonRequest<Relationship>(
             {
                 client.post("api/v1/accounts/$accountId/mute")
@@ -186,7 +186,7 @@ class Accounts(private val client: MastodonClient) {
     }
 
     //  POST /api/v1/accounts/:id/unmute
-    fun postUnmute(accountId: Long): MastodonRequest<Relationship> {
+    fun postUnmute(accountId: String): MastodonRequest<Relationship> {
         return MastodonRequest<Relationship>(
             {
                 client.post("api/v1/accounts/$accountId/unmute")
@@ -198,7 +198,7 @@ class Accounts(private val client: MastodonClient) {
     }
 
     //  GET /api/v1/accounts/relationships
-    fun getRelationships(accountIds: List<Long>): MastodonRequest<List<Relationship>> {
+    fun getRelationships(accountIds: List<String>): MastodonRequest<List<Relationship>> {
         return MastodonRequest(
             {
                 client.get(

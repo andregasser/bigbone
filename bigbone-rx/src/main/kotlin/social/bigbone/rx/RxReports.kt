@@ -21,7 +21,7 @@ class RxReports(client: MastodonClient) {
         }
     }
 
-    fun postReport(accountId: Long, statusId: Long, comment: String): Single<Report> {
+    fun postReport(accountId: String, statusId: String, comment: String): Single<Report> {
         return Single.create {
             try {
                 val report = reports.postReport(accountId, statusId, comment)

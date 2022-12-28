@@ -237,7 +237,7 @@ class Streaming(private val client: MastodonClient) {
                         if (event == "delete") {
                             val id = client.getSerializer().fromJson(
                                 json,
-                                Long::class.java
+                                String::class.java
                             )
                             handler.onDelete(id)
                         }
@@ -301,7 +301,7 @@ class Streaming(private val client: MastodonClient) {
                         if (event == "delete") {
                             val id = client.getSerializer().fromJson(
                                 json,
-                                Long::class.java
+                                String::class.java
                             )
                             handler.onDelete(id)
                         }

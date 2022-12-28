@@ -7,7 +7,7 @@ class RxTimelinesTest {
 
     @Test
     fun getPublic() {
-        val client = MockClient.mock("public_timeline.json", 5L, 40L)
+        val client = MockClient.mock("public_timeline.json", "5", "40")
         val publicMethod = RxPublic(client)
         val subscriber = publicMethod.getLocalPublic().test()
         subscriber.assertNoErrors()

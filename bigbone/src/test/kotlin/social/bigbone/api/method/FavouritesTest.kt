@@ -14,7 +14,7 @@ class FavouritesTest {
         val favorites = Favourites(client)
         val pageable = favorites.getFavourites().execute()
         val status = pageable.part.first()
-        status.id shouldBeEqualTo 1111
+        status.id shouldBeEqualTo "1111"
     }
 
     @Test

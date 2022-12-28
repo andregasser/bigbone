@@ -36,7 +36,7 @@ class Reports(private val client: MastodonClient) {
      * comment: A comment to associate with the report.
      */
     @Throws(BigboneRequestException::class)
-    fun postReport(accountId: Long, statusId: Long, comment: String): MastodonRequest<Report> {
+    fun postReport(accountId: String, statusId: String, comment: String): MastodonRequest<Report> {
         val parameters = Parameter().apply {
             append("account_id", accountId)
             append("status_ids", statusId)

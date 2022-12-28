@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName
  */
 class Relationship(
     @SerializedName("id")
-    val id: Long = 0L,
+    val id: String = "0",
 
     @SerializedName("following")
     val isFollowing: Boolean = false,

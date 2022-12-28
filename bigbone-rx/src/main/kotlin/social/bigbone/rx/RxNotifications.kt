@@ -22,7 +22,7 @@ class RxNotifications(client: MastodonClient) {
         }
     }
 
-    fun getNotification(id: Long): Single<Notification> {
+    fun getNotification(id: String): Single<Notification> {
         return Single.create {
             try {
                 val notification = notifications.getNotification(id)

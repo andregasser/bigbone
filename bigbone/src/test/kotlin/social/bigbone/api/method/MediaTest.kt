@@ -15,7 +15,7 @@ class MediaTest {
         val client = MockClient.mock("attachment.json")
         val media = Media(client)
         val attachment = media.postMedia(MultipartBody.Part.create(emptyRequestBody())).execute()
-        attachment.id shouldBeEqualTo 10
+        attachment.id shouldBeEqualTo "10"
         attachment.type shouldBeEqualTo "video"
         attachment.url shouldBeEqualTo "youtube"
         attachment.remoteUrl shouldNotBe null
