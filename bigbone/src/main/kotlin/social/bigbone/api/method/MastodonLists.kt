@@ -26,7 +26,7 @@ class MastodonLists(private val client: MastodonClient) {
 
     // GET /api/v1/timelines/list/:list_id
     @Throws(BigboneRequestException::class)
-    fun getListTimeLine(listID: Long, range: Range = Range()): MastodonRequest<Pageable<Status>> {
+    fun getListTimeLine(listID: String, range: Range = Range()): MastodonRequest<Pageable<Status>> {
         return MastodonRequest<Pageable<Status>>(
             {
                 client.get(

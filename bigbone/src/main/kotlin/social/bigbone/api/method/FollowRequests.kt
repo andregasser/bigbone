@@ -24,7 +24,7 @@ class FollowRequests(private val client: MastodonClient) {
 
     //  POST /api/v1/follow_requests/:id/authorize
     @Throws(BigboneRequestException::class)
-    fun postAuthorize(accountId: Long) {
+    fun postAuthorize(accountId: String) {
         val response = client.post("api/v1/follow_requests/$accountId/authorize")
         if (!response.isSuccessful) {
             throw BigboneRequestException(response)
@@ -33,7 +33,7 @@ class FollowRequests(private val client: MastodonClient) {
 
     //  POST /api/v1/follow_requests/:id/reject
     @Throws(BigboneRequestException::class)
-    fun postReject(accountId: Long) {
+    fun postReject(accountId: String) {
         val response = client.post("api/v1/follow_requests/$accountId/reject")
         if (!response.isSuccessful) {
             throw BigboneRequestException(response)

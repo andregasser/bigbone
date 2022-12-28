@@ -14,7 +14,7 @@ class TimelinesTest {
         val timelines = Timelines(client)
         val pageable = timelines.getHome().execute()
         val status = pageable.part.first()
-        status.id shouldBeEqualTo 11_111L
+        status.id shouldBeEqualTo "11111"
     }
 
     @Test

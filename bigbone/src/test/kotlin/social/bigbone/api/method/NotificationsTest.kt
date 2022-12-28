@@ -33,7 +33,7 @@ class NotificationsTest {
         Assertions.assertThrows(BigboneRequestException::class.java) {
             val client = MockClient.ioException()
             val notifications = Notifications(client)
-            notifications.getNotification(1L).execute()
+            notifications.getNotification("1").execute()
         }
     }
 }

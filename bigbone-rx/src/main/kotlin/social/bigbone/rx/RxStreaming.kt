@@ -24,7 +24,7 @@ class RxStreaming(client: MastodonClient) {
                     // no op
                 }
 
-                override fun onDelete(id: Long) {
+                override fun onDelete(id: String) {
                     // no op
                 }
             })

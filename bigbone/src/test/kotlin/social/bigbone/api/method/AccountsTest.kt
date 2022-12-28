@@ -11,7 +11,7 @@ class AccountsTest {
     fun getAccount() {
         val client = MockClient.mock("account.json")
         val accounts = Accounts(client)
-        val account = accounts.getAccount(1L).execute()
+        val account = accounts.getAccount("1").execute()
         account.acct shouldBeEqualTo "test@test.com"
         account.displayName shouldBeEqualTo "test"
         account.userName shouldBeEqualTo "test"
@@ -22,7 +22,7 @@ class AccountsTest {
         Assertions.assertThrows(BigboneRequestException::class.java) {
             val client = MockClient.ioException()
             val accounts = Accounts(client)
-            accounts.getAccount(1L).execute()
+            accounts.getAccount("1").execute()
         }
     }
 
@@ -70,7 +70,7 @@ class AccountsTest {
     fun getFollowers() {
         val client = MockClient.mock("accounts.json")
         val accounts = Accounts(client)
-        val pageable = accounts.getFollowers(1L).execute()
+        val pageable = accounts.getFollowers("1").execute()
         val account = pageable.part.first()
         account.acct shouldBeEqualTo "test@test.com"
         account.displayName shouldBeEqualTo "test"
@@ -82,7 +82,7 @@ class AccountsTest {
         Assertions.assertThrows(BigboneRequestException::class.java) {
             val client = MockClient.ioException()
             val accounts = Accounts(client)
-            accounts.getFollowers(1L).execute()
+            accounts.getFollowers("1").execute()
         }
     }
 
@@ -90,7 +90,7 @@ class AccountsTest {
     fun getFollowing() {
         val client = MockClient.mock("accounts.json")
         val accounts = Accounts(client)
-        val pageable = accounts.getFollowing(1L).execute()
+        val pageable = accounts.getFollowing("1").execute()
         val account = pageable.part.first()
         account.acct shouldBeEqualTo "test@test.com"
         account.displayName shouldBeEqualTo "test"
@@ -102,7 +102,7 @@ class AccountsTest {
         Assertions.assertThrows(BigboneRequestException::class.java) {
             val client = MockClient.ioException()
             val accounts = Accounts(client)
-            accounts.getFollowing(1L).execute()
+            accounts.getFollowing("1").execute()
         }
     }
 
@@ -110,9 +110,9 @@ class AccountsTest {
     fun getStatuses() {
         val client = MockClient.mock("statuses.json")
         val accounts = Accounts(client)
-        val pageable = accounts.getStatuses(1, false).execute()
+        val pageable = accounts.getStatuses("1", false).execute()
         val status = pageable.part.first()
-        status.id shouldBeEqualTo 11_111L
+        status.id shouldBeEqualTo "11111"
     }
 
     @Test
@@ -120,7 +120,7 @@ class AccountsTest {
         Assertions.assertThrows(BigboneRequestException::class.java) {
             val client = MockClient.ioException()
             val accounts = Accounts(client)
-            accounts.getStatuses(1, false).execute()
+            accounts.getStatuses("1", false).execute()
         }
     }
 
@@ -128,8 +128,8 @@ class AccountsTest {
     fun postFollow() {
         val client = MockClient.mock("relationship.json")
         val accounts = Accounts(client)
-        val relationship = accounts.postFollow(1L).execute()
-        relationship.id shouldBeEqualTo 3361
+        val relationship = accounts.postFollow("1").execute()
+        relationship.id shouldBeEqualTo "3361"
         relationship.isFollowing shouldBeEqualTo true
         relationship.isFollowedBy shouldBeEqualTo false
         relationship.isBlocking shouldBeEqualTo false
@@ -142,7 +142,7 @@ class AccountsTest {
         Assertions.assertThrows(BigboneRequestException::class.java) {
             val client = MockClient.ioException()
             val accounts = Accounts(client)
-            accounts.postFollow(1L).execute()
+            accounts.postFollow("1").execute()
         }
     }
 
@@ -150,8 +150,8 @@ class AccountsTest {
     fun postUnFollow() {
         val client = MockClient.mock("relationship.json")
         val accounts = Accounts(client)
-        val relationship = accounts.postUnFollow(1L).execute()
-        relationship.id shouldBeEqualTo 3361
+        val relationship = accounts.postUnFollow("1").execute()
+        relationship.id shouldBeEqualTo "3361"
         relationship.isFollowing shouldBeEqualTo true
         relationship.isFollowedBy shouldBeEqualTo false
         relationship.isBlocking shouldBeEqualTo false
@@ -164,7 +164,7 @@ class AccountsTest {
         Assertions.assertThrows(BigboneRequestException::class.java) {
             val client = MockClient.ioException()
             val accounts = Accounts(client)
-            accounts.postUnFollow(1L).execute()
+            accounts.postUnFollow("1").execute()
         }
     }
 
@@ -172,8 +172,8 @@ class AccountsTest {
     fun postBlock() {
         val client = MockClient.mock("relationship.json")
         val accounts = Accounts(client)
-        val relationship = accounts.postBlock(1L).execute()
-        relationship.id shouldBeEqualTo 3361
+        val relationship = accounts.postBlock("1").execute()
+        relationship.id shouldBeEqualTo "3361"
         relationship.isFollowing shouldBeEqualTo true
         relationship.isFollowedBy shouldBeEqualTo false
         relationship.isBlocking shouldBeEqualTo false
@@ -186,7 +186,7 @@ class AccountsTest {
         Assertions.assertThrows(BigboneRequestException::class.java) {
             val client = MockClient.ioException()
             val accounts = Accounts(client)
-            accounts.postBlock(1L).execute()
+            accounts.postBlock("1").execute()
         }
     }
 
@@ -194,8 +194,8 @@ class AccountsTest {
     fun postUnblock() {
         val client = MockClient.mock("relationship.json")
         val accounts = Accounts(client)
-        val relationship = accounts.postUnblock(1L).execute()
-        relationship.id shouldBeEqualTo 3361
+        val relationship = accounts.postUnblock("1").execute()
+        relationship.id shouldBeEqualTo "3361"
         relationship.isFollowing shouldBeEqualTo true
         relationship.isFollowedBy shouldBeEqualTo false
         relationship.isBlocking shouldBeEqualTo false
@@ -208,7 +208,7 @@ class AccountsTest {
         Assertions.assertThrows(BigboneRequestException::class.java) {
             val client = MockClient.ioException()
             val accounts = Accounts(client)
-            accounts.postUnblock(1L).execute()
+            accounts.postUnblock("1").execute()
         }
     }
 
@@ -216,8 +216,8 @@ class AccountsTest {
     fun postMute() {
         val client = MockClient.mock("relationship.json")
         val accounts = Accounts(client)
-        val relationship = accounts.postMute(1L).execute()
-        relationship.id shouldBeEqualTo 3361
+        val relationship = accounts.postMute("1").execute()
+        relationship.id shouldBeEqualTo "3361"
         relationship.isFollowing shouldBeEqualTo true
         relationship.isFollowedBy shouldBeEqualTo false
         relationship.isBlocking shouldBeEqualTo false
@@ -230,7 +230,7 @@ class AccountsTest {
         Assertions.assertThrows(BigboneRequestException::class.java) {
             val client = MockClient.ioException()
             val accounts = Accounts(client)
-            accounts.postMute(1L).execute()
+            accounts.postMute("1").execute()
         }
     }
 
@@ -238,8 +238,8 @@ class AccountsTest {
     fun postUnmute() {
         val client = MockClient.mock("relationship.json")
         val accounts = Accounts(client)
-        val relationship = accounts.postUnmute(1L).execute()
-        relationship.id shouldBeEqualTo 3361
+        val relationship = accounts.postUnmute("1").execute()
+        relationship.id shouldBeEqualTo "3361"
         relationship.isFollowing shouldBeEqualTo true
         relationship.isFollowedBy shouldBeEqualTo false
         relationship.isBlocking shouldBeEqualTo false
@@ -252,7 +252,7 @@ class AccountsTest {
         Assertions.assertThrows(BigboneRequestException::class.java) {
             val client = MockClient.ioException()
             val accounts = Accounts(client)
-            accounts.postUnmute(1L).execute()
+            accounts.postUnmute("1").execute()
         }
     }
 
@@ -260,9 +260,9 @@ class AccountsTest {
     fun getRelationships() {
         val client = MockClient.mock("relationships.json")
         val accounts = Accounts(client)
-        val relationships = accounts.getRelationships(listOf(1L)).execute()
+        val relationships = accounts.getRelationships(listOf("1")).execute()
         val relationship = relationships.first()
-        relationship.id shouldBeEqualTo 3361
+        relationship.id shouldBeEqualTo "3361"
         relationship.isFollowing shouldBeEqualTo true
         relationship.isFollowedBy shouldBeEqualTo false
         relationship.isBlocking shouldBeEqualTo false
@@ -275,7 +275,7 @@ class AccountsTest {
         Assertions.assertThrows(BigboneRequestException::class.java) {
             val client = MockClient.ioException()
             val accounts = Accounts(client)
-            accounts.getRelationships(listOf(1L)).execute()
+            accounts.getRelationships(listOf("1")).execute()
         }
     }
 

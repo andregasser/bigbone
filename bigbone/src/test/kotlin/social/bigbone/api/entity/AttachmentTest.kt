@@ -11,7 +11,7 @@ class AttachmentTest {
     fun deserialize() {
         val json = AssetsUtil.readFromAssets("attachment.json")
         val status: Attachment = Gson().fromJson(json, Attachment::class.java)
-        status.id shouldBeEqualTo 10L
+        status.id shouldBeEqualTo "10"
         status.url shouldBeEqualTo "youtube"
         status.remoteUrl shouldNotBe null
         status.previewUrl shouldBeEqualTo "preview"

@@ -30,7 +30,7 @@ public class StreamPublicTimeline {
             }
 
             @Override
-            public void onDelete(final long id) {
+            public void onDelete(final String id) {
                 // No op
             }
         };

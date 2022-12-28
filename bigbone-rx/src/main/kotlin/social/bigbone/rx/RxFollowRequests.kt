@@ -23,7 +23,7 @@ class RxFollowRequests(client: MastodonClient) {
         }
     }
 
-    fun postAuthorize(accountId: Long): Completable {
+    fun postAuthorize(accountId: String): Completable {
         return Completable.create {
             try {
                 followRequests.postAuthorize(accountId)
@@ -34,7 +34,7 @@ class RxFollowRequests(client: MastodonClient) {
         }
     }
 
-    fun postReject(accountId: Long): Completable {
+    fun postReject(accountId: String): Completable {
         return Completable.create {
             try {
                 followRequests.postReject(accountId)

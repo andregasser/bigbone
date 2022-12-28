@@ -11,5 +11,5 @@ interface Handler {
     fun onNotification(notification: Notification)
 
     // ignore if public streaming
-    fun onDelete(id: Long)
+    fun onDelete(id: String)
 }

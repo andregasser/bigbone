@@ -13,7 +13,7 @@ import social.bigbone.rx.extensions.onErrorIfNotDisposed
 class RxAccounts(client: MastodonClient) {
     val accounts = Accounts(client)
 
-    fun getAccount(accountId: Long): Single<Account> {
+    fun getAccount(accountId: String): Single<Account> {
         return Single.create {
             try {
                 val account = accounts.getAccount(accountId).execute()
@@ -46,7 +46,7 @@ class RxAccounts(client: MastodonClient) {
         }
     }
 
-    fun getFollowers(accountId: Long, range: Range): Single<Pageable<Account>> {
+    fun getFollowers(accountId: String, range: Range): Single<Pageable<Account>> {
         return Single.create {
             try {
                 val followers = accounts.getFollowers(accountId, range).execute()
@@ -57,7 +57,7 @@ class RxAccounts(client: MastodonClient) {
         }
     }
 
-    fun getFollowing(accountId: Long, range: Range): Single<Pageable<Account>> {
+    fun getFollowing(accountId: String, range: Range): Single<Pageable<Account>> {
         return Single.create {
             try {
                 val following = accounts.getFollowing(accountId, range).execute()
@@ -68,7 +68,7 @@ class RxAccounts(client: MastodonClient) {
         }
     }
 
-    fun getStatuses(accountId: Long, onlyMedia: Boolean, range: Range): Single<Pageable<Status>> {
+    fun getStatuses(accountId: String, onlyMedia: Boolean, range: Range): Single<Pageable<Status>> {
         return Single.create {
             try {
                 val statuses = accounts.getStatuses(accountId, onlyMedia, range = range).execute()
@@ -79,7 +79,7 @@ class RxAccounts(client: MastodonClient) {
         }
     }
 
-    fun postFollow(accountId: Long): Single<Relationship> {
+    fun postFollow(accountId: String): Single<Relationship> {
         return Single.create {
             try {
                 val relationship = accounts.postFollow(accountId).execute()
@@ -90,7 +90,7 @@ class RxAccounts(client: MastodonClient) {
         }
     }
 
-    fun postUnFollow(accountId: Long): Single<Relationship> {
+    fun postUnFollow(accountId: String): Single<Relationship> {
         return Single.create {
             try {
                 val relationship = accounts.postUnFollow(accountId).execute()
@@ -101,7 +101,7 @@ class RxAccounts(client: MastodonClient) {
         }
     }
 
-    fun postBlock(accountId: Long): Single<Relationship> {
+    fun postBlock(accountId: String): Single<Relationship> {
         return Single.create {
             try {
                 val relationship = accounts.postBlock(accountId).execute()
@@ -112,7 +112,7 @@ class RxAccounts(client: MastodonClient) {
         }
     }
 
-    fun postUnblock(accountId: Long): Single<Relationship> {
+    fun postUnblock(accountId: String): Single<Relationship> {
         return Single.create {
             try {
                 val relationship = accounts.postUnblock(accountId).execute()
@@ -123,7 +123,7 @@ class RxAccounts(client: MastodonClient) {
         }
     }
 
-    fun postMute(accountId: Long): Single<Relationship> {
+    fun postMute(accountId: String): Single<Relationship> {
         return Single.create {
             try {
                 val relationship = accounts.postMute(accountId).execute()
@@ -134,7 +134,7 @@ class RxAccounts(client: MastodonClient) {
         }
     }
 
-    fun postUnmute(accountId: Long): Single<Relationship> {
+    fun postUnmute(accountId: String): Single<Relationship> {
         return Single.create {
             try {
                 val relationship = accounts.postUnmute(accountId).execute()
@@ -145,7 +145,7 @@ class RxAccounts(client: MastodonClient) {
         }
     }
 
-    fun getRelationships(accountIds: List<Long>): Single<List<Relationship>> {
+    fun getRelationships(accountIds: List<String>): Single<List<Relationship>> {
         return Single.create {
             try {
                 val relationships = accounts.getRelationships(accountIds).execute()

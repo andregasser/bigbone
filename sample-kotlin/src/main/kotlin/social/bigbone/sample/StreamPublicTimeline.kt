@@ -22,7 +22,7 @@ object StreamPublicTimeline {
 
             override fun onNotification(notification: Notification) { }
 
-            override fun onDelete(id: Long) { }
+            override fun onDelete(id: String) { }
         }
         val streaming = Streaming(client)
         try {
