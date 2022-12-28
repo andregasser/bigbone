@@ -1,6 +1,6 @@
 package social.bigbone.sample
 
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.rxjava3.schedulers.Schedulers
 import social.bigbone.rx.RxStreaming
 
 object RxStreamPublicTimeline {

@@ -11,7 +11,7 @@ kotlin-coroutines = "1.6.4"
 mockk = "1.13.3"
 okhttp = "4.9.1"
 okio = "2.8.0"
-rxjava = "2.2.21"
+rxjava = "3.1.5"
 
 # Gradle plugins
 jacoco = "0.8.8"
@@ -29,7 +29,7 @@ mockk-dsl = { module = "io.mockk:mockk-dsl", version.ref = "mockk" }
 okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
 okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
 okhttp-mockwebserver = { module = "com.squareup.okhttp3:mockwebserver", version.ref = "okhttp" }
-rxjava = { module="io.reactivex.rxjava2:rxjava", version.ref="rxjava"}
+rxjava = { module="io.reactivex.rxjava3:rxjava", version.ref="rxjava"}
 detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
 
 [plugins]
