@@ -31,7 +31,7 @@ class ReportsTest {
         Assertions.assertThrows(BigboneRequestException::class.java) {
             val client = MockClient.ioException()
             val reports = Reports(client)
-            reports.postReport("10", "20", "test").execute()
+            reports.postReport(10, 20, "test").execute()
         }
     }
 }
