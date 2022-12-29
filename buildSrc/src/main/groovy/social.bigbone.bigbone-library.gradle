@@ -3,21 +3,61 @@ plugins {
     id 'java-library'
     id 'kotlin'
     id 'maven-publish'
+    id 'signing'
     id 'jacoco'
 }
 
 publishing {
     repositories {
         maven {
-            name = "build"
+            name = "local"
             url = rootProject.file("build/repo")
         }
+        maven {
+            name = "mavenCentral"
+            def releasesRepoUrl = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+            def snapshotsRepoUrl = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+            credentials {
+                username = sonatypeUsername
+                password = sonatypePassword
+            }
+        }
+
     }
     publications {
-        mavenJava(MavenPublication) {
+        bigbone(MavenPublication) {
+            pom {
+                name = 'Bigbone'
+                description = 'Mastodon Client for Java and Kotlin'
+                url = 'https://github.com/andregasser/bigbone/'
+                licenses {
+                    license {
+                        name = 'MIT License'
+                        url = 'https://opensource.org/licenses/MIT'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'andregasser'
+                        name = 'André Gasser'
+                        email = 'andre.gasser@protonmail.com'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:https://github.com/andregasser/bigbone.git'
+                    developerConnection = 'scm:git:ssh:git@github.com:andregasser/bigbone.git'
+                    url = 'https://github.com/andregasser/bigbone/'
+                }
+            }
+
             from components.java
         }
     }
+}
+
+signing {
+    sign publishing.publications.bigbone
 }
 
 jacoco {
