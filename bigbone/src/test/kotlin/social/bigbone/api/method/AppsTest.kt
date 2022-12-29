@@ -69,26 +69,4 @@ class AppsTest {
             apps.getAccessToken("test", "test", code = "test").execute()
         }
     }
-
-    @Test
-    fun postUserNameAndPassword() {
-        val client: MastodonClient = MockClient.mock("access_token.json")
-        every { client.getInstanceName() } returns "mastodon.cloud"
-        val apps = Apps(client)
-        val accessToken = apps.postUserNameAndPassword("test", "test", Scope(Scope.Name.ALL), "test", "test").execute()
-        accessToken.accessToken shouldBeEqualTo "test"
-        accessToken.scope shouldBeEqualTo "read write follow"
-        accessToken.tokenType shouldBeEqualTo "bearer"
-        accessToken.createdAt shouldBeEqualTo 1_493_188_835
-    }
-
-    @Test
-    fun postUserNameAndPasswordWithException() {
-        Assertions.assertThrows(BigboneRequestException::class.java) {
-            val client: MastodonClient = MockClient.ioException()
-            every { client.getInstanceName() } returns "mastodon.cloud"
-            val apps = Apps(client)
-            apps.postUserNameAndPassword("test", "test", Scope(Scope.Name.ALL), "test", "test").execute()
-        }
-    }
 }

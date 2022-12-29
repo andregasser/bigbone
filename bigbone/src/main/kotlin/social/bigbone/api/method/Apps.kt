@@ -97,39 +97,4 @@ class Apps(private val client: MastodonClient) {
             }
         )
     }
-
-    /**
-     * Obtain an access token, to be used during API calls that are not public. This method uses a grant_type
-     * that is undocumented in Mastodon API, and should NOT be used in production code. It exists for example code
-     * in this project and will be removed at a later date. getAccessToken() should be used instead.
-     */
-    @Deprecated(
-        "This method uses grant_type 'password' which is undocumented in Mastodon API" +
-            " and should not be used in production code.",
-        ReplaceWith("getAccessToken()"),
-        DeprecationLevel.WARNING
-    )
-    fun postUserNameAndPassword(
-        clientId: String,
-        clientSecret: String,
-        scope: Scope,
-        userName: String,
-        password: String
-    ): MastodonRequest<AccessToken> {
-        val parameters = Parameter()
-            .append("client_id", clientId)
-            .append("client_secret", clientSecret)
-            .append("scope", scope.toString())
-            .append("username", userName)
-            .append("password", password)
-            .append("grant_type", "password")
-        return MastodonRequest(
-            {
-                client.post("oauth/token", parameters)
-            },
-            {
-                client.getSerializer().fromJson(it, AccessToken::class.java)
-            }
-        )
-    }
 }
