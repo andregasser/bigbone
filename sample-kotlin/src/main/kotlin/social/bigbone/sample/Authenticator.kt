@@ -1,6 +1,8 @@
 package social.bigbone.sample
 
 import social.bigbone.MastodonClient
+import social.bigbone.MastodonRequest
+import social.bigbone.Parameter
 import social.bigbone.api.Scope
 import social.bigbone.api.entity.auth.AccessToken
 import social.bigbone.api.entity.auth.AppRegistration
@@ -70,8 +72,7 @@ object Authenticator {
         password: String
     ): AccessToken {
         val client = MastodonClient.Builder(instanceName).build()
-        val apps = Apps(client)
-        return apps.postUserNameAndPassword(clientId, clientSecret, Scope(), email, password).execute()
+        return postUserNameAndPassword(client, clientId, clientSecret, Scope(), email, password).execute()
     }
 
     private fun appRegistration(instanceName: String): AppRegistration {
@@ -81,5 +82,35 @@ object Authenticator {
             "kotlindon",
             scope = Scope()
         ).execute()
+    }
+
+    /**
+     * Obtain an access token, to be used during API calls that are not public. This method uses a grant_type
+     * that is undocumented in Mastodon API, and should NOT be used in production code. It will be removed at a later date.
+     * Apps.getAccessToken() should be used instead.
+     */
+    private fun postUserNameAndPassword(
+        client: MastodonClient,
+        clientId: String,
+        clientSecret: String,
+        scope: Scope,
+        userName: String,
+        password: String
+    ): MastodonRequest<AccessToken> {
+        val parameters = Parameter()
+            .append("client_id", clientId)
+            .append("client_secret", clientSecret)
+            .append("scope", scope.toString())
+            .append("username", userName)
+            .append("password", password)
+            .append("grant_type", "password")
+        return MastodonRequest(
+            {
+                client.post("oauth/token", parameters)
+            },
+            {
+                client.getSerializer().fromJson(it, AccessToken::class.java)
+            }
+        )
     }
 }
