@@ -26,16 +26,13 @@ built in the past serves as a basis for our own development efforts. Thank you!
 Bigbone has not been published as a released version yet. But you can include a snapshot build of our library in your project if you want.
 But prepare for breaking changes, as we are in the process of changing some fundamental things. 
 
-Bigbone is available on Jitpack. Check the latest snapshot version here:
-[![](https://jitpack.io/v/andregasser/bigbone.svg)](https://jitpack.io/#andregasser/bigbone)
-
-To use Bigbone via Jitpack, add it to your root `build.gradle` at the end of repositories:
+Bigbone is available on [Maven Central Repository](https://search.maven.org/). To use Bigbone from Maven Central, add `mavenCentral()` to your root 
+`build.gradle` as shown below:
 
 ```groovy
 allprojects {
   repositories {
-    ...
-    maven { url 'https://jitpack.io' }
+    mavenCentral()
   }
 }
 ```
@@ -43,11 +40,10 @@ allprojects {
 Then, add Bigbone dependencies to your module `build.gradle` file:
 
 ```groovy
-implementation 'com.github.andregasser.bigbone:bigbone:master-SNAPSHOT'
-implementation 'com.github.andregasser.bigbone:bigbone-rx:master-SNAPSHOT'
+implementation 'social.bigbone:bigbone:2.0.0-SNAPSHOT'
+implementation 'social.bigbone:bigbone-rx:2.0.0-SNAPSHOT'
 ```
 
-If you want to better understand how JitPack works, checkout their documentation [here](https://jitpack.io/docs/).
 Usage examples for Bigbone can be found in [USAGE.md](USAGE.md).
 
 ## Mastodon API 
@@ -57,8 +53,8 @@ More information about the current implementation progress can be found in [API.
 and our roadmap please have a look in the **Issues** or **Projects** section. 
 
 ## Releases
-We did not yet release a publicly available version. But we are working on it and hope to release an initial version 2.0.0 soon. Until then,
-you can experiment with our snapshot builds on JitPack.
+We did not yet release a publicly available version. But we have released our first 2.0.0-SNAPSHOT on Maven Central. We are working on the 2.0.0 release and 
+hope to get it out soon. Until then, we encourage you to experiment / play with the 2.0.0-SNAPSHOT build and report any issues you find.
 
 Bigbone uses [Semantic Versioning 2.0.0](http://semver.org/spec/v2.0.0.html).
 
