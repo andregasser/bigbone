@@ -15,7 +15,7 @@ import java.net.SocketTimeoutException
 
 object MockClient {
 
-    fun mock(jsonName: String, maxId: Long? = null, sinceId: Long? = null): MastodonClient {
+    fun mock(jsonName: String, maxId: String? = null, sinceId: String? = null): MastodonClient {
         val clientMock: MastodonClient = mockk()
         val response: Response = Response.Builder()
             .code(200)

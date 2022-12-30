@@ -1,7 +1,7 @@
 package social.bigbone.rx
 
-import io.reactivex.Completable
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Single
 import social.bigbone.MastodonClient
 import social.bigbone.api.Pageable
 import social.bigbone.api.Range
@@ -22,7 +22,7 @@ class RxNotifications(client: MastodonClient) {
         }
     }
 
-    fun getNotification(id: Long): Single<Notification> {
+    fun getNotification(id: String): Single<Notification> {
         return Single.create {
             try {
                 val notification = notifications.getNotification(id)

@@ -11,7 +11,7 @@ import okhttp3.ResponseBody.Companion.toResponseBody
 import social.bigbone.MastodonClient
 
 object MockClient {
-    fun mock(jsonName: String, maxId: Long? = null, sinceId: Long? = null): MastodonClient {
+    fun mock(jsonName: String, maxId: String? = null, sinceId: String? = null): MastodonClient {
         val client: MastodonClient = mockk()
         val response: Response = Response.Builder()
             .code(200)

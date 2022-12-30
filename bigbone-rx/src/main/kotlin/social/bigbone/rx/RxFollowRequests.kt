@@ -1,7 +1,7 @@
 package social.bigbone.rx
 
-import io.reactivex.Completable
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Single
 import social.bigbone.MastodonClient
 import social.bigbone.api.Pageable
 import social.bigbone.api.Range
@@ -23,7 +23,7 @@ class RxFollowRequests(client: MastodonClient) {
         }
     }
 
-    fun postAuthorize(accountId: Long): Completable {
+    fun postAuthorize(accountId: String): Completable {
         return Completable.create {
             try {
                 followRequests.postAuthorize(accountId)
@@ -34,7 +34,7 @@ class RxFollowRequests(client: MastodonClient) {
         }
     }
 
-    fun postReject(accountId: Long): Completable {
+    fun postReject(accountId: String): Completable {
         return Completable.create {
             try {
                 followRequests.postReject(accountId)

@@ -1,6 +1,8 @@
 package social.bigbone.sample;
 
 import social.bigbone.MastodonClient;
+import social.bigbone.MastodonRequest;
+import social.bigbone.Parameter;
 import social.bigbone.api.Scope;
 import social.bigbone.api.entity.auth.AccessToken;
 import social.bigbone.api.entity.auth.AppRegistration;
@@ -62,13 +64,38 @@ final class Authenticator {
 
     private static AccessToken getAccessToken(final String instanceName, final String clientId, final String clientSecret, final String email, final String password) throws BigboneRequestException {
         final MastodonClient client = new MastodonClient.Builder(instanceName).build();
-        final Apps apps = new Apps(client);
-        return apps.postUserNameAndPassword(clientId, clientSecret, new Scope(), email, password).execute();
+        return postUserNameAndPassword(client, clientId, clientSecret, new Scope(), email, password).execute();
     }
 
     private static AppRegistration appRegistration(final String instanceName) throws BigboneRequestException {
         final MastodonClient client = new MastodonClient.Builder(instanceName).build();
         final Apps apps = new Apps(client);
         return apps.createApp("kotlindon", "urn:ietf:wg:oauth:2.0:oob", new Scope(), null).execute();
+    }
+
+    /**
+     * Obtain an access token, to be used during API calls that are not public. This method uses a grant_type
+     * that is undocumented in Mastodon API, and should NOT be used in production code. It will be removed at a later date.
+     * Apps.getAccessToken() should be used instead.
+     */
+    private static MastodonRequest<AccessToken> postUserNameAndPassword(
+            final MastodonClient client,
+            final String clientId,
+            final String clientSecret,
+            final Scope scope,
+            final String userName,
+            final String password
+            ) {
+        final Parameter parameters = new Parameter()
+                .append("client_id", clientId)
+                .append("client_secret", clientSecret)
+                .append("scope", scope.toString())
+                .append("username", userName)
+                .append("password", password)
+                .append("grant_type", "password");
+        return new MastodonRequest<>(
+                () -> client.post("oauth/token", parameters),
+                s -> client.getSerializer().fromJson(s, AccessToken.class)
+        );
     }
 }

@@ -1,7 +1,7 @@
 package social.bigbone.rx
 
-import io.reactivex.BackpressureStrategy
-import io.reactivex.Flowable
+import io.reactivex.rxjava3.core.BackpressureStrategy
+import io.reactivex.rxjava3.core.Flowable
 import social.bigbone.MastodonClient
 import social.bigbone.api.Handler
 import social.bigbone.api.Shutdownable
@@ -24,7 +24,7 @@ class RxStreaming(client: MastodonClient) {
                     // no op
                 }
 
-                override fun onDelete(id: Long) {
+                override fun onDelete(id: String) {
                     // no op
                 }
             })

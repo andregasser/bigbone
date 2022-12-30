@@ -84,22 +84,22 @@ class PublicTest {
 
     @Test
     fun getLocalPublic() {
-        val client = MockClient.mock("public_timeline.json", maxId = 3L, sinceId = 1L)
+        val client = MockClient.mock("public_timeline.json", maxId = "3", sinceId = "1")
         val publicMethod = Public(client)
         val statuses = publicMethod.getLocalPublic().execute()
         statuses.part.size shouldBeEqualTo 20
         statuses.link?.let {
             it.nextPath shouldBeEqualTo "<https://mstdn.jp/api/v1/timelines/public?limit=20&local=true&max_id=3>"
-            it.maxId shouldBeEqualTo 3L
+            it.maxId shouldBeEqualTo "3"
             it.prevPath shouldBeEqualTo "<https://mstdn.jp/api/v1/timelines/public?limit=20&local=true&since_id=1>"
-            it.sinceId shouldBeEqualTo 1L
+            it.sinceId shouldBeEqualTo "1"
         }
     }
 
     @Test
     fun getLocalPublicWithJson() {
         val atomicInt = AtomicInteger(0)
-        val client = MockClient.mock("public_timeline.json", maxId = 3L, sinceId = 1L)
+        val client = MockClient.mock("public_timeline.json", maxId = "3", sinceId = "1")
         val publicMethod = Public(client)
         publicMethod.getLocalPublic()
             .doOnJson {
@@ -120,7 +120,7 @@ class PublicTest {
 
     @Test
     fun getLocalTag() {
-        val client = MockClient.mock("tag.json", maxId = 3L, sinceId = 1L)
+        val client = MockClient.mock("tag.json", maxId = "3", sinceId = "1")
         val publicMethod = Public(client)
         val statuses = publicMethod.getLocalTag("mastodon").execute()
         statuses.part.size shouldBeEqualTo 20

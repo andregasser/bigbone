@@ -18,8 +18,8 @@ class LinkTest {
                 fail("link is null")
                 return
             }
-            link.maxId shouldBeEqualTo 1552
-            link.sinceId shouldBeEqualTo 105
+            link.maxId shouldBeEqualTo "1552"
+            link.sinceId shouldBeEqualTo "105"
         }
 
         // max
@@ -33,8 +33,8 @@ class LinkTest {
                 fail("link is null")
                 return
             }
-            link.maxId shouldBeEqualTo 1553
-            link.sinceId shouldBeEqualTo 0
+            link.maxId shouldBeEqualTo "1553"
+            link.sinceId shouldBeEqualTo "0"
             link.prevPath shouldBeEqualTo ""
         }
 
@@ -49,9 +49,9 @@ class LinkTest {
                 fail("link is null")
                 return
             }
-            link.maxId shouldBeEqualTo 0
+            link.maxId shouldBeEqualTo "0"
             link.nextPath shouldBeEqualTo ""
-            link.sinceId shouldBeEqualTo 105
+            link.sinceId shouldBeEqualTo "105"
         }
     }
 }

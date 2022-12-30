@@ -32,7 +32,7 @@ class Notifications(private val client: MastodonClient) {
     }
 
     // GET /api/v1/notifications/:id
-    fun getNotification(id: Long): MastodonRequest<Notification> {
+    fun getNotification(id: String): MastodonRequest<Notification> {
         return MastodonRequest<Notification>(
             {
                 client.get("api/v1/notifications/$id")

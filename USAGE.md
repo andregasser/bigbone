@@ -197,7 +197,7 @@ val handler = object : Handler {
     println(status.content)
   }
   override fun onNotification(notification: Notification) {/* no op */}
-  override fun onDelete(id: Long) {/* no op */}
+  override fun onDelete(id: String) {/* no op */}
 }
 
 val streaming = Streaming(client)
@@ -226,7 +226,7 @@ Handler handler = new Handler() {
     @Override
     public void onNotification(@NotNull Notification notification) {/* no op */}
     @Override
-    public void onDelete(long id) {/* no op */}
+    public void onDelete(String id) {/* no op */}
 };
 
 Streaming streaming = new Streaming(client);

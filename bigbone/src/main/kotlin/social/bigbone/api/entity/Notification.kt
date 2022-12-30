@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName
  */
 class Notification(
     @SerializedName("id")
-    val id: Long = 0L, // The notification ID
+    val id: String = "0", // The notification ID
 
     @SerializedName("type")
     val type: String = Type.Mention.value, // One of: "mention", "reblog", "favourite", "follow"
