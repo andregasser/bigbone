@@ -29,23 +29,21 @@ With a library like Bigbone, you can for example build tools which
 
 # Implementation Status
 
-We did not release an official version on Maven Central yet, but we already have a `2.0.0-SNAPSHOT` that you can use to play around / experiment with. We really 
-hope to get out an initial 2.0.0 version very soon (hopefully January 2023) to have something out there that is maintained and can be used by other developers.
+**I did not release an official version on Maven Central yet**, but there's already a `2.0.0-SNAPSHOT` that you can use to play around / experiment with. 
+Just please be aware that, although it is a SNAPSHOT version, it is still in an early stage and there are for sure dark places in the library, where stuff will
+not work as expected. If you find issues, please file an issue in the [Issues](https://github.com/andregasser/bigbone/issues) section.  
+
+I really hope to get out an initial 2.0.0 version very soon (hopefully January 2023) to have something out there that is maintained and can be used by other 
+developers.
 
 Bigbone does not yet implement the full API of Mastodon. Actually, there is still **a lot to do**. Our main goal for the 2.0.0 release is to get something out 
-that is in a maintained state and on a solid basis, technology-wise. In future releases, we will focus on extending the existing API coverage. 
+that is in a maintained state and on a solid basis, technology-wise. In future releases, focus will be put on extending the existing API coverage. 
 
 For details on the current API coverage please have a look at [API.md](API.md).
 
 Bigbone uses [Semantic Versioning 2.0.0](http://semver.org/spec/v2.0.0.html).
 
 # Get Started
-
-Bigbone is available on [Maven Central](https://search.maven.org/). We have not yet released an official version, but there is a `2.0.0-SNAPSHOT` build you
-can experiment / play around with. 
-
-**Remember: SNAPSHOT versions are not stable, so please expect updates on a daily basis until the official 2.0.0 release is made
-available.** 
 
 ## Gradle (Groovy DSL)
 
@@ -140,14 +138,17 @@ There are also two Gradle modules that provide some insights on how to use this 
 - `sample` for Java example code
 - `sample-kotlin` for Kotlin example code
 
+# Bigbone Contributors
+
+The following people have actively contributed to the development of Bigbone:
+
+- Andreas (Mastodon: @factotum@c.im) - For actively contributing to the whole library project - thanks!
+- Cédric Champeau (Mastodon: @melix@mastodon.xyz) - For putting the Gradle build scripts in great shape again
+
 # Contribution
 
-Contributors are very welcome. If you think you can contribute, please do so! We will happily review any request we get. You can either
-create a pull request or [create an issue](https://github.com/andregasser/bigbone/issues). 
-
-Thanks to all the people who have contributed so far:
-
-[![Profile images of all the contributors](https://contrib.rocks/image?repo=andregasser/bigbone)](https://github.com/andregasser/bigbone/graphs/contributors)
+Contributions are welcome! If you find bugs or other issues, please open an issue in the [Issues](https://github.com/andregasser/bigbone/issues) section. I will 
+happily review any request that is created.  
 
 # Previous Work
 
