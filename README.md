@@ -2,25 +2,42 @@
 
 ![Build](https://github.com/andregasser/bigbone/actions/workflows/build.yml/badge.svg)
 [![codecov](https://codecov.io/gh/andregasser/bigbone/branch/master/graph/badge.svg?token=3AFHQQH547)](https://codecov.io/gh/andregasser/bigbone)
+![Latest Snapshot](https://img.shields.io/badge/dynamic/xml?url=https://s01.oss.sonatype.org/content/repositories/snapshots/social/bigbone/bigbone/maven-metadata.xml&label=Latest%20Snapshot&color=blue&query=.//versioning/latest)
 
 **Bigbone** is a [Mastodon](https://docs.joinmastodon.org/) client for Java and Kotlin.
 
 # Why Bigbone
 
-Bigbone is a fork of the original [Mastodon4J](https://github.com/sys1yagi/mastodon4j) library published by Toshihiro Yagi. Unfortunately, it became abandoned
-and has not seen any updates since 2018. I have therefore (more or less spontaneously) decided to revive it. Initially, I did not have any plans on doing
-something like this, but slipped more or less into this role. 
+Bigbone is a fork of [Mastodon4J](https://github.com/sys1yagi/mastodon4j), a Mastodon client library for Java and Kotlin that was published by Toshihiro Yagi. 
+The goal of Mastodon4J was to provide an easy-to-use library for interacting with the Mastodon social media network from Java and Kotlin code. Unfortunately, 
+it became abandoned and has not seen any updates since 2018. Since Elon Musk's Twitter acquisition in 2022, Mastodon has gained tremendous popularity. A project
+that is so well received by the community deserves to have up-to-date client libraries. I have therefore decided to jump in and am now maintaining the Bigbone 
+client library since mid-November 2022 as an alternative to Mastodon4J. I hope that this library will help other developers to build cool stuff for the 
+Mastodon community.
 
-Since Elon Musk's Twitter acquisition, Mastodon has gained tremendous popularity. A project that is so well received by the community deserves to have 
-up-to-date client libraries. That's why I took on this task and try to develop the library in a good sense. This is the call of duty. 
+The name **Bigbone** has mostly symbolic character. I have chosen the name Bigbone for this library because Mastodons represent impressive animals from the 
+Pleistocene, built of big and heavy bones. At the same time, we hope this library will build some sort of "skeleton" for your Mastodon-related projects. 
+Interestingly, there is also [Big Bone Lick State Park in Kentucky](https://parks.ky.gov/union/parks/historic/big-bone-lick-state-historic-site) where 
+American Mastodons have been excavated.
 
-The name has mostly symbolic character. We chose the name Bigbone for this library because Mastodons represent impressive animals from the Pleistocene, built 
-of big and heavy bones. At the same time, we hope this library will build some sort of "skeleton" for your Mastodon-related projects. Interestingly, there is 
-also [Big Bone Lick State Park in Kentucky](https://parks.ky.gov/union/parks/historic/big-bone-lick-state-historic-site) where American Mastodons have been 
-excavated.
+# Core Functionality
 
-My personal thanks goes to Toshihiro and his contributors back then for building [Mastodon4J](https://github.com/sys1yagi/mastodon4j). The library they have
-built in the past serves as a basis for our own development efforts. Thank you!
+With a library like Bigbone, you can for example build tools which
+- act on status updates on your timelines (home, local, federated).
+- post, reblog and favourite statuses
+- plus lots of other stuff
+
+# Implementation Status
+
+We did not release an official version on Maven Central yet, but we already have a `2.0.0-SNAPSHOT` that you can use to play around / experiment with. We really 
+hope to get out an initial 2.0.0 version very soon (hopefully January 2023) to have something out there that is maintained and can be used by other developers.
+
+Bigbone does not yet implement the full API of Mastodon. Actually, there is still **a lot to do**. Our main goal for the 2.0.0 release is to get something out 
+that is in a maintained state and on a solid basis, technology-wise. In future releases, we will focus on extending the existing API coverage. 
+
+For details on the current API coverage please have a look at [API.md](API.md).
+
+Bigbone uses [Semantic Versioning 2.0.0](http://semver.org/spec/v2.0.0.html).
 
 # Get Started
 
@@ -113,20 +130,15 @@ Dependencies:
 </dependency>
 ```
 
-Usage examples for Bigbone can be found in [USAGE.md](USAGE.md).
+### Usage Examples
 
-## Mastodon API 
+We provide some example code snippets for Java and Kotlin in [USAGE.md](USAGE.md) to get you started
 
-Bigbone aims to implement the Mastodon API. The official Mastodon API can be found here: https://docs.joinmastodon.org/client/intro/
-More information about the current implementation progress can be found in [API.md](API.md). For more details about future releases 
-and our roadmap please have a look in the **Issues** or **Projects** section. 
+### Sample Code
 
-## Releases
-
-We did not yet release a publicly available version. But we have released our first 2.0.0-SNAPSHOT on Maven Central. We are working on the 2.0.0 release and 
-hope to get it out soon. Until then, we encourage you to experiment / play with the 2.0.0-SNAPSHOT build and report any issues you find.
-
-Bigbone uses [Semantic Versioning 2.0.0](http://semver.org/spec/v2.0.0.html).
+There are also two Gradle modules that provide some insights on how to use this library:
+- `sample` for Java example code
+- `sample-kotlin` for Kotlin example code
 
 # Contribution
 
@@ -136,6 +148,11 @@ create a pull request or [create an issue](https://github.com/andregasser/bigbon
 Thanks to all the people who have contributed so far:
 
 [![Profile images of all the contributors](https://contrib.rocks/image?repo=andregasser/bigbone)](https://github.com/andregasser/bigbone/graphs/contributors)
+
+# Previous Work
+
+My personal thanks go to Toshihiro and his contributors back then for building [Mastodon4J](https://github.com/sys1yagi/mastodon4j). The library they have
+built in the past serves as a basis for our own development efforts. ❤️ Thank you! ❤️
 
 # License
 
