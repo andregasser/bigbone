@@ -6,11 +6,9 @@ Following this guide will allow you to:
 * read some of the most recent statuses available for that user
 * post a status as that user
 
-See the [official Mastodon docs](https://docs.joinmastodon.org/methods/apps/) for further API methods,
-and this project's code for implementation details.
+See the [official Mastodon docs](https://docs.joinmastodon.org/methods/apps/) for further API methods, and this project's code for implementation details.
 
-Code examples in this guide make use of the following variable for simplicity.
-Its value should generally *not* be hard-coded in an actual application.
+Code examples in this guide make use of the following variable for simplicity. Its value should generally *not* be hard-coded in an actual application.
 
 ```kotlin
 // hostname of a Mastodon server, e.g. "mastodon.social"
