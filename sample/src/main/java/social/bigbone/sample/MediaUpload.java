@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
+@SuppressWarnings("PMD.AvoidPrintStackTrace")
 public class MediaUpload {
     public static void main(final String[] args) throws IOException {
         try {
@@ -24,15 +25,15 @@ public class MediaUpload {
             final MastodonClient client = Authenticator.appRegistrationIfNeeded(instanceName, credentialFilePath, false);
 
             // Read file from resources folder
-            ClassLoader classLoader = MediaUpload.class.getClassLoader();
-            File uploadFile = new File(classLoader.getResource("castle.jpg").getFile());
+            final ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+            final File uploadFile = new File(classLoader.getResource("castle.jpg").getFile());
 
             // Upload image to Mastodon
             final Media media = new Media(client);
-            RequestBody requestBody = RequestBody.create(uploadFile, MediaType.parse("image/jpg"));
-            MultipartBody.Part pFile = MultipartBody.Part.createFormData("file", uploadFile.getName(), requestBody);
-            Attachment uploadedFile = media.postMedia(pFile).execute();
-            String mediaId = uploadedFile.getId();
+            final RequestBody requestBody = RequestBody.create(uploadFile, MediaType.parse("image/jpg"));
+            final MultipartBody.Part pFile = MultipartBody.Part.createFormData("file", uploadFile.getName(), requestBody);
+            final Attachment uploadedFile = media.postMedia(pFile).execute();
+            final String mediaId = uploadedFile.getId();
 
             // Post status with media attached
             final Statuses statuses = new Statuses(client);
