@@ -1,10 +1,30 @@
 [
   {
-    "id": 3361,
+    "id": "3457",
     "following": true,
+    "showing_reblogs": true,
+    "notifying": false,
+    "followed_by": true,
+    "blocking": false,
+    "blocked_by": false,
+    "muting": false,
+    "muting_notifications": false,
+    "requested": false,
+    "domain_blocking": false,
+    "endorsed": false
+  },
+  {
+    "id": "249534098",
+    "following": false,
+    "showing_reblogs": false,
+    "notifying": false,
     "followed_by": false,
     "blocking": false,
+    "blocked_by": false,
     "muting": false,
-    "requested": false
+    "muting_notifications": false,
+    "requested": false,
+    "domain_blocking": false,
+    "endorsed": false
   }
 ]

@@ -11,12 +11,12 @@ class StatusTest {
     fun deserialize() {
         val json = AssetsUtil.readFromAssets("status.json")
         val status: Status = Gson().fromJson(json, Status::class.java)
-        status.id shouldBeEqualTo "11111"
+        status.id shouldBeEqualTo "103254962155278888"
         status.visibility shouldBeEqualTo Status.Visibility.Public.value
-        status.content shouldBeEqualTo "Test Status"
+        status.content shouldBeEqualTo "<p>test content</p>"
         val account = status.account
         requireNotNull(account)
-        account.id shouldBeEqualTo "14476"
+        account.id shouldBeEqualTo "239857457"
         status.isReblogged shouldBeEqualTo false
     }
 

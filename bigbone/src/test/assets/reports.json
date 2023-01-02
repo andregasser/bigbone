@@ -1,6 +1,38 @@
 [
   {
-    "id": "100",
-    "action_taken": "test"
+    "id": "3049857",
+    "action_taken": false,
+    "action_taken_at": null,
+    "category": "spam",
+    "comment": "Spam account",
+    "forwarded": false,
+    "created_at": "2022-08-25T09:56:16.763Z",
+    "status_ids": [
+      "108882889550545820"
+    ],
+    "rule_ids": null,
+    "target_account": {
+      "id": "30498573490857",
+      "username": "Sauron",
+      "acct": "Sauron",
+      "display_name": "Sauron Jewelry Inc.",
+      "locked": false,
+      "bot": false,
+      "discoverable": false,
+      "group": false,
+      "created_at": "2022-05-26T00:00:00.000Z",
+      "note": "<p>Creating jewelry since the First Age. Check out our One Ring.</p><p><a href=\"https://example.org/\" target=\"_blank\" rel=\"nofollow noopener noreferrer\"><span class=\"invisible\">https://</span><span class=\"\">example.org/</span><span class=\"invisible\"></span></a></p>",
+      "url": "https://mastodon.social/@Sauron",
+      "avatar": "https://files.example.org/accounts/avatars/108/366/849/347/798/387/original/dbcfe99ed5def0f4.png",
+      "avatar_static": "https://files.example.org/accounts/avatars/108/366/849/347/798/387/original/dbcfe99ed5def0f4.png",
+      "header": "https://static-cdn.example.org/headers/original/missing.png",
+      "header_static": "https://static-cdn.example.org/headers/original/missing.png",
+      "followers_count": 0,
+      "following_count": 0,
+      "statuses_count": 38,
+      "last_status_at": "2022-08-25",
+      "emojis": [],
+      "fields": []
+    }
   }
 ]

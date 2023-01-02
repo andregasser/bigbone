@@ -1,6 +1,15 @@
 {
-  "url": "The url associated with the card",
-  "title": "The title of the card",
-  "description": "The card description",
-  "image": "The image associated with the card, if any"
+  "url": "https://www.youtube.com/watch?v=00000000",
+  "title": "♪ Some video title",
+  "description": "",
+  "type": "video",
+  "author_name": "Faramir",
+  "author_url": "https://www.youtube.com/user/Faramir",
+  "provider_name": "YouTube",
+  "provider_url": "https://www.youtube.com/",
+  "html": "<iframe width=\"480\" height=\"270\" src=\"https://www.youtube.com/embed/00000000?feature=oembed\" frameborder=\"0\" allowfullscreen=\"\"></iframe>",
+  "width": 480,
+  "height": 270,
+  "image": "https://files.example.org/preview_cards/images/014/179/145/original/9cf4b7cf5567b569.jpeg",
+  "embed_url": ""
 }

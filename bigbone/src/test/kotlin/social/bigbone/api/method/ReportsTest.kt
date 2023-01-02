@@ -13,8 +13,8 @@ class ReportsTest {
         val reports = Reports(client)
         val pageable = reports.getReports().execute()
         val report = pageable.part.first()
-        report.id shouldBeEqualTo "100"
-        report.actionTaken shouldBeEqualTo "test"
+        report.id shouldBeEqualTo "3049857"
+        report.actionTaken shouldBeEqualTo "false"
     }
 
     @Test

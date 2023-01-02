@@ -14,16 +14,16 @@ class AppsTest {
     @Test
     fun createApp() {
         val client: MastodonClient = MockClient.mock("app_registration.json")
-        every { client.getInstanceName() } returns "mastodon.cloud"
+        every { client.getInstanceName() } returns "mastodon.social"
 
         val apps = Apps(client)
         val registration = apps.createApp(
             clientName = "mastodon-android-sys1yagi", scope = Scope(Scope.Name.ALL)
         ).execute()
 
-        registration.instanceName shouldBeEqualTo "mastodon.cloud"
-        registration.clientId shouldBeEqualTo "client id"
-        registration.clientSecret shouldBeEqualTo "client secret"
+        registration.instanceName shouldBeEqualTo "mastodon.social"
+        registration.clientId shouldBeEqualTo "TWhM-tNSuncnqN7DBJmoyeLnk6K3iJJ71KKXxgL1hPM"
+        registration.clientSecret shouldBeEqualTo "ZEaFUFmF0umgBX1qKJDjaU99Q31lDkOU8NutzTOoliw"
         registration.redirectUri shouldBeEqualTo "urn:ietf:wg:oauth:2.0:oob"
     }
 
@@ -54,10 +54,10 @@ class AppsTest {
         every { client.getInstanceName() } returns "mastodon.cloud"
         val apps = Apps(client)
         val accessToken = apps.getAccessToken("test", "test", code = "test").execute()
-        accessToken.accessToken shouldBeEqualTo "test"
-        accessToken.scope shouldBeEqualTo "read write follow"
-        accessToken.tokenType shouldBeEqualTo "bearer"
-        accessToken.createdAt shouldBeEqualTo 1_493_188_835
+        accessToken.accessToken shouldBeEqualTo "ZA-Yj3aBD8U8Cm7lKUp-lm9O9BmDgdhHzDeqsY8tlL0"
+        accessToken.scope shouldBeEqualTo "read write follow push"
+        accessToken.tokenType shouldBeEqualTo "Bearer"
+        accessToken.createdAt shouldBeEqualTo 1_573_979_017L
     }
 
     @Test

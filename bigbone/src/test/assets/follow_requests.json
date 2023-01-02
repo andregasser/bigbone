@@ -1,19 +1,14 @@
 [
   {
-    "id": 11111,
-    "username": "test",
-    "acct": "test@test.com",
-    "display_name": "test",
-    "locked": false,
-    "created_at": "2017-04-27T11:12:20.039Z",
-    "followers_count": 371,
-    "following_count": 14547,
-    "statuses_count": 195,
-    "note": "<p>test</p>",
-    "url": "https://test.com/test",
-    "avatar": "test",
-    "avatar_static": "test",
-    "header": "test",
-    "header_static": "test"
+    "id":"108119793981152178",
+    "username":"gandalf",
+    "acct":"gandalf@example.org",
+    "display_name":"Gandalf"
+  },
+  {
+    "id":"106780475844882270",
+    "username":"sauron",
+    "acct":"sauron@example.org",
+    "display_name":"Sauron"
   }
 ]

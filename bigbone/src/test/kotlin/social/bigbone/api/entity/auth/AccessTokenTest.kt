@@ -11,15 +11,15 @@ class AccessTokenTest {
     fun deserialize() {
         val json = AssetsUtil.readFromAssets("access_token.json")
         val accessToken: AccessToken = Gson().fromJson(json, AccessToken::class.java)
-        accessToken.accessToken shouldBeEqualTo "test"
-        accessToken.tokenType shouldBeEqualTo "bearer"
-        accessToken.scope shouldBeEqualTo "read write follow"
-        accessToken.createdAt shouldBeEqualTo 1_493_188_835L
+        accessToken.accessToken shouldBeEqualTo "ZA-Yj3aBD8U8Cm7lKUp-lm9O9BmDgdhHzDeqsY8tlL0"
+        accessToken.tokenType shouldBeEqualTo "Bearer"
+        accessToken.scope shouldBeEqualTo "read write follow push"
+        accessToken.createdAt shouldBeEqualTo 1_573_979_017L
     }
 
     @Test
     fun constructor() {
-        val accessToken: AccessToken = AccessToken(accessToken = "123", scope = "scope")
+        val accessToken = AccessToken(accessToken = "123", scope = "scope")
         accessToken.accessToken shouldBeEqualTo "123"
         accessToken.tokenType shouldBeEqualTo ""
         accessToken.scope shouldBeEqualTo "scope"

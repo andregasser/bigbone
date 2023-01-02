@@ -14,9 +14,9 @@ class FollowRequestsTest {
         val followRequests = FollowRequests(client)
         val pageable = followRequests.getFollowRequests().execute()
         val account = pageable.part.first()
-        account.acct shouldBeEqualTo "test@test.com"
-        account.displayName shouldBeEqualTo "test"
-        account.userName shouldBeEqualTo "test"
+        account.acct shouldBeEqualTo "gandalf@example.org"
+        account.displayName shouldBeEqualTo "Gandalf"
+        account.userName shouldBeEqualTo "gandalf"
     }
 
     @Test
