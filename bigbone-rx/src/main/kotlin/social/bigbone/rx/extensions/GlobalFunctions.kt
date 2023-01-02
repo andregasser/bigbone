@@ -2,7 +2,7 @@ package social.bigbone.rx.extensions
 
 import io.reactivex.rxjava3.core.Single
 
-fun <T> single(f: () -> T): Single<T> {
+fun <T : Any> single(f: () -> T): Single<T> {
     return Single.create {
         try {
             val result = f()
