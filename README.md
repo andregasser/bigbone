@@ -130,12 +130,12 @@ Dependencies:
 
 ### Usage Examples
 
-We provide some example code snippets for Java and Kotlin in [USAGE.md](USAGE.md) to get you started
+We provide some example code snippets for Java and Kotlin in [USAGE.md](USAGE.md) to get you started.
 
 ### Sample Code
 
 There are also two Gradle modules that provide some insights on how to use this library:
-- `sample` for Java example code
+- `sample-java` for Java example code
 - `sample-kotlin` for Kotlin example code
 
 # Bigbone Contributors
