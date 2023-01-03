@@ -45,9 +45,9 @@ publishing {
                     }
                 }
                 scm {
-                    connection = 'scm:git:https://github.com/andregasser/bigbone.git'
-                    developerConnection = 'scm:git:ssh:git@github.com:andregasser/bigbone.git'
-                    url = 'https://github.com/andregasser/bigbone/'
+                    connection = 'scm:git:git://github.com/andregasser/bigbone.git'
+                    developerConnection = 'scm:git:ssh://github.com:andregasser/bigbone.git'
+                    url = 'https://github.com/andregasser/bigbone'
                 }
             }
 
