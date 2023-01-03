@@ -15,17 +15,17 @@ import social.bigbone.api.entity.Status
 class Accounts(private val client: MastodonClient) {
     // GET /api/v1/accounts/:id
     fun getAccount(accountId: String): MastodonRequest<Account> {
-        return MastodonRequest(
-            { client.get("api/v1/accounts/$accountId") },
-            { client.getSerializer().fromJson(it, Account::class.java) }
+        return client.getMastodonRequest(
+            endpoint = "api/v1/accounts/$accountId",
+            method = MastodonClient.Method.GET
         )
     }
 
     //  GET /api/v1/accounts/verify_credentials
     fun getVerifyCredentials(): MastodonRequest<Account> {
-        return MastodonRequest(
-            { client.get("api/v1/accounts/verify_credentials") },
-            { client.getSerializer().fromJson(it, Account::class.java) }
+        return client.getMastodonRequest(
+            endpoint = "api/v1/accounts/verify_credentials",
+            method = MastodonClient.Method.GET
         )
     }
 
@@ -37,26 +37,14 @@ class Accounts(private val client: MastodonClient) {
      * header: A base64 encoded image to display as the user's header image (e.g. data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUoAAADrCAYAAAA...)
      */
     fun updateCredential(displayName: String?, note: String?, avatar: String?, header: String?): MastodonRequest<Account> {
-        val parameters = Parameter().apply {
-            displayName?.let {
-                append("display_name", it)
-            }
-            note?.let {
-                append("note", it)
-            }
-            avatar?.let {
-                append("avatar", it)
-            }
-            header?.let {
-                append("header", it)
-            }
-        }
-        return MastodonRequest(
-            {
-                client.patch("api/v1/accounts/update_credentials", parameters)
-            },
-            {
-                client.getSerializer().fromJson(it, Account::class.java)
+        return client.getMastodonRequest(
+            endpoint = "api/v1/accounts/update_credentials",
+            method = MastodonClient.Method.PATCH,
+            parameters = Parameter().apply {
+                displayName?.let { append("display_name", it) }
+                note?.let { append("note", it) }
+                avatar?.let { append("avatar", it) }
+                header?.let { append("header", it) }
             }
         )
     }
@@ -64,33 +52,21 @@ class Accounts(private val client: MastodonClient) {
     //  GET /api/v1/accounts/:id/followers
     @JvmOverloads
     fun getFollowers(accountId: String, range: Range = Range()): MastodonRequest<Pageable<Account>> {
-        return MastodonRequest<Pageable<Account>>(
-            {
-                client.get(
-                    "api/v1/accounts/$accountId/followers",
-                    range.toParameter()
-                )
-            },
-            {
-                client.getSerializer().fromJson(it, Account::class.java)
-            }
-        ).toPageable()
+        return client.getPageableMastodonRequest(
+            endpoint = "api/v1/accounts/$accountId/followers",
+            method = MastodonClient.Method.GET,
+            parameters = range.toParameter()
+        )
     }
 
     //  GET /api/v1/accounts/:id/following
     @JvmOverloads
     fun getFollowing(accountId: String, range: Range = Range()): MastodonRequest<Pageable<Account>> {
-        return MastodonRequest<Pageable<Account>>(
-            {
-                client.get(
-                    "api/v1/accounts/$accountId/following",
-                    range.toParameter()
-                )
-            },
-            {
-                client.getSerializer().fromJson(it, Account::class.java)
-            }
-        ).toPageable()
+        return client.getPageableMastodonRequest(
+            endpoint = "api/v1/accounts/$accountId/following",
+            method = MastodonClient.Method.GET,
+            parameters = range.toParameter()
+        )
     }
 
     //  GET /api/v1/accounts/:id/statuses
@@ -102,113 +78,71 @@ class Accounts(private val client: MastodonClient) {
         pinned: Boolean = false,
         range: Range = Range()
     ): MastodonRequest<Pageable<Status>> {
-        val parameters = range.toParameter()
-        if (onlyMedia) {
-            parameters.append("only_media", true)
-        }
-        if (pinned) {
-            parameters.append("pinned", true)
-        }
-        if (excludeReplies) {
-            parameters.append("exclude_replies", true)
-        }
-        return MastodonRequest<Pageable<Status>>(
-            {
-                client.get(
-                    "api/v1/accounts/$accountId/statuses",
-                    parameters
-                )
-            },
-            {
-                client.getSerializer().fromJson(it, Status::class.java)
+        return client.getPageableMastodonRequest(
+            endpoint = "api/v1/accounts/$accountId/statuses",
+            method = MastodonClient.Method.GET,
+            parameters = range.toParameter().apply {
+                if (onlyMedia) { append("only_media", true) }
+                if (pinned) { append("pinned", true) }
+                if (excludeReplies) { append("exclude_replies", true) }
             }
-        ).toPageable()
+        )
     }
 
     //  POST /api/v1/accounts/:id/follow
     fun postFollow(accountId: String): MastodonRequest<Relationship> {
-        return MastodonRequest<Relationship>(
-            {
-                client.post("api/v1/accounts/$accountId/follow")
-            },
-            {
-                client.getSerializer().fromJson(it, Relationship::class.java)
-            }
+        return client.getMastodonRequest(
+            endpoint = "api/v1/accounts/$accountId/follow",
+            method = MastodonClient.Method.POST,
         )
     }
 
     //  POST /api/v1/accounts/:id/unfollow
     fun postUnFollow(accountId: String): MastodonRequest<Relationship> {
-        return MastodonRequest<Relationship>(
-            {
-                client.post("api/v1/accounts/$accountId/unfollow")
-            },
-            {
-                client.getSerializer().fromJson(it, Relationship::class.java)
-            }
+        return client.getMastodonRequest(
+            endpoint = "api/v1/accounts/$accountId/unfollow",
+            method = MastodonClient.Method.POST
         )
     }
 
     //  POST /api/v1/accounts/:id/block
     fun postBlock(accountId: String): MastodonRequest<Relationship> {
-        return MastodonRequest<Relationship>(
-            {
-                client.post("api/v1/accounts/$accountId/block")
-            },
-            {
-                client.getSerializer().fromJson(it, Relationship::class.java)
-            }
+        return client.getMastodonRequest(
+            endpoint = "api/v1/accounts/$accountId/block",
+            method = MastodonClient.Method.POST
         )
     }
 
     //  POST /api/v1/accounts/:id/unblock
     fun postUnblock(accountId: String): MastodonRequest<Relationship> {
-        return MastodonRequest<Relationship>(
-            {
-                client.post("api/v1/accounts/$accountId/unblock")
-            },
-            {
-                client.getSerializer().fromJson(it, Relationship::class.java)
-            }
+        return client.getMastodonRequest(
+            endpoint = "api/v1/accounts/$accountId/unblock",
+            method = MastodonClient.Method.POST
         )
     }
 
     //  POST /api/v1/accounts/:id/mute
     fun postMute(accountId: String): MastodonRequest<Relationship> {
-        return MastodonRequest<Relationship>(
-            {
-                client.post("api/v1/accounts/$accountId/mute")
-            },
-            {
-                client.getSerializer().fromJson(it, Relationship::class.java)
-            }
+        return client.getMastodonRequest(
+            endpoint = "api/v1/accounts/$accountId/mute",
+            method = MastodonClient.Method.POST
         )
     }
 
     //  POST /api/v1/accounts/:id/unmute
     fun postUnmute(accountId: String): MastodonRequest<Relationship> {
-        return MastodonRequest<Relationship>(
-            {
-                client.post("api/v1/accounts/$accountId/unmute")
-            },
-            {
-                client.getSerializer().fromJson(it, Relationship::class.java)
-            }
+        return client.getMastodonRequest(
+            endpoint = "api/v1/accounts/$accountId/unmute",
+            method = MastodonClient.Method.POST
         )
     }
 
     //  GET /api/v1/accounts/relationships
     fun getRelationships(accountIds: List<String>): MastodonRequest<List<Relationship>> {
-        return MastodonRequest(
-            {
-                client.get(
-                    "api/v1/accounts/relationships",
-                    Parameter().append("id", accountIds)
-                )
-            },
-            {
-                client.getSerializer().fromJson(it, Relationship::class.java)
-            }
+        return client.getMastodonRequestForList(
+            endpoint = "api/v1/accounts/relationships",
+            method = MastodonClient.Method.GET,
+            parameters = Parameter().append("id", accountIds)
         )
     }
 
@@ -219,18 +153,12 @@ class Accounts(private val client: MastodonClient) {
      */
     @JvmOverloads
     fun getAccountSearch(query: String, limit: Int = 40): MastodonRequest<List<Account>> {
-        return MastodonRequest(
-            {
-                client.get(
-                    "api/v1/accounts/search",
-                    Parameter()
-                        .append("q", query)
-                        .append("limit", limit)
-                )
-            },
-            {
-                client.getSerializer().fromJson(it, Account::class.java)
-            }
+        return client.getMastodonRequestForList(
+            endpoint = "api/v1/accounts/search",
+            method = MastodonClient.Method.GET,
+            parameters = Parameter()
+                .append("q", query)
+                .append("limit", limit)
         )
     }
 }

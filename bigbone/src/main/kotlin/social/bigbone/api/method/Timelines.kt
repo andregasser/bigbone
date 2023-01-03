@@ -15,16 +15,10 @@ class Timelines(private val client: MastodonClient) {
     @JvmOverloads
     @Throws(BigboneRequestException::class)
     fun getHome(range: Range = Range()): MastodonRequest<Pageable<Status>> {
-        return MastodonRequest<Pageable<Status>>(
-            {
-                client.get(
-                    "api/v1/timelines/home",
-                    range.toParameter()
-                )
-            },
-            {
-                client.getSerializer().fromJson(it, Status::class.java)
-            }
-        ).toPageable()
+        return client.getPageableMastodonRequest(
+            endpoint = "api/v1/timelines/home",
+            method = MastodonClient.Method.GET,
+            parameters = range.toParameter()
+        )
     }
 }

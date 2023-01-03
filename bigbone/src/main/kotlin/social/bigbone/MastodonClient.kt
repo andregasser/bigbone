@@ -9,6 +9,7 @@ import okhttp3.Request
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
+import social.bigbone.api.Pageable
 import social.bigbone.api.exception.BigboneRequestException
 import social.bigbone.extension.emptyRequestBody
 import java.io.IOException
@@ -22,64 +23,126 @@ private constructor(
 ) {
     private var debug = false
 
-    class Builder(
-        private val instanceName: String
-    ) {
-
-        private val okHttpClientBuilder = OkHttpClient.Builder()
-        private val gson = Gson()
-        private var accessToken: String? = null
-        private var debug = false
-
-        fun accessToken(accessToken: String) = apply {
-            this.accessToken = accessToken
-        }
-
-        fun useStreamingApi() = apply {
-            okHttpClientBuilder.readTimeout(60, TimeUnit.SECONDS)
-        }
-
-        fun debug() = apply {
-            this.debug = true
-        }
-
-        fun build(): MastodonClient {
-            return MastodonClient(
-                instanceName,
-                okHttpClientBuilder.addNetworkInterceptor(AuthorizationInterceptor(accessToken)).build(),
-                gson
-            ).also {
-                it.debug = debug
-            }
-        }
-    }
-
-    private fun debugPrintUrl(url: HttpUrl) {
-        if (debug) {
-            println(url.toUrl().toString())
-        }
-    }
-
-    private class AuthorizationInterceptor(val accessToken: String? = null) : Interceptor {
-        @Throws(IOException::class)
-        override fun intercept(chain: Interceptor.Chain): Response {
-            val originalRequest = chain.request()
-            val compressedRequest = originalRequest.newBuilder()
-                .headers(originalRequest.headers)
-                .method(originalRequest.method, originalRequest.body)
-                .apply {
-                    accessToken?.let {
-                        header("Authorization", String.format("Bearer %s", it))
-                    }
-                }
-                .build()
-            return chain.proceed(compressedRequest)
-        }
+    enum class Method {
+        DELETE,
+        GET,
+        POST,
+        PATCH
     }
 
     open fun getSerializer() = gson
 
     open fun getInstanceName() = instanceName
+
+    /**
+     * Returns a MastodonRequest for the defined action, allowing to retrieve returned data.
+     * @param endpoint the Mastodon API endpoint to call
+     * @param method the HTTP method to use
+     * @param parameters parameters to use in the action; can be null
+     */
+    internal inline fun <reified T : Any> getMastodonRequest(
+        endpoint: String,
+        method: Method,
+        parameters: Parameter? = null
+    ): MastodonRequest<T> {
+        return MastodonRequest(
+            {
+                when (method) {
+                    Method.DELETE -> delete(endpoint)
+                    Method.GET -> get(endpoint, parameters)
+                    Method.PATCH -> patch(endpoint, parameters)
+                    Method.POST -> post(endpoint, parameters)
+                }
+            },
+            { getSerializer().fromJson(it, T::class.java) }
+        )
+    }
+
+    /**
+     * Returns a MastodonRequest for the defined action, allowing to retrieve returned data as a Pageable.
+     * @param endpoint the Mastodon API endpoint to call
+     * @param method the HTTP method to use
+     * @param parameters parameters to use in the action; can be null
+     */
+    internal inline fun <reified T : Any> getPageableMastodonRequest(
+        endpoint: String,
+        method: Method,
+        parameters: Parameter? = null
+    ): MastodonRequest<Pageable<T>> {
+        return MastodonRequest<Pageable<T>>(
+            {
+                when (method) {
+                    Method.DELETE -> delete(endpoint)
+                    Method.GET -> get(endpoint, parameters)
+                    Method.PATCH -> patch(endpoint, parameters)
+                    Method.POST -> post(endpoint, parameters)
+                }
+            },
+            { getSerializer().fromJson(it, T::class.java) }
+        ).toPageable()
+    }
+
+    /**
+     * Returns a MastodonRequest for the defined action, allowing to retrieve returned data as a List.
+     * @param endpoint the Mastodon API endpoint to call
+     * @param method the HTTP method to use
+     * @param parameters parameters to use in the action; can be null
+     */
+    internal inline fun <reified T : Any> getMastodonRequestForList(
+        endpoint: String,
+        method: Method,
+        parameters: Parameter? = null
+    ): MastodonRequest<List<T>> {
+        return MastodonRequest(
+            {
+                when (method) {
+                    Method.DELETE -> delete(endpoint)
+                    Method.GET -> get(endpoint, parameters)
+                    Method.PATCH -> patch(endpoint, parameters)
+                    Method.POST -> post(endpoint, parameters)
+                }
+            },
+            { getSerializer().fromJson(it, T::class.java) }
+        )
+    }
+
+    /**
+     * Performs the defined action and throws an exception if unsuccessful, without returning any data.
+     * @param endpoint the Mastodon API endpoint to call
+     * @param method the HTTP method to use
+     */
+    @Throws(BigboneRequestException::class)
+    internal fun performAction(endpoint: String, method: Method) {
+        val response = when (method) {
+            Method.DELETE -> delete(endpoint)
+            Method.GET -> get(endpoint)
+            Method.PATCH -> patch(endpoint, null)
+            Method.POST -> post(endpoint)
+        }
+        if (!response.isSuccessful) {
+            throw BigboneRequestException(response)
+        }
+    }
+
+    /**
+     * Get a response from the Mastodon instance defined for this client using the DELETE method.
+     * @param path an absolute path to the API endpoint to call
+     */
+    open fun delete(path: String): Response {
+        try {
+            val url = fullUrl(instanceName, path)
+            debugPrintUrl(url)
+            val call = client.newCall(
+                Request.Builder()
+                    .url(url)
+                    .delete()
+                    .build()
+            )
+            return call.execute()
+        } catch (e: IOException) {
+            throw BigboneRequestException(e)
+        }
+    }
 
     /**
      * Get a response from the Mastodon instance defined for this client using the GET method.
@@ -94,6 +157,31 @@ private constructor(
                 Request.Builder()
                     .url(url)
                     .get()
+                    .build()
+            )
+            return call.execute()
+        } catch (e: IOException) {
+            throw BigboneRequestException(e)
+        }
+    }
+
+    /**
+     * Get a response from the Mastodon instance defined for this client using the PATCH method.
+     * @param path an absolute path to the API endpoint to call
+     * @param body the parameters to use in the request body for this request
+     */
+    open fun patch(path: String, body: Parameter?): Response {
+        if (body == null) {
+            throw BigboneRequestException(Exception("body must not be empty"))
+        }
+
+        try {
+            val url = fullUrl(instanceName, path)
+            debugPrintUrl(url)
+            val call = client.newCall(
+                Request.Builder()
+                    .url(url)
+                    .patch(parameterBody(body))
                     .build()
             )
             return call.execute()
@@ -137,43 +225,11 @@ private constructor(
     }
 
     /**
-     * Get a response from the Mastodon instance defined for this client using the PATCH method.
-     * @param path an absolute path to the API endpoint to call
-     * @param body the parameters to use in the request body for this request
+     * In debug mode, print out any accessed URL. Debug mode can be activated via MastodonClient.Builder.debug().
      */
-    open fun patch(path: String, body: Parameter): Response {
-        try {
-            val url = fullUrl(instanceName, path)
-            debugPrintUrl(url)
-            val call = client.newCall(
-                Request.Builder()
-                    .url(url)
-                    .patch(parameterBody(body))
-                    .build()
-            )
-            return call.execute()
-        } catch (e: IOException) {
-            throw BigboneRequestException(e)
-        }
-    }
-
-    /**
-     * Get a response from the Mastodon instance defined for this client using the DELETE method.
-     * @param path an absolute path to the API endpoint to call
-     */
-    open fun delete(path: String): Response {
-        try {
-            val url = fullUrl(instanceName, path)
-            debugPrintUrl(url)
-            val call = client.newCall(
-                Request.Builder()
-                    .url(url)
-                    .delete()
-                    .build()
-            )
-            return call.execute()
-        } catch (e: IOException) {
-            throw BigboneRequestException(e)
+    private fun debugPrintUrl(url: HttpUrl) {
+        if (debug) {
+            println(url.toUrl().toString())
         }
     }
 
@@ -204,6 +260,54 @@ private constructor(
                 ?.build()
                 ?.toRequestBody("application/x-www-form-urlencoded; charset=utf-8".toMediaTypeOrNull())
                 ?: emptyRequestBody()
+        }
+    }
+
+    class Builder(
+        private val instanceName: String
+    ) {
+        private val okHttpClientBuilder = OkHttpClient.Builder()
+        private val gson = Gson()
+        private var accessToken: String? = null
+        private var debug = false
+
+        fun accessToken(accessToken: String) = apply {
+            this.accessToken = accessToken
+        }
+
+        fun useStreamingApi() = apply {
+            okHttpClientBuilder.readTimeout(60, TimeUnit.SECONDS)
+        }
+
+        fun debug() = apply {
+            this.debug = true
+        }
+
+        fun build(): MastodonClient {
+            return MastodonClient(
+                instanceName,
+                okHttpClientBuilder.addNetworkInterceptor(AuthorizationInterceptor(accessToken)).build(),
+                gson
+            ).also {
+                it.debug = debug
+            }
+        }
+    }
+
+    private class AuthorizationInterceptor(val accessToken: String? = null) : Interceptor {
+        @Throws(IOException::class)
+        override fun intercept(chain: Interceptor.Chain): Response {
+            val originalRequest = chain.request()
+            val compressedRequest = originalRequest.newBuilder()
+                .headers(originalRequest.headers)
+                .method(originalRequest.method, originalRequest.body)
+                .apply {
+                    accessToken?.let {
+                        header("Authorization", String.format("Bearer %s", it))
+                    }
+                }
+                .build()
+            return chain.proceed(compressedRequest)
         }
     }
 }

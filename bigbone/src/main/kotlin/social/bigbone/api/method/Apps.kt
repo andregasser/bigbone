@@ -81,19 +81,15 @@ class Apps(private val client: MastodonClient) {
         code: String,
         grantType: String = "authorization_code"
     ): MastodonRequest<AccessToken> {
-        val parameters = Parameter()
-            .append("client_id", clientId)
-            .append("client_secret", clientSecret)
-            .append("redirect_uri", redirectUri)
-            .append("code", code)
-            .append("grant_type", grantType)
-
-        return MastodonRequest(
-            {
-                client.post("oauth/token", parameters)
-            },
-            {
-                client.getSerializer().fromJson(it, AccessToken::class.java)
+        return client.getMastodonRequest(
+            endpoint = "oauth/token",
+            method = MastodonClient.Method.POST,
+            parameters = Parameter().apply {
+                append("client_id", clientId)
+                append("client_secret", clientSecret)
+                append("redirect_uri", redirectUri)
+                append("code", code)
+                append("grant_type", grantType)
             }
         )
     }

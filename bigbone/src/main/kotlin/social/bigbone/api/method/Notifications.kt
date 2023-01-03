@@ -14,41 +14,31 @@ class Notifications(private val client: MastodonClient) {
     // GET /api/v1/notifications
     @JvmOverloads
     fun getNotifications(range: Range = Range(), excludeTypes: List<Notification.Type>? = null): MastodonRequest<Pageable<Notification>> {
-        val parameter = range.toParameter()
-        if (excludeTypes != null) {
-            parameter.append("exclude_types", excludeTypes.map { it.value })
-        }
-        return MastodonRequest<Pageable<Notification>>(
-            {
-                client.get(
-                    "api/v1/notifications",
-                    parameter
-                )
-            },
-            {
-                client.getSerializer().fromJson(it, Notification::class.java)
+        return client.getPageableMastodonRequest(
+            endpoint = "api/v1/notifications",
+            method = MastodonClient.Method.GET,
+            parameters = range.toParameter().apply {
+                excludeTypes?.let {
+                    append("exclude_types", excludeTypes.map { it.value })
+                }
             }
-        ).toPageable()
+        )
     }
 
     // GET /api/v1/notifications/:id
     fun getNotification(id: String): MastodonRequest<Notification> {
-        return MastodonRequest<Notification>(
-            {
-                client.get("api/v1/notifications/$id")
-            },
-            {
-                client.getSerializer().fromJson(it, Notification::class.java)
-            }
+        return client.getMastodonRequest(
+            endpoint = "api/v1/notifications/$id",
+            method = MastodonClient.Method.GET
         )
     }
 
     //  POST /api/v1/notifications/clear
     @Throws(BigboneRequestException::class)
     fun clearNotifications() {
-        val response = client.post("api/v1/notifications/clear")
-        if (!response.isSuccessful) {
-            throw BigboneRequestException(response)
-        }
+        client.performAction(
+            endpoint = "api/v1/notifications/clear",
+            method = MastodonClient.Method.POST
+        )
     }
 }

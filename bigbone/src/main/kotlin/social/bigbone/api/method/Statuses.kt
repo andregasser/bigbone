@@ -19,39 +19,27 @@ class Statuses(private val client: MastodonClient) {
     //  GET /api/v1/statuses/:id
     @Throws(BigboneRequestException::class)
     fun getStatus(statusId: String): MastodonRequest<Status> {
-        return MastodonRequest<Status>(
-            {
-                client.get("api/v1/statuses/$statusId")
-            },
-            {
-                client.getSerializer().fromJson(it, Status::class.java)
-            }
+        return client.getMastodonRequest(
+            endpoint = "api/v1/statuses/$statusId",
+            method = MastodonClient.Method.GET
         )
     }
 
     //  GET /api/v1/statuses/:id/context
     @Throws(BigboneRequestException::class)
     fun getContext(statusId: String): MastodonRequest<Context> {
-        return MastodonRequest<Context>(
-            {
-                client.get("api/v1/statuses/$statusId/context")
-            },
-            {
-                client.getSerializer().fromJson(it, Context::class.java)
-            }
+        return client.getMastodonRequest(
+            endpoint = "api/v1/statuses/$statusId/context",
+            method = MastodonClient.Method.GET
         )
     }
 
     //  GET /api/v1/statuses/:id/card
     @Throws(BigboneRequestException::class)
     fun getCard(statusId: String): MastodonRequest<Card> {
-        return MastodonRequest<Card>(
-            {
-                client.get("api/v1/statuses/$statusId/card")
-            },
-            {
-                client.getSerializer().fromJson(it, Card::class.java)
-            }
+        return client.getMastodonRequest(
+            endpoint = "api/v1/statuses/$statusId/card",
+            method = MastodonClient.Method.GET
         )
     }
 
@@ -59,34 +47,22 @@ class Statuses(private val client: MastodonClient) {
     @JvmOverloads
     @Throws(BigboneRequestException::class)
     fun getRebloggedBy(statusId: String, range: Range = Range()): MastodonRequest<Pageable<Account>> {
-        return MastodonRequest<Pageable<Account>>(
-            {
-                client.get(
-                    "api/v1/statuses/$statusId/reblogged_by",
-                    range.toParameter()
-                )
-            },
-            {
-                client.getSerializer().fromJson(it, Account::class.java)
-            }
-        ).toPageable()
+        return client.getPageableMastodonRequest(
+            endpoint = "api/v1/statuses/$statusId/reblogged_by",
+            method = MastodonClient.Method.GET,
+            parameters = range.toParameter()
+        )
     }
 
     //  GET /api/v1/favourited_by
     @JvmOverloads
     @Throws(BigboneRequestException::class)
     fun getFavouritedBy(statusId: String, range: Range = Range()): MastodonRequest<Pageable<Account>> {
-        return MastodonRequest<Pageable<Account>>(
-            {
-                client.get(
-                    "api/v1/statuses/$statusId/favourited_by",
-                    range.toParameter()
-                )
-            },
-            {
-                client.getSerializer().fromJson(it, Account::class.java)
-            }
-        ).toPageable()
+        return client.getPageableMastodonRequest(
+            endpoint = "api/v1/statuses/$statusId/favourited_by",
+            method = MastodonClient.Method.GET,
+            parameters = range.toParameter()
+        )
     }
 
     /**
@@ -108,27 +84,16 @@ class Statuses(private val client: MastodonClient) {
         spoilerText: String?,
         visibility: Status.Visibility = Status.Visibility.Public
     ): MastodonRequest<Status> {
-        val parameters = Parameter().apply {
-            append("status", status)
-            inReplyToId?.let {
-                append("in_reply_to_id", it)
-            }
-            mediaIds?.let {
-                append("media_ids", it)
-            }
-            append("sensitive", sensitive)
-            spoilerText?.let {
-                append("spoiler_text", it)
-            }
-            append("visibility", visibility.value)
-        }
-
-        return MastodonRequest<Status>(
-            {
-                client.post("api/v1/statuses", parameters)
-            },
-            {
-                client.getSerializer().fromJson(it, Status::class.java)
+        return client.getMastodonRequest(
+            endpoint = "api/v1/statuses",
+            method = MastodonClient.Method.POST,
+            parameters = Parameter().apply {
+                append("status", status)
+                inReplyToId?.let { append("in_reply_to_id", it) }
+                mediaIds?.let { append("media_ids", it) }
+                append("sensitive", sensitive)
+                spoilerText?.let { append("spoiler_text", it) }
+                append("visibility", visibility.value)
             }
         )
     }
@@ -136,61 +101,45 @@ class Statuses(private val client: MastodonClient) {
     //  DELETE /api/v1/statuses/:id
     @Throws(BigboneRequestException::class)
     fun deleteStatus(statusId: String) {
-        val response = client.delete("api/v1/statuses/$statusId")
-        if (!response.isSuccessful) {
-            throw BigboneRequestException(response)
-        }
+        client.performAction(
+            endpoint = "api/v1/statuses/$statusId",
+            method = MastodonClient.Method.DELETE
+        )
     }
 
     //  POST /api/v1/statuses/:id/reblog
     @Throws(BigboneRequestException::class)
     fun postReblog(statusId: String): MastodonRequest<Status> {
-        return MastodonRequest<Status>(
-            {
-                client.post("api/v1/statuses/$statusId/reblog")
-            },
-            {
-                client.getSerializer().fromJson(it, Status::class.java)
-            }
+        return client.getMastodonRequest(
+            endpoint = "api/v1/statuses/$statusId/reblog",
+            method = MastodonClient.Method.POST
         )
     }
 
     //  POST /api/v1/statuses/:id/unreblog
     @Throws(BigboneRequestException::class)
     fun postUnreblog(statusId: String): MastodonRequest<Status> {
-        return MastodonRequest<Status>(
-            {
-                client.post("api/v1/statuses/$statusId/unreblog")
-            },
-            {
-                client.getSerializer().fromJson(it, Status::class.java)
-            }
+        return client.getMastodonRequest(
+            endpoint = "api/v1/statuses/$statusId/unreblog",
+            method = MastodonClient.Method.POST
         )
     }
 
     //  POST /api/v1/statuses/:id/favourite
     @Throws(BigboneRequestException::class)
     fun postFavourite(statusId: String): MastodonRequest<Status> {
-        return MastodonRequest<Status>(
-            {
-                client.post("api/v1/statuses/$statusId/favourite")
-            },
-            {
-                client.getSerializer().fromJson(it, Status::class.java)
-            }
+        return client.getMastodonRequest(
+            endpoint = "api/v1/statuses/$statusId/favourite",
+            method = MastodonClient.Method.POST
         )
     }
 
     //  POST /api/v1/statuses/:id/unfavourite
     @Throws(BigboneRequestException::class)
     fun postUnfavourite(statusId: String): MastodonRequest<Status> {
-        return MastodonRequest<Status>(
-            {
-                client.post("api/v1/statuses/$statusId/unfavourite")
-            },
-            {
-                client.getSerializer().fromJson(it, Status::class.java)
-            }
+        return client.getMastodonRequest(
+            endpoint = "api/v1/statuses/$statusId/unfavourite",
+            method = MastodonClient.Method.POST
         )
     }
 }

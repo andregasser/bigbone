@@ -16,17 +16,11 @@ class Reports(private val client: MastodonClient) {
     @JvmOverloads
     @Throws(BigboneRequestException::class)
     fun getReports(range: Range = Range()): MastodonRequest<Pageable<Report>> {
-        return MastodonRequest<Pageable<Report>>(
-            {
-                client.get(
-                    "api/v1/reports",
-                    range.toParameter()
-                )
-            },
-            {
-                client.getSerializer().fromJson(it, Report::class.java)
-            }
-        ).toPageable()
+        return client.getPageableMastodonRequest(
+            endpoint = "api/v1/reports",
+            method = MastodonClient.Method.GET,
+            parameters = range.toParameter()
+        )
     }
 
     /**
@@ -37,17 +31,13 @@ class Reports(private val client: MastodonClient) {
      */
     @Throws(BigboneRequestException::class)
     fun postReport(accountId: String, statusId: String, comment: String): MastodonRequest<Report> {
-        val parameters = Parameter().apply {
-            append("account_id", accountId)
-            append("status_ids", statusId)
-            append("comment", comment)
-        }
-        return MastodonRequest<Report>(
-            {
-                client.post("api/v1/reports", parameters)
-            },
-            {
-                client.getSerializer().fromJson(it, Report::class.java)
+        return client.getMastodonRequest(
+            endpoint = "api/v1/reports",
+            method = MastodonClient.Method.POST,
+            parameters = Parameter().apply {
+                append("account_id", accountId)
+                append("status_ids", statusId)
+                append("comment", comment)
             }
         )
     }

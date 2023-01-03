@@ -17,13 +17,9 @@ class Public(private val client: MastodonClient) {
      * @see https://docs.joinmastodon.org/entities/V1_Instance/
      */
     fun getInstance(): MastodonRequest<Instance> {
-        return MastodonRequest(
-            {
-                client.get("api/v1/instance")
-            },
-            { json ->
-                client.getSerializer().fromJson(json, Instance::class.java)
-            }
+        return client.getMastodonRequest(
+            endpoint = "api/v1/instance",
+            method = MastodonClient.Method.GET
         )
     }
 
@@ -37,20 +33,14 @@ class Public(private val client: MastodonClient) {
      */
     @JvmOverloads
     fun getSearch(query: String, resolve: Boolean = false): MastodonRequest<Results> {
-        return MastodonRequest<Results>(
-            {
-                client.get(
-                    "api/v1/search",
-                    Parameter().apply {
-                        append("q", query)
-                        if (resolve) {
-                            append("resolve", resolve)
-                        }
-                    }
-                )
-            },
-            {
-                client.getSerializer().fromJson(it, Results::class.java)
+        return client.getMastodonRequest(
+            endpoint = "api/v1/search",
+            method = MastodonClient.Method.GET,
+            parameters = Parameter().apply {
+                append("q", query)
+                if (resolve) {
+                    append("resolve", true)
+                }
             }
         )
     }
@@ -61,18 +51,15 @@ class Public(private val client: MastodonClient) {
      * @see https://github.com/tootsuite/documentation/blob/master/Using-the-API/API.md#timelines
      */
     private fun getPublic(local: Boolean, range: Range): MastodonRequest<Pageable<Status>> {
-        val parameter = range.toParameter()
-        if (local) {
-            parameter.append("local", local)
-        }
-        return MastodonRequest<Pageable<Status>>(
-            {
-                client.get("api/v1/timelines/public", parameter)
-            },
-            {
-                client.getSerializer().fromJson(it, Status::class.java)
+        return client.getPageableMastodonRequest(
+            endpoint = "api/v1/timelines/public",
+            method = MastodonClient.Method.GET,
+            parameters = range.toParameter().apply {
+                if (local) {
+                    append("local", true)
+                }
             }
-        ).toPageable()
+        )
     }
 
     @JvmOverloads
@@ -86,21 +73,15 @@ class Public(private val client: MastodonClient) {
      * @see https://github.com/tootsuite/documentation/blob/master/Using-the-API/API.md#timelines
      */
     private fun getTag(tag: String, local: Boolean, range: Range): MastodonRequest<Pageable<Status>> {
-        val parameter = range.toParameter()
-        if (local) {
-            parameter.append("local", local)
-        }
-        return MastodonRequest<Pageable<Status>>(
-            {
-                client.get(
-                    "api/v1/timelines/tag/$tag",
-                    parameter
-                )
-            },
-            {
-                client.getSerializer().fromJson(it, Status::class.java)
+        return client.getPageableMastodonRequest(
+            endpoint = "api/v1/timelines/tag/$tag",
+            method = MastodonClient.Method.GET,
+            parameters = range.toParameter().apply {
+                if (local) {
+                    append("local", true)
+                }
             }
-        ).toPageable()
+        )
     }
 
     @JvmOverloads
