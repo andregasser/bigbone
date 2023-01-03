@@ -12,7 +12,6 @@ We use the __Status__ column to provide information about the current implementa
 | 🔴     | The endpoint is not supported by the library at the moment.                                                                                |
 
 In the __Comments__ column, we provide more information what exactly is missing in order to get to a fully implemented state.
-We use the __Version__ column to indicate from which version on this endpoint started to become at least partially implemented.
 
 ## Methods
 
