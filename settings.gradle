@@ -22,5 +22,5 @@ dependencyResolutionManagement {
 
 include 'bigbone'
 include 'bigbone-rx'
-include 'sample'
+include 'sample-java'
 include 'sample-kotlin'
