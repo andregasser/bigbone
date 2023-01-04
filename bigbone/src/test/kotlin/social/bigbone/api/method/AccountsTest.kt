@@ -12,9 +12,9 @@ class AccountsTest {
         val client = MockClient.mock("account.json")
         val accounts = Accounts(client)
         val account = accounts.getAccount("1").execute()
-        account.acct shouldBeEqualTo "test@test.com"
-        account.displayName shouldBeEqualTo "test"
-        account.userName shouldBeEqualTo "test"
+        account.acct shouldBeEqualTo "gollum@example.org"
+        account.displayName shouldBeEqualTo "gollum fan account"
+        account.userName shouldBeEqualTo "gollum"
     }
 
     @Test
@@ -31,9 +31,9 @@ class AccountsTest {
         val client = MockClient.mock("account.json")
         val accounts = Accounts(client)
         val account = accounts.getVerifyCredentials().execute()
-        account.acct shouldBeEqualTo "test@test.com"
-        account.displayName shouldBeEqualTo "test"
-        account.userName shouldBeEqualTo "test"
+        account.acct shouldBeEqualTo "gollum@example.org"
+        account.displayName shouldBeEqualTo "gollum fan account"
+        account.userName shouldBeEqualTo "gollum"
     }
 
     @Test
@@ -52,9 +52,9 @@ class AccountsTest {
         val client = MockClient.mock("account.json")
         val accounts = Accounts(client)
         val account = accounts.updateCredential("test", "test", "test", "test").execute()
-        account.acct shouldBeEqualTo "test@test.com"
-        account.displayName shouldBeEqualTo "test"
-        account.userName shouldBeEqualTo "test"
+        account.acct shouldBeEqualTo "gollum@example.org"
+        account.displayName shouldBeEqualTo "gollum fan account"
+        account.userName shouldBeEqualTo "gollum"
     }
 
     @Test
@@ -72,9 +72,13 @@ class AccountsTest {
         val accounts = Accounts(client)
         val pageable = accounts.getFollowers("1").execute()
         val account = pageable.part.first()
-        account.acct shouldBeEqualTo "test@test.com"
-        account.displayName shouldBeEqualTo "test"
-        account.userName shouldBeEqualTo "test"
+        account.acct shouldBeEqualTo "bombadil@example.org"
+        account.displayName shouldBeEqualTo "Tom Bombadil"
+        account.userName shouldBeEqualTo "bombadil"
+        val account2 = pageable.part[1]
+        account2.acct shouldBeEqualTo "sauron@example.com"
+        account2.displayName shouldBeEqualTo "The one with the rings"
+        account2.userName shouldBeEqualTo "Sauron"
     }
 
     @Test
@@ -92,9 +96,13 @@ class AccountsTest {
         val accounts = Accounts(client)
         val pageable = accounts.getFollowing("1").execute()
         val account = pageable.part.first()
-        account.acct shouldBeEqualTo "test@test.com"
-        account.displayName shouldBeEqualTo "test"
-        account.userName shouldBeEqualTo "test"
+        account.acct shouldBeEqualTo "bombadil@example.org"
+        account.displayName shouldBeEqualTo "Tom Bombadil"
+        account.userName shouldBeEqualTo "bombadil"
+        val account2 = pageable.part[1]
+        account2.acct shouldBeEqualTo "sauron@example.com"
+        account2.displayName shouldBeEqualTo "The one with the rings"
+        account2.userName shouldBeEqualTo "Sauron"
     }
 
     @Test
@@ -112,7 +120,7 @@ class AccountsTest {
         val accounts = Accounts(client)
         val pageable = accounts.getStatuses("1", false).execute()
         val status = pageable.part.first()
-        status.id shouldBeEqualTo "11111"
+        status.id shouldBeEqualTo "108880211901672326"
     }
 
     @Test
@@ -129,7 +137,7 @@ class AccountsTest {
         val client = MockClient.mock("relationship.json")
         val accounts = Accounts(client)
         val relationship = accounts.postFollow("1").execute()
-        relationship.id shouldBeEqualTo "3361"
+        relationship.id shouldBeEqualTo "349578"
         relationship.isFollowing shouldBeEqualTo true
         relationship.isFollowedBy shouldBeEqualTo false
         relationship.isBlocking shouldBeEqualTo false
@@ -151,7 +159,7 @@ class AccountsTest {
         val client = MockClient.mock("relationship.json")
         val accounts = Accounts(client)
         val relationship = accounts.postUnFollow("1").execute()
-        relationship.id shouldBeEqualTo "3361"
+        relationship.id shouldBeEqualTo "349578"
         relationship.isFollowing shouldBeEqualTo true
         relationship.isFollowedBy shouldBeEqualTo false
         relationship.isBlocking shouldBeEqualTo false
@@ -173,7 +181,7 @@ class AccountsTest {
         val client = MockClient.mock("relationship.json")
         val accounts = Accounts(client)
         val relationship = accounts.postBlock("1").execute()
-        relationship.id shouldBeEqualTo "3361"
+        relationship.id shouldBeEqualTo "349578"
         relationship.isFollowing shouldBeEqualTo true
         relationship.isFollowedBy shouldBeEqualTo false
         relationship.isBlocking shouldBeEqualTo false
@@ -195,7 +203,7 @@ class AccountsTest {
         val client = MockClient.mock("relationship.json")
         val accounts = Accounts(client)
         val relationship = accounts.postUnblock("1").execute()
-        relationship.id shouldBeEqualTo "3361"
+        relationship.id shouldBeEqualTo "349578"
         relationship.isFollowing shouldBeEqualTo true
         relationship.isFollowedBy shouldBeEqualTo false
         relationship.isBlocking shouldBeEqualTo false
@@ -217,7 +225,7 @@ class AccountsTest {
         val client = MockClient.mock("relationship.json")
         val accounts = Accounts(client)
         val relationship = accounts.postMute("1").execute()
-        relationship.id shouldBeEqualTo "3361"
+        relationship.id shouldBeEqualTo "349578"
         relationship.isFollowing shouldBeEqualTo true
         relationship.isFollowedBy shouldBeEqualTo false
         relationship.isBlocking shouldBeEqualTo false
@@ -239,7 +247,7 @@ class AccountsTest {
         val client = MockClient.mock("relationship.json")
         val accounts = Accounts(client)
         val relationship = accounts.postUnmute("1").execute()
-        relationship.id shouldBeEqualTo "3361"
+        relationship.id shouldBeEqualTo "349578"
         relationship.isFollowing shouldBeEqualTo true
         relationship.isFollowedBy shouldBeEqualTo false
         relationship.isBlocking shouldBeEqualTo false
@@ -262,9 +270,9 @@ class AccountsTest {
         val accounts = Accounts(client)
         val relationships = accounts.getRelationships(listOf("1")).execute()
         val relationship = relationships.first()
-        relationship.id shouldBeEqualTo "3361"
+        relationship.id shouldBeEqualTo "3457"
         relationship.isFollowing shouldBeEqualTo true
-        relationship.isFollowedBy shouldBeEqualTo false
+        relationship.isFollowedBy shouldBeEqualTo true
         relationship.isBlocking shouldBeEqualTo false
         relationship.isMuting shouldBeEqualTo false
         relationship.isRequested shouldBeEqualTo false
@@ -285,9 +293,13 @@ class AccountsTest {
         val accounts = Accounts(client)
         val result = accounts.getAccountSearch("test").execute()
         val account = result.first()
-        account.acct shouldBeEqualTo "A"
-        account.displayName shouldBeEqualTo ""
-        account.userName shouldBeEqualTo "A"
+        account.acct shouldBeEqualTo "gandalf"
+        account.displayName shouldBeEqualTo "Formerly grey, now white"
+        account.userName shouldBeEqualTo "gandalf"
+        val account2 = result[1]
+        account2.acct shouldBeEqualTo "bombadil@example.org"
+        account2.displayName shouldBeEqualTo "Tom Bombadil"
+        account2.userName shouldBeEqualTo "bombadil"
     }
 
     @Test

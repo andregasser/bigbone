@@ -14,7 +14,7 @@ class NotificationsTest {
         val notifications = Notifications(client)
         val pageable = notifications.getNotifications().execute()
         val notification = pageable.part.first()
-        notification.type shouldBeEqualTo "favourite"
+        notification.type shouldBeEqualTo "mention"
         notification.account shouldNotBe null
         notification.status shouldNotBe null
     }

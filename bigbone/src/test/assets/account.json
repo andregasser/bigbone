@@ -1,26 +1,61 @@
 {
-  "id": 11111,
-  "username": "test",
-  "acct": "test@test.com",
-  "display_name": "test",
+  "id": "31415",
+  "username": "gollum",
+  "acct": "gollum@example.org",
+  "display_name": "gollum fan account",
   "locked": false,
-  "created_at": "2017-04-27T11:12:20.039Z",
-  "followers_count": 371,
-  "following_count": 14547,
-  "statuses_count": 195,
-  "note": "<p>test</p>",
-  "url": "https://test.com/test",
-  "avatar": "test",
-  "avatar_static": "test",
-  "header": "test",
-  "header_static": "test",
+  "bot": false,
+  "created_at": "2017-02-08T02:00:53.274Z",
+  "note": "<p>:ms_rainbow_flag:​ :ms_bisexual_flagweb:​ :ms_nonbinary_flag:​ <a href=\"https://example.org/tags/gollum\" class=\"mention hashtag\" rel=\"nofollow noopener noreferrer\" target=\"_blank\">#<span>gollum</span}.space <a href=\"https://example.org/tags/admin\" class=\"mention hashtag\" rel=\"nofollow noopener noreferrer\" target=\"_blank\">#<span>admin</span} ~ <a href=\"https://example.org/tags/bi\" class=\"mention hashtag\" rel=\"nofollow noopener noreferrer\" target=\"_blank\">#<span>bi</span} ~ <a href=\"https://example.org/tags/nonbinary\" class=\"mention hashtag\" rel=\"nofollow noopener noreferrer\" target=\"_blank\">#<span>nonbinary</span} ~ compsci student ~ likes video <a href=\"https://example.org/tags/games\" class=\"mention hashtag\" rel=\"nofollow noopener noreferrer\" target=\"_blank\">#<span>games</span} and weird/ old electronics and will post obsessively about both ~ avatar by <span class=\"h-card\"><a href=\"https://weirder.earth/@dzuk\" class=\"u-url mention\" rel=\"nofollow noopener noreferrer\" target=\"_blank\">@<span>dzuk</span}</span></p>",
+  "url": "https://example.org/@gollum",
+  "avatar": "https://files.example.org/accounts/avatars/000/023/634/original/6ca8804dc46800ad.png",
+  "avatar_static": "https://files.example.org/accounts/avatars/000/023/634/original/6ca8804dc46800ad.png",
+  "header": "https://files.example.org/accounts/headers/000/023/634/original/256eb8d7ac40f49a.png",
+  "header_static": "https://files.example.org/accounts/headers/000/023/634/original/256eb8d7ac40f49a.png",
+  "followers_count": 547,
+  "following_count": 404,
+  "statuses_count": 28468,
+  "last_status_at": "2019-11-17T00:02:23.693Z",
   "emojis": [
     {
-      "shortcode": "test",
-      "url": "https://test.jp/images/custom_emojis/images/000/001/576/original/test.png",
-      "static_url": "https://test.jp/images/custom_emojis/images/000/001/576/static/test.png",
+      "shortcode": "ms_rainbow_flag",
+      "url": "https://files.example.org/custom_emojis/images/000/028/691/original/6de008d6281f4f59.png",
+      "static_url": "https://files.example.org/custom_emojis/images/000/028/691/static/6de008d6281f4f59.png",
       "visible_in_picker": true
+    },
+    {
+      "shortcode": "ms_bisexual_flag",
+      "url": "https://files.example.org/custom_emojis/images/000/050/744/original/02f94a5fca7eaf78.png",
+      "static_url": "https://files.example.org/custom_emojis/images/000/050/744/static/02f94a5fca7eaf78.png",
+      "visible_in_picker": true
+    },
+    {
+      "shortcode": "ms_nonbinary_flag",
+      "url": "https://files.example.org/custom_emojis/images/000/105/099/original/8106088bd4782072.png",
+      "static_url": "https://files.example.org/custom_emojis/images/000/105/099/static/8106088bd4782072.png",
+      "visible_in_picker": true
+    }
+  ],
+  "fields": [
+    {
+      "name": "Pronouns",
+      "value": "they/them",
+      "verified_at": null
+    },
+    {
+      "name": "Alt",
+      "value": "<span class=\"h-card\"><a href=\"https://example.org/@gollum\" class=\"u-url mention\" rel=\"nofollow noopener noreferrer\" target=\"_blank\">@<span>gollum</span}</span>",
+      "verified_at": null
+    },
+    {
+      "name": "Bots",
+      "value": "<span class=\"h-card\"><a href=\"https://example.org/@boromir\" class=\"u-url mention\" rel=\"nofollow noopener noreferrer\" target=\"_blank\">@<span>boromir</span}</span>, <span class=\"h-card\"><a href=\"https://example.org/@bombadil\" class=\"u-url mention\" rel=\"nofollow noopener noreferrer\" target=\"_blank\">@<span>bombadil</span}</span>, <span class=\"h-card\"><a href=\"https://example.org/@fedi\" class=\"u-url mention\" rel=\"nofollow noopener noreferrer\" target=\"_blank\">@<span>fedi</span}</span>, code for <span class=\"h-card\"><a href=\"https://example.org/@gandalf\" class=\"u-url mention\" rel=\"nofollow noopener noreferrer\" target=\"_blank\">@<span>gandalf</span}</span>",
+      "verified_at": null
+    },
+    {
+      "name": "Website",
+      "value": "<a href=\"http://example.org\" rel=\"nofollow noopener noreferrer\" target=\"_blank\"><span class=\"invisible\">http://</span><span class=\"\">example.org</span><span class=\"invisible\"></span}",
+      "verified_at": "2019-11-10T10:31:10.744+00:00"
     }
   ]
 }
-

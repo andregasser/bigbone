@@ -14,9 +14,9 @@ class BlocksTest {
         val blocks = Blocks(client)
         val pageable = blocks.getBlocks().execute()
         val block = pageable.part.first()
-        block.acct shouldBeEqualTo "test@test.com"
-        block.displayName shouldBeEqualTo "test"
-        block.userName shouldBeEqualTo "test"
+        block.acct shouldBeEqualTo "bombadil@example.org"
+        block.displayName shouldBeEqualTo "Tom Bombadil"
+        block.userName shouldBeEqualTo "bombadil"
     }
 
     @Test

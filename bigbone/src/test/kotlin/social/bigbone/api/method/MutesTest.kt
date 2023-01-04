@@ -13,9 +13,9 @@ class MutesTest {
         val mutes = Mutes(client)
         val pageable = mutes.getMutes().execute()
         val account = pageable.part.first()
-        account.acct shouldBeEqualTo "test@test.com"
-        account.displayName shouldBeEqualTo "test"
-        account.userName shouldBeEqualTo "test"
+        account.acct shouldBeEqualTo "gandalf"
+        account.displayName shouldBeEqualTo ""
+        account.userName shouldBeEqualTo "gandalf"
     }
 
     @Test

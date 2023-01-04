@@ -1,8 +1,14 @@
 {
-  "id": 3361,
+  "id": "349578",
   "following": true,
+  "showing_reblogs": false,
+  "notifying": false,
   "followed_by": false,
   "blocking": false,
+  "blocked_by": false,
   "muting": false,
-  "requested": false
+  "muting_notifications": false,
+  "requested": false,
+  "domain_blocking": false,
+  "endorsed": false
 }

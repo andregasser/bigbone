@@ -2,7 +2,6 @@ package social.bigbone.api.method
 
 import okhttp3.MultipartBody
 import org.amshove.kluent.shouldBeEqualTo
-import org.amshove.kluent.shouldNotBe
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import social.bigbone.api.exception.BigboneRequestException
@@ -15,12 +14,12 @@ class MediaTest {
         val client = MockClient.mock("attachment.json")
         val media = Media(client)
         val attachment = media.postMedia(MultipartBody.Part.create(emptyRequestBody())).execute()
-        attachment.id shouldBeEqualTo "10"
-        attachment.type shouldBeEqualTo "video"
-        attachment.url shouldBeEqualTo "youtube"
-        attachment.remoteUrl shouldNotBe null
-        attachment.previewUrl shouldBeEqualTo "preview"
-        attachment.textUrl shouldNotBe null
+        attachment.id shouldBeEqualTo "22348641"
+        attachment.type shouldBeEqualTo "image"
+        attachment.url shouldBeEqualTo "https://files.example.org/media_attachments/files/022/348/641/original/cebc6d51be03e509.jpeg"
+        attachment.remoteUrl shouldBeEqualTo null
+        attachment.previewUrl shouldBeEqualTo "https://files.example.org/media_attachments/files/022/348/641/small/cebc6d51be03e509.jpeg"
+        attachment.textUrl shouldBeEqualTo "https://example.org/media/4Zj6ewxzzzDi0g8JnZQ"
     }
 
     @Test
