@@ -15,7 +15,7 @@ public class GetPublicTimelines {
         final Public publicMethod = new Public(client);
 
         try {
-            final Pageable<Status> statuses = publicMethod.getLocalPublic(new Range())
+            final Pageable<Status> statuses = publicMethod.getPublic(new Range(), Public.StatusOrigin.LOCAL)
                     .doOnJson(System.out::println)
                     .execute();
             statuses.getPart().forEach(status -> {

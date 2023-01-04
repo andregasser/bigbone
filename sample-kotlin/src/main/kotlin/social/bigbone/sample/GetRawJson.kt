@@ -11,7 +11,7 @@ object GetRawJson {
         val client = Authenticator.appRegistrationIfNeeded(instanceName, credentialFilePath)
         runBlocking {
             val public = Public(client)
-            public.getLocalPublic().doOnJson {
+            public.getPublic(statusOrigin = Public.StatusOrigin.LOCAL).doOnJson {
                 println(it)
             }.execute()
         }
