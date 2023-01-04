@@ -9,9 +9,6 @@ import social.bigbone.api.entity.Account
 import social.bigbone.api.entity.Relationship
 import social.bigbone.api.entity.Status
 
-/**
- * See more https://github.com/tootsuite/documentation/blob/master/Using-the-API/API.md#accounts
- */
 class Accounts(private val client: MastodonClient) {
     // GET /api/v1/accounts/:id
     fun getAccount(accountId: String): MastodonRequest<Account> {

@@ -2,9 +2,6 @@ package social.bigbone.api.entity
 
 import com.google.gson.annotations.SerializedName
 
-/**
- * see more https://github.com/tootsuite/documentation/blob/master/Using-the-API/API.md#notification
- */
 class Notification(
     @SerializedName("id")
     val id: String = "0", // The notification ID

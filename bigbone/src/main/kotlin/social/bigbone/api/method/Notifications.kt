@@ -7,9 +7,6 @@ import social.bigbone.api.Range
 import social.bigbone.api.entity.Notification
 import social.bigbone.api.exception.BigboneRequestException
 
-/**
- * See more https://github.com/tootsuite/documentation/blob/master/Using-the-API/API.md#notifications
- */
 class Notifications(private val client: MastodonClient) {
     // GET /api/v1/notifications
     @JvmOverloads
