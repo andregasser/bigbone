@@ -12,7 +12,7 @@ import social.bigbone.rx.extensions.onErrorIfNotDisposed
 import social.bigbone.rx.extensions.single
 
 class RxPublic(client: MastodonClient) {
-    val publicMethod = Public(client)
+    private val publicMethod = Public(client)
 
     fun getInstance(): Single<Instance> {
         return Single.create {
@@ -36,27 +36,22 @@ class RxPublic(client: MastodonClient) {
         }
     }
 
-    fun getLocalPublic(range: Range = Range()): Single<Pageable<Status>> {
+    fun getPublic(
+        range: Range = Range(),
+        statusOrigin: Public.StatusOrigin = Public.StatusOrigin.LOCAL_AND_REMOTE
+    ): Single<Pageable<Status>> {
         return single {
-            publicMethod.getLocalPublic(range).execute()
+            publicMethod.getPublic(range, statusOrigin).execute()
         }
     }
 
-    fun getFederatedPublic(range: Range = Range()): Single<Pageable<Status>> {
+    fun getTag(
+        tag: String,
+        range: Range = Range(),
+        statusOrigin: Public.StatusOrigin = Public.StatusOrigin.LOCAL_AND_REMOTE
+    ): Single<Pageable<Status>> {
         return single {
-            publicMethod.getFederatedPublic(range).execute()
-        }
-    }
-
-    fun getLocalTag(tag: String, range: Range = Range()): Single<Pageable<Status>> {
-        return single {
-            publicMethod.getLocalTag(tag, range).execute()
-        }
-    }
-
-    fun getFederatedTag(tag: String, range: Range = Range()): Single<Pageable<Status>> {
-        return single {
-            publicMethod.getFederatedTag(tag, range).execute()
+            publicMethod.getTag(tag, range, statusOrigin).execute()
         }
     }
 }

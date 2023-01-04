@@ -86,7 +86,7 @@ class PublicTest {
     fun getLocalPublic() {
         val client = MockClient.mock("public_timeline.json", maxId = "3", sinceId = "1")
         val publicMethod = Public(client)
-        val statuses = publicMethod.getLocalPublic().execute()
+        val statuses = publicMethod.getPublic(statusOrigin = Public.StatusOrigin.LOCAL).execute()
         statuses.part.size shouldBeEqualTo 20
         statuses.link?.let {
             it.nextPath shouldBeEqualTo "<https://mstdn.jp/api/v1/timelines/public?limit=20&local=true&max_id=3>"
@@ -101,7 +101,7 @@ class PublicTest {
         val atomicInt = AtomicInteger(0)
         val client = MockClient.mock("public_timeline.json", maxId = "3", sinceId = "1")
         val publicMethod = Public(client)
-        publicMethod.getLocalPublic()
+        publicMethod.getPublic(statusOrigin = Public.StatusOrigin.LOCAL)
             .doOnJson {
                 atomicInt.incrementAndGet()
             }
@@ -114,7 +114,7 @@ class PublicTest {
         Assertions.assertThrows(BigboneRequestException::class.java) {
             val client = MockClient.ioException()
             val publicMethod = Public(client)
-            publicMethod.getLocalPublic().execute()
+            publicMethod.getPublic(statusOrigin = Public.StatusOrigin.LOCAL).execute()
         }
     }
 
@@ -122,7 +122,7 @@ class PublicTest {
     fun getLocalTag() {
         val client = MockClient.mock("tag.json", maxId = "3", sinceId = "1")
         val publicMethod = Public(client)
-        val statuses = publicMethod.getLocalTag("mastodon").execute()
+        val statuses = publicMethod.getTag(tag = "mastodon", statusOrigin = Public.StatusOrigin.LOCAL).execute()
         statuses.part.size shouldBeEqualTo 20
     }
 
@@ -131,7 +131,7 @@ class PublicTest {
         Assertions.assertThrows(BigboneRequestException::class.java) {
             val client = MockClient.ioException()
             val publicMethod = Public(client)
-            publicMethod.getLocalTag("mastodon").execute()
+            publicMethod.getTag(tag = "mastodon", statusOrigin = Public.StatusOrigin.LOCAL).execute()
         }
     }
 }

@@ -283,13 +283,13 @@ https://docs.joinmastodon.org/methods/scheduled_statuses/
 
 https://docs.joinmastodon.org/methods/timelines/
 
-| Method                                | Description                       | Status | Comments                                                                                                              | 
-|---------------------------------------|-----------------------------------|--------|-----------------------------------------------------------------------------------------------------------------------|
-| `GET /api/v1/timelines/public`        | View public timelines             | 🟠     | `remote`, `only_media`, `min_id` query parameters missing. `Status` entity needs to be updated.                       |
-| `GET /api/v1/timelines/tag/:hashtag`  | View hashtag timeline             | 🟠     | `any`, `all`, `none`, `remote`, `only_media`, `min_id` query parameters missing. `Status` entity needs to be updated. |
-| `GET /api/v1/timelines/home`          | View home timeline                | 🟠     | `min_id` query parameter missing. `Status` entity needs to be updated.                                                |
-| `GET /api/v1/timelines/list/:list_id` | View list timeline                | 🔴     |                                                                                                                       |
-| `GET /api/v1/timelines/direct`        | (DEPRECATED) View direct timeline | 🔴     |                                                                                                                       |
+| Method                                | Description                       | Status | Comments                                                                                                            | 
+|---------------------------------------|-----------------------------------|--------|---------------------------------------------------------------------------------------------------------------------|
+| `GET /api/v1/timelines/public`        | View public timelines             | 🟠     | `only_media`, `min_id` query parameters missing. `Status` entity needs to be updated.                       |
+| `GET /api/v1/timelines/tag/:hashtag`  | View hashtag timeline             | 🟠     | `any`, `all`, `none`, `only_media`, `min_id` query parameters missing. `Status` entity needs to be updated. |
+| `GET /api/v1/timelines/home`          | View home timeline                | 🟠     | `min_id` query parameter missing. `Status` entity needs to be updated.                                              |
+| `GET /api/v1/timelines/list/:list_id` | View list timeline                | 🔴     |                                                                                                                     |
+| `GET /api/v1/timelines/direct`        | (DEPRECATED) View direct timeline | 🔴     |                                                                                                                     |
 
 #### Conversations
 

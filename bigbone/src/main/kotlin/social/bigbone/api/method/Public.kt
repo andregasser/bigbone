@@ -10,11 +10,19 @@ import social.bigbone.api.entity.Results
 import social.bigbone.api.entity.Status
 
 class Public(private val client: MastodonClient) {
+
+    /**
+     * Public timelines can consist of only local statuses, only remote (=federated) statuses, or a combination of both.
+     */
+    enum class StatusOrigin {
+        LOCAL,
+        REMOTE,
+        LOCAL_AND_REMOTE
+    }
+
     /**
      * Retrieve instance details.
-     *
-     * GET /api/v1/instance
-     * @see https://docs.joinmastodon.org/entities/V1_Instance/
+     * @see <a href="https://docs.joinmastodon.org/entities/V1_Instance/">Mastodon API documentation: entities/V1_Instance</a>
      */
     fun getInstance(): MastodonRequest<Instance> {
         return client.getMastodonRequest(
@@ -25,11 +33,9 @@ class Public(private val client: MastodonClient) {
 
     /**
      * Search for content in accounts, statuses and hashtags.
-     *
-     * GET /api/v1/search
-     * q: The search query
-     * resolve: Whether to resolve non-local accounts
-     * @see https://docs.joinmastodon.org/methods/search/
+     * @param query string to search for
+     * @param resolve whether to resolve non-local accounts
+     * @see <a href="https://docs.joinmastodon.org/methods/search/">Mastodon API documentation: methods/search</a>
      */
     @JvmOverloads
     fun getSearch(query: String, resolve: Boolean = false): MastodonRequest<Results> {
@@ -46,47 +52,54 @@ class Public(private val client: MastodonClient) {
     }
 
     /**
-     *
-     * GET /api/v1/timelines/public
-     * @see https://github.com/tootsuite/documentation/blob/master/Using-the-API/API.md#timelines
+     * Get the public timeline of the configured instance. Defaults to a combination of local and remote statuses,
+     * but can be restricted to either.
+     * @param range restrict result to a specific range
+     * @param statusOrigin optionally restrict result to either local or remote (=federated) statuses; defaults to all
+     * @see <a href="https://docs.joinmastodon.org/methods/timelines/#public">Mastodon API documentation: methods/timelines/#public</a>
      */
-    private fun getPublic(local: Boolean, range: Range): MastodonRequest<Pageable<Status>> {
+    @JvmOverloads
+    fun getPublic(
+        range: Range = Range(),
+        statusOrigin: StatusOrigin = StatusOrigin.LOCAL_AND_REMOTE
+    ): MastodonRequest<Pageable<Status>> {
         return client.getPageableMastodonRequest(
             endpoint = "api/v1/timelines/public",
             method = MastodonClient.Method.GET,
             parameters = range.toParameter().apply {
-                if (local) {
-                    append("local", true)
+                when (statusOrigin) {
+                    StatusOrigin.LOCAL -> append("local", true)
+                    StatusOrigin.REMOTE -> append("remote", true)
+                    else -> { /* append neither, combined results will be shown */ }
                 }
             }
         )
     }
 
-    @JvmOverloads
-    fun getLocalPublic(range: Range = Range()) = getPublic(true, range)
-
-    @JvmOverloads
-    fun getFederatedPublic(range: Range = Range()) = getPublic(false, range)
-
     /**
-     * GET /api/v1/timelines/tag/:tag
-     * @see https://github.com/tootsuite/documentation/blob/master/Using-the-API/API.md#timelines
+     * Get the public timeline for a specific hashtag of the configured instance.
+     * Defaults to a combination of local and remote (=federated) statuses, but can be restricted to either.
+     * @param tag the hashtag for which a timeline should be returned
+     * @param range restrict result to a specific range
+     * @param statusOrigin optionally restrict result to either local or remote statuses; defaults to all
+     * @see <a href="https://docs.joinmastodon.org/methods/timelines/#tag">Mastodon API documentation: methods/timelines/#tag</a>
      */
-    private fun getTag(tag: String, local: Boolean, range: Range): MastodonRequest<Pageable<Status>> {
+    @JvmOverloads
+    fun getTag(
+        tag: String,
+        range: Range = Range(),
+        statusOrigin: StatusOrigin = StatusOrigin.LOCAL_AND_REMOTE
+    ): MastodonRequest<Pageable<Status>> {
         return client.getPageableMastodonRequest(
             endpoint = "api/v1/timelines/tag/$tag",
             method = MastodonClient.Method.GET,
             parameters = range.toParameter().apply {
-                if (local) {
-                    append("local", true)
+                when (statusOrigin) {
+                    StatusOrigin.LOCAL -> append("local", true)
+                    StatusOrigin.REMOTE -> append("remote", true)
+                    else -> { /* append neither, combined results will be shown */ }
                 }
             }
         )
     }
-
-    @JvmOverloads
-    fun getLocalTag(tag: String, range: Range = Range()) = getTag(tag, true, range)
-
-    @JvmOverloads
-    fun getFederatedTag(tag: String, range: Range = Range()) = getTag(tag, false, range)
 }
