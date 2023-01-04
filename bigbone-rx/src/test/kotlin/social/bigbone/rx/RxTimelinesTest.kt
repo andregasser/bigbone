@@ -1,16 +1,16 @@
 package social.bigbone.rx
 
 import org.junit.jupiter.api.Test
-import social.bigbone.api.method.Public
+import social.bigbone.api.method.Timelines
 import social.bigbone.rx.testtool.MockClient
 
 class RxTimelinesTest {
 
     @Test
-    fun getPublic() {
+    fun getPublicTimeline() {
         val client = MockClient.mock("public_timeline.json", "5", "40")
-        val publicMethod = RxPublic(client)
-        val subscriber = publicMethod.getPublic(statusOrigin = Public.StatusOrigin.LOCAL).test()
+        val timelines = RxTimelines(client)
+        val subscriber = timelines.getPublicTimeline(statusOrigin = Timelines.StatusOrigin.LOCAL).test()
         subscriber.assertNoErrors()
     }
 }
