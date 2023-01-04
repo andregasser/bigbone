@@ -12,31 +12,19 @@ class MastodonLists(private val client: MastodonClient) {
 
     // GET /api/v1/lists
     fun getLists(): MastodonRequest<Pageable<MastodonList>> {
-        return MastodonRequest<Pageable<MastodonList>>(
-            {
-                client.get(
-                    "api/v1/lists"
-                )
-            },
-            {
-                client.getSerializer().fromJson(it, MastodonList::class.java)
-            }
-        ).toPageable()
+        return client.getPageableMastodonRequest(
+            endpoint = "api/v1/lists",
+            method = MastodonClient.Method.GET
+        )
     }
 
     // GET /api/v1/timelines/list/:list_id
     @Throws(BigboneRequestException::class)
     fun getListTimeLine(listID: String, range: Range = Range()): MastodonRequest<Pageable<Status>> {
-        return MastodonRequest<Pageable<Status>>(
-            {
-                client.get(
-                    "api/v1/timelines/list/$listID",
-                    range.toParameter()
-                )
-            },
-            {
-                client.getSerializer().fromJson(it, Status::class.java)
-            }
-        ).toPageable()
+        return client.getPageableMastodonRequest(
+            endpoint = "api/v1/timelines/list/$listID",
+            method = MastodonClient.Method.GET,
+            parameters = range.toParameter()
+        )
     }
 }
