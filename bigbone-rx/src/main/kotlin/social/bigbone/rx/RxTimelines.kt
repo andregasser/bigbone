@@ -11,9 +11,28 @@ import social.bigbone.rx.extensions.single
 class RxTimelines(client: MastodonClient) {
     val timelines = Timelines(client)
 
-    fun getHome(range: Range = Range()): Single<Pageable<Status>> {
+    fun getHomeTimeline(range: Range = Range()): Single<Pageable<Status>> {
         return single {
-            timelines.getHome(range).execute()
+            timelines.getHomeTimeline(range).execute()
+        }
+    }
+
+    fun getPublicTimeline(
+        range: Range = Range(),
+        statusOrigin: Timelines.StatusOrigin = Timelines.StatusOrigin.LOCAL_AND_REMOTE
+    ): Single<Pageable<Status>> {
+        return single {
+            timelines.getPublicTimeline(range, statusOrigin).execute()
+        }
+    }
+
+    fun getTagTimeline(
+        tag: String,
+        range: Range = Range(),
+        statusOrigin: Timelines.StatusOrigin = Timelines.StatusOrigin.LOCAL_AND_REMOTE
+    ): Single<Pageable<Status>> {
+        return single {
+            timelines.getTagTimeline(tag, range, statusOrigin).execute()
         }
     }
 }

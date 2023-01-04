@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test
 import social.bigbone.api.exception.BigboneRequestException
 import social.bigbone.testtool.MockClient
 import social.bigbone.testtool.TestUtil
-import java.util.concurrent.atomic.AtomicInteger
 
 class PublicTest {
     @Test
@@ -79,59 +78,6 @@ class PublicTest {
             val client = MockClient.ioException()
             val publicMethod = Public(client)
             publicMethod.getSearch("test").execute()
-        }
-    }
-
-    @Test
-    fun getLocalPublic() {
-        val client = MockClient.mock("public_timeline.json", maxId = "3", sinceId = "1")
-        val publicMethod = Public(client)
-        val statuses = publicMethod.getPublic(statusOrigin = Public.StatusOrigin.LOCAL).execute()
-        statuses.part.size shouldBeEqualTo 20
-        statuses.link?.let {
-            it.nextPath shouldBeEqualTo "<https://mstdn.jp/api/v1/timelines/public?limit=20&local=true&max_id=3>"
-            it.maxId shouldBeEqualTo "3"
-            it.prevPath shouldBeEqualTo "<https://mstdn.jp/api/v1/timelines/public?limit=20&local=true&since_id=1>"
-            it.sinceId shouldBeEqualTo "1"
-        }
-    }
-
-    @Test
-    fun getLocalPublicWithJson() {
-        val atomicInt = AtomicInteger(0)
-        val client = MockClient.mock("public_timeline.json", maxId = "3", sinceId = "1")
-        val publicMethod = Public(client)
-        publicMethod.getPublic(statusOrigin = Public.StatusOrigin.LOCAL)
-            .doOnJson {
-                atomicInt.incrementAndGet()
-            }
-            .execute()
-        atomicInt.get() shouldBeEqualTo 20
-    }
-
-    @Test
-    fun getLocalPublicWithException() {
-        Assertions.assertThrows(BigboneRequestException::class.java) {
-            val client = MockClient.ioException()
-            val publicMethod = Public(client)
-            publicMethod.getPublic(statusOrigin = Public.StatusOrigin.LOCAL).execute()
-        }
-    }
-
-    @Test
-    fun getLocalTag() {
-        val client = MockClient.mock("tag.json", maxId = "3", sinceId = "1")
-        val publicMethod = Public(client)
-        val statuses = publicMethod.getTag(tag = "mastodon", statusOrigin = Public.StatusOrigin.LOCAL).execute()
-        statuses.part.size shouldBeEqualTo 20
-    }
-
-    @Test
-    fun getLocalTagWithException() {
-        Assertions.assertThrows(BigboneRequestException::class.java) {
-            val client = MockClient.ioException()
-            val publicMethod = Public(client)
-            publicMethod.getTag(tag = "mastodon", statusOrigin = Public.StatusOrigin.LOCAL).execute()
         }
     }
 }
