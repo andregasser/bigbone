@@ -7,9 +7,6 @@ import social.bigbone.api.Range
 import social.bigbone.api.entity.Account
 import social.bigbone.api.exception.BigboneRequestException
 
-/**
- * See more https://github.com/tootsuite/documentation/blob/master/Using-the-API/API.md#follow-requests
- */
 class FollowRequests(private val client: MastodonClient) {
     // GET /api/v1/follow_requests
     @JvmOverloads

@@ -6,9 +6,6 @@ import social.bigbone.api.Pageable
 import social.bigbone.api.Range
 import social.bigbone.api.entity.Status
 
-/**
- * See more https://github.com/tootsuite/documentation/blob/master/Using-the-API/API.md#favourites
- */
 class Favourites(private val client: MastodonClient) {
 
     //  GET /api/v1/favourites

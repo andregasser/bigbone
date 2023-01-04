@@ -7,9 +7,6 @@ import social.bigbone.api.Range
 import social.bigbone.api.entity.Status
 import social.bigbone.api.exception.BigboneRequestException
 
-/**
- * see more https://github.com/tootsuite/documentation/blob/master/Using-the-API/API.md#timelines
- */
 class Timelines(private val client: MastodonClient) {
     /**
      * Public timelines can consist of only local statuses, only remote (=federated) statuses, or a combination of both.

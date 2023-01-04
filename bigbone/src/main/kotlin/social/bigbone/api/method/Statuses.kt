@@ -11,9 +11,6 @@ import social.bigbone.api.entity.Context
 import social.bigbone.api.entity.Status
 import social.bigbone.api.exception.BigboneRequestException
 
-/**
- * See more https://github.com/tootsuite/documentation/blob/master/Using-the-API/API.md#statuses
- */
 class Statuses(private val client: MastodonClient) {
 
     //  GET /api/v1/statuses/:id
