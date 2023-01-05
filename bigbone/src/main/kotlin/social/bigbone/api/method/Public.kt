@@ -28,7 +28,7 @@ class Public(private val client: MastodonClient) {
     @JvmOverloads
     fun getSearch(query: String, resolve: Boolean = false): MastodonRequest<Results> {
         return client.getMastodonRequest(
-            endpoint = "api/v1/search",
+            endpoint = "api/v2/search",
             method = MastodonClient.Method.GET,
             parameters = Parameter().apply {
                 append("q", query)

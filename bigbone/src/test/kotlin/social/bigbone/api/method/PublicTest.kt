@@ -66,10 +66,9 @@ class PublicTest {
 
         val publicMethod = Public(client)
         val result = publicMethod.getSearch("test").execute()
-        result.statuses.size shouldBeEqualTo 0
         result.accounts.size shouldBeEqualTo 6
-        result.hashtags.size shouldBeEqualTo 5
-        result.hashtags.size shouldBeEqualTo 5
+        result.statuses.size shouldBeEqualTo 2
+        result.hashtags.size shouldBeEqualTo 1
     }
 
     @Test
