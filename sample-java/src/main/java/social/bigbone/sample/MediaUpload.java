@@ -1,8 +1,5 @@
 package social.bigbone.sample;
 
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import social.bigbone.MastodonClient;
 import social.bigbone.api.entity.Attachment;
 import social.bigbone.api.entity.Status.Visibility;
@@ -30,9 +27,7 @@ public class MediaUpload {
 
             // Upload image to Mastodon
             final Media media = new Media(client);
-            final RequestBody requestBody = RequestBody.create(uploadFile, MediaType.parse("image/jpg"));
-            final MultipartBody.Part pFile = MultipartBody.Part.createFormData("file", uploadFile.getName(), requestBody);
-            final Attachment uploadedFile = media.postMedia(pFile).execute();
+            final Attachment uploadedFile = media.postMedia(uploadFile, "image/jpg").execute();
             final String mediaId = uploadedFile.getId();
 
             // Post status with media attached
