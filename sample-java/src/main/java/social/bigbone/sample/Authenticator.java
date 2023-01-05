@@ -1,5 +1,6 @@
 package social.bigbone.sample;
 
+import com.google.gson.Gson;
 import social.bigbone.MastodonClient;
 import social.bigbone.MastodonRequest;
 import social.bigbone.Parameter;
@@ -95,7 +96,7 @@ final class Authenticator {
                 .append("grant_type", "password");
         return new MastodonRequest<>(
                 () -> client.post("oauth/token", parameters),
-                s -> client.getSerializer().fromJson(s, AccessToken.class)
+                s -> new Gson().fromJson(s, AccessToken.class)
         );
     }
 }

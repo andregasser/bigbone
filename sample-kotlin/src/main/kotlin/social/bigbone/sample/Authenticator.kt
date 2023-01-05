@@ -1,5 +1,6 @@
 package social.bigbone.sample
 
+import com.google.gson.Gson
 import social.bigbone.MastodonClient
 import social.bigbone.MastodonRequest
 import social.bigbone.Parameter
@@ -109,7 +110,7 @@ object Authenticator {
                 client.post("oauth/token", parameters)
             },
             {
-                client.getSerializer().fromJson(it, AccessToken::class.java)
+                Gson().fromJson(it, AccessToken::class.java)
             }
         )
     }

@@ -30,7 +30,8 @@ private constructor(
         PATCH
     }
 
-    open fun getSerializer() = gson
+    @PublishedApi
+    internal fun getSerializer() = gson
 
     open fun getInstanceName() = instanceName
 
