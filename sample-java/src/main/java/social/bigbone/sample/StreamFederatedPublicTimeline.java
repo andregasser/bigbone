@@ -9,15 +9,17 @@ import social.bigbone.api.entity.Status;
 import social.bigbone.api.exception.BigboneRequestException;
 import social.bigbone.api.method.Streaming;
 
-@SuppressWarnings({"PMD.AvoidPrintStackTrace", "PMD.SystemPrintln"})
-public class StreamPublicTimeline {
-    public static void main(final String[] args) {
-        // require authentication even if public streaming
-        final String accessToken = "PUT YOUR ACCESS TOKEN";
-        final MastodonClient client = new MastodonClient.Builder("mstdn.jp")
-                .accessToken(accessToken)
-                .useStreamingApi()
-                .build();
+@SuppressWarnings("PMD.SystemPrintln")
+public class StreamFederatedPublicTimeline {
+    public static void main(final String[] args) throws BigboneRequestException, InterruptedException {
+        final String instance = "<YOUR INSTANCE>";
+
+        // Instantiate client
+        final MastodonClient client = new MastodonClient.Builder(instance)
+            .useStreamingApi()
+            .build();
+
+        // Configure status handler
         final Handler handler = new Handler() {
             @Override
             public void onStatus(@NotNull final Status status) {
@@ -30,17 +32,15 @@ public class StreamPublicTimeline {
             }
 
             @Override
-            public void onDelete(final String id) {
+            public void onDelete(@NotNull final String id) {
                 // No op
             }
         };
+
+        // Start federated timeline streaming and stop after 20 seconds
         final Streaming streaming = new Streaming(client);
-        try {
-            final Shutdownable shutdownable = streaming.localPublic(handler);
-            Thread.sleep(10_000L);
-            shutdownable.shutdown();
-        } catch (BigboneRequestException | InterruptedException e) {
-            e.printStackTrace();
-        }
+        final Shutdownable shutdownable = streaming.federatedPublic(handler);
+        Thread.sleep(20_000L);
+        shutdownable.shutdown();
     }
 }
