@@ -37,7 +37,10 @@ object MockClient {
             }
             .build()
         every { client.get(ofType<String>(), any()) } returns response
-        every { client.getSerializer() } returns Gson()
+
+        // mocking function that is internal in MastodonClient
+        every { client["getSerializer"]() } returns Gson()
+
         return client
     }
 }
