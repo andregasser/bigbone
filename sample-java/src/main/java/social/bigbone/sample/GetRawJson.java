@@ -10,7 +10,7 @@ import static social.bigbone.api.method.Timelines.StatusOrigin.LOCAL_AND_REMOTE;
 @SuppressWarnings("PMD.SystemPrintln")
 public class GetRawJson {
     public static void main(final String[] args) throws BigboneRequestException {
-        final String instance = "<YOUR INSTANCE>";
+        final String instance = args[0];
 
         // Instantiate client
         final MastodonClient client = new MastodonClient.Builder(instance)

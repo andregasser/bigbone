@@ -9,7 +9,7 @@ import social.bigbone.api.method.Streaming
 object StreamFederatedPublicTimeline {
     @JvmStatic
     fun main(args: Array<String>) {
-        val instance = "<YOUR INSTANCE>"
+        val instance = args[0]
 
         // Instantiate client
         val client = MastodonClient.Builder(instance)

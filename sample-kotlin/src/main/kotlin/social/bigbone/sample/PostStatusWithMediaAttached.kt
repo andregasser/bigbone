@@ -9,8 +9,8 @@ import java.io.File
 object PostStatusWithMediaAttached {
     @JvmStatic
     fun main(args: Array<String>) {
-        val instance = "<YOUR INSTANCE>"
-        val accessToken = "<YOUR ACCESS TOKEN>"
+        val instance = args[0]
+        val accessToken = args[1]
 
         // Instantiate client
         val client = MastodonClient.Builder(instance)

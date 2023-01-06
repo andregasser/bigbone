@@ -8,9 +8,9 @@ import social.bigbone.api.method.Public;
 @SuppressWarnings("PMD.SystemPrintln")
 public class PerformSimpleSearch {
     public static void main(final String[] args) throws BigboneRequestException {
-        final String instance = "<YOUR INSTANCE>";
-        final String accessToken = "<YOUR ACCESS TOKEN>";
-        final String searchTerm = "<YOUR SEARCH TERM>";
+        final String instance = args[0];
+        final String accessToken = args[1];
+        final String searchTerm = args[2];
 
         // Instantiate client
         final MastodonClient client = new MastodonClient.Builder(instance)

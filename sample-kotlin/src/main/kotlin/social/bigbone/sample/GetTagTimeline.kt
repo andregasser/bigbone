@@ -7,8 +7,8 @@ import social.bigbone.api.method.Timelines
 object GetTagTimeline {
     @JvmStatic
     fun main(args: Array<String>) {
-        val instance = "<YOUR INSTANCE>"
-        val hashtag = "<YOUR HASHTAG>"
+        val instance = args[0]
+        val hashtag = args[1]
 
         // Instantiate client
         val client = MastodonClient.Builder(instance)

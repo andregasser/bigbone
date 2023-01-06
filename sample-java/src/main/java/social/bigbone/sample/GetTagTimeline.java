@@ -12,8 +12,8 @@ import static social.bigbone.api.method.Timelines.StatusOrigin.LOCAL_AND_REMOTE;
 @SuppressWarnings("PMD.SystemPrintln")
 public class GetTagTimeline {
     public static void main(final String[] args) throws BigboneRequestException {
-        final String instance = "<YOUR INSTANCE>";
-        final String hashtag = "<YOUR HASHTAG>";
+        final String instance = args[0];
+        final String hashtag = args[1];
 
         // Instantiate client
         final MastodonClient client = new MastodonClient.Builder(instance)

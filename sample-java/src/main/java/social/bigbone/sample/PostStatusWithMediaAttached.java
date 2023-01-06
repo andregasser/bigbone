@@ -13,8 +13,8 @@ import java.util.List;
 
 public class PostStatusWithMediaAttached {
     public static void main(final String[] args) throws BigboneRequestException {
-        final String instance = "<YOUR INSTANCE>";
-        final String accessToken = "<YOUR ACCESS TOKEN>";
+        final String instance = args[0];
+        final String accessToken = args[1];
 
         // Instantiate client
         final MastodonClient client = new MastodonClient.Builder(instance)

@@ -6,9 +6,9 @@ import social.bigbone.api.method.Public
 object PerformSimpleSearch {
     @JvmStatic
     fun main(args: Array<String>) {
-        val instance = "<YOUR INSTANCE>"
-        val accessToken = "<YOUR ACCESS TOKEN>"
-        val searchTerm = "<YOUR SEARCH TERM>"
+        val instance = args[0]
+        val accessToken = args[1]
+        val searchTerm = args[2]
 
         // Instantiate client
         val client = MastodonClient.Builder(instance)
