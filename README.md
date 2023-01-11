@@ -39,7 +39,7 @@ developers.
 Bigbone does not yet implement the full API of Mastodon. Actually, there is still **a lot to do**. Our main goal for the 2.0.0 release is to get something out 
 that is in a maintained state and on a solid basis, technology-wise. In future releases, focus will be put on extending the existing API coverage. 
 
-For details on the current API coverage please have a look at [API.md](API.md).
+For details on the current API coverage please checkout wiki page [Mastodon API Coverage](https://github.com/andregasser/bigbone/wiki/Mastodon-API-Coverage).
 
 Bigbone uses [Semantic Versioning 2.0.0](http://semver.org/spec/v2.0.0.html).
 
