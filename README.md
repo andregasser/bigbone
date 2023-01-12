@@ -142,8 +142,8 @@ There are also two Gradle modules that provide some insights on how to use this 
 
 The following people have actively contributed to the development of Bigbone:
 
-- Andreas (Mastodon: @factotum@c.im) - For actively contributing to the whole library project - thanks!
-- Cédric Champeau (Mastodon: @melix@mastodon.xyz) - For putting the Gradle build scripts in great shape again
+- [Andreas](https://fosstodon.org/@bocops) - For actively contributing to the whole library project - thanks!
+- [Cédric Champeau](https://mastodon.xyz/@melix) - For putting the Gradle build scripts in great shape again
 
 # Contribution
 
