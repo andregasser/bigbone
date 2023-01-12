@@ -10,6 +10,7 @@ import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import social.bigbone.api.Pageable
+import social.bigbone.api.entity.Instance
 import social.bigbone.api.exception.BigboneRequestException
 import social.bigbone.extension.emptyRequestBody
 import java.io.IOException
@@ -18,6 +19,7 @@ import java.util.concurrent.TimeUnit
 open class MastodonClient
 private constructor(
     private val instanceName: String,
+    private val instanceVersion: String,
     private val client: OkHttpClient,
     private val gson: Gson
 ) {
@@ -34,6 +36,8 @@ private constructor(
     internal fun getSerializer() = gson
 
     open fun getInstanceName() = instanceName
+
+    open fun getInstanceVersion() = instanceVersion
 
     /**
      * Returns a MastodonRequest for the defined action, allowing to retrieve returned data.
@@ -271,6 +275,8 @@ private constructor(
         private val gson = Gson()
         private var accessToken: String? = null
         private var debug = false
+        private val baseUrlV1 = "https://$instanceName/api/v1"
+        private val baseUrlV2 = "https://$instanceName/api/v2"
 
         fun accessToken(accessToken: String) = apply {
             this.accessToken = accessToken
@@ -284,9 +290,23 @@ private constructor(
             this.debug = true
         }
 
+        private fun getInstanceVersion(): String {
+            val httpClient = OkHttpClient.Builder().build()
+            val v2InstanceRequest = httpClient.newCall(Request.Builder().url("$baseUrlV2/instance").get().build())
+            val v1InstanceRequest = httpClient.newCall(Request.Builder().url("$baseUrlV1/instance").get().build())
+            return listOf(v1InstanceRequest, v2InstanceRequest).stream()
+                .map { x -> x.execute() }
+                .filter { response -> response.isSuccessful }
+                .map { response -> gson.fromJson(response.body.toString(), Instance::class.java) }
+                .map { json -> json.version }
+                .findFirst()
+                .orElseThrow { BigboneRequestException("Unable to fetch instance version") }
+        }
+
         fun build(): MastodonClient {
             return MastodonClient(
                 instanceName,
+                getInstanceVersion(),
                 okHttpClientBuilder.addNetworkInterceptor(AuthorizationInterceptor(accessToken)).build(),
                 gson
             ).also {
