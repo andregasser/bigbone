@@ -275,8 +275,6 @@ private constructor(
         private val gson = Gson()
         private var accessToken: String? = null
         private var debug = false
-        private val baseUrlV1 = "https://$instanceName/api/v1"
-        private val baseUrlV2 = "https://$instanceName/api/v2"
 
         fun accessToken(accessToken: String) = apply {
             this.accessToken = accessToken
@@ -291,10 +289,10 @@ private constructor(
         }
 
         private fun getInstanceVersion(): String {
-            val httpClient = OkHttpClient.Builder().build()
-            val v2InstanceRequest = httpClient.newCall(Request.Builder().url("$baseUrlV2/instance").get().build())
-            val v1InstanceRequest = httpClient.newCall(Request.Builder().url("$baseUrlV1/instance").get().build())
-            return listOf(v1InstanceRequest, v2InstanceRequest).stream()
+            val client = OkHttpClient.Builder().build()
+            val v2InstanceRequest = client.newCall(Request.Builder().url(fullUrl(instanceName, "api/v2/instance")).get().build())
+            val v1InstanceRequest = client.newCall(Request.Builder().url(fullUrl(instanceName, "api/v1/instance")).get().build())
+            return listOf(v2InstanceRequest, v1InstanceRequest).stream()
                 .map { x -> x.execute() }
                 .filter { response -> response.isSuccessful }
                 .map { response -> gson.fromJson(response.body.toString(), Instance::class.java) }
