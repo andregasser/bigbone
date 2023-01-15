@@ -27,7 +27,7 @@ public class PostStatusWithMediaAttached {
 
         // Upload image to Mastodon
         final Media media = new Media(client);
-        final Attachment uploadedFile = media.postMedia(uploadFile, "image/jpg").execute();
+        final Attachment uploadedFile = media.uploadMedia(uploadFile, "image/jpg").execute();
         final String mediaId = uploadedFile.getId();
 
         // Post status with media attached

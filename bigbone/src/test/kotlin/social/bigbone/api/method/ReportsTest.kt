@@ -27,11 +27,11 @@ class ReportsTest {
     }
 
     @Test
-    fun postReportWithException() {
+    fun fileReportWithException() {
         Assertions.assertThrows(BigboneRequestException::class.java) {
             val client = MockClient.ioException()
             val reports = Reports(client)
-            reports.postReport("10", "20", "test").execute()
+            reports.fileReport("10", "20", "test").execute()
         }
     }
 }

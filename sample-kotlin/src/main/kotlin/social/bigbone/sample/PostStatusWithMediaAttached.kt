@@ -23,7 +23,7 @@ object PostStatusWithMediaAttached {
 
         // Upload image to Mastodon
         val media = Media(client)
-        val uploadedFile = media.postMedia(uploadFile, "image/jpg").execute()
+        val uploadedFile = media.uploadMedia(uploadFile, "image/jpg").execute()
         val mediaId = uploadedFile.id
 
         // Post status with media attached

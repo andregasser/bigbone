@@ -10,12 +10,12 @@ import java.io.File
 
 class MediaTest {
     @Test
-    fun postMedia() {
+    fun uploadMedia() {
         val client = MockClient.mock("attachment.json")
         val media = Media(client)
         val file = File("foo.bar")
         val mediaType = "image/foo"
-        val attachment = media.postMedia(file, mediaType).execute()
+        val attachment = media.uploadMedia(file, mediaType).execute()
         attachment.id shouldBeEqualTo "10"
         attachment.type shouldBeEqualTo "video"
         attachment.url shouldBeEqualTo "youtube"
@@ -25,13 +25,13 @@ class MediaTest {
     }
 
     @Test
-    fun postMediaWithException() {
+    fun uploadMediaWithException() {
         Assertions.assertThrows(BigboneRequestException::class.java) {
             val client = MockClient.ioException()
             val media = Media(client)
             val file = File("foo.bar")
             val mediaType = "image/foo"
-            media.postMedia(file, mediaType).execute()
+            media.uploadMedia(file, mediaType).execute()
         }
     }
 }

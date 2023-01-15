@@ -121,70 +121,70 @@ class StatusesTest {
     }
 
     @Test
-    fun postReblog() {
+    fun reblogStatus() {
         val client = MockClient.mock("status.json")
         val statuses = Statuses(client)
-        val status = statuses.postReblog("1").execute()
+        val status = statuses.reblogStatus("1").execute()
         status.id shouldBeEqualTo "11111"
     }
 
     @Test
-    fun postReblogWithException() {
+    fun reblogStatusWithException() {
         Assertions.assertThrows(BigboneRequestException::class.java) {
             val client = MockClient.ioException()
             val statuses = Statuses(client)
-            statuses.postReblog("1").execute()
+            statuses.reblogStatus("1").execute()
         }
     }
 
     @Test
-    fun postUnreblog() {
+    fun unreblogStatus() {
         val client = MockClient.mock("status.json")
         val statuses = Statuses(client)
-        val status = statuses.postUnreblog("1").execute()
+        val status = statuses.unreblogStatus("1").execute()
         status.id shouldBeEqualTo "11111"
     }
 
     @Test
-    fun postUnreblogWithException() {
+    fun unreblogStatusWithException() {
         Assertions.assertThrows(BigboneRequestException::class.java) {
             val client = MockClient.ioException()
             val statuses = Statuses(client)
-            statuses.postUnreblog("1").execute()
+            statuses.unreblogStatus("1").execute()
         }
     }
 
     @Test
-    fun postFavourite() {
+    fun favouriteStatus() {
         val client = MockClient.mock("status.json")
         val statuses = Statuses(client)
-        val status = statuses.postFavourite("1").execute()
+        val status = statuses.favouriteStatus("1").execute()
         status.id shouldBeEqualTo "11111"
     }
 
     @Test
-    fun postFavouriteWithException() {
+    fun favouriteStatusWithException() {
         Assertions.assertThrows(BigboneRequestException::class.java) {
             val client = MockClient.ioException()
             val statuses = Statuses(client)
-            statuses.postFavourite("1").execute()
+            statuses.favouriteStatus("1").execute()
         }
     }
 
     @Test
-    fun postUnfavourite() {
+    fun unfavouriteStatus() {
         val client = MockClient.mock("status.json")
         val statuses = Statuses(client)
-        val status = statuses.postUnfavourite("1").execute()
+        val status = statuses.unfavouriteStatus("1").execute()
         status.id shouldBeEqualTo "11111"
     }
 
     @Test
-    fun postUnfavouriteWithException() {
+    fun unfavouriteStatusWithException() {
         Assertions.assertThrows(BigboneRequestException::class.java) {
             val client = MockClient.ioException()
             val statuses = Statuses(client)
-            statuses.postUnfavourite("1").execute()
+            statuses.unfavouriteStatus("1").execute()
         }
     }
 }

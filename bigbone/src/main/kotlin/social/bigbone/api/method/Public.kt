@@ -26,7 +26,7 @@ class Public(private val client: MastodonClient) {
      * @see <a href="https://docs.joinmastodon.org/methods/search/">Mastodon API documentation: methods/search</a>
      */
     @JvmOverloads
-    fun getSearch(query: String, resolve: Boolean = false): MastodonRequest<Results> {
+    fun search(query: String, resolve: Boolean = false): MastodonRequest<Results> {
         return client.getMastodonRequest(
             endpoint = "api/v2/search",
             method = MastodonClient.Method.GET,

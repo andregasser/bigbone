@@ -19,7 +19,7 @@ class Accounts(private val client: MastodonClient) {
     }
 
     //  GET /api/v1/accounts/verify_credentials
-    fun getVerifyCredentials(): MastodonRequest<Account> {
+    fun verifyCredentials(): MastodonRequest<Account> {
         return client.getMastodonRequest(
             endpoint = "api/v1/accounts/verify_credentials",
             method = MastodonClient.Method.GET
@@ -33,7 +33,7 @@ class Accounts(private val client: MastodonClient) {
      * avatar: A base64 encoded image to display as the user's avatar (e.g. data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUoAAADrCAYAAAA...)
      * header: A base64 encoded image to display as the user's header image (e.g. data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUoAAADrCAYAAAA...)
      */
-    fun updateCredential(displayName: String?, note: String?, avatar: String?, header: String?): MastodonRequest<Account> {
+    fun updateCredentials(displayName: String?, note: String?, avatar: String?, header: String?): MastodonRequest<Account> {
         return client.getMastodonRequest(
             endpoint = "api/v1/accounts/update_credentials",
             method = MastodonClient.Method.PATCH,
@@ -87,7 +87,7 @@ class Accounts(private val client: MastodonClient) {
     }
 
     //  POST /api/v1/accounts/:id/follow
-    fun postFollow(accountId: String): MastodonRequest<Relationship> {
+    fun followAccount(accountId: String): MastodonRequest<Relationship> {
         return client.getMastodonRequest(
             endpoint = "api/v1/accounts/$accountId/follow",
             method = MastodonClient.Method.POST,
@@ -95,7 +95,7 @@ class Accounts(private val client: MastodonClient) {
     }
 
     //  POST /api/v1/accounts/:id/unfollow
-    fun postUnFollow(accountId: String): MastodonRequest<Relationship> {
+    fun unfollowAccount(accountId: String): MastodonRequest<Relationship> {
         return client.getMastodonRequest(
             endpoint = "api/v1/accounts/$accountId/unfollow",
             method = MastodonClient.Method.POST
@@ -103,7 +103,7 @@ class Accounts(private val client: MastodonClient) {
     }
 
     //  POST /api/v1/accounts/:id/block
-    fun postBlock(accountId: String): MastodonRequest<Relationship> {
+    fun blockAccount(accountId: String): MastodonRequest<Relationship> {
         return client.getMastodonRequest(
             endpoint = "api/v1/accounts/$accountId/block",
             method = MastodonClient.Method.POST
@@ -111,7 +111,7 @@ class Accounts(private val client: MastodonClient) {
     }
 
     //  POST /api/v1/accounts/:id/unblock
-    fun postUnblock(accountId: String): MastodonRequest<Relationship> {
+    fun unblockAccount(accountId: String): MastodonRequest<Relationship> {
         return client.getMastodonRequest(
             endpoint = "api/v1/accounts/$accountId/unblock",
             method = MastodonClient.Method.POST
@@ -119,7 +119,7 @@ class Accounts(private val client: MastodonClient) {
     }
 
     //  POST /api/v1/accounts/:id/mute
-    fun postMute(accountId: String): MastodonRequest<Relationship> {
+    fun muteAccount(accountId: String): MastodonRequest<Relationship> {
         return client.getMastodonRequest(
             endpoint = "api/v1/accounts/$accountId/mute",
             method = MastodonClient.Method.POST
@@ -127,7 +127,7 @@ class Accounts(private val client: MastodonClient) {
     }
 
     //  POST /api/v1/accounts/:id/unmute
-    fun postUnmute(accountId: String): MastodonRequest<Relationship> {
+    fun unmuteAccount(accountId: String): MastodonRequest<Relationship> {
         return client.getMastodonRequest(
             endpoint = "api/v1/accounts/$accountId/unmute",
             method = MastodonClient.Method.POST
@@ -149,7 +149,7 @@ class Accounts(private val client: MastodonClient) {
      * limit: Maximum number of matching accounts to return (default: 40)
      */
     @JvmOverloads
-    fun getAccountSearch(query: String, limit: Int = 40): MastodonRequest<List<Account>> {
+    fun searchAccounts(query: String, limit: Int = 40): MastodonRequest<List<Account>> {
         return client.getMastodonRequestForList(
             endpoint = "api/v1/accounts/search",
             method = MastodonClient.Method.GET,

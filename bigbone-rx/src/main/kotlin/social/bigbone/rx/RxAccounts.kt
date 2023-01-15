@@ -24,10 +24,10 @@ class RxAccounts(client: MastodonClient) {
         }
     }
 
-    fun getVerifyCredentials(): Single<Account> {
+    fun verifyCredentials(): Single<Account> {
         return Single.create {
             try {
-                val credential = accounts.getVerifyCredentials().execute()
+                val credential = accounts.verifyCredentials().execute()
                 it.onSuccess(credential)
             } catch (throwable: Throwable) {
                 it.onErrorIfNotDisposed(throwable)
@@ -35,10 +35,10 @@ class RxAccounts(client: MastodonClient) {
         }
     }
 
-    fun updateCredential(displayName: String?, note: String?, avatar: String?, header: String?): Single<Account> {
+    fun updateCredentials(displayName: String?, note: String?, avatar: String?, header: String?): Single<Account> {
         return Single.create {
             try {
-                val credential = accounts.updateCredential(displayName, note, avatar, header).execute()
+                val credential = accounts.updateCredentials(displayName, note, avatar, header).execute()
                 it.onSuccess(credential)
             } catch (throwable: Throwable) {
                 it.onErrorIfNotDisposed(throwable)
@@ -79,10 +79,10 @@ class RxAccounts(client: MastodonClient) {
         }
     }
 
-    fun postFollow(accountId: String): Single<Relationship> {
+    fun followAccount(accountId: String): Single<Relationship> {
         return Single.create {
             try {
-                val relationship = accounts.postFollow(accountId).execute()
+                val relationship = accounts.followAccount(accountId).execute()
                 it.onSuccess(relationship)
             } catch (throwable: Throwable) {
                 it.onErrorIfNotDisposed(throwable)
@@ -90,10 +90,10 @@ class RxAccounts(client: MastodonClient) {
         }
     }
 
-    fun postUnFollow(accountId: String): Single<Relationship> {
+    fun unfollowAccount(accountId: String): Single<Relationship> {
         return Single.create {
             try {
-                val relationship = accounts.postUnFollow(accountId).execute()
+                val relationship = accounts.unfollowAccount(accountId).execute()
                 it.onSuccess(relationship)
             } catch (throwable: Throwable) {
                 it.onErrorIfNotDisposed(throwable)
@@ -101,10 +101,10 @@ class RxAccounts(client: MastodonClient) {
         }
     }
 
-    fun postBlock(accountId: String): Single<Relationship> {
+    fun blockAccount(accountId: String): Single<Relationship> {
         return Single.create {
             try {
-                val relationship = accounts.postBlock(accountId).execute()
+                val relationship = accounts.blockAccount(accountId).execute()
                 it.onSuccess(relationship)
             } catch (throwable: Throwable) {
                 it.onErrorIfNotDisposed(throwable)
@@ -112,10 +112,10 @@ class RxAccounts(client: MastodonClient) {
         }
     }
 
-    fun postUnblock(accountId: String): Single<Relationship> {
+    fun unblockAccount(accountId: String): Single<Relationship> {
         return Single.create {
             try {
-                val relationship = accounts.postUnblock(accountId).execute()
+                val relationship = accounts.unblockAccount(accountId).execute()
                 it.onSuccess(relationship)
             } catch (throwable: Throwable) {
                 it.onErrorIfNotDisposed(throwable)
@@ -123,10 +123,10 @@ class RxAccounts(client: MastodonClient) {
         }
     }
 
-    fun postMute(accountId: String): Single<Relationship> {
+    fun muteAccount(accountId: String): Single<Relationship> {
         return Single.create {
             try {
-                val relationship = accounts.postMute(accountId).execute()
+                val relationship = accounts.muteAccount(accountId).execute()
                 it.onSuccess(relationship)
             } catch (throwable: Throwable) {
                 it.onErrorIfNotDisposed(throwable)
@@ -134,10 +134,10 @@ class RxAccounts(client: MastodonClient) {
         }
     }
 
-    fun postUnmute(accountId: String): Single<Relationship> {
+    fun unmuteAccount(accountId: String): Single<Relationship> {
         return Single.create {
             try {
-                val relationship = accounts.postUnmute(accountId).execute()
+                val relationship = accounts.unmuteAccount(accountId).execute()
                 it.onSuccess(relationship)
             } catch (throwable: Throwable) {
                 it.onErrorIfNotDisposed(throwable)
@@ -156,10 +156,10 @@ class RxAccounts(client: MastodonClient) {
         }
     }
 
-    fun getAccountSearch(query: String, limit: Int = 40): Single<List<Account>> {
+    fun searchAccounts(query: String, limit: Int = 40): Single<List<Account>> {
         return Single.create {
             try {
-                val accounts = accounts.getAccountSearch(query, limit).execute()
+                val accounts = accounts.searchAccounts(query, limit).execute()
                 it.onSuccess(accounts)
             } catch (throwable: Throwable) {
                 it.onErrorIfNotDisposed(throwable)

@@ -21,10 +21,10 @@ class RxReports(client: MastodonClient) {
         }
     }
 
-    fun postReport(accountId: String, statusId: String, comment: String): Single<Report> {
+    fun fileReport(accountId: String, statusId: String, comment: String): Single<Report> {
         return Single.create {
             try {
-                val report = reports.postReport(accountId, statusId, comment)
+                val report = reports.fileReport(accountId, statusId, comment)
                 it.onSuccess(report.execute())
             } catch (e: Throwable) {
                 it.onError(e)

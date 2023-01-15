@@ -99,10 +99,10 @@ class RxStatuses(client: MastodonClient) {
         }
     }
 
-    fun postReblog(statusId: String): Single<Status> {
+    fun reblogStatus(statusId: String): Single<Status> {
         return Single.create {
             try {
-                val status = statuses.postReblog(statusId)
+                val status = statuses.reblogStatus(statusId)
                 it.onSuccess(status.execute())
             } catch (e: Throwable) {
                 it.onError(e)
@@ -110,10 +110,10 @@ class RxStatuses(client: MastodonClient) {
         }
     }
 
-    fun postUnreblog(statusId: String): Single<Status> {
+    fun unreblogStatus(statusId: String): Single<Status> {
         return Single.create {
             try {
-                val status = statuses.postUnreblog(statusId)
+                val status = statuses.unreblogStatus(statusId)
                 it.onSuccess(status.execute())
             } catch (e: Throwable) {
                 it.onError(e)
@@ -121,10 +121,10 @@ class RxStatuses(client: MastodonClient) {
         }
     }
 
-    fun postFavourite(statusId: String): Single<Status> {
+    fun favouriteStatus(statusId: String): Single<Status> {
         return Single.create {
             try {
-                val status = statuses.postFavourite(statusId)
+                val status = statuses.favouriteStatus(statusId)
                 it.onSuccess(status.execute())
             } catch (e: Throwable) {
                 it.onError(e)
@@ -132,10 +132,10 @@ class RxStatuses(client: MastodonClient) {
         }
     }
 
-    fun postUnfavourite(statusId: String): Single<Status> {
+    fun unfavouriteStatus(statusId: String): Single<Status> {
         return Single.create {
             try {
-                val status = statuses.postUnfavourite(statusId)
+                val status = statuses.unfavouriteStatus(statusId)
                 it.onSuccess(status.execute())
             } catch (e: Throwable) {
                 it.onError(e)
