@@ -8,7 +8,6 @@ dependencies {
     implementation libs.kotlin.jdk8
 
     testImplementation libs.junit.jupiter
-    testImplementation libs.okio
     testImplementation libs.kluent
     testImplementation libs.mockk
     testImplementation libs.mockk.dsl
