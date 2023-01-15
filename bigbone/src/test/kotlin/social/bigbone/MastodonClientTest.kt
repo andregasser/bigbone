@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import social.bigbone.api.exception.BigboneRequestException
 
+@SuppressWarnings("FunctionMaxLength")
 class MastodonClientTest {
 
     private val invalidResponseBody = "{ \"foo\": \"bar\" }"

@@ -302,8 +302,8 @@ private constructor(
         }
 
         internal fun v2InstanceRequest(): Response {
-           val client = OkHttpClient.Builder().build()
-           return client.newCall(Request.Builder().url(fullUrl(instanceName, "api/v2/instance")).get().build()).execute()
+            val client = OkHttpClient.Builder().build()
+            return client.newCall(Request.Builder().url(fullUrl(instanceName, "api/v2/instance")).get().build()).execute()
         }
 
         internal fun v1InstanceRequest(): Response {
