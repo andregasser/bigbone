@@ -19,11 +19,11 @@ import java.util.concurrent.TimeUnit
 open class MastodonClient
 private constructor(
     private val instanceName: String,
-    private val instanceVersion: String,
     private val client: OkHttpClient,
     private val gson: Gson
 ) {
     private var debug = false
+    private var instanceVersion: String? = null
 
     enum class Method {
         DELETE,
@@ -289,26 +289,36 @@ private constructor(
         }
 
         private fun getInstanceVersion(): String {
+            try {
+                return listOf(v2InstanceRequest(), v1InstanceRequest()).stream()
+                    .filter { response -> response.isSuccessful && response.body != null }
+                    .map { response -> gson.fromJson(response.body.toString(), Instance::class.java) }
+                    .map { json -> json.version }
+                    .findFirst()
+                    .get()
+            } catch (e: Exception) {
+                throw BigboneRequestException("Unable to fetch instance version", e)
+            }
+        }
+
+        internal fun v2InstanceRequest(): Response {
+           val client = OkHttpClient.Builder().build()
+           return client.newCall(Request.Builder().url(fullUrl(instanceName, "api/v2/instance")).get().build()).execute()
+        }
+
+        internal fun v1InstanceRequest(): Response {
             val client = OkHttpClient.Builder().build()
-            val v2InstanceRequest = client.newCall(Request.Builder().url(fullUrl(instanceName, "api/v2/instance")).get().build())
-            val v1InstanceRequest = client.newCall(Request.Builder().url(fullUrl(instanceName, "api/v1/instance")).get().build())
-            return listOf(v2InstanceRequest, v1InstanceRequest).stream()
-                .map { x -> x.execute() }
-                .filter { response -> response.isSuccessful }
-                .map { response -> gson.fromJson(response.body.toString(), Instance::class.java) }
-                .map { json -> json.version }
-                .findFirst()
-                .orElseThrow { BigboneRequestException("Unable to fetch instance version") }
+            return client.newCall(Request.Builder().url(fullUrl(instanceName, "api/v1/instance")).get().build()).execute()
         }
 
         fun build(): MastodonClient {
             return MastodonClient(
                 instanceName,
-                getInstanceVersion(),
                 okHttpClientBuilder.addNetworkInterceptor(AuthorizationInterceptor(accessToken)).build(),
                 gson
             ).also {
                 it.debug = debug
+                it.instanceVersion = getInstanceVersion()
             }
         }
     }

@@ -16,4 +16,8 @@ class BigboneRequestException : Exception {
     constructor(message: String) : super(message) {
         this.response = null
     }
+
+    constructor(message: String, e: Exception) : super(message, e) {
+        this.response = null
+    }
 }
