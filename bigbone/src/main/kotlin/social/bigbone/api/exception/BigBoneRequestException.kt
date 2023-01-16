@@ -13,5 +13,11 @@ class BigBoneRequestException : Exception {
         this.response = null
     }
 
-    fun isErrorResponse() = response != null
+    constructor(message: String) : super(message) {
+        this.response = null
+    }
+
+    constructor(message: String, e: Exception) : super(message, e) {
+        this.response = null
+    }
 }

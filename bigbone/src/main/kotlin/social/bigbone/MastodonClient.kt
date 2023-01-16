@@ -10,6 +10,7 @@ import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import social.bigbone.api.Pageable
+import social.bigbone.api.entity.Instance
 import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.extension.emptyRequestBody
 import java.io.IOException
@@ -22,6 +23,7 @@ private constructor(
     private val gson: Gson
 ) {
     private var debug = false
+    private var instanceVersion: String? = null
 
     enum class Method {
         DELETE,
@@ -34,6 +36,8 @@ private constructor(
     internal fun getSerializer() = gson
 
     open fun getInstanceName() = instanceName
+
+    open fun getInstanceVersion() = instanceVersion
 
     /**
      * Returns a MastodonRequest for the defined action, allowing to retrieve returned data.
@@ -284,6 +288,29 @@ private constructor(
             this.debug = true
         }
 
+        private fun getInstanceVersion(): String {
+            try {
+                return listOf(v2InstanceRequest(), v1InstanceRequest()).stream()
+                    .filter { response -> response.isSuccessful && response.body != null }
+                    .map { response -> gson.fromJson(response.body.toString(), Instance::class.java) }
+                    .map { json -> json.version }
+                    .findFirst()
+                    .get()
+            } catch (e: Exception) {
+                throw BigBoneRequestException("Unable to fetch instance version", e)
+            }
+        }
+
+        internal fun v2InstanceRequest(): Response {
+            val client = OkHttpClient.Builder().build()
+            return client.newCall(Request.Builder().url(fullUrl(instanceName, "api/v2/instance")).get().build()).execute()
+        }
+
+        internal fun v1InstanceRequest(): Response {
+            val client = OkHttpClient.Builder().build()
+            return client.newCall(Request.Builder().url(fullUrl(instanceName, "api/v1/instance")).get().build()).execute()
+        }
+
         fun build(): MastodonClient {
             return MastodonClient(
                 instanceName,
@@ -291,6 +318,7 @@ private constructor(
                 gson
             ).also {
                 it.debug = debug
+                it.instanceVersion = getInstanceVersion()
             }
         }
     }
