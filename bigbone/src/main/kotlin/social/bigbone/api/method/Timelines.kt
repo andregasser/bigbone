@@ -5,7 +5,7 @@ import social.bigbone.MastodonRequest
 import social.bigbone.api.Pageable
 import social.bigbone.api.Range
 import social.bigbone.api.entity.Status
-import social.bigbone.api.exception.BigboneRequestException
+import social.bigbone.api.exception.BigBoneRequestException
 
 class Timelines(private val client: MastodonClient) {
     /**
@@ -23,7 +23,7 @@ class Timelines(private val client: MastodonClient) {
      * @see <a href="https://docs.joinmastodon.org/methods/timelines/#home">Mastodon API documentation: methods/timelines/#home</a>
      */
     @JvmOverloads
-    @Throws(BigboneRequestException::class)
+    @Throws(BigBoneRequestException::class)
     fun getHomeTimeline(range: Range = Range()): MastodonRequest<Pageable<Status>> {
         return client.getPageableMastodonRequest(
             endpoint = "api/v1/timelines/home",
@@ -38,7 +38,7 @@ class Timelines(private val client: MastodonClient) {
      * @param range restrict result to a specific range
      * @see <a href="https://docs.joinmastodon.org/methods/timelines/#list">Mastodon API documentation: methods/timelines/#list</a>
      */
-    @Throws(BigboneRequestException::class)
+    @Throws(BigBoneRequestException::class)
     fun getListTimeline(listID: String, range: Range = Range()): MastodonRequest<Pageable<Status>> {
         return client.getPageableMastodonRequest(
             endpoint = "api/v1/timelines/list/$listID",

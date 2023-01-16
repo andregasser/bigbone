@@ -4,7 +4,7 @@ import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldNotBe
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import social.bigbone.api.exception.BigboneRequestException
+import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.testtool.MockClient
 
 class NotificationsTest {
@@ -21,7 +21,7 @@ class NotificationsTest {
 
     @Test
     fun getNotificationsWithException() {
-        Assertions.assertThrows(BigboneRequestException::class.java) {
+        Assertions.assertThrows(BigBoneRequestException::class.java) {
             val client = MockClient.ioException()
             val notifications = Notifications(client)
             notifications.getNotifications().execute()
@@ -30,7 +30,7 @@ class NotificationsTest {
 
     @Test
     fun getNotificationWithException() {
-        Assertions.assertThrows(BigboneRequestException::class.java) {
+        Assertions.assertThrows(BigBoneRequestException::class.java) {
             val client = MockClient.ioException()
             val notifications = Notifications(client)
             notifications.getNotification("1").execute()

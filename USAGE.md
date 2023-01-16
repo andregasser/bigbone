@@ -1,4 +1,4 @@
-# First steps with Bigbone
+# First steps with BigBone
 
 Following this guide will allow you to:
 * register your Mastodon application
@@ -22,7 +22,7 @@ Additionally, this guide uses the following values that should be replaced in yo
 // The actual value used instead should be a URL that will be interpreted by your application.
 redirectUris = "urn:ietf:wg:oauth:2.0:oob"
 
-// This is equal to the full range of scopes currently supported by Bigbone.
+// This is equal to the full range of scopes currently supported by BigBone.
 // Instead of this, you should request as little as possible for your application.
 scope = Scope()
 ```
@@ -56,7 +56,7 @@ try {
 	    new Scope(),
 	    "https://example.org/"
 	).execute();
-} catch (BigboneRequestException e) {
+} catch (BigBoneRequestException e) {
 	// error handling
 }
 ```
@@ -173,7 +173,7 @@ public class GetRawJson {
             MastodonClient client = Authenticator.appRegistrationIfNeeded(instanceName, credentialFilePath, false);
             Public publicMethod = new Public(client);
             publicMethod.getLocalPublic().doOnJson(System.out::println).execute();
-        } catch (IOException | BigboneRequestException e) {
+        } catch (IOException | BigBoneRequestException e) {
             e.printStackTrace();
         }
     }
@@ -205,7 +205,7 @@ try {
   val shutdownable = streaming.localPublic(handler)
   Thread.sleep(10000L)
   shutdownable.shutdown()
-} catch(e: BigboneRequestException) {
+} catch(e: BigBoneRequestException) {
   e.printStackTrace()
 }
 ```

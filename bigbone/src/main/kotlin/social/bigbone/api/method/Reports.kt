@@ -6,12 +6,12 @@ import social.bigbone.Parameter
 import social.bigbone.api.Pageable
 import social.bigbone.api.Range
 import social.bigbone.api.entity.Report
-import social.bigbone.api.exception.BigboneRequestException
+import social.bigbone.api.exception.BigBoneRequestException
 
 class Reports(private val client: MastodonClient) {
     // GET /api/v1/reports
     @JvmOverloads
-    @Throws(BigboneRequestException::class)
+    @Throws(BigBoneRequestException::class)
     fun getReports(range: Range = Range()): MastodonRequest<Pageable<Report>> {
         return client.getPageableMastodonRequest(
             endpoint = "api/v1/reports",
@@ -26,7 +26,7 @@ class Reports(private val client: MastodonClient) {
      * status_ids: The IDs of statuses to report (can be an array)
      * comment: A comment to associate with the report.
      */
-    @Throws(BigboneRequestException::class)
+    @Throws(BigBoneRequestException::class)
     fun fileReport(accountId: String, statusId: String, comment: String): MastodonRequest<Report> {
         return client.getMastodonRequest(
             endpoint = "api/v1/reports",

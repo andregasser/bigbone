@@ -5,7 +5,7 @@ import social.bigbone.MastodonRequest
 import social.bigbone.api.Pageable
 import social.bigbone.api.Range
 import social.bigbone.api.entity.Notification
-import social.bigbone.api.exception.BigboneRequestException
+import social.bigbone.api.exception.BigBoneRequestException
 
 class Notifications(private val client: MastodonClient) {
     // GET /api/v1/notifications
@@ -31,7 +31,7 @@ class Notifications(private val client: MastodonClient) {
     }
 
     //  POST /api/v1/notifications/clear
-    @Throws(BigboneRequestException::class)
+    @Throws(BigBoneRequestException::class)
     fun clearNotifications() {
         client.performAction(
             endpoint = "api/v1/notifications/clear",

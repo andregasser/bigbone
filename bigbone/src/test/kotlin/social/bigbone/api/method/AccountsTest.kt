@@ -3,7 +3,7 @@ package social.bigbone.api.method
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import social.bigbone.api.exception.BigboneRequestException
+import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.testtool.MockClient
 
 class AccountsTest {
@@ -19,7 +19,7 @@ class AccountsTest {
 
     @Test
     fun getAccountWithException() {
-        Assertions.assertThrows(BigboneRequestException::class.java) {
+        Assertions.assertThrows(BigBoneRequestException::class.java) {
             val client = MockClient.ioException()
             val accounts = Accounts(client)
             accounts.getAccount("1").execute()
@@ -38,7 +38,7 @@ class AccountsTest {
 
     @Test
     fun verifyCredentialsWithException() {
-        Assertions.assertThrows(BigboneRequestException::class.java) {
+        Assertions.assertThrows(BigBoneRequestException::class.java) {
             val client = MockClient.ioException()
             val accounts = Accounts(client)
             accounts.verifyCredentials().execute()
@@ -59,7 +59,7 @@ class AccountsTest {
 
     @Test
     fun updateCredentialsWithException() {
-        Assertions.assertThrows(BigboneRequestException::class.java) {
+        Assertions.assertThrows(BigBoneRequestException::class.java) {
             val client = MockClient.ioException()
             val accounts = Accounts(client)
             accounts.updateCredentials("test", "test", "test", "test").execute()
@@ -79,7 +79,7 @@ class AccountsTest {
 
     @Test
     fun getFollowersWithException() {
-        Assertions.assertThrows(BigboneRequestException::class.java) {
+        Assertions.assertThrows(BigBoneRequestException::class.java) {
             val client = MockClient.ioException()
             val accounts = Accounts(client)
             accounts.getFollowers("1").execute()
@@ -99,7 +99,7 @@ class AccountsTest {
 
     @Test
     fun getFollowingWithException() {
-        Assertions.assertThrows(BigboneRequestException::class.java) {
+        Assertions.assertThrows(BigBoneRequestException::class.java) {
             val client = MockClient.ioException()
             val accounts = Accounts(client)
             accounts.getFollowing("1").execute()
@@ -117,7 +117,7 @@ class AccountsTest {
 
     @Test
     fun getStatusesWithException() {
-        Assertions.assertThrows(BigboneRequestException::class.java) {
+        Assertions.assertThrows(BigBoneRequestException::class.java) {
             val client = MockClient.ioException()
             val accounts = Accounts(client)
             accounts.getStatuses("1", false).execute()
@@ -139,7 +139,7 @@ class AccountsTest {
 
     @Test
     fun followAccountWithException() {
-        Assertions.assertThrows(BigboneRequestException::class.java) {
+        Assertions.assertThrows(BigBoneRequestException::class.java) {
             val client = MockClient.ioException()
             val accounts = Accounts(client)
             accounts.followAccount("1").execute()
@@ -161,7 +161,7 @@ class AccountsTest {
 
     @Test
     fun unfollowAccountWithException() {
-        Assertions.assertThrows(BigboneRequestException::class.java) {
+        Assertions.assertThrows(BigBoneRequestException::class.java) {
             val client = MockClient.ioException()
             val accounts = Accounts(client)
             accounts.unfollowAccount("1").execute()
@@ -183,7 +183,7 @@ class AccountsTest {
 
     @Test
     fun blockAccountWithException() {
-        Assertions.assertThrows(BigboneRequestException::class.java) {
+        Assertions.assertThrows(BigBoneRequestException::class.java) {
             val client = MockClient.ioException()
             val accounts = Accounts(client)
             accounts.blockAccount("1").execute()
@@ -205,7 +205,7 @@ class AccountsTest {
 
     @Test
     fun unblockAccountWithException() {
-        Assertions.assertThrows(BigboneRequestException::class.java) {
+        Assertions.assertThrows(BigBoneRequestException::class.java) {
             val client = MockClient.ioException()
             val accounts = Accounts(client)
             accounts.unblockAccount("1").execute()
@@ -227,7 +227,7 @@ class AccountsTest {
 
     @Test
     fun muteAccountWithException() {
-        Assertions.assertThrows(BigboneRequestException::class.java) {
+        Assertions.assertThrows(BigBoneRequestException::class.java) {
             val client = MockClient.ioException()
             val accounts = Accounts(client)
             accounts.muteAccount("1").execute()
@@ -249,7 +249,7 @@ class AccountsTest {
 
     @Test
     fun unmuteAccountWithException() {
-        Assertions.assertThrows(BigboneRequestException::class.java) {
+        Assertions.assertThrows(BigBoneRequestException::class.java) {
             val client = MockClient.ioException()
             val accounts = Accounts(client)
             accounts.unmuteAccount("1").execute()
@@ -272,7 +272,7 @@ class AccountsTest {
 
     @Test
     fun getRelationshipsWithException() {
-        Assertions.assertThrows(BigboneRequestException::class.java) {
+        Assertions.assertThrows(BigBoneRequestException::class.java) {
             val client = MockClient.ioException()
             val accounts = Accounts(client)
             accounts.getRelationships(listOf("1")).execute()
@@ -292,7 +292,7 @@ class AccountsTest {
 
     @Test
     fun searchAccountsWithException() {
-        Assertions.assertThrows(BigboneRequestException::class.java) {
+        Assertions.assertThrows(BigBoneRequestException::class.java) {
             val client = MockClient.ioException()
             val accounts = Accounts(client)
             accounts.searchAccounts("test").execute()

@@ -7,9 +7,8 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.Protocol
 import okhttp3.Request
 import okhttp3.Response
-import okhttp3.ResponseBody.Companion.asResponseBody
+import okhttp3.ResponseBody
 import okhttp3.ResponseBody.Companion.toResponseBody
-import okio.BufferedSource
 import social.bigbone.MastodonClient
 import java.net.SocketTimeoutException
 
@@ -52,20 +51,14 @@ object MockClient {
 
     fun ioException(): MastodonClient {
         val clientMock: MastodonClient = mockk()
-        val source: BufferedSource = mockk()
-        every { source.readString(any()) } throws SocketTimeoutException()
+        val responseBodyMock: ResponseBody = mockk()
+        every { responseBodyMock.toString() } throws SocketTimeoutException()
         val response: Response = Response.Builder()
             .code(200)
             .message("OK")
             .request(Request.Builder().url("https://test.com/").build())
             .protocol(Protocol.HTTP_1_1)
-            .body(
-                source
-                    .asResponseBody(
-                        "application/json; charset=utf-8".toMediaTypeOrNull(),
-                        1024
-                    )
-            )
+            .body(responseBodyMock)
             .build()
 
         every { clientMock.get(ofType<String>(), isNull(inverse = false)) } returns response

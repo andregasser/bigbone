@@ -2,12 +2,12 @@ package social.bigbone.sample;
 
 import social.bigbone.MastodonClient;
 import social.bigbone.api.entity.Results;
-import social.bigbone.api.exception.BigboneRequestException;
+import social.bigbone.api.exception.BigBoneRequestException;
 import social.bigbone.api.method.Public;
 
 @SuppressWarnings("PMD.SystemPrintln")
 public class PerformSimpleSearch {
-    public static void main(final String[] args) throws BigboneRequestException {
+    public static void main(final String[] args) throws BigBoneRequestException {
         final String instance = args[0];
         final String accessToken = args[1];
         final String searchTerm = args[2];
