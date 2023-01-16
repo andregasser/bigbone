@@ -3,7 +3,7 @@ package social.bigbone.sample;
 import social.bigbone.MastodonClient;
 import social.bigbone.api.Scope;
 import social.bigbone.api.entity.auth.AppRegistration;
-import social.bigbone.api.exception.BigboneRequestException;
+import social.bigbone.api.exception.BigBoneRequestException;
 import social.bigbone.api.method.Apps;
 
 @SuppressWarnings({"PMD.SystemPrintln", "PMD.AvoidPrintStackTrace"})
@@ -21,7 +21,7 @@ public class GetAppRegistration {
             System.out.println("instance=" + registration.getInstanceName());
             System.out.println("client_id=" + registration.getClientId());
             System.out.println("client_secret=" + registration.getClientSecret());
-        } catch (BigboneRequestException e) {
+        } catch (BigBoneRequestException e) {
             e.printStackTrace();
         }
     }
