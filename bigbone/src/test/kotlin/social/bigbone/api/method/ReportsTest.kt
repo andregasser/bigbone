@@ -3,7 +3,7 @@ package social.bigbone.api.method
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import social.bigbone.api.exception.BigboneRequestException
+import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.testtool.MockClient
 
 class ReportsTest {
@@ -19,7 +19,7 @@ class ReportsTest {
 
     @Test
     fun getReportsWithException() {
-        Assertions.assertThrows(BigboneRequestException::class.java) {
+        Assertions.assertThrows(BigBoneRequestException::class.java) {
             val client = MockClient.ioException()
             val reports = Reports(client)
             reports.getReports().execute()
@@ -27,11 +27,11 @@ class ReportsTest {
     }
 
     @Test
-    fun postReportWithException() {
-        Assertions.assertThrows(BigboneRequestException::class.java) {
+    fun fileReportWithException() {
+        Assertions.assertThrows(BigBoneRequestException::class.java) {
             val client = MockClient.ioException()
             val reports = Reports(client)
-            reports.postReport("10", "20", "test").execute()
+            reports.fileReport("10", "20", "test").execute()
         }
     }
 }

@@ -6,12 +6,12 @@ import social.bigbone.api.Handler;
 import social.bigbone.api.Shutdownable;
 import social.bigbone.api.entity.Notification;
 import social.bigbone.api.entity.Status;
-import social.bigbone.api.exception.BigboneRequestException;
+import social.bigbone.api.exception.BigBoneRequestException;
 import social.bigbone.api.method.Streaming;
 
 @SuppressWarnings("PMD.SystemPrintln")
 public class StreamFederatedPublicTimeline {
-    public static void main(final String[] args) throws BigboneRequestException, InterruptedException {
+    public static void main(final String[] args) throws BigBoneRequestException, InterruptedException {
         final String instance = args[0];
 
         // Instantiate client

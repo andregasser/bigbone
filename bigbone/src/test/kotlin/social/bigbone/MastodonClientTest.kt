@@ -10,7 +10,7 @@ import okhttp3.ResponseBody.Companion.toResponseBody
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import social.bigbone.api.exception.BigboneRequestException
+import social.bigbone.api.exception.BigBoneRequestException
 
 @SuppressWarnings("FunctionMaxLength")
 class MastodonClientTest {
@@ -75,7 +75,7 @@ class MastodonClientTest {
         every { clientBuilder.v1InstanceRequest() } answers { responseMock }
 
         // when / then
-        Assertions.assertThrows(BigboneRequestException::class.java) {
+        Assertions.assertThrows(BigBoneRequestException::class.java) {
             clientBuilder.build()
         }
     }

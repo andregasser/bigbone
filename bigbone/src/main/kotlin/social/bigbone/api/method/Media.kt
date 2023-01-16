@@ -15,7 +15,7 @@ class Media(private val client: MastodonClient) {
      * @param mediaType media type of the file as a string, e.g. "image/png"
      * @see <a href="https://docs.joinmastodon.org/methods/media/#v1">Mastodon API documentation: methods/media/#v1</a>
      */
-    fun postMedia(file: File, mediaType: String): MastodonRequest<Attachment> {
+    fun uploadMedia(file: File, mediaType: String): MastodonRequest<Attachment> {
         val body = file.asRequestBody(mediaType.toMediaTypeOrNull())
         val part = MultipartBody.Part.createFormData("file", file.name, body)
         val requestBody = MultipartBody.Builder()

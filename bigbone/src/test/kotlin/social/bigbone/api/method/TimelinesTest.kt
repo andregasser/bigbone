@@ -3,7 +3,7 @@ package social.bigbone.api.method
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import social.bigbone.api.exception.BigboneRequestException
+import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.testtool.MockClient
 import java.util.concurrent.atomic.AtomicInteger
 
@@ -20,7 +20,7 @@ class TimelinesTest {
 
     @Test
     fun getHomeTimelineWithException() {
-        Assertions.assertThrows(BigboneRequestException::class.java) {
+        Assertions.assertThrows(BigBoneRequestException::class.java) {
             val client = MockClient.ioException()
             val timelines = Timelines(client)
             timelines.getHomeTimeline().execute()
@@ -56,7 +56,7 @@ class TimelinesTest {
 
     @Test
     fun getLocalPublicTimelineWithException() {
-        Assertions.assertThrows(BigboneRequestException::class.java) {
+        Assertions.assertThrows(BigBoneRequestException::class.java) {
             val client = MockClient.ioException()
             val timelines = Timelines(client)
             timelines.getPublicTimeline(statusOrigin = Timelines.StatusOrigin.LOCAL).execute()
@@ -73,7 +73,7 @@ class TimelinesTest {
 
     @Test
     fun getLocalTagTimelineWithException() {
-        Assertions.assertThrows(BigboneRequestException::class.java) {
+        Assertions.assertThrows(BigBoneRequestException::class.java) {
             val client = MockClient.ioException()
             val timelines = Timelines(client)
             timelines.getTagTimeline(tag = "mastodon", statusOrigin = Timelines.StatusOrigin.LOCAL).execute()

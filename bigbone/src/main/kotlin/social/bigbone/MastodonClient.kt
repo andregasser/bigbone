@@ -11,7 +11,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import social.bigbone.api.Pageable
 import social.bigbone.api.entity.Instance
-import social.bigbone.api.exception.BigboneRequestException
+import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.extension.emptyRequestBody
 import java.io.IOException
 import java.util.concurrent.TimeUnit
@@ -116,7 +116,7 @@ private constructor(
      * @param endpoint the Mastodon API endpoint to call
      * @param method the HTTP method to use
      */
-    @Throws(BigboneRequestException::class)
+    @Throws(BigBoneRequestException::class)
     internal fun performAction(endpoint: String, method: Method) {
         val response = when (method) {
             Method.DELETE -> delete(endpoint)
@@ -125,7 +125,7 @@ private constructor(
             Method.POST -> post(endpoint)
         }
         if (!response.isSuccessful) {
-            throw BigboneRequestException(response)
+            throw BigBoneRequestException(response)
         }
     }
 
@@ -145,7 +145,7 @@ private constructor(
             )
             return call.execute()
         } catch (e: IOException) {
-            throw BigboneRequestException(e)
+            throw BigBoneRequestException(e)
         }
     }
 
@@ -166,7 +166,7 @@ private constructor(
             )
             return call.execute()
         } catch (e: IOException) {
-            throw BigboneRequestException(e)
+            throw BigBoneRequestException(e)
         }
     }
 
@@ -177,7 +177,7 @@ private constructor(
      */
     open fun patch(path: String, body: Parameter?): Response {
         if (body == null) {
-            throw BigboneRequestException(Exception("body must not be empty"))
+            throw BigBoneRequestException(Exception("body must not be empty"))
         }
 
         try {
@@ -191,7 +191,7 @@ private constructor(
             )
             return call.execute()
         } catch (e: IOException) {
-            throw BigboneRequestException(e)
+            throw BigBoneRequestException(e)
         }
     }
 
@@ -223,9 +223,9 @@ private constructor(
             )
             return call.execute()
         } catch (e: IllegalArgumentException) {
-            throw BigboneRequestException(e)
+            throw BigBoneRequestException(e)
         } catch (e: IOException) {
-            throw BigboneRequestException(e)
+            throw BigBoneRequestException(e)
         }
     }
 
@@ -297,7 +297,7 @@ private constructor(
                     .findFirst()
                     .get()
             } catch (e: Exception) {
-                throw BigboneRequestException("Unable to fetch instance version", e)
+                throw BigBoneRequestException("Unable to fetch instance version", e)
             }
         }
 

@@ -23,10 +23,10 @@ class RxFollowRequests(client: MastodonClient) {
         }
     }
 
-    fun postAuthorize(accountId: String): Completable {
+    fun authorizeFollowRequest(accountId: String): Completable {
         return Completable.create {
             try {
-                followRequests.postAuthorize(accountId)
+                followRequests.authorizeFollowRequest(accountId)
                 it.onComplete()
             } catch (throwable: Throwable) {
                 it.onErrorIfNotDisposed(throwable)
@@ -34,10 +34,10 @@ class RxFollowRequests(client: MastodonClient) {
         }
     }
 
-    fun postReject(accountId: String): Completable {
+    fun rejectFollowRequest(accountId: String): Completable {
         return Completable.create {
             try {
-                followRequests.postReject(accountId)
+                followRequests.rejectFollowRequest(accountId)
                 it.onComplete()
             } catch (throwable: Throwable) {
                 it.onErrorIfNotDisposed(throwable)

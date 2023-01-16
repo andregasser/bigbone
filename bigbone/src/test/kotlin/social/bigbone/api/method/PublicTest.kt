@@ -4,7 +4,7 @@ import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import social.bigbone.api.exception.BigboneRequestException
+import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.testtool.MockClient
 import social.bigbone.testtool.TestUtil
 
@@ -53,7 +53,7 @@ class PublicTest {
 
     @Test
     fun getInstanceWithException() {
-        Assertions.assertThrows(BigboneRequestException::class.java) {
+        Assertions.assertThrows(BigBoneRequestException::class.java) {
             val client = MockClient.ioException()
             val publicMethod = Public(client)
             publicMethod.getInstance().execute()
@@ -61,22 +61,22 @@ class PublicTest {
     }
 
     @Test
-    fun getSearch() {
+    fun search() {
         val client = MockClient.mock("search.json")
 
         val publicMethod = Public(client)
-        val result = publicMethod.getSearch("test").execute()
+        val result = publicMethod.search("test").execute()
         result.accounts.size shouldBeEqualTo 6
         result.statuses.size shouldBeEqualTo 2
         result.hashtags.size shouldBeEqualTo 1
     }
 
     @Test
-    fun getSearchWithException() {
-        Assertions.assertThrows(BigboneRequestException::class.java) {
+    fun searchWithException() {
+        Assertions.assertThrows(BigBoneRequestException::class.java) {
             val client = MockClient.ioException()
             val publicMethod = Public(client)
-            publicMethod.getSearch("test").execute()
+            publicMethod.search("test").execute()
         }
     }
 }

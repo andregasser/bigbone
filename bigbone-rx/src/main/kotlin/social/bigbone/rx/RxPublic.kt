@@ -21,10 +21,10 @@ class RxPublic(client: MastodonClient) {
         }
     }
 
-    fun getSearch(query: String, resolve: Boolean = true): Single<Results> {
+    fun search(query: String, resolve: Boolean = true): Single<Results> {
         return Single.create {
             try {
-                val results = publicMethod.getSearch(query, resolve)
+                val results = publicMethod.search(query, resolve)
                 it.onSuccess(results.execute())
             } catch (e: Throwable) {
                 it.onError(e)
