@@ -19,7 +19,7 @@ public class PerformSimpleSearch {
 
         // Perform search and print results
         final Public publicMethod = new Public(client);
-        final Results searchResult = publicMethod.getSearch(searchTerm).execute();
+        final Results searchResult = publicMethod.search(searchTerm).execute();
         searchResult.getAccounts().forEach(account -> System.out.println(account.getDisplayName()));
         searchResult.getStatuses().forEach(status -> System.out.println(status.getContent()));
         searchResult.getHashtags().forEach(hashtag -> System.out.println(hashtag.getName()));

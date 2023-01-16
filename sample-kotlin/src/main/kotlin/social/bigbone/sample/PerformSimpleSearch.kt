@@ -17,7 +17,7 @@ object PerformSimpleSearch {
 
         // Perform search and print results
         val public = Public(client)
-        val searchResult = public.getSearch(searchTerm).execute()
+        val searchResult = public.search(searchTerm).execute()
         searchResult.accounts.forEach {
             println(it.displayName)
         }

@@ -61,22 +61,22 @@ class PublicTest {
     }
 
     @Test
-    fun getSearch() {
+    fun search() {
         val client = MockClient.mock("search.json")
 
         val publicMethod = Public(client)
-        val result = publicMethod.getSearch("test").execute()
+        val result = publicMethod.search("test").execute()
         result.accounts.size shouldBeEqualTo 6
         result.statuses.size shouldBeEqualTo 2
         result.hashtags.size shouldBeEqualTo 1
     }
 
     @Test
-    fun getSearchWithException() {
+    fun searchWithException() {
         Assertions.assertThrows(BigBoneRequestException::class.java) {
             val client = MockClient.ioException()
             val publicMethod = Public(client)
-            publicMethod.getSearch("test").execute()
+            publicMethod.search("test").execute()
         }
     }
 }

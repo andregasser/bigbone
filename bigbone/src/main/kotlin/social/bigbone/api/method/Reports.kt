@@ -27,7 +27,7 @@ class Reports(private val client: MastodonClient) {
      * comment: A comment to associate with the report.
      */
     @Throws(BigBoneRequestException::class)
-    fun postReport(accountId: String, statusId: String, comment: String): MastodonRequest<Report> {
+    fun fileReport(accountId: String, statusId: String, comment: String): MastodonRequest<Report> {
         return client.getMastodonRequest(
             endpoint = "api/v1/reports",
             method = MastodonClient.Method.POST,

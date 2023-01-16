@@ -20,7 +20,7 @@ class FollowRequests(private val client: MastodonClient) {
 
     //  POST /api/v1/follow_requests/:id/authorize
     @Throws(BigBoneRequestException::class)
-    fun postAuthorize(accountId: String) {
+    fun authorizeFollowRequest(accountId: String) {
         client.performAction(
             endpoint = "api/v1/follow_requests/$accountId/authorize",
             method = MastodonClient.Method.POST
@@ -29,7 +29,7 @@ class FollowRequests(private val client: MastodonClient) {
 
     //  POST /api/v1/follow_requests/:id/reject
     @Throws(BigBoneRequestException::class)
-    fun postReject(accountId: String) {
+    fun rejectFollowRequest(accountId: String) {
         client.performAction(
             endpoint = "api/v1/follow_requests/$accountId/reject",
             method = MastodonClient.Method.POST

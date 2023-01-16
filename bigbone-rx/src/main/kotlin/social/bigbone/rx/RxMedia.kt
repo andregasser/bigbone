@@ -9,10 +9,10 @@ import java.io.File
 class RxMedia(client: MastodonClient) {
     val media = Media(client)
 
-    fun postMedia(file: File, mediaType: String): Single<Attachment> {
+    fun uploadMedia(file: File, mediaType: String): Single<Attachment> {
         return Single.create {
             try {
-                val result = media.postMedia(file, mediaType)
+                val result = media.uploadMedia(file, mediaType)
                 it.onSuccess(result.execute())
             } catch (e: Throwable) {
                 it.onError(e)
