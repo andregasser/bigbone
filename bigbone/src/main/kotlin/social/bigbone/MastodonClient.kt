@@ -16,7 +16,7 @@ import social.bigbone.extension.emptyRequestBody
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 
-open class MastodonClient
+class MastodonClient
 private constructor(
     private val instanceName: String,
     private val client: OkHttpClient,
@@ -35,9 +35,9 @@ private constructor(
     @PublishedApi
     internal fun getSerializer() = gson
 
-    open fun getInstanceName() = instanceName
+    fun getInstanceName() = instanceName
 
-    open fun getInstanceVersion() = instanceVersion
+    fun getInstanceVersion() = instanceVersion
 
     /**
      * Returns a MastodonRequest for the defined action, allowing to retrieve returned data.
@@ -133,7 +133,7 @@ private constructor(
      * Get a response from the Mastodon instance defined for this client using the DELETE method.
      * @param path an absolute path to the API endpoint to call
      */
-    open fun delete(path: String): Response {
+    fun delete(path: String): Response {
         try {
             val url = fullUrl(instanceName, path)
             debugPrintUrl(url)
@@ -154,7 +154,7 @@ private constructor(
      * @param path an absolute path to the API endpoint to call
      * @param query the parameters to use as query string for this request; may be null
      */
-    open fun get(path: String, query: Parameter? = null): Response {
+    fun get(path: String, query: Parameter? = null): Response {
         try {
             val url = fullUrl(instanceName, path, query)
             debugPrintUrl(url)
@@ -175,7 +175,7 @@ private constructor(
      * @param path an absolute path to the API endpoint to call
      * @param body the parameters to use in the request body for this request
      */
-    open fun patch(path: String, body: Parameter?): Response {
+    fun patch(path: String, body: Parameter?): Response {
         if (body == null) {
             throw BigBoneRequestException(Exception("body must not be empty"))
         }
@@ -200,7 +200,7 @@ private constructor(
      * @param path an absolute path to the API endpoint to call
      * @param body the parameters to use in the request body for this request; may be null
      */
-    open fun post(path: String, body: Parameter? = null): Response =
+    fun post(path: String, body: Parameter? = null): Response =
         postRequestBody(path, parameterBody(body))
 
     /**
@@ -211,7 +211,7 @@ private constructor(
      *
      * @see post
      */
-    open fun postRequestBody(path: String, body: RequestBody): Response {
+    fun postRequestBody(path: String, body: RequestBody): Response {
         try {
             val url = fullUrl(instanceName, path)
             debugPrintUrl(url)
