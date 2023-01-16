@@ -4,7 +4,7 @@ import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldNotBe
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import social.bigbone.api.exception.BigboneRequestException
+import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.testtool.MockClient
 import java.io.File
 
@@ -26,7 +26,7 @@ class MediaTest {
 
     @Test
     fun postMediaWithException() {
-        Assertions.assertThrows(BigboneRequestException::class.java) {
+        Assertions.assertThrows(BigBoneRequestException::class.java) {
             val client = MockClient.ioException()
             val media = Media(client)
             val file = File("foo.bar")

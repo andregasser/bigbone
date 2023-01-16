@@ -7,10 +7,10 @@ import social.bigbone.api.Handler
 import social.bigbone.api.Shutdownable
 import social.bigbone.api.entity.Notification
 import social.bigbone.api.entity.Status
-import social.bigbone.api.exception.BigboneRequestException
+import social.bigbone.api.exception.BigBoneRequestException
 
 class Streaming(private val client: MastodonClient) {
-    @Throws(BigboneRequestException::class)
+    @Throws(BigBoneRequestException::class)
     fun federatedPublic(handler: Handler): Shutdownable {
         val response = client.get("api/v1/streaming/public")
         if (response.isSuccessful) {
@@ -50,11 +50,11 @@ class Streaming(private val client: MastodonClient) {
             }
             return Shutdownable(dispatcher)
         } else {
-            throw BigboneRequestException(response)
+            throw BigBoneRequestException(response)
         }
     }
 
-    @Throws(BigboneRequestException::class)
+    @Throws(BigBoneRequestException::class)
     fun localPublic(handler: Handler): Shutdownable {
         val response = client.get("api/v1/streaming/public/local")
         if (response.isSuccessful) {
@@ -94,11 +94,11 @@ class Streaming(private val client: MastodonClient) {
             }
             return Shutdownable(dispatcher)
         } else {
-            throw BigboneRequestException(response)
+            throw BigBoneRequestException(response)
         }
     }
 
-    @Throws(BigboneRequestException::class)
+    @Throws(BigBoneRequestException::class)
     fun federatedHashtag(tag: String, handler: Handler): Shutdownable {
         val response = client.get(
             "api/v1/streaming/hashtag",
@@ -141,11 +141,11 @@ class Streaming(private val client: MastodonClient) {
             }
             return Shutdownable(dispatcher)
         } else {
-            throw BigboneRequestException(response)
+            throw BigBoneRequestException(response)
         }
     }
 
-    @Throws(BigboneRequestException::class)
+    @Throws(BigBoneRequestException::class)
     fun localHashtag(tag: String, handler: Handler): Shutdownable {
         val response = client.get(
             "api/v1/streaming/hashtag/local",
@@ -188,11 +188,11 @@ class Streaming(private val client: MastodonClient) {
             }
             return Shutdownable(dispatcher)
         } else {
-            throw BigboneRequestException(response)
+            throw BigBoneRequestException(response)
         }
     }
 
-    @Throws(BigboneRequestException::class)
+    @Throws(BigBoneRequestException::class)
     fun user(handler: Handler): Shutdownable {
         val response = client.get(
             "api/v1/streaming/user"
@@ -249,11 +249,11 @@ class Streaming(private val client: MastodonClient) {
             }
             return Shutdownable(dispatcher)
         } else {
-            throw BigboneRequestException(response)
+            throw BigBoneRequestException(response)
         }
     }
 
-    @Throws(BigboneRequestException::class)
+    @Throws(BigBoneRequestException::class)
     fun userList(handler: Handler, listID: String): Shutdownable {
         val response = client.get(
             "api/v1/streaming/list",
@@ -313,7 +313,7 @@ class Streaming(private val client: MastodonClient) {
             }
             return Shutdownable(dispatcher)
         } else {
-            throw BigboneRequestException(response)
+            throw BigBoneRequestException(response)
         }
     }
 }

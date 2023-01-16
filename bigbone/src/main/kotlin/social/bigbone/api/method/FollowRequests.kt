@@ -5,7 +5,7 @@ import social.bigbone.MastodonRequest
 import social.bigbone.api.Pageable
 import social.bigbone.api.Range
 import social.bigbone.api.entity.Account
-import social.bigbone.api.exception.BigboneRequestException
+import social.bigbone.api.exception.BigBoneRequestException
 
 class FollowRequests(private val client: MastodonClient) {
     // GET /api/v1/follow_requests
@@ -19,7 +19,7 @@ class FollowRequests(private val client: MastodonClient) {
     }
 
     //  POST /api/v1/follow_requests/:id/authorize
-    @Throws(BigboneRequestException::class)
+    @Throws(BigBoneRequestException::class)
     fun postAuthorize(accountId: String) {
         client.performAction(
             endpoint = "api/v1/follow_requests/$accountId/authorize",
@@ -28,7 +28,7 @@ class FollowRequests(private val client: MastodonClient) {
     }
 
     //  POST /api/v1/follow_requests/:id/reject
-    @Throws(BigboneRequestException::class)
+    @Throws(BigBoneRequestException::class)
     fun postReject(accountId: String) {
         client.performAction(
             endpoint = "api/v1/follow_requests/$accountId/reject",

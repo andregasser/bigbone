@@ -4,14 +4,14 @@ import social.bigbone.MastodonClient;
 import social.bigbone.api.Pageable;
 import social.bigbone.api.Range;
 import social.bigbone.api.entity.Status;
-import social.bigbone.api.exception.BigboneRequestException;
+import social.bigbone.api.exception.BigBoneRequestException;
 import social.bigbone.api.method.Timelines;
 
 import static social.bigbone.api.method.Timelines.StatusOrigin.LOCAL_AND_REMOTE;
 
 @SuppressWarnings("PMD.SystemPrintln")
 public class GetPublicTimeline {
-    public static void main(final String[] args) throws BigboneRequestException {
+    public static void main(final String[] args) throws BigBoneRequestException {
         final String instance = args[0];
 
         // Instantiate client

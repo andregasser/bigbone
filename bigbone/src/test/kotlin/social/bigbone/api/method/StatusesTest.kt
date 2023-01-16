@@ -4,7 +4,7 @@ import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldNotBe
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import social.bigbone.api.exception.BigboneRequestException
+import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.testtool.MockClient
 
 class StatusesTest {
@@ -18,7 +18,7 @@ class StatusesTest {
 
     @Test
     fun getStatusWithException() {
-        Assertions.assertThrows(BigboneRequestException::class.java) {
+        Assertions.assertThrows(BigBoneRequestException::class.java) {
             val client = MockClient.ioException()
             val statuses = Statuses(client)
             statuses.getStatus("1").execute()
@@ -36,7 +36,7 @@ class StatusesTest {
 
     @Test
     fun getContextWithException() {
-        Assertions.assertThrows(BigboneRequestException::class.java) {
+        Assertions.assertThrows(BigBoneRequestException::class.java) {
             val client = MockClient.ioException()
             val statuses = Statuses(client)
             statuses.getContext("1").execute()
@@ -56,7 +56,7 @@ class StatusesTest {
 
     @Test
     fun getCardWithExcetpion() {
-        Assertions.assertThrows(BigboneRequestException::class.java) {
+        Assertions.assertThrows(BigBoneRequestException::class.java) {
             val client = MockClient.ioException()
             val statuses = Statuses(client)
             statuses.getCard("1").execute()
@@ -76,7 +76,7 @@ class StatusesTest {
 
     @Test
     fun getRebloggedByWithException() {
-        Assertions.assertThrows(BigboneRequestException::class.java) {
+        Assertions.assertThrows(BigBoneRequestException::class.java) {
             val client = MockClient.ioException()
             val statuses = Statuses(client)
             statuses.getRebloggedBy("1").execute()
@@ -96,7 +96,7 @@ class StatusesTest {
 
     @Test
     fun getFavouritedByWithException() {
-        Assertions.assertThrows(BigboneRequestException::class.java) {
+        Assertions.assertThrows(BigBoneRequestException::class.java) {
             val client = MockClient.ioException()
             val statuses = Statuses(client)
             statuses.getFavouritedBy("1").execute()
@@ -113,7 +113,7 @@ class StatusesTest {
 
     @Test
     fun postStatusWithException() {
-        Assertions.assertThrows(BigboneRequestException::class.java) {
+        Assertions.assertThrows(BigBoneRequestException::class.java) {
             val client = MockClient.ioException()
             val statuses = Statuses(client)
             statuses.postStatus("a", null, null, false, null).execute()
@@ -130,7 +130,7 @@ class StatusesTest {
 
     @Test
     fun postReblogWithException() {
-        Assertions.assertThrows(BigboneRequestException::class.java) {
+        Assertions.assertThrows(BigBoneRequestException::class.java) {
             val client = MockClient.ioException()
             val statuses = Statuses(client)
             statuses.postReblog("1").execute()
@@ -147,7 +147,7 @@ class StatusesTest {
 
     @Test
     fun postUnreblogWithException() {
-        Assertions.assertThrows(BigboneRequestException::class.java) {
+        Assertions.assertThrows(BigBoneRequestException::class.java) {
             val client = MockClient.ioException()
             val statuses = Statuses(client)
             statuses.postUnreblog("1").execute()
@@ -164,7 +164,7 @@ class StatusesTest {
 
     @Test
     fun postFavouriteWithException() {
-        Assertions.assertThrows(BigboneRequestException::class.java) {
+        Assertions.assertThrows(BigBoneRequestException::class.java) {
             val client = MockClient.ioException()
             val statuses = Statuses(client)
             statuses.postFavourite("1").execute()
@@ -181,7 +181,7 @@ class StatusesTest {
 
     @Test
     fun postUnfavouriteWithException() {
-        Assertions.assertThrows(BigboneRequestException::class.java) {
+        Assertions.assertThrows(BigBoneRequestException::class.java) {
             val client = MockClient.ioException()
             val statuses = Statuses(client)
             statuses.postUnfavourite("1").execute()

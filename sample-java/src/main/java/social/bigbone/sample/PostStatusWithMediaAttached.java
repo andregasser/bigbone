@@ -3,7 +3,7 @@ package social.bigbone.sample;
 import social.bigbone.MastodonClient;
 import social.bigbone.api.entity.Attachment;
 import social.bigbone.api.entity.Status.Visibility;
-import social.bigbone.api.exception.BigboneRequestException;
+import social.bigbone.api.exception.BigBoneRequestException;
 import social.bigbone.api.method.Media;
 import social.bigbone.api.method.Statuses;
 
@@ -12,7 +12,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class PostStatusWithMediaAttached {
-    public static void main(final String[] args) throws BigboneRequestException {
+    public static void main(final String[] args) throws BigBoneRequestException {
         final String instance = args[0];
         final String accessToken = args[1];
 

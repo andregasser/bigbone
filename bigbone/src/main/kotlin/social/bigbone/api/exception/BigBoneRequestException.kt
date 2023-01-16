@@ -2,7 +2,7 @@ package social.bigbone.api.exception
 
 import okhttp3.Response
 
-class BigboneRequestException : Exception {
+class BigBoneRequestException : Exception {
     val response: Response?
 
     constructor(response: Response) : super(response.message) {
