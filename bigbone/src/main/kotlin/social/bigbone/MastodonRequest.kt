@@ -6,7 +6,7 @@ import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.extension.toPageable
 import java.lang.Exception
 
-open class MastodonRequest<T>(
+class MastodonRequest<T>(
     private val executor: () -> Response,
     private val mapper: (String) -> Any
 ) {
