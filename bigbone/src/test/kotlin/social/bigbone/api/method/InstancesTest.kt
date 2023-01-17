@@ -2,19 +2,18 @@ package social.bigbone.api.method
 
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.testtool.MockClient
 import social.bigbone.testtool.TestUtil
 
-class PublicTest {
+class InstancesTest {
     @Test
     fun getInstance() {
         val client = MockClient.mock("instance.json")
-        val publicMethod = Public(client)
+        val instancesMethod = Instances(client)
 
-        val instance = publicMethod.getInstance().execute()
+        val instance = instancesMethod.getInstance().execute()
         instance.uri shouldBeEqualTo "test.com"
         instance.title shouldBeEqualTo "test.com"
         instance.description shouldBeEqualTo "description"
@@ -25,8 +24,8 @@ class PublicTest {
     @Test
     fun getInstanceWithJson() {
         val client = MockClient.mock("instance.json")
-        val publicMethod = Public(client)
-        publicMethod.getInstance()
+        val instancesMethod = Instances(client)
+        instancesMethod.getInstance()
             .doOnJson {
                 val expected = """{
   "uri": "test.com",
@@ -46,7 +45,7 @@ class PublicTest {
   "invites_enabled": true
 }
 """
-                assertEquals(TestUtil.normalizeLineBreaks(it), TestUtil.normalizeLineBreaks(expected))
+                Assertions.assertEquals(TestUtil.normalizeLineBreaks(it), TestUtil.normalizeLineBreaks(expected))
             }
             .execute()
     }
@@ -55,28 +54,8 @@ class PublicTest {
     fun getInstanceWithException() {
         Assertions.assertThrows(BigBoneRequestException::class.java) {
             val client = MockClient.ioException()
-            val publicMethod = Public(client)
-            publicMethod.getInstance().execute()
-        }
-    }
-
-    @Test
-    fun search() {
-        val client = MockClient.mock("search.json")
-
-        val publicMethod = Public(client)
-        val result = publicMethod.search("test").execute()
-        result.accounts.size shouldBeEqualTo 6
-        result.statuses.size shouldBeEqualTo 2
-        result.hashtags.size shouldBeEqualTo 1
-    }
-
-    @Test
-    fun searchWithException() {
-        Assertions.assertThrows(BigBoneRequestException::class.java) {
-            val client = MockClient.ioException()
-            val publicMethod = Public(client)
-            publicMethod.search("test").execute()
+            val instancesMethod = Instances(client)
+            instancesMethod.getInstance().execute()
         }
     }
 }

@@ -25,7 +25,7 @@ class Notifications(private val client: MastodonClient) {
     // GET /api/v1/notifications/:id
     fun getNotification(id: String): MastodonRequest<Notification> {
         return client.getMastodonRequest(
-            endpoint = "api/v1/notifications/$id",
+            endpoint = "api/v1/notification/$id", // singular "notification" is correct here
             method = MastodonClient.Method.GET
         )
     }
