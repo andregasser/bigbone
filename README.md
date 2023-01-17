@@ -147,8 +147,7 @@ The following people have actively contributed to the development of BigBone:
 
 # Contribution
 
-Contributions are welcome! If you find bugs or other issues, please open an issue in the [Issues](https://github.com/andregasser/bigbone/issues) section. I will 
-happily review any request that is created.  
+Contributions are welcome! Please have a look at [CONTRIBUTING.md](CONTRIBUTING.md) for more details.  
 
 # Previous Work
 
