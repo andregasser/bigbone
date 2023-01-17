@@ -5,9 +5,9 @@ import social.bigbone.api.Pageable;
 import social.bigbone.api.Range;
 import social.bigbone.api.entity.Status;
 import social.bigbone.api.exception.BigBoneRequestException;
-import social.bigbone.api.method.Timelines;
+import social.bigbone.api.method.TimelinesMethods;
 
-import static social.bigbone.api.method.Timelines.StatusOrigin.LOCAL_AND_REMOTE;
+import static social.bigbone.api.method.TimelinesMethods.StatusOrigin.LOCAL_AND_REMOTE;
 
 @SuppressWarnings("PMD.SystemPrintln")
 public class GetTagTimeline {
@@ -20,8 +20,8 @@ public class GetTagTimeline {
             .build();
 
         // Get statuses from public timeline
-        final Timelines timelines = new Timelines(client);
-        final Pageable<Status> statuses = timelines.getTagTimeline(hashtag, new Range(), LOCAL_AND_REMOTE).execute();
+        final TimelinesMethods timelinesMethods = new TimelinesMethods(client);
+        final Pageable<Status> statuses = timelinesMethods.getTagTimeline(hashtag, new Range(), LOCAL_AND_REMOTE).execute();
         statuses.getPart().forEach(status -> System.out.println(status.getContent()));
     }
 }

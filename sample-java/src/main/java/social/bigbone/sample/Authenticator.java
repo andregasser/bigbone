@@ -8,7 +8,7 @@ import social.bigbone.api.Scope;
 import social.bigbone.api.entity.auth.AccessToken;
 import social.bigbone.api.entity.auth.AppRegistration;
 import social.bigbone.api.exception.BigBoneRequestException;
-import social.bigbone.api.method.Apps;
+import social.bigbone.api.method.AppsMethods;
 
 import java.io.File;
 import java.io.IOException;
@@ -70,8 +70,8 @@ final class Authenticator {
 
     private static AppRegistration appRegistration(final String instanceName) throws BigBoneRequestException {
         final MastodonClient client = new MastodonClient.Builder(instanceName).build();
-        final Apps apps = new Apps(client);
-        return apps.createApp("kotlindon", "urn:ietf:wg:oauth:2.0:oob", new Scope(), null).execute();
+        final AppsMethods appsMethods = new AppsMethods(client);
+        return appsMethods.createApp("kotlindon", "urn:ietf:wg:oauth:2.0:oob", new Scope(), null).execute();
     }
 
     /**
