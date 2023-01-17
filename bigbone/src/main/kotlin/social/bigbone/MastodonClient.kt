@@ -404,7 +404,7 @@ private constructor(
             try {
                 return listOf(v2InstanceRequest(), v1InstanceRequest()).stream()
                     .filter { response -> response.isSuccessful && response.body != null }
-                    .map { response -> gson.fromJson(response.body.toString(), InstanceVersion::class.java) }
+                    .map { response -> gson.fromJson(response.body?.string(), InstanceVersion::class.java) }
                     .map { json -> json.version }
                     .findFirst()
                     .get()

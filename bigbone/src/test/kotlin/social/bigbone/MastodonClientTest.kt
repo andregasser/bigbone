@@ -301,7 +301,7 @@ class MastodonClientTest {
     fun `should return version of v2 endpoint if available`() {
         // given
         val responseBodyV2Mock = mockk<ResponseBody>()
-        every { responseBodyV2Mock.toString() } answers { v2InstanceResponseBody }
+        every { responseBodyV2Mock.string() } answers { v2InstanceResponseBody }
         val responseV2Mock = mockk<Response>()
         every { responseV2Mock.body } answers { responseBodyV2Mock }
         every { responseV2Mock.isSuccessful } answers { true }
@@ -326,7 +326,7 @@ class MastodonClientTest {
         every { responseV2Mock.isSuccessful } answers { false }
 
         val responseBodyV1Mock = mockk<ResponseBody>()
-        every { responseBodyV1Mock.toString() } answers { v1InstanceResponseBody }
+        every { responseBodyV1Mock.string() } answers { v1InstanceResponseBody }
         val responseV1Mock = mockk<Response>()
         every { responseV1Mock.isSuccessful } answers { true }
         every { responseV1Mock.body } answers { responseBodyV1Mock }
