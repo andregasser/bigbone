@@ -12,6 +12,22 @@ import okhttp3.Response
 import social.bigbone.api.Pageable
 import social.bigbone.api.entity.Instance
 import social.bigbone.api.exception.BigBoneRequestException
+import social.bigbone.api.method.AccountsMethods
+import social.bigbone.api.method.AppsMethods
+import social.bigbone.api.method.BlocksMethods
+import social.bigbone.api.method.FavouritesMethods
+import social.bigbone.api.method.FollowRequestsMethods
+import social.bigbone.api.method.InstanceMethods
+import social.bigbone.api.method.ListsMethods
+import social.bigbone.api.method.MediaMethods
+import social.bigbone.api.method.MutesMethods
+import social.bigbone.api.method.NotificationsMethods
+import social.bigbone.api.method.OAuthMethods
+import social.bigbone.api.method.ReportsMethods
+import social.bigbone.api.method.SearchMethods
+import social.bigbone.api.method.StatusesMethods
+import social.bigbone.api.method.StreamingMethods
+import social.bigbone.api.method.TimelinesMethods
 import social.bigbone.extension.emptyRequestBody
 import java.io.IOException
 import java.util.concurrent.TimeUnit
@@ -24,6 +40,102 @@ private constructor(
 ) {
     private var debug = false
     private var instanceVersion: String? = null
+
+    /**
+     * access API methods under "api/vX/accounts" endpoint
+     */
+    @Suppress("unused") // public API
+    val accounts: AccountsMethods by lazy { AccountsMethods(this) }
+
+    /**
+     * access API methods under "api/vX/apps" endpoint
+     */
+    @Suppress("unused") // public API
+    val apps: AppsMethods by lazy { AppsMethods(this) }
+
+    /**
+     * access API methods under "api/vX/blocks" endpoint
+     */
+    @Suppress("unused") // public API
+    val blocks: BlocksMethods by lazy { BlocksMethods(this) }
+
+    /**
+     * access API methods under "api/vX/favourites" endpoint
+     */
+    @Suppress("unused") // public API
+    val favourites: FavouritesMethods by lazy { FavouritesMethods(this) }
+
+    /**
+     * access API methods under "api/vX/follow_requests" endpoint
+     */
+    @Suppress("unused") // public API
+    val followRequests: FollowRequestsMethods by lazy { FollowRequestsMethods(this) }
+
+    /**
+     * access API methods under "api/vX/instance" endpoint
+     */
+    @Suppress("unused") // public API
+    val instance: InstanceMethods by lazy { InstanceMethods(this) }
+
+    /**
+     * access API methods under "api/vX/lists" endpoint
+     */
+    @Suppress("unused") // public API
+    val lists: ListsMethods by lazy { ListsMethods(this) }
+
+    /**
+     * access API methods under "api/vX/media" endpoint
+     */
+    @Suppress("unused") // public API
+    val media: MediaMethods by lazy { MediaMethods(this) }
+
+    /**
+     * access API methods under "api/vX/mutes" endpoint
+     */
+    @Suppress("unused") // public API
+    val mutes: MutesMethods by lazy { MutesMethods(this) }
+
+    /**
+     * access API methods under "api/vX/notification[s]" endpoint
+     */
+    @Suppress("unused") // public API
+    val notifications: NotificationsMethods by lazy { NotificationsMethods(this) }
+
+    /**
+     * access API methods under "oauth" endpoint
+     */
+    @Suppress("unused") // public API
+    val oauth: OAuthMethods by lazy { OAuthMethods(this) }
+
+    /**
+     * access API methods under "api/vX/reports" endpoint
+     */
+    @Suppress("unused") // public API
+    val reports: ReportsMethods by lazy { ReportsMethods(this) }
+
+    /**
+     * access API methods under "api/vX/search" endpoint
+     */
+    @Suppress("unused") // public API
+    val search: SearchMethods by lazy { SearchMethods(this) }
+
+    /**
+     * access API methods under "api/vX/statuses" endpoint
+     */
+    @Suppress("unused") // public API
+    val statuses: StatusesMethods by lazy { StatusesMethods(this) }
+
+    /**
+     * access API methods under "api/vX/streaming" endpoint
+     */
+    @Suppress("unused") // public API
+    val streaming: StreamingMethods by lazy { StreamingMethods(this) }
+
+    /**
+     * access API methods under "api/vX/timelines" endpoint
+     */
+    @Suppress("unused") // public API
+    val timelines: TimelinesMethods by lazy { TimelinesMethods(this) }
 
     enum class Method {
         DELETE,

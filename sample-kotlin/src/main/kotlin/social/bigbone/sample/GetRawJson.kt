@@ -1,7 +1,6 @@
 package social.bigbone.sample
 
 import social.bigbone.MastodonClient
-import social.bigbone.api.method.TimelinesMethods
 import social.bigbone.api.method.TimelinesMethods.StatusOrigin.LOCAL_AND_REMOTE
 
 object GetRawJson {
@@ -14,8 +13,7 @@ object GetRawJson {
             .build()
 
         // Print timeline statuses
-        val timelinesMethods = TimelinesMethods(client)
-        timelinesMethods.getPublicTimeline(statusOrigin = LOCAL_AND_REMOTE).doOnJson {
+        client.timelines.getPublicTimeline(statusOrigin = LOCAL_AND_REMOTE).doOnJson {
             println(it)
         }.execute()
     }

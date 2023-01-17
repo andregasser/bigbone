@@ -15,8 +15,7 @@ object GetTagTimeline {
             .build()
 
         // Get statuses from public timeline
-        val timelinesMethods = TimelinesMethods(client)
-        val statuses = timelinesMethods.getTagTimeline(hashtag, Range(), TimelinesMethods.StatusOrigin.LOCAL_AND_REMOTE).execute()
+        val statuses = client.timelines.getTagTimeline(hashtag, Range(), TimelinesMethods.StatusOrigin.LOCAL_AND_REMOTE).execute()
         statuses.part.forEach {
             println(it.content)
         }
