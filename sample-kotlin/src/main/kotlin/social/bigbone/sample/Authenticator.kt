@@ -7,7 +7,7 @@ import social.bigbone.Parameter
 import social.bigbone.api.Scope
 import social.bigbone.api.entity.auth.AccessToken
 import social.bigbone.api.entity.auth.AppRegistration
-import social.bigbone.api.method.Apps
+import social.bigbone.api.method.AppsMethods
 import java.io.File
 import java.util.Properties
 
@@ -78,8 +78,8 @@ object Authenticator {
 
     private fun appRegistration(instanceName: String): AppRegistration {
         val client = MastodonClient.Builder(instanceName).build()
-        val apps = Apps(client)
-        return apps.createApp(
+        val appsMethods = AppsMethods(client)
+        return appsMethods.createApp(
             "kotlindon",
             scope = Scope()
         ).execute()

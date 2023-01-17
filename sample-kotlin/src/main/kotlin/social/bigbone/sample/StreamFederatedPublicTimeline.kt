@@ -4,7 +4,7 @@ import social.bigbone.MastodonClient
 import social.bigbone.api.Handler
 import social.bigbone.api.entity.Notification
 import social.bigbone.api.entity.Status
-import social.bigbone.api.method.Streaming
+import social.bigbone.api.method.StreamingMethods
 
 object StreamFederatedPublicTimeline {
     @JvmStatic
@@ -32,8 +32,8 @@ object StreamFederatedPublicTimeline {
         }
 
         // Start federated timeline streaming and stop after 20 seconds
-        val streaming = Streaming(client)
-        val shutdownable = streaming.federatedPublic(handler)
+        val streamingMethods = StreamingMethods(client)
+        val shutdownable = streamingMethods.federatedPublic(handler)
         Thread.sleep(20_000L)
         shutdownable.shutdown()
     }

@@ -1,7 +1,7 @@
 package social.bigbone.sample
 
 import social.bigbone.MastodonClient
-import social.bigbone.api.method.Search
+import social.bigbone.api.method.SearchMethods
 
 object PerformSimpleSearch {
     @JvmStatic
@@ -16,8 +16,8 @@ object PerformSimpleSearch {
             .build()
 
         // Perform search and print results
-        val search = Search(client)
-        val searchResult = search.searchContent(searchTerm).execute()
+        val searchMethods = SearchMethods(client)
+        val searchResult = searchMethods.searchContent(searchTerm).execute()
         searchResult.accounts.forEach {
             println(it.displayName)
         }
