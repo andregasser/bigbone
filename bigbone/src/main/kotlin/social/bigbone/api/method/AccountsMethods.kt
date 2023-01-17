@@ -9,6 +9,10 @@ import social.bigbone.api.entity.Account
 import social.bigbone.api.entity.Relationship
 import social.bigbone.api.entity.Status
 
+/**
+ * Allows access to API methods with endpoints having an "api/vX/accounts" prefix.
+ * @see <a href="https://docs.joinmastodon.org/methods/accounts/">Mastodon accounts API methods</a>
+ */
 class AccountsMethods(private val client: MastodonClient) {
     // GET /api/v1/accounts/:id
     fun getAccount(accountId: String): MastodonRequest<Account> {

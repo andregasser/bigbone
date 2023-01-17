@@ -7,7 +7,7 @@ import social.bigbone.api.Scope
 import social.bigbone.api.entity.auth.AccessToken
 
 /**
- * Generate and manage OAuth tokens.
+ * Allows access to API methods with endpoints having an "oauth" prefix.
  * @see <a href="https://docs.joinmastodon.org/methods/oauth/">Mastodon oauth API methods</a>
  */
 class OAuthMethods(private val client: MastodonClient) {

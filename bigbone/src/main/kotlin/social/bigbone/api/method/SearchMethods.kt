@@ -5,6 +5,10 @@ import social.bigbone.MastodonRequest
 import social.bigbone.Parameter
 import social.bigbone.api.entity.Results
 
+/**
+ * Allows access to API methods with endpoints having an "api/vX/search" prefix.
+ * @see <a href="https://docs.joinmastodon.org/methods/search/">Mastodon search API methods</a>
+ */
 class SearchMethods(private val client: MastodonClient) {
 
     /**

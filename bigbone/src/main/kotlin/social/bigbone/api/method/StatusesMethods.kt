@@ -11,6 +11,10 @@ import social.bigbone.api.entity.Context
 import social.bigbone.api.entity.Status
 import social.bigbone.api.exception.BigBoneRequestException
 
+/**
+ * Allows access to API methods with endpoints having an "api/vX/statuses" prefix.
+ * @see <a href="https://docs.joinmastodon.org/methods/statuses/">Mastodon statuses API methods</a>
+ */
 class StatusesMethods(private val client: MastodonClient) {
 
     //  GET /api/v1/statuses/:id

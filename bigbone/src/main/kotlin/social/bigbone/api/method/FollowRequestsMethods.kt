@@ -7,6 +7,10 @@ import social.bigbone.api.Range
 import social.bigbone.api.entity.Account
 import social.bigbone.api.exception.BigBoneRequestException
 
+/**
+ * Allows access to API methods with endpoints having an "api/vX/follow_requests" prefix.
+ * @see <a href="https://docs.joinmastodon.org/methods/follow_requests/">Mastodon follow_requests API methods</a>
+ */
 class FollowRequestsMethods(private val client: MastodonClient) {
     // GET /api/v1/follow_requests
     @JvmOverloads

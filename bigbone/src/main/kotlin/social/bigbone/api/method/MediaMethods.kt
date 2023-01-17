@@ -8,6 +8,10 @@ import social.bigbone.MastodonRequest
 import social.bigbone.api.entity.Attachment
 import java.io.File
 
+/**
+ * Allows access to API methods with endpoints having an "api/vX/media" prefix.
+ * @see <a href="https://docs.joinmastodon.org/methods/media/">Mastodon media API methods</a>
+ */
 class MediaMethods(private val client: MastodonClient) {
     /**
      * Creates an attachment to be used with a new status.

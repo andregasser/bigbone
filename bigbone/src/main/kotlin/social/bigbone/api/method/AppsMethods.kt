@@ -7,7 +7,7 @@ import social.bigbone.api.Scope
 import social.bigbone.api.entity.auth.AppRegistration
 
 /**
- * Register client applications that can be used to obtain OAuth tokens.
+ * Allows access to API methods with endpoints having an "api/vX/apps" prefix.
  * @see <a href="https://docs.joinmastodon.org/methods/apps/">Mastodon apps API methods</a>
  */
 class AppsMethods(private val client: MastodonClient) {

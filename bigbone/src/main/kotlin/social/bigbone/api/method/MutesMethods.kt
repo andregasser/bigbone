@@ -6,6 +6,10 @@ import social.bigbone.api.Pageable
 import social.bigbone.api.Range
 import social.bigbone.api.entity.Account
 
+/**
+ * Allows access to API methods with endpoints having an "api/vX/mutes" prefix.
+ * @see <a href="https://docs.joinmastodon.org/methods/mutes/">Mastodon mutes API methods</a>
+ */
 class MutesMethods(private val client: MastodonClient) {
     // GET /api/v1/mutes
     @JvmOverloads

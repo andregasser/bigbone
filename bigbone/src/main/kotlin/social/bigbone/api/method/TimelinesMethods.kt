@@ -7,6 +7,10 @@ import social.bigbone.api.Range
 import social.bigbone.api.entity.Status
 import social.bigbone.api.exception.BigBoneRequestException
 
+/**
+ * Allows access to API methods with endpoints having an "api/vX/timelines" prefix.
+ * @see <a href="https://docs.joinmastodon.org/methods/timelines/">Mastodon timelines API methods</a>
+ */
 class TimelinesMethods(private val client: MastodonClient) {
     /**
      * Public timelines can consist of only local statuses, only remote (=federated) statuses, or a combination of both.

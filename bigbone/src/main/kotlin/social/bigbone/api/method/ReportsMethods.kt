@@ -8,6 +8,10 @@ import social.bigbone.api.Range
 import social.bigbone.api.entity.Report
 import social.bigbone.api.exception.BigBoneRequestException
 
+/**
+ * Allows access to API methods with endpoints having an "api/vX/reports" prefix.
+ * @see <a href="https://docs.joinmastodon.org/methods/reports/">Mastodon reports API methods</a>
+ */
 class ReportsMethods(private val client: MastodonClient) {
     // GET /api/v1/reports
     @JvmOverloads

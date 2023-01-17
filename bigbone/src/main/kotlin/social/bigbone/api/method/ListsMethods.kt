@@ -4,6 +4,10 @@ import social.bigbone.MastodonClient
 import social.bigbone.MastodonRequest
 import social.bigbone.api.entity.MastodonList
 
+/**
+ * Allows access to API methods with endpoints having an "api/vX/lists" prefix.
+ * @see <a href="https://docs.joinmastodon.org/methods/lists/">Mastodon lists API methods</a>
+ */
 class ListsMethods(private val client: MastodonClient) {
 
     /**
