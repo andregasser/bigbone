@@ -10,7 +10,7 @@ import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import social.bigbone.api.Pageable
-import social.bigbone.api.entity.Instance
+import social.bigbone.api.entity.InstanceVersion
 import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.api.method.AccountsMethods
 import social.bigbone.api.method.AppsMethods
@@ -404,7 +404,7 @@ private constructor(
             try {
                 return listOf(v2InstanceRequest(), v1InstanceRequest()).stream()
                     .filter { response -> response.isSuccessful && response.body != null }
-                    .map { response -> gson.fromJson(response.body.toString(), Instance::class.java) }
+                    .map { response -> gson.fromJson(response.body.toString(), InstanceVersion::class.java) }
                     .map { json -> json.version }
                     .findFirst()
                     .get()
