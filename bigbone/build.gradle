@@ -2,6 +2,18 @@ plugins {
     id 'social.bigbone.bigbone-library'
 }
 
+sourceSets {
+    integrationTest {
+        compileClasspath += sourceSets.main.output
+        runtimeClasspath += sourceSets.main.output
+    }
+}
+
+configurations {
+    integrationTestImplementaton.extendsFrom implementation
+    integrationTestRuntimeOnly.extendsFrom runtimeOnly
+}
+
 dependencies {
     api libs.okhttp
     api libs.gson
@@ -11,4 +23,7 @@ dependencies {
     testImplementation libs.kluent
     testImplementation libs.mockk
     testImplementation libs.mockk.dsl
+    integrationTestImplementation libs.junit.jupiter
+    integrationTestImplementation libs.testcontainers
+    integrationTestImplementation libs.testcontainers.junit
 }
