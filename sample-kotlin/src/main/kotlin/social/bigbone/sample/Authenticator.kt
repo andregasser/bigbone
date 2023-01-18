@@ -78,7 +78,7 @@ object Authenticator {
     private fun appRegistration(instanceName: String): AppRegistration {
         val client = MastodonClient.Builder(instanceName).build()
         return client.apps.createApp(
-            "kotlindon",
+            "bigbone-sample-app",
             scope = Scope()
         ).execute()
     }

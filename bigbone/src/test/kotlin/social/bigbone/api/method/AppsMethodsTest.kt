@@ -17,7 +17,7 @@ class AppsMethodsTest {
 
         val appsMethods = AppsMethods(client)
         val registration = appsMethods.createApp(
-            clientName = "mastodon-android-sys1yagi", scope = Scope(Scope.Name.ALL)
+            clientName = "bigbone-sample-app", scope = Scope(Scope.Name.ALL)
         ).execute()
 
         registration.instanceName shouldBeEqualTo "mastodon.cloud"
@@ -32,7 +32,7 @@ class AppsMethodsTest {
             val client = MockClient.ioException()
             val appsMethods = AppsMethods(client)
             appsMethods.createApp(
-                clientName = "mastodon-android-sys1yagi", scope = Scope(Scope.Name.ALL)
+                clientName = "bigbone-sample-app", scope = Scope(Scope.Name.ALL)
             ).execute()
         }
     }
