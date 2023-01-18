@@ -403,7 +403,7 @@ private constructor(
         private fun getInstanceVersion(): String {
             try {
                 return listOf(v2InstanceRequest(), v1InstanceRequest()).stream()
-                    .filter { response -> response.isSuccessful && response.body != null }
+                    .filter { response -> response.isSuccessful }
                     .map { response -> gson.fromJson(response.body?.string(), InstanceVersion::class.java) }
                     .map { json -> json.version }
                     .findFirst()

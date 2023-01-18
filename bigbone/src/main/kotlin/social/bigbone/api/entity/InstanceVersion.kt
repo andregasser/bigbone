@@ -4,5 +4,5 @@ import com.google.gson.annotations.SerializedName
 
 data class InstanceVersion(
     @SerializedName("version")
-    val version: String = "",
+    val version: String? = null
 )
