@@ -1,7 +1,7 @@
 package social.bigbone.api.method
 
 import social.bigbone.MastodonClient
-import social.bigbone.ParameterList
+import social.bigbone.Parameters
 import social.bigbone.api.Dispatcher
 import social.bigbone.api.Handler
 import social.bigbone.api.Shutdownable
@@ -106,7 +106,7 @@ class StreamingMethods(private val client: MastodonClient) {
     fun federatedHashtag(tag: String, handler: Handler): Shutdownable {
         val response = client.get(
             "api/v1/streaming/hashtag",
-            ParameterList().append("tag", tag)
+            Parameters().append("tag", tag)
         )
         if (response.isSuccessful) {
             val reader = response.body?.byteStream()?.bufferedReader()
@@ -153,7 +153,7 @@ class StreamingMethods(private val client: MastodonClient) {
     fun localHashtag(tag: String, handler: Handler): Shutdownable {
         val response = client.get(
             "api/v1/streaming/hashtag/local",
-            ParameterList().append("tag", tag)
+            Parameters().append("tag", tag)
         )
         if (response.isSuccessful) {
             val reader = response.body?.byteStream()?.bufferedReader()
@@ -261,7 +261,7 @@ class StreamingMethods(private val client: MastodonClient) {
     fun userList(handler: Handler, listID: String): Shutdownable {
         val response = client.get(
             "api/v1/streaming/list",
-            ParameterList().apply {
+            Parameters().apply {
                 append("list", listID)
             }
         )

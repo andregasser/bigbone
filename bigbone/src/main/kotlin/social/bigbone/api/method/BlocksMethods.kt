@@ -18,7 +18,7 @@ class BlocksMethods(private val client: MastodonClient) {
         return client.getPageableMastodonRequest(
             endpoint = "api/v1/blocks",
             method = MastodonClient.Method.GET,
-            parameters = range.toParameterList()
+            parameters = range.toParameters()
         )
     }
 }

@@ -2,7 +2,7 @@ package social.bigbone.api.method
 
 import social.bigbone.MastodonClient
 import social.bigbone.MastodonRequest
-import social.bigbone.ParameterList
+import social.bigbone.Parameters
 import social.bigbone.api.Scope
 import social.bigbone.api.entity.auth.AccessToken
 
@@ -22,7 +22,7 @@ class OAuthMethods(private val client: MastodonClient) {
      */
     fun getOAuthUrl(clientId: String, scope: Scope, redirectUri: String = "urn:ietf:wg:oauth:2.0:oob"): String {
         val endpoint = "oauth/authorize"
-        val params = ParameterList()
+        val params = Parameters()
             .append("client_id", clientId)
             .append("redirect_uri", redirectUri)
             .append("response_type", "code")
@@ -46,7 +46,7 @@ class OAuthMethods(private val client: MastodonClient) {
         return client.getMastodonRequest(
             endpoint = "oauth/token",
             method = MastodonClient.Method.POST,
-            parameters = ParameterList().apply {
+            parameters = Parameters().apply {
                 append("client_id", clientId)
                 append("client_secret", clientSecret)
                 append("redirect_uri", redirectUri)

@@ -32,7 +32,7 @@ class TimelinesMethods(private val client: MastodonClient) {
         return client.getPageableMastodonRequest(
             endpoint = "api/v1/timelines/home",
             method = MastodonClient.Method.GET,
-            parameters = range.toParameterList()
+            parameters = range.toParameters()
         )
     }
 
@@ -47,7 +47,7 @@ class TimelinesMethods(private val client: MastodonClient) {
         return client.getPageableMastodonRequest(
             endpoint = "api/v1/timelines/list/$listID",
             method = MastodonClient.Method.GET,
-            parameters = range.toParameterList()
+            parameters = range.toParameters()
         )
     }
 
@@ -66,7 +66,7 @@ class TimelinesMethods(private val client: MastodonClient) {
         return client.getPageableMastodonRequest(
             endpoint = "api/v1/timelines/public",
             method = MastodonClient.Method.GET,
-            parameters = range.toParameterList().apply {
+            parameters = range.toParameters().apply {
                 when (statusOrigin) {
                     StatusOrigin.LOCAL -> append("local", true)
                     StatusOrigin.REMOTE -> append("remote", true)
@@ -93,7 +93,7 @@ class TimelinesMethods(private val client: MastodonClient) {
         return client.getPageableMastodonRequest(
             endpoint = "api/v1/timelines/tag/$tag",
             method = MastodonClient.Method.GET,
-            parameters = range.toParameterList().apply {
+            parameters = range.toParameters().apply {
                 when (statusOrigin) {
                     StatusOrigin.LOCAL -> append("local", true)
                     StatusOrigin.REMOTE -> append("remote", true)

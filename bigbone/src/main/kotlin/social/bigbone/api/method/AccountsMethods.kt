@@ -2,7 +2,7 @@ package social.bigbone.api.method
 
 import social.bigbone.MastodonClient
 import social.bigbone.MastodonRequest
-import social.bigbone.ParameterList
+import social.bigbone.Parameters
 import social.bigbone.api.Pageable
 import social.bigbone.api.Range
 import social.bigbone.api.entity.Account
@@ -41,7 +41,7 @@ class AccountsMethods(private val client: MastodonClient) {
         return client.getMastodonRequest(
             endpoint = "api/v1/accounts/update_credentials",
             method = MastodonClient.Method.PATCH,
-            parameters = ParameterList().apply {
+            parameters = Parameters().apply {
                 displayName?.let { append("display_name", it) }
                 note?.let { append("note", it) }
                 avatar?.let { append("avatar", it) }
@@ -56,7 +56,7 @@ class AccountsMethods(private val client: MastodonClient) {
         return client.getPageableMastodonRequest(
             endpoint = "api/v1/accounts/$accountId/followers",
             method = MastodonClient.Method.GET,
-            parameters = range.toParameterList()
+            parameters = range.toParameters()
         )
     }
 
@@ -66,7 +66,7 @@ class AccountsMethods(private val client: MastodonClient) {
         return client.getPageableMastodonRequest(
             endpoint = "api/v1/accounts/$accountId/following",
             method = MastodonClient.Method.GET,
-            parameters = range.toParameterList()
+            parameters = range.toParameters()
         )
     }
 
@@ -82,7 +82,7 @@ class AccountsMethods(private val client: MastodonClient) {
         return client.getPageableMastodonRequest(
             endpoint = "api/v1/accounts/$accountId/statuses",
             method = MastodonClient.Method.GET,
-            parameters = range.toParameterList().apply {
+            parameters = range.toParameters().apply {
                 if (onlyMedia) { append("only_media", true) }
                 if (pinned) { append("pinned", true) }
                 if (excludeReplies) { append("exclude_replies", true) }
@@ -143,7 +143,7 @@ class AccountsMethods(private val client: MastodonClient) {
         return client.getMastodonRequestForList(
             endpoint = "api/v1/accounts/relationships",
             method = MastodonClient.Method.GET,
-            parameters = ParameterList().append("id", accountIds)
+            parameters = Parameters().append("id", accountIds)
         )
     }
 
@@ -157,7 +157,7 @@ class AccountsMethods(private val client: MastodonClient) {
         return client.getMastodonRequestForList(
             endpoint = "api/v1/accounts/search",
             method = MastodonClient.Method.GET,
-            parameters = ParameterList()
+            parameters = Parameters()
                 .append("q", query)
                 .append("limit", limit)
         )

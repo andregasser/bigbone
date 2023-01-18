@@ -18,7 +18,7 @@ class FollowRequestsMethods(private val client: MastodonClient) {
         return client.getPageableMastodonRequest(
             endpoint = "api/v1/follow_requests",
             method = MastodonClient.Method.GET,
-            parameters = range.toParameterList()
+            parameters = range.toParameters()
         )
     }
 

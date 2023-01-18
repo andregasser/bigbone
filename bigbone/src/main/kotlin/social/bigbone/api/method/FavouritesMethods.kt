@@ -18,7 +18,7 @@ class FavouritesMethods(private val client: MastodonClient) {
         return client.getPageableMastodonRequest(
             endpoint = "api/v1/favourites",
             method = MastodonClient.Method.GET,
-            parameters = range.toParameterList()
+            parameters = range.toParameters()
         )
     }
 }

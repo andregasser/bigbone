@@ -18,7 +18,7 @@ class NotificationsMethods(private val client: MastodonClient) {
         return client.getPageableMastodonRequest(
             endpoint = "api/v1/notifications",
             method = MastodonClient.Method.GET,
-            parameters = range.toParameterList().apply {
+            parameters = range.toParameters().apply {
                 excludeTypes?.let {
                     append("exclude_types", excludeTypes.map { it.value })
                 }
