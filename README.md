@@ -9,11 +9,12 @@
 # Why BigBone
 
 BigBone is a fork of [Mastodon4J](https://github.com/sys1yagi/mastodon4j), a Mastodon client library for Java and Kotlin that was published by Toshihiro Yagi. 
-The goal of Mastodon4J was to provide an easy-to-use library for interacting with the Mastodon social media network from Java and Kotlin code. Unfortunately, 
-it became abandoned and has not seen any updates since 2018. Since Elon Musk's Twitter acquisition in 2022, Mastodon has gained tremendous popularity. A project
-that is so well received by the community deserves to have up-to-date client libraries. I have therefore decided to jump in and am now maintaining the BigBone 
-client library since mid-November 2022 as an alternative to Mastodon4J. I hope that this library will help other developers to build cool stuff for the 
-Mastodon community.
+The goal of Mastodon4J at that time was to provide an easy-to-use library for interacting with the Mastodon social media network from Java and Kotlin code. 
+Unfortunately, it became abandoned and has not seen any updates since 2018. 
+
+Since Elon Musk's Twitter acquisition in 2022, Mastodon has gained tremendous popularity. A project that is so well received by the community deserves to have 
+up-to-date client libraries. I have therefore decided to jump in and am now maintaining the BigBone client library since mid-November 2022 as an alternative 
+to Mastodon4J. I hope that this library will help other developers to build cool stuff for the Mastodon community.
 
 The name **BigBone** has mostly symbolic character. I have chosen the name BigBone for this library because Mastodons represent impressive animals from the 
 Pleistocene, built of big and heavy bones. At the same time, we hope this library will build some sort of "skeleton" for your Mastodon-related projects. 
@@ -22,24 +23,18 @@ American Mastodons have been excavated.
 
 # Core Functionality
 
-With a library like BigBone, you can for example build tools which
-- act on status updates on your timelines (home, local, federated).
-- post, reblog and favourite statuses
-- plus lots of other stuff
+With a library like BigBone, you can build tools which
+- act on status updates on any of your timelines (home, local, federated)
+- post, reblog, and favourite statuses
+- plus lots of other stuff!
 
 # Implementation Status
 
-**I did not release an official version on Maven Central yet**, but there's already a `2.0.0-SNAPSHOT` that you can use to play around / experiment with. 
-Just please be aware that, although it is a SNAPSHOT version, it is still in an early stage and there are for sure dark places in the library, where stuff will
-not work as expected. If you find issues, please file an issue in the [Issues](https://github.com/andregasser/bigbone/issues) section.  
+BigBone does not yet implement the full API of Mastodon. Actually, there is still **a lot to do**. The main focus for future releases will be extending the 
+API coverage and fixing bugs that pop up. For some more insights please check out any of these pages:
 
-I really hope to get out an initial 2.0.0 version very soon (hopefully January 2023) to have something out there that is maintained and can be used by other 
-developers.
-
-BigBone does not yet implement the full API of Mastodon. Actually, there is still **a lot to do**. Our main goal for the 2.0.0 release is to get something out 
-that is in a maintained state and on a solid basis, technology-wise. In future releases, focus will be put on extending the existing API coverage. 
-
-For details on the current API coverage please checkout wiki page [Mastodon API Coverage](https://github.com/andregasser/bigbone/wiki/Mastodon-API-Coverage).
+- [Mastodon API Coverage](https://github.com/andregasser/bigbone/wiki/Mastodon-API-Coverage) 
+- [Release Roadmap](https://github.com/andregasser/bigbone/wiki/Release-Roadmap)
 
 BigBone uses [Semantic Versioning 2.0.0](http://semver.org/spec/v2.0.0.html).
 
@@ -47,7 +42,29 @@ BigBone uses [Semantic Versioning 2.0.0](http://semver.org/spec/v2.0.0.html).
 
 ## Gradle (Groovy DSL)
 
-Instructions for adding BigBone `2.0.0-SNAPSHOT` to your Gradle project (using Groovy DSL):
+### Using Latest Stable Release
+
+Instructions for adding BigBone `2.0.0` to your Gradle project:
+
+Repository:
+
+```groovy
+repositories {
+    mavenCentral()
+}
+```
+Dependencies:
+
+```groovy
+dependencies {
+    implementation "social.bigbone:bigbone:2.0.0"
+    implementation "social.bigbone:bigbone-rx:2.0.0"
+}
+```
+
+### Using Latest Snapshot Release
+
+Instructions for adding BigBone `2.0.0-SNAPSHOT` to your Gradle project:
 
 Repository:
 
@@ -70,11 +87,34 @@ dependencies {
 
 ## Gradle (Kotlin DSL)
 
-Instructions for adding BigBone `2.0.0-SNAPSHOT` to your Gradle project (using Kotlin DSL):
+### Using Latest Stable Release
+
+Instructions for adding BigBone `2.0.0` to your Gradle project:
 
 Repository:
 
-```groovy
+```kotlin
+repositories {
+    mavenCentral()
+}
+```
+
+Dependencies:
+
+```kotlin
+dependencies {
+    implementation("social.bigbone:bigbone:2.0.0")
+    implementation("social.bigbone:bigbone-rx:2.0.0")
+}
+```
+
+### Using Latest Snapshot Release
+
+Instructions for adding BigBone `2.0.0-SNAPSHOT` to your Gradle project:
+
+Repository:
+
+```kotlin
 repositories {
     maven {
         url = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
@@ -84,7 +124,7 @@ repositories {
 
 Dependencies:
 
-```groovy
+```kotlin
 dependencies {
     implementation("social.bigbone:bigbone:2.0.0-SNAPSHOT")
     implementation("social.bigbone:bigbone-rx:2.0.0-SNAPSHOT")
@@ -92,6 +132,42 @@ dependencies {
 ```
 
 ## Maven
+
+### Using Latest Stable Release
+
+Instructions for adding BigBone `2.0.0` to your Maven project:
+
+Repository:
+
+```xml
+<repositories>
+    <repository>
+        <id>maven-central</id>
+        <name>Maven Central Repository</name>
+        <url>https://repo1.maven.org/maven2</url>
+        <snapshots>
+            <enabled>false</enabled>
+        </snapshots>
+    </repository>
+</repositories>
+```
+
+Dependencies:
+
+```xml
+<dependency>
+    <groupId>social.bigbone</groupId>
+    <artifactId>bigbone</artifactId>
+    <version>2.0.0</version>
+</dependency>
+<dependency>
+    <groupId>social.bigbone</groupId>
+    <artifactId>bigbone-rx</artifactId>
+    <version>2.0.0</version>
+</dependency>
+```
+
+### Using Latest Snapshot Release
 
 Instructions for adding BigBone `2.0.0-SNAPSHOT` to your Maven project:
 
@@ -135,6 +211,7 @@ We provide some example code snippets for Java and Kotlin in [USAGE.md](USAGE.md
 ### Sample Code
 
 There are also two Gradle modules that provide some insights on how to use this library:
+
 - `sample-java` for Java example code
 - `sample-kotlin` for Kotlin example code
 
@@ -145,9 +222,17 @@ The following people have actively contributed to the development of BigBone:
 - [Andreas](https://fosstodon.org/@bocops) - For actively contributing to the whole library project - thanks!
 - [Cédric Champeau](https://mastodon.xyz/@melix) - For putting the Gradle build scripts in great shape again
 
-# Contribution
+Thank you very much for your contributions!
+
+# Contributing
 
 Contributions are welcome! Please have a look at [CONTRIBUTING.md](CONTRIBUTING.md) for more details.  
+
+# Are You Using BigBone?
+
+If so, please let me know and I will add you to the list here which is pretty small at the moment 🙂 
+
+- [MastoFX](https://github.com/pilhuhn/MastoFX) - A simple Mastodon client written in JavaFX
 
 # Previous Work
 
