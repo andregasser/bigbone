@@ -2,7 +2,7 @@ package social.bigbone.api.method
 
 import social.bigbone.MastodonClient
 import social.bigbone.MastodonRequest
-import social.bigbone.Parameter
+import social.bigbone.Parameters
 import social.bigbone.api.entity.Results
 
 /**
@@ -22,7 +22,7 @@ class SearchMethods(private val client: MastodonClient) {
         return client.getMastodonRequest(
             endpoint = "api/v2/search",
             method = MastodonClient.Method.GET,
-            parameters = Parameter().apply {
+            parameters = Parameters().apply {
                 append("q", query)
                 if (resolve) {
                     append("resolve", true)

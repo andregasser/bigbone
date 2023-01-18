@@ -17,7 +17,7 @@ class MutesMethods(private val client: MastodonClient) {
         return client.getPageableMastodonRequest(
             endpoint = "api/v1/mutes",
             method = MastodonClient.Method.GET,
-            parameters = range.toParameter()
+            parameters = range.toParameters()
         )
     }
 }

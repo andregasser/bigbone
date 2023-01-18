@@ -2,7 +2,7 @@ package social.bigbone.api.method
 
 import social.bigbone.MastodonClient
 import social.bigbone.MastodonRequest
-import social.bigbone.Parameter
+import social.bigbone.Parameters
 import social.bigbone.api.Scope
 import social.bigbone.api.entity.auth.AppRegistration
 
@@ -26,7 +26,7 @@ class AppsMethods(private val client: MastodonClient) {
     ): MastodonRequest<AppRegistration> {
         scope.validate()
 
-        val parameters = Parameter()
+        val parameters = Parameters()
             .append("client_name", clientName)
             .append("scopes", scope.toString())
             .append("redirect_uris", redirectUris)
