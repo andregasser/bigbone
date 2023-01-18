@@ -2,6 +2,7 @@
 
 ![Build](https://github.com/andregasser/bigbone/actions/workflows/build.yml/badge.svg)
 [![codecov](https://codecov.io/gh/andregasser/bigbone/branch/master/graph/badge.svg?token=3AFHQQH547)](https://codecov.io/gh/andregasser/bigbone)
+![Latest Release](https://img.shields.io/badge/dynamic/xml?url=https://repo1.maven.org/maven2/social/bigbone/bigbone/maven-metadata.xml&label=Latest%20Release&color=blue&query=.//versioning/latest)
 ![Latest Snapshot](https://img.shields.io/badge/dynamic/xml?url=https://s01.oss.sonatype.org/content/repositories/snapshots/social/bigbone/bigbone/maven-metadata.xml&label=Latest%20Snapshot&color=blue&query=.//versioning/latest)
 
 **BigBone** is a [Mastodon](https://docs.joinmastodon.org/) client library for Java and Kotlin.
