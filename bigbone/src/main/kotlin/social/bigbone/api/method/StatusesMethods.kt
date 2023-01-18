@@ -2,7 +2,7 @@ package social.bigbone.api.method
 
 import social.bigbone.MastodonClient
 import social.bigbone.MastodonRequest
-import social.bigbone.Parameter
+import social.bigbone.ParameterList
 import social.bigbone.api.Pageable
 import social.bigbone.api.Range
 import social.bigbone.api.entity.Account
@@ -51,7 +51,7 @@ class StatusesMethods(private val client: MastodonClient) {
         return client.getPageableMastodonRequest(
             endpoint = "api/v1/statuses/$statusId/reblogged_by",
             method = MastodonClient.Method.GET,
-            parameters = range.toParameter()
+            parameters = range.toParameterList()
         )
     }
 
@@ -62,7 +62,7 @@ class StatusesMethods(private val client: MastodonClient) {
         return client.getPageableMastodonRequest(
             endpoint = "api/v1/statuses/$statusId/favourited_by",
             method = MastodonClient.Method.GET,
-            parameters = range.toParameter()
+            parameters = range.toParameterList()
         )
     }
 
@@ -88,7 +88,7 @@ class StatusesMethods(private val client: MastodonClient) {
         return client.getMastodonRequest(
             endpoint = "api/v1/statuses",
             method = MastodonClient.Method.POST,
-            parameters = Parameter().apply {
+            parameters = ParameterList().apply {
                 append("status", status)
                 inReplyToId?.let { append("in_reply_to_id", it) }
                 mediaIds?.let { append("media_ids", it) }

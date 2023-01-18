@@ -160,7 +160,7 @@ private constructor(
     internal inline fun <reified T : Any> getMastodonRequest(
         endpoint: String,
         method: Method,
-        parameters: Parameter? = null
+        parameters: ParameterList? = null
     ): MastodonRequest<T> {
         return MastodonRequest(
             {
@@ -184,7 +184,7 @@ private constructor(
     internal inline fun <reified T : Any> getPageableMastodonRequest(
         endpoint: String,
         method: Method,
-        parameters: Parameter? = null
+        parameters: ParameterList? = null
     ): MastodonRequest<Pageable<T>> {
         return MastodonRequest<Pageable<T>>(
             {
@@ -208,7 +208,7 @@ private constructor(
     internal inline fun <reified T : Any> getMastodonRequestForList(
         endpoint: String,
         method: Method,
-        parameters: Parameter? = null
+        parameters: ParameterList? = null
     ): MastodonRequest<List<T>> {
         return MastodonRequest(
             {
@@ -266,7 +266,7 @@ private constructor(
      * @param path an absolute path to the API endpoint to call
      * @param query the parameters to use as query string for this request; may be null
      */
-    fun get(path: String, query: Parameter? = null): Response {
+    fun get(path: String, query: ParameterList? = null): Response {
         try {
             val url = fullUrl(instanceName, path, query)
             debugPrintUrl(url)
@@ -287,7 +287,7 @@ private constructor(
      * @param path an absolute path to the API endpoint to call
      * @param body the parameters to use in the request body for this request
      */
-    fun patch(path: String, body: Parameter?): Response {
+    fun patch(path: String, body: ParameterList?): Response {
         if (body == null) {
             throw BigBoneRequestException(Exception("body must not be empty"))
         }
@@ -312,7 +312,7 @@ private constructor(
      * @param path an absolute path to the API endpoint to call
      * @param body the parameters to use in the request body for this request; may be null
      */
-    fun post(path: String, body: Parameter? = null): Response =
+    fun post(path: String, body: ParameterList? = null): Response =
         postRequestBody(path, parameterBody(body))
 
     /**
@@ -357,7 +357,7 @@ private constructor(
          * @param path Mastodon API endpoint to be called
          * @param query query part of the URL to build; may be null
          */
-        fun fullUrl(instanceName: String, path: String, query: Parameter? = null): HttpUrl {
+        fun fullUrl(instanceName: String, path: String, query: ParameterList? = null): HttpUrl {
             val urlBuilder = HttpUrl.Builder()
                 .scheme("https")
                 .host(instanceName)
@@ -372,7 +372,7 @@ private constructor(
          * Returns a RequestBody matching the given parameters.
          * @param parameters list of parameters to use; may be null, in which case the returned RequestBody will be empty
          */
-        fun parameterBody(parameters: Parameter?): RequestBody {
+        fun parameterBody(parameters: ParameterList?): RequestBody {
             return parameters
                 ?.build()
                 ?.toRequestBody("application/x-www-form-urlencoded; charset=utf-8".toMediaTypeOrNull())

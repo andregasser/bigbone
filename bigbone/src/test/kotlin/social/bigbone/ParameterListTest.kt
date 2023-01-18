@@ -3,22 +3,22 @@ package social.bigbone
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.Test
 
-class ParameterTest {
+class ParameterListTest {
     @Test
     fun parameterEmpty() {
-        Parameter().build() shouldBeEqualTo ""
+        ParameterList().build() shouldBeEqualTo ""
     }
 
     @Test
     fun parameterOne() {
-        Parameter()
+        ParameterList()
             .append("test", "value")
             .build() shouldBeEqualTo "test=value"
     }
 
     @Test
     fun parametersOne() {
-        Parameter()
+        ParameterList()
             .append("test", "value")
             .append("id", 3L)
             .append("max", 10)
@@ -28,7 +28,7 @@ class ParameterTest {
 
     @Test
     fun parameterArray() {
-        Parameter()
+        ParameterList()
             .append("media_ids", listOf(1, 3, 4))
             .build() shouldBeEqualTo "media_ids[]=1&media_ids[]=3&media_ids[]=4"
     }
