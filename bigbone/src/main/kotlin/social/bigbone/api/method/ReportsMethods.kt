@@ -2,7 +2,7 @@ package social.bigbone.api.method
 
 import social.bigbone.MastodonClient
 import social.bigbone.MastodonRequest
-import social.bigbone.Parameter
+import social.bigbone.Parameters
 import social.bigbone.api.Pageable
 import social.bigbone.api.Range
 import social.bigbone.api.entity.Report
@@ -20,7 +20,7 @@ class ReportsMethods(private val client: MastodonClient) {
         return client.getPageableMastodonRequest(
             endpoint = "api/v1/reports",
             method = MastodonClient.Method.GET,
-            parameters = range.toParameter()
+            parameters = range.toParameters()
         )
     }
 
@@ -35,7 +35,7 @@ class ReportsMethods(private val client: MastodonClient) {
         return client.getMastodonRequest(
             endpoint = "api/v1/reports",
             method = MastodonClient.Method.POST,
-            parameters = Parameter().apply {
+            parameters = Parameters().apply {
                 append("account_id", accountId)
                 append("status_ids", statusId)
                 append("comment", comment)
