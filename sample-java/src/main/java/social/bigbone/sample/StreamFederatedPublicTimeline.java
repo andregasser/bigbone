@@ -7,7 +7,6 @@ import social.bigbone.api.Shutdownable;
 import social.bigbone.api.entity.Notification;
 import social.bigbone.api.entity.Status;
 import social.bigbone.api.exception.BigBoneRequestException;
-import social.bigbone.api.method.StreamingMethods;
 
 @SuppressWarnings("PMD.SystemPrintln")
 public class StreamFederatedPublicTimeline {
@@ -38,8 +37,7 @@ public class StreamFederatedPublicTimeline {
         };
 
         // Start federated timeline streaming and stop after 20 seconds
-        final StreamingMethods streamingMethods = new StreamingMethods(client);
-        final Shutdownable shutdownable = streamingMethods.federatedPublic(handler);
+        final Shutdownable shutdownable = client.streaming().federatedPublic(handler);
         Thread.sleep(20_000L);
         shutdownable.shutdown();
     }

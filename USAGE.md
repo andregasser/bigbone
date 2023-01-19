@@ -48,7 +48,7 @@ __Java__
 ```java
 MastodonClient client = new MastodonClient.Builder(instanceHostname).build();
 try {
-	AppRegistration appRegistration = client.apps.createApp(
+	AppRegistration appRegistration = client.apps().createApp(
 	    "bigbone-sample-app",
 	    "urn:ietf:wg:oauth:2.0:oob",
 	    new Scope(),
@@ -166,7 +166,7 @@ public class GetRawJson {
             String instanceName = args[0];
             String credentialFilePath = args[1];
             MastodonClient client = Authenticator.appRegistrationIfNeeded(instanceName, credentialFilePath, false);
-            client.timelines.getPublicTimeline().doOnJson(System.out::println).execute();
+            client.timelines().getPublicTimeline().doOnJson(System.out::println).execute();
         } catch (IOException | BigBoneRequestException e) {
             e.printStackTrace();
         }
@@ -223,7 +223,7 @@ Handler handler = new Handler() {
 };
 
 try {
-    Shutdownable shutdownable = client.streaming.localPublic(handler);
+    Shutdownable shutdownable = client.streaming().localPublic(handler);
     Thread.sleep(10000L);
     shutdownable.shutdown();
 } catch (Exception e) {

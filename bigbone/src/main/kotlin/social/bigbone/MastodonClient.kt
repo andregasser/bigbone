@@ -12,22 +12,22 @@ import okhttp3.Response
 import social.bigbone.api.Pageable
 import social.bigbone.api.entity.InstanceVersion
 import social.bigbone.api.exception.BigBoneRequestException
-import social.bigbone.api.method.AccountsMethods
-import social.bigbone.api.method.AppsMethods
-import social.bigbone.api.method.BlocksMethods
-import social.bigbone.api.method.FavouritesMethods
-import social.bigbone.api.method.FollowRequestsMethods
+import social.bigbone.api.method.AccountMethods
+import social.bigbone.api.method.AppMethods
+import social.bigbone.api.method.BlockMethods
+import social.bigbone.api.method.FavouriteMethods
+import social.bigbone.api.method.FollowRequestMethods
 import social.bigbone.api.method.InstanceMethods
-import social.bigbone.api.method.ListsMethods
+import social.bigbone.api.method.ListMethods
 import social.bigbone.api.method.MediaMethods
-import social.bigbone.api.method.MutesMethods
-import social.bigbone.api.method.NotificationsMethods
+import social.bigbone.api.method.MuteMethods
+import social.bigbone.api.method.NotificationMethods
 import social.bigbone.api.method.OAuthMethods
-import social.bigbone.api.method.ReportsMethods
+import social.bigbone.api.method.ReportMethods
 import social.bigbone.api.method.SearchMethods
-import social.bigbone.api.method.StatusesMethods
+import social.bigbone.api.method.StatusMethods
 import social.bigbone.api.method.StreamingMethods
-import social.bigbone.api.method.TimelinesMethods
+import social.bigbone.api.method.TimelineMethods
 import social.bigbone.extension.emptyRequestBody
 import java.io.IOException
 import java.util.concurrent.TimeUnit
@@ -45,97 +45,113 @@ private constructor(
      * access API methods under "api/vX/accounts" endpoint
      */
     @Suppress("unused") // public API
-    val accounts: AccountsMethods by lazy { AccountsMethods(this) }
+    @get:JvmName("accounts")
+    val accounts: AccountMethods by lazy { AccountMethods(this) }
 
     /**
      * access API methods under "api/vX/apps" endpoint
      */
     @Suppress("unused") // public API
-    val apps: AppsMethods by lazy { AppsMethods(this) }
+    @get:JvmName("apps")
+    val apps: AppMethods by lazy { AppMethods(this) }
 
     /**
      * access API methods under "api/vX/blocks" endpoint
      */
     @Suppress("unused") // public API
-    val blocks: BlocksMethods by lazy { BlocksMethods(this) }
+    @get:JvmName("blocks")
+    val blocks: BlockMethods by lazy { BlockMethods(this) }
 
     /**
      * access API methods under "api/vX/favourites" endpoint
      */
     @Suppress("unused") // public API
-    val favourites: FavouritesMethods by lazy { FavouritesMethods(this) }
+    @get:JvmName("favourites")
+    val favourites: FavouriteMethods by lazy { FavouriteMethods(this) }
 
     /**
      * access API methods under "api/vX/follow_requests" endpoint
      */
     @Suppress("unused") // public API
-    val followRequests: FollowRequestsMethods by lazy { FollowRequestsMethods(this) }
+    @get:JvmName("followRequests")
+    val followRequests: FollowRequestMethods by lazy { FollowRequestMethods(this) }
 
     /**
      * access API methods under "api/vX/instance" endpoint
      */
     @Suppress("unused") // public API
-    val instance: InstanceMethods by lazy { InstanceMethods(this) }
+    @get:JvmName("instances")
+    val instances: InstanceMethods by lazy { InstanceMethods(this) }
 
     /**
      * access API methods under "api/vX/lists" endpoint
      */
     @Suppress("unused") // public API
-    val lists: ListsMethods by lazy { ListsMethods(this) }
+    @get:JvmName("lists")
+    val lists: ListMethods by lazy { ListMethods(this) }
 
     /**
      * access API methods under "api/vX/media" endpoint
      */
     @Suppress("unused") // public API
+    @get:JvmName("media")
     val media: MediaMethods by lazy { MediaMethods(this) }
 
     /**
      * access API methods under "api/vX/mutes" endpoint
      */
     @Suppress("unused") // public API
-    val mutes: MutesMethods by lazy { MutesMethods(this) }
+    @get:JvmName("mutes")
+    val mutes: MuteMethods by lazy { MuteMethods(this) }
 
     /**
      * access API methods under "api/vX/notification[s]" endpoint
      */
     @Suppress("unused") // public API
-    val notifications: NotificationsMethods by lazy { NotificationsMethods(this) }
+    @get:JvmName("notifications")
+    val notifications: NotificationMethods by lazy { NotificationMethods(this) }
 
     /**
      * access API methods under "oauth" endpoint
      */
     @Suppress("unused") // public API
+    @get:JvmName("oauth")
     val oauth: OAuthMethods by lazy { OAuthMethods(this) }
 
     /**
      * access API methods under "api/vX/reports" endpoint
      */
     @Suppress("unused") // public API
-    val reports: ReportsMethods by lazy { ReportsMethods(this) }
+    @get:JvmName("reports")
+    val reports: ReportMethods by lazy { ReportMethods(this) }
 
     /**
      * access API methods under "api/vX/search" endpoint
      */
     @Suppress("unused") // public API
+    @get:JvmName("search")
     val search: SearchMethods by lazy { SearchMethods(this) }
 
     /**
      * access API methods under "api/vX/statuses" endpoint
      */
     @Suppress("unused") // public API
-    val statuses: StatusesMethods by lazy { StatusesMethods(this) }
+    @get:JvmName("statuses")
+    val statuses: StatusMethods by lazy { StatusMethods(this) }
 
     /**
      * access API methods under "api/vX/streaming" endpoint
      */
     @Suppress("unused") // public API
+    @get:JvmName("streaming")
     val streaming: StreamingMethods by lazy { StreamingMethods(this) }
 
     /**
      * access API methods under "api/vX/timelines" endpoint
      */
     @Suppress("unused") // public API
-    val timelines: TimelinesMethods by lazy { TimelinesMethods(this) }
+    @get:JvmName("timelines")
+    val timelines: TimelineMethods by lazy { TimelineMethods(this) }
 
     enum class Method {
         DELETE,

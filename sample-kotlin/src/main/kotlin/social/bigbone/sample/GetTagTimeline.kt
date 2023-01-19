@@ -2,7 +2,7 @@ package social.bigbone.sample
 
 import social.bigbone.MastodonClient
 import social.bigbone.api.Range
-import social.bigbone.api.method.TimelinesMethods
+import social.bigbone.api.method.TimelineMethods
 
 object GetTagTimeline {
     @JvmStatic
@@ -15,7 +15,7 @@ object GetTagTimeline {
             .build()
 
         // Get statuses from public timeline
-        val statuses = client.timelines.getTagTimeline(hashtag, Range(), TimelinesMethods.StatusOrigin.LOCAL_AND_REMOTE).execute()
+        val statuses = client.timelines.getTagTimeline(hashtag, Range(), TimelineMethods.StatusOrigin.LOCAL_AND_REMOTE).execute()
         statuses.part.forEach {
             println(it.content)
         }

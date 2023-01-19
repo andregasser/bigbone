@@ -2,7 +2,7 @@ package social.bigbone.sample
 
 import social.bigbone.MastodonClient
 import social.bigbone.api.Range
-import social.bigbone.api.method.TimelinesMethods.StatusOrigin
+import social.bigbone.api.method.TimelineMethods.StatusOrigin
 
 object GetPublicTimeline {
     @JvmStatic
