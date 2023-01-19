@@ -14,87 +14,87 @@ services:
       interval: 5s
       timeout: 5s
 
-  mastodon-redis:
-    image: 'redis:alpine'
-    command: 'redis-server --save 60 1 --loglevel warning'
-    volumes:
-      - 'mastodon-redis-volume:/data'
-    healthcheck:
-      test: ['CMD', 'redis-cli', 'ping']
-      interval: 5s
-      timeout: 5s
-
-  mastodon-es:
-    image: 'docker.elastic.co/elasticsearch/elasticsearch:7.17.7'
-    volumes:
-      - 'mastodon-es-volume:/usr/share/elasticsearch/data'
-    environment:
-      - 'ES_JAVA_OPTS=-Xms512m -Xmx512m'
-      - 'xpack.license.self_generated.type=basic'
-      - 'xpack.security.enabled=false'
-      - 'xpack.watcher.enabled=false'
-      - 'xpack.graph.enabled=false'
-      - 'xpack.ml.enabled=false'
-      - 'bootstrap.memory_lock=true'
-      - 'cluster.name=mastodon-es'
-      - 'discovery.type=single-node'
-      - 'thread_pool.write.queue_size=1000'
-      - 'ingest.geoip.downloader.enabled=false'
-    healthcheck:
-      test: ['CMD-SHELL', 'curl --silent --fail localhost:9200/_cluster/health || exit 1']
-      interval: 5s
-      timeout: 5s
-      retries: 6
-
-  mastodon-web:
-    extends:
-      file: 'docker-compose.base.yml'
-      service: 'mastodon-base'
-    command: 'bash -c "/provision.sh; rm -f /mastodon/tmp/pids/server.pid; bundle exec rails s -p 3000"'
-    volumes:
-      - './provision.sh:/provision.sh:ro'
-      - './production.rb:/opt/mastodon/config/environments/production.rb'
-    environment:
-      MASTODON_ADMIN_USERNAME: '${MASTODON_ADMIN_USERNAME}'
-      MASTODON_ADMIN_EMAIL: '${MASTODON_ADMIN_EMAIL}'
-#    ports:
-#      - '3000:3000'
-    healthcheck:
-      test: ['CMD-SHELL', 'wget -q --spider --proxy=off localhost:3000/health || exit 1']
-      interval: 5s
-      timeout: 5s
-      retries: 12
-    depends_on:
-      mastodon-db:
-        condition: service_healthy
-      mastodon-redis:
-        condition: service_healthy
-      mastodon-es:
-        condition: service_healthy
-
-  mastodon-sidekiq:
-    extends:
-      file: 'docker-compose.base.yml'
-      service: 'mastodon-base'
-    command: 'bundle exec sidekiq'
-    healthcheck:
-      test: ['CMD-SHELL', "ps aux | grep '[s]idekiq\ 6' || false"]
-    depends_on:
-      mastodon-web:
-        condition: service_healthy
-
-  mastodon-streaming:
-    extends:
-      file: 'docker-compose.base.yml'
-      service: 'mastodon-base'
-    command: 'node ./streaming'
-#    ports:
-#      - '4000:4000'
-    healthcheck:
-      test: ['CMD-SHELL', 'wget -q --spider --proxy=off localhost:4000/api/v1/streaming/health || exit 1']
-    depends_on:
-      mastodon-web:
-        condition: service_healthy
+#  mastodon-redis:
+#    image: 'redis:alpine'
+#    command: 'redis-server --save 60 1 --loglevel warning'
+#    volumes:
+#      - 'mastodon-redis-volume:/data'
+#    healthcheck:
+#      test: ['CMD', 'redis-cli', 'ping']
+#      interval: 5s
+#      timeout: 5s
+#
+#  mastodon-es:
+#    image: 'docker.elastic.co/elasticsearch/elasticsearch:7.17.7'
+#    volumes:
+#      - 'mastodon-es-volume:/usr/share/elasticsearch/data'
+#    environment:
+#      - 'ES_JAVA_OPTS=-Xms512m -Xmx512m'
+#      - 'xpack.license.self_generated.type=basic'
+#      - 'xpack.security.enabled=false'
+#      - 'xpack.watcher.enabled=false'
+#      - 'xpack.graph.enabled=false'
+#      - 'xpack.ml.enabled=false'
+#      - 'bootstrap.memory_lock=true'
+#      - 'cluster.name=mastodon-es'
+#      - 'discovery.type=single-node'
+#      - 'thread_pool.write.queue_size=1000'
+#      - 'ingest.geoip.downloader.enabled=false'
+#    healthcheck:
+#      test: ['CMD-SHELL', 'curl --silent --fail localhost:9200/_cluster/health || exit 1']
+#      interval: 5s
+#      timeout: 5s
+#      retries: 6
+#
+#  mastodon-web:
+#    extends:
+#      file: 'docker-compose.base.yml'
+#      service: 'mastodon-base'
+#    command: 'bash -c "/provision.sh; rm -f /mastodon/tmp/pids/server.pid; bundle exec rails s -p 3000"'
+#    volumes:
+#      - './provision.sh:/provision.sh:ro'
+#      - './production.rb:/opt/mastodon/config/environments/production.rb'
+#    environment:
+#      MASTODON_ADMIN_USERNAME: '${MASTODON_ADMIN_USERNAME}'
+#      MASTODON_ADMIN_EMAIL: '${MASTODON_ADMIN_EMAIL}'
+##    ports:
+##      - '3000:3000'
+#    healthcheck:
+#      test: ['CMD-SHELL', 'wget -q --spider --proxy=off localhost:3000/health || exit 1']
+#      interval: 5s
+#      timeout: 5s
+#      retries: 12
+#    depends_on:
+#      mastodon-db:
+#        condition: service_healthy
+#      mastodon-redis:
+#        condition: service_healthy
+#      mastodon-es:
+#        condition: service_healthy
+#
+#  mastodon-sidekiq:
+#    extends:
+#      file: 'docker-compose.base.yml'
+#      service: 'mastodon-base'
+#    command: 'bundle exec sidekiq'
+#    healthcheck:
+#      test: ['CMD-SHELL', "ps aux | grep '[s]idekiq\ 6' || false"]
+#    depends_on:
+#      mastodon-web:
+#        condition: service_healthy
+#
+#  mastodon-streaming:
+#    extends:
+#      file: 'docker-compose.base.yml'
+#      service: 'mastodon-base'
+#    command: 'node ./streaming'
+##    ports:
+##      - '4000:4000'
+#    healthcheck:
+#      test: ['CMD-SHELL', 'wget -q --spider --proxy=off localhost:4000/api/v1/streaming/health || exit 1']
+#    depends_on:
+#      mastodon-web:
+#        condition: service_healthy
 
   # mastodon-proxy:
   #   image: 'caddy:alpine'
