@@ -1,8 +1,6 @@
 package social.bigbone.api
 
-class Scope
-@JvmOverloads
-constructor(private vararg val scopes: Name = arrayOf(Name.ALL)) {
+class Scope @JvmOverloads constructor(private vararg val scopes: Name = arrayOf(Name.ALL)) {
     enum class Name(val scopeName: String) {
         READ("read"),
         WRITE("write"),

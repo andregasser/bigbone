@@ -7,14 +7,14 @@ import java.util.concurrent.locks.ReentrantLock
 import kotlin.concurrent.withLock
 
 class Dispatcher {
-    val executorService: ExecutorService = Executors.newFixedThreadPool(1, { r ->
+    private val executorService: ExecutorService = Executors.newFixedThreadPool(1) { r ->
         val thread = Thread(r)
         thread.isDaemon = true
         return@newFixedThreadPool thread
-    })
+    }
 
-    val lock = ReentrantLock()
-    val shutdownTime = 1000L
+    private val lock = ReentrantLock()
+    private val shutdownTime = 1000L
 
     fun invokeLater(task: Runnable) = executorService.execute(task)
 

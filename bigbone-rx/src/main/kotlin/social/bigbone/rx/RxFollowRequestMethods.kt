@@ -10,7 +10,7 @@ import social.bigbone.api.method.FollowRequestMethods
 import social.bigbone.rx.extensions.onErrorIfNotDisposed
 
 class RxFollowRequestMethods(client: MastodonClient) {
-    val followRequestMethods = FollowRequestMethods(client)
+    private val followRequestMethods = FollowRequestMethods(client)
 
     fun getFollowRequests(range: Range = Range()): Single<Pageable<Account>> {
         return Single.create {

@@ -9,7 +9,7 @@ import social.bigbone.api.method.BlockMethods
 import social.bigbone.rx.extensions.onErrorIfNotDisposed
 
 class RxBlockMethods(client: MastodonClient) {
-    val blockMethods = BlockMethods(client)
+    private val blockMethods = BlockMethods(client)
 
     fun getBlocks(range: Range = Range()): Single<Pageable<Account>> {
         return Single.create {

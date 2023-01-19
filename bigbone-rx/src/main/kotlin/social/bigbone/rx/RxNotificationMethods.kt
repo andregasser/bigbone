@@ -9,7 +9,7 @@ import social.bigbone.api.entity.Notification
 import social.bigbone.api.method.NotificationMethods
 
 class RxNotificationMethods(client: MastodonClient) {
-    val notificationMethods = NotificationMethods(client)
+    private val notificationMethods = NotificationMethods(client)
 
     fun getNotifications(range: Range): Single<Pageable<Notification>> {
         return Single.create {
