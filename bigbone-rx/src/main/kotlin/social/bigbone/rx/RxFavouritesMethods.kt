@@ -9,7 +9,7 @@ import social.bigbone.api.method.FavouritesMethods
 import social.bigbone.rx.extensions.onErrorIfNotDisposed
 
 class RxFavouritesMethods(client: MastodonClient) {
-    val favouritesMethods = FavouritesMethods(client)
+    private val favouritesMethods = FavouritesMethods(client)
 
     fun getFavourites(range: Range = Range()): Single<Pageable<Status>> {
         return Single.create {

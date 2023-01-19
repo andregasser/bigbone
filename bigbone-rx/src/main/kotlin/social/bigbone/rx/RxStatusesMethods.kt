@@ -12,7 +12,7 @@ import social.bigbone.api.entity.Status
 import social.bigbone.api.method.StatusesMethods
 
 class RxStatusesMethods(client: MastodonClient) {
-    val statusesMethods = StatusesMethods(client)
+    private val statusesMethods = StatusesMethods(client)
 
     fun getStatus(statusId: String): Single<Status> {
         return Single.create {

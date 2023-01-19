@@ -8,7 +8,7 @@ import social.bigbone.api.entity.Report
 import social.bigbone.api.method.ReportsMethods
 
 class RxReportsMethods(client: MastodonClient) {
-    val reportsMethods = ReportsMethods(client)
+    private val reportsMethods = ReportsMethods(client)
 
     fun getReports(range: Range = Range()): Single<Pageable<Report>> {
         return Single.create {

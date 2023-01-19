@@ -10,14 +10,13 @@ import social.bigbone.api.entity.Status
 import social.bigbone.api.method.StreamingMethods
 
 class RxStreamingMethods(client: MastodonClient) {
-
-    val streamingMethods = StreamingMethods(client)
+    private val streamingMethods = StreamingMethods(client)
 
     private fun stream(f: (Handler) -> Shutdownable): Flowable<Status> {
-        return Flowable.create<Status>({ emmiter ->
+        return Flowable.create<Status>({ emitter ->
             val shutdownable = f(object : Handler {
                 override fun onStatus(status: Status) {
-                    emmiter.onNext(status)
+                    emitter.onNext(status)
                 }
 
                 override fun onNotification(notification: Notification) {
@@ -28,7 +27,7 @@ class RxStreamingMethods(client: MastodonClient) {
                     // no op
                 }
             })
-            emmiter.setCancellable {
+            emitter.setCancellable {
                 shutdownable.shutdown()
             }
         }, BackpressureStrategy.LATEST)

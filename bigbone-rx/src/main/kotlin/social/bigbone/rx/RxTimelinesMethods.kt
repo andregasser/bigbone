@@ -9,7 +9,7 @@ import social.bigbone.api.method.TimelinesMethods
 import social.bigbone.rx.extensions.single
 
 class RxTimelinesMethods(client: MastodonClient) {
-    val timelinesMethods = TimelinesMethods(client)
+    private val timelinesMethods = TimelinesMethods(client)
 
     fun getHomeTimeline(range: Range = Range()): Single<Pageable<Status>> {
         return single {

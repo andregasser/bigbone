@@ -11,7 +11,7 @@ import social.bigbone.api.method.AccountsMethods
 import social.bigbone.rx.extensions.onErrorIfNotDisposed
 
 class RxAccountsMethods(client: MastodonClient) {
-    val accountsMethods = AccountsMethods(client)
+    private val accountsMethods = AccountsMethods(client)
 
     fun getAccount(accountId: String): Single<Account> {
         return Single.create {
