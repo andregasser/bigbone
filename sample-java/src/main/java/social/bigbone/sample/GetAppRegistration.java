@@ -13,7 +13,7 @@ public class GetAppRegistration {
         final AppsMethods appsMethods = new AppsMethods(client);
         try {
             final AppRegistration registration = appsMethods.createApp(
-                    "mastodon4j-sample-app",
+                    "bigbone-sample-app",
                     "urn:ietf:wg:oauth:2.0:oob",
                     new Scope(Scope.Name.ALL),
                     ""

@@ -71,7 +71,7 @@ final class Authenticator {
     private static AppRegistration appRegistration(final String instanceName) throws BigBoneRequestException {
         final MastodonClient client = new MastodonClient.Builder(instanceName).build();
         final AppsMethods appsMethods = new AppsMethods(client);
-        return appsMethods.createApp("kotlindon", "urn:ietf:wg:oauth:2.0:oob", new Scope(), null).execute();
+        return appsMethods.createApp("bigbone-sample-app", "urn:ietf:wg:oauth:2.0:oob", new Scope(), null).execute();
     }
 
     /**
