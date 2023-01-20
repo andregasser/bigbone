@@ -2,7 +2,7 @@ package social.bigbone.api.entity.auth
 
 import com.google.gson.annotations.SerializedName
 
-class AppRegistration(
+data class AppRegistration(
     @SerializedName("id")
     val id: Long = 0,
 
@@ -14,6 +14,4 @@ class AppRegistration(
 
     @SerializedName("redirect_uri")
     val redirectUri: String = "",
-
-    var instanceName: String = ""
 )

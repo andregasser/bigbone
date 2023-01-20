@@ -2,7 +2,7 @@ package social.bigbone.api.entity
 
 import com.google.gson.annotations.SerializedName
 
-class Mention(
+data class Mention(
     @SerializedName("url")
     val url: String = "",
 

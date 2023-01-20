@@ -7,7 +7,7 @@ import social.bigbone.api.method.MediaMethods
 import java.io.File
 
 class RxMediaMethods(client: MastodonClient) {
-    val mediaMethods = MediaMethods(client)
+    private val mediaMethods = MediaMethods(client)
 
     fun uploadMedia(file: File, mediaType: String): Single<Attachment> {
         return Single.create {

@@ -3,12 +3,11 @@ package social.bigbone.sample;
 import com.google.gson.Gson;
 import social.bigbone.MastodonClient;
 import social.bigbone.MastodonRequest;
-import social.bigbone.Parameter;
+import social.bigbone.Parameters;
 import social.bigbone.api.Scope;
 import social.bigbone.api.entity.auth.AccessToken;
 import social.bigbone.api.entity.auth.AppRegistration;
 import social.bigbone.api.exception.BigBoneRequestException;
-import social.bigbone.api.method.AppsMethods;
 
 import java.io.File;
 import java.io.IOException;
@@ -70,8 +69,7 @@ final class Authenticator {
 
     private static AppRegistration appRegistration(final String instanceName) throws BigBoneRequestException {
         final MastodonClient client = new MastodonClient.Builder(instanceName).build();
-        final AppsMethods appsMethods = new AppsMethods(client);
-        return appsMethods.createApp("kotlindon", "urn:ietf:wg:oauth:2.0:oob", new Scope(), null).execute();
+        return client.apps().createApp("bigbone-sample-app", "urn:ietf:wg:oauth:2.0:oob", new Scope(), null).execute();
     }
 
     /**
@@ -87,7 +85,7 @@ final class Authenticator {
             final String userName,
             final String password
             ) {
-        final Parameter parameters = new Parameter()
+        final Parameters parameters = new Parameters()
                 .append("client_id", clientId)
                 .append("client_secret", clientSecret)
                 .append("scope", scope.toString())

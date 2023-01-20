@@ -3,7 +3,7 @@ package social.bigbone.sample
 import com.google.gson.Gson
 import social.bigbone.MastodonClient
 import social.bigbone.MastodonRequest
-import social.bigbone.Parameter
+import social.bigbone.Parameters
 import social.bigbone.api.Scope
 import social.bigbone.api.entity.auth.AccessToken
 import social.bigbone.api.entity.auth.AppRegistration
@@ -78,7 +78,7 @@ object Authenticator {
     private fun appRegistration(instanceName: String): AppRegistration {
         val client = MastodonClient.Builder(instanceName).build()
         return client.apps.createApp(
-            "kotlindon",
+            "bigbone-sample-app",
             scope = Scope()
         ).execute()
     }
@@ -96,7 +96,7 @@ object Authenticator {
         userName: String,
         password: String
     ): MastodonRequest<AccessToken> {
-        val parameters = Parameter()
+        val parameters = Parameters()
             .append("client_id", clientId)
             .append("client_secret", clientSecret)
             .append("scope", scope.toString())

@@ -2,7 +2,7 @@ package social.bigbone.api.entity
 
 import com.google.gson.annotations.SerializedName
 
-class Notification(
+data class Notification(
     @SerializedName("id")
     val id: String = "0", // The notification ID
 
