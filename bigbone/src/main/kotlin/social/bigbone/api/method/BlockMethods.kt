@@ -12,7 +12,11 @@ import social.bigbone.api.entity.Account
  */
 class BlockMethods(private val client: MastodonClient) {
 
-    //  GET /api/v1/blocks
+    /**
+     * View your blocks. Blocking and unblocking is achieved via accounts methods.
+     * @param range optional Range for the pageable return value
+     * @see <a href="https://docs.joinmastodon.org/methods/blocks/#get">Mastodon API documentation: methods/blocks/#get</a>
+     */
     @JvmOverloads
     fun getBlocks(range: Range = Range()): MastodonRequest<Pageable<Account>> {
         return client.getPageableMastodonRequest(

@@ -12,7 +12,12 @@ import social.bigbone.api.exception.BigBoneRequestException
  * @see <a href="https://docs.joinmastodon.org/methods/follow_requests/">Mastodon follow_requests API methods</a>
  */
 class FollowRequestMethods(private val client: MastodonClient) {
-    // GET /api/v1/follow_requests
+
+    /**
+     * View pending follow requests.
+     * @param range optional Range for the pageable return value
+     * @see <a href="https://docs.joinmastodon.org/methods/follow_requests/#get">Mastodon API documentation: methods/follow_requests/#get</a>
+     */
     @JvmOverloads
     fun getFollowRequests(range: Range = Range()): MastodonRequest<Pageable<Account>> {
         return client.getPageableMastodonRequest(
@@ -22,7 +27,11 @@ class FollowRequestMethods(private val client: MastodonClient) {
         )
     }
 
-    //  POST /api/v1/follow_requests/:id/authorize
+    /**
+     * Accept follow request.
+     * @param accountId ID of the account whose follow request should be accepted.
+     * @see <a href="https://docs.joinmastodon.org/methods/follow_requests/#accept">Mastodon API documentation: methods/follow_requests/#accept</a>
+     */
     @Throws(BigBoneRequestException::class)
     fun authorizeFollowRequest(accountId: String) {
         client.performAction(
@@ -31,7 +40,11 @@ class FollowRequestMethods(private val client: MastodonClient) {
         )
     }
 
-    //  POST /api/v1/follow_requests/:id/reject
+    /**
+     * Reject follow request.
+     * @param accountId ID of the account whose follow request should be rejected.
+     * @see <a href="https://docs.joinmastodon.org/methods/follow_requests/#reject">Mastodon API documentation: methods/follow_requests/#reject</a>
+     */
     @Throws(BigBoneRequestException::class)
     fun rejectFollowRequest(accountId: String) {
         client.performAction(
