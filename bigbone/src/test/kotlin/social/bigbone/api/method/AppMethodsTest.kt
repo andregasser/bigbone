@@ -20,7 +20,6 @@ class AppMethodsTest {
             clientName = "bigbone-sample-app", scope = Scope(Scope.Name.ALL)
         ).execute()
 
-        registration.instanceName shouldBeEqualTo "mastodon.cloud"
         registration.clientId shouldBeEqualTo "client id"
         registration.clientSecret shouldBeEqualTo "client secret"
         registration.redirectUri shouldBeEqualTo "urn:ietf:wg:oauth:2.0:oob"

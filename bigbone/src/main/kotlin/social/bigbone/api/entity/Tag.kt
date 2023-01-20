@@ -2,7 +2,7 @@ package social.bigbone.api.entity
 
 import com.google.gson.annotations.SerializedName
 
-class Tag(
+data class Tag(
     @SerializedName("name")
     val name: String = "",
 

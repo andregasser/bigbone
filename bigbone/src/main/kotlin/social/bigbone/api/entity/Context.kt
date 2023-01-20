@@ -2,7 +2,7 @@ package social.bigbone.api.entity
 
 import com.google.gson.annotations.SerializedName
 
-class Context(
+data class Context(
     @SerializedName("ancestors")
     val ancestors: List<Status> = emptyList(),
 

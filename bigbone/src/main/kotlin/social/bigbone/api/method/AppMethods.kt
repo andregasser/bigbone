@@ -39,9 +39,7 @@ class AppMethods(private val client: MastodonClient) {
                 client.post("api/v1/apps", parameters)
             },
             {
-                client.getSerializer().fromJson(it, AppRegistration::class.java).apply {
-                    this.instanceName = client.getInstanceName()
-                }
+                client.getSerializer().fromJson(it, AppRegistration::class.java)
             }
         )
     }
