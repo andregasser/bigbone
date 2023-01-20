@@ -25,10 +25,11 @@ class ReportMethods(private val client: MastodonClient) {
     }
 
     /**
-     * POST /api/v1/reports
-     * account_id: The ID of the account to report
-     * status_ids: The IDs of statuses to report (can be an array)
-     * comment: A comment to associate with the report.
+     * File a report.
+     * @param accountId The ID of the account to report
+     * @param statusId The ID of a status to report
+     * @param comment The reason for the report. Default maximum of 1000 characters.
+     * @see <a href="https://docs.joinmastodon.org/methods/reports/#post">Mastodon API documentation: methods/reports/#post</a>
      */
     @Throws(BigBoneRequestException::class)
     fun fileReport(accountId: String, statusId: String, comment: String): MastodonRequest<Report> {

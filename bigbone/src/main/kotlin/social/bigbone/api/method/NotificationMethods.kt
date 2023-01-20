@@ -12,7 +12,13 @@ import social.bigbone.api.exception.BigBoneRequestException
  * @see <a href="https://docs.joinmastodon.org/methods/notifications/">Mastodon notifications API methods</a>
  */
 class NotificationMethods(private val client: MastodonClient) {
-    // GET /api/v1/notifications
+
+    /**
+     * Notifications concerning the user.
+     * @param range optional Range for the pageable return value
+     * @param excludeTypes Types to exclude from the results. See Mastodon API documentation for details.
+     * @see <a href="https://docs.joinmastodon.org/methods/notifications/#get">Mastodon API documentation: methods/notifications/#get</a>
+     */
     @JvmOverloads
     fun getNotifications(range: Range = Range(), excludeTypes: List<Notification.Type>? = null): MastodonRequest<Pageable<Notification>> {
         return client.getPageableMastodonRequest(
@@ -26,7 +32,11 @@ class NotificationMethods(private val client: MastodonClient) {
         )
     }
 
-    // GET /api/v1/notifications/:id
+    /**
+     * View information about a notification with a given ID.
+     * @param id ID of the notification to view
+     * @see <a href="https://docs.joinmastodon.org/methods/notifications/#get-one">Mastodon API documentation: methods/notifications/#get-one</a>
+     */
     fun getNotification(id: String): MastodonRequest<Notification> {
         return client.getMastodonRequest(
             endpoint = "api/v1/notification/$id", // singular "notification" is correct here
@@ -34,7 +44,10 @@ class NotificationMethods(private val client: MastodonClient) {
         )
     }
 
-    //  POST /api/v1/notifications/clear
+    /**
+     * Clear all notifications from the server.
+     * @see <a href="https://docs.joinmastodon.org/methods/notifications/#clear">Mastodon API documentation: methods/notifications/#clear</a>
+     */
     @Throws(BigBoneRequestException::class)
     fun clearNotifications() {
         client.performAction(
