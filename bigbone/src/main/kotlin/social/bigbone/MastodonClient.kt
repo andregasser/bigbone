@@ -42,112 +42,112 @@ private constructor(
     private var instanceVersion: String? = null
 
     /**
-     * access API methods under "api/vX/accounts" endpoint
+     * Access API methods under "api/vX/accounts" endpoint.
      */
     @Suppress("unused") // public API
     @get:JvmName("accounts")
     val accounts: AccountMethods by lazy { AccountMethods(this) }
 
     /**
-     * access API methods under "api/vX/apps" endpoint
+     * Access API methods under "api/vX/apps" endpoint.
      */
     @Suppress("unused") // public API
     @get:JvmName("apps")
     val apps: AppMethods by lazy { AppMethods(this) }
 
     /**
-     * access API methods under "api/vX/blocks" endpoint
+     * Access API methods under "api/vX/blocks" endpoint.
      */
     @Suppress("unused") // public API
     @get:JvmName("blocks")
     val blocks: BlockMethods by lazy { BlockMethods(this) }
 
     /**
-     * access API methods under "api/vX/favourites" endpoint
+     * Access API methods under "api/vX/favourites" endpoint.
      */
     @Suppress("unused") // public API
     @get:JvmName("favourites")
     val favourites: FavouriteMethods by lazy { FavouriteMethods(this) }
 
     /**
-     * access API methods under "api/vX/follow_requests" endpoint
+     * Access API methods under "api/vX/follow_requests" endpoint.
      */
     @Suppress("unused") // public API
     @get:JvmName("followRequests")
     val followRequests: FollowRequestMethods by lazy { FollowRequestMethods(this) }
 
     /**
-     * access API methods under "api/vX/instance" endpoint
+     * Access API methods under "api/vX/instance" endpoint.
      */
     @Suppress("unused") // public API
     @get:JvmName("instances")
     val instances: InstanceMethods by lazy { InstanceMethods(this) }
 
     /**
-     * access API methods under "api/vX/lists" endpoint
+     * Access API methods under "api/vX/lists" endpoint.
      */
     @Suppress("unused") // public API
     @get:JvmName("lists")
     val lists: ListMethods by lazy { ListMethods(this) }
 
     /**
-     * access API methods under "api/vX/media" endpoint
+     * Access API methods under "api/vX/media" endpoint.
      */
     @Suppress("unused") // public API
     @get:JvmName("media")
     val media: MediaMethods by lazy { MediaMethods(this) }
 
     /**
-     * access API methods under "api/vX/mutes" endpoint
+     * Access API methods under "api/vX/mutes" endpoint.
      */
     @Suppress("unused") // public API
     @get:JvmName("mutes")
     val mutes: MuteMethods by lazy { MuteMethods(this) }
 
     /**
-     * access API methods under "api/vX/notification[s]" endpoint
+     * Access API methods under "api/vX/notification[s]" endpoint.
      */
     @Suppress("unused") // public API
     @get:JvmName("notifications")
     val notifications: NotificationMethods by lazy { NotificationMethods(this) }
 
     /**
-     * access API methods under "oauth" endpoint
+     * Access API methods under "oauth" endpoint.
      */
     @Suppress("unused") // public API
     @get:JvmName("oauth")
     val oauth: OAuthMethods by lazy { OAuthMethods(this) }
 
     /**
-     * access API methods under "api/vX/reports" endpoint
+     * Access API methods under "api/vX/reports" endpoint.
      */
     @Suppress("unused") // public API
     @get:JvmName("reports")
     val reports: ReportMethods by lazy { ReportMethods(this) }
 
     /**
-     * access API methods under "api/vX/search" endpoint
+     * Access API methods under "api/vX/search" endpoint.
      */
     @Suppress("unused") // public API
     @get:JvmName("search")
     val search: SearchMethods by lazy { SearchMethods(this) }
 
     /**
-     * access API methods under "api/vX/statuses" endpoint
+     * Access API methods under "api/vX/statuses" endpoint.
      */
     @Suppress("unused") // public API
     @get:JvmName("statuses")
     val statuses: StatusMethods by lazy { StatusMethods(this) }
 
     /**
-     * access API methods under "api/vX/streaming" endpoint
+     * Access API methods under "api/vX/streaming" endpoint.
      */
     @Suppress("unused") // public API
     @get:JvmName("streaming")
     val streaming: StreamingMethods by lazy { StreamingMethods(this) }
 
     /**
-     * access API methods under "api/vX/timelines" endpoint
+     * Access API methods under "api/vX/timelines" endpoint.
      */
     @Suppress("unused") // public API
     @get:JvmName("timelines")
@@ -368,7 +368,7 @@ private constructor(
 
     companion object {
         /**
-         * Returns a HttpUrl
+         * Returns a HttpUrl.
          * @param instanceName host of a Mastodon instance
          * @param path Mastodon API endpoint to be called
          * @param query query part of the URL to build; may be null

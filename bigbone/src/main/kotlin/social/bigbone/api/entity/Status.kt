@@ -2,7 +2,7 @@ package social.bigbone.api.entity
 
 import com.google.gson.annotations.SerializedName
 
-class Status(
+data class Status(
     @SerializedName("id")
     val id: String = "0",
 

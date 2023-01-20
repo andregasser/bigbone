@@ -149,8 +149,9 @@ class AccountMethods(private val client: MastodonClient) {
 
     // GET /api/v1/accounts/search
     /**
-     * q: What to search for
-     * limit: Maximum number of matching accounts to return (default: 40)
+     * Performs an account search.
+     * @param query the search query
+     * @param limit the maximum number of matching accounts to return (default: 40)
      */
     @JvmOverloads
     fun searchAccounts(query: String, limit: Int = 40): MastodonRequest<List<Account>> {

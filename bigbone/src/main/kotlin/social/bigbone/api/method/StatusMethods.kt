@@ -66,14 +66,15 @@ class StatusMethods(private val client: MastodonClient) {
         )
     }
 
+    // POST /api/v1/status
     /**
-     * POST /api/v1/status
-     * status: The text of the status
-     * in_reply_to_id (optional): local ID of the status you want to reply to
-     * media_ids (optional): array of media IDs to attach to the status (maximum 4)
-     * sensitive (optional): set this to mark the media of the status as NSFW
-     * spoiler_text (optional): text to be shown as a warning before the actual content
-     * visibility (optional): either "direct", "private", "unlisted" or "public"
+     * Post a status.
+     * @param status the text of the status
+     * @param inReplyToId the local id of the status you want to reply to
+     * @param mediaIds the array of media ids to attach to the status (maximum 4)
+     * @param sensitive set this to mark the media of the status as NSFW
+     * @param spoilerText text to be shown as a warning before the actual content
+     * @param visibility either "direct", "private", "unlisted" or "public"
      */
     @JvmOverloads
     @Throws(BigBoneRequestException::class)
