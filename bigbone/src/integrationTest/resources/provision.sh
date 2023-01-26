@@ -4,6 +4,9 @@ echo "Migrating database..."
 bundle exec rake db:migrate
 
 echo "Checking if provisioning is required..."
+echo "----"
+echo $MASTODON_ADMIN_USERNAME
+echo "----"
 bin/tootctl accounts approve $MASTODON_ADMIN_USERNAME
 
 if [ $? -eq 0 ]; then

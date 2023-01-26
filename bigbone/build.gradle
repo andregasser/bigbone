@@ -10,7 +10,7 @@ sourceSets {
 }
 
 configurations {
-    integrationTestImplementaton.extendsFrom implementation
+    integrationTestImplementation.extendsFrom implementation
     integrationTestRuntimeOnly.extendsFrom runtimeOnly
 }
 
@@ -19,14 +19,30 @@ dependencies {
     api libs.gson
     implementation libs.kotlin.jdk8
 
-    testImplementation libs.junit.jupiter
+    testImplementation libs.junit.jupiter.api
     testImplementation libs.kluent
     testImplementation libs.mockk
     testImplementation libs.mockk.dsl
-    integrationTestImplementation libs.junit.jupiter
+    integrationTestImplementation libs.junit.jupiter.api
+    integrationTestImplementation libs.junit.jupiter.engine
     integrationTestImplementation libs.testcontainers
     integrationTestImplementation libs.testcontainers.junit
     integrationTestImplementation 'ch.qos.logback:logback-core:1.3.5'
     integrationTestImplementation 'ch.qos.logback:logback-classic:1.3.5'
     integrationTestImplementation 'org.slf4j:slf4j-api:2.0.4'
+}
+
+tasks.register('integrationTest', Test) {
+    description = 'Runs integration tests.'
+    group = 'verification'
+
+    testClassesDirs = sourceSets.integrationTest.output.classesDirs
+    classpath = sourceSets.integrationTest.runtimeClasspath
+    shouldRunAfter test
+
+    useJUnitPlatform()
+
+    testLogging {
+        events "passed"
+    }
 }

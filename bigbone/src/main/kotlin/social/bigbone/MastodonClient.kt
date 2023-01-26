@@ -40,6 +40,8 @@ private constructor(
 ) {
     private var debug = false
     private var instanceVersion: String? = null
+    private var scheme: String = "https"
+    private var port: Int = 443
 
     /**
      * Access API methods under "api/vX/accounts" endpoint.
@@ -167,6 +169,10 @@ private constructor(
 
     fun getInstanceVersion() = instanceVersion
 
+    fun getScheme() = scheme
+
+    fun getPort() = port
+
     /**
      * Returns a MastodonRequest for the defined action, allowing to retrieve returned data.
      * @param endpoint the Mastodon API endpoint to call
@@ -263,7 +269,7 @@ private constructor(
      */
     fun delete(path: String): Response {
         try {
-            val url = fullUrl(instanceName, path)
+            val url = fullUrl(scheme, instanceName, port, path)
             debugPrintUrl(url)
             val call = client.newCall(
                 Request.Builder()
@@ -284,7 +290,7 @@ private constructor(
      */
     fun get(path: String, query: Parameters? = null): Response {
         try {
-            val url = fullUrl(instanceName, path, query)
+            val url = fullUrl(scheme, instanceName, port, path, query)
             debugPrintUrl(url)
             val call = client.newCall(
                 Request.Builder()
@@ -309,7 +315,7 @@ private constructor(
         }
 
         try {
-            val url = fullUrl(instanceName, path)
+            val url = fullUrl(scheme, instanceName, port, path)
             debugPrintUrl(url)
             val call = client.newCall(
                 Request.Builder()
@@ -341,7 +347,7 @@ private constructor(
      */
     fun postRequestBody(path: String, body: RequestBody): Response {
         try {
-            val url = fullUrl(instanceName, path)
+            val url = fullUrl(scheme, instanceName, port, path)
             debugPrintUrl(url)
             val call = client.newCall(
                 Request.Builder()
@@ -373,10 +379,11 @@ private constructor(
          * @param path Mastodon API endpoint to be called
          * @param query query part of the URL to build; may be null
          */
-        fun fullUrl(instanceName: String, path: String, query: Parameters? = null): HttpUrl {
+        fun fullUrl(scheme: String, instanceName: String, port: Int, path: String, query: Parameters? = null): HttpUrl {
             val urlBuilder = HttpUrl.Builder()
-                .scheme("https")
+                .scheme(scheme)
                 .host(instanceName)
+                .port(port)
                 .addEncodedPathSegments(path)
             query?.let {
                 urlBuilder.encodedQuery(it.toQuery())
@@ -403,9 +410,19 @@ private constructor(
         private val gson = Gson()
         private var accessToken: String? = null
         private var debug = false
+        private var scheme = "https"
+        private var port = 443
 
         fun accessToken(accessToken: String) = apply {
             this.accessToken = accessToken
+        }
+
+        fun withHttpsDisabled() = apply {
+            scheme = "http"
+        }
+
+        fun withPort(port: Int) = apply {
+            this.port = port
         }
 
         fun useStreamingApi() = apply {
@@ -431,12 +448,12 @@ private constructor(
 
         internal fun v2InstanceRequest(): Response {
             val client = OkHttpClient.Builder().build()
-            return client.newCall(Request.Builder().url(fullUrl(instanceName, "api/v2/instance")).get().build()).execute()
+            return client.newCall(Request.Builder().url(fullUrl(scheme, instanceName, port, "api/v2/instance")).get().build()).execute()
         }
 
         internal fun v1InstanceRequest(): Response {
             val client = OkHttpClient.Builder().build()
-            return client.newCall(Request.Builder().url(fullUrl(instanceName, "api/v1/instance")).get().build()).execute()
+            return client.newCall(Request.Builder().url(fullUrl(scheme, instanceName, port, "api/v1/instance")).get().build()).execute()
         }
 
         fun build(): MastodonClient {
@@ -447,6 +464,8 @@ private constructor(
             ).also {
                 it.debug = debug
                 it.instanceVersion = getInstanceVersion()
+                it.scheme = scheme
+                it.port = port
             }
         }
     }

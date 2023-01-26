@@ -8,12 +8,20 @@ import social.bigbone.api.Range
 import social.bigbone.api.entity.Account
 import social.bigbone.api.entity.Relationship
 import social.bigbone.api.entity.Status
+import social.bigbone.api.entity.auth.AccessToken
 
 /**
  * Allows access to API methods with endpoints having an "api/vX/accounts" prefix.
  * @see <a href="https://docs.joinmastodon.org/methods/accounts/">Mastodon accounts API methods</a>
  */
 class AccountMethods(private val client: MastodonClient) {
+    fun registerAccount(username: String, email: String, password: String, agreement: Boolean, locale: String, reason: String?): MastodonRequest<AccessToken>{
+        return client.getMastodonRequest(
+            endpoint = "api/v1/accounts",
+            method = MastodonClient.Method.POST
+        )
+    }
+
     /**
      * View information about a profile.
      * @param accountId ID of the profile to look up

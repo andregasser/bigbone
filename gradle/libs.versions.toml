@@ -21,7 +21,8 @@ detekt = "1.22.0"
 versions = "0.44.0"
 
 [libraries]
-junit-jupiter = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junit-jupiter" }
+junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junit-jupiter" }
+junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit-jupiter" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 kluent = { module = "org.amshove.kluent:kluent", version.ref = "kluent" }
 kotlin-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin-coroutines" }

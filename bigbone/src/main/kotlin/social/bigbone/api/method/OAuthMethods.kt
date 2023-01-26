@@ -31,7 +31,7 @@ class OAuthMethods(private val client: MastodonClient) {
             .append("redirect_uri", redirectUri)
             .append("response_type", "code")
             .append("scope", scope.toString())
-        return MastodonClient.fullUrl(client.getInstanceName(), endpoint, params).toString()
+        return MastodonClient.fullUrl(client.getScheme(), client.getInstanceName(), client.getPort(), endpoint, params).toString()
     }
 
     /**
