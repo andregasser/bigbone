@@ -13,7 +13,7 @@ class RxAppMethods(client: MastodonClient) {
     fun createApp(
         clientName: String,
         redirectUris: String = "urn:ietf:wg:oauth:2.0:oob",
-        scope: Scope,
+        scope: Scope = Scope(Scope.Name.READ),
         website: String? = null
     ): Single<AppRegistration> {
         return Single.create {
