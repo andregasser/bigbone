@@ -1,11 +1,9 @@
 package social.bigbone.sample;
 
 import social.bigbone.MastodonClient;
-import social.bigbone.api.entity.Attachment;
+import social.bigbone.api.entity.MediaAttachment;
 import social.bigbone.api.entity.Status.Visibility;
 import social.bigbone.api.exception.BigBoneRequestException;
-import social.bigbone.api.method.MediaMethods;
-import social.bigbone.api.method.StatusesMethods;
 
 import java.io.File;
 import java.util.Collections;
@@ -26,18 +24,16 @@ public class PostStatusWithMediaAttached {
         final File uploadFile = new File(classLoader.getResource("castle.jpg").getFile());
 
         // Upload image to Mastodon
-        final MediaMethods mediaMethods = new MediaMethods(client);
-        final Attachment uploadedFile = mediaMethods.uploadMedia(uploadFile, "image/jpg").execute();
+        final MediaAttachment uploadedFile = client.media().uploadMedia(uploadFile, "image/jpg").execute();
         final String mediaId = uploadedFile.getId();
 
         // Post status with media attached
-        final StatusesMethods statusesMethods = new StatusesMethods(client);
         final String statusText = "Status posting test";
         final String inReplyToId = null;
         final List<String> mediaIds = Collections.singletonList(mediaId);
         final boolean sensitive = false;
         final String spoilerText = "A castle";
         final Visibility visibility = Visibility.Private;
-        statusesMethods.postStatus(statusText, inReplyToId, mediaIds, sensitive, spoilerText, visibility).execute();
+        client.statuses().postStatus(statusText, inReplyToId, mediaIds, sensitive, spoilerText, visibility).execute();
     }
 }

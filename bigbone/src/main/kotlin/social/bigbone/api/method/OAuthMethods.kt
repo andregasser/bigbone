@@ -17,7 +17,11 @@ class OAuthMethods(private val client: MastodonClient) {
      * it will create and return an authorization code, then redirect to the desired redirectUri,
      * or show the authorization code if urn:ietf:wg:oauth:2.0:oob was requested.
      * The authorization code can be used while requesting a token to obtain access to user-level methods.
-     *
+     * @param clientId The client ID, obtained during app registration.
+     * @param scope List of requested OAuth scopes, separated by spaces. Must be a subset of scopes declared during app registration.
+     * @param redirectUri Set a URI to redirect the user to. Defaults to "urn:ietf:wg:oauth:2.0:oob",
+     *  which will display the authorization code to the user instead of redirecting to a web page.
+     *  Must match one of the redirect_uris declared during app registration.
      * @see <a href="https://docs.joinmastodon.org/methods/oauth/#authorize">Mastodon oauth API methods #authorize</a>
      */
     fun getOAuthUrl(clientId: String, scope: Scope, redirectUri: String = "urn:ietf:wg:oauth:2.0:oob"): String {
@@ -32,7 +36,13 @@ class OAuthMethods(private val client: MastodonClient) {
 
     /**
      * Obtain an access token, to be used during API calls that are not public.
-     *
+     * @param clientId The client ID, obtained during app registration.
+     * @param clientSecret The client secret, obtained during app registration.
+     * @param redirectUri Set a URI to redirect the user to. Defaults to "urn:ietf:wg:oauth:2.0:oob",
+     *  which will display the authorization code to the user instead of redirecting to a web page.
+     *  Must match one of the redirect_uris declared during app registration.
+     * @param code A user authorization code, obtained via the URL received from getOAuthUrl()
+     * @param grantType See Mastodon API documentation for details. Defaults to "authorization_code".
      * @see <a href="https://docs.joinmastodon.org/methods/oauth/#token">Mastodon oauth API methods #token</a>
      */
     @JvmOverloads

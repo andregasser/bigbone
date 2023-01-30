@@ -1,7 +1,7 @@
 package social.bigbone.sample
 
 import social.bigbone.MastodonClient
-import social.bigbone.api.method.TimelinesMethods.StatusOrigin.LOCAL_AND_REMOTE
+import social.bigbone.api.method.TimelineMethods.StatusOrigin.LOCAL_AND_REMOTE
 
 object GetRawJson {
     @JvmStatic

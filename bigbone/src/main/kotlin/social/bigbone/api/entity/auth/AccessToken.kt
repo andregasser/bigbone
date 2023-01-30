@@ -2,16 +2,16 @@ package social.bigbone.api.entity.auth
 
 import com.google.gson.annotations.SerializedName
 
-class AccessToken(
+data class AccessToken(
     @SerializedName("access_token")
-    var accessToken: String = "",
+    val accessToken: String = "",
 
     @SerializedName("token_type")
-    var tokenType: String = "",
+    val tokenType: String = "",
 
     @SerializedName("scope")
-    var scope: String = "",
+    val scope: String = "",
 
     @SerializedName("created_at")
-    var createdAt: Long = 0L
+    val createdAt: Long = 0L
 )
