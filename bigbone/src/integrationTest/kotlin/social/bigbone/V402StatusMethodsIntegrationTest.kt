@@ -1,23 +1,17 @@
+package social.bigbone
+
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import social.bigbone.MastodonClient
 
-class Test2 {
-
+class V402StatusMethodsIntegrationTest: V402BaseIntegrationTest() {
     private lateinit var client: MastodonClient
 
     @BeforeEach
     fun setUp() {
-        client = MastodonClient.Builder("localhost")
+        client = MastodonClient.Builder(mastodonWebContainer.host)
             .withHttpsDisabled()
-            .withPort(3000)
+            .withPort(mastodonWebContainer.getMappedPort(3000))
             .build()
-    }
-
-    @Test
-    fun getInstance() {
-        val instance = client.instances.getInstance().execute()
-        println(instance)
     }
 
     @Test
