@@ -2,7 +2,7 @@ package social.bigbone.api.entity
 
 import com.google.gson.annotations.SerializedName
 
-data class Attachment(
+data class MediaAttachment(
     @SerializedName("id")
     val id: String = "0",
 

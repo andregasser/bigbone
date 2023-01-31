@@ -58,7 +58,7 @@ data class Status(
     val visibility: String = Visibility.Public.value,
 
     @SerializedName("media_attachments")
-    val mediaAttachments: List<Attachment> = emptyList(),
+    val mediaAttachments: List<MediaAttachment> = emptyList(),
 
     @SerializedName("mentions")
     val mentions: List<Mention> = emptyList(),

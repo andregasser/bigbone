@@ -5,7 +5,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import social.bigbone.MastodonClient
 import social.bigbone.MastodonRequest
-import social.bigbone.api.entity.Attachment
+import social.bigbone.api.entity.MediaAttachment
 import java.io.File
 
 /**
@@ -19,19 +19,19 @@ class MediaMethods(private val client: MastodonClient) {
      * @param mediaType media type of the file as a string, e.g. "image/png"
      * @see <a href="https://docs.joinmastodon.org/methods/media/#v1">Mastodon API documentation: methods/media/#v1</a>
      */
-    fun uploadMedia(file: File, mediaType: String): MastodonRequest<Attachment> {
+    fun uploadMedia(file: File, mediaType: String): MastodonRequest<MediaAttachment> {
         val body = file.asRequestBody(mediaType.toMediaTypeOrNull())
         val part = MultipartBody.Part.createFormData("file", file.name, body)
         val requestBody = MultipartBody.Builder()
             .setType(MultipartBody.FORM)
             .addPart(part)
             .build()
-        return MastodonRequest<Attachment>(
+        return MastodonRequest<MediaAttachment>(
             {
                 client.postRequestBody("api/v1/media", requestBody)
             },
             {
-                client.getSerializer().fromJson(it, Attachment::class.java)
+                client.getSerializer().fromJson(it, MediaAttachment::class.java)
             }
         )
     }
