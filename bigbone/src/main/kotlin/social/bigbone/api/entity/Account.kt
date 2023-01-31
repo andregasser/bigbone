@@ -7,7 +7,7 @@ data class Account(
     val id: String = "0",
 
     @SerializedName("username")
-    val userName: String = "",
+    val username: String = "",
 
     @SerializedName("acct")
     val acct: String = "",

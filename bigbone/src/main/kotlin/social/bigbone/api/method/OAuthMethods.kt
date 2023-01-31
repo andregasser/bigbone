@@ -35,23 +35,21 @@ class OAuthMethods(private val client: MastodonClient) {
     }
 
     /**
-     * Obtain an access token, to be used during API calls that are not public.
+     * Obtain an access token using OAuth 2 authorization code grant type. To be used during API calls that are not public.
      * @param clientId The client ID, obtained during app registration.
      * @param clientSecret The client secret, obtained during app registration.
      * @param redirectUri Set a URI to redirect the user to. Defaults to "urn:ietf:wg:oauth:2.0:oob",
      *  which will display the authorization code to the user instead of redirecting to a web page.
      *  Must match one of the redirect_uris declared during app registration.
      * @param code A user authorization code, obtained via the URL received from getOAuthUrl()
-     * @param grantType See Mastodon API documentation for details. Defaults to "authorization_code".
      * @see <a href="https://docs.joinmastodon.org/methods/oauth/#token">Mastodon oauth API methods #token</a>
      */
     @JvmOverloads
-    fun getAccessToken(
+    fun getAccessTokenWithAuthorizationCodeGrant(
         clientId: String,
         clientSecret: String,
         redirectUri: String = "urn:ietf:wg:oauth:2.0:oob",
-        code: String,
-        grantType: String = "authorization_code"
+        code: String
     ): MastodonRequest<AccessToken> {
         return client.getMastodonRequest(
             endpoint = "oauth/token",
@@ -61,7 +59,38 @@ class OAuthMethods(private val client: MastodonClient) {
                 append("client_secret", clientSecret)
                 append("redirect_uri", redirectUri)
                 append("code", code)
-                append("grant_type", grantType)
+                append("grant_type", "authorization_code")
+            }
+        )
+    }
+
+    /**
+     * Obtain an access token using OAuth 2 password grant type. To be used during API calls that are not public.
+     * @param clientId The client ID, obtained during app registration.
+     * @param clientSecret The client secret, obtained during app registration.
+     * @param scope Requested OAuth scopes
+     * @param username The Mastodon account username.
+     * @param password The Mastodon account password.
+     * @see <a href="https://docs.joinmastodon.org/methods/oauth/#token">Mastodon oauth API methods #token</a>
+     */
+    @JvmOverloads
+    fun getAccessTokenWithPasswordGrant(
+        clientId: String,
+        clientSecret: String,
+        scope: Scope = Scope(Scope.Name.READ),
+        username: String,
+        password: String
+    ): MastodonRequest<AccessToken> {
+        return client.getMastodonRequest(
+            endpoint = "oauth/token",
+            method = MastodonClient.Method.POST,
+            parameters = Parameters().apply {
+                append("client_id", clientId)
+                append("client_secret", clientSecret)
+                append("scope", scope.toString())
+                append("username", username)
+                append("password", password)
+                append("grant_type", "password")
             }
         )
     }

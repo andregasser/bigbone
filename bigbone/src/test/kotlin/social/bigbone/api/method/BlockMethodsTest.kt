@@ -16,7 +16,7 @@ class BlockMethodsTest {
         val block = pageable.part.first()
         block.acct shouldBeEqualTo "test@test.com"
         block.displayName shouldBeEqualTo "test"
-        block.userName shouldBeEqualTo "test"
+        block.username shouldBeEqualTo "test"
     }
 
     @Test

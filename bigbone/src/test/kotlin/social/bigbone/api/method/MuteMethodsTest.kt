@@ -15,7 +15,7 @@ class MuteMethodsTest {
         val account = pageable.part.first()
         account.acct shouldBeEqualTo "test@test.com"
         account.displayName shouldBeEqualTo "test"
-        account.userName shouldBeEqualTo "test"
+        account.username shouldBeEqualTo "test"
     }
 
     @Test

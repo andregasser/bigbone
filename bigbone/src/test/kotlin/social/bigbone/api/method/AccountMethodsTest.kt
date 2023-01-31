@@ -14,7 +14,7 @@ class AccountMethodsTest {
         val account = accountMethods.getAccount("1").execute()
         account.acct shouldBeEqualTo "test@test.com"
         account.displayName shouldBeEqualTo "test"
-        account.userName shouldBeEqualTo "test"
+        account.username shouldBeEqualTo "test"
     }
 
     @Test
@@ -33,7 +33,7 @@ class AccountMethodsTest {
         val account = accountMethods.verifyCredentials().execute()
         account.acct shouldBeEqualTo "test@test.com"
         account.displayName shouldBeEqualTo "test"
-        account.userName shouldBeEqualTo "test"
+        account.username shouldBeEqualTo "test"
     }
 
     @Test
@@ -54,7 +54,7 @@ class AccountMethodsTest {
         val account = accountMethods.updateCredentials("test", "test", "test", "test").execute()
         account.acct shouldBeEqualTo "test@test.com"
         account.displayName shouldBeEqualTo "test"
-        account.userName shouldBeEqualTo "test"
+        account.username shouldBeEqualTo "test"
     }
 
     @Test
@@ -74,7 +74,7 @@ class AccountMethodsTest {
         val account = pageable.part.first()
         account.acct shouldBeEqualTo "test@test.com"
         account.displayName shouldBeEqualTo "test"
-        account.userName shouldBeEqualTo "test"
+        account.username shouldBeEqualTo "test"
     }
 
     @Test
@@ -94,7 +94,7 @@ class AccountMethodsTest {
         val account = pageable.part.first()
         account.acct shouldBeEqualTo "test@test.com"
         account.displayName shouldBeEqualTo "test"
-        account.userName shouldBeEqualTo "test"
+        account.username shouldBeEqualTo "test"
     }
 
     @Test
@@ -287,7 +287,7 @@ class AccountMethodsTest {
         val account = result.first()
         account.acct shouldBeEqualTo "A"
         account.displayName shouldBeEqualTo ""
-        account.userName shouldBeEqualTo "A"
+        account.username shouldBeEqualTo "A"
     }
 
     @Test
