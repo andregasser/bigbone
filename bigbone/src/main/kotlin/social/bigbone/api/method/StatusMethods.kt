@@ -6,8 +6,8 @@ import social.bigbone.Parameters
 import social.bigbone.api.Pageable
 import social.bigbone.api.Range
 import social.bigbone.api.entity.Account
-import social.bigbone.api.entity.Card
 import social.bigbone.api.entity.Context
+import social.bigbone.api.entity.PreviewCard
 import social.bigbone.api.entity.Status
 import social.bigbone.api.exception.BigBoneRequestException
 
@@ -49,7 +49,7 @@ class StatusMethods(private val client: MastodonClient) {
      * @see <a href="https://docs.joinmastodon.org/methods/statuses/#card">Mastodon API documentation: methods/statuses/#card</a>
      */
     @Throws(BigBoneRequestException::class)
-    fun getCard(statusId: String): MastodonRequest<Card> {
+    fun getCard(statusId: String): MastodonRequest<PreviewCard> {
         return client.getMastodonRequest(
             endpoint = "api/v1/statuses/$statusId/card",
             method = MastodonClient.Method.GET

@@ -2,7 +2,7 @@ package social.bigbone.api.entity
 
 import com.google.gson.annotations.SerializedName
 
-data class Card(
+data class PreviewCard(
     @SerializedName("url")
     val url: String = "",
 
