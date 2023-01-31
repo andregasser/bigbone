@@ -11,7 +11,7 @@ class V402InstanceMethodsIntegrationTest : V402BaseIntegrationTest() {
 
     @BeforeEach
     fun setUp() {
-        client = MastodonClient.Builder(mastodonWebContainer.host)
+        client = MastodonClient.Builder("localhost")
             .withHttpsDisabled()
             .withPort(mastodonWebContainer.getMappedPort(3000))
             .build()

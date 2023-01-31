@@ -15,10 +15,13 @@ open class V402BaseIntegrationTest {
     companion object {
         private const val POSTGRES_HOSTNAME = "postgres"
         private const val POSTGRES_IMAGE_VERSION = "postgres:14-alpine"
+
         private const val REDIS_HOSTNAME = "redis"
         private const val REDIS_IMAGE_VERSION = "redis:7-alpine"
+
         private const val ELASTIC_HOSTNAME = "elastic"
         private const val ELASTIC_IMAGE_VERSION = "docker.elastic.co/elasticsearch/elasticsearch:7.17.7"
+
         private const val MASTODON_WEB_HOSTNAME = "mastodon-web"
         private const val MASTODON_SIDEKIQ_HOSTNAME = "mastodon-sidekiq"
         private const val MASTODON_STREAMING_HOSTNAME = "mastodon-streaming"
