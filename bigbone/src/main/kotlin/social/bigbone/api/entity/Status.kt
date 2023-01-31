@@ -72,7 +72,7 @@ data class Status(
      * Mentions of users within the status content.
      */
     @SerializedName("mentions")
-    val mentions: List<Mention> = emptyList(),
+    val mentions: List<StatusMention> = emptyList(),
 
     /**
      * Hashtags used within the status content.
