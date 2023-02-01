@@ -5,7 +5,7 @@ import social.bigbone.MastodonClient;
 import social.bigbone.MastodonRequest;
 import social.bigbone.Parameters;
 import social.bigbone.api.Scope;
-import social.bigbone.api.entity.auth.AccessToken;
+import social.bigbone.api.entity.auth.Token;
 import social.bigbone.api.entity.auth.AppRegistration;
 import social.bigbone.api.exception.BigBoneRequestException;
 
@@ -48,7 +48,7 @@ final class Authenticator {
             final String email = System.console().readLine();
             System.out.println("please input your password...");
             final String pass = System.console().readLine();
-            final AccessToken accessToken = getAccessToken(instanceName, clientId, clientSecret, email, pass);
+            final Token accessToken = getAccessToken(instanceName, clientId, clientSecret, email, pass);
             properties.put(ACCESS_TOKEN, accessToken.getAccessToken());
             properties.store(Files.newOutputStream(file.toPath()), "app registration");
         } else {
@@ -62,7 +62,7 @@ final class Authenticator {
         return builder.build();
     }
 
-    private static AccessToken getAccessToken(final String instanceName, final String clientId, final String clientSecret, final String email, final String password) throws BigBoneRequestException {
+    private static Token getAccessToken(final String instanceName, final String clientId, final String clientSecret, final String email, final String password) throws BigBoneRequestException {
         final MastodonClient client = new MastodonClient.Builder(instanceName).build();
         return postUserNameAndPassword(client, clientId, clientSecret, new Scope(), email, password).execute();
     }
@@ -77,7 +77,7 @@ final class Authenticator {
      * that is undocumented in Mastodon API, and should NOT be used in production code. It will be removed at a later date.
      * Apps.getAccessToken() should be used instead.
      */
-    private static MastodonRequest<AccessToken> postUserNameAndPassword(
+    private static MastodonRequest<Token> postUserNameAndPassword(
             final MastodonClient client,
             final String clientId,
             final String clientSecret,
@@ -94,7 +94,7 @@ final class Authenticator {
                 .append("grant_type", "password");
         return new MastodonRequest<>(
                 () -> client.post("oauth/token", parameters),
-                s -> new Gson().fromJson(s, AccessToken.class)
+                s -> new Gson().fromJson(s, Token.class)
         );
     }
 }

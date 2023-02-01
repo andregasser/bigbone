@@ -1,7 +1,7 @@
 package social.bigbone.sample;
 
 import social.bigbone.MastodonClient;
-import social.bigbone.api.entity.Results;
+import social.bigbone.api.entity.Search;
 import social.bigbone.api.exception.BigBoneRequestException;
 
 @SuppressWarnings("PMD.SystemPrintln")
@@ -17,7 +17,7 @@ public class PerformSimpleSearch {
             .build();
 
         // Perform search and print results
-        final Results searchResult = client.search().searchContent(searchTerm).execute();
+        final Search searchResult = client.search().searchContent(searchTerm).execute();
         searchResult.getAccounts().forEach(account -> System.out.println(account.getDisplayName()));
         searchResult.getStatuses().forEach(status -> System.out.println(status.getContent()));
         searchResult.getHashtags().forEach(hashtag -> System.out.println(hashtag.getName()));

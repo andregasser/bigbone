@@ -43,5 +43,5 @@ data class Account(
     val statusesCount: Int = 0,
 
     @SerializedName("emojis")
-    val emojis: List<Emoji> = emptyList()
+    val emojis: List<CustomEmoji> = emptyList()
 )

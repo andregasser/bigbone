@@ -5,8 +5,8 @@ import social.bigbone.MastodonClient
 import social.bigbone.MastodonRequest
 import social.bigbone.Parameters
 import social.bigbone.api.Scope
-import social.bigbone.api.entity.auth.AccessToken
 import social.bigbone.api.entity.auth.AppRegistration
+import social.bigbone.api.entity.auth.Token
 import java.io.File
 import java.util.Properties
 
@@ -70,7 +70,7 @@ object Authenticator {
         clientSecret: String,
         email: String,
         password: String
-    ): AccessToken {
+    ): Token {
         val client = MastodonClient.Builder(instanceName).build()
         return postUserNameAndPassword(client, clientId, clientSecret, Scope(), email, password).execute()
     }
@@ -95,7 +95,7 @@ object Authenticator {
         scope: Scope,
         userName: String,
         password: String
-    ): MastodonRequest<AccessToken> {
+    ): MastodonRequest<Token> {
         val parameters = Parameters()
             .append("client_id", clientId)
             .append("client_secret", clientSecret)
@@ -108,7 +108,7 @@ object Authenticator {
                 client.post("oauth/token", parameters)
             },
             {
-                Gson().fromJson(it, AccessToken::class.java)
+                Gson().fromJson(it, Token::class.java)
             }
         )
     }

@@ -2,7 +2,7 @@ package social.bigbone.api.entity
 
 import com.google.gson.annotations.SerializedName
 
-data class Emoji(
+data class CustomEmoji(
     @SerializedName("shortcode")
     val shortcode: String = "",
 
