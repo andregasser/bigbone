@@ -65,7 +65,8 @@ class OAuthMethods(private val client: MastodonClient) {
     }
 
     /**
-     * Obtain an access token using OAuth 2 password grant type. To be used during API calls that are not public.
+     * Obtain an access token using OAuth 2 password grant type, to be used for bots and other single-user applications.
+     * Where possible, [getAccessTokenWithAuthorizationCodeGrant] should be used instead.
      * @param clientId The client ID, obtained during app registration.
      * @param clientSecret The client secret, obtained during app registration.
      * @param scope Requested OAuth scopes
