@@ -4,7 +4,7 @@ import social.bigbone.MastodonClient
 import social.bigbone.MastodonRequest
 import social.bigbone.Parameters
 import social.bigbone.api.Scope
-import social.bigbone.api.entity.auth.AccessToken
+import social.bigbone.api.entity.auth.Token
 
 /**
  * Allows access to API methods with endpoints having an "oauth" prefix.
@@ -50,7 +50,7 @@ class OAuthMethods(private val client: MastodonClient) {
         clientSecret: String,
         redirectUri: String = "urn:ietf:wg:oauth:2.0:oob",
         code: String
-    ): MastodonRequest<AccessToken> {
+    ): MastodonRequest<Token> {
         return client.getMastodonRequest(
             endpoint = "oauth/token",
             method = MastodonClient.Method.POST,
@@ -81,7 +81,7 @@ class OAuthMethods(private val client: MastodonClient) {
         scope: Scope = Scope(Scope.Name.READ),
         username: String,
         password: String
-    ): MastodonRequest<AccessToken> {
+    ): MastodonRequest<Token> {
         return client.getMastodonRequest(
             endpoint = "oauth/token",
             method = MastodonClient.Method.POST,

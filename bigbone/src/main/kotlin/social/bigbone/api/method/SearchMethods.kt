@@ -3,7 +3,7 @@ package social.bigbone.api.method
 import social.bigbone.MastodonClient
 import social.bigbone.MastodonRequest
 import social.bigbone.Parameters
-import social.bigbone.api.entity.Results
+import social.bigbone.api.entity.Search
 
 /**
  * Allows access to API methods with endpoints having an "api/vX/search" prefix.
@@ -18,7 +18,7 @@ class SearchMethods(private val client: MastodonClient) {
      * @see <a href="https://docs.joinmastodon.org/methods/search/">Mastodon API documentation: methods/search</a>
      */
     @JvmOverloads
-    fun searchContent(query: String, resolve: Boolean = false): MastodonRequest<Results> {
+    fun searchContent(query: String, resolve: Boolean = false): MastodonRequest<Search> {
         return client.getMastodonRequest(
             endpoint = "api/v2/search",
             method = MastodonClient.Method.GET,

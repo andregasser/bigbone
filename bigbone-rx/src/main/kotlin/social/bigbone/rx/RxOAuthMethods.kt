@@ -3,7 +3,7 @@ package social.bigbone.rx
 import io.reactivex.rxjava3.core.Single
 import social.bigbone.MastodonClient
 import social.bigbone.api.Scope
-import social.bigbone.api.entity.auth.AccessToken
+import social.bigbone.api.entity.auth.Token
 import social.bigbone.api.method.OAuthMethods
 import social.bigbone.rx.extensions.onErrorIfNotDisposed
 
@@ -15,7 +15,7 @@ class RxOAuthMethods(client: MastodonClient) {
         clientSecret: String,
         redirectUri: String = "urn:ietf:wg:oauth:2.0:oob",
         code: String
-    ): Single<AccessToken> {
+    ): Single<Token> {
         return Single.create {
             try {
                 val accessToken = oauth.getAccessTokenWithAuthorizationCodeGrant(clientId, clientSecret, redirectUri, code)
@@ -32,7 +32,7 @@ class RxOAuthMethods(client: MastodonClient) {
         scope: Scope = Scope(Scope.Name.READ),
         username: String,
         password: String
-    ): Single<AccessToken> {
+    ): Single<Token> {
         return Single.create {
             try {
                 val accessToken = oauth.getAccessTokenWithPasswordGrant(clientId, clientSecret, scope, username, password)

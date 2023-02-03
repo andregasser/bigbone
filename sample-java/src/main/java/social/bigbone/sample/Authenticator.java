@@ -2,7 +2,7 @@ package social.bigbone.sample;
 
 import social.bigbone.MastodonClient;
 import social.bigbone.api.Scope;
-import social.bigbone.api.entity.auth.AccessToken;
+import social.bigbone.api.entity.auth.Token;
 import social.bigbone.api.entity.auth.AppRegistration;
 import social.bigbone.api.exception.BigBoneRequestException;
 import social.bigbone.api.method.OAuthMethods;
@@ -46,7 +46,7 @@ final class Authenticator {
             final String email = System.console().readLine();
             System.out.println("please input your password...");
             final String pass = System.console().readLine();
-            final AccessToken accessToken = getAccessToken(instanceName, clientId, clientSecret, email, pass);
+            final Token accessToken = getAccessToken(instanceName, clientId, clientSecret, email, pass);
             properties.put(ACCESS_TOKEN, accessToken.getAccessToken());
             properties.store(Files.newOutputStream(file.toPath()), "app registration");
         } else {
@@ -60,7 +60,7 @@ final class Authenticator {
         return builder.build();
     }
 
-    private static AccessToken getAccessToken(final String instanceName, final String clientId, final String clientSecret, final String email, final String password) throws BigBoneRequestException {
+    private static Token getAccessToken(final String instanceName, final String clientId, final String clientSecret, final String email, final String password) throws BigBoneRequestException {
         final MastodonClient client = new MastodonClient.Builder(instanceName).build();
         final OAuthMethods oauthMethods = new OAuthMethods(client);
         return oauthMethods.getAccessTokenWithPasswordGrant(clientId, clientSecret, new Scope(), email, password).execute();
