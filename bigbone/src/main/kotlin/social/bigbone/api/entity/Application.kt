@@ -7,5 +7,14 @@ data class Application(
     val name: String = "",
 
     @SerializedName("website")
-    val website: String? = null
+    val website: String? = null,
+
+    @SerializedName("vapid_key")
+    val vapidKey: String = "",
+
+    @SerializedName("client_id")
+    val clientId: String? = null,
+
+    @SerializedName("client_secret")
+    val clientSecret: String? = null
 )

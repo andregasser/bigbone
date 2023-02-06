@@ -2,8 +2,8 @@ package social.bigbone.sample;
 
 import social.bigbone.MastodonClient;
 import social.bigbone.api.Scope;
-import social.bigbone.api.entity.auth.Token;
-import social.bigbone.api.entity.auth.AppRegistration;
+import social.bigbone.api.entity.Application;
+import social.bigbone.api.entity.Token;
 import social.bigbone.api.exception.BigBoneRequestException;
 import social.bigbone.api.method.OAuthMethods;
 
@@ -31,9 +31,9 @@ final class Authenticator {
         properties.load(Files.newInputStream(file.toPath()));
         if (properties.get(CLIENT_ID) == null) {
             System.out.println("try app registration...");
-            final AppRegistration appRegistration = appRegistration(instanceName);
-            properties.put(CLIENT_ID, appRegistration.getClientId());
-            properties.put(CLIENT_SECRET, appRegistration.getClientSecret());
+            final Application application = application(instanceName);
+            properties.put(CLIENT_ID, application.getClientId());
+            properties.put(CLIENT_SECRET, application.getClientSecret());
             properties.store(Files.newOutputStream(file.toPath()), "app registration");
         } else {
             System.out.println("app registration found...");
@@ -66,7 +66,7 @@ final class Authenticator {
         return oauthMethods.getAccessTokenWithPasswordGrant(clientId, clientSecret, new Scope(), email, password).execute();
     }
 
-    private static AppRegistration appRegistration(final String instanceName) throws BigBoneRequestException {
+    private static Application application(final String instanceName) throws BigBoneRequestException {
         final MastodonClient client = new MastodonClient.Builder(instanceName).build();
         return client.apps().createApp("bigbone-sample-app", "urn:ietf:wg:oauth:2.0:oob", new Scope(), null).execute();
     }

@@ -1,4 +1,4 @@
-package social.bigbone.api.entity.auth
+package social.bigbone.api.entity
 
 import com.google.gson.annotations.SerializedName
 
