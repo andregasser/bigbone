@@ -1,4 +1,4 @@
-package social.bigbone.api.entity.auth
+package social.bigbone.api.entity
 
 import com.google.gson.Gson
 import org.amshove.kluent.shouldBeEqualTo
@@ -19,7 +19,7 @@ class TokenTest {
 
     @Test
     fun constructor() {
-        val accessToken: Token = Token(accessToken = "123", scope = "scope")
+        val accessToken = Token(accessToken = "123", scope = "scope")
         accessToken.accessToken shouldBeEqualTo "123"
         accessToken.tokenType shouldBeEqualTo ""
         accessToken.scope shouldBeEqualTo "scope"

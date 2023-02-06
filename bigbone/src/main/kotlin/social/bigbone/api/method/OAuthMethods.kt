@@ -4,7 +4,7 @@ import social.bigbone.MastodonClient
 import social.bigbone.MastodonRequest
 import social.bigbone.Parameters
 import social.bigbone.api.Scope
-import social.bigbone.api.entity.auth.Token
+import social.bigbone.api.entity.Token
 
 /**
  * Allows access to API methods with endpoints having an "oauth" prefix.
