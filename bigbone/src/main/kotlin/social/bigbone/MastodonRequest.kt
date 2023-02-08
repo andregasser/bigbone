@@ -6,10 +6,17 @@ import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.extension.toPageable
 import java.lang.Exception
 
+/**
+ * Represents an HTTP request that is sent to a Mastodon instance, once the [execute]
+ * method on this class is called.
+ */
 class MastodonRequest<T>(
     private val executor: () -> Response,
     private val mapper: (String) -> Any
 ) {
+    /**
+     * SAM interface provided for Java interoperability related to [doOnJson] method.
+     */
     interface Action1<T> {
         fun invoke(arg: T)
     }
@@ -22,11 +29,19 @@ class MastodonRequest<T>(
         isPageable = true
     }
 
+    /**
+     * Allows you to execute some extra logic (such as logging) that is triggered when the JSON response
+     * from the Mastodon API arrives.
+     */
     @JvmSynthetic
     fun doOnJson(action: (String) -> Unit) = apply {
         this.action = action
     }
 
+    /**
+     * Allows you to execute some extra logic (such as logging) that is triggered when the JSON response
+     * from the Mastodon API arrives. This method is provided for Java interoperability reasons.
+     */
     fun doOnJson(action: Action1<String>) = apply {
         this.action = { action.invoke(it) }
     }

@@ -43,6 +43,9 @@ data class MediaAttachment(
     @SerializedName("text_url")
     val textUrl: String? = null
 ) {
+    /**
+     * The available media types.
+     */
     enum class Type(val value: String) {
         Image("image"),
         Video("video"),

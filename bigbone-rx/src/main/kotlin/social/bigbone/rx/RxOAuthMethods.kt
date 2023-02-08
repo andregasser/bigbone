@@ -7,6 +7,11 @@ import social.bigbone.api.entity.Token
 import social.bigbone.api.method.OAuthMethods
 import social.bigbone.rx.extensions.onErrorIfNotDisposed
 
+/**
+ * Reactive implementation of [OAuthMethods].
+ * Allows access to API methods with endpoints having an "oauth" prefix.
+ * @see <a href="https://docs.joinmastodon.org/methods/oauth/">Mastodon oauth API methods</a>
+ */
 class RxOAuthMethods(client: MastodonClient) {
     private val oauth = OAuthMethods(client)
 

@@ -192,6 +192,9 @@ data class Status(
      */
     // filtered
 ) {
+    /**
+     * Specifies the visibility of the status post.
+     */
     enum class Visibility(val value: String) {
         Public("public"),
         Unlisted("unlisted"),

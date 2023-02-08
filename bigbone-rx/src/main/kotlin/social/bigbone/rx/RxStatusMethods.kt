@@ -11,6 +11,11 @@ import social.bigbone.api.entity.PreviewCard
 import social.bigbone.api.entity.Status
 import social.bigbone.api.method.StatusMethods
 
+/**
+ * Reactive implementation of [StatusMethods].
+ * Allows access to API methods with endpoints having an "api/vX/statuses" prefix.
+ * @see <a href="https://docs.joinmastodon.org/methods/statuses/">Mastodon statuses API methods</a>
+ */
 class RxStatusMethods(client: MastodonClient) {
     private val statusMethods = StatusMethods(client)
 

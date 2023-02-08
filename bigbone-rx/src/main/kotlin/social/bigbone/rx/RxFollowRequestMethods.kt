@@ -9,6 +9,11 @@ import social.bigbone.api.entity.Account
 import social.bigbone.api.method.FollowRequestMethods
 import social.bigbone.rx.extensions.onErrorIfNotDisposed
 
+/**
+ * Reactive implementation of [FollowRequestMethods].
+ * Allows access to API methods with endpoints having an "api/vX/follow_requests" prefix.
+ * @see <a href="https://docs.joinmastodon.org/methods/follow_requests/">Mastodon follow_requests API methods</a>
+ */
 class RxFollowRequestMethods(client: MastodonClient) {
     private val followRequestMethods = FollowRequestMethods(client)
 

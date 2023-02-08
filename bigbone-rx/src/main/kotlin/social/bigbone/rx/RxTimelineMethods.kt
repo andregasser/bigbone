@@ -8,6 +8,11 @@ import social.bigbone.api.entity.Status
 import social.bigbone.api.method.TimelineMethods
 import social.bigbone.rx.extensions.single
 
+/**
+ * Reactive implementation of [TimelineMethods].
+ * Allows access to API methods with endpoints having an "api/vX/timelines" prefix.
+ * @see <a href="https://docs.joinmastodon.org/methods/timelines/">Mastodon timelines API methods</a>
+ */
 class RxTimelineMethods(client: MastodonClient) {
     private val timelineMethods = TimelineMethods(client)
 
