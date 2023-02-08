@@ -3,7 +3,7 @@ package social.bigbone.rx
 import io.reactivex.rxjava3.core.Single
 import social.bigbone.MastodonClient
 import social.bigbone.api.Scope
-import social.bigbone.api.entity.auth.Token
+import social.bigbone.api.entity.Token
 import social.bigbone.api.method.OAuthMethods
 import social.bigbone.rx.extensions.onErrorIfNotDisposed
 

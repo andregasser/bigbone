@@ -2,8 +2,8 @@ package social.bigbone.sample
 
 import social.bigbone.MastodonClient
 import social.bigbone.api.Scope
-import social.bigbone.api.entity.auth.AppRegistration
-import social.bigbone.api.entity.auth.Token
+import social.bigbone.api.entity.Application
+import social.bigbone.api.entity.Token
 import social.bigbone.api.method.OAuthMethods
 import java.io.File
 import java.util.Properties
@@ -74,7 +74,7 @@ object Authenticator {
         return oAuthMethods.getAccessTokenWithPasswordGrant(clientId, clientSecret, Scope(), email, password).execute()
     }
 
-    private fun appRegistration(instanceName: String): AppRegistration {
+    private fun appRegistration(instanceName: String): Application {
         val client = MastodonClient.Builder(instanceName).build()
         return client.apps.createApp(
             "bigbone-sample-app",
