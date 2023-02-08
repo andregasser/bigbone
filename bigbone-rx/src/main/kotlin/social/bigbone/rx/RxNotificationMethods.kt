@@ -8,6 +8,11 @@ import social.bigbone.api.Range
 import social.bigbone.api.entity.Notification
 import social.bigbone.api.method.NotificationMethods
 
+/**
+ * Reactive implementation of [NotificationMethods].
+ * Allows access to API methods with endpoints having an "api/vX/notifications" or "api/vX/notification" prefix.
+ * @see <a href="https://docs.joinmastodon.org/methods/notifications/">Mastodon notifications API methods</a>
+ */
 class RxNotificationMethods(client: MastodonClient) {
     private val notificationMethods = NotificationMethods(client)
 

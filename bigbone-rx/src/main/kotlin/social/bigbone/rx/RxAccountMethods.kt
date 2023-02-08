@@ -10,6 +10,11 @@ import social.bigbone.api.entity.Status
 import social.bigbone.api.method.AccountMethods
 import social.bigbone.rx.extensions.onErrorIfNotDisposed
 
+/**
+ * Reactive implementation of [AccountMethods].
+ * Allows access to API methods with endpoints having an "api/vX/accounts" prefix.
+ * @see <a href="https://docs.joinmastodon.org/methods/accounts/">Mastodon accounts API methods</a>
+ */
 class RxAccountMethods(client: MastodonClient) {
     private val accountMethods = AccountMethods(client)
 

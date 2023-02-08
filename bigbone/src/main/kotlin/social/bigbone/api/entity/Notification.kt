@@ -37,6 +37,9 @@ data class Notification(
     @SerializedName("status")
     val status: Status? = null
 ) {
+    /**
+     * Specifies the notification type.
+     */
     enum class Type(val value: String) {
         Mention("mention"),
         Reblog("reblog"),
