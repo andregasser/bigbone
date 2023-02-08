@@ -6,10 +6,7 @@ import com.google.gson.annotations.SerializedName
  * Represents a custom emoji.
  * @see <a href="https://docs.joinmastodon.org/entities/CustomEmoji/">Mastodon API CustomEmoji</a>
  */
-data class Emoji(
-    /**
-     * The name of the custom emoji.
-     */
+data class CustomEmoji(
     @SerializedName("shortcode")
     val shortcode: String = "",
 

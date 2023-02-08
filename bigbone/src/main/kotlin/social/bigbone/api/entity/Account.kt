@@ -17,7 +17,7 @@ data class Account(
      * The username of the account, not including domain.
      */
     @SerializedName("username")
-    val userName: String = "",
+    val username: String = "",
 
     /**
      * The Webfinger account URI. Equal to username for local users, or username@domain for remote users.
@@ -86,5 +86,5 @@ data class Account(
     val statusesCount: Int = 0,
 
     @SerializedName("emojis")
-    val emojis: List<Emoji> = emptyList()
+    val emojis: List<CustomEmoji> = emptyList()
 )

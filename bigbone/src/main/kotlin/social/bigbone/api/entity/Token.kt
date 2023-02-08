@@ -1,4 +1,4 @@
-package social.bigbone.api.entity.auth
+package social.bigbone.api.entity
 
 import com.google.gson.annotations.SerializedName
 
@@ -6,10 +6,7 @@ import com.google.gson.annotations.SerializedName
  * Represents an OAuth token used for authenticating with the API and performing actions.
  * @see <a href="https://docs.joinmastodon.org/entities/Token/">Mastodon API Token</a>
  */
-data class AccessToken(
-    /**
-     * An OAuth token to be used for authorization.
-     */
+data class Token(
     @SerializedName("access_token")
     val accessToken: String = "",
 

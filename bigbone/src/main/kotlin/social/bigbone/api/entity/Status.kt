@@ -84,7 +84,7 @@ data class Status(
      * Custom emoji to be used when rendering status content.
      */
     @SerializedName("emojis")
-    val emojis: List<Emoji> = emptyList(),
+    val emojis: List<CustomEmoji> = emptyList(),
 
     /**
      * How many boosts this status has received.

@@ -6,10 +6,7 @@ import com.google.gson.annotations.SerializedName
  * Represents the results of a search.
  * @see <a href="https://docs.joinmastodon.org/entities/Search/">Mastodon API Search</a>
  */
-data class Results(
-    /**
-     * Accounts which match the given query.
-     */
+data class Search(
     @SerializedName("accounts")
     val accounts: List<Account> = emptyList(),
 
