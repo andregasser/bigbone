@@ -24,7 +24,7 @@ data class MastodonList(
      * @see [RepliesPolicy]
      */
     @SerializedName("replies_policy")
-    val repliesPolicy: String = RepliesPolicy.Followed.value,
+    val repliesPolicy: String = RepliesPolicy.List.value,
 ) {
     /**
      * Specifies the replies policy for a list.
