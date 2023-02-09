@@ -16,13 +16,12 @@ class AppMethodsTest {
         every { client.getInstanceName() } returns "mastodon.cloud"
 
         val appMethods = AppMethods(client)
-        val registration = appMethods.createApp(
+        val application = appMethods.createApp(
             clientName = "bigbone-sample-app", scope = Scope(Scope.Name.ALL)
         ).execute()
 
-        registration.clientId shouldBeEqualTo "client id"
-        registration.clientSecret shouldBeEqualTo "client secret"
-        registration.redirectUri shouldBeEqualTo "urn:ietf:wg:oauth:2.0:oob"
+        application.clientId shouldBeEqualTo "client id"
+        application.clientSecret shouldBeEqualTo "client secret"
     }
 
     @Test

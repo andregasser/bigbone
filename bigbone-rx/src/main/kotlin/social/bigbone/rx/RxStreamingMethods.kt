@@ -9,6 +9,11 @@ import social.bigbone.api.entity.Notification
 import social.bigbone.api.entity.Status
 import social.bigbone.api.method.StreamingMethods
 
+/**
+ * Reactive implementation of [StreamingMethods].
+ * Allows access to API methods with endpoints having an "api/vX/streaming" prefix.
+ * @see <a href="https://docs.joinmastodon.org/methods/streaming/">Mastodon streaming API methods</a>
+ */
 class RxStreamingMethods(client: MastodonClient) {
     private val streamingMethods = StreamingMethods(client)
 

@@ -4,7 +4,7 @@ import social.bigbone.MastodonClient
 import social.bigbone.MastodonRequest
 import social.bigbone.Parameters
 import social.bigbone.api.Scope
-import social.bigbone.api.entity.auth.AppRegistration
+import social.bigbone.api.entity.Application
 
 /**
  * Allows access to API methods with endpoints having an "api/vX/apps" prefix.
@@ -27,7 +27,7 @@ class AppMethods(private val client: MastodonClient) {
         redirectUris: String = "urn:ietf:wg:oauth:2.0:oob",
         scope: Scope = Scope(Scope.Name.ALL),
         website: String? = null
-    ): MastodonRequest<AppRegistration> {
+    ): MastodonRequest<Application> {
         scope.validate()
 
         val parameters = Parameters()
@@ -43,7 +43,7 @@ class AppMethods(private val client: MastodonClient) {
                 client.post("api/v1/apps", parameters)
             },
             {
-                client.getSerializer().fromJson(it, AppRegistration::class.java)
+                client.getSerializer().fromJson(it, Application::class.java)
             }
         )
     }

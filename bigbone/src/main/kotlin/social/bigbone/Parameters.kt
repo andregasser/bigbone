@@ -47,6 +47,7 @@ class Parameters {
 
     /**
      * Appends a new key/value pair, with the value being a list.
+     * @param T
      * @param key the key of this pair
      * @param value a list of objects; individual elements will be stored via their .toString() method
      * @return this Parameters instance

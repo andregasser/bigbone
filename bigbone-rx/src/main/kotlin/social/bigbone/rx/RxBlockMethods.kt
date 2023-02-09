@@ -8,6 +8,11 @@ import social.bigbone.api.entity.Account
 import social.bigbone.api.method.BlockMethods
 import social.bigbone.rx.extensions.onErrorIfNotDisposed
 
+/**
+ * Reactive implementation of [BlockMethods].
+ * Allows access to API methods with endpoints having an "api/vX/blocks" prefix.
+ * @see <a href="https://docs.joinmastodon.org/methods/blocks/">Mastodon blocks API methods</a>
+ */
 class RxBlockMethods(client: MastodonClient) {
     private val blockMethods = BlockMethods(client)
 
