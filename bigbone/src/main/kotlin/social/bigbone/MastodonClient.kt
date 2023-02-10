@@ -385,7 +385,9 @@ private constructor(
     companion object {
         /**
          * Returns a HttpUrl.
-         * @param instanceName host of a Mastodon instance
+         * @param scheme the schema to be used, either "http" or "https"
+         * @param instanceName the Mastodon instance hostname
+         * @param port the TCP/IP port to connect to, usually 443
          * @param path Mastodon API endpoint to be called
          * @param query query part of the URL to build; may be null
          */

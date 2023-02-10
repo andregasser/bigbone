@@ -17,6 +17,8 @@ class OAuthMethodsTest {
     fun getOAuthUrl() {
         val client: MastodonClient = mockk()
         every { client.getInstanceName() } returns "mastodon.cloud"
+        every { client.getScheme() } returns "https"
+        every { client.getPort() } returns 443
 
         val url = OAuthMethods(client).getOAuthUrl("client_id", Scope(Scope.Name.ALL))
         url shouldBeEqualTo "https://mastodon.cloud/oauth/authorize?client_id=client_id" +

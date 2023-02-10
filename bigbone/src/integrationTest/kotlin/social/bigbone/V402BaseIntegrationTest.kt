@@ -1,6 +1,7 @@
 package social.bigbone
 
 import com.github.dockerjava.api.model.HealthCheck
+import org.junit.jupiter.api.TestInstance
 import org.slf4j.LoggerFactory
 import org.testcontainers.containers.GenericContainer
 import org.testcontainers.containers.Network
@@ -11,6 +12,7 @@ import org.testcontainers.utility.DockerImageName
 import org.testcontainers.utility.MountableFile
 
 @Testcontainers
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 open class V402BaseIntegrationTest {
     companion object {
         private const val POSTGRES_HOSTNAME = "postgres"

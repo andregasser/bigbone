@@ -8,7 +8,7 @@ import social.bigbone.api.Range
 import social.bigbone.api.entity.Account
 import social.bigbone.api.entity.Relationship
 import social.bigbone.api.entity.Status
-import social.bigbone.api.entity.auth.AccessToken
+import social.bigbone.api.entity.Token
 
 /**
  * Allows access to API methods with endpoints having an "api/vX/accounts" prefix.
@@ -32,7 +32,7 @@ class AccountMethods(private val client: MastodonClient) {
         agreement: Boolean,
         locale: String,
         reason: String?
-    ): MastodonRequest<AccessToken>{
+    ): MastodonRequest<Token> {
         return client.getMastodonRequest(
             endpoint = "api/v1/accounts",
             method = MastodonClient.Method.POST,
