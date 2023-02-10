@@ -17,5 +17,21 @@ data class MastodonList(
      * The user-defined title of the list.
      */
     @SerializedName("title")
-    val title: String = ""
-)
+    val title: String = "",
+
+    /**
+     * Which replies should be shown in the list.
+     * @see [RepliesPolicy]
+     */
+    @SerializedName("replies_policy")
+    val repliesPolicy: String = RepliesPolicy.List.value,
+) {
+    /**
+     * Specifies the replies policy for a list.
+     */
+    enum class RepliesPolicy(val value: String) {
+        Followed("followed"),
+        List("list"),
+        None("none")
+    }
+}
