@@ -40,7 +40,7 @@ object Authenticator {
             val email = System.`in`.bufferedReader().readLine()
             println("please input your password...")
             val pass = System.`in`.bufferedReader().readLine()
-            val accessToken = getAccessToken(
+            val accessToken = getUserAccessToken(
                 instanceName,
                 clientId,
                 clientSecret,
@@ -62,7 +62,7 @@ object Authenticator {
             .build()
     }
 
-    private fun getAccessToken(
+    private fun getUserAccessToken(
         instanceName: String,
         clientId: String,
         clientSecret: String,
@@ -71,7 +71,7 @@ object Authenticator {
     ): Token {
         val client = MastodonClient.Builder(instanceName).build()
         val oAuthMethods = OAuthMethods(client)
-        return oAuthMethods.getAccessTokenWithPasswordGrant(clientId, clientSecret, Scope(), email, password).execute()
+        return oAuthMethods.getUserAccessTokenWithPasswordGrant(clientId, clientSecret, Scope(), email, password).execute()
     }
 
     private fun appRegistration(instanceName: String): Application {
