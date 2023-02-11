@@ -11,35 +11,23 @@ import social.bigbone.api.entity.Application
 import social.bigbone.api.entity.Token
 
 class V402StatusMethodsIntegrationTest: V402BaseIntegrationTest() {
-    private lateinit var client: MastodonClient
+    //private lateinit var client: MastodonClient
     private lateinit var token: Token
-
-    @BeforeAll
-    fun beforeAll() {
-        val application = createApp()
-        token = loginUser(application, "foobar", "foo@bar.ch")
-
-//        // Create user account
-//        val client1 = MastodonClient.Builder("localhost")
-//            .withHttpsDisabled()
-//            .withPort(mastodonWebContainer.getMappedPort(3000))
-//            .accessToken(accessToken0.accessToken)
-//            .build()
-//        val accessToken = client1.accounts.registerAccount(
-//            username = "andre",
-//            email = "andre.gasser@protonmail.com",
-//            password = "test",
-//            agreement = true,
-//            locale = "en",
-//            reason = null).execute()
-    }
 
     @Test
     fun postStatus() {
+        val username = "user1"
+        val password = "123456"
+        val email = "user1@mastodon.internal"
+        val application = createApp()
+        val appToken = getAppToken(application)
+        val userToken = createUser(application, username, password, email)
+        //token = loginUser(application, "foobar", "foo@bar.ch")
+
         val client = MastodonClient.Builder("localhost")
             .withHttpsDisabled()
             .withPort(mastodonWebContainer.getMappedPort(3000))
-            .accessToken(token.accessToken)
+            .accessToken(userToken.accessToken)
             .build()
         val response = client.statuses.postStatus("This is my status", null, null, false, "Test").execute()
         assertEquals(response.text, "This is my status")
@@ -53,7 +41,27 @@ class V402StatusMethodsIntegrationTest: V402BaseIntegrationTest() {
         return client.apps.createApp("int-test-client").execute()
     }
 
+    private fun getAppToken(application: Application) {
+        val client = MastodonClient.Builder("localhost")
+            .withHttpsDisabled()
+            .withPort(mastodonWebContainer.getMappedPort(3000))
+            .build()
+        return client.oauth.get     //accounts.registerAccount(username, email, password, true, "en", null).execute()
+    }
+
+    private fun createUser(application: Application, username: String, password: String, email: String): Token {
+        val client = MastodonClient.Builder("localhost")
+            .withHttpsDisabled()
+            .withPort(mastodonWebContainer.getMappedPort(3000))
+            .build()
+        return client.accounts.registerAccount(username, email, password, true, "en", null).execute()
+    }
+
     private fun loginUser(application: Application, username: String, password: String): Token {
+        val client = MastodonClient.Builder("localhost")
+            .withHttpsDisabled()
+            .withPort(mastodonWebContainer.getMappedPort(3000))
+            .build()
         return client.oauth.getAccessTokenWithPasswordGrant(
             application.clientId!!,
             application.clientSecret!!,
