@@ -26,11 +26,11 @@ class OAuthMethodsTest {
     }
 
     @Test
-    fun getAccessTokenWithAuthorizationCodeGrant() {
+    fun getUserAccessTokenWithAuthorizationCodeGrant() {
         val client: MastodonClient = MockClient.mock("access_token.json")
         every { client.getInstanceName() } returns "mastodon.cloud"
         val oauth = OAuthMethods(client)
-        val accessToken = oauth.getAccessTokenWithAuthorizationCodeGrant("test", "test", code = "test").execute()
+        val accessToken = oauth.getUserAccessTokenWithAuthorizationCodeGrant("test", "test", code = "test").execute()
         accessToken.accessToken shouldBeEqualTo "test"
         accessToken.scope shouldBeEqualTo "read write follow"
         accessToken.tokenType shouldBeEqualTo "bearer"
@@ -43,16 +43,16 @@ class OAuthMethodsTest {
             val client: MastodonClient = MockClient.ioException()
             every { client.getInstanceName() } returns "mastodon.cloud"
             val oauth = OAuthMethods(client)
-            oauth.getAccessTokenWithAuthorizationCodeGrant("test", "test", code = "test").execute()
+            oauth.getUserAccessTokenWithAuthorizationCodeGrant("test", "test", code = "test").execute()
         }
     }
 
     @Test
-    fun getAccessTokenWithPasswordGrant() {
+    fun getUserAccessTokenWithPasswordGrant() {
         val client: MastodonClient = MockClient.mock("access_token.json")
         every { client.getInstanceName() } returns "mastodon.cloud"
         val oauth = OAuthMethods(client)
-        val accessToken = oauth.getAccessTokenWithPasswordGrant("test", "test", Scope(Scope.Name.ALL), "test", "test").execute()
+        val accessToken = oauth.getUserAccessTokenWithPasswordGrant("test", "test", Scope(Scope.Name.ALL), "test", "test").execute()
         accessToken.accessToken shouldBeEqualTo "test"
         accessToken.scope shouldBeEqualTo "read write follow"
         accessToken.tokenType shouldBeEqualTo "bearer"
@@ -65,7 +65,7 @@ class OAuthMethodsTest {
             val client: MastodonClient = MockClient.ioException()
             every { client.getInstanceName() } returns "mastodon.cloud"
             val oauth = OAuthMethods(client)
-            oauth.getAccessTokenWithPasswordGrant("test", "test", Scope(Scope.Name.ALL), "test", "test").execute()
+            oauth.getUserAccessTokenWithPasswordGrant("test", "test", Scope(Scope.Name.ALL), "test", "test").execute()
         }
     }
 }
