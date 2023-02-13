@@ -283,7 +283,7 @@ private constructor(
             )
             return call.execute()
         } catch (e: IOException) {
-            throw BigBoneRequestException(e)
+            throw BigBoneRequestException("Request not executed due to network IO issue", e)
         }
     }
 
@@ -304,7 +304,7 @@ private constructor(
             )
             return call.execute()
         } catch (e: IOException) {
-            throw BigBoneRequestException(e)
+            throw BigBoneRequestException("Request not executed due to network IO issue", e)
         }
     }
 
@@ -315,7 +315,7 @@ private constructor(
      */
     fun patch(path: String, body: Parameters?): Response {
         if (body == null) {
-            throw BigBoneRequestException(Exception("body must not be empty"))
+            throw BigBoneRequestException("Patch request not possible with null body")
         }
 
         try {
@@ -329,7 +329,7 @@ private constructor(
             )
             return call.execute()
         } catch (e: IOException) {
-            throw BigBoneRequestException(e)
+            throw BigBoneRequestException("Request not executed due to network IO issue", e)
         }
     }
 
@@ -363,7 +363,7 @@ private constructor(
         } catch (e: IllegalArgumentException) {
             throw BigBoneRequestException(e)
         } catch (e: IOException) {
-            throw BigBoneRequestException(e)
+            throw BigBoneRequestException("Request not executed due to network IO issue", e)
         }
     }
 
