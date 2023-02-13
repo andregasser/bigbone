@@ -25,7 +25,7 @@ class AppMethods(private val client: MastodonClient) {
     fun createApp(
         clientName: String,
         redirectUris: String = "urn:ietf:wg:oauth:2.0:oob",
-        scope: Scope = Scope(Scope.Name.ALL),
+        scope: Scope = Scope(Scope.Name.ALL),   // TODO: Fix this, default should be read
         website: String? = null
     ): MastodonRequest<Application> {
         scope.validate()

@@ -18,11 +18,12 @@ class RxOAuthMethods(client: MastodonClient) {
     fun getClientAccessToken(
         clientId: String,
         clientSecret: String,
+        scope: Scope = Scope(Scope.Name.READ),
         redirectUri: String = "urn:ietf:wg:oauth:2.0:oob"
     ): Single<Token> {
         return Single.create {
             try {
-                val accessToken = oauth.getClientAccessToken(clientId, clientSecret, redirectUri)
+                val accessToken = oauth.getClientAccessToken(clientId, clientSecret, scope, redirectUri)
                 it.onSuccess(accessToken.execute())
             } catch (throwable: Throwable) {
                 it.onErrorIfNotDisposed(throwable)
@@ -50,12 +51,13 @@ class RxOAuthMethods(client: MastodonClient) {
         clientId: String,
         clientSecret: String,
         scope: Scope = Scope(Scope.Name.READ),
+        redirectUri: String = "urn:ietf:wg:oauth:2.0:oob",
         username: String,
         password: String
     ): Single<Token> {
         return Single.create {
             try {
-                val accessToken = oauth.getUserAccessTokenWithPasswordGrant(clientId, clientSecret, scope, username, password)
+                val accessToken = oauth.getUserAccessTokenWithPasswordGrant(clientId, clientSecret, scope, redirectUri, username, password)
                 it.onSuccess(accessToken.execute())
             } catch (throwable: Throwable) {
                 it.onErrorIfNotDisposed(throwable)

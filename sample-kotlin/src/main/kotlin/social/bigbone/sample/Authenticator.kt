@@ -71,7 +71,7 @@ object Authenticator {
     ): Token {
         val client = MastodonClient.Builder(instanceName).build()
         val oAuthMethods = OAuthMethods(client)
-        return oAuthMethods.getUserAccessTokenWithPasswordGrant(clientId, clientSecret, Scope(), email, password).execute()
+        return oAuthMethods.getUserAccessTokenWithPasswordGrant(clientId, clientSecret, Scope(), "urn:ietf:wg:oauth:2.0:oob", email, password).execute()
     }
 
     private fun appRegistration(instanceName: String): Application {

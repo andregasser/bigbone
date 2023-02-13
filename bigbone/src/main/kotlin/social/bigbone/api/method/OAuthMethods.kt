@@ -24,6 +24,7 @@ class OAuthMethods(private val client: MastodonClient) {
      *  Must match one of the redirect_uris declared during app registration.
      * @see <a href="https://docs.joinmastodon.org/methods/oauth/#authorize">Mastodon oauth API methods #authorize</a>
      */
+    @JvmOverloads
     fun getOAuthUrl(clientId: String, scope: Scope, redirectUri: String = "urn:ietf:wg:oauth:2.0:oob"): String {
         val endpoint = "oauth/authorize"
         val params = Parameters()
@@ -43,9 +44,11 @@ class OAuthMethods(private val client: MastodonClient) {
      *  Must match one of the redirect_uris declared during app registration.
      *  @see <a href="https://docs.joinmastodon.org/methods/oauth/#token">Mastodon oauth API methods #token</a>
      */
+    @JvmOverloads
     fun getClientAccessToken(
         clientId: String,
         clientSecret: String,
+        scope: Scope = Scope(Scope.Name.READ),
         redirectUri: String = "urn:ietf:wg:oauth:2.0:oob",
     ): MastodonRequest<Token> {
         return client.getMastodonRequest(
@@ -54,6 +57,7 @@ class OAuthMethods(private val client: MastodonClient) {
             parameters = Parameters().apply {
                 append("client_id", clientId)
                 append("client_secret", clientSecret)
+                append("scope", scope.toString())
                 append("redirect_uri", redirectUri)
                 append("grant_type", "client_credentials")
             }
@@ -105,6 +109,7 @@ class OAuthMethods(private val client: MastodonClient) {
         clientId: String,
         clientSecret: String,
         scope: Scope = Scope(Scope.Name.READ),
+        redirectUri: String = "urn:ietf:wg:oauth:2.0:oob",
         username: String,
         password: String
     ): MastodonRequest<Token> {
@@ -115,6 +120,7 @@ class OAuthMethods(private val client: MastodonClient) {
                 append("client_id", clientId)
                 append("client_secret", clientSecret)
                 append("scope", scope.toString())
+                append("redirect_uri", redirectUri)
                 append("username", username)
                 append("password", password)
                 append("grant_type", "password")
