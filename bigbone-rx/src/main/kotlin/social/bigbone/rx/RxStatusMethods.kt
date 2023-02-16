@@ -1,14 +1,14 @@
 package social.bigbone.rx
 
-import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import social.bigbone.MastodonClient
 import social.bigbone.api.Pageable
 import social.bigbone.api.Range
 import social.bigbone.api.entity.Account
 import social.bigbone.api.entity.Context
-import social.bigbone.api.entity.PreviewCard
+import social.bigbone.api.entity.ScheduledStatus
 import social.bigbone.api.entity.Status
+import social.bigbone.api.entity.Translation
 import social.bigbone.api.method.StatusMethods
 
 /**
@@ -41,11 +41,11 @@ class RxStatusMethods(client: MastodonClient) {
         }
     }
 
-    fun getCard(statusId: String): Single<PreviewCard> {
+    fun translateStatus(statusId: String, language: String? = null): Single<Translation> {
         return Single.create {
             try {
-                val context = statusMethods.getCard(statusId)
-                it.onSuccess(context.execute())
+                val translation = statusMethods.translateStatus(statusId, language)
+                it.onSuccess(translation.execute())
             } catch (e: Throwable) {
                 it.onError(e)
             }
@@ -81,11 +81,12 @@ class RxStatusMethods(client: MastodonClient) {
         mediaIds: List<String>? = null,
         sensitive: Boolean = false,
         spoilerText: String? = null,
-        visibility: Status.Visibility = Status.Visibility.Public
+        visibility: Status.Visibility = Status.Visibility.Public,
+        language: String? = null
     ): Single<Status> {
         return Single.create {
             try {
-                val result = statusMethods.postStatus(status, inReplyToId, mediaIds, sensitive, spoilerText, visibility)
+                val result = statusMethods.postStatus(status, inReplyToId, mediaIds, sensitive, spoilerText, visibility, language)
                 it.onSuccess(result.execute())
             } catch (e: Throwable) {
                 it.onError(e)
@@ -93,21 +94,109 @@ class RxStatusMethods(client: MastodonClient) {
         }
     }
 
-    fun deleteStatus(statusId: String): Completable {
-        return Completable.create {
+    fun postPoll(
+        status: String,
+        pollOptions: List<String>,
+        pollExpiresIn: Int,
+        pollMultiple: Boolean = false,
+        pollHideTotals: Boolean = false,
+        inReplyToId: String? = null,
+        sensitive: Boolean = false,
+        spoilerText: String? = null,
+        visibility: Status.Visibility = Status.Visibility.Public,
+        language: String? = null
+    ): Single<Status> {
+        return Single.create {
             try {
-                statusMethods.deleteStatus(statusId)
-                it.onComplete()
+                val result = statusMethods.postPoll(
+                    status,
+                    pollOptions,
+                    pollExpiresIn,
+                    pollMultiple,
+                    pollHideTotals,
+                    inReplyToId,
+                    sensitive,
+                    spoilerText,
+                    visibility,
+                    language
+                )
+                it.onSuccess(result.execute())
             } catch (e: Throwable) {
                 it.onError(e)
             }
         }
     }
 
-    fun reblogStatus(statusId: String): Single<Status> {
+    fun scheduleStatus(
+        status: String,
+        inReplyToId: String? = null,
+        mediaIds: List<String>? = null,
+        sensitive: Boolean = false,
+        spoilerText: String? = null,
+        visibility: Status.Visibility = Status.Visibility.Public,
+        language: String? = null,
+        scheduledAt: String
+    ): Single<ScheduledStatus> {
         return Single.create {
             try {
-                val status = statusMethods.reblogStatus(statusId)
+                val result = statusMethods.scheduleStatus(status, inReplyToId, mediaIds, sensitive, spoilerText, visibility, language, scheduledAt)
+                it.onSuccess(result.execute())
+            } catch (e: Throwable) {
+                it.onError(e)
+            }
+        }
+    }
+
+    fun schedulePoll(
+        status: String,
+        pollOptions: List<String>,
+        pollExpiresIn: Int,
+        pollMultiple: Boolean = false,
+        pollHideTotals: Boolean = false,
+        inReplyToId: String? = null,
+        sensitive: Boolean = false,
+        spoilerText: String? = null,
+        visibility: Status.Visibility = Status.Visibility.Public,
+        language: String? = null,
+        scheduledAt: String
+    ): Single<ScheduledStatus> {
+        return Single.create {
+            try {
+                val result = statusMethods.schedulePoll(
+                    status,
+                    pollOptions,
+                    pollExpiresIn,
+                    pollMultiple,
+                    pollHideTotals,
+                    inReplyToId,
+                    sensitive,
+                    spoilerText,
+                    visibility,
+                    language,
+                    scheduledAt
+                )
+                it.onSuccess(result.execute())
+            } catch (e: Throwable) {
+                it.onError(e)
+            }
+        }
+    }
+
+    fun deleteStatus(statusId: String): Single<Status> {
+        return Single.create {
+            try {
+                val status = statusMethods.deleteStatus(statusId)
+                it.onSuccess(status.execute())
+            } catch (e: Throwable) {
+                it.onError(e)
+            }
+        }
+    }
+
+    fun reblogStatus(statusId: String, visibility: Status.Visibility = Status.Visibility.Public): Single<Status> {
+        return Single.create {
+            try {
+                val status = statusMethods.reblogStatus(statusId, visibility)
                 it.onSuccess(status.execute())
             } catch (e: Throwable) {
                 it.onError(e)
@@ -141,6 +230,72 @@ class RxStatusMethods(client: MastodonClient) {
         return Single.create {
             try {
                 val status = statusMethods.unfavouriteStatus(statusId)
+                it.onSuccess(status.execute())
+            } catch (e: Throwable) {
+                it.onError(e)
+            }
+        }
+    }
+
+    fun bookmarkStatus(statusId: String): Single<Status> {
+        return Single.create {
+            try {
+                val status = statusMethods.bookmarkStatus(statusId)
+                it.onSuccess(status.execute())
+            } catch (e: Throwable) {
+                it.onError(e)
+            }
+        }
+    }
+
+    fun unbookmarkStatus(statusId: String): Single<Status> {
+        return Single.create {
+            try {
+                val status = statusMethods.unbookmarkStatus(statusId)
+                it.onSuccess(status.execute())
+            } catch (e: Throwable) {
+                it.onError(e)
+            }
+        }
+    }
+
+    fun muteConversation(statusId: String): Single<Status> {
+        return Single.create {
+            try {
+                val status = statusMethods.muteConversation(statusId)
+                it.onSuccess(status.execute())
+            } catch (e: Throwable) {
+                it.onError(e)
+            }
+        }
+    }
+
+    fun unmuteConversation(statusId: String): Single<Status> {
+        return Single.create {
+            try {
+                val status = statusMethods.unmuteConversation(statusId)
+                it.onSuccess(status.execute())
+            } catch (e: Throwable) {
+                it.onError(e)
+            }
+        }
+    }
+
+    fun pinStatus(statusId: String): Single<Status> {
+        return Single.create {
+            try {
+                val status = statusMethods.pinStatus(statusId)
+                it.onSuccess(status.execute())
+            } catch (e: Throwable) {
+                it.onError(e)
+            }
+        }
+    }
+
+    fun unpinStatus(statusId: String): Single<Status> {
+        return Single.create {
+            try {
+                val status = statusMethods.unpinStatus(statusId)
                 it.onSuccess(status.execute())
             } catch (e: Throwable) {
                 it.onError(e)
