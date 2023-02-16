@@ -40,11 +40,13 @@ object MockClient {
             }
             .build()
 
+        every { clientMock.delete(ofType<String>(), any()) } returns response
         every { clientMock.get(ofType<String>(), isNull(inverse = false)) } returns response
         every { clientMock.get(ofType<String>(), any()) } returns response
+        every { clientMock.patch(ofType<String>(), any()) } returns response
         every { clientMock.post(ofType<String>(), any()) } returns response
         every { clientMock.postRequestBody(ofType<String>(), any()) } returns response
-        every { clientMock.patch(ofType<String>(), any()) } returns response
+        every { clientMock.put(ofType<String>(), any()) } returns response
         every { clientMock.getSerializer() } returns Gson()
         return clientMock
     }
@@ -61,11 +63,13 @@ object MockClient {
             .body(responseBodyMock)
             .build()
 
+        every { clientMock.delete(ofType<String>(), any()) } returns response
         every { clientMock.get(ofType<String>(), isNull(inverse = false)) } returns response
         every { clientMock.get(ofType<String>(), any()) } returns response
+        every { clientMock.patch(ofType<String>(), any()) } returns response
         every { clientMock.post(ofType<String>(), any()) } returns response
         every { clientMock.postRequestBody(ofType<String>(), any()) } returns response
-        every { clientMock.patch(ofType<String>(), any()) } returns response
+        every { clientMock.put(ofType<String>(), any()) } returns response
         every { clientMock.getSerializer() } returns Gson()
         return clientMock
     }

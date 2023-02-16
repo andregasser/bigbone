@@ -163,8 +163,9 @@ private constructor(
     enum class Method {
         DELETE,
         GET,
+        PATCH,
         POST,
-        PATCH
+        PUT
     }
 
     @PublishedApi
@@ -189,10 +190,11 @@ private constructor(
         return MastodonRequest(
             {
                 when (method) {
-                    Method.DELETE -> delete(endpoint)
+                    Method.DELETE -> delete(endpoint, parameters)
                     Method.GET -> get(endpoint, parameters)
                     Method.PATCH -> patch(endpoint, parameters)
                     Method.POST -> post(endpoint, parameters)
+                    Method.PUT -> put(endpoint, parameters)
                 }
             },
             { getSerializer().fromJson(it, T::class.java) }
@@ -214,10 +216,11 @@ private constructor(
         return MastodonRequest<Pageable<T>>(
             {
                 when (method) {
-                    Method.DELETE -> delete(endpoint)
+                    Method.DELETE -> delete(endpoint, parameters)
                     Method.GET -> get(endpoint, parameters)
                     Method.PATCH -> patch(endpoint, parameters)
                     Method.POST -> post(endpoint, parameters)
+                    Method.PUT -> put(endpoint, parameters)
                 }
             },
             { getSerializer().fromJson(it, T::class.java) }
@@ -239,10 +242,11 @@ private constructor(
         return MastodonRequest(
             {
                 when (method) {
-                    Method.DELETE -> delete(endpoint)
+                    Method.DELETE -> delete(endpoint, parameters)
                     Method.GET -> get(endpoint, parameters)
                     Method.PATCH -> patch(endpoint, parameters)
                     Method.POST -> post(endpoint, parameters)
+                    Method.PUT -> put(endpoint, parameters)
                 }
             },
             { getSerializer().fromJson(it, T::class.java) }
@@ -253,14 +257,16 @@ private constructor(
      * Performs the defined action and throws an exception if unsuccessful, without returning any data.
      * @param endpoint the Mastodon API endpoint to call
      * @param method the HTTP method to use
+     * @param parameters parameters to use in the action; can be null
      */
     @Throws(BigBoneRequestException::class)
-    internal fun performAction(endpoint: String, method: Method) {
+    internal fun performAction(endpoint: String, method: Method, parameters: Parameters? = null) {
         val response = when (method) {
-            Method.DELETE -> delete(endpoint)
-            Method.GET -> get(endpoint)
-            Method.PATCH -> patch(endpoint, null)
-            Method.POST -> post(endpoint)
+            Method.DELETE -> delete(endpoint, parameters)
+            Method.GET -> get(endpoint, parameters)
+            Method.PATCH -> patch(endpoint, parameters)
+            Method.POST -> post(endpoint, parameters)
+            Method.PUT -> put(endpoint, parameters)
         }
         if (!response.isSuccessful) {
             throw BigBoneRequestException(response)
@@ -270,15 +276,16 @@ private constructor(
     /**
      * Get a response from the Mastodon instance defined for this client using the DELETE method.
      * @param path an absolute path to the API endpoint to call
+     * @param body the parameters to use in the request body for this request
      */
-    fun delete(path: String): Response {
+    fun delete(path: String, body: Parameters?): Response {
         try {
             val url = fullUrl(instanceName, path)
             debugPrintUrl(url)
             val call = client.newCall(
                 Request.Builder()
                     .url(url)
-                    .delete()
+                    .delete(parameterBody(body))
                     .build()
             )
             return call.execute()
@@ -362,6 +369,31 @@ private constructor(
             return call.execute()
         } catch (e: IllegalArgumentException) {
             throw BigBoneRequestException(e)
+        } catch (e: IOException) {
+            throw BigBoneRequestException("Request not executed due to network IO issue", e)
+        }
+    }
+
+    /**
+     * Get a response from the Mastodon instance defined for this client using the PUT method.
+     * @param path an absolute path to the API endpoint to call
+     * @param body the parameters to use in the request body for this request; may be null
+     */
+    fun put(path: String, body: Parameters?): Response {
+        if (body == null) {
+            throw BigBoneRequestException("Patch request not possible with null body")
+        }
+
+        try {
+            val url = fullUrl(instanceName, path)
+            debugPrintUrl(url)
+            val call = client.newCall(
+                Request.Builder()
+                    .url(url)
+                    .put(parameterBody(body))
+                    .build()
+            )
+            return call.execute()
         } catch (e: IOException) {
             throw BigBoneRequestException("Request not executed due to network IO issue", e)
         }
