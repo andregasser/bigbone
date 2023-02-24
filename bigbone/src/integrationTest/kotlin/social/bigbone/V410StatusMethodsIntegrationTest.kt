@@ -11,7 +11,7 @@ import social.bigbone.api.entity.Application
 import social.bigbone.api.entity.Token
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class V402StatusMethodsIntegrationTest {
+class V410StatusMethodsIntegrationTest {
     private lateinit var appToken: Token
     private lateinit var user2Token: Token
 

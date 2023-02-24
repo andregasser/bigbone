@@ -30,7 +30,13 @@ import social.bigbone.api.method.StreamingMethods
 import social.bigbone.api.method.TimelineMethods
 import social.bigbone.extension.emptyRequestBody
 import java.io.IOException
+import java.security.SecureRandom
+import java.security.cert.X509Certificate
 import java.util.concurrent.TimeUnit
+import javax.net.ssl.HostnameVerifier
+import javax.net.ssl.SSLContext
+import javax.net.ssl.SSLSession
+import javax.net.ssl.X509TrustManager
 
 /**
  * This class is used by method classes (e.g. AccountMethods, RxAcccountMethods, ...) and performs HTTP calls
@@ -428,6 +434,7 @@ private constructor(
         private var debug = false
         private var scheme = "https"
         private var port = 443
+        private var trustAllCerts = false
 
         fun accessToken(accessToken: String) = apply {
             this.accessToken = accessToken
@@ -435,6 +442,16 @@ private constructor(
 
         fun withHttpsDisabled() = apply {
             scheme = "http"
+        }
+
+        /**
+         * Disables certificate validation and hostname verification. Please do not use this
+         * on production environments, as it is considered bad practice. Use it solely for
+         * testing purposes.
+         */
+        fun withTrustAllCerts() = apply {
+            trustAllCerts = true
+            configureForTrustAll(okHttpClientBuilder)
         }
 
         fun withPort(port: Int) = apply {
@@ -463,13 +480,39 @@ private constructor(
         }
 
         internal fun v2InstanceRequest(): Response {
-            val client = OkHttpClient.Builder().build()
-            return client.newCall(Request.Builder().url(fullUrl(scheme, instanceName, port, "api/v2/instance")).get().build()).execute()
+            val clientBuilder = OkHttpClient.Builder()
+            if (trustAllCerts) {
+                configureForTrustAll(clientBuilder)
+            }
+            val client = clientBuilder.build()
+            return client.newCall(
+                Request.Builder()
+                    .url(fullUrl(scheme, instanceName, port, "api/v2/instance"))
+                    .get()
+                    .build()
+            ).execute()
         }
 
         internal fun v1InstanceRequest(): Response {
-            val client = OkHttpClient.Builder().build()
-            return client.newCall(Request.Builder().url(fullUrl(scheme, instanceName, port, "api/v1/instance")).get().build()).execute()
+            val clientBuilder = OkHttpClient.Builder()
+            if (trustAllCerts) {
+                configureForTrustAll(clientBuilder)
+            }
+            val client = clientBuilder.build()
+            return client.newCall(
+                Request.Builder()
+                    .url(fullUrl(scheme, instanceName, port, "api/v1/instance"))
+                    .get()
+                    .build()
+            ).execute()
+        }
+
+        private fun configureForTrustAll(clientBuilder: OkHttpClient.Builder) {
+            val sslContext = SSLContext.getInstance("SSL")
+            sslContext.init(null, arrayOf(TrustAllX509TrustManager), SecureRandom())
+            clientBuilder
+                .sslSocketFactory(sslContext.socketFactory, TrustAllX509TrustManager)
+                .hostnameVerifier(AcceptAllHostnameVerifier)
         }
 
         fun build(): MastodonClient {
@@ -484,6 +527,16 @@ private constructor(
                 it.port = port
             }
         }
+    }
+
+    private object TrustAllX509TrustManager : X509TrustManager {
+        override fun checkClientTrusted(chain: Array<out X509Certificate>?, authType: String?) { }
+        override fun checkServerTrusted(chain: Array<out X509Certificate>?, authType: String?) { }
+        override fun getAcceptedIssuers(): Array<X509Certificate> = arrayOf()
+    }
+
+    private object AcceptAllHostnameVerifier : HostnameVerifier {
+        override fun verify(hostname: String?, session: SSLSession?): Boolean = true
     }
 
     private class AuthorizationInterceptor(val accessToken: String? = null) : Interceptor {

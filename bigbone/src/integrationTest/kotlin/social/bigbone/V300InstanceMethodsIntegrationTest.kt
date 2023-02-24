@@ -6,10 +6,10 @@ import org.junit.jupiter.api.TestInstance
 import social.bigbone.TestConstants.Companion.REST_API_HOSTNAME
 
 /**
- * Integration tests for InstanceMethods running on Mastodon 4.0.2.
+ * Integration tests for InstanceMethods running on Mastodon 3.0.0.
  */
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class V402InstanceMethodsIntegrationTest {
+class V300InstanceMethodsIntegrationTest {
     private lateinit var client: MastodonClient
 
     @BeforeAll

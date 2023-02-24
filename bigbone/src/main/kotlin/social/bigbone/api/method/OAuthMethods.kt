@@ -39,6 +39,7 @@ class OAuthMethods(private val client: MastodonClient) {
      * Obtain a client access token using OAuth2 client credentials grant type.
      * @param clientId The client ID, obtained during app registration.
      * @param clientSecret The client secret, obtained during app registration.
+     * @param scope List of requested OAuth scopes, separated by spaces. Must be a subset of scopes declared during app registration.
      * @param redirectUri Set a URI to redirect the user to. Defaults to "urn:ietf:wg:oauth:2.0:oob",
      *  which will display the authorization code to the user instead of redirecting to a web page.
      *  Must match one of the redirect_uris declared during app registration.
@@ -100,6 +101,8 @@ class OAuthMethods(private val client: MastodonClient) {
      * @param clientId The client ID, obtained during app registration.
      * @param clientSecret The client secret, obtained during app registration.
      * @param scope Requested OAuth scopes
+     * @param redirectUri Set a URI to redirect the user to. Defaults to "urn:ietf:wg:oauth:2.0:oob",
+     *  which will display the authorization code to the user instead of redirecting to a web page.
      * @param username The Mastodon account username.
      * @param password The Mastodon account password.
      * @see <a href="https://docs.joinmastodon.org/methods/oauth/#token">Mastodon oauth API methods #token</a>
