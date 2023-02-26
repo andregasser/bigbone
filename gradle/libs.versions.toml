@@ -12,8 +12,6 @@ kotlin-coroutines = "1.6.4"
 mockk = "1.13.4"
 okhttp = "4.10.0"
 rxjava = "3.1.6"
-testcontainers = "1.17.6"
-testcontainers-junit = "1.17.6"
 
 # Gradle plugins
 jacoco = "0.8.8"
@@ -35,8 +33,6 @@ okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
 okhttp-mockwebserver = { module = "com.squareup.okhttp3:mockwebserver", version.ref = "okhttp" }
 rxjava = { module="io.reactivex.rxjava3:rxjava", version.ref="rxjava"}
 detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
-testcontainers = { module = "org.testcontainers:testcontainers", version.ref = "testcontainers" }
-testcontainers-junit = { module = "org.testcontainers:junit-jupiter", version.ref = "testcontainers-junit" }
 
 [plugins]
 kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }

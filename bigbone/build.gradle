@@ -26,8 +26,6 @@ dependencies {
     integrationTestImplementation libs.junit.jupiter.api
     integrationTestImplementation libs.junit.jupiter.engine
     integrationTestImplementation libs.junit.platform.suite.engine
-    integrationTestImplementation libs.testcontainers
-    integrationTestImplementation libs.testcontainers.junit
     integrationTestImplementation 'ch.qos.logback:logback-core:1.3.5'
     integrationTestImplementation 'ch.qos.logback:logback-classic:1.3.5'
     integrationTestImplementation 'org.slf4j:slf4j-api:2.0.4'
