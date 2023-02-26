@@ -36,36 +36,6 @@ class OAuthMethods(private val client: MastodonClient) {
     }
 
     /**
-     * Obtain a client access token using OAuth2 client credentials grant type.
-     * @param clientId The client ID, obtained during app registration.
-     * @param clientSecret The client secret, obtained during app registration.
-     * @param scope List of requested OAuth scopes, separated by spaces. Must be a subset of scopes declared during app registration.
-     * @param redirectUri Set a URI to redirect the user to. Defaults to "urn:ietf:wg:oauth:2.0:oob",
-     *  which will display the authorization code to the user instead of redirecting to a web page.
-     *  Must match one of the redirect_uris declared during app registration.
-     *  @see <a href="https://docs.joinmastodon.org/methods/oauth/#token">Mastodon oauth API methods #token</a>
-     */
-    @JvmOverloads
-    fun getClientAccessToken(
-        clientId: String,
-        clientSecret: String,
-        scope: Scope = Scope(Scope.Name.READ),
-        redirectUri: String = "urn:ietf:wg:oauth:2.0:oob",
-    ): MastodonRequest<Token> {
-        return client.getMastodonRequest(
-            endpoint = "oauth/token",
-            method = MastodonClient.Method.POST,
-            parameters = Parameters().apply {
-                append("client_id", clientId)
-                append("client_secret", clientSecret)
-                append("scope", scope.toString())
-                append("redirect_uri", redirectUri)
-                append("grant_type", "client_credentials")
-            }
-        )
-    }
-
-    /**
      * Obtain a user access token using OAuth 2 authorization code grant type. To be used during API calls that are not public.
      * @param clientId The client ID, obtained during app registration.
      * @param clientSecret The client secret, obtained during app registration.
@@ -90,7 +60,41 @@ class OAuthMethods(private val client: MastodonClient) {
                 append("client_secret", clientSecret)
                 append("redirect_uri", redirectUri)
                 append("code", code)
-                append("grant_type", "authorization_code")
+                append("grant_type", GrantTypes.AUTHORIZATION_CODE.value)
+            }
+        )
+    }
+
+    /**
+     * Obtain an access token using OAuth 2 client credentials grant type. To be used during API calls that are not public.
+     * @param clientId The client ID, obtained during app registration.
+     * @param clientSecret The client secret, obtained during app registration.
+     * @param redirectUri Set a URI to redirect the user to. Defaults to "urn:ietf:wg:oauth:2.0:oob",
+     *  which will display the authorization code to the user instead of redirecting to a web page.
+     *  Must match one of the redirect_uris declared during app registration.
+     * @param scope Requested OAuth scopes. Must be a subset of scopes declared during app registration.
+     *  If not provided, defaults to read.
+     * @see <a href="https://docs.joinmastodon.org/methods/oauth/#token">Mastodon oauth API methods #token</a>
+     * @see <a href="https://docs.joinmastodon.org/client/token/#methods">Usage of this authentication form</a>
+     */
+    @JvmOverloads
+    fun getAccessTokenWithClientCredentialsGrant(
+        clientId: String,
+        clientSecret: String,
+        redirectUri: String = "urn:ietf:wg:oauth:2.0:oob",
+        scope: Scope? = null
+    ): MastodonRequest<Token> {
+        return client.getMastodonRequest(
+            endpoint = "oauth/token",
+            method = MastodonClient.Method.POST,
+            parameters = Parameters().apply {
+                append("client_id", clientId)
+                append("client_secret", clientSecret)
+                append("redirect_uri", redirectUri)
+                scope?.let {
+                    append("scope", it.toString())
+                }
+                append("grant_type", GrantTypes.CLIENT_CREDENTIALS.value)
             }
         )
     }
@@ -126,8 +130,19 @@ class OAuthMethods(private val client: MastodonClient) {
                 append("redirect_uri", redirectUri)
                 append("username", username)
                 append("password", password)
-                append("grant_type", "password")
+                append("grant_type", GrantTypes.PASSWORD.value)
             }
         )
+    }
+
+    companion object {
+        /**
+         * Possible grant types and respective parameter values used when requesting an access token.
+         */
+        private enum class GrantTypes(val value: String) {
+            AUTHORIZATION_CODE("authorization_code"),
+            CLIENT_CREDENTIALS("client_credentials"),
+            PASSWORD("password")
+        }
     }
 }

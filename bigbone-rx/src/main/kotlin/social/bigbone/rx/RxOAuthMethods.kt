@@ -15,22 +15,6 @@ import social.bigbone.rx.extensions.onErrorIfNotDisposed
 class RxOAuthMethods(client: MastodonClient) {
     private val oauth = OAuthMethods(client)
 
-    fun getClientAccessToken(
-        clientId: String,
-        clientSecret: String,
-        scope: Scope = Scope(Scope.Name.READ),
-        redirectUri: String = "urn:ietf:wg:oauth:2.0:oob"
-    ): Single<Token> {
-        return Single.create {
-            try {
-                val accessToken = oauth.getClientAccessToken(clientId, clientSecret, scope, redirectUri)
-                it.onSuccess(accessToken.execute())
-            } catch (throwable: Throwable) {
-                it.onErrorIfNotDisposed(throwable)
-            }
-        }
-    }
-
     fun getUserAccessTokenWithAuthorizationCodeGrant(
         clientId: String,
         clientSecret: String,

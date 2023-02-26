@@ -47,7 +47,11 @@ class V300StatusMethodsIntegrationTest {
         val client = MastodonClient.Builder(REST_API_HOSTNAME)
             .withTrustAllCerts()
             .build()
-        return client.oauth.getClientAccessToken(application.clientId!!, application.clientSecret!!, Scope(Scope.Name.ALL)).execute()
+        return client.oauth.getAccessTokenWithClientCredentialsGrant(
+            clientId = application.clientId!!,
+            clientSecret = application.clientSecret!!,
+            scope = Scope(Scope.Name.ALL)
+        ).execute()
     }
 
     private fun getUserToken(application: Application, username: String, password: String): Token {
