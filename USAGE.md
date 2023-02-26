@@ -163,7 +163,6 @@ MastodonRequest<Status> request = client.statuses()
         Status status = request.execute();
 ```
 
-
 ## Get Raw JSON
 The examples in this section demonstrate, how raw JSON responses can be processed by using the `doOnJson` method. `doOnJson`is invoked for every single JSON object that is returned.
 
