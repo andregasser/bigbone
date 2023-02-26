@@ -12,7 +12,7 @@ import social.bigbone.testtool.MockClient
 class AppMethodsTest {
     @Test
     fun createApp() {
-        val client: MastodonClient = MockClient.mock("app_registration.json")
+        val client: MastodonClient = MockClient.mock("application.json")
         every { client.getInstanceName() } returns "mastodon.cloud"
 
         val appMethods = AppMethods(client)
@@ -32,6 +32,26 @@ class AppMethodsTest {
             appMethods.createApp(
                 clientName = "bigbone-sample-app", scope = Scope(Scope.Name.ALL)
             ).execute()
+        }
+    }
+
+    @Test
+    fun verifyCredentials() {
+        val client: MastodonClient = MockClient.mock("application_no_client_data.json")
+        every { client.getInstanceName() } returns "mastodon.cloud"
+
+        val appMethods = AppMethods(client)
+        val application = appMethods.verifyCredentials().execute()
+
+        application.name shouldBeEqualTo "bigbone-sample-app"
+    }
+
+    @Test
+    fun verifyCredentialsWithException() {
+        Assertions.assertThrows(BigBoneRequestException::class.java) {
+            val client = MockClient.ioException()
+            val appMethods = AppMethods(client)
+            appMethods.verifyCredentials().execute()
         }
     }
 }
