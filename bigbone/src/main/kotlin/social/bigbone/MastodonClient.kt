@@ -10,19 +10,156 @@ import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import social.bigbone.api.Pageable
-import social.bigbone.api.exception.BigboneRequestException
+import social.bigbone.api.entity.InstanceVersion
+import social.bigbone.api.exception.BigBoneRequestException
+import social.bigbone.api.method.AccountMethods
+import social.bigbone.api.method.AppMethods
+import social.bigbone.api.method.BlockMethods
+import social.bigbone.api.method.FavouriteMethods
+import social.bigbone.api.method.FollowRequestMethods
+import social.bigbone.api.method.InstanceMethods
+import social.bigbone.api.method.ListMethods
+import social.bigbone.api.method.MediaMethods
+import social.bigbone.api.method.MuteMethods
+import social.bigbone.api.method.NotificationMethods
+import social.bigbone.api.method.OAuthMethods
+import social.bigbone.api.method.ReportMethods
+import social.bigbone.api.method.SearchMethods
+import social.bigbone.api.method.StatusMethods
+import social.bigbone.api.method.StreamingMethods
+import social.bigbone.api.method.TimelineMethods
 import social.bigbone.extension.emptyRequestBody
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 
-open class MastodonClient
+/**
+ * This class is used by method classes (e.g. AccountMethods, RxAcccountMethods, ...) and performs HTTP calls
+ * towards the Mastodon instance specified. Request/response data is serialized/deserialized accordingly.
+ */
+class MastodonClient
 private constructor(
     private val instanceName: String,
     private val client: OkHttpClient,
     private val gson: Gson
 ) {
     private var debug = false
+    private var instanceVersion: String? = null
 
+    /**
+     * Access API methods under "api/vX/accounts" endpoint.
+     */
+    @Suppress("unused") // public API
+    @get:JvmName("accounts")
+    val accounts: AccountMethods by lazy { AccountMethods(this) }
+
+    /**
+     * Access API methods under "api/vX/apps" endpoint.
+     */
+    @Suppress("unused") // public API
+    @get:JvmName("apps")
+    val apps: AppMethods by lazy { AppMethods(this) }
+
+    /**
+     * Access API methods under "api/vX/blocks" endpoint.
+     */
+    @Suppress("unused") // public API
+    @get:JvmName("blocks")
+    val blocks: BlockMethods by lazy { BlockMethods(this) }
+
+    /**
+     * Access API methods under "api/vX/favourites" endpoint.
+     */
+    @Suppress("unused") // public API
+    @get:JvmName("favourites")
+    val favourites: FavouriteMethods by lazy { FavouriteMethods(this) }
+
+    /**
+     * Access API methods under "api/vX/follow_requests" endpoint.
+     */
+    @Suppress("unused") // public API
+    @get:JvmName("followRequests")
+    val followRequests: FollowRequestMethods by lazy { FollowRequestMethods(this) }
+
+    /**
+     * Access API methods under "api/vX/instance" endpoint.
+     */
+    @Suppress("unused") // public API
+    @get:JvmName("instances")
+    val instances: InstanceMethods by lazy { InstanceMethods(this) }
+
+    /**
+     * Access API methods under "api/vX/lists" endpoint.
+     */
+    @Suppress("unused") // public API
+    @get:JvmName("lists")
+    val lists: ListMethods by lazy { ListMethods(this) }
+
+    /**
+     * Access API methods under "api/vX/media" endpoint.
+     */
+    @Suppress("unused") // public API
+    @get:JvmName("media")
+    val media: MediaMethods by lazy { MediaMethods(this) }
+
+    /**
+     * Access API methods under "api/vX/mutes" endpoint.
+     */
+    @Suppress("unused") // public API
+    @get:JvmName("mutes")
+    val mutes: MuteMethods by lazy { MuteMethods(this) }
+
+    /**
+     * Access API methods under "api/vX/notification[s]" endpoint.
+     */
+    @Suppress("unused") // public API
+    @get:JvmName("notifications")
+    val notifications: NotificationMethods by lazy { NotificationMethods(this) }
+
+    /**
+     * Access API methods under "oauth" endpoint.
+     */
+    @Suppress("unused") // public API
+    @get:JvmName("oauth")
+    val oauth: OAuthMethods by lazy { OAuthMethods(this) }
+
+    /**
+     * Access API methods under "api/vX/reports" endpoint.
+     */
+    @Suppress("unused") // public API
+    @get:JvmName("reports")
+    val reports: ReportMethods by lazy { ReportMethods(this) }
+
+    /**
+     * Access API methods under "api/vX/search" endpoint.
+     */
+    @Suppress("unused") // public API
+    @get:JvmName("search")
+    val search: SearchMethods by lazy { SearchMethods(this) }
+
+    /**
+     * Access API methods under "api/vX/statuses" endpoint.
+     */
+    @Suppress("unused") // public API
+    @get:JvmName("statuses")
+    val statuses: StatusMethods by lazy { StatusMethods(this) }
+
+    /**
+     * Access API methods under "api/vX/streaming" endpoint.
+     */
+    @Suppress("unused") // public API
+    @get:JvmName("streaming")
+    val streaming: StreamingMethods by lazy { StreamingMethods(this) }
+
+    /**
+     * Access API methods under "api/vX/timelines" endpoint.
+     */
+    @Suppress("unused") // public API
+    @get:JvmName("timelines")
+    val timelines: TimelineMethods by lazy { TimelineMethods(this) }
+
+    /**
+     * Specifies the HTTP methods / HTTP verb that can be used by this class.
+     */
     enum class Method {
         DELETE,
         GET,
@@ -33,10 +170,13 @@ private constructor(
     @PublishedApi
     internal fun getSerializer() = gson
 
-    open fun getInstanceName() = instanceName
+    fun getInstanceName() = instanceName
+
+    fun getInstanceVersion() = instanceVersion
 
     /**
      * Returns a MastodonRequest for the defined action, allowing to retrieve returned data.
+     * @param T
      * @param endpoint the Mastodon API endpoint to call
      * @param method the HTTP method to use
      * @param parameters parameters to use in the action; can be null
@@ -44,7 +184,7 @@ private constructor(
     internal inline fun <reified T : Any> getMastodonRequest(
         endpoint: String,
         method: Method,
-        parameters: Parameter? = null
+        parameters: Parameters? = null
     ): MastodonRequest<T> {
         return MastodonRequest(
             {
@@ -61,6 +201,7 @@ private constructor(
 
     /**
      * Returns a MastodonRequest for the defined action, allowing to retrieve returned data as a Pageable.
+     * @param T
      * @param endpoint the Mastodon API endpoint to call
      * @param method the HTTP method to use
      * @param parameters parameters to use in the action; can be null
@@ -68,7 +209,7 @@ private constructor(
     internal inline fun <reified T : Any> getPageableMastodonRequest(
         endpoint: String,
         method: Method,
-        parameters: Parameter? = null
+        parameters: Parameters? = null
     ): MastodonRequest<Pageable<T>> {
         return MastodonRequest<Pageable<T>>(
             {
@@ -85,6 +226,7 @@ private constructor(
 
     /**
      * Returns a MastodonRequest for the defined action, allowing to retrieve returned data as a List.
+     * @param T
      * @param endpoint the Mastodon API endpoint to call
      * @param method the HTTP method to use
      * @param parameters parameters to use in the action; can be null
@@ -92,7 +234,7 @@ private constructor(
     internal inline fun <reified T : Any> getMastodonRequestForList(
         endpoint: String,
         method: Method,
-        parameters: Parameter? = null
+        parameters: Parameters? = null
     ): MastodonRequest<List<T>> {
         return MastodonRequest(
             {
@@ -112,7 +254,7 @@ private constructor(
      * @param endpoint the Mastodon API endpoint to call
      * @param method the HTTP method to use
      */
-    @Throws(BigboneRequestException::class)
+    @Throws(BigBoneRequestException::class)
     internal fun performAction(endpoint: String, method: Method) {
         val response = when (method) {
             Method.DELETE -> delete(endpoint)
@@ -121,7 +263,7 @@ private constructor(
             Method.POST -> post(endpoint)
         }
         if (!response.isSuccessful) {
-            throw BigboneRequestException(response)
+            throw BigBoneRequestException(response)
         }
     }
 
@@ -129,7 +271,7 @@ private constructor(
      * Get a response from the Mastodon instance defined for this client using the DELETE method.
      * @param path an absolute path to the API endpoint to call
      */
-    open fun delete(path: String): Response {
+    fun delete(path: String): Response {
         try {
             val url = fullUrl(instanceName, path)
             debugPrintUrl(url)
@@ -141,7 +283,7 @@ private constructor(
             )
             return call.execute()
         } catch (e: IOException) {
-            throw BigboneRequestException(e)
+            throw BigBoneRequestException("Request not executed due to network IO issue", e)
         }
     }
 
@@ -150,7 +292,7 @@ private constructor(
      * @param path an absolute path to the API endpoint to call
      * @param query the parameters to use as query string for this request; may be null
      */
-    open fun get(path: String, query: Parameter? = null): Response {
+    fun get(path: String, query: Parameters? = null): Response {
         try {
             val url = fullUrl(instanceName, path, query)
             debugPrintUrl(url)
@@ -162,7 +304,7 @@ private constructor(
             )
             return call.execute()
         } catch (e: IOException) {
-            throw BigboneRequestException(e)
+            throw BigBoneRequestException("Request not executed due to network IO issue", e)
         }
     }
 
@@ -171,9 +313,9 @@ private constructor(
      * @param path an absolute path to the API endpoint to call
      * @param body the parameters to use in the request body for this request
      */
-    open fun patch(path: String, body: Parameter?): Response {
+    fun patch(path: String, body: Parameters?): Response {
         if (body == null) {
-            throw BigboneRequestException(Exception("body must not be empty"))
+            throw BigBoneRequestException("Patch request not possible with null body")
         }
 
         try {
@@ -187,7 +329,7 @@ private constructor(
             )
             return call.execute()
         } catch (e: IOException) {
-            throw BigboneRequestException(e)
+            throw BigBoneRequestException("Request not executed due to network IO issue", e)
         }
     }
 
@@ -196,7 +338,7 @@ private constructor(
      * @param path an absolute path to the API endpoint to call
      * @param body the parameters to use in the request body for this request; may be null
      */
-    open fun post(path: String, body: Parameter? = null): Response =
+    fun post(path: String, body: Parameters? = null): Response =
         postRequestBody(path, parameterBody(body))
 
     /**
@@ -207,7 +349,7 @@ private constructor(
      *
      * @see post
      */
-    open fun postRequestBody(path: String, body: RequestBody): Response {
+    fun postRequestBody(path: String, body: RequestBody): Response {
         try {
             val url = fullUrl(instanceName, path)
             debugPrintUrl(url)
@@ -219,9 +361,9 @@ private constructor(
             )
             return call.execute()
         } catch (e: IllegalArgumentException) {
-            throw BigboneRequestException(e)
+            throw BigBoneRequestException(e)
         } catch (e: IOException) {
-            throw BigboneRequestException(e)
+            throw BigBoneRequestException("Request not executed due to network IO issue", e)
         }
     }
 
@@ -236,18 +378,18 @@ private constructor(
 
     companion object {
         /**
-         * Returns a HttpUrl
+         * Returns a HttpUrl.
          * @param instanceName host of a Mastodon instance
          * @param path Mastodon API endpoint to be called
          * @param query query part of the URL to build; may be null
          */
-        fun fullUrl(instanceName: String, path: String, query: Parameter? = null): HttpUrl {
+        fun fullUrl(instanceName: String, path: String, query: Parameters? = null): HttpUrl {
             val urlBuilder = HttpUrl.Builder()
                 .scheme("https")
                 .host(instanceName)
                 .addEncodedPathSegments(path)
             query?.let {
-                urlBuilder.encodedQuery(it.build())
+                urlBuilder.encodedQuery(it.toQuery())
             }
             return urlBuilder.build()
         }
@@ -256,14 +398,18 @@ private constructor(
          * Returns a RequestBody matching the given parameters.
          * @param parameters list of parameters to use; may be null, in which case the returned RequestBody will be empty
          */
-        fun parameterBody(parameters: Parameter?): RequestBody {
+        fun parameterBody(parameters: Parameters?): RequestBody {
             return parameters
-                ?.build()
+                ?.toQuery()
                 ?.toRequestBody("application/x-www-form-urlencoded; charset=utf-8".toMediaTypeOrNull())
                 ?: emptyRequestBody()
         }
     }
 
+    /**
+     * The builder used to create a new instance of [MastodonClient]. New instances of [MastodonClient] should
+     * be created using this builder only.
+     */
     class Builder(
         private val instanceName: String
     ) {
@@ -284,6 +430,29 @@ private constructor(
             this.debug = true
         }
 
+        private fun getInstanceVersion(): String {
+            try {
+                return listOf(v2InstanceRequest(), v1InstanceRequest()).stream()
+                    .filter { response -> response.isSuccessful }
+                    .map { response -> gson.fromJson(response.body?.string(), InstanceVersion::class.java) }
+                    .map { json -> json.version }
+                    .findFirst()
+                    .get()
+            } catch (e: Exception) {
+                throw BigBoneRequestException("Unable to fetch instance version", e)
+            }
+        }
+
+        internal fun v2InstanceRequest(): Response {
+            val client = OkHttpClient.Builder().build()
+            return client.newCall(Request.Builder().url(fullUrl(instanceName, "api/v2/instance")).get().build()).execute()
+        }
+
+        internal fun v1InstanceRequest(): Response {
+            val client = OkHttpClient.Builder().build()
+            return client.newCall(Request.Builder().url(fullUrl(instanceName, "api/v1/instance")).get().build()).execute()
+        }
+
         fun build(): MastodonClient {
             return MastodonClient(
                 instanceName,
@@ -291,6 +460,7 @@ private constructor(
                 gson
             ).also {
                 it.debug = debug
+                it.instanceVersion = getInstanceVersion()
             }
         }
     }

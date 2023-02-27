@@ -2,8 +2,7 @@ package social.bigbone.sample
 
 import social.bigbone.MastodonClient
 import social.bigbone.api.Range
-import social.bigbone.api.method.Timelines
-import social.bigbone.api.method.Timelines.StatusOrigin
+import social.bigbone.api.method.TimelineMethods.StatusOrigin
 
 object GetPublicTimeline {
     @JvmStatic
@@ -15,8 +14,7 @@ object GetPublicTimeline {
             .build()
 
         // Get statuses from public timeline
-        val timelines = Timelines(client)
-        val statuses = timelines.getPublicTimeline(Range(), StatusOrigin.LOCAL_AND_REMOTE).execute()
+        val statuses = client.timelines.getPublicTimeline(Range(), StatusOrigin.LOCAL_AND_REMOTE).execute()
         statuses.part.forEach {
             println(it.content)
         }

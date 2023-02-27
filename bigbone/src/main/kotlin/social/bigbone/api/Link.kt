@@ -1,6 +1,9 @@
 package social.bigbone.api
 
-class Link(
+/**
+ * Represents an HTTP link header that is returned as part of a Mastodon API response.
+ */
+data class Link(
     val linkHeader: String,
     val nextPath: String,
     val prevPath: String,

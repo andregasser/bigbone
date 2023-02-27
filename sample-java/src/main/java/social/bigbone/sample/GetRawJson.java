@@ -2,14 +2,13 @@ package social.bigbone.sample;
 
 import social.bigbone.MastodonClient;
 import social.bigbone.api.Range;
-import social.bigbone.api.exception.BigboneRequestException;
-import social.bigbone.api.method.Timelines;
+import social.bigbone.api.exception.BigBoneRequestException;
 
-import static social.bigbone.api.method.Timelines.StatusOrigin.LOCAL_AND_REMOTE;
+import static social.bigbone.api.method.TimelineMethods.StatusOrigin.LOCAL_AND_REMOTE;
 
 @SuppressWarnings("PMD.SystemPrintln")
 public class GetRawJson {
-    public static void main(final String[] args) throws BigboneRequestException {
+    public static void main(final String[] args) throws BigBoneRequestException {
         final String instance = args[0];
 
         // Instantiate client
@@ -17,8 +16,7 @@ public class GetRawJson {
             .build();
 
         // Print timeline statuses
-        final Timelines timelines = new Timelines(client);
-        timelines.getPublicTimeline(new Range(), LOCAL_AND_REMOTE).doOnJson(
+        client.timelines().getPublicTimeline(new Range(), LOCAL_AND_REMOTE).doOnJson(
             System.out::println
         ).execute();
     }

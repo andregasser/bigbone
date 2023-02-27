@@ -6,12 +6,11 @@ import social.bigbone.api.Handler;
 import social.bigbone.api.Shutdownable;
 import social.bigbone.api.entity.Notification;
 import social.bigbone.api.entity.Status;
-import social.bigbone.api.exception.BigboneRequestException;
-import social.bigbone.api.method.Streaming;
+import social.bigbone.api.exception.BigBoneRequestException;
 
 @SuppressWarnings("PMD.SystemPrintln")
 public class StreamFederatedPublicTimeline {
-    public static void main(final String[] args) throws BigboneRequestException, InterruptedException {
+    public static void main(final String[] args) throws BigBoneRequestException, InterruptedException {
         final String instance = args[0];
 
         // Instantiate client
@@ -38,8 +37,7 @@ public class StreamFederatedPublicTimeline {
         };
 
         // Start federated timeline streaming and stop after 20 seconds
-        final Streaming streaming = new Streaming(client);
-        final Shutdownable shutdownable = streaming.federatedPublic(handler);
+        final Shutdownable shutdownable = client.streaming().federatedPublic(handler);
         Thread.sleep(20_000L);
         shutdownable.shutdown();
     }

@@ -1,4 +1,4 @@
-# First steps with Bigbone
+# First steps with BigBone
 
 Following this guide will allow you to:
 * register your Mastodon application
@@ -22,7 +22,7 @@ Additionally, this guide uses the following values that should be replaced in yo
 // The actual value used instead should be a URL that will be interpreted by your application.
 redirectUris = "urn:ietf:wg:oauth:2.0:oob"
 
-// This is equal to the full range of scopes currently supported by Bigbone.
+// This is equal to the full range of scopes currently supported by BigBone.
 // Instead of this, you should request as little as possible for your application.
 scope = Scope()
 ```
@@ -35,8 +35,7 @@ __Kotlin__
 
 ```kotlin
 val client: MastodonClient = MastodonClient.Builder(instanceHostname).build()
-val apps = Apps(client)
-val appRegistration = apps.createApp(
+val appRegistration = client.apps.createApp(
 	clientName = "bigbone-sample-app",
 	redirectUris = "urn:ietf:wg:oauth:2.0:oob",
 	scope = Scope(),
@@ -48,15 +47,14 @@ __Java__
 
 ```java
 MastodonClient client = new MastodonClient.Builder(instanceHostname).build();
-Apps apps = new Apps(client);
 try {
-	AppRegistration appRegistration = apps.createApp(
+	AppRegistration appRegistration = client.apps().createApp(
 	    "bigbone-sample-app",
 	    "urn:ietf:wg:oauth:2.0:oob",
 	    new Scope(),
 	    "https://example.org/"
 	).execute();
-} catch (BigboneRequestException e) {
+} catch (BigBoneRequestException e) {
 	// error handling
 }
 ```
@@ -69,9 +67,7 @@ __Kotlin__
 
 ```kotlin
 // using client and appRegistration as defined above
-
-val apps = Apps(client)
-val url = apps.getOAuthUrl(appRegistration.clientId, Scope())
+val url = client.oauth.getOAuthUrl(appRegistration.clientId, Scope())
 
 // This URL will have the following format:
 // https://<instance_name>/oauth/authorize?client_id=<client_id>&redirect_uri=<redirect_uri>&response_type=code&scope=<scope> 
@@ -83,7 +79,7 @@ val url = apps.getOAuthUrl(appRegistration.clientId, Scope())
 val authCode:String = ... // retrieved from redirect_uri query parameter
 
 // we use this auth code to get an access token
-val accessToken = apps.getAccessToken(
+val accessToken = client.oauth.getAccessToken(
 	clientId = appRegistration.clientId,
 	clientSecret = appRegistration.clientSecret,
 	redirectUri = appRegistration.redirectUri,
@@ -105,7 +101,7 @@ val client: MastodonClient = MastodonClient.Builder(instanceHostname)
 	.build()
 
 // get 5 statuses
-val result = Timelines(client).getHome(Range(limit = 5)).execute()
+val result = client.timelines.getHome(Range(limit = 5)).execute()
 
 // sort and display these statuses
 result.part.sortedBy { it.createdAt }.forEach {
@@ -126,7 +122,7 @@ __Kotlin__
 ```kotlin
 try {
 	// using previously defined client with access token
-	val status = Statuses(client).postStatus(
+	val status = client.statuses.postStatus(
 		status = "Hello World! #HelloWorld",
 		inReplyToId = null,
 		mediaIds = null,
@@ -153,8 +149,7 @@ object GetRawJson {
         val credentialFilePath = args[1]
         val client = Authenticator.appRegistrationIfNeeded(instanceName, credentialFilePath)
         runBlocking {
-            val public = Public(client)
-            public.getLocalPublic().doOnJson {
+            client.timelines.getPublicTimeline().doOnJson {
                 println(it)
             }.execute()
         }
@@ -171,9 +166,8 @@ public class GetRawJson {
             String instanceName = args[0];
             String credentialFilePath = args[1];
             MastodonClient client = Authenticator.appRegistrationIfNeeded(instanceName, credentialFilePath, false);
-            Public publicMethod = new Public(client);
-            publicMethod.getLocalPublic().doOnJson(System.out::println).execute();
-        } catch (IOException | BigboneRequestException e) {
+            client.timelines().getPublicTimeline().doOnJson(System.out::println).execute();
+        } catch (IOException | BigBoneRequestException e) {
             e.printStackTrace();
         }
     }
@@ -200,12 +194,11 @@ val handler = object : Handler {
   override fun onDelete(id: String) {/* no op */}
 }
 
-val streaming = Streaming(client)
 try {
-  val shutdownable = streaming.localPublic(handler)
+  val shutdownable = client.streaming.localPublic(handler)
   Thread.sleep(10000L)
   shutdownable.shutdown()
-} catch(e: BigboneRequestException) {
+} catch(e: BigBoneRequestException) {
   e.printStackTrace()
 }
 ```
@@ -229,9 +222,8 @@ Handler handler = new Handler() {
     public void onDelete(String id) {/* no op */}
 };
 
-Streaming streaming = new Streaming(client);
 try {
-    Shutdownable shutdownable = streaming.localPublic(handler);
+    Shutdownable shutdownable = client.streaming().localPublic(handler);
     Thread.sleep(10000L);
     shutdownable.shutdown();
 } catch (Exception e) {

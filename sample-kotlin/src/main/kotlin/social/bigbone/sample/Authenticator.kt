@@ -1,13 +1,10 @@
 package social.bigbone.sample
 
-import com.google.gson.Gson
 import social.bigbone.MastodonClient
-import social.bigbone.MastodonRequest
-import social.bigbone.Parameter
 import social.bigbone.api.Scope
-import social.bigbone.api.entity.auth.AccessToken
-import social.bigbone.api.entity.auth.AppRegistration
-import social.bigbone.api.method.Apps
+import social.bigbone.api.entity.Application
+import social.bigbone.api.entity.Token
+import social.bigbone.api.method.OAuthMethods
 import java.io.File
 import java.util.Properties
 
@@ -71,47 +68,17 @@ object Authenticator {
         clientSecret: String,
         email: String,
         password: String
-    ): AccessToken {
+    ): Token {
         val client = MastodonClient.Builder(instanceName).build()
-        return postUserNameAndPassword(client, clientId, clientSecret, Scope(), email, password).execute()
+        val oAuthMethods = OAuthMethods(client)
+        return oAuthMethods.getAccessTokenWithPasswordGrant(clientId, clientSecret, Scope(), email, password).execute()
     }
 
-    private fun appRegistration(instanceName: String): AppRegistration {
+    private fun appRegistration(instanceName: String): Application {
         val client = MastodonClient.Builder(instanceName).build()
-        val apps = Apps(client)
-        return apps.createApp(
-            "kotlindon",
+        return client.apps.createApp(
+            "bigbone-sample-app",
             scope = Scope()
         ).execute()
-    }
-
-    /**
-     * Obtain an access token, to be used during API calls that are not public. This method uses a grant_type
-     * that is undocumented in Mastodon API, and should NOT be used in production code. It will be removed at a later date.
-     * Apps.getAccessToken() should be used instead.
-     */
-    private fun postUserNameAndPassword(
-        client: MastodonClient,
-        clientId: String,
-        clientSecret: String,
-        scope: Scope,
-        userName: String,
-        password: String
-    ): MastodonRequest<AccessToken> {
-        val parameters = Parameter()
-            .append("client_id", clientId)
-            .append("client_secret", clientSecret)
-            .append("scope", scope.toString())
-            .append("username", userName)
-            .append("password", password)
-            .append("grant_type", "password")
-        return MastodonRequest(
-            {
-                client.post("oauth/token", parameters)
-            },
-            {
-                Gson().fromJson(it, AccessToken::class.java)
-            }
-        )
     }
 }

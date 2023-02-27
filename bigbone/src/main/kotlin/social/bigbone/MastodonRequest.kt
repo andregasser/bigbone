@@ -2,14 +2,21 @@ package social.bigbone
 
 import com.google.gson.JsonParser
 import okhttp3.Response
-import social.bigbone.api.exception.BigboneRequestException
+import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.extension.toPageable
 import java.lang.Exception
 
-open class MastodonRequest<T>(
+/**
+ * Represents an HTTP request that is sent to a Mastodon instance, once the [execute]
+ * method on this class is called.
+ */
+class MastodonRequest<T>(
     private val executor: () -> Response,
     private val mapper: (String) -> Any
 ) {
+    /**
+     * SAM interface provided for Java interoperability related to [doOnJson] method.
+     */
     interface Action1<T> {
         fun invoke(arg: T)
     }
@@ -22,17 +29,25 @@ open class MastodonRequest<T>(
         isPageable = true
     }
 
+    /**
+     * Allows you to execute some extra logic (such as logging) that is triggered when the JSON response
+     * from the Mastodon API arrives.
+     */
     @JvmSynthetic
     fun doOnJson(action: (String) -> Unit) = apply {
         this.action = action
     }
 
+    /**
+     * Allows you to execute some extra logic (such as logging) that is triggered when the JSON response
+     * from the Mastodon API arrives. This method is provided for Java interoperability reasons.
+     */
     fun doOnJson(action: Action1<String>) = apply {
         this.action = { action.invoke(it) }
     }
 
     @Suppress("UNCHECKED_CAST")
-    @Throws(BigboneRequestException::class)
+    @Throws(BigBoneRequestException::class)
     fun execute(): T {
         val response = executor()
         if (response.isSuccessful) {
@@ -56,10 +71,10 @@ open class MastodonRequest<T>(
                     }
                 }
             } catch (e: Exception) {
-                throw BigboneRequestException(e)
+                throw BigBoneRequestException("Successful response could not be parsed", e)
             }
         } else {
-            throw BigboneRequestException(response)
+            throw BigBoneRequestException(response)
         }
     }
 }

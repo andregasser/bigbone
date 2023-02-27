@@ -1,14 +1,11 @@
 package social.bigbone.sample;
 
-import com.google.gson.Gson;
 import social.bigbone.MastodonClient;
-import social.bigbone.MastodonRequest;
-import social.bigbone.Parameter;
 import social.bigbone.api.Scope;
-import social.bigbone.api.entity.auth.AccessToken;
-import social.bigbone.api.entity.auth.AppRegistration;
-import social.bigbone.api.exception.BigboneRequestException;
-import social.bigbone.api.method.Apps;
+import social.bigbone.api.entity.Application;
+import social.bigbone.api.entity.Token;
+import social.bigbone.api.exception.BigBoneRequestException;
+import social.bigbone.api.method.OAuthMethods;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,7 +20,7 @@ final class Authenticator {
 
     private Authenticator() {}
 
-    static MastodonClient appRegistrationIfNeeded(final String instanceName, final String credentialFilePath, final boolean useStreaming) throws IOException, BigboneRequestException {
+    static MastodonClient appRegistrationIfNeeded(final String instanceName, final String credentialFilePath, final boolean useStreaming) throws IOException, BigBoneRequestException {
         final File file = new File(credentialFilePath);
         if (!file.exists()) {
             System.out.println("create $credentialFilePath.");
@@ -34,9 +31,9 @@ final class Authenticator {
         properties.load(Files.newInputStream(file.toPath()));
         if (properties.get(CLIENT_ID) == null) {
             System.out.println("try app registration...");
-            final AppRegistration appRegistration = appRegistration(instanceName);
-            properties.put(CLIENT_ID, appRegistration.getClientId());
-            properties.put(CLIENT_SECRET, appRegistration.getClientSecret());
+            final Application application = application(instanceName);
+            properties.put(CLIENT_ID, application.getClientId());
+            properties.put(CLIENT_SECRET, application.getClientSecret());
             properties.store(Files.newOutputStream(file.toPath()), "app registration");
         } else {
             System.out.println("app registration found...");
@@ -49,7 +46,7 @@ final class Authenticator {
             final String email = System.console().readLine();
             System.out.println("please input your password...");
             final String pass = System.console().readLine();
-            final AccessToken accessToken = getAccessToken(instanceName, clientId, clientSecret, email, pass);
+            final Token accessToken = getAccessToken(instanceName, clientId, clientSecret, email, pass);
             properties.put(ACCESS_TOKEN, accessToken.getAccessToken());
             properties.store(Files.newOutputStream(file.toPath()), "app registration");
         } else {
@@ -63,40 +60,14 @@ final class Authenticator {
         return builder.build();
     }
 
-    private static AccessToken getAccessToken(final String instanceName, final String clientId, final String clientSecret, final String email, final String password) throws BigboneRequestException {
+    private static Token getAccessToken(final String instanceName, final String clientId, final String clientSecret, final String email, final String password) throws BigBoneRequestException {
         final MastodonClient client = new MastodonClient.Builder(instanceName).build();
-        return postUserNameAndPassword(client, clientId, clientSecret, new Scope(), email, password).execute();
+        final OAuthMethods oauthMethods = new OAuthMethods(client);
+        return oauthMethods.getAccessTokenWithPasswordGrant(clientId, clientSecret, new Scope(), email, password).execute();
     }
 
-    private static AppRegistration appRegistration(final String instanceName) throws BigboneRequestException {
+    private static Application application(final String instanceName) throws BigBoneRequestException {
         final MastodonClient client = new MastodonClient.Builder(instanceName).build();
-        final Apps apps = new Apps(client);
-        return apps.createApp("kotlindon", "urn:ietf:wg:oauth:2.0:oob", new Scope(), null).execute();
-    }
-
-    /**
-     * Obtain an access token, to be used during API calls that are not public. This method uses a grant_type
-     * that is undocumented in Mastodon API, and should NOT be used in production code. It will be removed at a later date.
-     * Apps.getAccessToken() should be used instead.
-     */
-    private static MastodonRequest<AccessToken> postUserNameAndPassword(
-            final MastodonClient client,
-            final String clientId,
-            final String clientSecret,
-            final Scope scope,
-            final String userName,
-            final String password
-            ) {
-        final Parameter parameters = new Parameter()
-                .append("client_id", clientId)
-                .append("client_secret", clientSecret)
-                .append("scope", scope.toString())
-                .append("username", userName)
-                .append("password", password)
-                .append("grant_type", "password");
-        return new MastodonRequest<>(
-                () -> client.post("oauth/token", parameters),
-                s -> new Gson().fromJson(s, AccessToken.class)
-        );
+        return client.apps().createApp("bigbone-sample-app", "urn:ietf:wg:oauth:2.0:oob", new Scope(), null).execute();
     }
 }

@@ -1,8 +1,14 @@
 package social.bigbone.api
 
-class Scope
-@JvmOverloads
-constructor(private vararg val scopes: Name = arrayOf(Name.ALL)) {
+/**
+ * Represents the access permissions that can be requested when registering an app or when
+ * requesting access tokens.
+ */
+class Scope @JvmOverloads constructor(private vararg val scopes: Name = arrayOf(Name.ALL)) {
+
+    /**
+     * The available scopes.
+     */
     enum class Name(val scopeName: String) {
         READ("read"),
         WRITE("write"),

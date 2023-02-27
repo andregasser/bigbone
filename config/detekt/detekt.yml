@@ -60,21 +60,21 @@ comments:
   CommentOverPrivateProperty:
     active: false
   DeprecatedBlockTag:
-    active: false
+    active: true
   EndOfSentenceFormat:
-    active: false
+    active: true
     endOfSentenceFormat: '([.?!][ \t\n\r\f<])|([.?!:]$)'
   KDocReferencesNonPublicProperty:
-    active: false
+    active: true
     excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']
   OutdatedDocumentation:
-    active: false
+    active: true
     matchTypeParameters: true
     matchDeclarationsOrder: true
     allowParamOnConstructorProperties: false
   UndocumentedPublicClass:
-    active: false
-    excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']
+    active: true
+    excludes: ['**/test/**', '**/sample/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']
     searchInNestedClass: true
     searchInInnerClass: true
     searchInInnerObject: true
@@ -91,18 +91,18 @@ comments:
 
 complexity:
   active: true
-#  CognitiveComplexMethod:
-#    active: false
-#    threshold: 15
-#  ComplexCondition:
-#    active: true
-#    threshold: 4
-#  ComplexInterface:
-#    active: false
-#    threshold: 10
-#    includeStaticDeclarations: false
-#    includePrivateDeclarations: false
-#    ignoreOverloaded: false
+  CognitiveComplexMethod:
+    active: false
+    threshold: 15
+  ComplexCondition:
+    active: true
+    threshold: 4
+  ComplexInterface:
+    active: true
+    threshold: 10
+    includeStaticDeclarations: false
+    includePrivateDeclarations: false
+    ignoreOverloaded: false
 #  CyclomaticComplexMethod:
 #    active: true
 #    threshold: 15
@@ -125,9 +125,9 @@ complexity:
   LargeClass:
     active: true
     threshold: 600
-#  LongMethod:
-#    active: true
-#    threshold: 60
+  LongMethod:
+    active: false
+    threshold: 60
 #  LongParameterList:
 #    active: true
 #    functionThreshold: 6
@@ -154,15 +154,15 @@ complexity:
 #      - 'kotlin.with'
 #      - 'kotlin.let'
 #      - 'kotlin.also'
-#  ReplaceSafeCallChainWithRun:
-#    active: false
-#  StringLiteralDuplication:
-#    active: false
-#    excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']
-#    threshold: 3
-#    ignoreAnnotation: true
-#    excludeStringsWithLessThan5Characters: true
-#    ignoreStringsRegex: '$^'
+  ReplaceSafeCallChainWithRun:
+    active: true
+  StringLiteralDuplication:
+    active: false
+    excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']
+    threshold: 3
+    ignoreAnnotation: true
+    excludeStringsWithLessThan5Characters: true
+    ignoreStringsRegex: '$^'
 #  TooManyFunctions:
 #    active: true
 #    excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']
@@ -175,24 +175,24 @@ complexity:
 #    ignorePrivate: false
 #    ignoreOverridden: false
 
-#coroutines:
-#  active: true
-#  GlobalCoroutineUsage:
-#    active: false
+coroutines:
+  active: true
+  GlobalCoroutineUsage:
+    active: true
 #  InjectDispatcher:
 #    active: true
 #    dispatcherNames:
 #      - 'IO'
 #      - 'Default'
 #      - 'Unconfined'
-#  RedundantSuspendModifier:
-#    active: true
-#  SleepInsteadOfDelay:
-#    active: true
-#  SuspendFunWithCoroutineScopeReceiver:
-#    active: false
-#  SuspendFunWithFlowReturnType:
-#    active: true
+  RedundantSuspendModifier:
+    active: true
+  SleepInsteadOfDelay:
+    active: true
+  SuspendFunWithCoroutineScopeReceiver:
+    active: false
+  SuspendFunWithFlowReturnType:
+    active: true
 
 empty-blocks:
   active: true
@@ -305,7 +305,7 @@ formatting:
   android: false
   autoCorrect: true
   AnnotationOnSeparateLine:
-    active: false
+    active: true
   ChainWrapping:
     active: true
     autoCorrect: true
@@ -488,9 +488,9 @@ performance:
   active: true
   ArrayPrimitive:
     active: true
-#  CouldBeSequence:
-#    active: false
-#    threshold: 3
+  CouldBeSequence:
+    active: true
+    threshold: 3
   ForEachOnRange:
     active: true
     excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']
@@ -552,9 +552,9 @@ potential-bugs:
     ignoreFunctionCall: []
 # ImplicitDefaultLocale:
 #    active: true
-#  ImplicitUnitReturnType:
-#    active: false
-#    allowExplicitReturnType: true
+  ImplicitUnitReturnType:
+    active: true
+    allowExplicitReturnType: true
   InvalidRange:
     active: true
   IteratorHasNextCallsNextMethod:
@@ -662,9 +662,9 @@ style:
     ignoreOverridableFunction: true
     ignoreActualFunction: true
     excludedFunctions: []
-#  LoopWithTooManyJumpStatements:
-#    active: true
-#    maxJumpCount: 1
+  LoopWithTooManyJumpStatements:
+    active: false
+    maxJumpCount: 1
 #  MagicNumber:
 #    active: true
 #    excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**', '**/*.kts']
@@ -687,9 +687,9 @@ style:
     active: true
   MandatoryBracesLoops:
     active: true
-#  MaxChainedCallsOnSameLine:
-#    active: false
-#    maxChainedCalls: 5
+  MaxChainedCallsOnSameLine:
+    active: true
+    maxChainedCalls: 5
   MaxLineLength:
     active: true
     maxLineLength: 160
@@ -794,9 +794,9 @@ style:
     active: true
   UseCheckOrError:
     active: true
-#  UseDataClass:
-#    active: true
-#    allowVars: false
+  UseDataClass:
+    active: true
+    allowVars: false
   UseEmptyCounterpart:
     active: true
   UseIfEmptyOrIfBlank:

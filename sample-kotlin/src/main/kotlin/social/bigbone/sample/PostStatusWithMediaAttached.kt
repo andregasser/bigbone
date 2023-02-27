@@ -2,8 +2,6 @@ package social.bigbone.sample
 
 import social.bigbone.MastodonClient
 import social.bigbone.api.entity.Status
-import social.bigbone.api.method.Media
-import social.bigbone.api.method.Statuses
 import java.io.File
 
 object PostStatusWithMediaAttached {
@@ -22,18 +20,16 @@ object PostStatusWithMediaAttached {
         val uploadFile = File(classLoader.getResource("castle.jpg")!!.file)
 
         // Upload image to Mastodon
-        val media = Media(client)
-        val uploadedFile = media.postMedia(uploadFile, "image/jpg").execute()
+        val uploadedFile = client.media.uploadMedia(uploadFile, "image/jpg").execute()
         val mediaId = uploadedFile.id
 
         // Post status with media attached
-        val statuses = Statuses(client)
         val statusText = "Status posting test"
         val inReplyToId: String? = null
         val mediaIds = listOf(mediaId)
         val sensitive = false
         val spoilerText = "A castle"
         val visibility = Status.Visibility.Private
-        statuses.postStatus(statusText, inReplyToId, mediaIds, sensitive, spoilerText, visibility).execute()
+        client.statuses.postStatus(statusText, inReplyToId, mediaIds, sensitive, spoilerText, visibility).execute()
     }
 }
