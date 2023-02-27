@@ -1,0 +1,7 @@
+{
+  "name": "bigbone-sample-app",
+  "website": null,
+  "vapid_key": "vapid key",
+  "client_id": "client id",
+  "client_secret": "client secret"
+}

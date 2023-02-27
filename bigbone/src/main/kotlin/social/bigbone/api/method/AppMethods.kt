@@ -29,22 +29,28 @@ class AppMethods(private val client: MastodonClient) {
         website: String? = null
     ): MastodonRequest<Application> {
         scope.validate()
-
-        val parameters = Parameters()
-            .append("client_name", clientName)
-            .append("scopes", scope.toString())
-            .append("redirect_uris", redirectUris)
-        website?.let {
-            parameters.append("website", it)
-        }
-
-        return MastodonRequest(
-            {
-                client.post("api/v1/apps", parameters)
-            },
-            {
-                client.getSerializer().fromJson(it, Application::class.java)
+        return client.getMastodonRequest(
+            endpoint = "api/v1/apps",
+            method = MastodonClient.Method.POST,
+            parameters = Parameters().apply {
+                append("client_name", clientName)
+                append("scopes", scope.toString())
+                append("redirect_uris", redirectUris)
+                website?.let {
+                    append("website", it)
+                }
             }
+        )
+    }
+
+    /**
+     * Confirm that the app’s OAuth2 credentials work.
+     * @see <a href="https://docs.joinmastodon.org/methods/apps/#verify_credentials">Mastodon API documentation: methods/apps/#verify_credentials</a>
+     */
+    fun verifyCredentials(): MastodonRequest<Application> {
+        return client.getMastodonRequest(
+            endpoint = "api/v1/apps/verify_credentials",
+            method = MastodonClient.Method.GET
         )
     }
 }
