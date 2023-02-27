@@ -41,6 +41,7 @@ class RxStatusMethods(client: MastodonClient) {
         }
     }
 
+    @JvmOverloads
     fun translateStatus(statusId: String, language: String? = null): Single<Translation> {
         return Single.create {
             try {
@@ -52,6 +53,7 @@ class RxStatusMethods(client: MastodonClient) {
         }
     }
 
+    @JvmOverloads
     fun getRebloggedBy(statusId: String, range: Range = Range()): Single<Pageable<Account>> {
         return Single.create {
             try {
@@ -63,7 +65,7 @@ class RxStatusMethods(client: MastodonClient) {
         }
     }
 
-    //  GET /api/v1/favourited_by
+    @JvmOverloads
     fun getFavouritedBy(statusId: String, range: Range = Range()): Single<Pageable<Account>> {
         return Single.create {
             try {
@@ -75,6 +77,7 @@ class RxStatusMethods(client: MastodonClient) {
         }
     }
 
+    @JvmOverloads
     fun postStatus(
         status: String,
         inReplyToId: String? = null,
@@ -94,6 +97,7 @@ class RxStatusMethods(client: MastodonClient) {
         }
     }
 
+    @JvmOverloads
     fun postPoll(
         status: String,
         pollOptions: List<String>,
@@ -127,6 +131,7 @@ class RxStatusMethods(client: MastodonClient) {
         }
     }
 
+    @JvmOverloads
     fun scheduleStatus(
         status: String,
         inReplyToId: String? = null,
@@ -147,6 +152,7 @@ class RxStatusMethods(client: MastodonClient) {
         }
     }
 
+    @JvmOverloads
     fun schedulePoll(
         status: String,
         pollOptions: List<String>,
@@ -193,6 +199,7 @@ class RxStatusMethods(client: MastodonClient) {
         }
     }
 
+    @JvmOverloads
     fun reblogStatus(statusId: String, visibility: Status.Visibility = Status.Visibility.Public): Single<Status> {
         return Single.create {
             try {

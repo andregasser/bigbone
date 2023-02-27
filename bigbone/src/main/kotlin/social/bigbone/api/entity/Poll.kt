@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 /**
  * Represents a poll attached to a status.
+ * @see <a href="https://docs.joinmastodon.org/entities/Poll/">Mastodon API Poll</a>
  */
 data class Poll(
     /**
@@ -69,6 +70,7 @@ data class Poll(
 ) {
     /**
      * Possible answers for the poll.
+     * @see <a href="https://docs.joinmastodon.org/entities/Poll/#Option">Mastodon API Poll::Option</a>
      */
     data class Option(
         /**

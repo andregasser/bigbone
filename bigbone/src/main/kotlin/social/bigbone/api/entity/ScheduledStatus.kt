@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 /**
  * Represents a status that will be published at a future scheduled date.
+ * @see <a href="https://docs.joinmastodon.org/entities/ScheduledStatus/">Mastodon API ScheduledStatus</a>
  */
 data class ScheduledStatus(
     /**
@@ -32,6 +33,7 @@ data class ScheduledStatus(
 ) {
     /**
      * The parameters that were used when scheduling the status, to be used when the status is posted.
+     * @see <a href="https://docs.joinmastodon.org/entities/ScheduledStatus/#params">Mastodon API ScheduledStatus params</a>
      */
     data class Parameters(
         /**
@@ -113,6 +115,7 @@ data class ScheduledStatus(
     data class Poll(
         /**
          * The poll options to be used.
+         * @see <a href="https://docs.joinmastodon.org/entities/ScheduledStatus/#params-poll">Mastodon API ScheduledStatus params-poll</a>
          */
         @SerializedName("options")
         val options: List<String> = emptyList(),

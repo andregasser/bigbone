@@ -50,6 +50,7 @@ class StatusMethods(private val client: MastodonClient) {
      * @param language ISO 639 language code. The status content will be translated into this language. Defaults to the user’s current locale.
      * @see <a href="https://docs.joinmastodon.org/methods/statuses/#translate">Mastodon API documentation: methods/statuses/#translate</a>
      */
+    @JvmOverloads
     @Throws(BigBoneRequestException::class)
     fun translateStatus(statusId: String, language: String? = null): MastodonRequest<Translation> {
         return client.getMastodonRequest(
@@ -287,6 +288,7 @@ class StatusMethods(private val client: MastodonClient) {
      *  Currently unused in UI.
      * @see <a href="https://docs.joinmastodon.org/methods/statuses/#boost">Mastodon API documentation: methods/statuses/#boost</a>
      */
+    @JvmOverloads
     @Throws(BigBoneRequestException::class)
     fun reblogStatus(statusId: String, visibility: Status.Visibility = Status.Visibility.Public): MastodonRequest<Status> {
         if (visibility != Status.Visibility.Public &&

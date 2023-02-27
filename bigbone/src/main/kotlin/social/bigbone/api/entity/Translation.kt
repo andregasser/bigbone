@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 /**
  * Represents the result of machine translating some status content.
+ * @see <a href="https://docs.joinmastodon.org/entities/Translation/">Mastodon API Translation</a>
  */
 data class Translation(
     /**
