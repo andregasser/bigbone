@@ -40,6 +40,7 @@ object MockClient {
             }
             .build()
 
+        every { clientMock.delete(ofType<String>()) } returns response
         every { clientMock.get(ofType<String>(), isNull(inverse = false)) } returns response
         every { clientMock.get(ofType<String>(), any()) } returns response
         every { clientMock.post(ofType<String>(), any()) } returns response
@@ -61,6 +62,7 @@ object MockClient {
             .body(responseBodyMock)
             .build()
 
+        every { clientMock.delete(ofType<String>()) } returns response
         every { clientMock.get(ofType<String>(), isNull(inverse = false)) } returns response
         every { clientMock.get(ofType<String>(), any()) } returns response
         every { clientMock.post(ofType<String>(), any()) } returns response

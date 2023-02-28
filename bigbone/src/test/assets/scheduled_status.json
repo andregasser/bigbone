@@ -1,0 +1,19 @@
+{
+  "id": "12345",
+  "scheduled_at": "2023-12-31T12:34:56.789Z",
+  "params": {
+    "text": "test post",
+    "media_ids": null,
+    "sensitive": null,
+    "spoiler_text": null,
+    "visibility": null,
+    "language": null,
+    "scheduled_at": null,
+    "poll": null,
+    "idempotency": null,
+    "with_rate_limit": false,
+    "in_reply_to_id": null,
+    "application_id": 3
+  },
+  "media_attachments": []
+}
