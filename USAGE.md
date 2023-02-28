@@ -88,6 +88,9 @@ val accessToken = client.oauth.getAccessToken(
 )
 ```
 
+If your app is a command line application and is not meant for a human user to login, you can use the access token
+generated from your Mastodon account. You find it under "Development > Your application > Access Token".
+
 ## Get Home Timeline
 
 Using the received access token, we can retrieve statuses from the user's home timeline and display them.
@@ -113,6 +116,17 @@ result.part.sortedBy { it.createdAt }.forEach {
 }
 ```
 
+__Java__
+
+```java
+MastodonClient client = new MastodonClient.Builder(instanceHostname).accessToken(accessToken).build();
+Pageable<Status> timeline = client.timelines().getHomeTimeline(new Range(null, null, 5)).execute();
+
+timeline.getPart().forEach(status -> {
+    System.out.println(status.getContent());
+});
+```
+
 ## Post a status
 
 We can also post a status as the user.
@@ -134,6 +148,19 @@ try {
 } catch (e: Exception) {
 	// error handling
 }
+```
+
+__Java__
+
+```java
+MastodonRequest<Status> request = client.statuses()
+                .postStatus("Hello World",
+                        null,
+                        null,
+                        false,
+                        null,
+                        Status.Visibility.Unlisted);
+        Status status = request.execute();
 ```
 
 ## Get Raw JSON
