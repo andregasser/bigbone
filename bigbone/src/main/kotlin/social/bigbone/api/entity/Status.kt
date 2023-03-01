@@ -131,7 +131,8 @@ data class Status(
     /**
      * The poll attached to the status.
      */
-    // poll
+    @SerializedName("poll")
+    val poll: Poll? = null,
 
     /**
      * Preview card for links included within status content.
