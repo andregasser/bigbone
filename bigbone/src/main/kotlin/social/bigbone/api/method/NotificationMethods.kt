@@ -15,12 +15,12 @@ class NotificationMethods(private val client: MastodonClient) {
 
     /**
      * Notifications concerning the user.
-     * @param range optional Range for the pageable return value
      * @param excludeTypes Types to exclude from the results. See Mastodon API documentation for details.
+     * @param range optional Range for the pageable return value
      * @see <a href="https://docs.joinmastodon.org/methods/notifications/#get">Mastodon API documentation: methods/notifications/#get</a>
      */
     @JvmOverloads
-    fun getNotifications(range: Range = Range(), excludeTypes: List<Notification.Type>? = null): MastodonRequest<Pageable<Notification>> {
+    fun getNotifications(excludeTypes: List<Notification.Type>? = null, range: Range = Range()): MastodonRequest<Pageable<Notification>> {
         return client.getPageableMastodonRequest(
             endpoint = "api/v1/notifications",
             method = MastodonClient.Method.GET,

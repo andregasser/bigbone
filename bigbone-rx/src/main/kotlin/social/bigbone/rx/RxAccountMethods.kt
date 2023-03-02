@@ -51,7 +51,8 @@ class RxAccountMethods(client: MastodonClient) {
         }
     }
 
-    fun getFollowers(accountId: String, range: Range): Single<Pageable<Account>> {
+    @JvmOverloads
+    fun getFollowers(accountId: String, range: Range = Range()): Single<Pageable<Account>> {
         return Single.create {
             try {
                 val followers = accountMethods.getFollowers(accountId, range).execute()
@@ -62,7 +63,8 @@ class RxAccountMethods(client: MastodonClient) {
         }
     }
 
-    fun getFollowing(accountId: String, range: Range): Single<Pageable<Account>> {
+    @JvmOverloads
+    fun getFollowing(accountId: String, range: Range = Range()): Single<Pageable<Account>> {
         return Single.create {
             try {
                 val following = accountMethods.getFollowing(accountId, range).execute()
@@ -73,10 +75,17 @@ class RxAccountMethods(client: MastodonClient) {
         }
     }
 
-    fun getStatuses(accountId: String, onlyMedia: Boolean, range: Range): Single<Pageable<Status>> {
+    @JvmOverloads
+    fun getStatuses(
+        accountId: String,
+        onlyMedia: Boolean = false,
+        excludeReplies: Boolean = false,
+        pinned: Boolean = false,
+        range: Range = Range()
+    ): Single<Pageable<Status>> {
         return Single.create {
             try {
-                val statuses = accountMethods.getStatuses(accountId, onlyMedia, range = range).execute()
+                val statuses = accountMethods.getStatuses(accountId, onlyMedia, excludeReplies, pinned, range).execute()
                 it.onSuccess(statuses)
             } catch (throwable: Throwable) {
                 it.onErrorIfNotDisposed(throwable)
@@ -161,6 +170,7 @@ class RxAccountMethods(client: MastodonClient) {
         }
     }
 
+    @JvmOverloads
     fun searchAccounts(query: String, limit: Int = 40): Single<List<Account>> {
         return Single.create {
             try {

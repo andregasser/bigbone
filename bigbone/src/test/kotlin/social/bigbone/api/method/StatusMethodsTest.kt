@@ -108,11 +108,11 @@ class StatusMethodsTest {
         val statusMethods = StatusMethods(client)
         val status = statusMethods.postStatus(
             status = "a",
+            visibility = Status.Visibility.Unlisted,
             inReplyToId = null,
             mediaIds = null,
             sensitive = false,
             spoilerText = null,
-            visibility = Status.Visibility.Unlisted,
             language = "en"
         ).execute()
         status.id shouldBeEqualTo "11111"
@@ -125,11 +125,11 @@ class StatusMethodsTest {
             val statusMethods = StatusMethods(client)
             statusMethods.postStatus(
                 status = "a",
+                visibility = Status.Visibility.Unlisted,
                 inReplyToId = null,
                 mediaIds = null,
                 sensitive = false,
                 spoilerText = null,
-                visibility = Status.Visibility.Unlisted,
                 language = "en"
             ).execute()
         }
@@ -144,11 +144,6 @@ class StatusMethodsTest {
             status = "a",
             pollOptions = pollOptions,
             pollExpiresIn = 3600,
-            pollMultiple = false,
-            pollHideTotals = false,
-            inReplyToId = null,
-            sensitive = false,
-            spoilerText = null,
             visibility = Status.Visibility.Unlisted,
             language = "en"
         ).execute()
@@ -168,11 +163,6 @@ class StatusMethodsTest {
                 status = "a",
                 pollOptions = pollOptions,
                 pollExpiresIn = 3600,
-                pollMultiple = false,
-                pollHideTotals = false,
-                inReplyToId = null,
-                sensitive = false,
-                spoilerText = null,
                 visibility = Status.Visibility.Unlisted,
                 language = "en"
             ).execute()
@@ -185,13 +175,13 @@ class StatusMethodsTest {
         val statusMethods = StatusMethods(client)
         val scheduledStatus = statusMethods.scheduleStatus(
             status = "a",
+            scheduledAt = "2023-12-31T12:34:56.789Z",
+            visibility = Status.Visibility.Unlisted,
             inReplyToId = null,
             mediaIds = null,
             sensitive = false,
             spoilerText = null,
-            visibility = Status.Visibility.Unlisted,
-            language = "en",
-            scheduledAt = "2023-12-31T12:34:56.789Z"
+            language = "en"
         ).execute()
         scheduledStatus.id shouldBeEqualTo "12345"
         scheduledStatus.scheduledAt shouldBeEqualTo "2023-12-31T12:34:56.789Z"
@@ -205,13 +195,13 @@ class StatusMethodsTest {
             val statusMethods = StatusMethods(client)
             statusMethods.scheduleStatus(
                 status = "a",
+                scheduledAt = "2023-12-31T12:34:56.789Z",
+                visibility = Status.Visibility.Unlisted,
                 inReplyToId = null,
                 mediaIds = null,
                 sensitive = false,
                 spoilerText = null,
-                visibility = Status.Visibility.Unlisted,
                 language = "en",
-                scheduledAt = "2023-12-31T12:34:56.789Z"
             ).execute()
         }
     }
@@ -222,16 +212,16 @@ class StatusMethodsTest {
         val statusMethods = StatusMethods(client)
         val scheduledStatus = statusMethods.schedulePoll(
             status = "a",
+            scheduledAt = "2023-12-31T12:34:56.789Z",
             pollOptions = listOf("foo", "bar", "baz"),
             pollExpiresIn = 3600,
+            visibility = Status.Visibility.Unlisted,
             pollMultiple = true,
             pollHideTotals = false,
             inReplyToId = null,
             sensitive = false,
             spoilerText = null,
-            visibility = Status.Visibility.Unlisted,
-            language = "en",
-            scheduledAt = "2023-12-31T12:34:56.789Z"
+            language = "en"
         ).execute()
         scheduledStatus.id shouldBeEqualTo "12345"
         scheduledStatus.params.poll?.options?.get(0) shouldBeEqualTo "foo"
@@ -246,16 +236,16 @@ class StatusMethodsTest {
             val statusMethods = StatusMethods(client)
             statusMethods.schedulePoll(
                 status = "a",
+                scheduledAt = "2023-12-31T12:34:56.789Z",
                 pollOptions = listOf("foo", "bar", "baz"),
                 pollExpiresIn = 3600,
+                visibility = Status.Visibility.Unlisted,
                 pollMultiple = true,
                 pollHideTotals = false,
                 inReplyToId = null,
                 sensitive = false,
                 spoilerText = null,
-                visibility = Status.Visibility.Unlisted,
-                language = "en",
-                scheduledAt = "2023-12-31T12:34:56.789Z"
+                language = "en"
             ).execute()
         }
     }

@@ -17,6 +17,7 @@ import social.bigbone.rx.extensions.onErrorIfNotDisposed
 class RxFollowRequestMethods(client: MastodonClient) {
     private val followRequestMethods = FollowRequestMethods(client)
 
+    @JvmOverloads
     fun getFollowRequests(range: Range = Range()): Single<Pageable<Account>> {
         return Single.create {
             try {

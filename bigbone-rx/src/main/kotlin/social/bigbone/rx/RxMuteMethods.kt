@@ -15,6 +15,7 @@ import social.bigbone.api.method.MuteMethods
 class RxMuteMethods(client: MastodonClient) {
     private val muteMethods = MuteMethods(client)
 
+    @JvmOverloads
     fun getMutes(range: Range = Range()): Single<Pageable<Account>> {
         return Single.create {
             try {

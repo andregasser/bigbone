@@ -35,6 +35,6 @@ public class PostStatusWithMediaAttached {
         final String spoilerText = "A castle";
         final Visibility visibility = Visibility.Private;
         final String language = "en";
-        client.statuses().postStatus(statusText, inReplyToId, mediaIds, sensitive, spoilerText, visibility, language).execute();
+        client.statuses().postStatus(statusText, visibility, inReplyToId, mediaIds, sensitive, spoilerText, language).execute();
     }
 }

@@ -1,7 +1,6 @@
 package social.bigbone.sample;
 
 import social.bigbone.MastodonClient;
-import social.bigbone.api.Range;
 import social.bigbone.api.exception.BigBoneRequestException;
 
 import static social.bigbone.api.method.TimelineMethods.StatusOrigin.LOCAL_AND_REMOTE;
@@ -16,7 +15,7 @@ public class GetRawJson {
             .build();
 
         // Print timeline statuses
-        client.timelines().getPublicTimeline(new Range(), LOCAL_AND_REMOTE).doOnJson(
+        client.timelines().getPublicTimeline(LOCAL_AND_REMOTE).doOnJson(
             System.out::println
         ).execute();
     }

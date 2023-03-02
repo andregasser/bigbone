@@ -13,7 +13,8 @@ import social.bigbone.api.method.SearchMethods
 class RxSearchMethods(client: MastodonClient) {
     private val searchMethodsMethod = SearchMethods(client)
 
-    fun searchContent(query: String, resolve: Boolean = true): Single<Search> {
+    @JvmOverloads
+    fun searchContent(query: String, resolve: Boolean = false): Single<Search> {
         return Single.create {
             try {
                 val results = searchMethodsMethod.searchContent(query, resolve)
