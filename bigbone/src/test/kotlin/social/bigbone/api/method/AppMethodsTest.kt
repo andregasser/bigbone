@@ -12,17 +12,16 @@ import social.bigbone.testtool.MockClient
 class AppMethodsTest {
     @Test
     fun createApp() {
-        val client: MastodonClient = MockClient.mock("app_registration.json")
+        val client: MastodonClient = MockClient.mock("application.json")
         every { client.getInstanceName() } returns "mastodon.cloud"
 
         val appMethods = AppMethods(client)
-        val registration = appMethods.createApp(
+        val application = appMethods.createApp(
             clientName = "bigbone-sample-app", scope = Scope(Scope.Name.ALL)
         ).execute()
 
-        registration.clientId shouldBeEqualTo "client id"
-        registration.clientSecret shouldBeEqualTo "client secret"
-        registration.redirectUri shouldBeEqualTo "urn:ietf:wg:oauth:2.0:oob"
+        application.clientId shouldBeEqualTo "client id"
+        application.clientSecret shouldBeEqualTo "client secret"
     }
 
     @Test
@@ -33,6 +32,26 @@ class AppMethodsTest {
             appMethods.createApp(
                 clientName = "bigbone-sample-app", scope = Scope(Scope.Name.ALL)
             ).execute()
+        }
+    }
+
+    @Test
+    fun verifyCredentials() {
+        val client: MastodonClient = MockClient.mock("application_no_client_data.json")
+        every { client.getInstanceName() } returns "mastodon.cloud"
+
+        val appMethods = AppMethods(client)
+        val application = appMethods.verifyCredentials().execute()
+
+        application.name shouldBeEqualTo "bigbone-sample-app"
+    }
+
+    @Test
+    fun verifyCredentialsWithException() {
+        Assertions.assertThrows(BigBoneRequestException::class.java) {
+            val client = MockClient.ioException()
+            val appMethods = AppMethods(client)
+            appMethods.verifyCredentials().execute()
         }
     }
 }

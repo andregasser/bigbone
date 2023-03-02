@@ -32,6 +32,10 @@ import social.bigbone.extension.emptyRequestBody
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 
+/**
+ * This class is used by method classes (e.g. AccountMethods, RxAcccountMethods, ...) and performs HTTP calls
+ * towards the Mastodon instance specified. Request/response data is serialized/deserialized accordingly.
+ */
 class MastodonClient
 private constructor(
     private val instanceName: String,
@@ -153,6 +157,9 @@ private constructor(
     @get:JvmName("timelines")
     val timelines: TimelineMethods by lazy { TimelineMethods(this) }
 
+    /**
+     * Specifies the HTTP methods / HTTP verb that can be used by this class.
+     */
     enum class Method {
         DELETE,
         GET,
@@ -169,6 +176,7 @@ private constructor(
 
     /**
      * Returns a MastodonRequest for the defined action, allowing to retrieve returned data.
+     * @param T
      * @param endpoint the Mastodon API endpoint to call
      * @param method the HTTP method to use
      * @param parameters parameters to use in the action; can be null
@@ -193,6 +201,7 @@ private constructor(
 
     /**
      * Returns a MastodonRequest for the defined action, allowing to retrieve returned data as a Pageable.
+     * @param T
      * @param endpoint the Mastodon API endpoint to call
      * @param method the HTTP method to use
      * @param parameters parameters to use in the action; can be null
@@ -217,6 +226,7 @@ private constructor(
 
     /**
      * Returns a MastodonRequest for the defined action, allowing to retrieve returned data as a List.
+     * @param T
      * @param endpoint the Mastodon API endpoint to call
      * @param method the HTTP method to use
      * @param parameters parameters to use in the action; can be null
@@ -273,7 +283,7 @@ private constructor(
             )
             return call.execute()
         } catch (e: IOException) {
-            throw BigBoneRequestException(e)
+            throw BigBoneRequestException("Request not executed due to network IO issue", e)
         }
     }
 
@@ -294,7 +304,7 @@ private constructor(
             )
             return call.execute()
         } catch (e: IOException) {
-            throw BigBoneRequestException(e)
+            throw BigBoneRequestException("Request not executed due to network IO issue", e)
         }
     }
 
@@ -305,7 +315,7 @@ private constructor(
      */
     fun patch(path: String, body: Parameters?): Response {
         if (body == null) {
-            throw BigBoneRequestException(Exception("body must not be empty"))
+            throw BigBoneRequestException("Patch request not possible with null body")
         }
 
         try {
@@ -319,7 +329,7 @@ private constructor(
             )
             return call.execute()
         } catch (e: IOException) {
-            throw BigBoneRequestException(e)
+            throw BigBoneRequestException("Request not executed due to network IO issue", e)
         }
     }
 
@@ -353,7 +363,7 @@ private constructor(
         } catch (e: IllegalArgumentException) {
             throw BigBoneRequestException(e)
         } catch (e: IOException) {
-            throw BigBoneRequestException(e)
+            throw BigBoneRequestException("Request not executed due to network IO issue", e)
         }
     }
 
@@ -396,6 +406,10 @@ private constructor(
         }
     }
 
+    /**
+     * The builder used to create a new instance of [MastodonClient]. New instances of [MastodonClient] should
+     * be created using this builder only.
+     */
     class Builder(
         private val instanceName: String
     ) {
