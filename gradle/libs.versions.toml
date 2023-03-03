@@ -5,6 +5,7 @@ bigbone = "2.0.0-SNAPSHOT"
 # 3rd party dependencies
 gson = "2.10.1"
 junit-jupiter = "5.9.2"
+junit-platform-suite-engine = "1.9.2"
 kluent = "1.72"
 kotlin = "1.7.21"
 kotlin-coroutines = "1.6.4"
@@ -19,7 +20,9 @@ detekt = "1.22.0"
 versions = "0.46.0"
 
 [libraries]
-junit-jupiter = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junit-jupiter" }
+junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junit-jupiter" }
+junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit-jupiter" }
+junit-platform-suite-engine = { module = "org.junit.platform:junit-platform-suite-engine", version.ref = "junit-platform-suite-engine" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 kluent = { module = "org.amshove.kluent:kluent", version.ref = "kluent" }
 kotlin-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin-coroutines" }

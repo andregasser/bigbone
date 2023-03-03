@@ -1,0 +1,2 @@
+CREATE USER mastodon WITH PASSWORD 'mastodon';
+ALTER USER mastodon CREATEDB;

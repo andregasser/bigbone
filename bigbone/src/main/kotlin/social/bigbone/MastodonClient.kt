@@ -30,7 +30,13 @@ import social.bigbone.api.method.StreamingMethods
 import social.bigbone.api.method.TimelineMethods
 import social.bigbone.extension.emptyRequestBody
 import java.io.IOException
+import java.security.SecureRandom
+import java.security.cert.X509Certificate
 import java.util.concurrent.TimeUnit
+import javax.net.ssl.HostnameVerifier
+import javax.net.ssl.SSLContext
+import javax.net.ssl.SSLSession
+import javax.net.ssl.X509TrustManager
 
 /**
  * This class is used by method classes (e.g. AccountMethods, RxAcccountMethods, ...) and performs HTTP calls
@@ -44,6 +50,8 @@ private constructor(
 ) {
     private var debug = false
     private var instanceVersion: String? = null
+    private var scheme: String = "https"
+    private var port: Int = 443
 
     /**
      * Access API methods under "api/vX/accounts" endpoint.
@@ -174,6 +182,10 @@ private constructor(
 
     fun getInstanceVersion() = instanceVersion
 
+    fun getScheme() = scheme
+
+    fun getPort() = port
+
     /**
      * Returns a MastodonRequest for the defined action, allowing to retrieve returned data.
      * @param T
@@ -274,7 +286,7 @@ private constructor(
      */
     fun delete(path: String): Response {
         try {
-            val url = fullUrl(instanceName, path)
+            val url = fullUrl(scheme, instanceName, port, path)
             debugPrintUrl(url)
             val call = client.newCall(
                 Request.Builder()
@@ -295,7 +307,7 @@ private constructor(
      */
     fun get(path: String, query: Parameters? = null): Response {
         try {
-            val url = fullUrl(instanceName, path, query)
+            val url = fullUrl(scheme, instanceName, port, path, query)
             debugPrintUrl(url)
             val call = client.newCall(
                 Request.Builder()
@@ -320,7 +332,7 @@ private constructor(
         }
 
         try {
-            val url = fullUrl(instanceName, path)
+            val url = fullUrl(scheme, instanceName, port, path)
             debugPrintUrl(url)
             val call = client.newCall(
                 Request.Builder()
@@ -352,7 +364,7 @@ private constructor(
      */
     fun postRequestBody(path: String, body: RequestBody): Response {
         try {
-            val url = fullUrl(instanceName, path)
+            val url = fullUrl(scheme, instanceName, port, path)
             debugPrintUrl(url)
             val call = client.newCall(
                 Request.Builder()
@@ -380,14 +392,17 @@ private constructor(
     companion object {
         /**
          * Returns a HttpUrl.
-         * @param instanceName host of a Mastodon instance
+         * @param scheme the schema to be used, either "http" or "https"
+         * @param instanceName the Mastodon instance hostname
+         * @param port the TCP/IP port to connect to, usually 443
          * @param path Mastodon API endpoint to be called
          * @param query query part of the URL to build; may be null
          */
-        fun fullUrl(instanceName: String, path: String, query: Parameters? = null): HttpUrl {
+        fun fullUrl(scheme: String, instanceName: String, port: Int, path: String, query: Parameters? = null): HttpUrl {
             val urlBuilder = HttpUrl.Builder()
-                .scheme("https")
+                .scheme(scheme)
                 .host(instanceName)
+                .port(port)
                 .addEncodedPathSegments(path)
             query?.let {
                 urlBuilder.encodedQuery(it.toQuery())
@@ -418,9 +433,47 @@ private constructor(
         private val gson = Gson()
         private var accessToken: String? = null
         private var debug = false
+        private var scheme = "https"
+        private var port = 443
+        private var trustAllCerts = false
 
+        /**
+         * Sets the access token required for calling authenticated endpoints.
+         * @param accessToken the access token to be used
+         */
         fun accessToken(accessToken: String) = apply {
             this.accessToken = accessToken
+        }
+
+        /**
+         * Makes the client use an unsecured HTTP connection to the Mastodon server.
+         *
+         * IMPORTANT: Please do not use this on production environments, as it is considered
+         * bad practice. Use it solely for testing purposes.
+         */
+        fun withHttpsDisabled() = apply {
+            scheme = "http"
+        }
+
+        /**
+         * Disables certificate validation and hostname verification.
+         *
+         * IMPORTANT: Please do not use this on production environments, as it is considered
+         * bad practice. Use it solely for testing purposes.
+         */
+        fun withTrustAllCerts() = apply {
+            trustAllCerts = true
+            configureForTrustAll(okHttpClientBuilder)
+        }
+
+        /**
+         * Makes the client use a different port than 443 for connecting to a Mastodon server.
+         *
+         * IMPORTANT: It is best practice to use the default port 443 when connecting to a
+         * Mastodon server.
+         */
+        fun withPort(port: Int) = apply {
+            this.port = port
         }
 
         fun useStreamingApi() = apply {
@@ -442,6 +495,14 @@ private constructor(
             } catch (e: Exception) {
                 throw BigBoneRequestException("Unable to fetch instance version", e)
             }
+        }
+
+        private fun configureForTrustAll(clientBuilder: OkHttpClient.Builder) {
+            val sslContext = SSLContext.getInstance("SSL")
+            sslContext.init(null, arrayOf(TrustAllX509TrustManager), SecureRandom())
+            clientBuilder
+                .sslSocketFactory(sslContext.socketFactory, TrustAllX509TrustManager)
+                .hostnameVerifier(AcceptAllHostnameVerifier)
         }
 
         /**
@@ -471,9 +532,7 @@ private constructor(
             val client = OkHttpClient.Builder().build()
             val response = client.newCall(
                 Request.Builder().url(
-                    fullUrl(
-                        instanceName,
-                        "api/$versionString/instance"
+                    fullUrl(scheme, instanceName, port, "api/$versionString/instance"
                     )
                 ).get().build()).execute()
             if (!response.isSuccessful) {
@@ -490,8 +549,20 @@ private constructor(
             ).also {
                 it.debug = debug
                 it.instanceVersion = getInstanceVersion()
+                it.scheme = scheme
+                it.port = port
             }
         }
+    }
+
+    private object TrustAllX509TrustManager : X509TrustManager {
+        override fun checkClientTrusted(chain: Array<out X509Certificate>?, authType: String?) { }
+        override fun checkServerTrusted(chain: Array<out X509Certificate>?, authType: String?) { }
+        override fun getAcceptedIssuers(): Array<X509Certificate> = arrayOf()
+    }
+
+    private object AcceptAllHostnameVerifier : HostnameVerifier {
+        override fun verify(hostname: String?, session: SSLSession?): Boolean = true
     }
 
     private class AuthorizationInterceptor(val accessToken: String? = null) : Interceptor {

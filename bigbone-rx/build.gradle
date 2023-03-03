@@ -9,7 +9,7 @@ dependencies {
 
     implementation libs.kotlin.jdk8
 
-    testImplementation libs.junit.jupiter
+    testImplementation libs.junit.jupiter.api
     testImplementation libs.mockk
     testImplementation libs.mockk.dsl
     testImplementation libs.gson
