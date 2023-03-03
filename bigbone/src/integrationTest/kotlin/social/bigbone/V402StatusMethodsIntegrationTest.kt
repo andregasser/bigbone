@@ -10,6 +10,9 @@ import social.bigbone.api.Scope
 import social.bigbone.api.entity.Application
 import social.bigbone.api.entity.Token
 
+/**
+ * Integration tests for StatusMethods running on Mastodon 4.0.2.
+ */
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class V402StatusMethodsIntegrationTest {
     private lateinit var appToken: Token
@@ -28,7 +31,7 @@ class V402StatusMethodsIntegrationTest {
             .withTrustAllCerts()
             .accessToken(user2Token.accessToken)
             .build()
-        val response = client.statuses.postStatus("This is my status", null, null, false, "Test").execute()
+        val response = client.statuses.postStatus(status = "This is my status", spoilerText = "Test").execute()
         Assertions.assertEquals("<p>This is my status</p>", response.content)
         Assertions.assertEquals("Test", response.spoilerText)
     }
@@ -37,7 +40,7 @@ class V402StatusMethodsIntegrationTest {
         val client = MastodonClient.Builder(TestConstants.REST_API_HOSTNAME)
             .withTrustAllCerts()
             .build()
-        return client.apps.createApp(TestConstants.APP_NAME, TestConstants.REDIRECT_URI, Scope(Scope.Name.ALL)).execute()
+        return client.apps.createApp(TestConstants.USER2_APP_NAME, TestConstants.REDIRECT_URI, Scope(Scope.Name.ALL)).execute()
     }
 
     private fun getAppToken(application: Application): Token {

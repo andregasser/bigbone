@@ -2,11 +2,13 @@ package social.bigbone
 
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 import social.bigbone.TestConstants.Companion.REST_API_HOSTNAME
 
 /**
  * Integration tests for InstanceMethods running on Mastodon 4.1.0.
  */
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class V410InstanceMethodsIntegrationTest {
     private lateinit var client: MastodonClient
 

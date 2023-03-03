@@ -4,15 +4,18 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
-import social.bigbone.TestConstants.Companion.APP_NAME
 import social.bigbone.TestConstants.Companion.REDIRECT_URI
 import social.bigbone.TestConstants.Companion.REST_API_HOSTNAME
+import social.bigbone.TestConstants.Companion.USER2_APP_NAME
 import social.bigbone.TestConstants.Companion.USER2_EMAIL
 import social.bigbone.TestConstants.Companion.USER2_PASSWORD
 import social.bigbone.api.Scope
 import social.bigbone.api.entity.Application
 import social.bigbone.api.entity.Token
 
+/**
+ * Integration tests for StatusMethods running on Mastodon 3.0.0.
+ */
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class V300StatusMethodsIntegrationTest {
     private lateinit var appToken: Token
@@ -31,7 +34,7 @@ class V300StatusMethodsIntegrationTest {
             .withTrustAllCerts()
             .accessToken(user2Token.accessToken)
             .build()
-        val response = client.statuses.postStatus("This is my status", null, null, false, "Test").execute()
+        val response = client.statuses.postStatus(status = "This is my status", spoilerText = "Test").execute()
         Assertions.assertEquals("<p>This is my status</p>", response.content)
         Assertions.assertEquals("Test", response.spoilerText)
     }
@@ -40,7 +43,7 @@ class V300StatusMethodsIntegrationTest {
         val client = MastodonClient.Builder(REST_API_HOSTNAME)
             .withTrustAllCerts()
             .build()
-        return client.apps.createApp(APP_NAME, REDIRECT_URI, Scope(Scope.Name.ALL)).execute()
+        return client.apps.createApp(USER2_APP_NAME, REDIRECT_URI, Scope(Scope.Name.ALL)).execute()
     }
 
     private fun getAppToken(application: Application): Token {

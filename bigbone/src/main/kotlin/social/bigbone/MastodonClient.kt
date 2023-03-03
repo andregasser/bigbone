@@ -529,7 +529,11 @@ private constructor(
             } else {
                 "v1"
             }
-            val client = OkHttpClient.Builder().build()
+            val clientBuilder = OkHttpClient.Builder()
+            if (trustAllCerts) {
+                configureForTrustAll(clientBuilder)
+            }
+            val client = clientBuilder.build()
             val response = client.newCall(
                 Request.Builder().url(
                     fullUrl(scheme, instanceName, port, "api/$versionString/instance"
