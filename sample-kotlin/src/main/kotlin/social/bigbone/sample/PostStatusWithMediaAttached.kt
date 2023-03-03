@@ -25,12 +25,12 @@ object PostStatusWithMediaAttached {
 
         // Post status with media attached
         val statusText = "Status posting test"
+        val visibility = Status.Visibility.Private
         val inReplyToId: String? = null
         val mediaIds = listOf(mediaId)
         val sensitive = false
         val spoilerText = "A castle"
-        val visibility = Status.Visibility.Private
         val language = "en"
-        client.statuses.postStatus(statusText, inReplyToId, mediaIds, sensitive, spoilerText, visibility, language).execute()
+        client.statuses.postStatus(statusText, visibility, inReplyToId, mediaIds, sensitive, spoilerText, language).execute()
     }
 }

@@ -2,7 +2,6 @@ package social.bigbone.sample;
 
 import social.bigbone.MastodonClient;
 import social.bigbone.api.Pageable;
-import social.bigbone.api.Range;
 import social.bigbone.api.entity.Status;
 import social.bigbone.api.exception.BigBoneRequestException;
 
@@ -18,7 +17,7 @@ public class GetPublicTimeline {
             .build();
 
         // Get statuses from public timeline
-        final Pageable<Status> statuses = client.timelines().getPublicTimeline(new Range(), LOCAL_AND_REMOTE).execute();
+        final Pageable<Status> statuses = client.timelines().getPublicTimeline(LOCAL_AND_REMOTE).execute();
         statuses.getPart().forEach(status -> System.out.println(status.getContent()));
     }
 }

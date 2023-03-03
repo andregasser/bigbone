@@ -98,11 +98,11 @@ class StatusMethods(private val client: MastodonClient) {
      * Publish a status with the given parameters. To publish a status containing a poll, use [postPoll].
      * To schedule a status, use [scheduleStatus].
      * @param status the text of the status
+     * @param visibility either "direct", "private", "unlisted" or "public"
      * @param inReplyToId the local id of the status you want to reply to
      * @param mediaIds the array of media ids to attach to the status (maximum 4)
      * @param sensitive set this to mark the media of the status as NSFW
      * @param spoilerText text to be shown as a warning before the actual content
-     * @param visibility either "direct", "private", "unlisted" or "public"
      * @param language ISO 639 language code for this status.
      * @see <a href="https://docs.joinmastodon.org/methods/statuses/#create">Mastodon API documentation: methods/statuses/#create</a>
      */
@@ -110,23 +110,23 @@ class StatusMethods(private val client: MastodonClient) {
     @Throws(BigBoneRequestException::class)
     fun postStatus(
         status: String,
-        inReplyToId: String?,
-        mediaIds: List<String>?,
-        sensitive: Boolean,
-        spoilerText: String?,
         visibility: Status.Visibility = Status.Visibility.Public,
-        language: String?
+        inReplyToId: String? = null,
+        mediaIds: List<String>? = null,
+        sensitive: Boolean = false,
+        spoilerText: String? = null,
+        language: String? = null
     ): MastodonRequest<Status> {
         return client.getMastodonRequest(
             endpoint = "api/v1/statuses",
             method = MastodonClient.Method.POST,
             parameters = Parameters().apply {
                 append("status", status)
+                append("visibility", visibility.value)
                 inReplyToId?.let { append("in_reply_to_id", it) }
                 mediaIds?.let { append("media_ids", it) }
                 append("sensitive", sensitive)
                 spoilerText?.let { append("spoiler_text", it) }
-                append("visibility", visibility.value)
                 language?.let { append("language", it) }
             }
         )
@@ -137,12 +137,12 @@ class StatusMethods(private val client: MastodonClient) {
      * @param status the text of the status
      * @param pollOptions Possible answers to the poll.
      * @param pollExpiresIn Duration that the poll should be open, in seconds.
+     * @param visibility either "direct", "private", "unlisted" or "public"
      * @param pollMultiple Allow multiple choices? Defaults to false.
      * @param pollHideTotals Hide vote counts until the poll ends? Defaults to false.
      * @param inReplyToId the local id of the status you want to reply to
      * @param sensitive set this to mark the media of the status as NSFW
      * @param spoilerText text to be shown as a warning before the actual content
-     * @param visibility either "direct", "private", "unlisted" or "public"
      * @param language ISO 639 language code for this status.
      * @see <a href="https://docs.joinmastodon.org/methods/statuses/#create">Mastodon API documentation: methods/statuses/#create</a>
      */
@@ -152,13 +152,13 @@ class StatusMethods(private val client: MastodonClient) {
         status: String,
         pollOptions: List<String>,
         pollExpiresIn: Int,
+        visibility: Status.Visibility = Status.Visibility.Public,
         pollMultiple: Boolean = false,
         pollHideTotals: Boolean = false,
-        inReplyToId: String?,
-        sensitive: Boolean,
-        spoilerText: String?,
-        visibility: Status.Visibility = Status.Visibility.Public,
-        language: String?
+        inReplyToId: String? = null,
+        sensitive: Boolean = false,
+        spoilerText: String? = null,
+        language: String? = null
     ): MastodonRequest<Status> {
         return client.getMastodonRequest(
             endpoint = "api/v1/statuses",
@@ -167,12 +167,12 @@ class StatusMethods(private val client: MastodonClient) {
                 append("status", status)
                 append("poll[options]", pollOptions)
                 append("poll[expires_in]", pollExpiresIn)
+                append("visibility", visibility.value)
                 append("poll[multiple]", pollMultiple)
                 append("poll[hide_totals", pollHideTotals)
                 inReplyToId?.let { append("in_reply_to_id", it) }
                 append("sensitive", sensitive)
                 spoilerText?.let { append("spoiler_text", it) }
-                append("visibility", visibility.value)
                 language?.let { append("language", it) }
             }
         )
@@ -182,39 +182,39 @@ class StatusMethods(private val client: MastodonClient) {
      * Schedule a status with the given parameters. To schedule a status containing a poll, use [schedulePoll].
      * To post a status immediately, use [postStatus].
      * @param status the text of the status
+     * @param scheduledAt ISO 8601 Datetime at which to schedule a status. Must be at least 5 minutes in the future.
+     * @param visibility either "direct", "private", "unlisted" or "public"
      * @param inReplyToId the local id of the status you want to reply to
      * @param mediaIds the array of media ids to attach to the status (maximum 4)
      * @param sensitive set this to mark the media of the status as NSFW
      * @param spoilerText text to be shown as a warning before the actual content
-     * @param visibility either "direct", "private", "unlisted" or "public"
      * @param language ISO 639 language code for this status.
-     * @param scheduledAt ISO 8601 Datetime at which to schedule a status. Must be at least 5 minutes in the future.
      * @see <a href="https://docs.joinmastodon.org/methods/statuses/#create">Mastodon API documentation: methods/statuses/#create</a>
      */
     @JvmOverloads
     @Throws(BigBoneRequestException::class)
     fun scheduleStatus(
         status: String,
-        inReplyToId: String?,
-        mediaIds: List<String>?,
-        sensitive: Boolean,
-        spoilerText: String?,
+        scheduledAt: String,
         visibility: Status.Visibility = Status.Visibility.Public,
-        language: String?,
-        scheduledAt: String
+        inReplyToId: String? = null,
+        mediaIds: List<String>? = null,
+        sensitive: Boolean = false,
+        spoilerText: String? = null,
+        language: String? = null
     ): MastodonRequest<ScheduledStatus> {
         return client.getMastodonRequest(
             endpoint = "api/v1/statuses",
             method = MastodonClient.Method.POST,
             parameters = Parameters().apply {
                 append("status", status)
+                append("scheduled_at", scheduledAt)
+                append("visibility", visibility.value)
                 inReplyToId?.let { append("in_reply_to_id", it) }
                 mediaIds?.let { append("media_ids", it) }
                 append("sensitive", sensitive)
                 spoilerText?.let { append("spoiler_text", it) }
-                append("visibility", visibility.value)
                 language?.let { append("language", it) }
-                append("scheduled_at", scheduledAt)
             }
         )
     }
@@ -222,48 +222,48 @@ class StatusMethods(private val client: MastodonClient) {
     /**
      * Schedule a status containing a poll with the given parameters. To post immediately, use [postPoll].
      * @param status the text of the status
+     * @param scheduledAt ISO 8601 Datetime at which to schedule a status. Must be at least 5 minutes in the future.
      * @param pollOptions Possible answers to the poll.
      * @param pollExpiresIn Duration that the poll should be open, in seconds.
+     * @param visibility either "direct", "private", "unlisted" or "public"
      * @param pollMultiple Allow multiple choices? Defaults to false.
      * @param pollHideTotals Hide vote counts until the poll ends? Defaults to false.
      * @param inReplyToId the local id of the status you want to reply to
      * @param sensitive set this to mark the media of the status as NSFW
      * @param spoilerText text to be shown as a warning before the actual content
-     * @param visibility either "direct", "private", "unlisted" or "public"
      * @param language ISO 639 language code for this status.
-     * @param scheduledAt ISO 8601 Datetime at which to schedule a status. Must be at least 5 minutes in the future.
      * @see <a href="https://docs.joinmastodon.org/methods/statuses/#create">Mastodon API documentation: methods/statuses/#create</a>
      */
     @JvmOverloads
     @Throws(BigBoneRequestException::class)
     fun schedulePoll(
         status: String,
+        scheduledAt: String,
         pollOptions: List<String>,
         pollExpiresIn: Int,
+        visibility: Status.Visibility = Status.Visibility.Public,
         pollMultiple: Boolean = false,
         pollHideTotals: Boolean = false,
-        inReplyToId: String?,
-        sensitive: Boolean,
-        spoilerText: String?,
-        visibility: Status.Visibility = Status.Visibility.Public,
-        language: String?,
-        scheduledAt: String
+        inReplyToId: String? = null,
+        sensitive: Boolean = false,
+        spoilerText: String? = null,
+        language: String? = null
     ): MastodonRequest<ScheduledStatus> {
         return client.getMastodonRequest(
             endpoint = "api/v1/statuses",
             method = MastodonClient.Method.POST,
             parameters = Parameters().apply {
                 append("status", status)
+                append("scheduled_at", scheduledAt)
                 append("poll[options]", pollOptions)
                 append("poll[expires_in]", pollExpiresIn)
+                append("visibility", visibility.value)
                 append("poll[multiple]", pollMultiple)
                 append("poll[hide_totals]", pollHideTotals)
                 inReplyToId?.let { append("in_reply_to_id", it) }
                 append("sensitive", sensitive)
                 spoilerText?.let { append("spoiler_text", it) }
-                append("visibility", visibility.value)
                 language?.let { append("language", it) }
-                append("scheduled_at", scheduledAt)
             }
         )
     }

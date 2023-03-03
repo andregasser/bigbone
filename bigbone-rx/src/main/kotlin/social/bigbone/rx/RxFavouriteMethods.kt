@@ -16,6 +16,7 @@ import social.bigbone.rx.extensions.onErrorIfNotDisposed
 class RxFavouriteMethods(client: MastodonClient) {
     private val favouriteMethods = FavouriteMethods(client)
 
+    @JvmOverloads
     fun getFavourites(range: Range = Range()): Single<Pageable<Status>> {
         return Single.create {
             try {

@@ -80,16 +80,16 @@ class RxStatusMethods(client: MastodonClient) {
     @JvmOverloads
     fun postStatus(
         status: String,
+        visibility: Status.Visibility = Status.Visibility.Public,
         inReplyToId: String? = null,
         mediaIds: List<String>? = null,
         sensitive: Boolean = false,
         spoilerText: String? = null,
-        visibility: Status.Visibility = Status.Visibility.Public,
         language: String? = null
     ): Single<Status> {
         return Single.create {
             try {
-                val result = statusMethods.postStatus(status, inReplyToId, mediaIds, sensitive, spoilerText, visibility, language)
+                val result = statusMethods.postStatus(status, visibility, inReplyToId, mediaIds, sensitive, spoilerText, language)
                 it.onSuccess(result.execute())
             } catch (e: Throwable) {
                 it.onError(e)
@@ -102,12 +102,12 @@ class RxStatusMethods(client: MastodonClient) {
         status: String,
         pollOptions: List<String>,
         pollExpiresIn: Int,
+        visibility: Status.Visibility = Status.Visibility.Public,
         pollMultiple: Boolean = false,
         pollHideTotals: Boolean = false,
         inReplyToId: String? = null,
         sensitive: Boolean = false,
         spoilerText: String? = null,
-        visibility: Status.Visibility = Status.Visibility.Public,
         language: String? = null
     ): Single<Status> {
         return Single.create {
@@ -116,12 +116,12 @@ class RxStatusMethods(client: MastodonClient) {
                     status,
                     pollOptions,
                     pollExpiresIn,
+                    visibility,
                     pollMultiple,
                     pollHideTotals,
                     inReplyToId,
                     sensitive,
                     spoilerText,
-                    visibility,
                     language
                 )
                 it.onSuccess(result.execute())
@@ -134,17 +134,17 @@ class RxStatusMethods(client: MastodonClient) {
     @JvmOverloads
     fun scheduleStatus(
         status: String,
+        scheduledAt: String,
+        visibility: Status.Visibility = Status.Visibility.Public,
         inReplyToId: String? = null,
         mediaIds: List<String>? = null,
         sensitive: Boolean = false,
         spoilerText: String? = null,
-        visibility: Status.Visibility = Status.Visibility.Public,
-        language: String? = null,
-        scheduledAt: String
+        language: String? = null
     ): Single<ScheduledStatus> {
         return Single.create {
             try {
-                val result = statusMethods.scheduleStatus(status, inReplyToId, mediaIds, sensitive, spoilerText, visibility, language, scheduledAt)
+                val result = statusMethods.scheduleStatus(status, scheduledAt, visibility, inReplyToId, mediaIds, sensitive, spoilerText, language)
                 it.onSuccess(result.execute())
             } catch (e: Throwable) {
                 it.onError(e)
@@ -155,31 +155,31 @@ class RxStatusMethods(client: MastodonClient) {
     @JvmOverloads
     fun schedulePoll(
         status: String,
+        scheduledAt: String,
         pollOptions: List<String>,
         pollExpiresIn: Int,
+        visibility: Status.Visibility = Status.Visibility.Public,
         pollMultiple: Boolean = false,
         pollHideTotals: Boolean = false,
         inReplyToId: String? = null,
         sensitive: Boolean = false,
         spoilerText: String? = null,
-        visibility: Status.Visibility = Status.Visibility.Public,
-        language: String? = null,
-        scheduledAt: String
+        language: String? = null
     ): Single<ScheduledStatus> {
         return Single.create {
             try {
                 val result = statusMethods.schedulePoll(
                     status,
+                    scheduledAt,
                     pollOptions,
                     pollExpiresIn,
+                    visibility,
                     pollMultiple,
                     pollHideTotals,
                     inReplyToId,
                     sensitive,
                     spoilerText,
-                    visibility,
-                    language,
-                    scheduledAt
+                    language
                 )
                 it.onSuccess(result.execute())
             } catch (e: Throwable) {

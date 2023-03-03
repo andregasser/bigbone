@@ -15,10 +15,11 @@ import social.bigbone.rx.extensions.onErrorIfNotDisposed
 class RxAppMethods(client: MastodonClient) {
     private val appMethods = AppMethods(client)
 
+    @JvmOverloads
     fun createApp(
         clientName: String,
         redirectUris: String = "urn:ietf:wg:oauth:2.0:oob",
-        scope: Scope,
+        scope: Scope = Scope(Scope.Name.ALL),
         website: String? = null
     ): Single<Application> {
         return Single.create {
