@@ -436,24 +436,41 @@ private constructor(
         private var port = 443
         private var trustAllCerts = false
 
+        /**
+         * Sets the access token required for calling authenticated endpoints.
+         * @param accessToken the access token to be used
+         */
         fun accessToken(accessToken: String) = apply {
             this.accessToken = accessToken
         }
 
+        /**
+         * Makes the client use an unsecured HTTP connection to the Mastodon server.
+         *
+         * IMPORTANT: Please do not use this on production environments, as it is considered
+         * bad practice. Use it solely for testing purposes.
+         */
         fun withHttpsDisabled() = apply {
             scheme = "http"
         }
 
         /**
-         * Disables certificate validation and hostname verification. Please do not use this
-         * on production environments, as it is considered bad practice. Use it solely for
-         * testing purposes.
+         * Disables certificate validation and hostname verification.
+         *
+         * IMPORTANT: Please do not use this on production environments, as it is considered
+         * bad practice. Use it solely for testing purposes.
          */
         fun withTrustAllCerts() = apply {
             trustAllCerts = true
             configureForTrustAll(okHttpClientBuilder)
         }
 
+        /**
+         * Makes the client use a different port than 443 for connecting to a Mastodon server.
+         *
+         * IMPORTANT: It is best practice to use the default port 443 when connecting to a
+         * Mastodon server.
+         */
         fun withPort(port: Int) = apply {
             this.port = port
         }
