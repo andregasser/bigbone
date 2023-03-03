@@ -16,10 +16,14 @@ import social.bigbone.api.method.NotificationMethods
 class RxNotificationMethods(client: MastodonClient) {
     private val notificationMethods = NotificationMethods(client)
 
-    fun getNotifications(range: Range): Single<Pageable<Notification>> {
+    @JvmOverloads
+    fun getNotifications(
+        excludeTypes: List<Notification.Type>? = null,
+        range: Range = Range()
+    ): Single<Pageable<Notification>> {
         return Single.create {
             try {
-                val notifications = notificationMethods.getNotifications(range)
+                val notifications = notificationMethods.getNotifications(excludeTypes, range)
                 it.onSuccess(notifications.execute())
             } catch (e: Throwable) {
                 it.onError(e)

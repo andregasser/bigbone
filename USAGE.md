@@ -138,11 +138,8 @@ try {
 	// using previously defined client with access token
 	val status = client.statuses.postStatus(
 		status = "Hello World! #HelloWorld",
-		inReplyToId = null,
-		mediaIds = null,
-		sensitive = false,
-		spoilerText = null,
 		visibility = Status.Visibility.Unlisted
+		// additional optional parameters exist
 	)
 	status.execute()
 } catch (e: Exception) {
@@ -154,12 +151,7 @@ __Java__
 
 ```java
 MastodonRequest<Status> request = client.statuses()
-                .postStatus("Hello World",
-                        null,
-                        null,
-                        false,
-                        null,
-                        Status.Visibility.Unlisted);
+                .postStatus("Hello World", Status.Visibility.Unlisted);
         Status status = request.execute();
 ```
 
