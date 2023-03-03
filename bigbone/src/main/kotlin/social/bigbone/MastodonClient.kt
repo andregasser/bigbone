@@ -274,6 +274,7 @@ private constructor(
             Method.PATCH -> patch(endpoint, null)
             Method.POST -> post(endpoint)
         }
+        response.close()
         if (!response.isSuccessful) {
             throw BigBoneRequestException(response)
         }
@@ -496,40 +497,48 @@ private constructor(
             }
         }
 
-        internal fun v2InstanceRequest(): Response {
-            val clientBuilder = OkHttpClient.Builder()
-            if (trustAllCerts) {
-                configureForTrustAll(clientBuilder)
-            }
-            val client = clientBuilder.build()
-            return client.newCall(
-                Request.Builder()
-                    .url(fullUrl(scheme, instanceName, port, "api/v2/instance"))
-                    .get()
-                    .build()
-            ).execute()
-        }
-
-        internal fun v1InstanceRequest(): Response {
-            val clientBuilder = OkHttpClient.Builder()
-            if (trustAllCerts) {
-                configureForTrustAll(clientBuilder)
-            }
-            val client = clientBuilder.build()
-            return client.newCall(
-                Request.Builder()
-                    .url(fullUrl(scheme, instanceName, port, "api/v1/instance"))
-                    .get()
-                    .build()
-            ).execute()
-        }
-
         private fun configureForTrustAll(clientBuilder: OkHttpClient.Builder) {
             val sslContext = SSLContext.getInstance("SSL")
             sslContext.init(null, arrayOf(TrustAllX509TrustManager), SecureRandom())
             clientBuilder
                 .sslSocketFactory(sslContext.socketFactory, TrustAllX509TrustManager)
                 .hostnameVerifier(AcceptAllHostnameVerifier)
+        }
+
+        /**
+         * Returns the server response for an instance request of version 2.
+         * @return server response for this request; if the response is not successful, its body will be closed
+         */
+        internal fun v2InstanceRequest(): Response = versionedInstanceRequest(2)
+
+        /**
+         * Returns the server response for an instance request of version 1.
+         * @return server response for this request; if the response is not successful, its body will be closed
+         */
+        internal fun v1InstanceRequest(): Response = versionedInstanceRequest(1)
+
+        /**
+         * Returns the server response for an instance request of a specific version.
+         * @param version value corresponding to the version that should be returned; falls
+         *  back to returning version 1 for illegal values.
+         * @return server response for this request; if the response is not successful, its body will be closed
+         */
+        private fun versionedInstanceRequest(version: Int): Response {
+            val versionString = if (version == 2) {
+                "v2"
+            } else {
+                "v1"
+            }
+            val client = OkHttpClient.Builder().build()
+            val response = client.newCall(
+                Request.Builder().url(
+                    fullUrl(scheme, instanceName, port, "api/$versionString/instance"
+                    )
+                ).get().build()).execute()
+            if (!response.isSuccessful) {
+                response.close()
+            }
+            return response
         }
 
         fun build(): MastodonClient {

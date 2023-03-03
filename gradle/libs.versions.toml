@@ -15,9 +15,9 @@ rxjava = "3.1.6"
 
 # Gradle plugins
 jacoco = "0.8.8"
-dependency-analysis = "1.18.0"
+dependency-analysis = "1.19.0"
 detekt = "1.22.0"
-versions = "0.44.0"
+versions = "0.46.0"
 
 [libraries]
 junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junit-jupiter" }

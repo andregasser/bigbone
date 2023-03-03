@@ -16,6 +16,7 @@ import social.bigbone.rx.extensions.onErrorIfNotDisposed
 class RxBlockMethods(client: MastodonClient) {
     private val blockMethods = BlockMethods(client)
 
+    @JvmOverloads
     fun getBlocks(range: Range = Range()): Single<Pageable<Account>> {
         return Single.create {
             try {

@@ -8,12 +8,12 @@ class RangeTest {
     fun toParameter() {
         run {
             val range = Range()
-            range.toParameters().toQuery() shouldBeEqualTo "limit=20"
+            range.toParameters().toQuery() shouldBeEqualTo ""
         }
 
         run {
             val range = Range(maxId = "10")
-            range.toParameters().toQuery() shouldBeEqualTo "max_id=10&limit=20"
+            range.toParameters().toQuery() shouldBeEqualTo "max_id=10"
         }
 
         run {
