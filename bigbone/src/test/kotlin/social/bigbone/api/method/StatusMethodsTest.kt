@@ -437,4 +437,23 @@ class StatusMethodsTest {
             statusMethods.unpinStatus("1").execute()
         }
     }
+
+    @Test
+    fun getStatusSource() {
+        val client = MockClient.mock("status_source.json")
+        val statusMethods = StatusMethods(client)
+        val statusSource = statusMethods.getStatusSource("1").execute()
+        statusSource.id shouldBeEqualTo "108942703571991143"
+        statusSource.text shouldBeEqualTo "this is a status that will be edited"
+        statusSource.spoilerText shouldBeEqualTo "spoiler"
+    }
+
+    @Test
+    fun getStatusSourceWithException() {
+        Assertions.assertThrows(BigBoneRequestException::class.java) {
+            val client = MockClient.ioException()
+            val statusMethods = StatusMethods(client)
+            statusMethods.getStatusSource("1").execute()
+        }
+    }
 }

@@ -9,6 +9,7 @@ import social.bigbone.api.entity.Account
 import social.bigbone.api.entity.Context
 import social.bigbone.api.entity.ScheduledStatus
 import social.bigbone.api.entity.Status
+import social.bigbone.api.entity.StatusSource
 import social.bigbone.api.entity.Translation
 import social.bigbone.api.exception.BigBoneRequestException
 
@@ -419,6 +420,19 @@ class StatusMethods(private val client: MastodonClient) {
         return client.getMastodonRequest(
             endpoint = "api/v1/statuses/$statusId/unpin",
             method = MastodonClient.Method.POST
+        )
+    }
+
+    /**
+     * Obtain the source properties for a status so that it can be edited.
+     * @param statusId The local ID of the Status in the database.
+     * @see <a href="https://docs.joinmastodon.org/methods/statuses/#source">Mastodon API documentation: methods/statuses/#source</a>
+     */
+    @Throws(BigBoneRequestException::class)
+    fun getStatusSource(statusId: String): MastodonRequest<StatusSource> {
+        return client.getMastodonRequest(
+            endpoint = "api/v1/statuses/$statusId/source",
+            method = MastodonClient.Method.GET
         )
     }
 }

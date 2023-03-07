@@ -8,6 +8,7 @@ import social.bigbone.api.entity.Account
 import social.bigbone.api.entity.Context
 import social.bigbone.api.entity.ScheduledStatus
 import social.bigbone.api.entity.Status
+import social.bigbone.api.entity.StatusSource
 import social.bigbone.api.entity.Translation
 import social.bigbone.api.method.StatusMethods
 
@@ -304,6 +305,17 @@ class RxStatusMethods(client: MastodonClient) {
             try {
                 val status = statusMethods.unpinStatus(statusId)
                 it.onSuccess(status.execute())
+            } catch (e: Throwable) {
+                it.onError(e)
+            }
+        }
+    }
+
+    fun getStatusSource(statusId: String): Single<StatusSource> {
+        return Single.create {
+            try {
+                val statusSource = statusMethods.getStatusSource(statusId)
+                it.onSuccess(statusSource.execute())
             } catch (e: Throwable) {
                 it.onError(e)
             }
