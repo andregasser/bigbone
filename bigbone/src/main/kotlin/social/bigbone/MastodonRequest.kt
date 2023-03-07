@@ -74,6 +74,7 @@ class MastodonRequest<T>(
                 throw BigBoneRequestException("Successful response could not be parsed", e)
             }
         } else {
+            response.close()
             throw BigBoneRequestException(response)
         }
     }

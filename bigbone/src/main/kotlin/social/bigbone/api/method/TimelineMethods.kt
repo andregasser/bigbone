@@ -42,6 +42,7 @@ class TimelineMethods(private val client: MastodonClient) {
      * @param range restrict result to a specific range
      * @see <a href="https://docs.joinmastodon.org/methods/timelines/#list">Mastodon API documentation: methods/timelines/#list</a>
      */
+    @JvmOverloads
     @Throws(BigBoneRequestException::class)
     fun getListTimeline(listID: String, range: Range = Range()): MastodonRequest<Pageable<Status>> {
         return client.getPageableMastodonRequest(
@@ -54,14 +55,14 @@ class TimelineMethods(private val client: MastodonClient) {
     /**
      * Get the public timeline of the configured instance. Defaults to a combination of local and remote statuses,
      * but can be restricted to either.
-     * @param range restrict result to a specific range
      * @param statusOrigin optionally restrict result to either local or remote (=federated) statuses; defaults to all
+     * @param range restrict result to a specific range
      * @see <a href="https://docs.joinmastodon.org/methods/timelines/#public">Mastodon API documentation: methods/timelines/#public</a>
      */
     @JvmOverloads
     fun getPublicTimeline(
-        range: Range = Range(),
-        statusOrigin: StatusOrigin = StatusOrigin.LOCAL_AND_REMOTE
+        statusOrigin: StatusOrigin = StatusOrigin.LOCAL_AND_REMOTE,
+        range: Range = Range()
     ): MastodonRequest<Pageable<Status>> {
         return client.getPageableMastodonRequest(
             endpoint = "api/v1/timelines/public",
@@ -80,15 +81,15 @@ class TimelineMethods(private val client: MastodonClient) {
      * Get the public timeline for a specific hashtag of the configured instance.
      * Defaults to a combination of local and remote (=federated) statuses, but can be restricted to either.
      * @param tag the hashtag for which a timeline should be returned
-     * @param range restrict result to a specific range
      * @param statusOrigin optionally restrict result to either local or remote statuses; defaults to all
+     * @param range restrict result to a specific range
      * @see <a href="https://docs.joinmastodon.org/methods/timelines/#tag">Mastodon API documentation: methods/timelines/#tag</a>
      */
     @JvmOverloads
     fun getTagTimeline(
         tag: String,
-        range: Range = Range(),
-        statusOrigin: StatusOrigin = StatusOrigin.LOCAL_AND_REMOTE
+        statusOrigin: StatusOrigin = StatusOrigin.LOCAL_AND_REMOTE,
+        range: Range = Range()
     ): MastodonRequest<Pageable<Status>> {
         return client.getPageableMastodonRequest(
             endpoint = "api/v1/timelines/tag/$tag",

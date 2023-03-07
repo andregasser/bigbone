@@ -63,7 +63,7 @@ final class Authenticator {
     private static Token getAccessToken(final String instanceName, final String clientId, final String clientSecret, final String email, final String password) throws BigBoneRequestException {
         final MastodonClient client = new MastodonClient.Builder(instanceName).build();
         final OAuthMethods oauthMethods = new OAuthMethods(client);
-        return oauthMethods.getAccessTokenWithPasswordGrant(clientId, clientSecret, new Scope(), email, password).execute();
+        return oauthMethods.getUserAccessTokenWithPasswordGrant(clientId, clientSecret, new Scope(), email, password).execute();
     }
 
     private static Application application(final String instanceName) throws BigBoneRequestException {

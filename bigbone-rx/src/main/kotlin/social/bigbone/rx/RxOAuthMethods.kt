@@ -15,7 +15,7 @@ import social.bigbone.rx.extensions.onErrorIfNotDisposed
 class RxOAuthMethods(client: MastodonClient) {
     private val oauth = OAuthMethods(client)
 
-    fun getAccessTokenWithAuthorizationCodeGrant(
+    fun getUserAccessTokenWithAuthorizationCodeGrant(
         clientId: String,
         clientSecret: String,
         redirectUri: String = "urn:ietf:wg:oauth:2.0:oob",
@@ -23,7 +23,7 @@ class RxOAuthMethods(client: MastodonClient) {
     ): Single<Token> {
         return Single.create {
             try {
-                val accessToken = oauth.getAccessTokenWithAuthorizationCodeGrant(clientId, clientSecret, redirectUri, code)
+                val accessToken = oauth.getUserAccessTokenWithAuthorizationCodeGrant(clientId, clientSecret, redirectUri, code)
                 it.onSuccess(accessToken.execute())
             } catch (throwable: Throwable) {
                 it.onErrorIfNotDisposed(throwable)
@@ -31,16 +31,17 @@ class RxOAuthMethods(client: MastodonClient) {
         }
     }
 
-    fun getAccessTokenWithPasswordGrant(
+    fun getUserAccessTokenWithPasswordGrant(
         clientId: String,
         clientSecret: String,
         scope: Scope = Scope(Scope.Name.READ),
+        redirectUri: String = "urn:ietf:wg:oauth:2.0:oob",
         username: String,
         password: String
     ): Single<Token> {
         return Single.create {
             try {
-                val accessToken = oauth.getAccessTokenWithPasswordGrant(clientId, clientSecret, scope, username, password)
+                val accessToken = oauth.getUserAccessTokenWithPasswordGrant(clientId, clientSecret, scope, redirectUri, username, password)
                 it.onSuccess(accessToken.execute())
             } catch (throwable: Throwable) {
                 it.onErrorIfNotDisposed(throwable)
