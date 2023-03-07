@@ -43,6 +43,7 @@ class ListMethods(private val client: MastodonClient) {
      * @param repliesPolicy One of [MastodonList.RepliesPolicy], defaults to [MastodonList.RepliesPolicy.List].
      * @see <a href="https://docs.joinmastodon.org/methods/lists/#create">Mastodon API documentation: methods/lists/#create</a>
      */
+    @JvmOverloads
     fun createList(
         title: String,
         repliesPolicy: MastodonList.RepliesPolicy = MastodonList.RepliesPolicy.List
@@ -97,6 +98,7 @@ class ListMethods(private val client: MastodonClient) {
      * @param range optional Range for the pageable return value
      * @see <a href="https://docs.joinmastodon.org/methods/lists/#accounts">Mastodon API documentation: methods/lists/#accounts</a>
      */
+    @JvmOverloads
     fun getAccountsInList(listId: String, range: Range = Range()): MastodonRequest<Pageable<Account>> {
         return client.getPageableMastodonRequest(
             endpoint = "api/v1/lists/$listId/accounts",
