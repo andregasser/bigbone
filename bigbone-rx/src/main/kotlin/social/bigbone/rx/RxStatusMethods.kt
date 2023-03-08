@@ -8,6 +8,7 @@ import social.bigbone.api.entity.Account
 import social.bigbone.api.entity.Context
 import social.bigbone.api.entity.ScheduledStatus
 import social.bigbone.api.entity.Status
+import social.bigbone.api.entity.StatusEdit
 import social.bigbone.api.entity.StatusSource
 import social.bigbone.api.entity.Translation
 import social.bigbone.api.method.StatusMethods
@@ -305,6 +306,68 @@ class RxStatusMethods(client: MastodonClient) {
             try {
                 val status = statusMethods.unpinStatus(statusId)
                 it.onSuccess(status.execute())
+            } catch (e: Throwable) {
+                it.onError(e)
+            }
+        }
+    }
+
+    @JvmOverloads
+    fun editStatus(
+        statusId: String,
+        status: String,
+        mediaIds: List<String>? = null,
+        sensitive: Boolean = false,
+        spoilerText: String? = null,
+        language: String? = null
+    ): Single<Status> {
+        return Single.create {
+            try {
+                val statusEdit = statusMethods.editStatus(statusId, status, mediaIds, sensitive, spoilerText, language)
+                it.onSuccess(statusEdit.execute())
+            } catch (e: Throwable) {
+                it.onError(e)
+            }
+        }
+    }
+
+    @JvmOverloads
+    fun editPoll(
+        statusId: String,
+        status: String,
+        pollOptions: List<String>,
+        pollExpiresIn: Int,
+        pollMultiple: Boolean = false,
+        pollHideTotals: Boolean = false,
+        sensitive: Boolean = false,
+        spoilerText: String? = null,
+        language: String? = null
+    ): Single<Status> {
+        return Single.create {
+            try {
+                val statusEdit = statusMethods.editPoll(
+                    statusId,
+                    status,
+                    pollOptions,
+                    pollExpiresIn,
+                    pollMultiple,
+                    pollHideTotals,
+                    sensitive,
+                    spoilerText,
+                    language
+                )
+                it.onSuccess(statusEdit.execute())
+            } catch (e: Throwable) {
+                it.onError(e)
+            }
+        }
+    }
+
+    fun getEditHistory(statusId: String): Single<List<StatusEdit>> {
+        return Single.create {
+            try {
+                val statusHistory = statusMethods.getEditHistory(statusId)
+                it.onSuccess(statusHistory.execute())
             } catch (e: Throwable) {
                 it.onError(e)
             }

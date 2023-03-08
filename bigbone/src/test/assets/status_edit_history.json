@@ -1,0 +1,98 @@
+[
+  {
+    "content": "<p>this is a status that will be edited</p>",
+    "spoiler_text": "",
+    "sensitive": false,
+    "created_at": "2022-09-04T23:22:13.704Z",
+    "account": {
+      "id": "14715",
+      "username": "trwnh",
+      "acct": "trwnh",
+      "display_name": "infinite love ⴳ"
+    },
+    "media_attachments": [],
+    "emojis": []
+  },
+  {
+    "content": "<p>this is a status that has been edited</p>",
+    "spoiler_text": "",
+    "sensitive": false,
+    "created_at": "2022-09-04T23:22:42.555Z",
+    "account": {
+      "id": "14715",
+      "username": "trwnh",
+      "acct": "trwnh",
+      "display_name": "infinite love ⴳ"
+    },
+    "media_attachments": [],
+    "emojis": []
+  },
+  {
+    "content": "<p>this is a status that has been edited twice</p>",
+    "spoiler_text": "",
+    "sensitive": false,
+    "created_at": "2022-09-04T23:22:55.956Z",
+    "account": {
+      "id": "14715",
+      "username": "trwnh",
+      "acct": "trwnh",
+      "display_name": "infinite love ⴳ"
+    },
+    "media_attachments": [],
+    "emojis": []
+  },
+  {
+    "content": "<p>this is a status that has been edited three times. this time a poll has been added.</p>",
+    "spoiler_text": "",
+    "sensitive": false,
+    "created_at": "2022-09-05T00:01:48.160Z",
+    "poll": {
+      "options": [
+        {
+          "title": "cool"
+        },
+        {
+          "title": "uncool"
+        },
+        {
+          "title": "spiderman"
+        }
+      ]
+    },
+    "account": {
+      "id": "14715",
+      "username": "trwnh",
+      "acct": "trwnh",
+      "display_name": "infinite love ⴳ"
+    },
+    "media_attachments": [],
+    "emojis": []
+  },
+  {
+    "content": "<p>this is a status that has been edited three times. this time a poll has been added.</p>",
+    "spoiler_text": "",
+    "sensitive": false,
+    "created_at": "2022-09-05T00:03:32.480Z",
+    "poll": {
+      "options": [
+        {
+          "title": "cool"
+        },
+        {
+          "title": "uncool"
+        },
+        {
+          "title": "spiderman (this option has been changed)"
+        }
+      ]
+    },
+    "account": {
+      "id": "14715",
+      "username": "trwnh",
+      "acct": "trwnh",
+      "display_name": "infinite love ⴳ"
+    },
+    "media_attachments": [],
+    "emojis": []
+  }
+]

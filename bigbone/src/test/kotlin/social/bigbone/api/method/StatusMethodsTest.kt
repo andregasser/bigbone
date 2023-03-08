@@ -439,6 +439,82 @@ class StatusMethodsTest {
     }
 
     @Test
+    fun editStatus() {
+        val client = MockClient.mock("status.json")
+        val statusMethods = StatusMethods(client)
+        val status = statusMethods.editStatus("1", "new status").execute()
+        status.id shouldBeEqualTo "11111"
+    }
+
+    @Test
+    fun editStatusWithException() {
+        Assertions.assertThrows(BigBoneRequestException::class.java) {
+            val client = MockClient.ioException()
+            val statusMethods = StatusMethods(client)
+            statusMethods.editStatus("1", "new status").execute()
+        }
+    }
+
+    @Test
+    fun editPoll() {
+        val client = MockClient.mock("status_with_poll.json")
+        val statusMethods = StatusMethods(client)
+        val pollOptions = listOf("foo", "bar", "baz")
+        val status = statusMethods.editPoll(
+            statusId = "statusId",
+            status = "a",
+            pollOptions = pollOptions,
+            pollExpiresIn = 3600,
+            language = "en"
+        ).execute()
+        status.poll?.id shouldBeEqualTo "34830"
+        status.poll?.expired shouldBeEqualTo true
+        status.poll?.votesCount shouldBeEqualTo 10
+        status.poll?.options?.get(0)?.votesCount shouldBeEqualTo 6
+    }
+
+    @Test
+    fun editPollWithException() {
+        Assertions.assertThrows(BigBoneRequestException::class.java) {
+            val client = MockClient.ioException()
+            val statusMethods = StatusMethods(client)
+            val pollOptions = listOf("foo", "bar", "baz")
+            statusMethods.editPoll(
+                statusId = "statusId",
+                status = "a",
+                pollOptions = pollOptions,
+                pollExpiresIn = 3600
+            ).execute()
+        }
+    }
+
+    @Test
+    fun getEditHistory() {
+        val client = MockClient.mock("status_edit_history.json")
+        val statusMethods = StatusMethods(client)
+        val statusHistory = statusMethods.getEditHistory("1").execute()
+        val statusEditInitial = statusHistory.first()
+        val statusEditRevision = statusHistory[1]
+        val statusEditWithPoll = statusHistory[3]
+        statusEditInitial.content shouldBeEqualTo "<p>this is a status that will be edited</p>"
+        statusEditRevision.content shouldBeEqualTo "<p>this is a status that has been edited</p>"
+        statusEditInitial.createdAt shouldBeEqualTo "2022-09-04T23:22:13.704Z"
+        statusEditRevision.createdAt shouldBeEqualTo "2022-09-04T23:22:42.555Z"
+        statusEditWithPoll.poll?.options?.get(0)?.title shouldBeEqualTo "cool"
+        statusEditWithPoll.poll?.options?.get(1)?.title shouldBeEqualTo "uncool"
+        statusEditWithPoll.poll?.options?.get(2)?.title shouldBeEqualTo "spiderman"
+    }
+
+    @Test
+    fun getEditHistoryWithException() {
+        Assertions.assertThrows(BigBoneRequestException::class.java) {
+            val client = MockClient.ioException()
+            val statusMethods = StatusMethods(client)
+            statusMethods.getEditHistory("1").execute()
+        }
+    }
+
+    @Test
     fun getStatusSource() {
         val client = MockClient.mock("status_source.json")
         val statusMethods = StatusMethods(client)
