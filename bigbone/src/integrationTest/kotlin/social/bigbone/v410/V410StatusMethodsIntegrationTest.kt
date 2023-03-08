@@ -17,9 +17,13 @@ import social.bigbone.TestConstants.Companion.USER2_APP_NAME
 import social.bigbone.TestConstants.Companion.USER2_EMAIL
 import social.bigbone.TestConstants.Companion.USER2_PASSWORD
 import social.bigbone.TestHelpers
+import social.bigbone.TestHelpers.toISO8601DateTime
 import social.bigbone.api.entity.Status
 import social.bigbone.api.entity.Token
 import social.bigbone.api.exception.BigBoneRequestException
+import java.time.Instant
+import java.time.ZoneId
+import java.time.temporal.ChronoUnit
 
 /**
  * Integration tests for StatusMethods running on Mastodon 4.1.0.
@@ -48,8 +52,8 @@ class V410StatusMethodsIntegrationTest {
         @Test
         fun `should return status when retrieved by id`() {
             val user1Client = TestHelpers.getTrustAllClient(user1UserToken.accessToken)
-            val status = user1Client.statuses.postStatus(status = "This is my status", spoilerText = "Test").execute()
-            val retrievedStatus = user1Client.statuses.getStatus(status.id).execute()
+            val statusId = user1Client.statuses.postStatus(status = "This is my status", spoilerText = "Test").execute().id
+            val retrievedStatus = user1Client.statuses.getStatus(statusId).execute()
             assertEquals("<p>This is my status</p>", retrievedStatus.content)
             assertEquals("Test", retrievedStatus.spoilerText)
         }
@@ -67,7 +71,7 @@ class V410StatusMethodsIntegrationTest {
     @DisplayName("postStatus tests")
     internal inner class PostStatusTests {
         @Test
-        fun `should post status when status set`() {
+        fun `should post status when mandatory params set`() {
             val user1Client = TestHelpers.getTrustAllClient(user1UserToken.accessToken)
             val statusId = user1Client.statuses.postStatus(status = "Status to be posted").execute().id
             val status = user1Client.statuses.getStatus(statusId).execute()
@@ -105,6 +109,77 @@ class V410StatusMethodsIntegrationTest {
             assertTrue(replyStatus.isSensitive)
             assertEquals("<p>This is a spoiler text</p>", replyStatus.spoilerText)
             assertEquals("en", replyStatus.language)
+        }
+    }
+
+    @Nested
+    @DisplayName("postPoll tests")
+    internal inner class PostPollTests {
+        @Test
+        fun `should post poll when mandatory params set`() {
+            val user1Client = TestHelpers.getTrustAllClient(user1UserToken.accessToken)
+            val statusId = user1Client.statuses.postPoll(
+                status = "Do you think this test will pass?",
+                pollOptions = listOf("Yes", "No"),
+                pollExpiresIn = 300
+            ).execute().id
+            val retrievedStatus = user1Client.statuses.getStatus(statusId).execute()
+            assertEquals(statusId, retrievedStatus.id)
+            assertEquals("<p>Do you think this test will pass?</p>", retrievedStatus.content)
+            assertEquals(Status.Visibility.Public.value, retrievedStatus.visibility)
+            assertNull(retrievedStatus.inReplyToId)
+            assertEquals(0, retrievedStatus.mediaAttachments.size)
+            assertFalse(retrievedStatus.isSensitive)
+            assertEquals("", retrievedStatus.spoilerText)
+            assertEquals("en", retrievedStatus.language)
+        }
+
+        @Test
+        fun `should post poll when all params set`() {
+            val user1Client = TestHelpers.getTrustAllClient(user1UserToken.accessToken)
+            val statusId = user1Client.statuses.postStatus(status = "Poll status test").execute().id
+            val pollStatusId = user1Client.statuses.postPoll(
+                status = "Wird dieser Test erfolgreich sein?",
+                pollOptions = listOf("Ja", "Nein"),
+                pollExpiresIn = 300,
+                visibility = Status.Visibility.Private,
+                pollMultiple = true,
+                pollHideTotals = true,
+                inReplyToId = statusId,
+                sensitive = true,
+                spoilerText = "Das ist der Spoilertext zur Umfrage",
+                language = "de"
+            ).execute().id
+            val retrievedPollStatus = user1Client.statuses.getStatus(pollStatusId).execute()
+            assertEquals(pollStatusId, retrievedPollStatus.id)
+            assertEquals("<p>Wird dieser Test erfolgreich sein?</p>", retrievedPollStatus.content)
+            assertEquals(Status.Visibility.Private.value, retrievedPollStatus.visibility)
+            assertEquals(statusId, retrievedPollStatus.inReplyToId)
+            assertEquals(0, retrievedPollStatus.mediaAttachments.size)
+            assertTrue(retrievedPollStatus.isSensitive)
+            assertEquals("Das ist der Spoilertext zur Umfrage", retrievedPollStatus.spoilerText)
+            assertEquals("de", retrievedPollStatus.language)
+        }
+    }
+
+    @Nested
+    @DisplayName("scheduleStatus tests")
+    internal inner class ScheduleStatusTests {
+        @Test
+        fun `should schedule status when mandatory params set`() {
+            val user1Client = TestHelpers.getTrustAllClient(user1UserToken.accessToken)
+            val inSixMinutes = Instant.now().plus(6, ChronoUnit.MINUTES).toISO8601DateTime(ZoneId.systemDefault())
+            val scheduledStatus = user1Client.statuses.scheduleStatus(
+                status = "This status is scheduled for $inSixMinutes",
+                scheduledAt = inSixMinutes
+            ).execute()
+            assertEquals("This status is scheduled for $inSixMinutes", scheduledStatus.params.text)
+            assertEquals(Status.Visibility.Public.value, scheduledStatus.params.visibility)
+            assertNull(scheduledStatus.params.inReplyToId)
+            assertEquals(0, scheduledStatus.mediaAttachments.size)
+            assertFalse(scheduledStatus.params.sensitive!!)
+            assertNull(scheduledStatus.params.spoilerText)
+            assertNull(scheduledStatus.params.language)
         }
     }
 }
