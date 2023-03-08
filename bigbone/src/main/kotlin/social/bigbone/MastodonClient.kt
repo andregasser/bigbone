@@ -334,10 +334,6 @@ private constructor(
      * @param body the parameters to use in the request body for this request
      */
     fun patch(path: String, body: Parameters?): Response {
-        if (body == null) {
-            throw BigBoneRequestException("Patch request not possible with null body")
-        }
-
         try {
             val url = fullUrl(scheme, instanceName, port, path)
             debugPrintUrl(url)
@@ -390,13 +386,9 @@ private constructor(
     /**
      * Get a response from the Mastodon instance defined for this client using the PUT method.
      * @param path an absolute path to the API endpoint to call
-     * @param body the parameters to use in the request body for this request; may be null
+     * @param body the parameters to use in the request body for this request
      */
     fun put(path: String, body: Parameters?): Response {
-        if (body == null) {
-            throw BigBoneRequestException("Patch request not possible with null body")
-        }
-
         try {
             val url = fullUrl(scheme, instanceName, port, path)
             debugPrintUrl(url)
