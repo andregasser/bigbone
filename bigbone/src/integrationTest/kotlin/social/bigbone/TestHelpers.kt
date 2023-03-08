@@ -6,19 +6,7 @@ import social.bigbone.api.entity.MediaAttachment
 import social.bigbone.api.entity.Token
 import java.io.File
 
-/**
- * This class provides helper methods used in integration tests which are not specific to any
- * version of Mastodon. If a version-specific helper needs to be written, please create a new
- * class (e.g. V402TestHelpers.kt) in the appropriate integration test directory.
- */
 object TestHelpers {
-    /**
-     * Uploads an image file using the POST /api/v1/media REST call.
-     * @param filename the filename. Must be located in the "resources" directory".
-     * @param mediaType the media type of the file (e.g. "image/jpg", ...).
-     * @param client an instance of MastodonClient. This instance is used to conduct the upload.
-     * @return the media attachment information.
-     */
     fun uploadMediaFromResourcesFolder(filename: String, mediaType: String, client: MastodonClient): MediaAttachment {
         val classLoader = Thread.currentThread().contextClassLoader
         val uploadFile = File(classLoader.getResource(filename)!!.file)

@@ -425,15 +425,13 @@ naming:
 #    active: false
 #    forbiddenName: []
   FunctionMaxLength:
-    active: true
-    maximumFunctionNameLength: 120
+    active: false
   FunctionMinLength:
     active: true
     minimumFunctionNameLength: 3
   FunctionNaming:
     active: true
     excludes: ['**/test/**', '**/integrationTest/**']
-    #functionPattern: '[a-z`][a-zA-Z0-9`\s]*'
     functionPattern: '[a-z][a-zA-Z0-9]*'
     excludeClassPattern: '$^'
     ignoreOverridden: true
