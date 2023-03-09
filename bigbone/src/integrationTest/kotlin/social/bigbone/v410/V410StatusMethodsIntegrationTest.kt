@@ -15,7 +15,6 @@ import org.junit.jupiter.api.TestInstance
 import social.bigbone.TestConstants.Companion.USER1_APP_NAME
 import social.bigbone.TestConstants.Companion.USER1_EMAIL
 import social.bigbone.TestConstants.Companion.USER1_PASSWORD
-import social.bigbone.TestConstants.Companion.USER1_USERNAME
 import social.bigbone.TestConstants.Companion.USER2_APP_NAME
 import social.bigbone.TestConstants.Companion.USER2_EMAIL
 import social.bigbone.TestConstants.Companion.USER2_PASSWORD

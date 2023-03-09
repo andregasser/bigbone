@@ -1,6 +1,5 @@
 package social.bigbone
 
-import social.bigbone.TestHelpers.toISO8601DateTime
 import social.bigbone.api.Scope
 import social.bigbone.api.entity.Application
 import social.bigbone.api.entity.MediaAttachment
@@ -30,12 +29,12 @@ object TestHelpers {
             .build()
 
     fun createApp(appName: String): Application {
-        val client = TestHelpers.getTrustAllClient()
+        val client = getTrustAllClient()
         return client.apps.createApp(appName, TestConstants.REDIRECT_URI, Scope(Scope.Name.ALL)).execute()
     }
 
     fun getAppToken(application: Application): Token {
-        val client = TestHelpers.getTrustAllClient()
+        val client = getTrustAllClient()
         return client.oauth.getAccessTokenWithClientCredentialsGrant(
             clientId = application.clientId!!,
             clientSecret = application.clientSecret!!,
@@ -44,7 +43,7 @@ object TestHelpers {
     }
 
     fun getUserToken(application: Application, username: String, password: String): Token {
-        val client = TestHelpers.getTrustAllClient()
+        val client = getTrustAllClient()
         return client.oauth.getUserAccessTokenWithPasswordGrant(
             clientId = application.clientId!!,
             clientSecret = application.clientSecret!!,
