@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeAll
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -14,6 +15,7 @@ import org.junit.jupiter.api.TestInstance
 import social.bigbone.TestConstants.Companion.USER1_APP_NAME
 import social.bigbone.TestConstants.Companion.USER1_EMAIL
 import social.bigbone.TestConstants.Companion.USER1_PASSWORD
+import social.bigbone.TestConstants.Companion.USER1_USERNAME
 import social.bigbone.TestConstants.Companion.USER2_APP_NAME
 import social.bigbone.TestConstants.Companion.USER2_EMAIL
 import social.bigbone.TestConstants.Companion.USER2_PASSWORD
@@ -56,10 +58,10 @@ class V410StatusMethodsIntegrationTest {
             val user1Client = TestHelpers.getTrustAllClient(user1UserToken.accessToken)
 
             // when
-            val statusId = user1Client.statuses.postStatus(status = "This is my status", spoilerText = "Test").execute().id
+            val postedStatus = user1Client.statuses.postStatus(status = "This is my status", spoilerText = "Test").execute()
 
             // then
-            val retrievedStatus = user1Client.statuses.getStatus(statusId).execute()
+            val retrievedStatus = user1Client.statuses.getStatus(postedStatus.id).execute()
             assertEquals("<p>This is my status</p>", retrievedStatus.content)
             assertEquals("Test", retrievedStatus.spoilerText)
         }
@@ -70,9 +72,10 @@ class V410StatusMethodsIntegrationTest {
             val user1Client = TestHelpers.getTrustAllClient(user1UserToken.accessToken)
 
             // when / then
-            assertThrows(BigBoneRequestException::class.java) {
+            val exception = assertThrows(BigBoneRequestException::class.java) {
                 user1Client.statuses.getStatus("non-existing status id").execute()
             }
+            assertEquals(404, exception.httpStatusCode)
         }
     }
 
@@ -85,18 +88,16 @@ class V410StatusMethodsIntegrationTest {
             val user1Client = TestHelpers.getTrustAllClient(user1UserToken.accessToken)
 
             // when
-            val statusId = user1Client.statuses.postStatus(status = "Status to be posted").execute().id
+            val postedStatus = user1Client.statuses.postStatus(status = "Status to be posted").execute()
 
             // then
-            val status = user1Client.statuses.getStatus(statusId).execute()
-            assertEquals(statusId, status.id)
-            assertEquals("<p>Status to be posted</p>", status.content)
-            assertEquals(Status.Visibility.Public.value, status.visibility)
-            assertNull(status.inReplyToId)
-            assertEquals(0, status.mediaAttachments.size)
-            assertFalse(status.isSensitive)
-            assertEquals("", status.spoilerText)
-            assertEquals("en", status.language)
+            assertEquals("<p>Status to be posted</p>", postedStatus.content)
+            assertEquals(Status.Visibility.Public.value, postedStatus.visibility)
+            assertNull(postedStatus.inReplyToId)
+            assertEquals(0, postedStatus.mediaAttachments.size)
+            assertFalse(postedStatus.isSensitive)
+            assertEquals("", postedStatus.spoilerText)
+            assertEquals("en", postedStatus.language)
         }
 
         @Test
@@ -108,7 +109,7 @@ class V410StatusMethodsIntegrationTest {
             val uploadedMediaId2 = TestHelpers.uploadMediaFromResourcesFolder("castle-1280x853.jpg", "image/jpg", user1Client).id
 
             // when
-            val replyStatusId = user1Client.statuses.postStatus(
+            val postedStatus = user1Client.statuses.postStatus(
                 status = "This is a reply to the previous status",
                 visibility = Status.Visibility.Private,
                 inReplyToId = statusId,
@@ -116,18 +117,16 @@ class V410StatusMethodsIntegrationTest {
                 sensitive = true,
                 spoilerText = "<p>This is a spoiler text</p>",
                 language = "en"
-            ).execute().id
+            ).execute()
 
             // then
-            val replyStatus = user1Client.statuses.getStatus(replyStatusId).execute()
-            assertEquals(replyStatusId, replyStatus.id)
-            assertEquals("<p>This is a reply to the previous status</p>", replyStatus.content)
-            assertEquals(Status.Visibility.Private.value, replyStatus.visibility)
-            assertEquals(statusId, replyStatus.inReplyToId)
-            assertEquals(2, replyStatus.mediaAttachments.size)
-            assertTrue(replyStatus.isSensitive)
-            assertEquals("<p>This is a spoiler text</p>", replyStatus.spoilerText)
-            assertEquals("en", replyStatus.language)
+            assertEquals("<p>This is a reply to the previous status</p>", postedStatus.content)
+            assertEquals(Status.Visibility.Private.value, postedStatus.visibility)
+            assertEquals(statusId, postedStatus.inReplyToId)
+            assertEquals(2, postedStatus.mediaAttachments.size)
+            assertTrue(postedStatus.isSensitive)
+            assertEquals("<p>This is a spoiler text</p>", postedStatus.spoilerText)
+            assertEquals("en", postedStatus.language)
         }
     }
 
@@ -140,22 +139,20 @@ class V410StatusMethodsIntegrationTest {
             val user1Client = TestHelpers.getTrustAllClient(user1UserToken.accessToken)
 
             // when
-            val statusId = user1Client.statuses.postPoll(
+            val postedPoll = user1Client.statuses.postPoll(
                 status = "Do you think this test will pass?",
                 pollOptions = listOf("Yes", "No"),
                 pollExpiresIn = 300
-            ).execute().id
+            ).execute()
 
             // then
-            val retrievedStatus = user1Client.statuses.getStatus(statusId).execute()
-            assertEquals(statusId, retrievedStatus.id)
-            assertEquals("<p>Do you think this test will pass?</p>", retrievedStatus.content)
-            assertEquals(Status.Visibility.Public.value, retrievedStatus.visibility)
-            assertNull(retrievedStatus.inReplyToId)
-            assertEquals(0, retrievedStatus.mediaAttachments.size)
-            assertFalse(retrievedStatus.isSensitive)
-            assertEquals("", retrievedStatus.spoilerText)
-            assertEquals("en", retrievedStatus.language)
+            assertEquals("<p>Do you think this test will pass?</p>", postedPoll.content)
+            assertEquals(Status.Visibility.Public.value, postedPoll.visibility)
+            assertNull(postedPoll.inReplyToId)
+            assertEquals(0, postedPoll.mediaAttachments.size)
+            assertFalse(postedPoll.isSensitive)
+            assertEquals("", postedPoll.spoilerText)
+            assertEquals("en", postedPoll.language)
         }
 
         @Test
@@ -165,7 +162,7 @@ class V410StatusMethodsIntegrationTest {
             val statusId = user1Client.statuses.postStatus(status = "Poll status test").execute().id
 
             // when
-            val pollStatusId = user1Client.statuses.postPoll(
+            val postedPoll = user1Client.statuses.postPoll(
                 status = "Wird dieser Test erfolgreich sein?",
                 pollOptions = listOf("Ja", "Nein"),
                 pollExpiresIn = 300,
@@ -176,18 +173,16 @@ class V410StatusMethodsIntegrationTest {
                 sensitive = true,
                 spoilerText = "Das ist der Spoilertext zur Umfrage",
                 language = "de"
-            ).execute().id
+            ).execute()
 
             // then
-            val retrievedPollStatus = user1Client.statuses.getStatus(pollStatusId).execute()
-            assertEquals(pollStatusId, retrievedPollStatus.id)
-            assertEquals("<p>Wird dieser Test erfolgreich sein?</p>", retrievedPollStatus.content)
-            assertEquals(Status.Visibility.Private.value, retrievedPollStatus.visibility)
-            assertEquals(statusId, retrievedPollStatus.inReplyToId)
-            assertEquals(0, retrievedPollStatus.mediaAttachments.size)
-            assertTrue(retrievedPollStatus.isSensitive)
-            assertEquals("Das ist der Spoilertext zur Umfrage", retrievedPollStatus.spoilerText)
-            assertEquals("de", retrievedPollStatus.language)
+            assertEquals("<p>Wird dieser Test erfolgreich sein?</p>", postedPoll.content)
+            assertEquals(Status.Visibility.Private.value, postedPoll.visibility)
+            assertEquals(statusId, postedPoll.inReplyToId)
+            assertEquals(0, postedPoll.mediaAttachments.size)
+            assertTrue(postedPoll.isSensitive)
+            assertEquals("Das ist der Spoilertext zur Umfrage", postedPoll.spoilerText)
+            assertEquals("de", postedPoll.language)
         }
     }
 
@@ -309,6 +304,302 @@ class V410StatusMethodsIntegrationTest {
             assertEquals("Das ist ein Spoilertext", scheduledPoll.params.spoilerText)
             assertEquals("de", scheduledPoll.params.language)
             assertEquals(true, scheduledPoll.params.poll!!.hideTotals)
+        }
+    }
+
+    @Nested
+    @DisplayName("reblogStatus tests")
+    internal inner class ReblogStatusTests {
+        @Test
+        fun `should reblog status when mandatory params set`() {
+            // given
+            val user1Client = TestHelpers.getTrustAllClient(user1UserToken.accessToken)
+            val user2Client = TestHelpers.getTrustAllClient(user2UserToken.accessToken)
+            val statusId = user1Client.statuses.postStatus(status = "This post will be reblogged soon").execute().id
+
+            // when
+            val rebloggedStatus = user2Client.statuses.reblogStatus(statusId).execute()
+
+            // then
+            assertEquals("<p>This post will be reblogged soon</p>", rebloggedStatus.reblog!!.content)
+            assertEquals(Status.Visibility.Public.value, rebloggedStatus.visibility)
+            assertNull(rebloggedStatus.inReplyToId)
+            assertEquals(0, rebloggedStatus.mediaAttachments.size)
+            assertFalse(rebloggedStatus.isSensitive)
+            assertEquals("", rebloggedStatus.spoilerText)
+            assertNull(rebloggedStatus.language)
+        }
+
+        @Test
+        fun `should reblog status when all params set`() {
+            // given
+            val user1Client = TestHelpers.getTrustAllClient(user1UserToken.accessToken)
+            val user2Client = TestHelpers.getTrustAllClient(user2UserToken.accessToken)
+            val statusId = user1Client.statuses.postStatus(status = "This post will be reblogged soon (all params set)").execute().id
+
+            // when
+            val rebloggedStatus = user2Client.statuses.reblogStatus(
+                statusId = statusId,
+                visibility = Status.Visibility.Private
+            ).execute()
+
+            // then
+            assertEquals("<p>This post will be reblogged soon (all params set)</p>", rebloggedStatus.reblog!!.content)
+            assertEquals(Status.Visibility.Private.value, rebloggedStatus.visibility)
+            assertNull(rebloggedStatus.inReplyToId)
+            assertEquals(0, rebloggedStatus.mediaAttachments.size)
+            assertFalse(rebloggedStatus.isSensitive)
+            assertEquals("", rebloggedStatus.spoilerText)
+            assertNull(rebloggedStatus.language)
+        }
+    }
+
+    @Nested
+    @DisplayName("unreblogStatus tests")
+    internal inner class UnreblogStatusTests {
+        @Test
+        fun `should unreblog status when mandatory params set`() {
+            // given
+            val user1Client = TestHelpers.getTrustAllClient(user1UserToken.accessToken)
+            val user2Client = TestHelpers.getTrustAllClient(user2UserToken.accessToken)
+            val statusId = user1Client.statuses.postStatus(status = "This post will be reblogged soon").execute().id
+            user2Client.statuses.reblogStatus(statusId).execute()
+
+            // when
+            val unrebloggedStatus = user2Client.statuses.unreblogStatus(statusId).execute()
+
+            // then
+            assertFalse(unrebloggedStatus.isReblogged)
+        }
+    }
+
+    @Nested
+    @DisplayName("bookmarkStatus tests")
+    internal inner class BookmarkStatusTests {
+        @Test
+        fun `should bookmark status when all params set`() {
+            // given
+            val user1Client = TestHelpers.getTrustAllClient(user1UserToken.accessToken)
+            val user2Client = TestHelpers.getTrustAllClient(user2UserToken.accessToken)
+            val statusId = user1Client.statuses.postStatus(status = "This post will be bookmarked soon").execute().id
+
+            // when
+            val bookmarkedStatus = user2Client.statuses.bookmarkStatus(statusId).execute()
+
+            // then
+            assertTrue(bookmarkedStatus.isBookmarked)
+        }
+    }
+
+    @Nested
+    @DisplayName("unbookmarkStatus tests")
+    internal inner class UnbookmarkStatusTests {
+        @Test
+        fun `should unbookmark status when all params set`() {
+            // given
+            val user1Client = TestHelpers.getTrustAllClient(user1UserToken.accessToken)
+            val user2Client = TestHelpers.getTrustAllClient(user2UserToken.accessToken)
+            val statusId = user1Client.statuses.postStatus(status = "This post will be bookmarked soon, then unbookmarked").execute().id
+            user2Client.statuses.bookmarkStatus(statusId).execute()
+
+            // when
+            val unbookmarkedStatus = user2Client.statuses.unbookmarkStatus(statusId).execute()
+
+            // then
+            assertFalse(unbookmarkedStatus.isBookmarked)
+        }
+    }
+
+    @Nested
+    @DisplayName("favouriteStatus tests")
+    internal inner class FavouriteStatusTests {
+        @Test
+        fun `should favourite status when all params set`() {
+            // given
+            val user1Client = TestHelpers.getTrustAllClient(user1UserToken.accessToken)
+            val user2Client = TestHelpers.getTrustAllClient(user2UserToken.accessToken)
+            val statusId = user1Client.statuses.postStatus(status = "This post will be favorized soon").execute().id
+
+            // when
+            val favourizedStatus = user2Client.statuses.favouriteStatus(statusId).execute()
+
+            // then
+            assertTrue(favourizedStatus.isFavourited)
+        }
+    }
+
+    @Nested
+    @DisplayName("unfavouriteStatus tests")
+    internal inner class UnfavouriteStatusTests {
+        @Test
+        fun `should unfavourite status when all params set`() {
+            // given
+            val user1Client = TestHelpers.getTrustAllClient(user1UserToken.accessToken)
+            val user2Client = TestHelpers.getTrustAllClient(user2UserToken.accessToken)
+            val statusId = user1Client.statuses.postStatus(status = "This post will be favourited soon, then unfavourited again").execute().id
+            user1Client.statuses.favouriteStatus(statusId).execute()
+
+            // when
+            val unfavouritedStatus = user2Client.statuses.unfavouriteStatus(statusId).execute()
+
+            // then
+            assertFalse(unfavouritedStatus.isFavourited)
+        }
+    }
+
+    @Nested
+    @DisplayName("pinStatus tests")
+    internal inner class PinStatusTests {
+        @Test
+        fun `should pin status when all params set`() {
+            // given
+            val user1Client = TestHelpers.getTrustAllClient(user1UserToken.accessToken)
+            val statusId = user1Client.statuses.postStatus(status = "This post will be pinned soon").execute().id
+            TestHelpers.unpinAllPinnedStatuses(user1Client)
+
+            // when
+            val pinnedStatus = user1Client.statuses.pinStatus(statusId).execute()
+
+            // then
+            assertTrue(pinnedStatus.isPinned!!)
+        }
+    }
+
+    @Nested
+    @DisplayName("unpinStatus tests")
+    internal inner class UnpinStatusTests {
+        @Test
+        fun `should unpin status when all params set`() {
+            // given
+            val user1Client = TestHelpers.getTrustAllClient(user1UserToken.accessToken)
+            val statusId = user1Client.statuses.postStatus(status = "This post will be pinned soon, then unpinned again").execute().id
+            TestHelpers.unpinAllPinnedStatuses(user1Client)
+            user1Client.statuses.pinStatus(statusId).execute()
+
+            // when
+            val unpinnedStatus = user1Client.statuses.unpinStatus(statusId).execute()
+
+            // then
+            assertFalse(unpinnedStatus.isPinned!!)
+        }
+    }
+
+    @Nested
+    @DisplayName("muteConversation tests")
+    internal inner class MuteConversationTests {
+        @Test
+        fun `should mute conversation when all params set`() {
+            // given
+            val user1Client = TestHelpers.getTrustAllClient(user1UserToken.accessToken)
+            val user2Client = TestHelpers.getTrustAllClient(user2UserToken.accessToken)
+            val statusId = user1Client.statuses.postStatus(status = "This conversation will be muted soon").execute().id
+
+            // when
+            val mutedConversation = user2Client.statuses.muteConversation(statusId).execute()
+
+            // then
+            assertTrue(mutedConversation.isMuted)
+        }
+    }
+
+    @Nested
+    @DisplayName("unmuteConversation tests")
+    internal inner class UnmuteConversationTests {
+        @Test
+        fun `should unmute conversation when all params set`() {
+            // given
+            val user1Client = TestHelpers.getTrustAllClient(user1UserToken.accessToken)
+            val user2Client = TestHelpers.getTrustAllClient(user2UserToken.accessToken)
+            val statusId = user1Client.statuses.postStatus(status = "This conversation will be muted soon, then unmuted again").execute().id
+            user2Client.statuses.muteConversation(statusId).execute()
+
+            // when
+            val unmutedConversation = user2Client.statuses.unmuteConversation(statusId).execute()   //.pinStatus(statusId).execute()
+
+            // then
+            assertFalse(unmutedConversation.isMuted)
+        }
+    }
+
+    @Nested
+    @DisplayName("deleteStatus tests")
+    internal inner class DeleteStatusTests {
+        @Test
+        fun `should delete status when all params set`() {
+            // given
+            val user1Client = TestHelpers.getTrustAllClient(user1UserToken.accessToken)
+            val statusId = user1Client.statuses.postStatus(status = "This post will be deleted soon").execute().id
+
+            // when
+            user1Client.statuses.deleteStatus(statusId).execute()
+
+            // then
+            val exception = assertThrows(BigBoneRequestException::class.java) {
+                user1Client.statuses.getStatus(statusId).execute()
+            }
+            assertEquals(404, exception.httpStatusCode)
+        }
+    }
+
+    @Nested
+    @DisplayName("getContext tests")
+    internal inner class GetContextTests {
+        @Test
+        fun `should retrieve context when status id provided`() {
+            // given
+            val user1Client = TestHelpers.getTrustAllClient(user1UserToken.accessToken)
+            val user2Client = TestHelpers.getTrustAllClient(user2UserToken.accessToken)
+            val firstStatus = user1Client.statuses.postStatus(status = "Hello, this is the first post in this thread!").execute()
+            val secondStatus = user2Client.statuses.postStatus(status = "This is the second status in this thread", inReplyToId = firstStatus.id).execute()
+            val thirdStatus = user1Client.statuses.postStatus(status = "This is the third status in this thread", inReplyToId = secondStatus.id).execute()
+            val fourthStatus = user2Client.statuses.postStatus(status = "This is the fourth status in this thread", inReplyToId = thirdStatus.id).execute()
+            user1Client.statuses.postStatus(status = "This is the fifth status in this thread", inReplyToId = fourthStatus.id).execute()
+
+            // when
+            val context = user1Client.statuses.getContext(fourthStatus.id).execute()
+
+            // then
+            assertEquals(3, context.ancestors.size)
+            assertEquals(1, context.descendants.size)
+        }
+    }
+
+    @Nested
+    @DisplayName("getRebloggedBy tests")
+    internal inner class GetRebloggedByTests {
+        @Test
+        fun `should retrieve reblogged count when status id provided`() {
+            // given
+            val user1Client = TestHelpers.getTrustAllClient(user1UserToken.accessToken)
+            val user2Client = TestHelpers.getTrustAllClient(user2UserToken.accessToken)
+            val status = user1Client.statuses.postStatus(status = "Hello, this is something that gets reblogged").execute()
+            user1Client.statuses.reblogStatus(status.id).execute()
+            user2Client.statuses.reblogStatus(status.id).execute()
+
+            // when
+            val accounts = user1Client.statuses.getRebloggedBy(status.id).execute()
+
+            // then
+            assertEquals(2, accounts.part.size)
+        }
+    }
+
+    @Disabled("This test currently fails as no translation service in Mastodon is configured")
+    @Nested
+    @DisplayName("translateStatus tests")
+    internal inner class TranslateStatusTests {
+        @Test
+        fun `should translate status when status id provided`() {
+            // given
+            val user1Client = TestHelpers.getTrustAllClient(user1UserToken.accessToken)
+            val user2Client = TestHelpers.getTrustAllClient(user2UserToken.accessToken)
+            val status = user1Client.statuses.postStatus(status = "Hello, how are you?").execute()
+
+            // when
+            val translation = user2Client.statuses.translateStatus(status.id, "de").execute()
+
+            // then
+            assertEquals("Hallo, wie geht es dir?", translation.content)
         }
     }
 }

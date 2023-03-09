@@ -55,6 +55,14 @@ object TestHelpers {
         ).execute()
     }
 
+    fun unpinAllPinnedStatuses(client: MastodonClient) {
+        val account = client.accounts.verifyCredentials().execute()
+        val pinnedStatuses = client.accounts.getStatuses(account.id, pinned = true).execute()
+        pinnedStatuses.part.forEach {
+            client.statuses.unpinStatus(it.id).execute()
+        }
+    }
+
     fun Instant.toISO8601DateTime(zoneId: ZoneId): String {
         val zonedDateTime = ZonedDateTime.ofInstant(this, zoneId)
         return DateTimeFormatter.ISO_INSTANT.format(zonedDateTime)
