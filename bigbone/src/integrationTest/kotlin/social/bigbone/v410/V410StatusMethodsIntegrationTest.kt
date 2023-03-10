@@ -513,7 +513,7 @@ class V410StatusMethodsIntegrationTest {
             user2Client.statuses.muteConversation(statusId).execute()
 
             // when
-            val unmutedConversation = user2Client.statuses.unmuteConversation(statusId).execute()   //.pinStatus(statusId).execute()
+            val unmutedConversation = user2Client.statuses.unmuteConversation(statusId).execute()
 
             // then
             assertFalse(unmutedConversation.isMuted)
