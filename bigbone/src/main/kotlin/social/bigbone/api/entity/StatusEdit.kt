@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 /**
  * Represents a revision of a status that has been edited.
+ * @see <a href="https://docs.joinmastodon.org/entities/StatusEdit/">Mastodon API StatusEdit</a>
  */
 data class StatusEdit(
     /**
