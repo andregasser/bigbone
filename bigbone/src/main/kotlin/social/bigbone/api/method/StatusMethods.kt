@@ -426,7 +426,8 @@ class StatusMethods(private val client: MastodonClient) {
 
     /**
      * Edit a given status to change its text, sensitivity, media attachments. Use [getStatus] and/or [getStatusSource]
-     * to get previous status data to use in this update.
+     * to get previous status data to use in this update. Editing a status containing a poll using this method will
+     * remove the poll - use [editPoll] instead!
      * @param statusId the ID of the Status in the database
      * @param status the plain text content of the status
      * @param mediaIds the array of media ids to attach to the status (maximum 4)
@@ -459,15 +460,15 @@ class StatusMethods(private val client: MastodonClient) {
     }
 
     /**
-     * Edit a given status to change its text, sensitivity, or poll. Note that editing a poll’s options will reset the votes.
-     * Use [editStatus] on a status containing a poll instead to not edit its poll options. Use [getStatus] and/or
-     * [getStatusSource] to get previous status data to use in this update.
+     * Edit a given status containing a poll to change its text, sensitivity, or poll. Use [getStatus] and/or
+     * [getStatusSource] to get previous status data to use in this update, including all necessary poll data that
+     * should not be changed. Note that changing a poll’s options will reset the votes.
      * @param statusId the ID of the Status in the database
      * @param status the plain text content of the status
      * @param pollOptions Possible answers to the poll.
      * @param pollExpiresIn Duration that the poll should be open, in seconds.
-     * @param pollMultiple Allow multiple choices? Defaults to false.
-     * @param pollHideTotals Hide vote counts until the poll ends? Defaults to false.
+     * @param pollMultiple Allow multiple choices?
+     * @param pollHideTotals Hide vote counts until the poll ends?
      * @param sensitive whether the status should be marked as sensitive
      * @param spoilerText the plain text subject or content warning of the status
      * @param language ISO 639 language code for this status.
@@ -480,8 +481,8 @@ class StatusMethods(private val client: MastodonClient) {
         status: String,
         pollOptions: List<String>,
         pollExpiresIn: Int,
-        pollMultiple: Boolean = false,
-        pollHideTotals: Boolean = false,
+        pollMultiple: Boolean,
+        pollHideTotals: Boolean,
         sensitive: Boolean = false,
         spoilerText: String? = null,
         language: String? = null
@@ -494,7 +495,7 @@ class StatusMethods(private val client: MastodonClient) {
                 append("poll[options]", pollOptions)
                 append("poll[expires_in]", pollExpiresIn)
                 append("poll[multiple]", pollMultiple)
-                append("poll[hide_totals", pollHideTotals)
+                append("poll[hide_totals]", pollHideTotals)
                 append("sensitive", sensitive)
                 spoilerText?.let { append("spoiler_text", it) }
                 language?.let { append("language", it) }

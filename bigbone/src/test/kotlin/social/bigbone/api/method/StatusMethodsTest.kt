@@ -465,6 +465,8 @@ class StatusMethodsTest {
             status = "a",
             pollOptions = pollOptions,
             pollExpiresIn = 3600,
+            pollMultiple = false,
+            pollHideTotals = false,
             language = "en"
         ).execute()
         status.poll?.id shouldBeEqualTo "34830"
@@ -483,7 +485,9 @@ class StatusMethodsTest {
                 statusId = "statusId",
                 status = "a",
                 pollOptions = pollOptions,
-                pollExpiresIn = 3600
+                pollExpiresIn = 3600,
+                pollMultiple = false,
+                pollHideTotals = false
             ).execute()
         }
     }
