@@ -588,6 +588,34 @@ class V410StatusMethodsIntegrationTest {
             assertEquals("Das ist der Spoilertext", editedStatus.spoilerText)
             assertEquals("de", editedStatus.language)
         }
+
+        @Test
+        fun `should not reset poll if status is edited`() {
+            // given
+            val user1Client = TestHelpers.getTrustAllClient(user1UserToken.accessToken)
+            val statusId = user1Client.statuses.postPoll(
+                status = "Do you think this test will pass?",
+                pollOptions = listOf("Yes", "No"),
+                pollExpiresIn = 300
+            ).execute().id
+
+            // when
+            val editedPoll = user1Client.statuses.editStatus(
+                statusId = statusId,
+                status = "Do you really think this test will pass?",
+            ).execute()
+
+            val editedPoll2 = user1Client.statuses.getStatus(statusId).execute()
+
+            // then
+            assertEquals("<p>Do you really think this test will pass?</p>", editedPoll2.content)
+            assertIterableEquals(listOf("Yes", "No"), editedPoll2.poll!!.options.stream().map { it.title }.collect(Collectors.toList()))
+            assertEquals(Status.Visibility.Public.value, editedPoll2.visibility)
+            assertEquals(0, editedPoll2.mediaAttachments.size)
+            assertFalse(editedPoll2.isSensitive)
+            assertEquals("", editedPoll2.spoilerText)
+            assertEquals("en", editedPoll2.language)
+        }
     }
 
     @Nested
