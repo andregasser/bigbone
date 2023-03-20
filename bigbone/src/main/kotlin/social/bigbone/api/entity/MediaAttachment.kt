@@ -41,14 +41,28 @@ data class MediaAttachment(
      * A shorter URL for the attachment.
      */
     @SerializedName("text_url")
-    val textUrl: String? = null
+    val textUrl: String? = null,
+
+    /**
+     * Alternate text that describes what is in the media attachment, to be used for the visually impaired or when media attachments do not load.
+     */
+    @SerializedName("description")
+    val description: String? = null,
+
+    /**
+     * A hash computed by the BlurHash algorithm, for generating colorful preview thumbnails when media has not been downloaded yet.
+     */
+    @SerializedName("blurhash")
+    val blurhash: String? = null
 ) {
     /**
      * The available media types.
      */
     enum class Type(val value: String) {
+        Audio("audio"),
         Image("image"),
         Video("video"),
-        Gifv("gifv")
+        Gifv("gifv"),
+        Unknown("unknown")
     }
 }
