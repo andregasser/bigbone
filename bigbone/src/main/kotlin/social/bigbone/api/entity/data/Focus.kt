@@ -14,4 +14,4 @@ data class Focus(
     val y: Float
 )
 
-fun Focus.asString():String = "$x, $y"
+fun Focus.asString(): String = "$x, $y"
