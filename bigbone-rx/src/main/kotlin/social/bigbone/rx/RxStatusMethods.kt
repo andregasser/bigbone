@@ -11,6 +11,7 @@ import social.bigbone.api.entity.Status
 import social.bigbone.api.entity.StatusEdit
 import social.bigbone.api.entity.StatusSource
 import social.bigbone.api.entity.Translation
+import social.bigbone.api.entity.data.Poll
 import social.bigbone.api.method.StatusMethods
 
 /**
@@ -102,11 +103,8 @@ class RxStatusMethods(client: MastodonClient) {
     @JvmOverloads
     fun postPoll(
         status: String,
-        pollOptions: List<String>,
-        pollExpiresIn: Int,
+        poll: Poll,
         visibility: Status.Visibility = Status.Visibility.Public,
-        pollMultiple: Boolean = false,
-        pollHideTotals: Boolean = false,
         inReplyToId: String? = null,
         sensitive: Boolean = false,
         spoilerText: String? = null,
@@ -116,11 +114,8 @@ class RxStatusMethods(client: MastodonClient) {
             try {
                 val result = statusMethods.postPoll(
                     status,
-                    pollOptions,
-                    pollExpiresIn,
+                    poll,
                     visibility,
-                    pollMultiple,
-                    pollHideTotals,
                     inReplyToId,
                     sensitive,
                     spoilerText,
@@ -158,11 +153,8 @@ class RxStatusMethods(client: MastodonClient) {
     fun schedulePoll(
         status: String,
         scheduledAt: String,
-        pollOptions: List<String>,
-        pollExpiresIn: Int,
+        poll: Poll,
         visibility: Status.Visibility = Status.Visibility.Public,
-        pollMultiple: Boolean = false,
-        pollHideTotals: Boolean = false,
         inReplyToId: String? = null,
         sensitive: Boolean = false,
         spoilerText: String? = null,
@@ -173,11 +165,8 @@ class RxStatusMethods(client: MastodonClient) {
                 val result = statusMethods.schedulePoll(
                     status,
                     scheduledAt,
-                    pollOptions,
-                    pollExpiresIn,
+                    poll,
                     visibility,
-                    pollMultiple,
-                    pollHideTotals,
                     inReplyToId,
                     sensitive,
                     spoilerText,
@@ -335,10 +324,7 @@ class RxStatusMethods(client: MastodonClient) {
     fun editPoll(
         statusId: String,
         status: String,
-        pollOptions: List<String>,
-        pollExpiresIn: Int,
-        pollMultiple: Boolean = false,
-        pollHideTotals: Boolean = false,
+        poll: Poll,
         sensitive: Boolean = false,
         spoilerText: String? = null,
         language: String? = null
@@ -348,10 +334,7 @@ class RxStatusMethods(client: MastodonClient) {
                 val statusEdit = statusMethods.editPoll(
                     statusId,
                     status,
-                    pollOptions,
-                    pollExpiresIn,
-                    pollMultiple,
-                    pollHideTotals,
+                    poll,
                     sensitive,
                     spoilerText,
                     language

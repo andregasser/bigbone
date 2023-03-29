@@ -22,6 +22,7 @@ import social.bigbone.TestHelpers
 import social.bigbone.TestHelpers.toISO8601DateTime
 import social.bigbone.api.entity.Status
 import social.bigbone.api.entity.Token
+import social.bigbone.api.entity.data.Poll
 import social.bigbone.api.exception.BigBoneRequestException
 import java.time.Instant
 import java.time.ZoneId
@@ -140,8 +141,10 @@ class V410StatusMethodsIntegrationTest {
             // when
             val postedPoll = user1Client.statuses.postPoll(
                 status = "Do you think this test will pass?",
-                pollOptions = listOf("Yes", "No"),
-                pollExpiresIn = 300
+                poll = Poll(
+                    options = listOf("Yes", "No"),
+                    expiresIn = "300"
+                )
             ).execute()
 
             // then
@@ -163,11 +166,13 @@ class V410StatusMethodsIntegrationTest {
             // when
             val postedPoll = user1Client.statuses.postPoll(
                 status = "Wird dieser Test erfolgreich sein?",
-                pollOptions = listOf("Ja", "Nein"),
-                pollExpiresIn = 300,
+                poll = Poll(
+                    options = listOf("Ja", "Nein"),
+                    expiresIn = "300",
+                    multiple = true,
+                    hideTotals = true,
+                ),
                 visibility = Status.Visibility.Private,
-                pollMultiple = true,
-                pollHideTotals = true,
                 inReplyToId = statusId,
                 sensitive = true,
                 spoilerText = "Das ist der Spoilertext zur Umfrage",
@@ -255,8 +260,10 @@ class V410StatusMethodsIntegrationTest {
             val scheduledPoll = user1Client.statuses.schedulePoll(
                 status = "Will this poll be posted at $inSixMinutes?",
                 scheduledAt = inSixMinutes,
-                pollOptions = listOf("Yes", "No"),
-                pollExpiresIn = 300
+                poll = Poll (
+                    options = listOf("Yes", "No"),
+                    expiresIn = "300"
+                ),
             ).execute()
 
             // then
@@ -280,15 +287,17 @@ class V410StatusMethodsIntegrationTest {
             val scheduledPoll = user1Client.statuses.schedulePoll(
                 status = "Wird diese Umfrage um $inSixMinutes gepostet?",
                 scheduledAt = inSixMinutes,
-                pollOptions = listOf("Yes", "No"),
-                pollExpiresIn = 300,
+                poll = Poll(
+                    options = listOf("Yes", "No"),
+                    expiresIn = "300",
+                    multiple = true,
+                    hideTotals = true
+                ),
                 visibility = Status.Visibility.Private,
-                pollMultiple = true,
                 inReplyToId = statusId,
                 sensitive = true,
                 spoilerText = "Das ist ein Spoilertext",
-                language = "de",
-                pollHideTotals = true
+                language = "de"
             ).execute()
 
             // then

@@ -4,6 +4,7 @@ import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import social.bigbone.api.entity.Status
+import social.bigbone.api.entity.data.Poll
 import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.testtool.MockClient
 
@@ -139,11 +140,13 @@ class StatusMethodsTest {
     fun postPoll() {
         val client = MockClient.mock("status_with_poll.json")
         val statusMethods = StatusMethods(client)
-        val pollOptions = listOf("foo", "bar", "baz")
+        val pollData = Poll(
+            options = listOf("foo", "bar", "baz"),
+            expiresIn = "3600"
+        )
         val status = statusMethods.postPoll(
             status = "a",
-            pollOptions = pollOptions,
-            pollExpiresIn = 3600,
+            poll = pollData,
             visibility = Status.Visibility.Unlisted,
             language = "en"
         ).execute()
@@ -158,11 +161,13 @@ class StatusMethodsTest {
         Assertions.assertThrows(BigBoneRequestException::class.java) {
             val client = MockClient.ioException()
             val statusMethods = StatusMethods(client)
-            val pollOptions = listOf("foo", "bar", "baz")
+            val pollData = Poll(
+                options = listOf("foo", "bar", "baz"),
+                expiresIn = "3600"
+            )
             statusMethods.postPoll(
                 status = "a",
-                pollOptions = pollOptions,
-                pollExpiresIn = 3600,
+                poll = pollData,
                 visibility = Status.Visibility.Unlisted,
                 language = "en"
             ).execute()
@@ -210,14 +215,17 @@ class StatusMethodsTest {
     fun schedulePoll() {
         val client = MockClient.mock("scheduled_status_with_poll.json")
         val statusMethods = StatusMethods(client)
+        val pollData = Poll(
+            options = listOf("foo", "bar", "baz"),
+            expiresIn = "3600",
+            multiple = true,
+            hideTotals = false
+        )
         val scheduledStatus = statusMethods.schedulePoll(
             status = "a",
             scheduledAt = "2023-12-31T12:34:56.789Z",
-            pollOptions = listOf("foo", "bar", "baz"),
-            pollExpiresIn = 3600,
+            poll = pollData,
             visibility = Status.Visibility.Unlisted,
-            pollMultiple = true,
-            pollHideTotals = false,
             inReplyToId = null,
             sensitive = false,
             spoilerText = null,
@@ -233,15 +241,18 @@ class StatusMethodsTest {
     fun schedulePollWithException() {
         Assertions.assertThrows(BigBoneRequestException::class.java) {
             val client = MockClient.ioException()
+            val pollData = Poll(
+                options = listOf("foo", "bar", "baz"),
+                expiresIn = "3600",
+                multiple = true,
+                hideTotals = false
+            )
             val statusMethods = StatusMethods(client)
             statusMethods.schedulePoll(
                 status = "a",
                 scheduledAt = "2023-12-31T12:34:56.789Z",
-                pollOptions = listOf("foo", "bar", "baz"),
-                pollExpiresIn = 3600,
+                poll = pollData,
                 visibility = Status.Visibility.Unlisted,
-                pollMultiple = true,
-                pollHideTotals = false,
                 inReplyToId = null,
                 sensitive = false,
                 spoilerText = null,
@@ -459,14 +470,16 @@ class StatusMethodsTest {
     fun editPoll() {
         val client = MockClient.mock("status_with_poll.json")
         val statusMethods = StatusMethods(client)
-        val pollOptions = listOf("foo", "bar", "baz")
+        val pollData = Poll(
+            options = listOf("foo", "bar", "baz"),
+            expiresIn = "3600",
+            multiple = false,
+            hideTotals = false
+        )
         val status = statusMethods.editPoll(
             statusId = "statusId",
             status = "a",
-            pollOptions = pollOptions,
-            pollExpiresIn = 3600,
-            pollMultiple = false,
-            pollHideTotals = false,
+            poll = pollData,
             language = "en"
         ).execute()
         status.poll?.id shouldBeEqualTo "34830"
@@ -480,14 +493,16 @@ class StatusMethodsTest {
         Assertions.assertThrows(BigBoneRequestException::class.java) {
             val client = MockClient.ioException()
             val statusMethods = StatusMethods(client)
-            val pollOptions = listOf("foo", "bar", "baz")
+            val pollData = Poll(
+                options = listOf("foo", "bar", "baz"),
+                expiresIn = "3600",
+                multiple = false,
+                hideTotals = false
+            )
             statusMethods.editPoll(
                 statusId = "statusId",
                 status = "a",
-                pollOptions = pollOptions,
-                pollExpiresIn = 3600,
-                pollMultiple = false,
-                pollHideTotals = false
+                poll = pollData
             ).execute()
         }
     }
