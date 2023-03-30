@@ -9,11 +9,12 @@
 # Why BigBone
 
 BigBone is a fork of [Mastodon4J](https://github.com/sys1yagi/mastodon4j), a Mastodon client library for Java and Kotlin that was published by Toshihiro Yagi. 
-The goal of Mastodon4J was to provide an easy-to-use library for interacting with the Mastodon social media network from Java and Kotlin code. Unfortunately, 
-it became abandoned and has not seen any updates since 2018. Since Elon Musk's Twitter acquisition in 2022, Mastodon has gained tremendous popularity. A project
-that is so well received by the community deserves to have up-to-date client libraries. I have therefore decided to jump in and am now maintaining the BigBone 
-client library since mid-November 2022 as an alternative to Mastodon4J. I hope that this library will help other developers to build cool stuff for the 
-Mastodon community.
+The goal of Mastodon4J was to provide an easy-to-use library for interacting with the [Mastodon social media network](https://joinmastodon.org/) from Java and 
+Kotlin code. Unfortunately, it became abandoned and has not seen any updates since 2018. 
+
+Since Elon Musk's Twitter acquisition in 2022, Mastodon has gained tremendous popularity. A project that is so well received by the community deserves to have 
+up-to-date and maintained client libraries. Back in November 2022, I took the decision to bring the Mastodon4J project back to life. That's when this project,
+the BigBone client library for Java and Kotlin, was born. May it serve you well in your Mastodon-related endeavours!
 
 The name **BigBone** has mostly symbolic character. I have chosen the name BigBone for this library because Mastodons represent impressive animals from the 
 Pleistocene, built of big and heavy bones. At the same time, we hope this library will build some sort of "skeleton" for your Mastodon-related projects. 
@@ -23,18 +24,16 @@ American Mastodons have been excavated.
 # Core Functionality
 
 With a library like BigBone, you can for example build tools which
-- act on status updates on your timelines (home, local, federated).
-- post, reblog and favourite statuses
-- plus lots of other stuff
+- act on statuses on your timelines (home, local, federated).
+- create, boost and favourite statuses and polls
+- schedule statuses
+- plus lots of other stuff!
 
 # Implementation Status
 
 **I did not release an official version on Maven Central yet**, but there's already a `2.0.0-SNAPSHOT` that you can use to play around / experiment with. 
-Just please be aware that, although it is a SNAPSHOT version, it is still in an early stage and there are for sure dark places in the library, where stuff will
-not work as expected. If you find issues, please file an issue in the [Issues](https://github.com/andregasser/bigbone/issues) section.  
-
-I really hope to get out an initial 2.0.0 version very soon (hopefully January 2023) to have something out there that is maintained and can be used by other 
-developers.
+Just please be aware that with every new snapshot version, there can be breaking changes along the lines. I am sure that there will be "dark places" in the 
+library, where stuff will not work as expected. If you find issues, please file an issue in the [Issues](https://github.com/andregasser/bigbone/issues) section.  
 
 BigBone does not yet implement the full API of Mastodon. Actually, there is still **a lot to do**. Our main goal for the 2.0.0 release is to get something out 
 that is in a maintained state and on a solid basis, technology-wise. In future releases, focus will be put on extending the existing API coverage. 
@@ -144,6 +143,10 @@ The following people have actively contributed to the development of BigBone:
 
 - [Andreas](https://fosstodon.org/@bocops) - For actively contributing to the whole library project - thanks!
 - [Cédric Champeau](https://mastodon.xyz/@melix) - For putting the Gradle build scripts in great shape again
+
+# BigBone Users
+
+Are you using this library in your project? If so, let me know and I will happily feature your project in this section here.
 
 # Contribution
 

@@ -9,6 +9,8 @@ import social.bigbone.api.entity.Account
 import social.bigbone.api.entity.Context
 import social.bigbone.api.entity.ScheduledStatus
 import social.bigbone.api.entity.Status
+import social.bigbone.api.entity.StatusEdit
+import social.bigbone.api.entity.StatusSource
 import social.bigbone.api.entity.Translation
 import social.bigbone.api.exception.BigBoneRequestException
 
@@ -419,6 +421,110 @@ class StatusMethods(private val client: MastodonClient) {
         return client.getMastodonRequest(
             endpoint = "api/v1/statuses/$statusId/unpin",
             method = MastodonClient.Method.POST
+        )
+    }
+
+    /**
+     * Edit a given status to change its text, sensitivity, media attachments. Use [getStatus] and/or [getStatusSource]
+     * to get previous status data to use in this update.
+     * @param statusId the ID of the Status in the database
+     * @param status the plain text content of the status
+     * @param mediaIds the array of media ids to attach to the status (maximum 4)
+     * @param sensitive whether the status should be marked as sensitive
+     * @param spoilerText the plain text subject or content warning of the status
+     * @param language ISO 639 language code for the status
+     * @see <a href="https://docs.joinmastodon.org/methods/statuses/#edit">Mastodon API documentation: methods/statuses/#edit</a>
+     */
+    @JvmOverloads
+    @Throws(BigBoneRequestException::class)
+    fun editStatus(
+        statusId: String,
+        status: String,
+        mediaIds: List<String>? = null,
+        sensitive: Boolean = false,
+        spoilerText: String? = null,
+        language: String? = null
+    ): MastodonRequest<Status> {
+        return client.getMastodonRequest(
+            endpoint = "api/v1/statuses/$statusId",
+            method = MastodonClient.Method.PUT,
+            parameters = Parameters().apply {
+                append("status", status)
+                mediaIds?.let { append("media_ids", it) }
+                append("sensitive", sensitive)
+                spoilerText?.let { append("spoiler_text", it) }
+                language?.let { append("language", it) }
+            }
+        )
+    }
+
+    /**
+     * Edit a given status to change its text, sensitivity, or poll. Note that editing a poll’s options will reset the votes.
+     * Use [editStatus] on a status containing a poll instead to not edit its poll options. Use [getStatus] and/or
+     * [getStatusSource] to get previous status data to use in this update.
+     * @param statusId the ID of the Status in the database
+     * @param status the plain text content of the status
+     * @param pollOptions Possible answers to the poll.
+     * @param pollExpiresIn Duration that the poll should be open, in seconds.
+     * @param pollMultiple Allow multiple choices? Defaults to false.
+     * @param pollHideTotals Hide vote counts until the poll ends? Defaults to false.
+     * @param sensitive whether the status should be marked as sensitive
+     * @param spoilerText the plain text subject or content warning of the status
+     * @param language ISO 639 language code for this status.
+     * @see <a href="https://docs.joinmastodon.org/methods/statuses/#edit">Mastodon API documentation: methods/statuses/#edit</a>
+     */
+    @JvmOverloads
+    @Throws(BigBoneRequestException::class)
+    fun editPoll(
+        statusId: String,
+        status: String,
+        pollOptions: List<String>,
+        pollExpiresIn: Int,
+        pollMultiple: Boolean = false,
+        pollHideTotals: Boolean = false,
+        sensitive: Boolean = false,
+        spoilerText: String? = null,
+        language: String? = null
+    ): MastodonRequest<Status> {
+        return client.getMastodonRequest(
+            endpoint = "api/v1/statuses/$statusId",
+            method = MastodonClient.Method.PUT,
+            parameters = Parameters().apply {
+                append("status", status)
+                append("poll[options]", pollOptions)
+                append("poll[expires_in]", pollExpiresIn)
+                append("poll[multiple]", pollMultiple)
+                append("poll[hide_totals", pollHideTotals)
+                append("sensitive", sensitive)
+                spoilerText?.let { append("spoiler_text", it) }
+                language?.let { append("language", it) }
+            }
+        )
+    }
+
+    /**
+     * Get all known versions of a status, including the initial and current states.
+     * @param statusId The local ID of the Status in the database.
+     * @see <a href="https://docs.joinmastodon.org/methods/statuses/#history">Mastodon API documentation: methods/statuses/#history</a>
+     */
+    @Throws(BigBoneRequestException::class)
+    fun getEditHistory(statusId: String): MastodonRequest<List<StatusEdit>> {
+        return client.getMastodonRequestForList(
+            endpoint = "api/v1/statuses/$statusId/history",
+            method = MastodonClient.Method.GET
+        )
+    }
+
+    /**
+     * Obtain the source properties for a status so that it can be edited.
+     * @param statusId The local ID of the Status in the database.
+     * @see <a href="https://docs.joinmastodon.org/methods/statuses/#source">Mastodon API documentation: methods/statuses/#source</a>
+     */
+    @Throws(BigBoneRequestException::class)
+    fun getStatusSource(statusId: String): MastodonRequest<StatusSource> {
+        return client.getMastodonRequest(
+            endpoint = "api/v1/statuses/$statusId/source",
+            method = MastodonClient.Method.GET
         )
     }
 }
