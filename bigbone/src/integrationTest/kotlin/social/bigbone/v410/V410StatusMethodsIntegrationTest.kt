@@ -22,7 +22,7 @@ import social.bigbone.TestHelpers
 import social.bigbone.TestHelpers.toISO8601DateTime
 import social.bigbone.api.entity.Status
 import social.bigbone.api.entity.Token
-import social.bigbone.api.entity.data.Poll
+import social.bigbone.api.entity.data.PollData
 import social.bigbone.api.exception.BigBoneRequestException
 import java.time.Instant
 import java.time.ZoneId
@@ -141,7 +141,7 @@ class V410StatusMethodsIntegrationTest {
             // when
             val postedPoll = user1Client.statuses.postPoll(
                 status = "Do you think this test will pass?",
-                poll = Poll(
+                pollData = PollData(
                     options = listOf("Yes", "No"),
                     expiresIn = "300"
                 )
@@ -166,7 +166,7 @@ class V410StatusMethodsIntegrationTest {
             // when
             val postedPoll = user1Client.statuses.postPoll(
                 status = "Wird dieser Test erfolgreich sein?",
-                poll = Poll(
+                pollData = PollData(
                     options = listOf("Ja", "Nein"),
                     expiresIn = "300",
                     multiple = true,
@@ -260,7 +260,7 @@ class V410StatusMethodsIntegrationTest {
             val scheduledPoll = user1Client.statuses.schedulePoll(
                 status = "Will this poll be posted at $inSixMinutes?",
                 scheduledAt = inSixMinutes,
-                poll = Poll (
+                pollData = PollData (
                     options = listOf("Yes", "No"),
                     expiresIn = "300"
                 ),
@@ -287,7 +287,7 @@ class V410StatusMethodsIntegrationTest {
             val scheduledPoll = user1Client.statuses.schedulePoll(
                 status = "Wird diese Umfrage um $inSixMinutes gepostet?",
                 scheduledAt = inSixMinutes,
-                poll = Poll(
+                pollData = PollData(
                     options = listOf("Yes", "No"),
                     expiresIn = "300",
                     multiple = true,

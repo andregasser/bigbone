@@ -12,7 +12,7 @@ import social.bigbone.api.entity.Status
 import social.bigbone.api.entity.StatusEdit
 import social.bigbone.api.entity.StatusSource
 import social.bigbone.api.entity.Translation
-import social.bigbone.api.entity.data.Poll
+import social.bigbone.api.entity.data.PollData
 import social.bigbone.api.exception.BigBoneRequestException
 
 /**
@@ -138,7 +138,7 @@ class StatusMethods(private val client: MastodonClient) {
     /**
      * Publish a status containing a poll with the given parameters. To schedule a poll status, use [schedulePoll].
      * @param status the text of the status
-     * @param poll containing all necessary poll data
+     * @param pollData containing all necessary poll data
      * @param visibility either "direct", "private", "unlisted" or "public"
      * @param inReplyToId the local id of the status you want to reply to
      * @param sensitive set this to mark the media of the status as NSFW
@@ -150,7 +150,7 @@ class StatusMethods(private val client: MastodonClient) {
     @Throws(BigBoneRequestException::class)
     fun postPoll(
         status: String,
-        poll: Poll,
+        pollData: PollData,
         visibility: Status.Visibility = Status.Visibility.Public,
         inReplyToId: String? = null,
         sensitive: Boolean = false,
@@ -162,11 +162,11 @@ class StatusMethods(private val client: MastodonClient) {
             method = MastodonClient.Method.POST,
             parameters = Parameters().apply {
                 append("status", status)
-                append("poll[options]", poll.options)
-                append("poll[expires_in]", poll.expiresIn)
+                append("poll[options]", pollData.options)
+                append("poll[expires_in]", pollData.expiresIn)
                 append("visibility", visibility.value)
-                append("poll[multiple]", poll.multiple ?: false)
-                append("poll[hide_totals", poll.hideTotals ?: false)
+                append("poll[multiple]", pollData.multiple ?: false)
+                append("poll[hide_totals", pollData.hideTotals ?: false)
                 inReplyToId?.let { append("in_reply_to_id", it) }
                 append("sensitive", sensitive)
                 spoilerText?.let { append("spoiler_text", it) }
@@ -220,7 +220,7 @@ class StatusMethods(private val client: MastodonClient) {
      * Schedule a status containing a poll with the given parameters. To post immediately, use [postPoll].
      * @param status the text of the status
      * @param scheduledAt ISO 8601 Datetime at which to schedule a status. Must be at least 5 minutes in the future.
-     * @param poll containing all necessary poll data
+     * @param pollData containing all necessary poll data
      * @param visibility either "direct", "private", "unlisted" or "public"
      * @param inReplyToId the local id of the status you want to reply to
      * @param sensitive set this to mark the media of the status as NSFW
@@ -233,7 +233,7 @@ class StatusMethods(private val client: MastodonClient) {
     fun schedulePoll(
         status: String,
         scheduledAt: String,
-        poll: Poll,
+        pollData: PollData,
         visibility: Status.Visibility = Status.Visibility.Public,
         inReplyToId: String? = null,
         sensitive: Boolean = false,
@@ -246,11 +246,11 @@ class StatusMethods(private val client: MastodonClient) {
             parameters = Parameters().apply {
                 append("status", status)
                 append("scheduled_at", scheduledAt)
-                append("poll[options]", poll.options)
-                append("poll[expires_in]", poll.expiresIn)
+                append("poll[options]", pollData.options)
+                append("poll[expires_in]", pollData.expiresIn)
                 append("visibility", visibility.value)
-                append("poll[multiple]", poll.multiple ?: false)
-                append("poll[hide_totals]", poll.multiple ?: false)
+                append("poll[multiple]", pollData.multiple ?: false)
+                append("poll[hide_totals]", pollData.multiple ?: false)
                 inReplyToId?.let { append("in_reply_to_id", it) }
                 append("sensitive", sensitive)
                 spoilerText?.let { append("spoiler_text", it) }
@@ -454,7 +454,7 @@ class StatusMethods(private val client: MastodonClient) {
      * should not be changed. Note that changing a poll’s options will reset the votes.
      * @param statusId the ID of the Status in the database
      * @param status the plain text content of the status
-     * @param poll containing all necessary poll data
+     * @param pollData containing all necessary poll data
      * @param sensitive whether the status should be marked as sensitive
      * @param spoilerText the plain text subject or content warning of the status
      * @param language ISO 639 language code for this status.
@@ -465,7 +465,7 @@ class StatusMethods(private val client: MastodonClient) {
     fun editPoll(
         statusId: String,
         status: String,
-        poll: Poll,
+        pollData: PollData,
         sensitive: Boolean = false,
         spoilerText: String? = null,
         language: String? = null
@@ -475,10 +475,10 @@ class StatusMethods(private val client: MastodonClient) {
             method = MastodonClient.Method.PUT,
             parameters = Parameters().apply {
                 append("status", status)
-                append("poll[options]", poll.options)
-                append("poll[expires_in]", poll.expiresIn)
-                append("poll[multiple]", poll.multiple ?: false)
-                append("poll[hide_totals]", poll.hideTotals ?: false)
+                append("poll[options]", pollData.options)
+                append("poll[expires_in]", pollData.expiresIn)
+                append("poll[multiple]", pollData.multiple ?: false)
+                append("poll[hide_totals]", pollData.hideTotals ?: false)
                 append("sensitive", sensitive)
                 spoilerText?.let { append("spoiler_text", it) }
                 language?.let { append("language", it) }

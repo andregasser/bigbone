@@ -11,7 +11,7 @@ import social.bigbone.api.entity.Status
 import social.bigbone.api.entity.StatusEdit
 import social.bigbone.api.entity.StatusSource
 import social.bigbone.api.entity.Translation
-import social.bigbone.api.entity.data.Poll
+import social.bigbone.api.entity.data.PollData
 import social.bigbone.api.method.StatusMethods
 
 /**
@@ -103,7 +103,7 @@ class RxStatusMethods(client: MastodonClient) {
     @JvmOverloads
     fun postPoll(
         status: String,
-        poll: Poll,
+        pollData: PollData,
         visibility: Status.Visibility = Status.Visibility.Public,
         inReplyToId: String? = null,
         sensitive: Boolean = false,
@@ -114,7 +114,7 @@ class RxStatusMethods(client: MastodonClient) {
             try {
                 val result = statusMethods.postPoll(
                     status,
-                    poll,
+                    pollData,
                     visibility,
                     inReplyToId,
                     sensitive,
@@ -153,7 +153,7 @@ class RxStatusMethods(client: MastodonClient) {
     fun schedulePoll(
         status: String,
         scheduledAt: String,
-        poll: Poll,
+        pollData: PollData,
         visibility: Status.Visibility = Status.Visibility.Public,
         inReplyToId: String? = null,
         sensitive: Boolean = false,
@@ -165,7 +165,7 @@ class RxStatusMethods(client: MastodonClient) {
                 val result = statusMethods.schedulePoll(
                     status,
                     scheduledAt,
-                    poll,
+                    pollData,
                     visibility,
                     inReplyToId,
                     sensitive,
@@ -324,7 +324,7 @@ class RxStatusMethods(client: MastodonClient) {
     fun editPoll(
         statusId: String,
         status: String,
-        poll: Poll,
+        pollData: PollData,
         sensitive: Boolean = false,
         spoilerText: String? = null,
         language: String? = null
@@ -334,7 +334,7 @@ class RxStatusMethods(client: MastodonClient) {
                 val statusEdit = statusMethods.editPoll(
                     statusId,
                     status,
-                    poll,
+                    pollData,
                     sensitive,
                     spoilerText,
                     language

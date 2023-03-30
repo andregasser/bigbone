@@ -1,6 +1,7 @@
 package social.bigbone.api.entity
 
 import com.google.gson.annotations.SerializedName
+import social.bigbone.api.entity.data.PollData
 
 /**
  * Represents a status that will be published at a future scheduled date.
@@ -46,7 +47,7 @@ data class ScheduledStatus(
          * Poll to be attached to the status.
          */
         @SerializedName("poll")
-        val poll: social.bigbone.api.entity.data.Poll? = null,
+        val poll: PollData? = null,
 
         /**
          * IDs of the MediaAttachments that will be attached to the status.
