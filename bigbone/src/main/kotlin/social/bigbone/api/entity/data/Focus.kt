@@ -12,6 +12,6 @@ data class Focus(
 
     @SerializedName("y")
     val y: Float
-)
-
-fun Focus.asString(): String = "$x, $y"
+) {
+    override fun toString(): String = "$x, $y"
+}
