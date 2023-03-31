@@ -27,6 +27,7 @@ import social.bigbone.api.method.ReportMethods
 import social.bigbone.api.method.SearchMethods
 import social.bigbone.api.method.StatusMethods
 import social.bigbone.api.method.StreamingMethods
+import social.bigbone.api.method.TagMethods
 import social.bigbone.api.method.TimelineMethods
 import social.bigbone.extension.emptyRequestBody
 import java.io.IOException
@@ -157,6 +158,13 @@ private constructor(
     @Suppress("unused") // public API
     @get:JvmName("streaming")
     val streaming: StreamingMethods by lazy { StreamingMethods(this) }
+
+    /**
+     * Access API methods under "api/vX/tags" endpoint.
+     */
+    @Suppress("unused") // public API
+    @get:JvmName("tags")
+    val tags: TagMethods by lazy { TagMethods(this) }
 
     /**
      * Access API methods under "api/vX/timelines" endpoint.
