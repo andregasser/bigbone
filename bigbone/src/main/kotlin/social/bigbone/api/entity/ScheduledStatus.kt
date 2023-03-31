@@ -1,6 +1,7 @@
 package social.bigbone.api.entity
 
 import com.google.gson.annotations.SerializedName
+import social.bigbone.api.entity.data.PollData
 
 /**
  * Represents a status that will be published at a future scheduled date.
@@ -46,7 +47,7 @@ data class ScheduledStatus(
          * Poll to be attached to the status.
          */
         @SerializedName("poll")
-        val poll: Poll? = null,
+        val poll: PollData? = null,
 
         /**
          * IDs of the MediaAttachments that will be attached to the status.
@@ -107,35 +108,5 @@ data class ScheduledStatus(
          */
         @SerializedName("with_rate_limit")
         val withRateLimit: Boolean = false
-    )
-
-    /**
-     * Poll to be attached to the status.
-     */
-    data class Poll(
-        /**
-         * The poll options to be used.
-         * @see <a href="https://docs.joinmastodon.org/entities/ScheduledStatus/#params-poll">Mastodon API ScheduledStatus params-poll</a>
-         */
-        @SerializedName("options")
-        val options: List<String> = emptyList(),
-
-        /**
-         * How many seconds the poll should last before closing (String cast from Integer).
-         */
-        @SerializedName("expires_in")
-        val expiresIn: String = "",
-
-        /**
-         * Whether the poll allows multiple choices.
-         */
-        @SerializedName("multiple")
-        val multiple: Boolean? = null,
-
-        /**
-         * Whether the poll should hide total votes until after voting has ended.
-         */
-        @SerializedName("hide_totals")
-        val hideTotals: Boolean? = null
     )
 }
