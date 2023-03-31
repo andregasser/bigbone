@@ -1,6 +1,7 @@
 package social.bigbone.api.entity
 
 import com.google.gson.annotations.SerializedName
+import social.bigbone.api.entity.data.Focus
 
 /**
  * Represents a file or media attachment that can be added to a status.
@@ -44,6 +45,12 @@ data class MediaAttachment(
     val textUrl: String? = null,
 
     /**
+     * Metadata returned by Paperclip.
+     */
+    @SerializedName("meta")
+    val meta: Meta? = null,
+
+    /**
      * Alternate text that describes what is in the media attachment, to be used for the visually impaired or when media attachments do not load.
      */
     @SerializedName("description")
@@ -55,6 +62,17 @@ data class MediaAttachment(
     @SerializedName("blurhash")
     val blurhash: String? = null
 ) {
+    /**
+     * Metadata returned by Paperclip.
+     */
+    data class Meta(
+        /**
+         * Contains the coordinates to be used for smart thumbnail cropping.
+         */
+        @SerializedName("focus")
+        val focus: Focus? = null,
+    )
+
     /**
      * The available media types.
      */

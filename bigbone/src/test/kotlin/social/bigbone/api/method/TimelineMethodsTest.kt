@@ -65,7 +65,7 @@ class TimelineMethodsTest {
 
     @Test
     fun getLocalTagTimeline() {
-        val client = MockClient.mock("tag.json", maxId = "3", sinceId = "1")
+        val client = MockClient.mock("tag_timeline.json", maxId = "3", sinceId = "1")
         val timelineMethods = TimelineMethods(client)
         val statuses = timelineMethods.getTagTimeline(tag = "mastodon", statusOrigin = TimelineMethods.StatusOrigin.LOCAL).execute()
         statuses.part.size shouldBeEqualTo 20
