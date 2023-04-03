@@ -35,13 +35,13 @@ data class Poll(
      * How many votes have been received.
      */
     @SerializedName("votes_count")
-    val votesCount: Int = 0,
+    val votesCount: Long = 0,
 
     /**
      * How many unique accounts have voted on a multiple-choice poll; integer, or null if [multiple] is false.
      */
     @SerializedName("voters_count")
-    val votersCount: Int? = null,
+    val votersCount: Long? = null,
 
     /**
      * Possible answers for the poll.
@@ -83,6 +83,6 @@ data class Poll(
          * The total number of received votes for this option; integer, or null if results are not published yet.
          */
         @SerializedName("votes_count")
-        val votesCount: Int? = null
+        val votesCount: Long? = null
     )
 }

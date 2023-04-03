@@ -90,19 +90,19 @@ data class Status(
      * How many boosts this status has received.
      */
     @SerializedName("reblogs_count")
-    val reblogsCount: Int = 0,
+    val reblogsCount: Long = 0,
 
     /**
      * How many favourites this status has received.
      */
     @SerializedName("favourites_count")
-    val favouritesCount: Int = 0,
+    val favouritesCount: Long = 0,
 
     /**
      * How many replies this status has received.
      */
     @SerializedName("replies_count")
-    val repliesCount: Int = 0,
+    val repliesCount: Long = 0,
 
     /**
      * A link to the status’s HTML representation.
