@@ -11,12 +11,14 @@ import social.bigbone.api.exception.BigBoneRequestException;
 @SuppressWarnings("PMD.SystemPrintln")
 public class StreamFederatedPublicTimeline {
     public static void main(final String[] args) throws BigBoneRequestException, InterruptedException {
-        final String instance = args[0];
+        final String INSTANCE = args[0];
+        final String ACCESS_TOKEN = args[1];
 
         // Instantiate client
-        final MastodonClient client = new MastodonClient.Builder(instance)
-            .useStreamingApi()
-            .build();
+        final MastodonClient client = new MastodonClient.Builder(INSTANCE)
+                .accessToken(ACCESS_TOKEN)
+                .useStreamingApi()
+                .build();
 
         // Configure status handler
         final Handler handler = new Handler() {
