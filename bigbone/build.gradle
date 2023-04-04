@@ -18,7 +18,6 @@ dependencies {
     api libs.okhttp
     api libs.gson
     implementation libs.kotlin.jdk8
-
     testImplementation libs.junit.jupiter.api
     testImplementation libs.kluent
     testImplementation libs.mockk
@@ -26,9 +25,6 @@ dependencies {
     integrationTestImplementation libs.junit.jupiter.api
     integrationTestImplementation libs.junit.jupiter.engine
     integrationTestImplementation libs.junit.platform.suite.engine
-    integrationTestImplementation 'ch.qos.logback:logback-core:1.4.6'
-    integrationTestImplementation 'ch.qos.logback:logback-classic:1.4.6'
-    integrationTestImplementation 'org.slf4j:slf4j-api:2.0.7'
 }
 
 tasks.register('integrationTest', Test) {
