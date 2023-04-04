@@ -15,7 +15,7 @@ dependencies {
 }
 
 pmd {
-    toolVersion = "6.52.0"
+    toolVersion = "6.55.0"
     consoleOutput = true
     ruleSetFiles = files("${rootProject.projectDir}/config/pmd/ruleset.xml")
     ruleSets = []
