@@ -26,5 +26,11 @@ data class CustomEmoji(
      * Whether this Emoji should be visible in the picker or unlisted.
      */
     @SerializedName("visible_in_picker")
-    val visibleInPicker: Boolean = true
+    val visibleInPicker: Boolean = true,
+
+    /**
+     * Used for sorting custom emoji in the picker.
+     */
+    @SerializedName("category")
+    val category: String = ""
 )
