@@ -12,6 +12,7 @@ object Authenticator {
     private const val CLIENT_ID = "client_id"
     private const val CLIENT_SECRET = "client_secret"
     private const val ACCESS_TOKEN = "access_token"
+    private const val REDIRECT_URI = "urn:ietf:wg:oauth:2.0:oob"
 
     fun appRegistrationIfNeeded(instanceName: String, credentialFilePath: String, useStreaming: Boolean = false): MastodonClient {
         val file = File(credentialFilePath)
@@ -71,13 +72,14 @@ object Authenticator {
     ): Token {
         val client = MastodonClient.Builder(instanceName).build()
         val oAuthMethods = OAuthMethods(client)
-        return oAuthMethods.getUserAccessTokenWithPasswordGrant(clientId, clientSecret, Scope(), "urn:ietf:wg:oauth:2.0:oob", email, password).execute()
+        return oAuthMethods.getUserAccessTokenWithPasswordGrant(clientId, clientSecret, Scope(), REDIRECT_URI, email, password).execute()
     }
 
     private fun appRegistration(instanceName: String): Application {
         val client = MastodonClient.Builder(instanceName).build()
         return client.apps.createApp(
-            "bigbone-sample-app",
+            clientName = "bigbone-sample-app",
+            redirectUris = REDIRECT_URI,
             scope = Scope()
         ).execute()
     }

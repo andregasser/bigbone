@@ -15,8 +15,7 @@ class AppMethods(private val client: MastodonClient) {
     /**
      * Create a new application to obtain OAuth2 credentials.
      * @param clientName A name for your application
-     * @param redirectUris Where the user should be redirected after authorization. Defaults to "urn:ietf:wg:oauth:2.0:oob",
-     *  which will display the authorization code to the user instead of redirecting to a web page.
+     * @param redirectUris Where the user should be redirected after authorization.
      * @param scope Space separated list of scopes. Defaults to all scopes.
      * @param website A URL to the homepage of your app, defaults to null.
      * @see <a href="https://docs.joinmastodon.org/methods/apps/#create">Mastodon apps API methods #create</a>
@@ -24,7 +23,7 @@ class AppMethods(private val client: MastodonClient) {
     @JvmOverloads
     fun createApp(
         clientName: String,
-        redirectUris: String = "urn:ietf:wg:oauth:2.0:oob",
+        redirectUris: String,
         scope: Scope = Scope(Scope.Name.ALL),
         website: String? = null
     ): MastodonRequest<Application> {

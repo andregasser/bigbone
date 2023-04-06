@@ -6,6 +6,7 @@ import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import social.bigbone.MastodonClient
+import social.bigbone.TestConstants
 import social.bigbone.api.Scope
 import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.testtool.MockClient
@@ -20,7 +21,11 @@ class OAuthMethodsTest {
         every { client.getScheme() } returns "https"
         every { client.getPort() } returns 443
 
-        val url = OAuthMethods(client).getOAuthUrl("client_id", Scope(Scope.Name.ALL))
+        val url = OAuthMethods(client).getOAuthUrl(
+            clientId = "client_id",
+            scope = Scope(Scope.Name.ALL),
+            redirectUri = TestConstants.REDIRECT_URI
+        )
         url shouldBeEqualTo "https://mastodon.cloud/oauth/authorize?client_id=client_id" +
             "&redirect_uri=urn%3Aietf%3Awg%3Aoauth%3A2.0%3Aoob&response_type=code&scope=read+write+follow"
     }
@@ -30,7 +35,12 @@ class OAuthMethodsTest {
         val client: MastodonClient = MockClient.mock("access_token.json")
         every { client.getInstanceName() } returns "mastodon.cloud"
         val oauth = OAuthMethods(client)
-        val accessToken = oauth.getUserAccessTokenWithAuthorizationCodeGrant("test", "test", code = "test").execute()
+        val accessToken = oauth.getUserAccessTokenWithAuthorizationCodeGrant(
+            clientId = "test",
+            clientSecret = "test",
+            redirectUri = TestConstants.REDIRECT_URI,
+            code = "test"
+        ).execute()
         accessToken.accessToken shouldBeEqualTo "test"
         accessToken.scope shouldBeEqualTo "read write follow"
         accessToken.tokenType shouldBeEqualTo "bearer"
@@ -43,7 +53,12 @@ class OAuthMethodsTest {
             val client: MastodonClient = MockClient.ioException()
             every { client.getInstanceName() } returns "mastodon.cloud"
             val oauth = OAuthMethods(client)
-            oauth.getUserAccessTokenWithAuthorizationCodeGrant("test", "test", code = "test").execute()
+            oauth.getUserAccessTokenWithAuthorizationCodeGrant(
+                clientId = "test",
+                clientSecret = "test",
+                redirectUri = TestConstants.REDIRECT_URI,
+                code = "test"
+            ).execute()
         }
     }
 
@@ -52,7 +67,11 @@ class OAuthMethodsTest {
         val client: MastodonClient = MockClient.mock("access_token.json")
         every { client.getInstanceName() } returns "mastodon.cloud"
         val oauth = OAuthMethods(client)
-        val accessToken = oauth.getAccessTokenWithClientCredentialsGrant("test", "test").execute()
+        val accessToken = oauth.getAccessTokenWithClientCredentialsGrant(
+            clientId = "test",
+            clientSecret = "test",
+            redirectUri = TestConstants.REDIRECT_URI
+        ).execute()
         accessToken.accessToken shouldBeEqualTo "test"
         accessToken.scope shouldBeEqualTo "read write follow"
         accessToken.tokenType shouldBeEqualTo "bearer"
@@ -65,7 +84,11 @@ class OAuthMethodsTest {
             val client: MastodonClient = MockClient.ioException()
             every { client.getInstanceName() } returns "mastodon.cloud"
             val oauth = OAuthMethods(client)
-            oauth.getAccessTokenWithClientCredentialsGrant("test", "test").execute()
+            oauth.getAccessTokenWithClientCredentialsGrant(
+                clientId = "test",
+                clientSecret = "test",
+                redirectUri = TestConstants.REDIRECT_URI
+            ).execute()
         }
     }
 
@@ -78,7 +101,7 @@ class OAuthMethodsTest {
             "test",
             "test",
             Scope(Scope.Name.ALL),
-            "urn:ietf:wg:oauth:2.0:oob",
+            TestConstants.REDIRECT_URI,
             "test",
             "test"
         ).execute()
@@ -94,7 +117,14 @@ class OAuthMethodsTest {
             val client: MastodonClient = MockClient.ioException()
             every { client.getInstanceName() } returns "mastodon.cloud"
             val oauth = OAuthMethods(client)
-            oauth.getUserAccessTokenWithPasswordGrant("test", "test", Scope(Scope.Name.ALL), "urn:ietf:wg:oauth:2.0:oob", "test", "test").execute()
+            oauth.getUserAccessTokenWithPasswordGrant(
+                clientId = "test",
+                clientSecret = "test",
+                scope = Scope(Scope.Name.ALL),
+                redirectUri = TestConstants.REDIRECT_URI,
+                username = "test",
+                password = "test"
+            ).execute()
         }
     }
 }

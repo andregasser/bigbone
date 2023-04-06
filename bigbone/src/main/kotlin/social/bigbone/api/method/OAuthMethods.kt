@@ -15,17 +15,14 @@ class OAuthMethods(private val client: MastodonClient) {
     /**
      * Returns a URL that can be used to display an authorization form to the user. If approved,
      * it will create and return an authorization code, then redirect to the desired redirectUri,
-     * or show the authorization code if urn:ietf:wg:oauth:2.0:oob was requested.
+     * or show the authorization code if redirectUri is "urn:ietf:wg:oauth:2.0:oob".
      * The authorization code can be used while requesting a token to obtain access to user-level methods.
      * @param clientId The client ID, obtained during app registration.
      * @param scope List of requested OAuth scopes, separated by spaces. Must be a subset of scopes declared during app registration.
-     * @param redirectUri Set a URI to redirect the user to. Defaults to "urn:ietf:wg:oauth:2.0:oob",
-     *  which will display the authorization code to the user instead of redirecting to a web page.
-     *  Must match one of the redirect_uris declared during app registration.
+     * @param redirectUri Set a URI to redirect the user to. Must match one of the redirect_uris declared during app registration.
      * @see <a href="https://docs.joinmastodon.org/methods/oauth/#authorize">Mastodon oauth API methods #authorize</a>
      */
-    @JvmOverloads
-    fun getOAuthUrl(clientId: String, scope: Scope, redirectUri: String = "urn:ietf:wg:oauth:2.0:oob"): String {
+    fun getOAuthUrl(clientId: String, scope: Scope, redirectUri: String): String {
         val endpoint = "oauth/authorize"
         val params = Parameters()
             .append("client_id", clientId)
@@ -39,17 +36,14 @@ class OAuthMethods(private val client: MastodonClient) {
      * Obtain a user access token using OAuth 2 authorization code grant type. To be used during API calls that are not public.
      * @param clientId The client ID, obtained during app registration.
      * @param clientSecret The client secret, obtained during app registration.
-     * @param redirectUri Set a URI to redirect the user to. Defaults to "urn:ietf:wg:oauth:2.0:oob",
-     *  which will display the authorization code to the user instead of redirecting to a web page.
-     *  Must match one of the redirect_uris declared during app registration.
+     * @param redirectUri Set a URI to redirect the user to. Must match one of the redirect_uris declared during app registration.
      * @param code A user authorization code, obtained via the URL received from getOAuthUrl()
      * @see <a href="https://docs.joinmastodon.org/methods/oauth/#token">Mastodon oauth API methods #token</a>
      */
-    @JvmOverloads
     fun getUserAccessTokenWithAuthorizationCodeGrant(
         clientId: String,
         clientSecret: String,
-        redirectUri: String = "urn:ietf:wg:oauth:2.0:oob",
+        redirectUri: String,
         code: String
     ): MastodonRequest<Token> {
         return client.getMastodonRequest(
@@ -69,9 +63,7 @@ class OAuthMethods(private val client: MastodonClient) {
      * Obtain an access token using OAuth 2 client credentials grant type. To be used during API calls that are not public.
      * @param clientId The client ID, obtained during app registration.
      * @param clientSecret The client secret, obtained during app registration.
-     * @param redirectUri Set a URI to redirect the user to. Defaults to "urn:ietf:wg:oauth:2.0:oob",
-     *  which will display the authorization code to the user instead of redirecting to a web page.
-     *  Must match one of the redirect_uris declared during app registration.
+     * @param redirectUri Set a URI to redirect the user to. Must match one of the redirect_uris declared during app registration.
      * @param scope Requested OAuth scopes. Must be a subset of scopes declared during app registration.
      *  If not provided, defaults to read.
      * @see <a href="https://docs.joinmastodon.org/methods/oauth/#token">Mastodon oauth API methods #token</a>
@@ -81,7 +73,7 @@ class OAuthMethods(private val client: MastodonClient) {
     fun getAccessTokenWithClientCredentialsGrant(
         clientId: String,
         clientSecret: String,
-        redirectUri: String = "urn:ietf:wg:oauth:2.0:oob",
+        redirectUri: String,
         scope: Scope? = null
     ): MastodonRequest<Token> {
         return client.getMastodonRequest(
@@ -105,8 +97,7 @@ class OAuthMethods(private val client: MastodonClient) {
      * @param clientId The client ID, obtained during app registration.
      * @param clientSecret The client secret, obtained during app registration.
      * @param scope Requested OAuth scopes
-     * @param redirectUri Set a URI to redirect the user to. Defaults to "urn:ietf:wg:oauth:2.0:oob",
-     *  which will display the authorization code to the user instead of redirecting to a web page.
+     * @param redirectUri Set a URI to redirect the user to.
      * @param username The Mastodon account username.
      * @param password The Mastodon account password.
      * @see <a href="https://docs.joinmastodon.org/methods/oauth/#token">Mastodon oauth API methods #token</a>
@@ -116,7 +107,7 @@ class OAuthMethods(private val client: MastodonClient) {
         clientId: String,
         clientSecret: String,
         scope: Scope = Scope(Scope.Name.READ),
-        redirectUri: String = "urn:ietf:wg:oauth:2.0:oob",
+        redirectUri: String,
         username: String,
         password: String
     ): MastodonRequest<Token> {
