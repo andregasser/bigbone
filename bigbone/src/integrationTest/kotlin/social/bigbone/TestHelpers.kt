@@ -38,6 +38,7 @@ object TestHelpers {
         return client.oauth.getAccessTokenWithClientCredentialsGrant(
             clientId = application.clientId!!,
             clientSecret = application.clientSecret!!,
+            redirectUri = TestConstants.REDIRECT_URI,
             scope = Scope(Scope.Name.ALL)
         ).execute()
     }

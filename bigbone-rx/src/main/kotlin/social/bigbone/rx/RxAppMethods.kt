@@ -18,7 +18,7 @@ class RxAppMethods(client: MastodonClient) {
     @JvmOverloads
     fun createApp(
         clientName: String,
-        redirectUris: String = "urn:ietf:wg:oauth:2.0:oob",
+        redirectUris: String,
         scope: Scope = Scope(Scope.Name.ALL),
         website: String? = null
     ): Single<Application> {
