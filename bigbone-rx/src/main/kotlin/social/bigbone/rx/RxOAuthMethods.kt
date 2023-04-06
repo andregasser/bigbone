@@ -18,7 +18,7 @@ class RxOAuthMethods(client: MastodonClient) {
     fun getUserAccessTokenWithAuthorizationCodeGrant(
         clientId: String,
         clientSecret: String,
-        redirectUri: String = "urn:ietf:wg:oauth:2.0:oob",
+        redirectUri: String,
         code: String
     ): Single<Token> {
         return Single.create {
@@ -35,7 +35,7 @@ class RxOAuthMethods(client: MastodonClient) {
         clientId: String,
         clientSecret: String,
         scope: Scope = Scope(Scope.Name.READ),
-        redirectUri: String = "urn:ietf:wg:oauth:2.0:oob",
+        redirectUri: String,
         username: String,
         password: String
     ): Single<Token> {

@@ -144,19 +144,19 @@ data class Account(
      * How many statuses are attached to this account.
      */
     @SerializedName("statuses_count")
-    val statusesCount: Int = 0,
+    val statusesCount: Long = 0,
 
     /**
      * The reported followers of this profile.
      */
     @SerializedName("followers_count")
-    val followersCount: Int = 0,
+    val followersCount: Long = 0,
 
     /**
      * The reported follows of this profile.
      */
     @SerializedName("following_count")
-    val followingCount: Int = 0
+    val followingCount: Long = 0
 ) {
     /**
      * Specifies a name-value pair as used in [fields] of the [Account] entity.
