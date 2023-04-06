@@ -17,6 +17,7 @@ final class Authenticator {
     private static final String CLIENT_ID = "client_id";
     private static final String CLIENT_SECRET = "client_secret";
     private static final String ACCESS_TOKEN = "access_token";
+    private static final String REDIRECT_URI = "urn:ietf:wg:oauth:2.0:oob";
 
     private Authenticator() {}
 
@@ -63,11 +64,11 @@ final class Authenticator {
     private static Token getAccessToken(final String instanceName, final String clientId, final String clientSecret, final String email, final String password) throws BigBoneRequestException {
         final MastodonClient client = new MastodonClient.Builder(instanceName).build();
         final OAuthMethods oauthMethods = new OAuthMethods(client);
-        return oauthMethods.getUserAccessTokenWithPasswordGrant(clientId, clientSecret, new Scope(), email, password).execute();
+        return oauthMethods.getUserAccessTokenWithPasswordGrant(clientId, clientSecret, new Scope(), REDIRECT_URI, email, password).execute();
     }
 
     private static Application application(final String instanceName) throws BigBoneRequestException {
         final MastodonClient client = new MastodonClient.Builder(instanceName).build();
-        return client.apps().createApp("bigbone-sample-app", "urn:ietf:wg:oauth:2.0:oob", new Scope(), null).execute();
+        return client.apps().createApp("bigbone-sample-app", REDIRECT_URI, new Scope(), null).execute();
     }
 }
