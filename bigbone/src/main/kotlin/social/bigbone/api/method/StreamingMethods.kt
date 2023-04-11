@@ -51,9 +51,11 @@ class StreamingMethods(private val client: MastodonClient) {
                     }
                 }
                 reader.close()
+                response.close()
             }
-            return Shutdownable(dispatcher)
+            return Shutdownable(dispatcher, response)
         } else {
+            response.close()
             throw BigBoneRequestException(response)
         }
     }
@@ -95,9 +97,11 @@ class StreamingMethods(private val client: MastodonClient) {
                     }
                 }
                 reader.close()
+                response.close()
             }
-            return Shutdownable(dispatcher)
+            return Shutdownable(dispatcher, response)
         } else {
+            response.close()
             throw BigBoneRequestException(response)
         }
     }
@@ -142,9 +146,11 @@ class StreamingMethods(private val client: MastodonClient) {
                     }
                 }
                 reader.close()
+                response.close()
             }
-            return Shutdownable(dispatcher)
+            return Shutdownable(dispatcher, response)
         } else {
+            response.close()
             throw BigBoneRequestException(response)
         }
     }
@@ -189,9 +195,11 @@ class StreamingMethods(private val client: MastodonClient) {
                     }
                 }
                 reader.close()
+                response.close()
             }
-            return Shutdownable(dispatcher)
+            return Shutdownable(dispatcher, response)
         } else {
+            response.close()
             throw BigBoneRequestException(response)
         }
     }
@@ -250,9 +258,11 @@ class StreamingMethods(private val client: MastodonClient) {
                     }
                 }
                 reader.close()
+                response.close()
             }
-            return Shutdownable(dispatcher)
+            return Shutdownable(dispatcher, response)
         } else {
+            response.close()
             throw BigBoneRequestException(response)
         }
     }
@@ -314,9 +324,11 @@ class StreamingMethods(private val client: MastodonClient) {
                     }
                 }
                 reader.close()
+                response.close()
             }
-            return Shutdownable(dispatcher)
+            return Shutdownable(dispatcher, response)
         } else {
+            response.close()
             throw BigBoneRequestException(response)
         }
     }
