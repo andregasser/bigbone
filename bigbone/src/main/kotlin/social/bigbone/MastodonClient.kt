@@ -23,6 +23,7 @@ import social.bigbone.api.method.MediaMethods
 import social.bigbone.api.method.MuteMethods
 import social.bigbone.api.method.NotificationMethods
 import social.bigbone.api.method.OAuthMethods
+import social.bigbone.api.method.PollMethods
 import social.bigbone.api.method.ReportMethods
 import social.bigbone.api.method.SearchMethods
 import social.bigbone.api.method.StatusMethods
@@ -130,6 +131,13 @@ private constructor(
     @Suppress("unused") // public API
     @get:JvmName("oauth")
     val oauth: OAuthMethods by lazy { OAuthMethods(this) }
+
+    /**
+     * Access API methods under "polls" endpoint.
+     */
+    @Suppress("unused") // public API
+    @get:JvmName("polls")
+    val polls: PollMethods by lazy { PollMethods(this) }
 
     /**
      * Access API methods under "api/vX/reports" endpoint.
