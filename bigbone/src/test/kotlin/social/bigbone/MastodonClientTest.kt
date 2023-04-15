@@ -309,8 +309,8 @@ class MastodonClientTest {
         val responseV1Mock = mockk<Response>()
 
         val clientBuilder = spyk(MastodonClient.Builder("foo.bar"))
-        every { clientBuilder.v2InstanceRequest() } answers { responseV2Mock }
-        every { clientBuilder.v1InstanceRequest() } answers { responseV1Mock }
+        every { clientBuilder.versionedInstanceRequest(1) } answers { responseV1Mock }
+        every { clientBuilder.versionedInstanceRequest(2) } answers { responseV2Mock }
 
         // when
         val client = clientBuilder.build()
@@ -332,8 +332,8 @@ class MastodonClientTest {
         every { responseV1Mock.body } answers { responseBodyV1Mock }
 
         val clientBuilder = spyk(MastodonClient.Builder("foo.bar"))
-        every { clientBuilder.v2InstanceRequest() } answers { responseV2Mock }
-        every { clientBuilder.v1InstanceRequest() } answers { responseV1Mock }
+        every { clientBuilder.versionedInstanceRequest(1) } answers { responseV1Mock }
+        every { clientBuilder.versionedInstanceRequest(2) } answers { responseV2Mock }
 
         // when
         val client = clientBuilder.build()
@@ -349,8 +349,7 @@ class MastodonClientTest {
         val responseMock = mockk<Response>()
         every { responseMock.body } answers { invalidResponseBody.toResponseBody("application/json".toMediaType()) }
         every { responseMock.isSuccessful } answers { true }
-        every { clientBuilder.v2InstanceRequest() } answers { responseMock }
-        every { clientBuilder.v1InstanceRequest() } answers { responseMock }
+        every { clientBuilder.versionedInstanceRequest(any()) } answers { responseMock }
 
         // when / then
         Assertions.assertThrows(BigBoneRequestException::class.java) {

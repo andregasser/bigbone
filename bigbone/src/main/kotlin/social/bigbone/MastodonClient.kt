@@ -10,7 +10,7 @@ import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import social.bigbone.api.Pageable
-import social.bigbone.api.entity.InstanceVersion
+import social.bigbone.api.entity.data.InstanceVersion
 import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.api.method.AccountMethods
 import social.bigbone.api.method.AppMethods
@@ -23,6 +23,7 @@ import social.bigbone.api.method.MediaMethods
 import social.bigbone.api.method.MuteMethods
 import social.bigbone.api.method.NotificationMethods
 import social.bigbone.api.method.OAuthMethods
+import social.bigbone.api.method.PollMethods
 import social.bigbone.api.method.ReportMethods
 import social.bigbone.api.method.SearchMethods
 import social.bigbone.api.method.StatusMethods
@@ -130,6 +131,13 @@ private constructor(
     @Suppress("unused") // public API
     @get:JvmName("oauth")
     val oauth: OAuthMethods by lazy { OAuthMethods(this) }
+
+    /**
+     * Access API methods under "polls" endpoint.
+     */
+    @Suppress("unused") // public API
+    @get:JvmName("polls")
+    val polls: PollMethods by lazy { PollMethods(this) }
 
     /**
      * Access API methods under "api/vX/reports" endpoint.
@@ -516,16 +524,34 @@ private constructor(
             this.debug = true
         }
 
+        /**
+         * Get the version string for this Mastodon instance.
+         * @return a string corresponding to the version of this Mastodon instance
+         * @throws BigBoneRequestException if instance version can not be retrieved using any API version
+         */
         private fun getInstanceVersion(): String {
-            try {
-                return listOf(v2InstanceRequest(), v1InstanceRequest()).stream()
-                    .filter { response -> response.isSuccessful }
-                    .map { response -> gson.fromJson(response.body?.string(), InstanceVersion::class.java) }
-                    .map { json -> json.version }
-                    .findFirst()
-                    .get()
+            val instanceVersion = getInstanceVersion(2) ?: getInstanceVersion(1)
+            return instanceVersion ?: throw BigBoneRequestException("Unable to fetch instance version")
+        }
+
+        /**
+         * Get the version string for this Mastodon instance, using a specific API version.
+         * @param apiVersion the version of API call to use in this request
+         * @return a string corresponding to the version of this Mastodon instance, or null if no version string can be
+         *  retrieved using the specified API version.
+         */
+        private fun getInstanceVersion(apiVersion: Int): String? {
+            return try {
+                val response = versionedInstanceRequest(apiVersion)
+                if (response.isSuccessful) {
+                    val instanceVersion = gson.fromJson(response.body?.string(), InstanceVersion::class.java)
+                    instanceVersion.version
+                } else {
+                    response.close()
+                    null
+                }
             } catch (e: Exception) {
-                throw BigBoneRequestException("Unable to fetch instance version", e)
+                null
             }
         }
 
@@ -538,24 +564,13 @@ private constructor(
         }
 
         /**
-         * Returns the server response for an instance request of version 2.
-         * @return server response for this request; if the response is not successful, its body will be closed
-         */
-        internal fun v2InstanceRequest(): Response = versionedInstanceRequest(2)
-
-        /**
-         * Returns the server response for an instance request of version 1.
-         * @return server response for this request; if the response is not successful, its body will be closed
-         */
-        internal fun v1InstanceRequest(): Response = versionedInstanceRequest(1)
-
-        /**
-         * Returns the server response for an instance request of a specific version.
+         * Returns the server response for an instance request of a specific version. This response needs to be closed
+         * by the caller, either by reading from it via response.body?.string(), or by calling response.close().
          * @param version value corresponding to the version that should be returned; falls
          *  back to returning version 1 for illegal values.
-         * @return server response for this request; if the response is not successful, its body will be closed
+         * @return server response for this request
          */
-        private fun versionedInstanceRequest(version: Int): Response {
+        internal fun versionedInstanceRequest(version: Int): Response {
             val versionString = if (version == 2) {
                 "v2"
             } else {
@@ -566,15 +581,13 @@ private constructor(
                 configureForTrustAll(clientBuilder)
             }
             val client = clientBuilder.build()
-            val response = client.newCall(
+            return client.newCall(
                 Request.Builder().url(
-                    fullUrl(scheme, instanceName, port, "api/$versionString/instance"
+                    fullUrl(
+                        scheme, instanceName, port, "api/$versionString/instance"
                     )
-                ).get().build()).execute()
-            if (!response.isSuccessful) {
-                response.close()
-            }
-            return response
+                ).get().build()
+            ).execute()
         }
 
         fun build(): MastodonClient {
