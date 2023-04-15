@@ -60,6 +60,19 @@ class Parameters {
     }
 
     /**
+     * Appends a new key/value pair, with the value being a list of integer values.
+     * @param key the key of this pair
+     * @param value a list of integer values
+     * @return this Parameters instance
+     */
+    fun appendInts(key: String, value: List<Int>): Parameters {
+        value.forEach {
+            append("$key[]", it)
+        }
+        return this
+    }
+
+    /**
      * Converts this Parameters instance into a query string.
      * @return String, formatted like: "key1=value1&key2=value2&..."
      */
