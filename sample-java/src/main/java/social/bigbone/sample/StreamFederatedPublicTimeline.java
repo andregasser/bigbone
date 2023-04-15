@@ -12,11 +12,13 @@ import social.bigbone.api.exception.BigBoneRequestException;
 public class StreamFederatedPublicTimeline {
     public static void main(final String[] args) throws BigBoneRequestException, InterruptedException {
         final String instance = args[0];
+        final String accessToken = args[1];
 
         // Instantiate client
         final MastodonClient client = new MastodonClient.Builder(instance)
-            .useStreamingApi()
-            .build();
+                .accessToken(accessToken)
+                .useStreamingApi()
+                .build();
 
         // Configure status handler
         final Handler handler = new Handler() {

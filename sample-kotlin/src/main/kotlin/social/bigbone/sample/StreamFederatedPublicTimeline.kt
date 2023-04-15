@@ -9,9 +9,11 @@ object StreamFederatedPublicTimeline {
     @JvmStatic
     fun main(args: Array<String>) {
         val instance = args[0]
+        val accessToken = args[1]
 
         // Instantiate client
         val client = MastodonClient.Builder(instance)
+            .accessToken(accessToken)
             .useStreamingApi()
             .build()
 
