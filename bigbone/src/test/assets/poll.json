@@ -1,0 +1,59 @@
+{
+  "id": "34873",
+  "expires_at": "2019-12-05T11:16:17.426Z",
+  "expired": false,
+  "multiple": true,
+  "votes_count": 5,
+  "voters_count": null,
+  "voted": true,
+  "own_votes": [
+    0,
+    2,
+    4,
+    9,
+    6
+  ],
+  "options": [
+    {
+      "title": "option 0",
+      "votes_count": 1
+    },
+    {
+      "title": "option 1",
+      "votes_count": 0
+    },
+    {
+      "title": "option 2",
+      "votes_count": 1
+    },
+    {
+      "title": "option 3",
+      "votes_count": 0
+    },
+    {
+      "title": "option 4",
+      "votes_count": 1
+    },
+    {
+      "title": "option 5",
+      "votes_count": 0
+    },
+    {
+      "title": "option 6",
+      "votes_count": 1
+    },
+    {
+      "title": "option 7",
+      "votes_count": 0
+    },
+    {
+      "title": "option 8",
+      "votes_count": 0
+    },
+    {
+      "title": "option 9",
+      "votes_count": 1
+    }
+  ],
+  "emojis": []
+}
