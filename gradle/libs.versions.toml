@@ -9,7 +9,7 @@ junit-platform-suite-engine = "1.9.2"
 kluent = "1.72"
 kotlin = "1.8.20"
 kotlin-coroutines = "1.6.4"
-mockk = "1.13.4"
+mockk = "1.13.5"
 okhttp = "4.10.0"
 rxjava = "3.1.6"
 
