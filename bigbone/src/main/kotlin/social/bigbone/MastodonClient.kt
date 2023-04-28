@@ -476,6 +476,9 @@ private constructor(
         private var scheme = "https"
         private var port = 443
         private var trustAllCerts = false
+        private var readTimeoutSeconds = 10L
+        private var writeTimeoutSeconds = 10L
+        private var connectTimeoutSeconds = 10L
 
         /**
          * Sets the access token required for calling authenticated endpoints.
@@ -516,8 +519,40 @@ private constructor(
             this.port = port
         }
 
+        /**
+         * Enables this client to support Streaming API methods.
+         */
         fun useStreamingApi() = apply {
-            okHttpClientBuilder.readTimeout(60, TimeUnit.SECONDS)
+            if (readTimeoutSeconds != 0L) { // a value of 0L means that read timeout is disabled already
+                readTimeoutSeconds.coerceAtLeast(60L)
+            }
+        }
+
+        /**
+         * Sets the read timeout for connections of this client.
+         * @param timeoutSeconds the new timeout value in seconds; default value is 10 seconds, setting this to 0
+         *  disables the timeout completely
+         */
+        fun setReadTimeoutSeconds(timeoutSeconds: Long) = apply {
+            readTimeoutSeconds = timeoutSeconds
+        }
+
+        /**
+         * Sets the write timeout for connections of this client.
+         * @param timeoutSeconds the new timeout value in seconds; default value is 10 seconds, setting this to 0
+         *  disables the timeout completely
+         */
+        fun setWriteTimeoutSeconds(timeoutSeconds: Long) = apply {
+            writeTimeoutSeconds = timeoutSeconds
+        }
+
+        /**
+         * Sets the connect timeout for connections of this client.
+         * @param timeoutSeconds the new timeout value in seconds; default value is 10 seconds, setting this to 0
+         *  disables the timeout completely
+         */
+        fun setConnectTimeoutSeconds(timeoutSeconds: Long) = apply {
+            connectTimeoutSeconds = timeoutSeconds
         }
 
         fun debug() = apply {
@@ -593,7 +628,12 @@ private constructor(
         fun build(): MastodonClient {
             return MastodonClient(
                 instanceName,
-                okHttpClientBuilder.addNetworkInterceptor(AuthorizationInterceptor(accessToken)).build(),
+                okHttpClientBuilder
+                    .addNetworkInterceptor(AuthorizationInterceptor(accessToken))
+                    .readTimeout(readTimeoutSeconds, TimeUnit.SECONDS)
+                    .writeTimeout(writeTimeoutSeconds, TimeUnit.SECONDS)
+                    .connectTimeout(connectTimeoutSeconds, TimeUnit.SECONDS)
+                    .build(),
                 gson
             ).also {
                 it.debug = debug
