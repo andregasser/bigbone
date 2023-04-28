@@ -3,7 +3,7 @@ package social.bigbone.sample
 import social.bigbone.MastodonClient
 import social.bigbone.api.Scope
 import social.bigbone.api.exception.BigBoneRequestException
-import java.util.*
+import java.util.Scanner
 
 object OAuthGetAccessToken {
     @Throws(BigBoneRequestException::class)
