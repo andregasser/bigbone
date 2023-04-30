@@ -149,7 +149,7 @@ read this section before you start working with the library, as the tips given i
 save you some time.
 
 ## Request Not Sent / No Data Returned
-Make sure, you call `.execute()` on the BigBone library method you want to use. Here's an example:
+Make sure you call `.execute()` on the BigBone library method you want to use. Here's an example:
 
 ```kotlin
 val client = MastodonClient.Builder(instance).build()
