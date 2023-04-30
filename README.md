@@ -132,7 +132,7 @@ Dependencies:
 ```
 
 # Using BigBone
-For an easy introduction to using the library, I recommend that you take a look at the sample-* modules of this 
+For an easy introduction to using the library, it is recommended that you take a look at the sample-* modules of this 
 project. We provide examples for Java and Kotlin:
 
 - `sample-java` for Java example code
@@ -167,7 +167,7 @@ The following people have actively contributed to the development of BigBone:
 
 # BigBone Users
 
-Are you using this library in your project? If so, let me know and I will happily feature your project in this section here.
+Are you using this library in your project? If so, let me know and we will happily feature your project in this section here.
 
 # Contribution
 
