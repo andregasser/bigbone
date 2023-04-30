@@ -138,7 +138,7 @@ project. We provide examples for Java and Kotlin:
 - `sample-java` for Java example code
 - `sample-kotlin` for Kotlin example code
 
-You can run them on your machine. Usually, they required some program arguments to be set before launch. Please
+You can run them on your machine. Usually, they require some program arguments to be set before launch. Please
 have a look at the code for details.
 
 We also provide some guidance in [USAGE.md](USAGE.md).
