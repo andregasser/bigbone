@@ -16,6 +16,7 @@ import social.bigbone.api.method.AccountMethods
 import social.bigbone.api.method.AppMethods
 import social.bigbone.api.method.BlockMethods
 import social.bigbone.api.method.FavouriteMethods
+import social.bigbone.api.method.FilterMethods
 import social.bigbone.api.method.FollowRequestMethods
 import social.bigbone.api.method.InstanceMethods
 import social.bigbone.api.method.ListMethods
@@ -82,6 +83,13 @@ private constructor(
     @Suppress("unused") // public API
     @get:JvmName("favourites")
     val favourites: FavouriteMethods by lazy { FavouriteMethods(this) }
+
+    /**
+     * Access API methods under "api/vX/filters" endpoint.
+     */
+    @Suppress("unused") // public API
+    @get:JvmName("filters")
+    val filters: FilterMethods by lazy { FilterMethods(this) }
 
     /**
      * Access API methods under "api/vX/follow_requests" endpoint.
