@@ -1,7 +1,3 @@
-# :desert_island: Important Notice :desert_island:
-
-Dear users, I'm on vacation until May 12, 2023. During this time, issues and pull requests will be processed with a delay. After my return, however, I will gladly work again for BigBone. Thank you for your understanding! I wish you a good time.
-
 # BigBone
 
 ![Build](https://github.com/andregasser/bigbone/actions/workflows/build.yml/badge.svg)
