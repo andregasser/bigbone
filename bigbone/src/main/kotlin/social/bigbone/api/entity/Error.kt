@@ -11,5 +11,11 @@ data class Error(
      * The error message.
      */
     @SerializedName("error")
-    val error: String = ""
+    val error: String = "",
+
+    /**
+     * A longer description of the error, mainly provided with the OAuth API.
+     */
+    @SerializedName("error_description")
+    val errorDescription: String? = null
 )
