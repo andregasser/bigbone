@@ -8,7 +8,6 @@ import social.bigbone.api.entity.Notification;
 import social.bigbone.api.entity.Status;
 import social.bigbone.api.exception.BigBoneRequestException;
 
-@SuppressWarnings("PMD.SystemPrintln")
 public class StreamFederatedPublicTimeline {
     public static void main(final String[] args) throws BigBoneRequestException, InterruptedException {
         final String instance = args[0];

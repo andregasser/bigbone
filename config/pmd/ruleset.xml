@@ -4,8 +4,10 @@
          xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 https://pmd.sourceforge.io/ruleset_2_0_0.xsd">
 
     <description>
-        Bigbone PMD Ruleset
+        BigBone PMD Ruleset
     </description>
+
+    <exclude-pattern>.*\.java</exclude-pattern>
 
     <rule ref="category/java/bestpractices.xml">
     </rule>
