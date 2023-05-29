@@ -47,13 +47,13 @@ data class Instance(
      * URLs of interest for clients apps.
      */
     @SerializedName("urls")
-    val urls: InstanceUrls? = null,
+    val urls: Urls? = null,
 
     /**
      * Statistics about how much information the instance contains.
      */
     @SerializedName("stats")
-    val stats: InstanceStats? = null,
+    val stats: Stats? = null,
 
     /**
      * Banner image for the website.
@@ -108,7 +108,7 @@ data class Instance(
      * URLs of interest for clients apps.
      * @see <a href="https://docs.joinmastodon.org/entities/V1_Instance/">Mastodon API V1::Instance</a>
      */
-    data class InstanceUrls(
+    data class Urls(
         /**
          * The Websockets URL for connecting to the streaming API.
          */
@@ -120,7 +120,7 @@ data class Instance(
      * Statistics about how much information the instance contains.
      * @see <a href="https://docs.joinmastodon.org/entities/V1_Instance/">Mastodon API V1::Instance</a>
      */
-    data class InstanceStats(
+    data class Stats(
         /**
          * Total users on this instance.
          */
@@ -277,22 +277,4 @@ data class Instance(
             val maxExpiration: Int = 0
         )
     }
-
-    /**
-     * Represents a rule that server users should follow.
-     * @see <a href="https://docs.joinmastodon.org/entities/Rule/">Mastodon API Rule</a>
-     */
-    data class Rule(
-        /**
-         * An identifier for the rule.
-         */
-        @SerializedName("id")
-        val id: String = "0",
-
-        /**
-         * The rule to be followed.
-         */
-        @SerializedName("text")
-        val text: String = ""
-    )
 }
