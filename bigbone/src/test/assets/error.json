@@ -1,0 +1,4 @@
+{
+  "error": "invalid_grant",
+  "error_description": "Here comes the more detailed error description."
+}

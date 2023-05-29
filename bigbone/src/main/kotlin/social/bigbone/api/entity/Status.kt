@@ -186,12 +186,13 @@ data class Status(
      * If the current token has an authorized user: Have you pinned this status? Only appears if the status is pinnable. (optional)
      */
     @SerializedName("pinned")
-    val isPinned: Boolean? = null
+    val isPinned: Boolean? = null,
 
     /**
      * If the current token has an authorized user: The filter and keywords that matched this status. (optional)
      */
-    // filtered
+    @SerializedName("filtered")
+    val filtered: List<FilterResult>? = null
 ) {
     /**
      * Specifies the visibility of the status post.

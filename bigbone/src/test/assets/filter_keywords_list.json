@@ -1,0 +1,17 @@
+[
+  {
+    "id": "1311",
+    "keyword": "from birdsite",
+    "whole_word": true
+  },
+  {
+    "id": "1324",
+    "keyword": "@twitter.com",
+    "whole_word": false
+  },
+  {
+    "id": "1325",
+    "keyword": "https://t.co/",
+    "whole_word": false
+  }
+]

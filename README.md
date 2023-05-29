@@ -1,7 +1,3 @@
-# :desert_island: Vacation Announcement :desert_island:
-
-Dear users, I'm on vacation until May 12, 2023. During this time, issues and pull requests will be processed with a delay. After my return, however, I will gladly work again for BigBone. Thank you for your understanding! I wish you a good time.
-
 # BigBone
 
 ![Build](https://github.com/andregasser/bigbone/actions/workflows/build.yml/badge.svg)
@@ -46,7 +42,7 @@ For details on the current API coverage please checkout wiki page [Mastodon API 
 
 BigBone uses [Semantic Versioning 2.0.0](http://semver.org/spec/v2.0.0.html).
 
-# Get Started
+# Adding BigBone to Your Project
 
 ## Gradle (Groovy DSL)
 
@@ -131,15 +127,32 @@ Dependencies:
 </dependency>
 ```
 
-### Usage Examples
+# Using BigBone
+For an easy introduction to using the library, it is recommended that you take a look at the sample-* modules of this 
+project. We provide examples for Java and Kotlin:
 
-We provide some example code snippets for Java and Kotlin in [USAGE.md](USAGE.md) to get you started.
-
-### Sample Code
-
-There are also two Gradle modules that provide some insights on how to use this library:
 - `sample-java` for Java example code
 - `sample-kotlin` for Kotlin example code
+
+You can run them on your machine. Usually, they require some program arguments to be set before launch. Please
+have a look at the code for details.
+
+We also provide some guidance in [USAGE.md](USAGE.md).
+
+# Troubleshooting
+In this section we describe problems that have been reported to us by users of the library. Please 
+read this section before you start working with the library, as the tips given in this section might 
+save you some time.
+
+## Request Not Sent / No Data Returned
+Make sure you call `.execute()` on the BigBone library method you want to use. Here's an example:
+
+```kotlin
+val client = MastodonClient.Builder(instance).build()
+val statuses = client.timelines.getTagTimeline(hashtag, TimelineMethods.StatusOrigin.LOCAL_AND_REMOTE).execute()
+```
+
+The same applies if you're using BigBone in a Java project.
 
 # BigBone Contributors
 
@@ -150,7 +163,7 @@ The following people have actively contributed to the development of BigBone:
 
 # BigBone Users
 
-Are you using this library in your project? If so, let me know and I will happily feature your project in this section here.
+Are you using this library in your project? If so, let me know and we will happily feature your project in this section here.
 
 # Contribution
 

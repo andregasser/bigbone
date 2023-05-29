@@ -10,6 +10,7 @@ import okhttp3.Response
 import okhttp3.ResponseBody
 import okhttp3.ResponseBody.Companion.toResponseBody
 import social.bigbone.MastodonClient
+import social.bigbone.api.exception.BigBoneRequestException
 import java.net.SocketTimeoutException
 
 object MockClient {
@@ -70,6 +71,7 @@ object MockClient {
         every { clientMock.post(ofType<String>(), any()) } returns response
         every { clientMock.postRequestBody(ofType<String>(), any()) } returns response
         every { clientMock.put(ofType<String>(), any()) } returns response
+        every { clientMock.performAction(ofType<String>(), any()) } throws BigBoneRequestException("mock")
         every { clientMock.getSerializer() } returns Gson()
         return clientMock
     }
