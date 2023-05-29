@@ -4,7 +4,6 @@ import social.bigbone.MastodonClient;
 import social.bigbone.api.entity.Search;
 import social.bigbone.api.exception.BigBoneRequestException;
 
-@SuppressWarnings("PMD.SystemPrintln")
 public class PerformSimpleSearch {
     public static void main(final String[] args) throws BigBoneRequestException {
         final String instance = args[0];

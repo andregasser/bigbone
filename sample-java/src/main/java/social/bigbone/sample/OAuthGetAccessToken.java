@@ -8,7 +8,6 @@ import social.bigbone.api.exception.BigBoneRequestException;
 
 import java.util.Scanner;
 
-@SuppressWarnings("PMD.SystemPrintln")
 public class OAuthGetAccessToken {
     public static void main(final String[] args) throws BigBoneRequestException {
         final String instanceName = args[0];
