@@ -54,14 +54,14 @@ public class ManageFilters {
     private static void listExistingFilters(final MastodonClient client) throws BigBoneRequestException {
         final List<Filter> existingFilters = client.filters().listFilters().execute();
         for (final Filter filter: existingFilters) {
-            System.out.println(filter.getTitle()+" (ID "+filter.getId()+"):");
-            System.out.print(filter.getFilterAction()+" in the following contexts: ");
+            System.out.println(filter.getTitle() + " (ID " + filter.getId() + "):");
+            System.out.print(filter.getFilterAction() + " in the following contexts: ");
             for (final String context: filter.getContext()) {
-                System.out.print(context+" ");
+                System.out.print(context + " ");
             }
             System.out.print("\nkeywords: ");
             for (final FilterKeyword filterKeyword: filter.getKeywords()) {
-                System.out.print(filterKeyword.getKeyword()+" ");
+                System.out.print(filterKeyword.getKeyword() + " ");
             }
             System.out.println("\n-------------------------------------------------------");
         }
@@ -77,7 +77,7 @@ public class ManageFilters {
      */
     private static void createNewFilter(final MastodonClient client, final String keywordToFilter) throws BigBoneRequestException {
         // title for new filter
-        final String title = "BigBone sample filter: "+keywordToFilter;
+        final String title = "BigBone sample filter: " + keywordToFilter;
 
         // filter context - where do we want statuses to be filtered? (here: in Home and Public timelines)
         final List<Filter.Context> context = Arrays.asList(Filter.Context.Home, Filter.Context.Public);
@@ -95,7 +95,7 @@ public class ManageFilters {
 
         // create filter and output its ID
         final Filter createdFilter = client.filters().createFilter(title, context, keywords, expiryInSeconds, action).execute();
-        System.out.println("New filter was created with ID "+createdFilter.getId());
+        System.out.println("New filter was created with ID " + createdFilter.getId());
     }
 
     /**
@@ -124,6 +124,6 @@ public class ManageFilters {
 
         // add keyword to filter
         final FilterKeyword newFilterKeyword = client.filters().addKeyword(filterId, localFilterKeyword).execute();
-        System.out.println("Keyword \""+keywordToFilter+"\" was added to filter with ID "+newFilterKeyword.getId());
+        System.out.println("Keyword \"" + keywordToFilter + "\" was added to filter with ID " + newFilterKeyword.getId());
     }
 }
