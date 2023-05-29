@@ -5,7 +5,6 @@ import social.bigbone.api.exception.BigBoneRequestException;
 
 import static social.bigbone.api.method.TimelineMethods.StatusOrigin.LOCAL_AND_REMOTE;
 
-@SuppressWarnings("PMD.SystemPrintln")
 public class GetRawJson {
     public static void main(final String[] args) throws BigBoneRequestException {
         final String instance = args[0];

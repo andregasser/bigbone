@@ -5,7 +5,6 @@ import social.bigbone.api.Scope;
 import social.bigbone.api.entity.Application;
 import social.bigbone.api.exception.BigBoneRequestException;
 
-@SuppressWarnings({"PMD.SystemPrintln", "PMD.AvoidPrintStackTrace"})
 public class GetAppRegistration {
     public static void main(final String[] args) {
         final MastodonClient client = new MastodonClient.Builder("mstdn.jp").build();
