@@ -183,10 +183,11 @@ data class Status(
     val isBookmarked: Boolean = false,
 
     /**
-     * If the current token has an authorized user: Have you pinned this status? Only appears if the status is pinnable. (optional)
+     * If the current token has an authorized user: Have you pinned this status? A value of false does not imply that
+     * this status is in fact pinnable.
      */
     @SerializedName("pinned")
-    val isPinned: Boolean? = null,
+    val isPinned: Boolean = false,
 
     /**
      * If the current token has an authorized user: The filter and keywords that matched this status. (optional)
