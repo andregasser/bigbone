@@ -144,9 +144,9 @@ class AccountMethods(private val client: MastodonClient) {
             endpoint = "api/v1/accounts/$accountId/statuses",
             method = MastodonClient.Method.GET,
             parameters = range.toParameters().apply {
-                if (onlyMedia) { append("only_media", true) }
-                if (pinned) { append("pinned", true) }
-                if (excludeReplies) { append("exclude_replies", true) }
+                if (onlyMedia) append("only_media", true)
+                if (pinned) append("pinned", true)
+                if (excludeReplies) append("exclude_replies", true)
             }
         )
     }
