@@ -15,10 +15,8 @@ class BigBoneRequestException : Exception {
     /**
      * true if [httpStatusCode] contains a valid HTTP Status code, false if not.
      */
-    val statusCodeValid: Boolean
-        get() {
-            return httpStatusCode != invalidStatusCode
-        }
+    val statusCodeValid: Boolean =
+        httpStatusCode != invalidStatusCode
 
     /**
      * Create a BigBoneRequestException using a [Response].
