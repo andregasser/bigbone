@@ -97,7 +97,6 @@ data class Instance(
     @SerializedName("contact_account")
     val contactAccount: Account? = null,
 
-    // Add rules block
     /**
      * An itemized list of rules for this website.
      */
