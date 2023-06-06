@@ -154,7 +154,7 @@ data class Instance(
          * Limits related to authoring statuses.
          */
         @SerializedName("statuses")
-        val text: Statuses? = null,
+        val statuses: Statuses? = null,
 
         /**
          * Hints for which attachments will be accepted.
