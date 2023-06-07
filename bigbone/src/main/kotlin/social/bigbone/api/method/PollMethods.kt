@@ -21,7 +21,7 @@ class PollMethods(private val client: MastodonClient) {
     @Throws(BigBoneRequestException::class)
     fun viewPoll(pollId: String): MastodonRequest<Poll> {
         return client.getMastodonRequest(
-            endpoint = "/api/v1/polls/$pollId",
+            endpoint = "api/v1/polls/$pollId",
             method = MastodonClient.Method.GET
         )
     }
@@ -36,7 +36,7 @@ class PollMethods(private val client: MastodonClient) {
     @Throws(BigBoneRequestException::class)
     fun voteOnPoll(pollId: String, choices: List<Int>): MastodonRequest<Poll> {
         return client.getMastodonRequest(
-            endpoint = "/api/v1/polls/$pollId/votes",
+            endpoint = "api/v1/polls/$pollId/votes",
             method = MastodonClient.Method.POST,
             parameters = Parameters().apply {
                 appendInts("choices", choices)
