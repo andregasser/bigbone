@@ -17,7 +17,7 @@ class TagMethods(private val client: MastodonClient) {
      */
     fun getTag(tagId: String): MastodonRequest<Tag> {
         return client.getMastodonRequest(
-            endpoint = "/api/v1/tags/$tagId",
+            endpoint = "api/v1/tags/$tagId",
             method = MastodonClient.Method.GET
         )
     }
@@ -29,7 +29,7 @@ class TagMethods(private val client: MastodonClient) {
      */
     fun followTag(tagId: String): MastodonRequest<Tag> {
         return client.getMastodonRequest(
-            endpoint = "/api/v1/tags/$tagId/follow",
+            endpoint = "api/v1/tags/$tagId/follow",
             method = MastodonClient.Method.POST
         )
     }
@@ -41,7 +41,7 @@ class TagMethods(private val client: MastodonClient) {
      */
     fun unfollowTag(tagId: String): MastodonRequest<Tag> {
         return client.getMastodonRequest(
-            endpoint = "/api/v1/tags/$tagId/unfollow",
+            endpoint = "api/v1/tags/$tagId/unfollow",
             method = MastodonClient.Method.POST
         )
     }
