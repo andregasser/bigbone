@@ -33,6 +33,12 @@ object NodeInfoClient {
                     .get()
                     .build()
             ).execute()
+
+            if (!response.isSuccessful) {
+                response.close()
+                throw BigBoneRequestException("request for NodeInfo URL unsuccessful")
+            }
+
             return gson.fromJson(response.body?.string(), Server::class.java)
         } catch (e: Exception) {
             throw BigBoneRequestException("invalid NodeInfo response")
