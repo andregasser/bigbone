@@ -1,0 +1,22 @@
+{
+  "version":"2.0",
+  "software":{
+    "name":"mastodon",
+    "version":"4.1.2+nightly-20230523"
+  },
+  "protocols":["activitypub"],
+  "services":{
+    "outbound":[],
+    "inbound":[]
+  },
+  "usage":{
+    "users":{
+      "total":1159186,
+      "activeMonth":217235,
+      "activeHalfyear":468099
+    },
+    "localPosts":56694261
+  },
+  "openRegistrations":true,
+  "metadata":{}
+}

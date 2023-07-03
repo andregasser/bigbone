@@ -32,6 +32,7 @@ import social.bigbone.api.method.StreamingMethods
 import social.bigbone.api.method.TagMethods
 import social.bigbone.api.method.TimelineMethods
 import social.bigbone.extension.emptyRequestBody
+import social.bigbone.nodeinfo.NodeInfoClient
 import java.io.IOException
 import java.security.SecureRandom
 import java.security.cert.X509Certificate
@@ -570,10 +571,20 @@ private constructor(
         /**
          * Get the version string for this Mastodon instance.
          * @return a string corresponding to the version of this Mastodon instance
-         * @throws BigBoneRequestException if instance version can not be retrieved using any API version
+         * @throws BigBoneRequestException if instance version can not be retrieved using any known method or API version
          */
         private fun getInstanceVersion(): String {
-            val instanceVersion = getInstanceVersion(2) ?: getInstanceVersion(1)
+            try {
+                val server = NodeInfoClient.retrieveServerInfo(instanceName)
+                server.software?.let { software ->
+                    if (software.name == "mastodon") {
+                        return software.version
+                    }
+                }
+            } catch (_: BigBoneRequestException) { }
+
+            // fall back to retrieving from Mastodon API itself
+            val instanceVersion = getInstanceVersionFromApi(2) ?: getInstanceVersionFromApi(1)
             return instanceVersion ?: throw BigBoneRequestException("Unable to fetch instance version")
         }
 
@@ -583,7 +594,7 @@ private constructor(
          * @return a string corresponding to the version of this Mastodon instance, or null if no version string can be
          *  retrieved using the specified API version.
          */
-        private fun getInstanceVersion(apiVersion: Int): String? {
+        private fun getInstanceVersionFromApi(apiVersion: Int): String? {
             return try {
                 val response = versionedInstanceRequest(apiVersion)
                 if (response.isSuccessful) {
