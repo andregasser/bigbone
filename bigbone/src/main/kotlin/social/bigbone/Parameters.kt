@@ -2,6 +2,7 @@ package social.bigbone
 
 import java.net.URLEncoder
 import java.util.ArrayList
+import java.util.UUID
 
 /**
  * Parameters holds a list of String key/value pairs that can be used as query part of a URL, or in the body of a request.
@@ -80,4 +81,18 @@ class Parameters {
         parameterList.joinToString(separator = "&") {
             "${it.first}=${URLEncoder.encode(it.second, "utf-8")}"
         }
+
+    /**
+     * Generates a UUID string for this parameter list. UUIDs returned for different Parameters instances should be
+     *  the same if they contain the same list of key/value pairs, even if pairs were appended in different order,
+     *  and should be different as soon as at least one parameter key or value differs.
+     * @return Type 3 UUID as a String.
+     */
+    fun uuid(): String {
+        val parameterString = parameterList
+            .sortedWith(compareBy { it.first })
+            .joinToString { "${it.first}${it.second}" }
+        val uuid = UUID.nameUUIDFromBytes(parameterString.toByteArray())
+        return uuid.toString()
+    }
 }

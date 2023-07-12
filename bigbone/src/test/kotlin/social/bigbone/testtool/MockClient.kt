@@ -46,6 +46,7 @@ object MockClient {
         every { clientMock.get(ofType<String>(), any()) } returns response
         every { clientMock.patch(ofType<String>(), any()) } returns response
         every { clientMock.post(ofType<String>(), any()) } returns response
+        every { clientMock.post(ofType<String>(), any(), any()) } returns response
         every { clientMock.postRequestBody(ofType<String>(), any()) } returns response
         every { clientMock.put(ofType<String>(), any()) } returns response
         every { clientMock.getSerializer() } returns Gson()
@@ -69,6 +70,7 @@ object MockClient {
         every { clientMock.get(ofType<String>(), any()) } returns response
         every { clientMock.patch(ofType<String>(), any()) } returns response
         every { clientMock.post(ofType<String>(), any()) } returns response
+        every { clientMock.post(ofType<String>(), any(), any()) } returns response
         every { clientMock.postRequestBody(ofType<String>(), any()) } returns response
         every { clientMock.put(ofType<String>(), any()) } returns response
         every { clientMock.performAction(ofType<String>(), any()) } throws BigBoneRequestException("mock")

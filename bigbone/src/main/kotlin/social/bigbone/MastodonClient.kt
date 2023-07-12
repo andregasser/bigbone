@@ -218,11 +218,13 @@ private constructor(
      * @param endpoint the Mastodon API endpoint to call
      * @param method the HTTP method to use
      * @param parameters parameters to use in the action; can be null
+     * @param addIdempotencyKey if true, adds idempotency key to header to avoid duplicate POST requests
      */
     internal inline fun <reified T : Any> getMastodonRequest(
         endpoint: String,
         method: Method,
-        parameters: Parameters? = null
+        parameters: Parameters? = null,
+        addIdempotencyKey: Boolean = false
     ): MastodonRequest<T> {
         return MastodonRequest(
             {
@@ -230,7 +232,7 @@ private constructor(
                     Method.DELETE -> delete(endpoint, parameters)
                     Method.GET -> get(endpoint, parameters)
                     Method.PATCH -> patch(endpoint, parameters)
-                    Method.POST -> post(endpoint, parameters)
+                    Method.POST -> post(endpoint, parameters, addIdempotencyKey)
                     Method.PUT -> put(endpoint, parameters)
                 }
             },
@@ -378,27 +380,38 @@ private constructor(
      * Get a response from the Mastodon instance defined for this client using the POST method.
      * @param path an absolute path to the API endpoint to call
      * @param body the parameters to use in the request body for this request; may be null
+     * @param addIdempotencyKey if true, generate idempotency key for this request
      */
-    fun post(path: String, body: Parameters? = null): Response =
-        postRequestBody(path, parameterBody(body))
+    fun post(path: String, body: Parameters? = null, addIdempotencyKey: Boolean = false): Response {
+        val idempotencyKey = if (addIdempotencyKey) {
+            body?.uuid()
+        } else {
+            null
+        }
+        return postRequestBody(path, parameterBody(body), idempotencyKey)
+    }
 
     /**
      * Get a response from the Mastodon instance defined for this client using the POST method. Use this method if
      * you need to build your own RequestBody; see post() otherwise.
      * @param path an absolute path to the API endpoint to call
      * @param body the RequestBody to use for this request
+     * @param idempotencyKey optional idempotency value to avoid duplicate calls
      *
      * @see post
      */
-    fun postRequestBody(path: String, body: RequestBody): Response {
+    fun postRequestBody(path: String, body: RequestBody, idempotencyKey: String? = null): Response {
         try {
             val url = fullUrl(scheme, instanceName, port, path)
             debugPrintUrl(url)
             val call = client.newCall(
-                Request.Builder()
-                    .url(url)
-                    .post(body)
-                    .build()
+                Request.Builder().apply {
+                    url(url)
+                    post(body)
+                    idempotencyKey?.let {
+                        header("Idempotency-Key", it)
+                    }
+                }.build()
             )
             return call.execute()
         } catch (e: IllegalArgumentException) {
