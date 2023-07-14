@@ -15,6 +15,7 @@ import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.api.method.AccountMethods
 import social.bigbone.api.method.AppMethods
 import social.bigbone.api.method.BlockMethods
+import social.bigbone.api.method.DirectoryMethods
 import social.bigbone.api.method.FavouriteMethods
 import social.bigbone.api.method.FilterMethods
 import social.bigbone.api.method.FollowRequestMethods
@@ -77,6 +78,13 @@ private constructor(
     @Suppress("unused") // public API
     @get:JvmName("blocks")
     val blocks: BlockMethods by lazy { BlockMethods(this) }
+
+    /**
+     * Access API methods under "api/vX/directory" endpoint.
+     */
+    @Suppress("unused") // public API
+    @get:JvmName("directories")
+    val directories: DirectoryMethods by lazy { DirectoryMethods(this) }
 
     /**
      * Access API methods under "api/vX/favourites" endpoint.
