@@ -131,7 +131,8 @@ class StatusMethods(private val client: MastodonClient) {
                 append("sensitive", sensitive)
                 spoilerText?.let { append("spoiler_text", it) }
                 language?.let { append("language", it) }
-            }
+            },
+            addIdempotencyKey = true
         )
     }
 
@@ -171,7 +172,8 @@ class StatusMethods(private val client: MastodonClient) {
                 append("sensitive", sensitive)
                 spoilerText?.let { append("spoiler_text", it) }
                 language?.let { append("language", it) }
-            }
+            },
+            addIdempotencyKey = true
         )
     }
 
@@ -212,7 +214,8 @@ class StatusMethods(private val client: MastodonClient) {
                 append("sensitive", sensitive)
                 spoilerText?.let { append("spoiler_text", it) }
                 language?.let { append("language", it) }
-            }
+            },
+            addIdempotencyKey = true
         )
     }
 
@@ -255,7 +258,8 @@ class StatusMethods(private val client: MastodonClient) {
                 append("sensitive", sensitive)
                 spoilerText?.let { append("spoiler_text", it) }
                 language?.let { append("language", it) }
-            }
+            },
+            addIdempotencyKey = true
         )
     }
 
