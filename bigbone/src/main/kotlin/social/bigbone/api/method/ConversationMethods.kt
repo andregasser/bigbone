@@ -30,8 +30,8 @@ class ConversationMethods(private val client: MastodonClient) {
      * @param conversationId ID of the conversation.
      * @see <a href="https://docs.joinmastodon.org/methods/conversations/#delete">Mastodon API documentation: methods/conversations/#delete</a>
      */
-    fun deleteConversation(conversationId: String): MastodonRequest<Conversation> {
-        return client.getMastodonRequest(
+    fun deleteConversation(conversationId: String) {
+        client.performAction(
             endpoint = "api/v1/conversations/$conversationId",
             method = MastodonClient.Method.DELETE
         )

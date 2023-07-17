@@ -28,22 +28,11 @@ class ConversationMethodsTest {
     }
 
     @Test
-    fun deleteConversation() {
-        val client = MockClient.mock("conversations_after_deleting.json")
-        val conversationMethods = ConversationMethods(client)
-        val conversation = conversationMethods.deleteConversation("conversationId").execute()
-        conversation.id shouldBeEqualTo null
-        conversation.unread shouldBeEqualTo null
-        conversation.accounts shouldBeEqualTo null
-        conversation.lastStatus shouldBeEqualTo null
-    }
-
-    @Test
     fun deleteConversationWithException() {
         Assertions.assertThrows(BigBoneRequestException::class.java) {
             val client = MockClient.ioException()
             val conversationMethods = ConversationMethods(client)
-            conversationMethods.deleteConversation("12345").execute()
+            conversationMethods.deleteConversation("12345")
         }
     }
 

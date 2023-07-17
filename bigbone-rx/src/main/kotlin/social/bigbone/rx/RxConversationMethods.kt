@@ -1,5 +1,6 @@
 package social.bigbone.rx
 
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import social.bigbone.MastodonClient
 import social.bigbone.api.Pageable
@@ -16,6 +17,7 @@ import social.bigbone.rx.extensions.onErrorIfNotDisposed
 class RxConversationMethods(client: MastodonClient) {
     private val conversationMethods = ConversationMethods(client)
 
+    @JvmOverloads
     fun getConversations(range: Range = Range()): Single<Pageable<Conversation>> {
         return Single.create {
             try {
@@ -27,13 +29,13 @@ class RxConversationMethods(client: MastodonClient) {
         }
     }
 
-    fun deleteConversation(conversationId: String): Single<Conversation> {
-        return Single.create {
+    fun deleteConversation(conversationId: String): Completable {
+        return Completable.create {
             try {
-                val conversation = conversationMethods.deleteConversation(conversationId)
-                it.onSuccess(conversation.execute())
+                conversationMethods.deleteConversation(conversationId)
+                it.onComplete()
             } catch (throwable: Throwable) {
-                it.onError(throwable)
+                it.onErrorIfNotDisposed(throwable)
             }
         }
     }

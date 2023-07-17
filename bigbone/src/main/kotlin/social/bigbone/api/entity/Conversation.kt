@@ -11,19 +11,19 @@ data class Conversation(
      * The ID of the conversation in the database.
      */
     @SerializedName("id")
-    val id: String? = null,
+    val id: String = "0",
 
     /**
      * Is the conversation currently marked as unread?
      */
     @SerializedName("unread")
-    val unread: Boolean? = null,
+    val unread: Boolean = true,
 
     /**
      * Participants in the conversation.
      */
     @SerializedName("accounts")
-    val accounts: List<Account>? = null,
+    val accounts: List<Account>? = emptyList(),
 
     /**
      * The last status in the conversation.
