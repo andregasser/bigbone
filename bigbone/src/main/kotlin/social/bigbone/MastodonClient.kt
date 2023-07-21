@@ -22,6 +22,7 @@ import social.bigbone.api.method.FilterMethods
 import social.bigbone.api.method.FollowRequestMethods
 import social.bigbone.api.method.InstanceMethods
 import social.bigbone.api.method.ListMethods
+import social.bigbone.api.method.MarkerMethods
 import social.bigbone.api.method.MediaMethods
 import social.bigbone.api.method.MuteMethods
 import social.bigbone.api.method.NotificationMethods
@@ -128,6 +129,13 @@ private constructor(
     @Suppress("unused") // public API
     @get:JvmName("lists")
     val lists: ListMethods by lazy { ListMethods(this) }
+
+    /**
+     * Save and restore your position in timelines.
+     */
+    @Suppress("unused") // public API
+    @get:JvmName("markers")
+    val markers: MarkerMethods by lazy { MarkerMethods(this) }
 
     /**
      * Access API methods under "api/vX/media" endpoint.
