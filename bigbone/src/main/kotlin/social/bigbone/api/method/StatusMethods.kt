@@ -107,6 +107,9 @@ class StatusMethods(private val client: MastodonClient) {
      * @param sensitive set this to mark the media of the status as NSFW
      * @param spoilerText text to be shown as a warning before the actual content
      * @param language ISO 639 language code for this status.
+     * @param addIdempotencyKey If true, this will generate a unique hash value from all given parameters and add it to
+     *         the request as its idempotency key value. To avoid duplicate submissions of the same status, if this
+     *         value is reused within a short timeframe, another status will not be created. Defaults to true.
      * @see <a href="https://docs.joinmastodon.org/methods/statuses/#create">Mastodon API documentation: methods/statuses/#create</a>
      */
     @JvmOverloads
@@ -118,7 +121,8 @@ class StatusMethods(private val client: MastodonClient) {
         mediaIds: List<String>? = null,
         sensitive: Boolean = false,
         spoilerText: String? = null,
-        language: String? = null
+        language: String? = null,
+        addIdempotencyKey: Boolean = true
     ): MastodonRequest<Status> {
         return client.getMastodonRequest(
             endpoint = "api/v1/statuses",
@@ -132,7 +136,7 @@ class StatusMethods(private val client: MastodonClient) {
                 spoilerText?.let { append("spoiler_text", it) }
                 language?.let { append("language", it) }
             },
-            addIdempotencyKey = true
+            addIdempotencyKey = addIdempotencyKey
         )
     }
 
@@ -145,6 +149,9 @@ class StatusMethods(private val client: MastodonClient) {
      * @param sensitive set this to mark the media of the status as NSFW
      * @param spoilerText text to be shown as a warning before the actual content
      * @param language ISO 639 language code for this status.
+     * @param addIdempotencyKey If true, this will generate a unique hash value from all given parameters and add it to
+     *         the request as its idempotency key value. To avoid duplicate submissions of the same status, if this
+     *         value is reused within a short timeframe, another status will not be created. Defaults to true.
      * @see <a href="https://docs.joinmastodon.org/methods/statuses/#create">Mastodon API documentation: methods/statuses/#create</a>
      */
     @JvmOverloads
@@ -156,7 +163,8 @@ class StatusMethods(private val client: MastodonClient) {
         inReplyToId: String? = null,
         sensitive: Boolean = false,
         spoilerText: String? = null,
-        language: String? = null
+        language: String? = null,
+        addIdempotencyKey: Boolean = true
     ): MastodonRequest<Status> {
         return client.getMastodonRequest(
             endpoint = "api/v1/statuses",
@@ -173,7 +181,7 @@ class StatusMethods(private val client: MastodonClient) {
                 spoilerText?.let { append("spoiler_text", it) }
                 language?.let { append("language", it) }
             },
-            addIdempotencyKey = true
+            addIdempotencyKey = addIdempotencyKey
         )
     }
 
@@ -188,6 +196,9 @@ class StatusMethods(private val client: MastodonClient) {
      * @param sensitive set this to mark the media of the status as NSFW
      * @param spoilerText text to be shown as a warning before the actual content
      * @param language ISO 639 language code for this status.
+     * @param addIdempotencyKey If true, this will generate a unique hash value from all given parameters and add it to
+     *         the request as its idempotency key value. To avoid duplicate submissions of the same status, if this
+     *         value is reused within a short timeframe, another status will not be created. Defaults to true.
      * @see <a href="https://docs.joinmastodon.org/methods/statuses/#create">Mastodon API documentation: methods/statuses/#create</a>
      */
     @JvmOverloads
@@ -200,7 +211,8 @@ class StatusMethods(private val client: MastodonClient) {
         mediaIds: List<String>? = null,
         sensitive: Boolean = false,
         spoilerText: String? = null,
-        language: String? = null
+        language: String? = null,
+        addIdempotencyKey: Boolean = true
     ): MastodonRequest<ScheduledStatus> {
         return client.getMastodonRequest(
             endpoint = "api/v1/statuses",
@@ -215,7 +227,7 @@ class StatusMethods(private val client: MastodonClient) {
                 spoilerText?.let { append("spoiler_text", it) }
                 language?.let { append("language", it) }
             },
-            addIdempotencyKey = true
+            addIdempotencyKey = addIdempotencyKey
         )
     }
 
@@ -229,6 +241,9 @@ class StatusMethods(private val client: MastodonClient) {
      * @param sensitive set this to mark the media of the status as NSFW
      * @param spoilerText text to be shown as a warning before the actual content
      * @param language ISO 639 language code for this status.
+     * @param addIdempotencyKey If true, this will generate a unique hash value from all given parameters and add it to
+     *         the request as its idempotency key value. To avoid duplicate submissions of the same status, if this
+     *         value is reused within a short timeframe, another status will not be created. Defaults to true.
      * @see <a href="https://docs.joinmastodon.org/methods/statuses/#create">Mastodon API documentation: methods/statuses/#create</a>
      */
     @JvmOverloads
@@ -241,7 +256,8 @@ class StatusMethods(private val client: MastodonClient) {
         inReplyToId: String? = null,
         sensitive: Boolean = false,
         spoilerText: String? = null,
-        language: String? = null
+        language: String? = null,
+        addIdempotencyKey: Boolean = true
     ): MastodonRequest<ScheduledStatus> {
         return client.getMastodonRequest(
             endpoint = "api/v1/statuses",
@@ -259,7 +275,7 @@ class StatusMethods(private val client: MastodonClient) {
                 spoilerText?.let { append("spoiler_text", it) }
                 language?.let { append("language", it) }
             },
-            addIdempotencyKey = true
+            addIdempotencyKey = addIdempotencyKey
         )
     }
 
