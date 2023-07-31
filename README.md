@@ -195,6 +195,17 @@ The following people have actively contributed to the development of BigBone:
 Contributions are welcome! There's always something to be done and we try to keep an up-to-date list of issues that can be 
 worked on. Please have a look at our [Code Contribution Guidelines](CONTRIBUTING.md) for more details.  
 
+# Projects Using BigBone
+
+Below we would like to mention projects that use the BigBone library.
+
+- [MastodonContentMover](https://mastodoncontentmover.github.io/): MastodonContentMover is a command-line tool created by 
+  [Tokyo Outsider](https://mas.to/@tokyo_0) that downloads your posts from one Mastodon instance, saving them as a set of 
+  files on your computer, and then re-posts them on any other Mastodon instance. Its purpose is to allow Mastodon users to 
+  move content they value when migrating from one instance to another, which is not currently possible within Mastodon itself.
+
+Do you have a project that you would like to have listed here? Then please contact us.
+
 # Previous Work
 
 Our personal thanks goes to Toshihiro and his contributors back then for building [Mastodon4J](https://github.com/sys1yagi/mastodon4j). 
