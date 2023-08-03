@@ -13,8 +13,8 @@ import social.bigbone.nodeinfo.entity.Server
  */
 object NodeInfoClient {
 
-    private val gson = Gson()
-    private val client = OkHttpClient.Builder()
+    private val GSON = Gson()
+    private val CLIENT = OkHttpClient.Builder()
         .followRedirects(true)
         .build()
 
@@ -27,7 +27,7 @@ object NodeInfoClient {
     fun retrieveServerInfo(host: String): Server {
         try {
             val serverInfoUrl = getServerInfoUrl(host)
-            val response = client.newCall(
+            val response = CLIENT.newCall(
                 Request.Builder()
                     .url(serverInfoUrl)
                     .get()
@@ -39,7 +39,7 @@ object NodeInfoClient {
                 throw BigBoneRequestException("request for NodeInfo URL unsuccessful")
             }
 
-            return gson.fromJson(response.body?.string(), Server::class.java)
+            return GSON.fromJson(response.body?.string(), Server::class.java)
         } catch (e: Exception) {
             throw BigBoneRequestException("invalid NodeInfo response")
         }
@@ -51,7 +51,7 @@ object NodeInfoClient {
      * @return String containing the URL holding server information
      */
     private fun getServerInfoUrl(host: String): String {
-        val response = client.newCall(
+        val response = CLIENT.newCall(
             Request.Builder()
                 .url("https://$host/.well-known/nodeinfo")
                 .get()
@@ -63,7 +63,7 @@ object NodeInfoClient {
             throw BigBoneRequestException("request for well-known NodeInfo URL unsuccessful")
         }
 
-        val nodeInfo = gson.fromJson(response.body?.string(), NodeInfo::class.java)
+        val nodeInfo = GSON.fromJson(response.body?.string(), NodeInfo::class.java)
 
         // attempt returning URL to schema 2.0 information, but fall back to any - software information exists in all schemas
         for (link in nodeInfo.links) {

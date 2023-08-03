@@ -610,7 +610,8 @@ private constructor(
                         return software.version
                     }
                 }
-            } catch (_: BigBoneRequestException) { }
+            } catch (_: BigBoneRequestException) {
+            }
 
             // fall back to retrieving from Mastodon API itself
             val instanceVersion = getInstanceVersionFromApi(2) ?: getInstanceVersionFromApi(1)
