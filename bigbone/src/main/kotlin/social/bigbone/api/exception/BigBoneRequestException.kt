@@ -10,13 +10,13 @@ class BigBoneRequestException : Exception {
      * If BigBoneRequestException was constructed using a [Response], this will be set to the HTTP status code of the
      * unsuccessful request. Use [statusCodeValid] to check whether this contains valid information.
      */
-    var httpStatusCode = invalidStatusCode
+    var httpStatusCode = INVALID_STATUS_CODE
 
     /**
      * true if [httpStatusCode] contains a valid HTTP Status code, false if not.
      */
     val statusCodeValid: Boolean =
-        httpStatusCode != invalidStatusCode
+        httpStatusCode != INVALID_STATUS_CODE
 
     /**
      * Create a BigBoneRequestException using a [Response].
@@ -47,6 +47,6 @@ class BigBoneRequestException : Exception {
     constructor(message: String, e: Exception) : super(message, e)
 
     companion object {
-        private const val invalidStatusCode = -1
+        private const val INVALID_STATUS_CODE = -1
     }
 }
