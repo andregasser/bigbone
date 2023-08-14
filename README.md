@@ -19,6 +19,7 @@ Maintained and developed with love by [André Gasser](https://fosstodon.org/@and
 * [Troubleshooting](#troubleshooting)
 * [BigBone Contributors](#bigbone-contributors)
 * [Contribution](#contribution)
+* [Projects Using BigBone](#projects-using-bigbone)
 * [Previous Work](#previous-work)
 * [License](#license)
 
