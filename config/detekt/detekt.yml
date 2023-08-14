@@ -185,7 +185,7 @@ style:
   BracesOnWhenStatements:
     active: true
     singleLine: never
-    multiLine: always
+    multiLine: necessary
   CanBeNonNullable:
     active: true
   CascadingCallWrapping:
