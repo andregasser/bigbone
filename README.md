@@ -6,6 +6,22 @@
 
 **BigBone** is a [Mastodon](https://docs.joinmastodon.org/) client library for Java and Kotlin.
 
+Maintained and developed with love by [André Gasser](https://fosstodon.org/@andregasser) and [contributors](https://github.com/andregasser/bigbone/graphs/contributors).
+
+# Table of Contents
+* [Why BigBone](#why-bigbone)
+* [Core Functionality](#core-functionality)
+* [Implementation Status](#implementation-status)
+* [Versioning](#versioning)
+* [Adding BigBone to Your Project](#adding-bigbone-to-your-project)
+* [Using BigBone](#using-bigbone)
+* [Support](#support)
+* [Troubleshooting](#troubleshooting)
+* [BigBone Contributors](#bigbone-contributors)
+* [Contribution](#contribution)
+* [Previous Work](#previous-work)
+* [License](#license)
+
 # Why BigBone
 
 BigBone is a fork of [Mastodon4J](https://github.com/sys1yagi/mastodon4j), a Mastodon client library for Java and Kotlin that was published by Toshihiro Yagi. 
@@ -13,32 +29,38 @@ The goal of Mastodon4J was to provide an easy-to-use library for interacting wit
 Kotlin code. Unfortunately, it became abandoned and has not seen any updates since 2018. 
 
 Since Elon Musk's Twitter acquisition in 2022, Mastodon has gained tremendous popularity. A project that is so well received by the community deserves to have 
-up-to-date and maintained client libraries. Back in November 2022, I took the decision to bring the Mastodon4J project back to life. That's when this project,
+up-to-date and maintained client libraries. Because of this, we brought the Mastodon4J project back to life in November 2022. That's when this project,
 the BigBone client library for Java and Kotlin, was born. May it serve you well in your Mastodon-related endeavours!
 
-The name **BigBone** has mostly symbolic character. I have chosen the name BigBone for this library because Mastodons represent impressive animals from the 
+The name **BigBone** has mostly symbolic character. We have chosen the name BigBone for this library because Mastodons represent impressive animals from the 
 Pleistocene, built of big and heavy bones. At the same time, we hope this library will build some sort of "skeleton" for your Mastodon-related projects. 
 Interestingly, there is also [Big Bone Lick State Park in Kentucky](https://parks.ky.gov/union/parks/historic/big-bone-lick-state-historic-site) where 
 American Mastodons have been excavated.
 
 # Core Functionality
 
-With a library like BigBone, you can for example build tools which
+With a library like BigBone, you can build tools that allow you to
 - act on statuses on your timelines (home, local, federated).
-- create, boost and favourite statuses and polls
+- post new statuses or edit existing ones (including media uploads)
+- favourite and bookmark statuses
+- manage lists
+- post polls or vote on them
 - schedule statuses
+- send direct messages to other people
+- manage filters
+- follow/unfollow hashtags
 - plus lots of other stuff!
 
 # Implementation Status
 
-**I did not release an official version on Maven Central yet**, but there's already a `2.0.0-SNAPSHOT` that you can use to play around / experiment with. 
-Just please be aware that with every new snapshot version, there can be breaking changes along the lines. I am sure that there will be "dark places" in the 
-library, where stuff will not work as expected. If you find issues, please file an issue in the [Issues](https://github.com/andregasser/bigbone/issues) section.  
+**We did not release an official version on Maven Central yet**, but there's a `2.0.0-SNAPSHOT` which you can use to play around / experiment with. 
+Just please be aware that with every new snapshot version, there can be breaking changes along the lines. There will be "darker places" in the 
+library, where stuff will not work as expected. If you find issues, please [file an issue](https://github.com/andregasser/bigbone/issues).  
 
-BigBone does not yet implement the full API of Mastodon. Actually, there is still **a lot to do**. Our main goal for the 2.0.0 release is to get something out 
-that is in a maintained state and on a solid basis, technology-wise. In future releases, focus will be put on extending the existing API coverage. 
+BigBone does not yet implement the full API of Mastodon. Actually, there is still **a lot to do**. For details on the current API coverage 
+please check out our wiki page [Mastodon API Coverage](https://github.com/andregasser/bigbone/wiki/Mastodon-API-Coverage).
 
-For details on the current API coverage please checkout wiki page [Mastodon API Coverage](https://github.com/andregasser/bigbone/wiki/Mastodon-API-Coverage).
+# Versioning
 
 BigBone uses [Semantic Versioning 2.0.0](http://semver.org/spec/v2.0.0.html).
 
@@ -128,8 +150,9 @@ Dependencies:
 ```
 
 # Using BigBone
-For an easy introduction to using the library, it is recommended that you take a look at the sample-* modules of this 
-project. We provide examples for Java and Kotlin:
+
+For an easy introduction to using the library, we recommended that you take a look at the `sample-*` modules of this 
+project. These modules provide examples for Java and Kotlin:
 
 - `sample-java` for Java example code
 - `sample-kotlin` for Kotlin example code
@@ -139,12 +162,18 @@ have a look at the code for details.
 
 We also provide some guidance in [USAGE.md](USAGE.md).
 
+# Support
+
+Please check out [SUPPORT.md](SUPPORT.md) for our preferred ways of supporting you.
+
 # Troubleshooting
+
 In this section we describe problems that have been reported to us by users of the library. Please 
-read this section before you start working with the library, as the tips given in this section might 
+read this section before you start working with it, as the tips given in this section might 
 save you some time.
 
 ## Request Not Sent / No Data Returned
+
 Make sure you call `.execute()` on the BigBone library method you want to use. Here's an example:
 
 ```kotlin
@@ -161,18 +190,26 @@ The following people have actively contributed to the development of BigBone:
 - [Andreas](https://fosstodon.org/@bocops) - For actively contributing to the whole library project - thanks!
 - [Cédric Champeau](https://mastodon.xyz/@melix) - For putting the Gradle build scripts in great shape again
 
-# BigBone Users
-
-Are you using this library in your project? If so, let me know and we will happily feature your project in this section here.
-
 # Contribution
 
-Contributions are welcome! Please have a look at [CONTRIBUTING.md](CONTRIBUTING.md) for more details.  
+Contributions are welcome! There's always something to be done and we try to keep an up-to-date list of issues that can be 
+worked on. Please have a look at our [Code Contribution Guidelines](CONTRIBUTING.md) for more details.  
+
+# Projects Using BigBone
+
+Below we would like to mention projects that use the BigBone library.
+
+- [MastodonContentMover](https://mastodoncontentmover.github.io/): MastodonContentMover is a command-line tool created by 
+  [Tokyo Outsider](https://mas.to/@tokyo_0) that downloads your posts from one Mastodon instance, saving them as a set of 
+  files on your computer, and then re-posts them on any other Mastodon instance. Its purpose is to allow Mastodon users to 
+  move content they value when migrating from one instance to another, which is not currently possible within Mastodon itself.
+
+Do you have a project that you would like to have listed here? Then please contact us.
 
 # Previous Work
 
-My personal thanks go to Toshihiro and his contributors back then for building [Mastodon4J](https://github.com/sys1yagi/mastodon4j). The library they have
-built in the past serves as a basis for our own development efforts. ❤️ Thank you! ❤️
+Our personal thanks goes to Toshihiro and his contributors back then for building [Mastodon4J](https://github.com/sys1yagi/mastodon4j). 
+The library they have built in the past serves as a basis for our own development efforts. ❤️ Thank you! ❤️
 
 # License
 
