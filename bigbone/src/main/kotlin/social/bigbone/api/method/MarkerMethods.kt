@@ -15,24 +15,25 @@ class MarkerMethods(private val client: MastodonClient) {
     /**
      * Get saved timeline positions.
      * @param timeline specifies for which timelines the position markers should be returned. This value
-     *         is chosen from the [Timeline] enum.
+     *         is chosen from the [Timeline] enum. When this value is not provided, all known markers
+     *         will be returned.
      */
-    fun getMarkers(timeline: Timeline): MastodonRequest<Markers> {
+    @JvmOverloads
+    fun getMarkers(timeline: Timeline? = null): MastodonRequest<Markers> {
         return client.getMastodonRequest(
             endpoint = "/api/v1/markers",
             method = MastodonClient.Method.GET,
             parameters = Parameters().apply {
+            timeline?.let {
                 when (timeline) {
-                    Timeline.ALL -> {
-                        append("timeline", "home")
-                        append("timeline", "notifications")
-                    }
-
-                    Timeline.HOME -> append("timeline", "home")
-                    Timeline.NOTIFICATIONS -> append("timeline", "notifications")
+                    Timeline.HOME -> append("timeline[]", "home")
+                    Timeline.NOTIFICATIONS -> append("timeline[]", "notifications")
                 }
+            } ?: run {
+                append("timeline[]", "home")
+                append("timeline[]", "notifications")
             }
-        )
+        })
     }
 
     /**
@@ -43,17 +44,12 @@ class MarkerMethods(private val client: MastodonClient) {
      */
     @Throws(BigBoneRequestException::class)
     fun updateMarker(timeline: Timeline, lastReadId: Int): MastodonRequest<Marker> {
-        return client.getMastodonRequest(
-            endpoint = "api/v1/markers",
-            method = MastodonClient.Method.POST,
-            parameters = Parameters().apply {
-                when (timeline) {
-                    Timeline.HOME -> append("home[last_read_id]", lastReadId)
-                    Timeline.NOTIFICATIONS -> append("notifications[last_read_id]", lastReadId)
-                    else -> throw BigBoneRequestException("Invalid timeline type specified")
-                }
+        return client.getMastodonRequest(endpoint = "api/v1/markers", method = MastodonClient.Method.POST, parameters = Parameters().apply {
+            when (timeline) {
+                Timeline.HOME -> append("home[last_read_id]", lastReadId)
+                Timeline.NOTIFICATIONS -> append("notifications[last_read_id]", lastReadId)
             }
-        )
+        })
 
     }
 }
@@ -63,11 +59,6 @@ class MarkerMethods(private val client: MastodonClient) {
  * @see <a href="https://docs.joinmastodon.org/entities/Marker/">Mastodon API Marker</a>
  */
 enum class Timeline {
-    /**
-     * All timelines (home and notification).
-     */
-    ALL,
-
     /**
      * Home timeline.
      */

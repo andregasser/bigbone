@@ -16,7 +16,8 @@ import social.bigbone.rx.extensions.onErrorIfNotDisposed
 class RxMarkerMethods(client: MastodonClient) {
     private val markerMethods = MarkerMethods(client)
 
-    fun getMarkers(timeline: Timeline): Single<Markers> {
+    @JvmOverloads
+    fun getMarkers(timeline: Timeline? = null): Single<Markers> {
         return Single.create {
             try {
                 val markers = markerMethods.getMarkers(timeline)
