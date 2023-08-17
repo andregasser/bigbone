@@ -6,10 +6,9 @@ dependencies {
     api project(':bigbone')
     api libs.rxjava
     api libs.okhttp
-
     implementation libs.kotlin.jdk8
-
-    testImplementation libs.junit.jupiter.api
+    testImplementation(libs.junit.jupiter)
+    testRuntimeOnly(libs.junit.platform.launcher)
     testImplementation libs.mockk
     testImplementation libs.mockk.dsl
     testImplementation libs.gson

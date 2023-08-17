@@ -18,12 +18,13 @@ dependencies {
     api libs.okhttp
     api libs.gson
     implementation libs.kotlin.jdk8
-    testImplementation libs.junit.jupiter.api
+    testImplementation(libs.junit.jupiter)
+    testRuntimeOnly(libs.junit.platform.launcher)
     testImplementation libs.kluent
     testImplementation libs.mockk
     testImplementation libs.mockk.dsl
-    integrationTestImplementation libs.junit.jupiter.api
-    integrationTestImplementation libs.junit.jupiter.engine
+    integrationTestImplementation(libs.junit.jupiter)
+    integrationTestRuntimeOnly(libs.junit.platform.launcher)
     integrationTestImplementation libs.junit.platform.suite.engine
 }
 
