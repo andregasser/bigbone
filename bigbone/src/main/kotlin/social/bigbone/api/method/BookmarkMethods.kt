@@ -4,7 +4,6 @@ import social.bigbone.MastodonClient
 import social.bigbone.MastodonRequest
 import social.bigbone.api.Pageable
 import social.bigbone.api.Range
-import social.bigbone.api.entity.Account
 import social.bigbone.api.entity.Status
 
 /**
