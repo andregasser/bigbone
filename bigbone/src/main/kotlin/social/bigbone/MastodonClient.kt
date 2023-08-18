@@ -15,6 +15,7 @@ import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.api.method.AccountMethods
 import social.bigbone.api.method.AppMethods
 import social.bigbone.api.method.BlockMethods
+import social.bigbone.api.method.BookmarkMethods
 import social.bigbone.api.method.ConversationMethods
 import social.bigbone.api.method.DirectoryMethods
 import social.bigbone.api.method.FavouriteMethods
@@ -80,6 +81,13 @@ private constructor(
     @Suppress("unused") // public API
     @get:JvmName("blocks")
     val blocks: BlockMethods by lazy { BlockMethods(this) }
+
+    /**
+     * Access API methods under "api/vX/bookmarks" endpoint.
+     */
+    @Suppress("unused") // public API
+    @get:JvmName("bookmarks")
+    val bookmarks: BookmarkMethods by lazy { BookmarkMethods(this) }
 
     /**
      * Access API methods under "api/vX/conversations" endpoint.
