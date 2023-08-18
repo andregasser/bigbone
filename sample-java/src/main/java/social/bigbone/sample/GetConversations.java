@@ -1,5 +1,6 @@
-package social.bigbone;
+package social.bigbone.sample;
 
+import social.bigbone.MastodonClient;
 import social.bigbone.api.Pageable;
 import social.bigbone.api.entity.Conversation;
 import social.bigbone.api.exception.BigBoneRequestException;
