@@ -7,6 +7,7 @@ import social.bigbone.api.Range
 import social.bigbone.api.entity.Account
 import social.bigbone.api.entity.Relationship
 import social.bigbone.api.entity.Status
+import social.bigbone.api.entity.Token
 import social.bigbone.api.method.AccountMethods
 import social.bigbone.rx.extensions.onErrorIfNotDisposed
 
@@ -17,6 +18,25 @@ import social.bigbone.rx.extensions.onErrorIfNotDisposed
  */
 class RxAccountMethods(client: MastodonClient) {
     private val accountMethods = AccountMethods(client)
+
+    fun registerAccount(
+        username: String,
+        email: String,
+        password: String,
+        agreement: Boolean,
+        locale: String,
+        reason: String?
+    ): Single<Token> {
+        return Single.create {
+            try {
+                val token = accountMethods.registerAccount(username, email, password,
+                    agreement, locale, reason).execute()
+                it.onSuccess(token)
+            } catch (throwable: Throwable) {
+                it.onErrorIfNotDisposed(throwable)
+            }
+        }
+    }
 
     fun getAccount(accountId: String): Single<Account> {
         return Single.create {

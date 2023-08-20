@@ -101,9 +101,9 @@ class StatusMethods(private val client: MastodonClient) {
      * Publish a status with the given parameters. To publish a status containing a poll, use [postPoll].
      * To schedule a status, use [scheduleStatus].
      * @param status the text of the status
+     * @param mediaIds the array of media ids to attach to the status (maximum 4)
      * @param visibility either "direct", "private", "unlisted" or "public"
      * @param inReplyToId the local id of the status you want to reply to
-     * @param mediaIds the array of media ids to attach to the status (maximum 4)
      * @param sensitive set this to mark the media of the status as NSFW
      * @param spoilerText text to be shown as a warning before the actual content
      * @param language ISO 639 language code for this status.
@@ -116,9 +116,9 @@ class StatusMethods(private val client: MastodonClient) {
     @Throws(BigBoneRequestException::class)
     fun postStatus(
         status: String,
+        mediaIds: List<String>? = null,
         visibility: Status.Visibility = Status.Visibility.Public,
         inReplyToId: String? = null,
-        mediaIds: List<String>? = null,
         sensitive: Boolean = false,
         spoilerText: String? = null,
         language: String? = null,
@@ -189,10 +189,10 @@ class StatusMethods(private val client: MastodonClient) {
      * Schedule a status with the given parameters. To schedule a status containing a poll, use [schedulePoll].
      * To post a status immediately, use [postStatus].
      * @param status the text of the status
+     * @param mediaIds the array of media ids to attach to the status (maximum 4)
      * @param scheduledAt ISO 8601 Datetime at which to schedule a status. Must be at least 5 minutes in the future.
      * @param visibility either "direct", "private", "unlisted" or "public"
      * @param inReplyToId the local id of the status you want to reply to
-     * @param mediaIds the array of media ids to attach to the status (maximum 4)
      * @param sensitive set this to mark the media of the status as NSFW
      * @param spoilerText text to be shown as a warning before the actual content
      * @param language ISO 639 language code for this status.
@@ -205,10 +205,10 @@ class StatusMethods(private val client: MastodonClient) {
     @Throws(BigBoneRequestException::class)
     fun scheduleStatus(
         status: String,
+        mediaIds: List<String>? = null,
         scheduledAt: String,
         visibility: Status.Visibility = Status.Visibility.Public,
         inReplyToId: String? = null,
-        mediaIds: List<String>? = null,
         sensitive: Boolean = false,
         spoilerText: String? = null,
         language: String? = null,

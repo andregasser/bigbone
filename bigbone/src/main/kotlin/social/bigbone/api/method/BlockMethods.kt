@@ -11,7 +11,6 @@ import social.bigbone.api.entity.Account
  * @see <a href="https://docs.joinmastodon.org/methods/blocks/">Mastodon blocks API methods</a>
  */
 class BlockMethods(private val client: MastodonClient) {
-
     /**
      * View your blocks. Blocking and unblocking is achieved via accounts methods.
      * @param range optional Range for the pageable return value

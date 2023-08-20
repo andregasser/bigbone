@@ -30,7 +30,7 @@ object TestHelpers {
 
     fun createApp(appName: String): Application {
         val client = getTrustAllClient()
-        return client.apps.createApp(appName, TestConstants.REDIRECT_URI, Scope(Scope.Name.ALL)).execute()
+        return client.apps.createApp(appName, TestConstants.REDIRECT_URI, null, Scope(Scope.Name.ALL)).execute()
     }
 
     fun getAppToken(application: Application): Token {

@@ -38,15 +38,15 @@ class TimelineMethods(private val client: MastodonClient) {
 
     /**
      * Gets a list timeline of statuses for the given list.
-     * @param listID ID of the list for which a timeline should be returned
+     * @param listId ID of the list for which a timeline should be returned
      * @param range restrict result to a specific range
      * @see <a href="https://docs.joinmastodon.org/methods/timelines/#list">Mastodon API documentation: methods/timelines/#list</a>
      */
     @JvmOverloads
     @Throws(BigBoneRequestException::class)
-    fun getListTimeline(listID: String, range: Range = Range()): MastodonRequest<Pageable<Status>> {
+    fun getListTimeline(listId: String, range: Range = Range()): MastodonRequest<Pageable<Status>> {
         return client.getPageableMastodonRequest(
-            endpoint = "api/v1/timelines/list/$listID",
+            endpoint = "api/v1/timelines/list/$listId",
             method = MastodonClient.Method.GET,
             parameters = range.toParameters()
         )

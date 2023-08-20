@@ -13,7 +13,18 @@ import social.bigbone.rx.extensions.onErrorIfNotDisposed
  * @see <a href="https://docs.joinmastodon.org/methods/oauth/">Mastodon oauth API methods</a>
  */
 class RxOAuthMethods(client: MastodonClient) {
-    private val oauth = OAuthMethods(client)
+    private val oAuthMethods = OAuthMethods(client)
+
+    fun getOAuthUrl(clientId: String, scope: Scope, redirectUri: String): Single<String> {
+        return Single.create {
+            try {
+                val oAuthUrl = oAuthMethods.getOAuthUrl(clientId, scope, redirectUri)
+                it.onSuccess(oAuthUrl)
+            } catch (throwable: Throwable) {
+                it.onErrorIfNotDisposed(throwable)
+            }
+        }
+    }
 
     fun getUserAccessTokenWithAuthorizationCodeGrant(
         clientId: String,
@@ -23,7 +34,7 @@ class RxOAuthMethods(client: MastodonClient) {
     ): Single<Token> {
         return Single.create {
             try {
-                val accessToken = oauth.getUserAccessTokenWithAuthorizationCodeGrant(clientId, clientSecret, redirectUri, code)
+                val accessToken = oAuthMethods.getUserAccessTokenWithAuthorizationCodeGrant(clientId, clientSecret, redirectUri, code)
                 it.onSuccess(accessToken.execute())
             } catch (throwable: Throwable) {
                 it.onErrorIfNotDisposed(throwable)
@@ -31,17 +42,18 @@ class RxOAuthMethods(client: MastodonClient) {
         }
     }
 
+    @JvmOverloads
     fun getUserAccessTokenWithPasswordGrant(
         clientId: String,
         clientSecret: String,
-        scope: Scope = Scope(Scope.Name.READ),
         redirectUri: String,
         username: String,
-        password: String
+        password: String,
+        scope: Scope = Scope(Scope.Name.READ)
     ): Single<Token> {
         return Single.create {
             try {
-                val accessToken = oauth.getUserAccessTokenWithPasswordGrant(clientId, clientSecret, scope, redirectUri, username, password)
+                val accessToken = oAuthMethods.getUserAccessTokenWithPasswordGrant(clientId, clientSecret, redirectUri, username, password, scope)
                 it.onSuccess(accessToken.execute())
             } catch (throwable: Throwable) {
                 it.onErrorIfNotDisposed(throwable)
