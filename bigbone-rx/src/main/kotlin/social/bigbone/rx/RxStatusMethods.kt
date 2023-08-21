@@ -83,16 +83,16 @@ class RxStatusMethods(client: MastodonClient) {
     @JvmOverloads
     fun postStatus(
         status: String,
+        mediaIds: List<String>? = null,
         visibility: Status.Visibility = Status.Visibility.Public,
         inReplyToId: String? = null,
-        mediaIds: List<String>? = null,
         sensitive: Boolean = false,
         spoilerText: String? = null,
         language: String? = null
     ): Single<Status> {
         return Single.create {
             try {
-                val result = statusMethods.postStatus(status, visibility, inReplyToId, mediaIds, sensitive, spoilerText, language)
+                val result = statusMethods.postStatus(status, mediaIds, visibility, inReplyToId, sensitive, spoilerText, language)
                 it.onSuccess(result.execute())
             } catch (e: Throwable) {
                 it.onError(e)
@@ -131,17 +131,17 @@ class RxStatusMethods(client: MastodonClient) {
     @JvmOverloads
     fun scheduleStatus(
         status: String,
+        mediaIds: List<String>? = null,
         scheduledAt: String,
         visibility: Status.Visibility = Status.Visibility.Public,
         inReplyToId: String? = null,
-        mediaIds: List<String>? = null,
         sensitive: Boolean = false,
         spoilerText: String? = null,
         language: String? = null
     ): Single<ScheduledStatus> {
         return Single.create {
             try {
-                val result = statusMethods.scheduleStatus(status, scheduledAt, visibility, inReplyToId, mediaIds, sensitive, spoilerText, language)
+                val result = statusMethods.scheduleStatus(status, mediaIds, scheduledAt, visibility, inReplyToId, sensitive, spoilerText, language)
                 it.onSuccess(result.execute())
             } catch (e: Throwable) {
                 it.onError(e)

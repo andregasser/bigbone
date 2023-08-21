@@ -19,12 +19,12 @@ class RxAppMethods(client: MastodonClient) {
     fun createApp(
         clientName: String,
         redirectUris: String,
-        scope: Scope = Scope(Scope.Name.ALL),
-        website: String? = null
+        website: String? = null,
+        scope: Scope = Scope(Scope.Name.ALL)
     ): Single<Application> {
         return Single.create {
             try {
-                val application = appMethods.createApp(clientName, redirectUris, scope, website)
+                val application = appMethods.createApp(clientName, redirectUris, website, scope)
                 it.onSuccess(application.execute())
             } catch (throwable: Throwable) {
                 it.onErrorIfNotDisposed(throwable)

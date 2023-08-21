@@ -96,20 +96,20 @@ class OAuthMethods(private val client: MastodonClient) {
      * Where possible, [getUserAccessTokenWithAuthorizationCodeGrant] should be used instead.
      * @param clientId The client ID, obtained during app registration.
      * @param clientSecret The client secret, obtained during app registration.
-     * @param scope Requested OAuth scopes
      * @param redirectUri Set a URI to redirect the user to.
      * @param username The Mastodon account username.
      * @param password The Mastodon account password.
+     * @param scope Requested OAuth scopes
      * @see <a href="https://docs.joinmastodon.org/methods/oauth/#token">Mastodon oauth API methods #token</a>
      */
     @JvmOverloads
     fun getUserAccessTokenWithPasswordGrant(
         clientId: String,
         clientSecret: String,
-        scope: Scope = Scope(Scope.Name.READ),
         redirectUri: String,
         username: String,
-        password: String
+        password: String,
+        scope: Scope = Scope(Scope.Name.READ)
     ): MastodonRequest<Token> {
         return client.getMastodonRequest(
             endpoint = "oauth/token",

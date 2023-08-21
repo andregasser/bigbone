@@ -29,12 +29,12 @@ public class PostStatusWithMediaAttached {
 
         // Post status with media attached
         final String statusText = "Status posting test";
-        final String inReplyToId = null;
         final List<String> mediaIds = Collections.singletonList(mediaId);
+        final Visibility visibility = Visibility.Private;
+        final String inReplyToId = null;
         final boolean sensitive = false;
         final String spoilerText = "A castle";
-        final Visibility visibility = Visibility.Private;
         final String language = "en";
-        client.statuses().postStatus(statusText, visibility, inReplyToId, mediaIds, sensitive, spoilerText, language).execute();
+        client.statuses().postStatus(statusText, mediaIds, visibility, inReplyToId, sensitive, spoilerText, language).execute();
     }
 }

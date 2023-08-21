@@ -100,10 +100,10 @@ class OAuthMethodsTest {
         val accessToken = oauth.getUserAccessTokenWithPasswordGrant(
             "test",
             "test",
-            Scope(Scope.Name.ALL),
             TestConstants.REDIRECT_URI,
             "test",
-            "test"
+            "test",
+            Scope(Scope.Name.ALL)
         ).execute()
         accessToken.accessToken shouldBeEqualTo "test"
         accessToken.scope shouldBeEqualTo "read write follow"

@@ -24,6 +24,13 @@ class RxTimelineMethods(client: MastodonClient) {
     }
 
     @JvmOverloads
+    fun getListTimeline(listId: String, range: Range = Range()): Single<Pageable<Status>> {
+        return single {
+            timelineMethods.getListTimeline(listId, range).execute()
+        }
+    }
+
+    @JvmOverloads
     fun getPublicTimeline(
         statusOrigin: TimelineMethods.StatusOrigin = TimelineMethods.StatusOrigin.LOCAL_AND_REMOTE,
         range: Range = Range()

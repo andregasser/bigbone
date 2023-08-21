@@ -12,8 +12,8 @@ public class GetAppRegistration {
             final Application application = client.apps().createApp(
                     "bigbone-sample-app",
                     "urn:ietf:wg:oauth:2.0:oob",
-                    new Scope(Scope.Name.ALL),
-                    ""
+                    "",
+                    new Scope(Scope.Name.ALL)
             ).execute();
             System.out.println("client_id=" + application.getClientId());
             System.out.println("client_secret=" + application.getClientSecret());
