@@ -11,9 +11,9 @@ import java.util.List;
 /**
  * The main method of this class accepts the following parameters:
  *  - &lt;instance&gt; &lt;accessToken&gt; list: list all existing filters for this account
- *  - &lt;instance&gt; &lt;accessToken&gt; create &lt;keyword&gt: create a new filter for the keyword
- *  - &lt;instance&gt; &lt;accessToken&gt; delete &lt;filterId&gt: delete the filter with this filterId
- *  - &lt;instance&gt; &lt;accessToken&gt; addKeyword &lt;filterId&gt &lt;filterId&gt: add keyword to the filter with ID filterId
+ *  - &lt;instance&gt; &lt;accessToken&gt; create &lt;keyword&gt; create a new filter for the keyword
+ *  - &lt;instance&gt; &lt;accessToken&gt; delete &lt;filterId&gt; delete the filter with this filterId
+ *  - &lt;instance&gt; &lt;accessToken&gt; addKeyword &lt;filterId&gt; &lt;filterId&gt; add keyword to the filter with ID filterId
  */
 @SuppressWarnings("PMD.SystemPrintln")
 public class ManageFilters {
