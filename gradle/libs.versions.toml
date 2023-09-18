@@ -12,7 +12,7 @@ kotlin = "1.9.10"
 kotlin-coroutines = "1.7.3"
 mockk = "1.13.7"
 okhttp = "4.11.0"
-rxjava = "3.1.6"
+rxjava = "3.1.7"
 
 # Gradle plugins
 jacoco = "0.8.9"
@@ -26,8 +26,9 @@ junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher
 junit-platform-suite-engine = { module = "org.junit.platform:junit-platform-suite-engine", version.ref = "junit-platform-suite-engine" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 kluent = { module = "org.amshove.kluent:kluent", version.ref = "kluent" }
+kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
+kotlin-stdlib-jdk8 = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
 kotlin-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin-coroutines" }
-kotlin-jdk8 = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 mockk-dsl = { module = "io.mockk:mockk-dsl", version.ref = "mockk" }
 okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
