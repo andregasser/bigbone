@@ -21,7 +21,7 @@ class MarkerMethods(private val client: MastodonClient) {
     @JvmOverloads
     fun getMarkers(timeline: Timeline? = null): MastodonRequest<Markers> {
         return client.getMastodonRequest(
-            endpoint = "/api/v1/markers",
+            endpoint = "api/v1/markers",
             method = MastodonClient.Method.GET,
             parameters = Parameters().apply {
             timeline?.let {
