@@ -8,7 +8,8 @@ data class Link(
     val nextPath: String,
     val prevPath: String,
     val maxId: String,
-    val sinceId: String
+    val sinceId: String,
+    val minId: String
 ) {
     companion object {
         @JvmStatic
@@ -17,10 +18,12 @@ data class Link(
                 val links = it.split(",")
                 val nextRel = ".*max_id=([0-9]+).*rel=\"next\"".toRegex()
                 val prevRel = ".*since_id=([0-9]+).*rel=\"prev\"".toRegex()
+                val minRel = ".*min_id=([0-9]+).*rel=\"min\"".toRegex()
                 var nextPath = ""
                 var maxId = "0"
                 var prevPath = ""
                 var sinceId = "0"
+                var minId = "0"
                 links.forEach {
                     val link = it.trim()
                     nextRel.matchEntire(link)?.let {
@@ -32,8 +35,12 @@ data class Link(
                         prevPath = it.value.replace("; rel=\"prev\"", "")
                         sinceId = it.groupValues[1]
                     }
+
+                    minRel.matchEntire(link)?.let {
+                        minId = it.groupValues[1]
+                    }
                 }
-                Link(it, nextPath, prevPath, maxId, sinceId)
+                Link(it, nextPath, prevPath, maxId, sinceId, minId)
             }
         }
     }
