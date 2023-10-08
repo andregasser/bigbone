@@ -1,10 +1,10 @@
 [
   {
-    "id": 5908530,
+    "id": "5908530",
     "type": "favourite",
     "created_at": "2017-05-02T05:28:01.703Z",
     "account": {
-      "id": 1111,
+      "id": "1111",
       "username": "test",
       "acct": "test",
       "display_name": "test",
@@ -21,7 +21,7 @@
       "header_static": "/headers/original/missing.png"
     },
     "status": {
-      "id": 6567717,
+      "id": "6567717",
       "created_at": "2017-05-02T05:27:58.332Z",
       "in_reply_to_id": null,
       "in_reply_to_account_id": null,
@@ -33,7 +33,7 @@
         "website": null
       },
       "account": {
-        "id": 7222,
+        "id": "7222",
         "username": "testuser",
         "acct": "testuser",
         "display_name": "",
@@ -63,11 +63,11 @@
     }
   },
   {
-    "id": 5908530,
+    "id": "5908530",
     "type": "admin.report",
     "created_at": "2017-05-02T05:28:01.703Z",
     "account": {
-      "id": 1111,
+      "id": "1111",
       "username": "test",
       "acct": "test",
       "display_name": "test",
