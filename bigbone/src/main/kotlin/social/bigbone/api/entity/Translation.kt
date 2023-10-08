@@ -1,27 +1,29 @@
 package social.bigbone.api.entity
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 /**
  * Represents the result of machine translating some status content.
  * @see <a href="https://docs.joinmastodon.org/entities/Translation/">Mastodon API Translation</a>
  */
+@Serializable
 data class Translation(
     /**
      * The translated text of the status as an HTML string.
      */
-    @SerializedName("content")
+    @SerialName("content")
     val content: String = "",
 
     /**
      * The language of the source text, as auto-detected by the machine translation provider (ISO 639 language code).
      */
-    @SerializedName("detected_source_language")
+    @SerialName("detected_source_language")
     val detectedSourceLanguage: String = "",
 
     /**
      * The service that provided the machine translation.
      */
-    @SerializedName("provider")
+    @SerialName("provider")
     val provider: String = ""
 )

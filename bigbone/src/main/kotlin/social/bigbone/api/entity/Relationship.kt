@@ -1,45 +1,47 @@
 package social.bigbone.api.entity
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 /**
  * Represents the relationship between accounts, such as following / blocking / muting / etc.
  * @see <a href="https://docs.joinmastodon.org/entities/Relationship/">Mastodon API Relationship</a>
  */
+@Serializable
 data class Relationship(
     /**
      * The account ID.
      */
-    @SerializedName("id")
+    @SerialName("id")
     val id: String = "0",
 
     /**
      * Are you following this user?
      */
-    @SerializedName("following")
+    @SerialName("following")
     val isFollowing: Boolean = false,
 
     /**
      * Are you followed by this user?
      */
-    @SerializedName("followed_by")
+    @SerialName("followed_by")
     val isFollowedBy: Boolean = false,
 
     /**
      * Are you blocking this user?
      */
-    @SerializedName("blocking")
+    @SerialName("blocking")
     val isBlocking: Boolean = false,
 
     /**
      * Are you muting this user?
      */
-    @SerializedName("muting")
+    @SerialName("muting")
     val isMuting: Boolean = false,
 
     /**
      * Do you have a pending follow request for this user?
      */
-    @SerializedName("requested")
+    @SerialName("requested")
     val isRequested: Boolean = false
 )
