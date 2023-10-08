@@ -1,40 +1,13 @@
 package social.bigbone
 
-import com.google.gson.Gson
-import okhttp3.HttpUrl
-import okhttp3.Interceptor
+import kotlinx.serialization.json.Json
+import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
-import okhttp3.Response
 import social.bigbone.api.Pageable
 import social.bigbone.api.entity.data.InstanceVersion
 import social.bigbone.api.exception.BigBoneRequestException
-import social.bigbone.api.method.AccountMethods
-import social.bigbone.api.method.AppMethods
-import social.bigbone.api.method.BlockMethods
-import social.bigbone.api.method.BookmarkMethods
-import social.bigbone.api.method.ConversationMethods
-import social.bigbone.api.method.DirectoryMethods
-import social.bigbone.api.method.FavouriteMethods
-import social.bigbone.api.method.FilterMethods
-import social.bigbone.api.method.FollowRequestMethods
-import social.bigbone.api.method.InstanceMethods
-import social.bigbone.api.method.ListMethods
-import social.bigbone.api.method.MarkerMethods
-import social.bigbone.api.method.MediaMethods
-import social.bigbone.api.method.MuteMethods
-import social.bigbone.api.method.NotificationMethods
-import social.bigbone.api.method.OAuthMethods
-import social.bigbone.api.method.PollMethods
-import social.bigbone.api.method.ReportMethods
-import social.bigbone.api.method.SearchMethods
-import social.bigbone.api.method.StatusMethods
-import social.bigbone.api.method.StreamingMethods
-import social.bigbone.api.method.TagMethods
-import social.bigbone.api.method.TimelineMethods
+import social.bigbone.api.method.*
 import social.bigbone.extension.emptyRequestBody
 import social.bigbone.nodeinfo.NodeInfoClient
 import java.io.IOException
@@ -54,7 +27,7 @@ class MastodonClient
 private constructor(
     private val instanceName: String,
     private val client: OkHttpClient,
-    private val gson: Gson
+    private val jsonSerializer: Json
 ) {
     private var debug = false
     private var instanceVersion: String? = null
@@ -234,7 +207,7 @@ private constructor(
     }
 
     @PublishedApi
-    internal fun getSerializer() = gson
+    internal fun getSerializer(): Json = jsonSerializer
 
     fun getInstanceName() = instanceName
 
@@ -259,7 +232,7 @@ private constructor(
         addIdempotencyKey: Boolean = false
     ): MastodonRequest<T> {
         return MastodonRequest(
-            {
+            executor = {
                 when (method) {
                     Method.DELETE -> delete(endpoint, parameters)
                     Method.GET -> get(endpoint, parameters)
@@ -268,7 +241,7 @@ private constructor(
                     Method.PUT -> put(endpoint, parameters)
                 }
             },
-            { getSerializer().fromJson(it, T::class.java) }
+            mapper = { getSerializer().decodeFromString<T>(it) }
         )
     }
 
@@ -285,7 +258,7 @@ private constructor(
         parameters: Parameters? = null
     ): MastodonRequest<Pageable<T>> {
         return MastodonRequest<Pageable<T>>(
-            {
+            executor = {
                 when (method) {
                     Method.DELETE -> delete(endpoint, parameters)
                     Method.GET -> get(endpoint, parameters)
@@ -294,7 +267,7 @@ private constructor(
                     Method.PUT -> put(endpoint, parameters)
                 }
             },
-            { getSerializer().fromJson(it, T::class.java) }
+            mapper = { getSerializer().decodeFromString<T>(it) }
         ).toPageable()
     }
 
@@ -311,7 +284,7 @@ private constructor(
         parameters: Parameters? = null
     ): MastodonRequest<List<T>> {
         return MastodonRequest(
-            {
+            executor = {
                 when (method) {
                     Method.DELETE -> delete(endpoint, parameters)
                     Method.GET -> get(endpoint, parameters)
@@ -320,7 +293,7 @@ private constructor(
                     Method.PUT -> put(endpoint, parameters)
                 }
             },
-            { getSerializer().fromJson(it, T::class.java) }
+            mapper = { getSerializer().decodeFromString<T>(it) }
         )
     }
 
@@ -524,7 +497,6 @@ private constructor(
         private val instanceName: String
     ) {
         private val okHttpClientBuilder = OkHttpClient.Builder()
-        private val gson = Gson()
         private var accessToken: String? = null
         private var debug = false
         private var scheme = "https"
@@ -644,8 +616,10 @@ private constructor(
             return try {
                 val response = versionedInstanceRequest(apiVersion)
                 if (response.isSuccessful) {
-                    val instanceVersion = gson.fromJson(response.body?.string(), InstanceVersion::class.java)
-                    instanceVersion.version
+                    val instanceVersion: InstanceVersion? = response.body?.string()?.let { responseBody: String ->
+                        getConfiguredJson().decodeFromString(responseBody)
+                    }
+                    instanceVersion?.version
                 } else {
                     response.close()
                     null
@@ -692,14 +666,14 @@ private constructor(
 
         fun build(): MastodonClient {
             return MastodonClient(
-                instanceName,
-                okHttpClientBuilder
+                instanceName = instanceName,
+                client = okHttpClientBuilder
                     .addNetworkInterceptor(AuthorizationInterceptor(accessToken))
                     .readTimeout(readTimeoutSeconds, TimeUnit.SECONDS)
                     .writeTimeout(writeTimeoutSeconds, TimeUnit.SECONDS)
                     .connectTimeout(connectTimeoutSeconds, TimeUnit.SECONDS)
                     .build(),
-                gson
+                jsonSerializer = getConfiguredJson()
             ).also {
                 it.debug = debug
                 it.instanceVersion = getInstanceVersion()
@@ -710,8 +684,8 @@ private constructor(
     }
 
     private object TrustAllX509TrustManager : X509TrustManager {
-        override fun checkClientTrusted(chain: Array<out X509Certificate>?, authType: String?) { }
-        override fun checkServerTrusted(chain: Array<out X509Certificate>?, authType: String?) { }
+        override fun checkClientTrusted(chain: Array<out X509Certificate>?, authType: String?) {}
+        override fun checkServerTrusted(chain: Array<out X509Certificate>?, authType: String?) {}
         override fun getAcceptedIssuers(): Array<X509Certificate> = arrayOf()
     }
 
@@ -735,4 +709,10 @@ private constructor(
             return chain.proceed(compressedRequest)
         }
     }
+}
+
+private fun getConfiguredJson(): Json = Json {
+    encodeDefaults = true
+    ignoreUnknownKeys = true
+    coerceInputValues = true
 }

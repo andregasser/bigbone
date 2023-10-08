@@ -36,13 +36,9 @@ class MediaMethods(private val client: MastodonClient) {
             requestBodyBuilder.addFormDataPart("focus", it.toString())
         }
         val requestBody = requestBodyBuilder.build()
-        return MastodonRequest<MediaAttachment>(
-            {
-                client.postRequestBody("api/v1/media", requestBody)
-            },
-            {
-                client.getSerializer().fromJson(it, MediaAttachment::class.java)
-            }
+        return MastodonRequest(
+            executor = { client.postRequestBody("api/v1/media", requestBody) },
+            mapper = { client.getSerializer().decodeFromString<MediaAttachment>(it) }
         )
     }
 }

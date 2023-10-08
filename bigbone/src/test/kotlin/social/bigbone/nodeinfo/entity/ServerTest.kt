@@ -1,11 +1,17 @@
 package social.bigbone.nodeinfo.entity
 
-import com.google.gson.Gson
+import kotlinx.serialization.json.Json
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.Test
 import social.bigbone.testtool.AssetsUtil
 
 class ServerTest {
+
+    private val jsonSerializer: Json = Json {
+        encodeDefaults = true
+        ignoreUnknownKeys = true
+        coerceInputValues = true
+    }
 
     @Test
     fun deserialize() {
@@ -13,7 +19,7 @@ class ServerTest {
         val json = AssetsUtil.readFromAssets("nodeinfo_server_info.json")
 
         // when
-        val server = Gson().fromJson(json, Server::class.java)
+        val server: Server = jsonSerializer.decodeFromString(json)
 
         // then
         server.schemaVersion shouldBeEqualTo "2.0"

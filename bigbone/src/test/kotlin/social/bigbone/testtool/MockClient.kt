@@ -1,8 +1,8 @@
 package social.bigbone.testtool
 
-import com.google.gson.Gson
 import io.mockk.every
 import io.mockk.mockk
+import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.Protocol
 import okhttp3.Request
@@ -14,6 +14,12 @@ import social.bigbone.api.exception.BigBoneRequestException
 import java.net.SocketTimeoutException
 
 object MockClient {
+
+    val json: Json = Json {
+        encodeDefaults = true
+        ignoreUnknownKeys = true
+        coerceInputValues = true
+    }
 
     fun mock(jsonName: String, maxId: String? = null, sinceId: String? = null): MastodonClient {
         val clientMock: MastodonClient = mockk()
@@ -49,7 +55,7 @@ object MockClient {
         every { clientMock.post(ofType<String>(), any(), any()) } returns response
         every { clientMock.postRequestBody(ofType<String>(), any()) } returns response
         every { clientMock.put(ofType<String>(), any()) } returns response
-        every { clientMock.getSerializer() } returns Gson()
+        every { clientMock.getSerializer() } returns json
         return clientMock
     }
 
@@ -74,7 +80,7 @@ object MockClient {
         every { clientMock.postRequestBody(ofType<String>(), any()) } returns response
         every { clientMock.put(ofType<String>(), any()) } returns response
         every { clientMock.performAction(ofType<String>(), any()) } throws BigBoneRequestException("mock")
-        every { clientMock.getSerializer() } returns Gson()
+        every { clientMock.getSerializer() } returns json
         return clientMock
     }
 }
