@@ -9,14 +9,27 @@ import social.bigbone.testtool.MockClient
 
 class NotificationMethodsTest {
     @Test
-    fun getNotifications() {
+    fun getFavoriteNotification() {
         val client = MockClient.mock("notifications.json")
         val notificationMethods = NotificationMethods(client)
         val pageable = notificationMethods.getNotifications().execute()
-        val notification = pageable.part.first()
-        notification.type shouldBeEqualTo "favourite"
-        notification.account shouldNotBe null
-        notification.status shouldNotBe null
+        val favoriteNotification = pageable.part.first()
+        favoriteNotification.type shouldBeEqualTo "favourite"
+        favoriteNotification.account shouldNotBe null
+        favoriteNotification.status shouldNotBe null
+    }
+
+    @Test
+    fun getReportNotification() {
+        val client = MockClient.mock("notifications.json")
+        val notificationMethods = NotificationMethods(client)
+        val pageable = notificationMethods.getNotifications().execute()
+
+        val reportNotification = pageable.part[1]
+        reportNotification.type shouldBeEqualTo "admin.report"
+        reportNotification.report shouldNotBe null
+        reportNotification.report?.id shouldBeEqualTo "48914"
+        reportNotification.report?.actionTaken shouldBeEqualTo "false"
     }
 
     @Test
