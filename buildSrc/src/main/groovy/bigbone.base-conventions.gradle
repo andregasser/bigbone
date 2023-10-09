@@ -1,0 +1,6 @@
+group = "social.bigbone"
+version = libs.versions.bigbone.get()
+
+tasks.withType(Test).configureEach {
+    useJUnitPlatform()
+}

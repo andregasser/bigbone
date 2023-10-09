@@ -1,7 +1,7 @@
 plugins {
-    id 'social.bigbone.bigbone-base'
+    id 'bigbone.java-conventions'
+    id 'bigbone.kotlin-conventions'
     id 'java-library'
-    id 'kotlin'
     id 'maven-publish'
     id 'signing'
     id 'jacoco'
@@ -71,5 +71,3 @@ jacocoTestReport {
         html.outputLocation.set(file("${layout.buildDirectory}/reports/jacoco"))
     }
 }
-
-
