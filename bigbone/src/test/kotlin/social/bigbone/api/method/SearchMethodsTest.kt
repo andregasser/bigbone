@@ -1,5 +1,6 @@
 package social.bigbone.api.method
 
+import org.amshove.kluent.`should be equal to`
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
@@ -17,6 +18,31 @@ class SearchMethodsTest {
         result.accounts.size shouldBeEqualTo 6
         result.statuses.size shouldBeEqualTo 2
         result.hashtags.size shouldBeEqualTo 1
+    }
+
+    @Test
+    fun searchOnlyForSpecificType() {
+        val client = MockClient.mock("search_only_accounts.json")
+        val type = SearchMethods.SearchType.ACCOUNTS
+        val searchMethodsMethod = SearchMethods(client)
+        val result = searchMethodsMethod.searchContent("test", type = type).execute()
+        result.accounts.size shouldBeEqualTo 6
+        result.statuses.size `should be equal to` 0
+        result.hashtags.size `should be equal to` 0
+    }
+
+    @Test
+    fun searchRangingTheIdsForSpecificType() {
+        val client = MockClient.mock("search_for_statuses_ranging_ids.json")
+        val type = SearchMethods.SearchType.STATUSES
+        val maxId = "10000"
+        val minId = "900"
+        val searchMethodsMethod = SearchMethods(client)
+        val result = searchMethodsMethod.searchContent("test", type = type, maxId = maxId, minId = minId).execute()
+        result.accounts.size `should be equal to` 0
+        result.statuses.size shouldBeEqualTo 4
+        result.hashtags.size `should be equal to` 0
+        result.statuses.all { it.id.toLong() in minId.toLong()..maxId.toLong() }
     }
 
     @Test
