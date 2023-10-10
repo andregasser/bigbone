@@ -3,6 +3,7 @@ package social.bigbone.rx
 import io.reactivex.rxjava3.core.Single
 import social.bigbone.MastodonClient
 import social.bigbone.api.entity.Report
+import social.bigbone.api.entity.Report.ReportType
 import social.bigbone.api.method.ReportMethods
 
 /**
@@ -19,7 +20,7 @@ class RxReportMethods(client: MastodonClient) {
         comment: String? = null,
         forward: Boolean = false,
         ruleIds: List<Int>? = emptyList(),
-        category: ReportMethods.ReportType? = null
+        category: ReportType? = null
     ): Single<Report> {
         return Single.create {
             try {
