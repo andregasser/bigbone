@@ -13,10 +13,17 @@ import social.bigbone.api.method.ReportMethods
 class RxReportMethods(client: MastodonClient) {
     private val reportMethods = ReportMethods(client)
 
-    fun fileReport(accountId: String, statusIds: List<String>, comment: String): Single<Report> {
+    fun fileReport(
+        accountId: String,
+        statusIds: List<String>? = emptyList(),
+        comment: String? = null,
+        forward: Boolean = false,
+        ruleIds: List<Int>? = emptyList(),
+        category: ReportMethods.ReportType? = null
+    ): Single<Report> {
         return Single.create {
             try {
-                val report = reportMethods.fileReport(accountId, statusIds, comment)
+                val report = reportMethods.fileReport(accountId, statusIds, comment, forward, ruleIds, category)
                 it.onSuccess(report.execute())
             } catch (e: Throwable) {
                 it.onError(e)

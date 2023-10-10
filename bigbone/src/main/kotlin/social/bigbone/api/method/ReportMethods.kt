@@ -4,6 +4,7 @@ import social.bigbone.MastodonClient
 import social.bigbone.MastodonRequest
 import social.bigbone.Parameters
 import social.bigbone.api.entity.Report
+import social.bigbone.api.entity.Report.ReportType
 import social.bigbone.api.exception.BigBoneRequestException
 
 /**
@@ -11,23 +12,62 @@ import social.bigbone.api.exception.BigBoneRequestException
  * @see <a href="https://docs.joinmastodon.org/methods/reports/">Mastodon reports API methods</a>
  */
 class ReportMethods(private val client: MastodonClient) {
+
     /**
      * File a report.
      * @param accountId The ID of the account to report
      * @param statusIds List of ID strings for statuses to be reported
      * @param comment The reason for the report. Default maximum of 1000 characters.
+     * @param forward To forward the report to the remote admin
+     * @param ruleIds To specify the IDs of the exact rules broken in case of violations
+     * @param category To specify if you are looking for a specific category of report
      * @see <a href="https://docs.joinmastodon.org/methods/reports/#post">Mastodon API documentation: methods/reports/#post</a>
      */
     @Throws(BigBoneRequestException::class)
-    fun fileReport(accountId: String, statusIds: List<String>, comment: String): MastodonRequest<Report> {
+    fun fileReport(
+        accountId: String,
+        statusIds: List<String>? = emptyList(),
+        comment: String? = null,
+        forward: Boolean = false,
+        ruleIds: List<Int>? = emptyList(),
+        category: ReportType? = null
+    ): MastodonRequest<Report> {
         return client.getMastodonRequest(
             endpoint = "api/v1/reports",
             method = MastodonClient.Method.POST,
-            parameters = Parameters().apply {
-                append("account_id", accountId)
+            parameters = buildParameters(accountId, statusIds, comment, forward, ruleIds, category)
+        )
+    }
+
+    private fun buildParameters(
+        accountId: String,
+        statusIds: List<String>? = emptyList(),
+        comment: String? = null,
+        forward: Boolean = false,
+        ruleIds: List<Int>? = emptyList(),
+        category: ReportType? = null
+    ): Parameters {
+        return Parameters().apply {
+            append("account_id", accountId)
+            append("forward", forward)
+            append("category", setCategoryCorrectly(ruleIds, category).name)
+            if(!statusIds.isNullOrEmpty()) {
                 append("status_ids", statusIds)
+            }
+            if(!comment.isNullOrEmpty() && comment.isNotBlank()) {
                 append("comment", comment)
             }
-        )
+            if(!ruleIds.isNullOrEmpty()) {
+                append("ruleIds", ruleIds)
+            }
+        }
+    }
+
+    private fun setCategoryCorrectly(ruleIds: List<Int>? = emptyList(), category: ReportType? = null): ReportType {
+        return when {
+            !ruleIds.isNullOrEmpty() -> ReportType.VIOLATION
+            category == null -> ReportType.OTHER
+            else -> category
+        }
     }
 }
