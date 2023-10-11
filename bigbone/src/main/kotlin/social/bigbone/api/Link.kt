@@ -18,7 +18,7 @@ data class Link(
                 val links = it.split(",")
                 val nextRel = ".*max_id=([0-9]+).*rel=\"next\"".toRegex()
                 val prevRel = ".*since_id=([0-9]+).*rel=\"prev\"".toRegex()
-                val minRel = ".*min_id=([0-9]+).*rel=\"next\"".toRegex()
+                val minRel = ".*min_id=([0-9]+).*rel=\"prev\"".toRegex()
                 var nextPath = ""
                 var maxId = "0"
                 var prevPath = ""
@@ -37,7 +37,7 @@ data class Link(
                     }
 
                     minRel.matchEntire(link)?.let {
-                        nextPath = it.value.replace("; rel=\"next\"", "")
+                        nextPath = it.value.replace("; rel=\"prev\"", "")
                         minId = it.groupValues[1]
                     }
                 }
