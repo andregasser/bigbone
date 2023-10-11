@@ -137,6 +137,7 @@ data class Status(
     /**
      * Preview card for links included within status content.
      */
+    @SerializedName("card")
     val card: PreviewCard? = null,
 
     /**
