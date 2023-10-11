@@ -2,7 +2,7 @@
 
 Please include a summary of the changes and the related issue. Please also include relevant motivation and context. List any dependencies that are required for this change. If your change addresses any existing issues, please link them here as well.
 
-## Type of Change
+# Type of Change
 
 - [ ] Bug fix (non-breaking change which fixes an issue)
 - [ ] New feature (non-breaking change which adds functionality)
@@ -13,7 +13,7 @@ Please include a summary of the changes and the related issue. Please also inclu
 
 Please describe the tests that you ran to verify your changes. 
 
-# Checklist:
+# Checklist
 
 - [ ] My code follows the style guidelines of this project
 - [ ] I have performed a self-review of my code
