@@ -1,17 +1,11 @@
 package social.bigbone.nodeinfo.entity
 
-import kotlinx.serialization.json.Json
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.Test
+import social.bigbone.JsonSerializer
 import social.bigbone.testtool.AssetsUtil
 
 class ServerTest {
-
-    private val jsonSerializer: Json = Json {
-        encodeDefaults = true
-        ignoreUnknownKeys = true
-        coerceInputValues = true
-    }
 
     @Test
     fun deserialize() {
@@ -19,7 +13,7 @@ class ServerTest {
         val json = AssetsUtil.readFromAssets("nodeinfo_server_info.json")
 
         // when
-        val server: Server = jsonSerializer.decodeFromString(json)
+        val server: Server = JsonSerializer.decodeFromString(json)
 
         // then
         server.schemaVersion shouldBeEqualTo "2.0"

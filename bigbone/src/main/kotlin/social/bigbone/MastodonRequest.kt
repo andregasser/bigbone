@@ -14,12 +14,6 @@ class MastodonRequest<T>(
     private val mapper: (String) -> Any
 ) {
 
-    private val json: Json = Json {
-        encodeDefaults = true
-        ignoreUnknownKeys = true
-        coerceInputValues = true
-    }
-
     /**
      * SAM interface provided for Java interoperability related to [doOnJson] method.
      */
@@ -61,7 +55,7 @@ class MastodonRequest<T>(
                 val body: String? = response.body?.string()
                 requireNotNull(body)
 
-                val element: JsonElement = json.parseToJsonElement(body)
+                val element: JsonElement = JsonSerializer.parseToJsonElement(body)
                 if (element is JsonObject) {
                     action(body)
 

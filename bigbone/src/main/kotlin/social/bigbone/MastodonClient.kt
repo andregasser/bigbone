@@ -26,8 +26,7 @@ import javax.net.ssl.X509TrustManager
 class MastodonClient
 private constructor(
     private val instanceName: String,
-    private val client: OkHttpClient,
-    private val jsonSerializer: Json
+    private val client: OkHttpClient
 ) {
     private var debug = false
     private var instanceVersion: String? = null
@@ -207,7 +206,7 @@ private constructor(
     }
 
     @PublishedApi
-    internal fun getSerializer(): Json = jsonSerializer
+    internal fun getSerializer(): Json = JsonSerializer
 
     fun getInstanceName() = instanceName
 
@@ -617,7 +616,7 @@ private constructor(
                 val response = versionedInstanceRequest(apiVersion)
                 if (response.isSuccessful) {
                     val instanceVersion: InstanceVersion? = response.body?.string()?.let { responseBody: String ->
-                        getConfiguredJson().decodeFromString(responseBody)
+                        JsonSerializer.decodeFromString(responseBody)
                     }
                     instanceVersion?.version
                 } else {
@@ -672,8 +671,7 @@ private constructor(
                     .readTimeout(readTimeoutSeconds, TimeUnit.SECONDS)
                     .writeTimeout(writeTimeoutSeconds, TimeUnit.SECONDS)
                     .connectTimeout(connectTimeoutSeconds, TimeUnit.SECONDS)
-                    .build(),
-                jsonSerializer = getConfiguredJson()
+                    .build()
             ).also {
                 it.debug = debug
                 it.instanceVersion = getInstanceVersion()
@@ -709,10 +707,4 @@ private constructor(
             return chain.proceed(compressedRequest)
         }
     }
-}
-
-private fun getConfiguredJson(): Json = Json {
-    encodeDefaults = true
-    ignoreUnknownKeys = true
-    coerceInputValues = true
 }
