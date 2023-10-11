@@ -29,7 +29,7 @@ class NotificationMethodsTest {
         reportNotification.type shouldBeEqualTo "admin.report"
         reportNotification.report shouldNotBe null
         reportNotification.report?.id shouldBeEqualTo "48914"
-        reportNotification.report?.actionTaken shouldBeEqualTo "false"
+        reportNotification.report?.actionTaken shouldBeEqualTo false
     }
 
     @Test

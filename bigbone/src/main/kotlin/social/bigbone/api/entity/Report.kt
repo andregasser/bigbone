@@ -17,5 +17,5 @@ data class Report(
      * Whether an action was taken yet.
      */
     @SerializedName("action_taken")
-    val actionTaken: String = "" // todo: Change this to type Boolean
+    val actionTaken: Boolean = false
 )
