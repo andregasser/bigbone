@@ -20,5 +20,10 @@ class RangeTest {
             val range = Range(maxId = "5", sinceId = "3", limit = 25)
             range.toParameters().toQuery() shouldBeEqualTo "max_id=5&since_id=3&limit=25"
         }
+
+        run {
+            val range = Range(maxId = "5", minId = "2", sinceId = "3", limit = 25)
+            range.toParameters().toQuery() shouldBeEqualTo "max_id=5&min_id=2&since_id=3&limit=25"
+        }
     }
 }
