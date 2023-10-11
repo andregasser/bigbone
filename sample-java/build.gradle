@@ -1,22 +1,10 @@
 plugins {
-    id 'social.bigbone.bigbone-sample'
-    id 'checkstyle'
-    id 'pmd'
-}
-
-tasks.named("detekt") configure {
-    enabled = false
+    id 'bigbone.java-conventions'
 }
 
 dependencies {
     implementation project(':bigbone')
+    implementation project(':bigbone-rx')
     implementation libs.gson
     implementation libs.okhttp
-}
-
-pmd {
-    toolVersion = "6.55.0"
-    consoleOutput = true
-    ruleSetFiles = files("${rootProject.projectDir}/config/pmd/ruleset.xml")
-    ruleSets = []
 }
