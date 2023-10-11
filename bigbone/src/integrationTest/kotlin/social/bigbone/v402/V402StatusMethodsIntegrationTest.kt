@@ -40,7 +40,7 @@ class V402StatusMethodsIntegrationTest {
         val client = MastodonClient.Builder(TestConstants.REST_API_HOSTNAME)
             .withTrustAllCerts()
             .build()
-        return client.apps.createApp(TestConstants.USER2_APP_NAME, TestConstants.REDIRECT_URI, Scope(Scope.Name.ALL)).execute()
+        return client.apps.createApp(TestConstants.USER2_APP_NAME, TestConstants.REDIRECT_URI, null, Scope(Scope.Name.ALL)).execute()
     }
 
     private fun getAppToken(application: Application): Token {
