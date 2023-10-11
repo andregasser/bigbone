@@ -27,7 +27,7 @@ class ReportMethodsTest {
             val client = MockClient.ioException()
             val reportMethods = ReportMethods(client)
             val statusIds = listOf("12345", "67890")
-            reportMethods.fileReport("10", statusIds, "test").execute()
+            reportMethods.fileReport("10", statusIds = statusIds, comment = "test").execute()
         }
     }
 }

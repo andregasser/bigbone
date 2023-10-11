@@ -16,20 +16,21 @@ class ReportMethods(private val client: MastodonClient) {
     /**
      * File a report.
      * @param accountId The ID of the account to report
-     * @param statusIds List of ID strings for statuses to be reported
-     * @param comment The reason for the report. Default maximum of 1000 characters.
      * @param forward To forward the report to the remote admin
+     * @param statusIds List of ID strings for statuses to be reported
      * @param ruleIds To specify the IDs of the exact rules broken in case of violations
+     * @param comment The reason for the report. Default maximum of 1000 characters
      * @param category To specify if you are looking for a specific category of report
      * @see <a href="https://docs.joinmastodon.org/methods/reports/#post">Mastodon API documentation: methods/reports/#post</a>
      */
+    @JvmOverloads
     @Throws(BigBoneRequestException::class)
     fun fileReport(
         accountId: String,
-        statusIds: List<String>? = emptyList(),
-        comment: String? = null,
         forward: Boolean = false,
+        statusIds: List<String>? = emptyList(),
         ruleIds: List<Int>? = emptyList(),
+        comment: String? = null,
         category: ReportType? = null
     ): MastodonRequest<Report> {
         return client.getMastodonRequest(
