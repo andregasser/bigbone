@@ -1,6 +1,7 @@
 package social.bigbone.api.entity
 
 import com.google.gson.annotations.SerializedName
+import social.bigbone.api.entity.data.History
 
 /**
  * Represents a rich preview card that is generated using OpenGraph tags from a URL.
