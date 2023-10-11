@@ -1,0 +1,21 @@
+plugins {
+    id 'bigbone.base-conventions'
+    id 'java'
+    id 'checkstyle'
+    id 'pmd'
+}
+
+java {
+    withSourcesJar()
+    withJavadocJar()
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(8)
+    }
+}
+
+pmd {
+    toolVersion = "6.55.0"
+    consoleOutput = true
+    ruleSetFiles = files("${rootProject.projectDir}/config/pmd/ruleset.xml")
+    ruleSets = []
+}
