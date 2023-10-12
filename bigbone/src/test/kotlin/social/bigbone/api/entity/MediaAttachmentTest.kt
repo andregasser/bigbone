@@ -3,14 +3,14 @@ package social.bigbone.api.entity
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldNotBe
 import org.junit.jupiter.api.Test
-import social.bigbone.JsonSerializer
+import social.bigbone.JSON_SERIALIZER
 import social.bigbone.testtool.AssetsUtil
 
 class MediaAttachmentTest {
     @Test
     fun deserialize() {
         val json = AssetsUtil.readFromAssets("attachment.json")
-        val status: MediaAttachment = JsonSerializer.decodeFromString(json)
+        val status: MediaAttachment = JSON_SERIALIZER.decodeFromString(json)
         status.id shouldBeEqualTo "10"
         status.url shouldBeEqualTo "youtube"
         status.remoteUrl shouldNotBe null

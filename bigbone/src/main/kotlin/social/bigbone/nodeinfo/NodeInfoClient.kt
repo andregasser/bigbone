@@ -2,7 +2,7 @@ package social.bigbone.nodeinfo
 
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import social.bigbone.JsonSerializer
+import social.bigbone.JSON_SERIALIZER
 import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.nodeinfo.entity.NodeInfo
 import social.bigbone.nodeinfo.entity.Server
@@ -38,7 +38,7 @@ object NodeInfoClient {
                 throw BigBoneRequestException("request for NodeInfo URL unsuccessful")
             }
 
-            return response.body?.string()?.let { JsonSerializer.decodeFromString(it) }
+            return response.body?.string()?.let { JSON_SERIALIZER.decodeFromString(it) }
         } catch (e: Exception) {
             throw BigBoneRequestException("invalid NodeInfo response")
         }
@@ -62,7 +62,7 @@ object NodeInfoClient {
             throw BigBoneRequestException("request for well-known NodeInfo URL unsuccessful")
         }
 
-        val nodeInfo: NodeInfo? = response.body?.string()?.let { JsonSerializer.decodeFromString(it) }
+        val nodeInfo: NodeInfo? = response.body?.string()?.let { JSON_SERIALIZER.decodeFromString(it) }
         if (nodeInfo == null || nodeInfo.links.isEmpty()) {
             throw BigBoneRequestException("empty link list in well-known NodeInfo location")
         }

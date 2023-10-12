@@ -1,13 +1,40 @@
 package social.bigbone
 
 import kotlinx.serialization.json.Json
-import okhttp3.*
+import okhttp3.HttpUrl
+import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
+import okhttp3.Response
 import social.bigbone.api.Pageable
 import social.bigbone.api.entity.data.InstanceVersion
 import social.bigbone.api.exception.BigBoneRequestException
-import social.bigbone.api.method.*
+import social.bigbone.api.method.AccountMethods
+import social.bigbone.api.method.AppMethods
+import social.bigbone.api.method.BlockMethods
+import social.bigbone.api.method.BookmarkMethods
+import social.bigbone.api.method.ConversationMethods
+import social.bigbone.api.method.DirectoryMethods
+import social.bigbone.api.method.FavouriteMethods
+import social.bigbone.api.method.FilterMethods
+import social.bigbone.api.method.FollowRequestMethods
+import social.bigbone.api.method.InstanceMethods
+import social.bigbone.api.method.ListMethods
+import social.bigbone.api.method.MarkerMethods
+import social.bigbone.api.method.MediaMethods
+import social.bigbone.api.method.MuteMethods
+import social.bigbone.api.method.NotificationMethods
+import social.bigbone.api.method.OAuthMethods
+import social.bigbone.api.method.PollMethods
+import social.bigbone.api.method.ReportMethods
+import social.bigbone.api.method.SearchMethods
+import social.bigbone.api.method.StatusMethods
+import social.bigbone.api.method.StreamingMethods
+import social.bigbone.api.method.TagMethods
+import social.bigbone.api.method.TimelineMethods
 import social.bigbone.extension.emptyRequestBody
 import social.bigbone.nodeinfo.NodeInfoClient
 import java.io.IOException
@@ -206,7 +233,7 @@ private constructor(
     }
 
     @PublishedApi
-    internal fun getSerializer(): Json = JsonSerializer
+    internal fun getSerializer(): Json = JSON_SERIALIZER
 
     fun getInstanceName() = instanceName
 
@@ -615,7 +642,7 @@ private constructor(
                 val response = versionedInstanceRequest(apiVersion)
                 if (response.isSuccessful) {
                     val instanceVersion: InstanceVersion? = response.body?.string()?.let { responseBody: String ->
-                        JsonSerializer.decodeFromString(responseBody)
+                        JSON_SERIALIZER.decodeFromString(responseBody)
                     }
                     instanceVersion?.version
                 } else {

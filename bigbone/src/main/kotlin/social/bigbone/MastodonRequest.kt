@@ -55,7 +55,7 @@ class MastodonRequest<T>(
                 val body: String? = response.body?.string()
                 requireNotNull(body)
 
-                val element: JsonElement = JsonSerializer.parseToJsonElement(body)
+                val element: JsonElement = JSON_SERIALIZER.parseToJsonElement(body)
                 if (element is JsonObject) {
                     action(body)
 

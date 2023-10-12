@@ -6,7 +6,7 @@ import social.bigbone.api.entity.Instance
 
 object GetInstanceInfo {
 
-    private val json: Json = Json {
+    private val JSON_SERIALIZER: Json = Json {
         encodeDefaults = true
         ignoreUnknownKeys = true
         coerceInputValues = true
@@ -22,6 +22,6 @@ object GetInstanceInfo {
 
         // Get instance info and dump it to the console as JSON
         val instanceInfo = client.instances.getInstance().execute()
-        println(json.encodeToString(Instance.serializer(), instanceInfo))
+        println(JSON_SERIALIZER.encodeToString(Instance.serializer(), instanceInfo))
     }
 }

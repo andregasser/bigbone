@@ -11,7 +11,7 @@ import static kotlinx.serialization.SerializersKt.serializer;
 @SuppressWarnings("PMD.SystemPrintln")
 public class GetInstanceInfo {
 
-    private static final Json jsonSerializer = JsonKt.Json(Json.Default, jsonBuilder -> {
+    private static final Json JSON_SERIALIZER = JsonKt.Json(Json.Default, jsonBuilder -> {
         jsonBuilder.setEncodeDefaults(true);
         jsonBuilder.setIgnoreUnknownKeys(true);
         jsonBuilder.setCoerceInputValues(true);
@@ -28,6 +28,6 @@ public class GetInstanceInfo {
         // Get instance info and dump it to the console as JSON
         final Instance instanceInfo = client.instances().getInstance().execute();
 
-        System.out.println(jsonSerializer.encodeToString(serializer(Instance.class), instanceInfo));
+        System.out.println(JSON_SERIALIZER.encodeToString(serializer(Instance.class), instanceInfo));
     }
 }

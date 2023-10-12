@@ -12,7 +12,7 @@ import social.bigbone.MastodonClient
 
 object MockClient {
 
-    val json: Json = Json {
+    val JSON: Json = Json {
         encodeDefaults = true
         ignoreUnknownKeys = true
         coerceInputValues = true
@@ -46,7 +46,7 @@ object MockClient {
         every { client.get(ofType<String>(), any()) } returns response
 
         // mocking function that is internal in MastodonClient
-        every { client["getSerializer"]() } returns json
+        every { client["getSerializer"]() } returns JSON
 
         return client
     }
