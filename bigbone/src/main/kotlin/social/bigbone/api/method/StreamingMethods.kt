@@ -1,5 +1,6 @@
 package social.bigbone.api.method
 
+import social.bigbone.JSON_SERIALIZER
 import social.bigbone.MastodonClient
 import social.bigbone.Parameters
 import social.bigbone.api.Dispatcher
@@ -38,7 +39,7 @@ class StreamingMethods(private val client: MastodonClient) {
                         }
                         if (event == "update") {
                             val json = payload.substringAfter(':').trim()
-                            handler.onStatus(status = client.getSerializer().decodeFromString(json))
+                            handler.onStatus(status = JSON_SERIALIZER.decodeFromString(json))
                         }
                     } catch (e: java.io.InterruptedIOException) {
                         break
@@ -77,7 +78,7 @@ class StreamingMethods(private val client: MastodonClient) {
                         }
                         if (event == "update") {
                             val json = payload.substringAfter(':').trim()
-                            handler.onStatus(status = client.getSerializer().decodeFromString(json))
+                            handler.onStatus(status = JSON_SERIALIZER.decodeFromString(json))
                         }
                     } catch (e: java.io.InterruptedIOException) {
                         break
@@ -119,7 +120,7 @@ class StreamingMethods(private val client: MastodonClient) {
                         }
                         if (event == "update") {
                             val json = payload.substringAfter(':').trim()
-                            val status: Status = client.getSerializer().decodeFromString(json)
+                            val status: Status = JSON_SERIALIZER.decodeFromString(json)
                             handler.onStatus(status)
                         }
                     } catch (e: java.io.InterruptedIOException) {
@@ -162,7 +163,7 @@ class StreamingMethods(private val client: MastodonClient) {
                         }
                         if (event == "update") {
                             val json = payload.substringAfter(':').trim()
-                            handler.onStatus(status = client.getSerializer().decodeFromString(json))
+                            handler.onStatus(status = JSON_SERIALIZER.decodeFromString(json))
                         }
                     } catch (e: java.io.InterruptedIOException) {
                         break
@@ -204,13 +205,13 @@ class StreamingMethods(private val client: MastodonClient) {
 
                         val json = payload.substringAfter(':').trim()
                         if (event == "update") {
-                            handler.onStatus(status = client.getSerializer().decodeFromString(json))
+                            handler.onStatus(status = JSON_SERIALIZER.decodeFromString(json))
                         }
                         if (event == "notification") {
-                            handler.onNotification(notification = client.getSerializer().decodeFromString(json))
+                            handler.onNotification(notification = JSON_SERIALIZER.decodeFromString(json))
                         }
                         if (event == "delete") {
-                            handler.onDelete(id = client.getSerializer().decodeFromString(json))
+                            handler.onDelete(id = JSON_SERIALIZER.decodeFromString(json))
                         }
                     } catch (e: java.io.InterruptedIOException) {
                         break
@@ -256,13 +257,13 @@ class StreamingMethods(private val client: MastodonClient) {
                         val start = payload.indexOf(":") + 1
                         val json = payload.substring(start).trim()
                         if (event == "update") {
-                            handler.onStatus(status = client.getSerializer().decodeFromString(json))
+                            handler.onStatus(status = JSON_SERIALIZER.decodeFromString(json))
                         }
                         if (event == "notification") {
-                            handler.onNotification(notification = client.getSerializer().decodeFromString(json))
+                            handler.onNotification(notification = JSON_SERIALIZER.decodeFromString(json))
                         }
                         if (event == "delete") {
-                            handler.onDelete(id = client.getSerializer().decodeFromString(json))
+                            handler.onDelete(id = JSON_SERIALIZER.decodeFromString(json))
                         }
                     } catch (e: java.io.InterruptedIOException) {
                         break

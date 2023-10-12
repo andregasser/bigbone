@@ -1,6 +1,5 @@
 package social.bigbone
 
-import kotlinx.serialization.json.Json
 import okhttp3.HttpUrl
 import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -232,9 +231,6 @@ private constructor(
         PUT
     }
 
-    @PublishedApi
-    internal fun getSerializer(): Json = JSON_SERIALIZER
-
     fun getInstanceName() = instanceName
 
     fun getInstanceVersion() = instanceVersion
@@ -267,7 +263,7 @@ private constructor(
                     Method.PUT -> put(endpoint, parameters)
                 }
             },
-            mapper = { getSerializer().decodeFromString<T>(it) }
+            mapper = { JSON_SERIALIZER.decodeFromString<T>(it) }
         )
     }
 
@@ -293,7 +289,7 @@ private constructor(
                     Method.PUT -> put(endpoint, parameters)
                 }
             },
-            mapper = { getSerializer().decodeFromString<T>(it) }
+            mapper = { JSON_SERIALIZER.decodeFromString<T>(it) }
         ).toPageable()
     }
 
@@ -319,7 +315,7 @@ private constructor(
                     Method.PUT -> put(endpoint, parameters)
                 }
             },
-            mapper = { getSerializer().decodeFromString<T>(it) }
+            mapper = { JSON_SERIALIZER.decodeFromString<T>(it) }
         )
     }
 
