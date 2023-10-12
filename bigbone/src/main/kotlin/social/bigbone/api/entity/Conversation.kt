@@ -29,5 +29,5 @@ data class Conversation(
      * The last status in the conversation.
      */
     @SerializedName("last_status")
-    val lastStatus: Status? = null,
+    val lastStatus: Status? = null
 )

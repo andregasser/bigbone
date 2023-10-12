@@ -70,7 +70,7 @@ data class MediaAttachment(
          * Contains the coordinates to be used for smart thumbnail cropping.
          */
         @SerializedName("focus")
-        val focus: Focus? = null,
+        val focus: Focus? = null
     )
 
     /**

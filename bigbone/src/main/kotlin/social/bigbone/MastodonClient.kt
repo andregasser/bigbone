@@ -684,7 +684,10 @@ private constructor(
             return client.newCall(
                 Request.Builder().url(
                     fullUrl(
-                        scheme, instanceName, port, "api/$versionString/instance"
+                        scheme,
+                        instanceName,
+                        port,
+                        "api/$versionString/instance"
                     )
                 ).get().build()
             ).execute()

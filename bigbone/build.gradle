@@ -1,6 +1,11 @@
 plugins {
     id 'bigbone.library-conventions'
     id 'bigbone.integrationtest-conventions'
+    id "org.jlleitschuh.gradle.ktlint" version "11.6.1"
+}
+
+allprojects {
+    apply plugin: "org.jlleitschuh.gradle.ktlint"
 }
 
 dependencies {

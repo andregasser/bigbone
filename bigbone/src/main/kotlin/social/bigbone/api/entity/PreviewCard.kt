@@ -99,7 +99,7 @@ data class PreviewCard(
      * Usage statistics for given days (typically the past week).
      */
     @SerializedName("history")
-    val history: List<History> = emptyList(),
+    val history: List<History> = emptyList()
 ) {
     /**
      * Specifies the type of the preview card.
