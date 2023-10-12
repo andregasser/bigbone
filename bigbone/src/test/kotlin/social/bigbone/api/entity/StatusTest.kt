@@ -1,8 +1,8 @@
 package social.bigbone.api.entity
 
-import com.google.gson.Gson
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.Test
+import social.bigbone.JsonSerializer
 import social.bigbone.testtool.AssetsUtil
 
 class StatusTest {
@@ -10,7 +10,7 @@ class StatusTest {
     @Test
     fun deserialize() {
         val json = AssetsUtil.readFromAssets("status.json")
-        val status: Status = Gson().fromJson(json, Status::class.java)
+        val status: Status = JsonSerializer.decodeFromString(json)
         status.id shouldBeEqualTo "11111"
         status.visibility shouldBeEqualTo Status.Visibility.Public.value
         status.content shouldBeEqualTo "Test Status"

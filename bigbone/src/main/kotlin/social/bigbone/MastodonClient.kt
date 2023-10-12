@@ -591,12 +591,11 @@ private constructor(
          */
         private fun getInstanceVersion(): String {
             try {
-                val server = NodeInfoClient.retrieveServerInfo(instanceName)
-                server.software?.let { software ->
-                    if (software.name == "mastodon") {
-                        return software.version
-                    }
-                }
+                NodeInfoClient
+                    .retrieveServerInfo(instanceName)
+                    ?.software
+                    ?.takeIf { it.name == "mastodon" }
+                    ?.version
             } catch (_: BigBoneRequestException) {
             }
 

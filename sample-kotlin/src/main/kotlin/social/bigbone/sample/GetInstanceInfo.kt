@@ -1,9 +1,17 @@
 package social.bigbone.sample
 
-import com.google.gson.Gson
+import kotlinx.serialization.json.Json
 import social.bigbone.MastodonClient
+import social.bigbone.api.entity.Instance
 
 object GetInstanceInfo {
+
+    private val json: Json = Json {
+        encodeDefaults = true
+        ignoreUnknownKeys = true
+        coerceInputValues = true
+    }
+
     @JvmStatic
     fun main(args: Array<String>) {
         val instance = args[0]
@@ -14,7 +22,6 @@ object GetInstanceInfo {
 
         // Get instance info and dump it to the console as JSON
         val instanceInfo = client.instances.getInstance().execute()
-        val gson = Gson()
-        println(gson.toJson(instanceInfo))
+        println(json.encodeToString(Instance.serializer(), instanceInfo))
     }
 }

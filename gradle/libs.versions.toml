@@ -3,7 +3,6 @@
 bigbone = "2.0.0-SNAPSHOT"
 
 # 3rd party dependencies
-gson = "2.10.1"
 junit-jupiter = "5.10.0"
 junit-platform-launcher = "1.10.0"
 junit-platform-suite-engine = "1.10.0"
@@ -25,7 +24,6 @@ versions = "0.49.0"
 junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit-jupiter" }
 junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher", version.ref = "junit-platform-launcher" }
 junit-platform-suite-engine = { module = "org.junit.platform:junit-platform-suite-engine", version.ref = "junit-platform-suite-engine" }
-gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 kluent = { module = "org.amshove.kluent:kluent", version.ref = "kluent" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization-json" }
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }

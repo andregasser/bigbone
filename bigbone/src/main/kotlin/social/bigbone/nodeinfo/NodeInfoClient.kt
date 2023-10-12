@@ -1,8 +1,8 @@
 package social.bigbone.nodeinfo
 
-import com.google.gson.Gson
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import social.bigbone.JsonSerializer
 import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.nodeinfo.entity.NodeInfo
 import social.bigbone.nodeinfo.entity.Server
@@ -13,7 +13,6 @@ import social.bigbone.nodeinfo.entity.Server
  */
 object NodeInfoClient {
 
-    private val GSON = Gson()
     private val CLIENT = OkHttpClient.Builder()
         .followRedirects(true)
         .build()
@@ -24,7 +23,7 @@ object NodeInfoClient {
      * @return server information, including the name and version of the software running on this server
      * @throws BigBoneRequestException if server info can not be retrieved via NodeInfo for any reason
      */
-    fun retrieveServerInfo(host: String): Server {
+    fun retrieveServerInfo(host: String): Server? {
         try {
             val serverInfoUrl = getServerInfoUrl(host)
             val response = CLIENT.newCall(
@@ -39,7 +38,7 @@ object NodeInfoClient {
                 throw BigBoneRequestException("request for NodeInfo URL unsuccessful")
             }
 
-            return GSON.fromJson(response.body?.string(), Server::class.java)
+            return response.body?.string()?.let { JsonSerializer.decodeFromString(it) }
         } catch (e: Exception) {
             throw BigBoneRequestException("invalid NodeInfo response")
         }
@@ -63,18 +62,16 @@ object NodeInfoClient {
             throw BigBoneRequestException("request for well-known NodeInfo URL unsuccessful")
         }
 
-        val nodeInfo = GSON.fromJson(response.body?.string(), NodeInfo::class.java)
+        val nodeInfo: NodeInfo? = response.body?.string()?.let { JsonSerializer.decodeFromString(it) }
+        if (nodeInfo == null || nodeInfo.links.isEmpty()) {
+            throw BigBoneRequestException("empty link list in well-known NodeInfo location")
+        }
+
 
         // attempt returning URL to schema 2.0 information, but fall back to any - software information exists in all schemas
-        for (link in nodeInfo.links) {
-            if (link.rel == "http://nodeinfo.diaspora.software/ns/schema/2.0") {
-                return link.href
-            }
-        }
-        if (nodeInfo.links.isNotEmpty()) {
-            return nodeInfo.links[0].href
-        }
-
-        throw BigBoneRequestException("empty link list in well-known NodeInfo location")
+        return nodeInfo.links
+            .firstOrNull { link -> link.rel == "http://nodeinfo.diaspora.software/ns/schema/2.0" }
+            ?.href
+            ?: nodeInfo.links.first().href
     }
 }
