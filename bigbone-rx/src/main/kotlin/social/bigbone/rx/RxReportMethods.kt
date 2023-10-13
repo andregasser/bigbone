@@ -3,6 +3,7 @@ package social.bigbone.rx
 import io.reactivex.rxjava3.core.Single
 import social.bigbone.MastodonClient
 import social.bigbone.api.entity.Report
+import social.bigbone.api.entity.Report.ReportType
 import social.bigbone.api.method.ReportMethods
 
 /**
@@ -13,10 +14,18 @@ import social.bigbone.api.method.ReportMethods
 class RxReportMethods(client: MastodonClient) {
     private val reportMethods = ReportMethods(client)
 
-    fun fileReport(accountId: String, statusIds: List<String>, comment: String): Single<Report> {
+    @JvmOverloads
+    fun fileReport(
+        accountId: String,
+        forward: Boolean = false,
+        statusIds: List<String>? = emptyList(),
+        ruleIds: List<Int>? = emptyList(),
+        comment: String? = null,
+        category: ReportType? = null
+    ): Single<Report> {
         return Single.create {
             try {
-                val report = reportMethods.fileReport(accountId, statusIds, comment)
+                val report = reportMethods.fileReport(accountId, forward, statusIds, ruleIds, comment, category)
                 it.onSuccess(report.execute())
             } catch (e: Throwable) {
                 it.onError(e)
