@@ -40,5 +40,33 @@ class FeaturedTagsMethodsTest {
         } shouldThrow BigBoneRequestException::class withMessage "Unauthorized"
     }
 
+    @Test
+    fun `Given a client returning success, when featuring a tag, then expect values of response`() {
+        val client = MockClient.mock("featured_tags_post_success.json")
+
+        val featuredTagsMethods = FeaturedTagsMethods(client)
+        val (id, name, url, statusesCount, lastStatusAt) = featuredTagsMethods
+            .featureTag("nowplaying")
+            .execute()
+
+        id shouldBeEqualTo "13174"
+        name shouldBeEqualTo "nowplaying"
+        url shouldBeEqualTo "https://mastodon.example/@user/tagged/nowplaying"
+        statusesCount shouldBeEqualTo 23
+        lastStatusAt shouldBeEqualTo "2021-10-22T14:47:35.357Z"
+    }
+
+    @Test
+    fun `Given a client returning unprocessable entity, when featuring a tag, then propagate error`() {
+        val client = MockClient.failWithResponse(
+            responseJsonAssetPath = "featured_tags_post_error_422.json",
+            responseCode = 422,
+            message = "Unprocessable entity"
+        )
+
+        invoking {
+            FeaturedTagsMethods(client).featureTag("nowplaying").execute()
+        } shouldThrow BigBoneRequestException::class withMessage "Unprocessable entity"
+    }
 
 }
