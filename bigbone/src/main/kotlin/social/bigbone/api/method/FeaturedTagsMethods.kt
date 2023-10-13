@@ -32,6 +32,10 @@ class FeaturedTagsMethods(private val client: MastodonClient) {
      * @return The [FeaturedTag] successfully created
      */
     fun featureTag(tagName: String): MastodonRequest<FeaturedTag> {
+        if (tagName.contains('#')) {
+            throw IllegalArgumentException("Tag name to be featured must not contain '#'")
+        }
+
         return client.getMastodonRequest(
             endpoint = featuredTagsEndpoint,
             method = MastodonClient.Method.POST,

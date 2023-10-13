@@ -60,6 +60,16 @@ class FeaturedTagsMethodsTest {
     }
 
     @Test
+    fun `Given a client returning success, when attempting to feature a tag starting with #, then throw IllegalArgumentException`() {
+        val client = MockClient.mock("featured_tags_post_success.json")
+
+        val featuredTagsMethods = FeaturedTagsMethods(client)
+        invoking {
+            featuredTagsMethods.featureTag("#nowplaying").execute()
+        } shouldThrow IllegalArgumentException::class withMessage "Tag name to be featured must not contain '#'"
+    }
+
+    @Test
     fun `Given a client returning unprocessable entity, when featuring a tag, then propagate error`() {
         val client = MockClient.failWithResponse(
             responseJsonAssetPath = "featured_tags_post_error_422.json",
