@@ -49,6 +49,10 @@ class FeaturedTagsMethods(private val client: MastodonClient) {
      */
     @Throws(BigBoneRequestException::class)
     fun unfeatureTag(tagId: String) {
+        if (tagId.isBlank()) {
+            throw IllegalArgumentException("Tag ID must not be blank")
+        }
+
         client.performAction(
             endpoint = featuredTagsEndpoint,
             method = MastodonClient.Method.DELETE,

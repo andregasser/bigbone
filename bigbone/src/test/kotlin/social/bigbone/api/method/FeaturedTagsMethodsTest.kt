@@ -91,6 +91,20 @@ class FeaturedTagsMethodsTest {
     }
 
     @Test
+    fun `Given a client returning success, when attempting to unfeature a tag with blank tag id, then throw IllegalArgumentException`() {
+        val client = MockClient.mock("featured_tags_delete_success.json")
+
+        val featuredTagsMethods = FeaturedTagsMethods(client)
+        invoking {
+            featuredTagsMethods.unfeatureTag("")
+        } shouldThrow IllegalArgumentException::class withMessage "Tag ID must not be blank"
+
+        invoking {
+            featuredTagsMethods.unfeatureTag("    ")
+        } shouldThrow IllegalArgumentException::class withMessage "Tag ID must not be blank"
+    }
+
+    @Test
     fun `Given a client returning Not found, when unfeaturing a tag, then propagate error`() {
         val client = MockClient.failWithResponse(
             responseJsonAssetPath = "error_404.json",
