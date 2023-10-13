@@ -2,6 +2,7 @@ package social.bigbone.api.method
 
 import org.amshove.kluent.invoking
 import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldNotThrow
 import org.amshove.kluent.shouldThrow
 import org.amshove.kluent.withMessage
 import org.junit.jupiter.api.Test
@@ -67,6 +68,27 @@ class FeaturedTagsMethodsTest {
         invoking {
             FeaturedTagsMethods(client).featureTag("nowplaying").execute()
         } shouldThrow BigBoneRequestException::class withMessage "Unprocessable entity"
+    }
+
+    @Test
+    fun `Given a client returning success, when unfeaturing a tag, then expect no errors`() {
+        val client = MockClient.mock("featured_tags_delete_success.json")
+
+        val featuredTagsMethods = FeaturedTagsMethods(client)
+        invoking { featuredTagsMethods.unfeatureTag("12345") } shouldNotThrow BigBoneRequestException::class
+    }
+
+    @Test
+    fun `Given a client returning Not found, when unfeaturing a tag, then propagate error`() {
+        val client = MockClient.failWithResponse(
+            responseJsonAssetPath = "error_404.json",
+            responseCode = 404,
+            message = "Not found"
+        )
+
+        invoking {
+            FeaturedTagsMethods(client).featureTag("12345").execute()
+        } shouldThrow BigBoneRequestException::class withMessage "Not found"
     }
 
 }

@@ -4,6 +4,7 @@ import social.bigbone.MastodonClient
 import social.bigbone.MastodonRequest
 import social.bigbone.Parameters
 import social.bigbone.api.entity.FeaturedTag
+import social.bigbone.api.exception.BigBoneRequestException
 
 /**
  * View information about Feature tags that you use frequently on your profile.
@@ -34,6 +35,19 @@ class FeaturedTagsMethods(private val client: MastodonClient) {
             endpoint = featuredTagsEndpoint,
             method = MastodonClient.Method.POST,
             parameters = Parameters().append("name", tagName)
+        )
+    }
+
+    /**
+     * Stop promoting a hashtag on your profile.
+     * @param tagId The ID of the FeaturedTag in the database you want to stop promoting.
+     */
+    @Throws(BigBoneRequestException::class)
+    fun unfeatureTag(tagId: String) {
+        client.performAction(
+            endpoint = featuredTagsEndpoint,
+            method = MastodonClient.Method.DELETE,
+            parameters = Parameters().append("id", tagId)
         )
     }
 
