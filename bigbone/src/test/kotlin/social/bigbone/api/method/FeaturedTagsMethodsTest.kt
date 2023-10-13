@@ -2,11 +2,13 @@ package social.bigbone.api.method
 
 import org.amshove.kluent.invoking
 import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldNotThrow
 import org.amshove.kluent.shouldThrow
 import org.amshove.kluent.withMessage
 import org.junit.jupiter.api.Test
 import social.bigbone.api.entity.FeaturedTag
+import social.bigbone.api.entity.Tag
 import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.testtool.MockClient
 
@@ -89,6 +91,34 @@ class FeaturedTagsMethodsTest {
         invoking {
             FeaturedTagsMethods(client).featureTag("12345").execute()
         } shouldThrow BigBoneRequestException::class withMessage "Not found"
+    }
+
+    @Test
+    fun `Given a client returning success, when getting suggested featured_tags, then expect values of response`() {
+        val client = MockClient.mock("featured_tags_view_suggested_success.json")
+
+        val featuredTagsMethods = FeaturedTagsMethods(client)
+        val suggestions: List<Tag> = featuredTagsMethods.getSuggestedTags().execute()
+
+        suggestions.size shouldBeEqualTo 2
+
+        val (name0, url0, history0, following0) = suggestions[0]
+        name0 shouldBeEqualTo "nowplaying"
+        url0 shouldBeEqualTo "https://mastodon.example/tags/nowplaying"
+        history0.size shouldBeEqualTo 7
+        history0[0].day shouldBeEqualTo "1574553600"
+        history0[0].accounts shouldBeEqualTo "31"
+        history0[0].uses shouldBeEqualTo "200"
+        following0.shouldBeNull()
+
+        val (name1, url1, history1, following1) = suggestions[1]
+        name1 shouldBeEqualTo "mastothemes"
+        url1 shouldBeEqualTo "https://mastodon.example/tags/mastothemes"
+        history1.size shouldBeEqualTo 5
+        history1[0].day shouldBeEqualTo "1574553600"
+        history1[0].accounts shouldBeEqualTo "0"
+        history1[0].uses shouldBeEqualTo "0"
+        following1.shouldBeNull()
     }
 
 }

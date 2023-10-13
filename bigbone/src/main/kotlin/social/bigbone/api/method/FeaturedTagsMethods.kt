@@ -4,6 +4,7 @@ import social.bigbone.MastodonClient
 import social.bigbone.MastodonRequest
 import social.bigbone.Parameters
 import social.bigbone.api.entity.FeaturedTag
+import social.bigbone.api.entity.Tag
 import social.bigbone.api.exception.BigBoneRequestException
 
 /**
@@ -48,6 +49,17 @@ class FeaturedTagsMethods(private val client: MastodonClient) {
             endpoint = featuredTagsEndpoint,
             method = MastodonClient.Method.DELETE,
             parameters = Parameters().append("id", tagId)
+        )
+    }
+
+    /**
+     * Shows up to 10 recently-used tags.
+     * @return List of up to 10 recently-used [Tag]s to feature.
+     */
+    fun getSuggestedTags(): MastodonRequest<List<Tag>> {
+        return client.getMastodonRequestForList(
+            endpoint = "$featuredTagsEndpoint/suggestions",
+            method = MastodonClient.Method.GET
         )
     }
 
