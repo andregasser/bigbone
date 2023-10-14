@@ -6,6 +6,4 @@ dependencies {
     implementation project(':bigbone')
     implementation project(':bigbone-rx')
     implementation libs.okhttp
-    implementation libs.rxjava
-    implementation libs.kotlin.coroutines
 }
