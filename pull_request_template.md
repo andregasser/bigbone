@@ -1,6 +1,6 @@
 # Description
 
-Please include a summary of the changes and the related issue. Please also include relevant motivation and context. List any dependencies that are required for this change. If your change closes an existing issue, please make this explicit by writing "Closes <link to issue>".
+Please include a summary of the changes and the related issue. Please also include relevant motivation and context. List any dependencies that are required for this change. If your change closes an existing issue, please make this explicit by writing "Closes &lt;link to issue&gt;".
 
 # Type of Change
 
