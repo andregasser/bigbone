@@ -1,6 +1,6 @@
 # Description
 
-Please include a summary of the changes and the related issue. Please also include relevant motivation and context. List any dependencies that are required for this change. If your change addresses any existing issues, please link them here as well.
+Please include a summary of the changes and the related issue. Please also include relevant motivation and context. List any dependencies that are required for this change. If your change closes an existing issue, please make this explicit by writing "Closes <link to issue>".
 
 # Type of Change
 
@@ -8,6 +8,7 @@ Please include a summary of the changes and the related issue. Please also inclu
 - [ ] New feature (non-breaking change which adds functionality)
 - [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
 - [ ] This change requires a documentation update
+- [ ] Dependency update / replacement
 
 # How Has This Been Tested?
 
