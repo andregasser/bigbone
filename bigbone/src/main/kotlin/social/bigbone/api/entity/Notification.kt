@@ -35,7 +35,13 @@ data class Notification(
      * Status that was the object of the notification. Attached when type of the notification is favourite, reblog, status, mention, poll, or update.
      */
     @SerializedName("status")
-    val status: Status? = null
+    val status: Status? = null,
+
+    /**
+     * Report that was the object of the notification. Attached when type of the notification is admin.report.
+     */
+    @SerializedName("report")
+    val report: Report? = null
 ) {
     /**
      * Specifies the notification type.

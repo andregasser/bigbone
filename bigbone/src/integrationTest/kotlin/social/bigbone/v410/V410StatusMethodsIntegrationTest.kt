@@ -469,7 +469,7 @@ class V410StatusMethodsIntegrationTest {
             val pinnedStatus = user1Client.statuses.pinStatus(statusId).execute()
 
             // then
-            assertTrue(pinnedStatus.isPinned!!)
+            assertTrue(pinnedStatus.isPinned)
         }
     }
 
@@ -488,7 +488,7 @@ class V410StatusMethodsIntegrationTest {
             val unpinnedStatus = user1Client.statuses.unpinStatus(statusId).execute()
 
             // then
-            assertFalse(unpinnedStatus.isPinned!!)
+            assertFalse(unpinnedStatus.isPinned)
         }
     }
 
