@@ -184,6 +184,12 @@ val statuses = client.timelines.getTagTimeline(hashtag, TimelineMethods.StatusOr
 
 The same applies if you're using BigBone in a Java project.
 
+## Android Studio: BigBone Classes Not Found
+
+An Android Studio user reported, that he was not able to use BigBone library in Android Studio, as classes were not
+recognized by the IDE (marked red instead). In this particular case, the fix was to switch/update to Android Studio Giraffe.
+See this issue for more details: https://github.com/andregasser/bigbone/issues/280
+
 # BigBone Contributors
 
 The following people have actively contributed to the development of BigBone:

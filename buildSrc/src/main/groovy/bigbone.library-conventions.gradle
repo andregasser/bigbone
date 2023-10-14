@@ -10,7 +10,7 @@ plugins {
 publishing {
     repositories {
         maven {
-            name = "local"
+            name = "localBuildRepo"
             url = rootProject.file("build/repo")
         }
         maven {
@@ -28,7 +28,7 @@ publishing {
     publications {
         bigbone(MavenPublication) {
             pom {
-                name = 'Bigbone'
+                name = 'BigBone'
                 description = 'Mastodon Client for Java and Kotlin'
                 url = 'https://github.com/andregasser/bigbone/'
                 licenses {
@@ -50,7 +50,6 @@ publishing {
                     url = 'https://github.com/andregasser/bigbone'
                 }
             }
-
             from components.java
         }
     }
