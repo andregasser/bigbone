@@ -7,7 +7,6 @@ dependencies {
     api libs.okhttp
     api libs.gson
     implementation libs.kotlin.stdlib
-    implementation libs.kotlin.stdlib.jdk8
     testImplementation libs.junit.jupiter
     testRuntimeOnly libs.junit.platform.launcher
     testImplementation libs.kluent
