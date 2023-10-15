@@ -68,7 +68,7 @@ data class Report(
      * The account that was reported.
      */
     @SerialName("target_account")
-    val targetAccount: Account,
+    val targetAccount: Account
 ) {
     /**
      * Specify the typology of category among spam, violation or other.

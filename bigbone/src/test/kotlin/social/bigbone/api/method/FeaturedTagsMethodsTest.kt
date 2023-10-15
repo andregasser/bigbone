@@ -144,5 +144,4 @@ class FeaturedTagsMethodsTest {
         history1[0].uses shouldBeEqualTo "0"
         following1.shouldBeNull()
     }
-
 }
