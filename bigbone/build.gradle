@@ -1,13 +1,14 @@
 plugins {
     id 'bigbone.library-conventions'
     id 'bigbone.integrationtest-conventions'
+    alias(libs.plugins.kotlin.serialization)
 }
 
 dependencies {
     api libs.okhttp
-    api libs.gson
-    implementation libs.kotlin.stdlib
-    implementation libs.kotlin.stdlib.jdk8
+
+    implementation libs.kotlinx.serialization.json
+
     testImplementation libs.junit.jupiter
     testRuntimeOnly libs.junit.platform.launcher
     testImplementation libs.kluent

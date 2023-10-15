@@ -1,34 +1,36 @@
 package social.bigbone.api.entity
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import social.bigbone.api.entity.data.History
 
 /**
  * Represents a hashtag used within the content of a status.
  * @see <a href="https://docs.joinmastodon.org/entities/Tag/">Mastodon API Tag</a>
  */
+@Serializable
 data class Tag(
     /**
      * The value of the hashtag after the # sign.
      */
-    @SerializedName("name")
+    @SerialName("name")
     val name: String = "",
 
     /**
      * A link to the hashtag on the instance.
      */
-    @SerializedName("url")
+    @SerialName("url")
     val url: String = "",
 
     /**
      * Usage statistics for given days (typically the past week).
      */
-    @SerializedName("history")
+    @SerialName("history")
     val history: List<History> = emptyList(),
 
     /**
      * Whether the current token’s authorized user is following this tag.
      */
-    @SerializedName("following")
+    @SerialName("following")
     val following: Boolean? = null
 )

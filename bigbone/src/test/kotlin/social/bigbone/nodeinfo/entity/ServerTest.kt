@@ -1,8 +1,8 @@
 package social.bigbone.nodeinfo.entity
 
-import com.google.gson.Gson
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.Test
+import social.bigbone.JSON_SERIALIZER
 import social.bigbone.testtool.AssetsUtil
 
 class ServerTest {
@@ -13,7 +13,7 @@ class ServerTest {
         val json = AssetsUtil.readFromAssets("nodeinfo_server_info.json")
 
         // when
-        val server = Gson().fromJson(json, Server::class.java)
+        val server: Server = JSON_SERIALIZER.decodeFromString(json)
 
         // then
         server.schemaVersion shouldBeEqualTo "2.0"

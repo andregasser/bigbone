@@ -1,36 +1,38 @@
 package social.bigbone.api.entity
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 /**
  * Represents a custom emoji.
  * @see <a href="https://docs.joinmastodon.org/entities/CustomEmoji/">Mastodon API CustomEmoji</a>
  */
+@Serializable
 data class CustomEmoji(
-    @SerializedName("shortcode")
+    @SerialName("shortcode")
     val shortcode: String = "",
 
     /**
      * A link to a static copy of the custom emoji.
      */
-    @SerializedName("static_url")
+    @SerialName("static_url")
     val staticUrl: String = "",
 
     /**
      * A link to the custom emoji.
      */
-    @SerializedName("url")
+    @SerialName("url")
     val url: String = "",
 
     /**
      * Whether this Emoji should be visible in the picker or unlisted.
      */
-    @SerializedName("visible_in_picker")
+    @SerialName("visible_in_picker")
     val visibleInPicker: Boolean = true,
 
     /**
      * Used for sorting custom emoji in the picker.
      */
-    @SerializedName("category")
+    @SerialName("category")
     val category: String = ""
 )
