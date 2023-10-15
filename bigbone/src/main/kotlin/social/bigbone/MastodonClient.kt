@@ -63,12 +63,12 @@ import javax.net.ssl.X509TrustManager
 class MastodonClient
 private constructor(
     private val instanceName: String,
-    private val client: OkHttpClient
+    private val client: OkHttpClient,
+    private var debug: Boolean = false,
+    private var instanceVersion: String? = null,
+    private var scheme: String = "https",
+    private var port: Int = 443,
 ) {
-    private var debug = false
-    private var instanceVersion: String? = null
-    private var scheme: String = "https"
-    private var port: Int = 443
 
     /**
      * Access API methods under the "accounts" endpoint.
@@ -785,13 +785,12 @@ private constructor(
                     .readTimeout(readTimeoutSeconds, TimeUnit.SECONDS)
                     .writeTimeout(writeTimeoutSeconds, TimeUnit.SECONDS)
                     .connectTimeout(connectTimeoutSeconds, TimeUnit.SECONDS)
-                    .build()
-            ).also {
-                it.debug = debug
-                it.instanceVersion = getInstanceVersion()
-                it.scheme = scheme
-                it.port = port
-            }
+                    .build(),
+                debug = debug,
+                instanceVersion = getInstanceVersion(),
+                scheme = scheme,
+                port = port
+            )
         }
     }
 
