@@ -12,6 +12,7 @@ import social.bigbone.api.method.SearchMethods.SearchType
  * @see <a href="https://docs.joinmastodon.org/methods/search/">Mastodon search API methods</a>
  */
 class RxSearchMethods(client: MastodonClient) {
+
     private val searchMethodsMethod = SearchMethods(client)
 
     @JvmOverloads
@@ -27,24 +28,19 @@ class RxSearchMethods(client: MastodonClient) {
         limit: Int? = null,
         offset: Int? = null
     ): Single<Search> {
-        return Single.create {
-            try {
-                val results = searchMethodsMethod.searchContent(
-                    query = query,
-                    type = type,
-                    resolve = resolve,
-                    following = following,
-                    excludeUnreviewed = excludeUnreviewed,
-                    accountId = accountId,
-                    maxId = maxId,
-                    minId = minId,
-                    limit = limit,
-                    offset = offset
-                )
-                it.onSuccess(results.execute())
-            } catch (e: Throwable) {
-                it.onError(e)
-            }
-        }
+        return Single.fromCallable(
+            searchMethodsMethod.searchContent(
+                query = query,
+                type = type,
+                resolve = resolve,
+                following = following,
+                excludeUnreviewed = excludeUnreviewed,
+                accountId = accountId,
+                maxId = maxId,
+                minId = minId,
+                limit = limit,
+                offset = offset
+            )::execute
+        )
     }
 }

@@ -11,6 +11,7 @@ import social.bigbone.api.method.TagMethods
  * @see <a href="https://docs.joinmastodon.org/methods/tags/">Mastodon tags API methods</a>
  */
 class RxTagMethods(client: MastodonClient) {
+
     private val tagMethods = TagMethods(client)
 
     /**
@@ -18,46 +19,19 @@ class RxTagMethods(client: MastodonClient) {
      * @param tagId The name of the hashtag
      * @return information about a single tag
      */
-    fun getTag(tagId: String): Single<Tag> {
-        return Single.create {
-            try {
-                val results = tagMethods.getTag(tagId)
-                it.onSuccess(results.execute())
-            } catch (e: Throwable) {
-                it.onError(e)
-            }
-        }
-    }
+    fun getTag(tagId: String): Single<Tag> = Single.fromCallable(tagMethods.getTag(tagId)::execute)
 
     /**
      * Follow a hashtag. Posts containing a followed hashtag will be inserted into your home timeline.
      * @param tagId The name of the hashtag
      * @return information about a single tag
      */
-    fun followTag(tagId: String): Single<Tag> {
-        return Single.create {
-            try {
-                val results = tagMethods.followTag(tagId)
-                it.onSuccess(results.execute())
-            } catch (e: Throwable) {
-                it.onError(e)
-            }
-        }
-    }
+    fun followTag(tagId: String): Single<Tag> = Single.fromCallable(tagMethods.followTag(tagId)::execute)
 
     /**
      * Unfollow a hashtag. Posts containing this hashtag will no longer be inserted into your home timeline.
      * @param tagId The name of the hashtag
      * @return information about a single tag
      */
-    fun unfollowTag(tagId: String): Single<Tag> {
-        return Single.create {
-            try {
-                val results = tagMethods.unfollowTag(tagId)
-                it.onSuccess(results.execute())
-            } catch (e: Throwable) {
-                it.onError(e)
-            }
-        }
-    }
+    fun unfollowTag(tagId: String): Single<Tag> = Single.fromCallable(tagMethods.unfollowTag(tagId)::execute)
 }

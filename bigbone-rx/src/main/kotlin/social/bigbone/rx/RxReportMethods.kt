@@ -12,6 +12,7 @@ import social.bigbone.api.method.ReportMethods
  * @see <a href="https://docs.joinmastodon.org/methods/reports/">Mastodon reports API methods</a>
  */
 class RxReportMethods(client: MastodonClient) {
+
     private val reportMethods = ReportMethods(client)
 
     @JvmOverloads
@@ -23,13 +24,8 @@ class RxReportMethods(client: MastodonClient) {
         comment: String? = null,
         category: ReportType? = null
     ): Single<Report> {
-        return Single.create {
-            try {
-                val report = reportMethods.fileReport(accountId, forward, statusIds, ruleIds, comment, category)
-                it.onSuccess(report.execute())
-            } catch (e: Throwable) {
-                it.onError(e)
-            }
-        }
+        return Single.fromCallable(
+            reportMethods.fileReport(accountId, forward, statusIds, ruleIds, comment, category)::execute
+        )
     }
 }

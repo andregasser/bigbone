@@ -6,7 +6,6 @@ import social.bigbone.api.Pageable
 import social.bigbone.api.Range
 import social.bigbone.api.entity.Status
 import social.bigbone.api.method.FavouriteMethods
-import social.bigbone.rx.extensions.onErrorIfNotDisposed
 
 /**
  * Reactive implementation of [FavouriteMethods].
@@ -14,17 +13,10 @@ import social.bigbone.rx.extensions.onErrorIfNotDisposed
  * @see <a href="https://docs.joinmastodon.org/methods/favourites/">Mastodon favourites API methods</a>
  */
 class RxFavouriteMethods(client: MastodonClient) {
+
     private val favouriteMethods = FavouriteMethods(client)
 
     @JvmOverloads
-    fun getFavourites(range: Range = Range()): Single<Pageable<Status>> {
-        return Single.create {
-            try {
-                val statuses = favouriteMethods.getFavourites(range)
-                it.onSuccess(statuses.execute())
-            } catch (throwable: Throwable) {
-                it.onErrorIfNotDisposed(throwable)
-            }
-        }
-    }
+    fun getFavourites(range: Range = Range()): Single<Pageable<Status>> =
+        Single.fromCallable(favouriteMethods.getFavourites(range)::execute)
 }
