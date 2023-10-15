@@ -89,4 +89,36 @@ object MockClient {
         every { clientMock.getSerializer() } returns Gson()
         return clientMock
     }
+
+    fun failWithResponse(
+        responseJsonAssetPath: String,
+        responseCode: Int,
+        message: String
+    ): MastodonClient {
+        val clientMock: MastodonClient = mockk()
+        val responseBodyMock: ResponseBody = mockk()
+        every { responseBodyMock.toString() } throws SocketTimeoutException()
+        val response: Response = Response.Builder()
+            .code(responseCode)
+            .message(message)
+            .request(Request.Builder().url("https://test.com/").build())
+            .protocol(Protocol.HTTP_1_1)
+            .body(
+                AssetsUtil.readFromAssets(responseJsonAssetPath)
+                    .toResponseBody("application/json; charset=utf-8".toMediaTypeOrNull())
+            )
+            .build()
+
+        every { clientMock.delete(ofType<String>(), any()) } returns response
+        every { clientMock.get(ofType<String>(), isNull(inverse = false)) } returns response
+        every { clientMock.get(ofType<String>(), any()) } returns response
+        every { clientMock.patch(ofType<String>(), any()) } returns response
+        every { clientMock.post(ofType<String>(), any()) } returns response
+        every { clientMock.post(ofType<String>(), any(), any()) } returns response
+        every { clientMock.postRequestBody(ofType<String>(), any()) } returns response
+        every { clientMock.put(ofType<String>(), any()) } returns response
+        every { clientMock.performAction(ofType<String>(), any()) } throws BigBoneRequestException("mock")
+        every { clientMock.getSerializer() } returns Gson()
+        return clientMock
+    }
 }
