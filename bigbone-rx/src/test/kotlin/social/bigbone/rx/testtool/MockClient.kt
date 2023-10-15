@@ -11,28 +11,38 @@ import okhttp3.ResponseBody.Companion.toResponseBody
 import social.bigbone.MastodonClient
 
 object MockClient {
-    fun mock(jsonName: String, maxId: String? = null, sinceId: String? = null): MastodonClient {
+    fun mock(
+        jsonName: String,
+        maxId: String? = null,
+        sinceId: String? = null,
+        requestUrl: String = "https://example.com",
+        responseBaseUrl: String = "https://mstdn.jp/api/v1/timelines/public"
+    ): MastodonClient {
         val client: MastodonClient = mockk()
         val response: Response = Response.Builder()
             .code(200)
             .message("OK")
-            .request(Request.Builder().url("https://test.com/").build())
+            .request(Request.Builder().url(requestUrl).build())
             .protocol(Protocol.HTTP_1_1)
             .body(
-                AssetsUtil.readFromAssets(jsonName)
+                AssetsUtil
+                    .readFromAssets(jsonName)
                     .toResponseBody("application/json; charset=utf-8".toMediaTypeOrNull())
             )
             .apply {
-                val linkHeader = arrayListOf<String>().apply {
+                val linkHeader = buildList {
                     maxId?.let {
-                        add("""<https://mstdn.jp/api/v1/timelines/public?limit=20&local=true&max_id=$it>; rel="next"""")
+                        add("""<${responseBaseUrl}?limit=20&local=true&max_id=$it>; rel="next"""")
                     }
                     sinceId?.let {
-                        add("""<https://mstdn.jp/api/v1/timelines/public?limit=20&local=true&since_id=$it>; rel="prev"""")
+                        add("""<${responseBaseUrl}?limit=20&local=true&since_id=$it>; rel="prev"""")
                     }
-                }.joinToString(separator = ",")
+                }
                 if (linkHeader.isNotEmpty()) {
-                    header("link", linkHeader)
+                    header(
+                        name = "link",
+                        value = linkHeader.joinToString(separator = ",")
+                    )
                 }
             }
             .build()
