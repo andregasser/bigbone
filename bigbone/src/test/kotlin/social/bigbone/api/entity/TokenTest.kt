@@ -1,8 +1,8 @@
 package social.bigbone.api.entity
 
-import com.google.gson.Gson
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.Test
+import social.bigbone.JSON_SERIALIZER
 import social.bigbone.testtool.AssetsUtil
 
 class TokenTest {
@@ -10,7 +10,7 @@ class TokenTest {
     @Test
     fun deserialize() {
         val json = AssetsUtil.readFromAssets("access_token.json")
-        val accessToken: Token = Gson().fromJson(json, Token::class.java)
+        val accessToken: Token = JSON_SERIALIZER.decodeFromString(json)
         accessToken.accessToken shouldBeEqualTo "test"
         accessToken.tokenType shouldBeEqualTo "bearer"
         accessToken.scope shouldBeEqualTo "read write follow"

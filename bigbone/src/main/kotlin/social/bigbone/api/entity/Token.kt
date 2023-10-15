@@ -1,30 +1,32 @@
 package social.bigbone.api.entity
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 /**
  * Represents an OAuth token used for authenticating with the API and performing actions.
  * @see <a href="https://docs.joinmastodon.org/entities/Token/">Mastodon API Token</a>
  */
+@Serializable
 data class Token(
-    @SerializedName("access_token")
+    @SerialName("access_token")
     val accessToken: String = "",
 
     /**
      * The OAuth token type. Mastodon uses Bearer tokens.
      */
-    @SerializedName("token_type")
+    @SerialName("token_type")
     val tokenType: String = "",
 
     /**
      * The OAuth scopes granted by this token, space-separated.
      */
-    @SerializedName("scope")
+    @SerialName("scope")
     val scope: String = "",
 
     /**
      * When the token was generated.
      */
-    @SerializedName("created_at")
+    @SerialName("created_at")
     val createdAt: Long = 0L
 )

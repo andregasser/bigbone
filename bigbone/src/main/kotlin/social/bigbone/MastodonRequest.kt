@@ -1,10 +1,11 @@
 package social.bigbone
 
-import com.google.gson.JsonParser
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.jsonArray
 import okhttp3.Response
 import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.extension.toPageable
-import java.lang.Exception
 
 /**
  * Represents an HTTP request that is sent to a Mastodon instance, once the [execute]
@@ -14,6 +15,7 @@ class MastodonRequest<T>(
     private val executor: () -> Response,
     private val mapper: (String) -> Any
 ) {
+
     /**
      * SAM interface provided for Java interoperability related to [doOnJson] method.
      */
@@ -52,23 +54,27 @@ class MastodonRequest<T>(
         val response = executor()
         if (response.isSuccessful) {
             try {
-                val body = response.body?.string()
-                val element = JsonParser.parseString(body)
-                if (element.isJsonObject) {
-                    action(body!!)
+                val body: String? = response.body?.string()
+                requireNotNull(body)
+
+                val element: JsonElement = JSON_SERIALIZER.parseToJsonElement(body)
+                if (element is JsonObject) {
+                    action(body)
+
                     return mapper(body) as T
+                }
+
+                val mappedJsonElements: List<Any> = element.jsonArray.map { jsonElement: JsonElement ->
+                    val json = jsonElement.toString()
+                    action(json)
+
+                    mapper(json)
+                }
+
+                return if (isPageable) {
+                    mappedJsonElements.toPageable(response) as T
                 } else {
-                    val list = arrayListOf<Any>()
-                    element.asJsonArray.forEach {
-                        val json = it.toString()
-                        action(json)
-                        list.add(mapper(json))
-                    }
-                    return if (isPageable) {
-                        list.toPageable(response) as T
-                    } else {
-                        list as T
-                    }
+                    mappedJsonElements as T
                 }
             } catch (e: Exception) {
                 throw BigBoneRequestException("Successful response could not be parsed", e)
