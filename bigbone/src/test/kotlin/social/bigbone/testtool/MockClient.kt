@@ -103,7 +103,6 @@ object MockClient {
         every { clientMock.postRequestBody(ofType<String>(), any()) } returns response
         every { clientMock.put(ofType<String>(), any()) } returns response
         every { clientMock.performAction(ofType<String>(), any()) } throws BigBoneRequestException("mock")
-        every { clientMock.getSerializer() } returns Gson()
         return clientMock
     }
 }
