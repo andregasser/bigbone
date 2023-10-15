@@ -1,93 +1,95 @@
 package social.bigbone.api.entity
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 /**
  * Represents the relationship between accounts, such as following / blocking / muting / etc.
  * @see <a href="https://docs.joinmastodon.org/entities/Relationship/">Mastodon API Relationship</a>
  */
+@Serializable
 data class Relationship(
     /**
      * The account ID.
      */
-    @SerializedName("id")
+    @SerialName("id")
     val id: String = "0",
 
     /**
      * Are you following this user?
      */
-    @SerializedName("following")
+    @SerialName("following")
     val isFollowing: Boolean = false,
 
     /**
      * Are you receiving this user’s boosts in your home timeline?
      */
-    @SerializedName("showing_reblogs")
+    @SerialName("showing_reblogs")
     val isShowingReblogs: Boolean = false,
 
     /**
      * Have you enabled notifications for this user?
      */
-    @SerializedName("notifying")
+    @SerialName("notifying")
     val notifying: Boolean = false,
 
     /**
      * Which languages are you following from this user?
      */
-    @SerializedName("languages")
+    @SerialName("languages")
     val languages: List<String> = emptyList(),
 
     /**
      * Are you followed by this user?
      */
-    @SerializedName("followed_by")
+    @SerialName("followed_by")
     val isFollowedBy: Boolean = false,
 
     /**
      * Are you blocking this user?
      */
-    @SerializedName("blocking")
+    @SerialName("blocking")
     val isBlocking: Boolean = false,
 
     /**
      * Is this user blocking you?
      */
-    @SerializedName("blocked_by")
+    @SerialName("blocked_by")
     val isBlockedBy: Boolean = false,
 
     /**
      * Are you muting this user?
      */
-    @SerializedName("muting")
+    @SerialName("muting")
     val isMuting: Boolean = false,
 
     /**
      * Are you muting notifications from this user?
      */
-    @SerializedName("muting_notifications")
+    @SerialName("muting_notifications")
     val isMutingNotifications: Boolean = false,
 
     /**
      * Do you have a pending follow request for this user?
      */
-    @SerializedName("requested")
+    @SerialName("requested")
     val isRequested: Boolean = false,
 
     /**
      * Are you blocking this user’s domain?
      */
-    @SerializedName("domain_blocking")
+    @SerialName("domain_blocking")
     val isDomainBlocking: Boolean = false,
 
     /**
      * Are you featuring this user on your profile?
      */
-    @SerializedName("endorsed")
+    @SerialName("endorsed")
     val endorsed: Boolean = false,
 
     /**
      * This user’s profile bio.
      */
-    @SerializedName("note")
+    @SerialName("note")
     val note: String = ""
 )

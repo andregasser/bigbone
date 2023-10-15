@@ -1,7 +1,7 @@
 {
   "accounts": [
     {
-      "id": 784,
+      "id": "784",
       "username": "test",
       "acct": "test",
       "display_name": "たこやき",
@@ -18,7 +18,7 @@
       "header_static": "/headers/original/missing.png"
     },
     {
-      "id": 34131,
+      "id": "34131",
       "username": "tester98",
       "acct": "tester98",
       "display_name": "tester98",
@@ -35,7 +35,7 @@
       "header_static": "/headers/original/missing.png"
     },
     {
-      "id": 143489,
+      "id": "143489",
       "username": "testid",
       "acct": "testid@pawoo.net",
       "display_name": "testid(pawoo) ☑",
@@ -52,7 +52,7 @@
       "header_static": "https://media.mstdn.jp/images/accounts/headers/000/143/489/original/23cb6971b013a71d.png?1492816512"
     },
     {
-      "id": 153028,
+      "id": "153028",
       "username": "testid",
       "acct": "testid@nicodon.jp",
       "display_name": "testid(隠れ家) :white_check_mark:",
@@ -69,7 +69,7 @@
       "header_static": "https://media.mstdn.jp/images/accounts/headers/000/153/028/original/61a6963ccfc95423.jpg?1492938386"
     },
     {
-      "id": 116733,
+      "id": "116733",
       "username": "testid",
       "acct": "testid@friends.nico",
       "display_name": "testid :white_check_mark:",
@@ -86,7 +86,7 @@
       "header_static": "https://media.mstdn.jp/images/accounts/headers/000/116/733/original/f940b3f7886d6d73.jpg?1492668793"
     },
     {
-      "id": 114430,
+      "id": "114430",
       "username": "test",
       "acct": "test@vocalodon.net",
       "display_name": "test",

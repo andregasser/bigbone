@@ -1,8 +1,8 @@
 package social.bigbone.nodeinfo.entity
 
-import com.google.gson.Gson
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.Test
+import social.bigbone.JSON_SERIALIZER
 import social.bigbone.testtool.AssetsUtil
 
 class NodeInfoTest {
@@ -13,7 +13,7 @@ class NodeInfoTest {
         val json = AssetsUtil.readFromAssets("nodeinfo.json")
 
         // when
-        val nodeInfo = Gson().fromJson(json, NodeInfo::class.java)
+        val nodeInfo: NodeInfo = JSON_SERIALIZER.decodeFromString(json)
 
         // when/then
         nodeInfo.links.size shouldBeEqualTo 1

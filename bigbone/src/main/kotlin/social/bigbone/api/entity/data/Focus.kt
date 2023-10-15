@@ -1,16 +1,18 @@
 package social.bigbone.api.entity.data
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 /**
  * Contains the coordinates to be used for smart thumbnail cropping.
  * For more details, please have a look at https://docs.joinmastodon.org/api/guidelines/#focal-points
  */
+@Serializable
 data class Focus(
-    @SerializedName("x")
+    @SerialName("x")
     val x: Float,
 
-    @SerializedName("y")
+    @SerialName("y")
     val y: Float
 ) {
     override fun toString(): String = "$x, $y"

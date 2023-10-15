@@ -1,11 +1,11 @@
 package social.bigbone.api.method
 
+import social.bigbone.JSON_SERIALIZER
 import social.bigbone.MastodonClient
 import social.bigbone.Parameters
 import social.bigbone.api.Dispatcher
 import social.bigbone.api.Handler
 import social.bigbone.api.Shutdownable
-import social.bigbone.api.entity.Notification
 import social.bigbone.api.entity.Status
 import social.bigbone.api.exception.BigBoneRequestException
 
@@ -38,13 +38,8 @@ class StreamingMethods(private val client: MastodonClient) {
                             continue
                         }
                         if (event == "update") {
-                            val start = payload.indexOf(":") + 1
-                            val json = payload.substring(start).trim()
-                            val status = client.getSerializer().fromJson(
-                                json,
-                                Status::class.java
-                            )
-                            handler.onStatus(status)
+                            val json = payload.substringAfter(':').trim()
+                            handler.onStatus(status = JSON_SERIALIZER.decodeFromString(json))
                         }
                     } catch (e: java.io.InterruptedIOException) {
                         break
@@ -82,13 +77,8 @@ class StreamingMethods(private val client: MastodonClient) {
                             continue
                         }
                         if (event == "update") {
-                            val start = payload.indexOf(":") + 1
-                            val json = payload.substring(start).trim()
-                            val status = client.getSerializer().fromJson(
-                                json,
-                                Status::class.java
-                            )
-                            handler.onStatus(status)
+                            val json = payload.substringAfter(':').trim()
+                            handler.onStatus(status = JSON_SERIALIZER.decodeFromString(json))
                         }
                     } catch (e: java.io.InterruptedIOException) {
                         break
@@ -129,12 +119,8 @@ class StreamingMethods(private val client: MastodonClient) {
                             continue
                         }
                         if (event == "update") {
-                            val start = payload.indexOf(":") + 1
-                            val json = payload.substring(start).trim()
-                            val status = client.getSerializer().fromJson(
-                                json,
-                                Status::class.java
-                            )
+                            val json = payload.substringAfter(':').trim()
+                            val status: Status = JSON_SERIALIZER.decodeFromString(json)
                             handler.onStatus(status)
                         }
                     } catch (e: java.io.InterruptedIOException) {
@@ -176,13 +162,8 @@ class StreamingMethods(private val client: MastodonClient) {
                             continue
                         }
                         if (event == "update") {
-                            val start = payload.indexOf(":") + 1
-                            val json = payload.substring(start).trim()
-                            val status = client.getSerializer().fromJson(
-                                json,
-                                Status::class.java
-                            )
-                            handler.onStatus(status)
+                            val json = payload.substringAfter(':').trim()
+                            handler.onStatus(status = JSON_SERIALIZER.decodeFromString(json))
                         }
                     } catch (e: java.io.InterruptedIOException) {
                         break
@@ -222,28 +203,15 @@ class StreamingMethods(private val client: MastodonClient) {
                             continue
                         }
 
-                        val start = payload.indexOf(":") + 1
-                        val json = payload.substring(start).trim()
+                        val json = payload.substringAfter(':').trim()
                         if (event == "update") {
-                            val status = client.getSerializer().fromJson(
-                                json,
-                                Status::class.java
-                            )
-                            handler.onStatus(status)
+                            handler.onStatus(status = JSON_SERIALIZER.decodeFromString(json))
                         }
                         if (event == "notification") {
-                            val notification = client.getSerializer().fromJson(
-                                json,
-                                Notification::class.java
-                            )
-                            handler.onNotification(notification)
+                            handler.onNotification(notification = JSON_SERIALIZER.decodeFromString(json))
                         }
                         if (event == "delete") {
-                            val id = client.getSerializer().fromJson(
-                                json,
-                                String::class.java
-                            )
-                            handler.onDelete(id)
+                            handler.onDelete(id = JSON_SERIALIZER.decodeFromString(json))
                         }
                     } catch (e: java.io.InterruptedIOException) {
                         break
@@ -289,25 +257,13 @@ class StreamingMethods(private val client: MastodonClient) {
                         val start = payload.indexOf(":") + 1
                         val json = payload.substring(start).trim()
                         if (event == "update") {
-                            val status = client.getSerializer().fromJson(
-                                json,
-                                Status::class.java
-                            )
-                            handler.onStatus(status)
+                            handler.onStatus(status = JSON_SERIALIZER.decodeFromString(json))
                         }
                         if (event == "notification") {
-                            val notification = client.getSerializer().fromJson(
-                                json,
-                                Notification::class.java
-                            )
-                            handler.onNotification(notification)
+                            handler.onNotification(notification = JSON_SERIALIZER.decodeFromString(json))
                         }
                         if (event == "delete") {
-                            val id = client.getSerializer().fromJson(
-                                json,
-                                String::class.java
-                            )
-                            handler.onDelete(id)
+                            handler.onDelete(id = JSON_SERIALIZER.decodeFromString(json))
                         }
                     } catch (e: java.io.InterruptedIOException) {
                         break

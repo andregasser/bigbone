@@ -1,90 +1,93 @@
 package social.bigbone.api.entity
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import social.bigbone.api.entity.PreviewCard.CardType
 import social.bigbone.api.entity.data.History
 
 /**
  * Represents a rich preview card that is generated using OpenGraph tags from a URL.
  * @see <a href="https://docs.joinmastodon.org/entities/PreviewCard/">Mastodon API PreviewCard</a>
  */
+@Serializable
 data class PreviewCard(
     /**
      * Location of linked resource.
      */
-    @SerializedName("url")
+    @SerialName("url")
     val url: String = "",
 
     /**
      * Title of linked resource.
      */
-    @SerializedName("title")
+    @SerialName("title")
     val title: String = "",
 
     /**
      * Description of preview.
      */
-    @SerializedName("description")
+    @SerialName("description")
     val description: String = "",
 
     /**
      * The type of the preview card.
      * @see CardType
      */
-    @SerializedName("type")
+    @SerialName("type")
     val type: String = CardType.Link.value,
 
     /**
      * The author of the original resource.
      */
-    @SerializedName("author_name")
+    @SerialName("author_name")
     val authorName: String = "",
 
     /**
      * A link to the author of the original resource.
      */
-    @SerializedName("author_url")
+    @SerialName("author_url")
     val authorUrl: String = "",
 
     /**
      * The provider of the original resource.
      */
-    @SerializedName("provider_name")
+    @SerialName("provider_name")
     val providerName: String = "",
 
     /**
      * A link to the provider of the original resource.
      */
-    @SerializedName("provider_url")
+    @SerialName("provider_url")
     val providerUrl: String = "",
 
     /**
      * HTML to be used for generating the preview card.
      */
-    @SerializedName("html")
+    @SerialName("html")
     val html: String = "",
 
     /**
      * Width of preview, in pixels.
      */
-    @SerializedName("width")
+    @SerialName("width")
     val width: Int = 0,
 
     /**
      * Height of preview, in pixels.
      */
-    @SerializedName("height")
+    @SerialName("height")
     val height: Int = 0,
 
     /**
      * Preview thumbnail.
      */
-    @SerializedName("image")
+    @SerialName("image")
     val image: String? = null,
 
     /**
      * Used for photo embeds, instead of custom html.
      */
-    @SerializedName("method_url")
+    @SerialName("method_url")
     val methodUrl: String = "",
 
     /**
@@ -92,13 +95,13 @@ data class PreviewCard(
      * for generating colorful preview thumbnails
      * when media has not been downloaded yet.
      */
-    @SerializedName("blurhash")
+    @SerialName("blurhash")
     val blurhash: String? = null,
 
     /**
      * Usage statistics for given days (typically the past week).
      */
-    @SerializedName("history")
+    @SerialName("history")
     val history: List<History> = emptyList(),
 ) {
     /**
