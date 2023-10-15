@@ -11,5 +11,4 @@ dependencies {
     testRuntimeOnly libs.junit.platform.launcher
     testImplementation libs.mockk
     testImplementation libs.mockk.dsl
-    testImplementation libs.gson
 }

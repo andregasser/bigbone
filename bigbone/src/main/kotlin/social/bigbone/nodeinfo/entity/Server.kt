@@ -1,40 +1,43 @@
 package social.bigbone.nodeinfo.entity
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 /**
  * Minimal data class for information returned by a server via NodeInfo. We are only interested in the software running
  * on this server.
  * @see <a href="https://github.com/jhass/nodeinfo/blob/main/schemas/2.0/schema.json">NodeInfo schema 2.0</a>
  */
+@Serializable
 data class Server(
     /**
      * Schema version information.
      */
-    @SerializedName("version")
+    @SerialName("version")
     val schemaVersion: String = "",
 
     /**
      * Software running on this server.
      */
-    @SerializedName("software")
+    @SerialName("software")
     val software: Software? = null
 
 ) {
     /**
      * Information about the software running on a server.
      */
+    @Serializable
     data class Software(
         /**
          * Canonical name of the software running on this server.
          */
-        @SerializedName("name")
+        @SerialName("name")
         val name: String = "",
 
         /**
          * Version of the software running on this server.
          */
-        @SerializedName("version")
+        @SerialName("version")
         val version: String = ""
     )
 }

@@ -1,54 +1,56 @@
 package social.bigbone.api.entity
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 /**
  * Represents a user-defined filter for determining which statuses should not be shown to the user.
  * @see <a href="https://docs.joinmastodon.org/entities/Filter/">Mastodon API Filter</a>
  */
+@Serializable
 data class Filter(
     /**
      * The ID of the Filter in the database.
      */
-    @SerializedName("id")
+    @SerialName("id")
     val id: String = "0",
 
     /**
      * A title given by the user to name the filter.
      */
-    @SerializedName("title")
+    @SerialName("title")
     val title: String = "",
 
     /**
      * The contexts in which the filter should be applied.
      * @see Context
      */
-    @SerializedName("context")
+    @SerialName("context")
     val context: List<String> = emptyList(),
 
     /**
      * When the filter should no longer be applied.
      */
-    @SerializedName("expires_at")
+    @SerialName("expires_at")
     val expiresAt: String? = null,
 
     /**
      * The action to be taken when a status matches this filter.
      * @see Action
      */
-    @SerializedName("filter_action")
+    @SerialName("filter_action")
     val filterAction: String = Action.Warn.value,
 
     /**
      * The keywords grouped under this filter.
      */
-    @SerializedName("keywords")
+    @SerialName("keywords")
     val keywords: List<FilterKeyword> = emptyList(),
 
     /**
      * The statuses grouped under this filter.
      */
-    @SerializedName("statuses")
+    @SerialName("statuses")
     val statuses: List<FilterStatus> = emptyList()
 ) {
     /**

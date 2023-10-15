@@ -1,6 +1,5 @@
 package social.bigbone
 
-import com.google.gson.Gson
 import okhttp3.HttpUrl
 import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -53,8 +52,7 @@ import javax.net.ssl.X509TrustManager
 class MastodonClient
 private constructor(
     private val instanceName: String,
-    private val client: OkHttpClient,
-    private val gson: Gson
+    private val client: OkHttpClient
 ) {
     private var debug = false
     private var instanceVersion: String? = null
@@ -233,9 +231,6 @@ private constructor(
         PUT
     }
 
-    @PublishedApi
-    internal fun getSerializer() = gson
-
     fun getInstanceName() = instanceName
 
     fun getInstanceVersion() = instanceVersion
@@ -259,7 +254,7 @@ private constructor(
         addIdempotencyKey: Boolean = false
     ): MastodonRequest<T> {
         return MastodonRequest(
-            {
+            executor = {
                 when (method) {
                     Method.DELETE -> delete(endpoint, parameters)
                     Method.GET -> get(endpoint, parameters)
@@ -268,7 +263,7 @@ private constructor(
                     Method.PUT -> put(endpoint, parameters)
                 }
             },
-            { getSerializer().fromJson(it, T::class.java) }
+            mapper = { JSON_SERIALIZER.decodeFromString<T>(it) }
         )
     }
 
@@ -285,7 +280,7 @@ private constructor(
         parameters: Parameters? = null
     ): MastodonRequest<Pageable<T>> {
         return MastodonRequest<Pageable<T>>(
-            {
+            executor = {
                 when (method) {
                     Method.DELETE -> delete(endpoint, parameters)
                     Method.GET -> get(endpoint, parameters)
@@ -294,7 +289,7 @@ private constructor(
                     Method.PUT -> put(endpoint, parameters)
                 }
             },
-            { getSerializer().fromJson(it, T::class.java) }
+            mapper = { JSON_SERIALIZER.decodeFromString<T>(it) }
         ).toPageable()
     }
 
@@ -311,7 +306,7 @@ private constructor(
         parameters: Parameters? = null
     ): MastodonRequest<List<T>> {
         return MastodonRequest(
-            {
+            executor = {
                 when (method) {
                     Method.DELETE -> delete(endpoint, parameters)
                     Method.GET -> get(endpoint, parameters)
@@ -320,7 +315,7 @@ private constructor(
                     Method.PUT -> put(endpoint, parameters)
                 }
             },
-            { getSerializer().fromJson(it, T::class.java) }
+            mapper = { JSON_SERIALIZER.decodeFromString<T>(it) }
         )
     }
 
@@ -524,7 +519,6 @@ private constructor(
         private val instanceName: String
     ) {
         private val okHttpClientBuilder = OkHttpClient.Builder()
-        private val gson = Gson()
         private var accessToken: String? = null
         private var debug = false
         private var scheme = "https"
@@ -620,12 +614,11 @@ private constructor(
          */
         private fun getInstanceVersion(): String {
             try {
-                val server = NodeInfoClient.retrieveServerInfo(instanceName)
-                server.software?.let { software ->
-                    if (software.name == "mastodon") {
-                        return software.version
-                    }
-                }
+                NodeInfoClient
+                    .retrieveServerInfo(instanceName)
+                    ?.software
+                    ?.takeIf { it.name == "mastodon" }
+                    ?.version
             } catch (_: BigBoneRequestException) {
             }
 
@@ -644,8 +637,10 @@ private constructor(
             return try {
                 val response = versionedInstanceRequest(apiVersion)
                 if (response.isSuccessful) {
-                    val instanceVersion = gson.fromJson(response.body?.string(), InstanceVersion::class.java)
-                    instanceVersion.version
+                    val instanceVersion: InstanceVersion? = response.body?.string()?.let { responseBody: String ->
+                        JSON_SERIALIZER.decodeFromString(responseBody)
+                    }
+                    instanceVersion?.version
                 } else {
                     response.close()
                     null
@@ -695,14 +690,13 @@ private constructor(
 
         fun build(): MastodonClient {
             return MastodonClient(
-                instanceName,
-                okHttpClientBuilder
+                instanceName = instanceName,
+                client = okHttpClientBuilder
                     .addNetworkInterceptor(AuthorizationInterceptor(accessToken))
                     .readTimeout(readTimeoutSeconds, TimeUnit.SECONDS)
                     .writeTimeout(writeTimeoutSeconds, TimeUnit.SECONDS)
                     .connectTimeout(connectTimeoutSeconds, TimeUnit.SECONDS)
-                    .build(),
-                gson
+                    .build()
             ).also {
                 it.debug = debug
                 it.instanceVersion = getInstanceVersion()
@@ -713,8 +707,8 @@ private constructor(
     }
 
     private object TrustAllX509TrustManager : X509TrustManager {
-        override fun checkClientTrusted(chain: Array<out X509Certificate>?, authType: String?) { }
-        override fun checkServerTrusted(chain: Array<out X509Certificate>?, authType: String?) { }
+        override fun checkClientTrusted(chain: Array<out X509Certificate>?, authType: String?) {}
+        override fun checkServerTrusted(chain: Array<out X509Certificate>?, authType: String?) {}
         override fun getAcceptedIssuers(): Array<X509Certificate> = arrayOf()
     }
 

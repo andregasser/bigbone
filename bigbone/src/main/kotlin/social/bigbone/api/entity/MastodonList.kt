@@ -1,30 +1,32 @@
 package social.bigbone.api.entity
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 /**
  * Represents a list of some users that the authenticated user follows.
  * @see <a href="https://docs.joinmastodon.org/entities/List/">Mastodon API List</a>
  */
+@Serializable
 data class MastodonList(
     /**
      * The internal database ID of the list.
      */
-    @SerializedName("id")
+    @SerialName("id")
     val id: String = "0",
 
     /**
      * The user-defined title of the list.
      */
-    @SerializedName("title")
+    @SerialName("title")
     val title: String = "",
 
     /**
      * Which replies should be shown in the list.
      * @see [RepliesPolicy]
      */
-    @SerializedName("replies_policy")
-    val repliesPolicy: String = RepliesPolicy.List.value
+    @SerialName("replies_policy")
+    val repliesPolicy: String = RepliesPolicy.List.value,
 ) {
     /**
      * Specifies the replies policy for a list.

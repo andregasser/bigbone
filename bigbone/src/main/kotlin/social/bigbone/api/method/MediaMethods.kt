@@ -3,6 +3,7 @@ package social.bigbone.api.method
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
+import social.bigbone.JSON_SERIALIZER
 import social.bigbone.MastodonClient
 import social.bigbone.MastodonRequest
 import social.bigbone.api.entity.MediaAttachment
@@ -36,13 +37,9 @@ class MediaMethods(private val client: MastodonClient) {
             requestBodyBuilder.addFormDataPart("focus", it.toString())
         }
         val requestBody = requestBodyBuilder.build()
-        return MastodonRequest<MediaAttachment>(
-            {
-                client.postRequestBody("api/v1/media", requestBody)
-            },
-            {
-                client.getSerializer().fromJson(it, MediaAttachment::class.java)
-            }
+        return MastodonRequest(
+            executor = { client.postRequestBody("api/v1/media", requestBody) },
+            mapper = { JSON_SERIALIZER.decodeFromString<MediaAttachment>(it) }
         )
     }
 }

@@ -1,6 +1,7 @@
 plugins {
     id 'bigbone.library-conventions'
     id 'bigbone.integrationtest-conventions'
+    alias(libs.plugins.kotlin.serialization)
     id "org.jlleitschuh.gradle.ktlint" version "11.6.1"
 }
 
@@ -10,7 +11,8 @@ allprojects {
 
 dependencies {
     api libs.okhttp
-    api libs.gson
+
+    implementation libs.kotlinx.serialization.json
 
     testImplementation libs.junit.jupiter
     testRuntimeOnly libs.junit.platform.launcher
