@@ -28,13 +28,13 @@ class FeaturedTagsMethods(private val client: MastodonClient) {
 
     /**
      * Promote a hashtag on your profile.
-     * @param tagName The hashtag to be featured, without the hash sign.
+     * @param tagName The hashtag to be featured, without the hash character.
      * @return The [FeaturedTag] successfully created
+     * @throws IllegalArgumentException if [tagName] contains a #
      */
+    @Throws(IllegalArgumentException::class)
     fun featureTag(tagName: String): MastodonRequest<FeaturedTag> {
-        if (tagName.contains('#')) {
-            throw IllegalArgumentException("Tag name to be featured must not contain '#'")
-        }
+        require(!tagName.contains('#')) { "Tag name to be featured must not contain '#'" }
 
         return client.getMastodonRequest(
             endpoint = featuredTagsEndpoint,
@@ -46,12 +46,12 @@ class FeaturedTagsMethods(private val client: MastodonClient) {
     /**
      * Stop promoting a hashtag on your profile.
      * @param tagId The ID of the FeaturedTag in the database you want to stop promoting.
+     * @throws IllegalArgumentException if [tagId] is blank
+     * @throws BigBoneRequestException if request to unfeature tag failed for any reason
      */
-    @Throws(BigBoneRequestException::class)
+    @Throws(BigBoneRequestException::class, IllegalArgumentException::class)
     fun unfeatureTag(tagId: String) {
-        if (tagId.isBlank()) {
-            throw IllegalArgumentException("Tag ID must not be blank")
-        }
+        require(tagId.isNotBlank()) { "Tag ID must not be blank" }
 
         client.performAction(
             endpoint = featuredTagsEndpoint,
