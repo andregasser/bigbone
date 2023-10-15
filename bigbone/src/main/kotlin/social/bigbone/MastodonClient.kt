@@ -19,6 +19,7 @@ import social.bigbone.api.method.ConversationMethods
 import social.bigbone.api.method.DirectoryMethods
 import social.bigbone.api.method.DomainBlocksMethods
 import social.bigbone.api.method.FavouriteMethods
+import social.bigbone.api.method.FeaturedTagsMethods
 import social.bigbone.api.method.FilterMethods
 import social.bigbone.api.method.FollowRequestMethods
 import social.bigbone.api.method.InstanceMethods
@@ -115,6 +116,13 @@ private constructor(
     @Suppress("unused") // public API
     @get:JvmName("favourites")
     val favourites: FavouriteMethods by lazy { FavouriteMethods(this) }
+
+    /**
+     * Access API methods under "api/vX/featured_tags" endpoint.
+     */
+    @Suppress("unused") // public API
+    @get:JvmName("featuredTags")
+    val featuredTags: FeaturedTagsMethods by lazy { FeaturedTagsMethods(this) }
 
     /**
      * Access API methods under "api/vX/filters" endpoint.
