@@ -1,6 +1,5 @@
 package social.bigbone.testtool
 
-import com.google.gson.Gson
 import io.mockk.every
 import io.mockk.mockk
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -59,7 +58,6 @@ object MockClient {
         every { clientMock.post(ofType<String>(), any(), any()) } returns response
         every { clientMock.postRequestBody(ofType<String>(), any()) } returns response
         every { clientMock.put(ofType<String>(), any()) } returns response
-        every { clientMock.getSerializer() } returns Gson()
         return clientMock
     }
 
@@ -86,7 +84,6 @@ object MockClient {
         every { clientMock.postRequestBody(ofType<String>(), any()) } returns response
         every { clientMock.put(ofType<String>(), any()) } returns response
         every { clientMock.performAction(ofType<String>(), any()) } throws BigBoneRequestException("mock")
-        every { clientMock.getSerializer() } returns Gson()
         return clientMock
     }
 
@@ -118,7 +115,6 @@ object MockClient {
         every { clientMock.postRequestBody(ofType<String>(), any()) } returns response
         every { clientMock.put(ofType<String>(), any()) } returns response
         every { clientMock.performAction(ofType<String>(), any()) } throws BigBoneRequestException("mock")
-        every { clientMock.getSerializer() } returns Gson()
         return clientMock
     }
 }

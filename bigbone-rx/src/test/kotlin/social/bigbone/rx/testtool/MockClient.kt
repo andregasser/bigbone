@@ -1,6 +1,5 @@
 package social.bigbone.rx.testtool
 
-import com.google.gson.Gson
 import io.mockk.every
 import io.mockk.mockk
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -11,6 +10,7 @@ import okhttp3.ResponseBody.Companion.toResponseBody
 import social.bigbone.MastodonClient
 
 object MockClient {
+
     fun mock(
         jsonName: String,
         maxId: String? = null,
@@ -47,9 +47,6 @@ object MockClient {
             }
             .build()
         every { client.get(ofType<String>(), any()) } returns response
-
-        // mocking function that is internal in MastodonClient
-        every { client["getSerializer"]() } returns Gson()
 
         return client
     }

@@ -1,24 +1,26 @@
 package social.bigbone.api.entity
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 /**
  * Represents the results of a search.
  * @see <a href="https://docs.joinmastodon.org/entities/Search/">Mastodon API Search</a>
  */
+@Serializable
 data class Search(
-    @SerializedName("accounts")
+    @SerialName("accounts")
     val accounts: List<Account> = emptyList(),
 
     /**
      * Statuses which match the given query.
      */
-    @SerializedName("statuses")
+    @SerialName("statuses")
     val statuses: List<Status> = emptyList(),
 
     /**
      * Hashtags which match the given query.
      */
-    @SerializedName("hashtags")
+    @SerialName("hashtags")
     val hashtags: List<Tag> = emptyList()
 )
