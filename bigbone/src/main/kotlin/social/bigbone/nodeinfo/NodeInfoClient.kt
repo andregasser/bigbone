@@ -25,20 +25,18 @@ object NodeInfoClient {
      */
     fun retrieveServerInfo(host: String): Server? {
         try {
-            val serverInfoUrl = getServerInfoUrl(host)
-            val response = CLIENT.newCall(
+            CLIENT.newCall(
                 Request.Builder()
-                    .url(serverInfoUrl)
+                    .url(getServerInfoUrl(host))
                     .get()
                     .build()
-            ).execute()
+            ).execute().use { response: Response ->
+                if (!response.isSuccessful) {
+                    throw BigBoneRequestException("request for NodeInfo URL unsuccessful")
+                }
 
-            if (!response.isSuccessful) {
-                response.close()
-                throw BigBoneRequestException("request for NodeInfo URL unsuccessful")
+                return response.body?.string()?.let { JSON_SERIALIZER.decodeFromString(it) }
             }
-
-            return response.body?.string()?.let { JSON_SERIALIZER.decodeFromString(it) }
         } catch (e: Exception) {
             throw BigBoneRequestException("invalid NodeInfo response")
         }
@@ -50,27 +48,26 @@ object NodeInfoClient {
      * @return String containing the URL holding server information
      */
     private fun getServerInfoUrl(host: String): String {
-        val response = CLIENT.newCall(
+        CLIENT.newCall(
             Request.Builder()
                 .url("https://$host/.well-known/nodeinfo")
                 .get()
                 .build()
-        ).execute()
+        ).execute().use { response: Response ->
+            if (!response.isSuccessful) {
+                throw BigBoneRequestException("request for well-known NodeInfo URL unsuccessful")
+            }
 
-        if (!response.isSuccessful) {
-            response.close()
-            throw BigBoneRequestException("request for well-known NodeInfo URL unsuccessful")
+            val nodeInfo: NodeInfo? = response.body?.string()?.let { JSON_SERIALIZER.decodeFromString(it) }
+            if (nodeInfo == null || nodeInfo.links.isEmpty()) {
+                throw BigBoneRequestException("empty link list in well-known NodeInfo location")
+            }
+
+            // attempt returning URL to schema 2.0 information, but fall back to any - software information exists in all schemas
+            return nodeInfo.links
+                .firstOrNull { link -> link.rel == "http://nodeinfo.diaspora.software/ns/schema/2.0" }
+                ?.href
+                ?: nodeInfo.links.first().href
         }
-
-        val nodeInfo: NodeInfo? = response.body?.string()?.let { JSON_SERIALIZER.decodeFromString(it) }
-        if (nodeInfo == null || nodeInfo.links.isEmpty()) {
-            throw BigBoneRequestException("empty link list in well-known NodeInfo location")
-        }
-
-        // attempt returning URL to schema 2.0 information, but fall back to any - software information exists in all schemas
-        return nodeInfo.links
-            .firstOrNull { link -> link.rel == "http://nodeinfo.diaspora.software/ns/schema/2.0" }
-            ?.href
-            ?: nodeInfo.links.first().href
     }
 }

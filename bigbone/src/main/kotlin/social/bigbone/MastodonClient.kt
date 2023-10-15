@@ -415,16 +415,16 @@ private constructor(
      */
     @Throws(BigBoneRequestException::class)
     internal fun performAction(endpoint: String, method: Method, parameters: Parameters? = null) {
-        val response = when (method) {
+        when (method) {
             Method.DELETE -> delete(endpoint, parameters)
             Method.GET -> get(endpoint, parameters)
             Method.PATCH -> patch(endpoint, parameters)
             Method.POST -> post(endpoint, parameters)
             Method.PUT -> put(endpoint, parameters)
-        }
-        response.close()
-        if (!response.isSuccessful) {
-            throw BigBoneRequestException(response)
+        }.use { response: Response ->
+            if (!response.isSuccessful) {
+                throw BigBoneRequestException(response)
+            }
         }
     }
 
@@ -724,15 +724,15 @@ private constructor(
          */
         private fun getInstanceVersionFromApi(apiVersion: Int): String? {
             return try {
-                val response = versionedInstanceRequest(apiVersion)
-                if (response.isSuccessful) {
-                    val instanceVersion: InstanceVersion? = response.body?.string()?.let { responseBody: String ->
-                        JSON_SERIALIZER.decodeFromString(responseBody)
+                versionedInstanceRequest(apiVersion).use { response: Response ->
+                    if (response.isSuccessful) {
+                        val instanceVersion: InstanceVersion? = response.body?.string()?.let { responseBody: String ->
+                            JSON_SERIALIZER.decodeFromString(responseBody)
+                        }
+                        instanceVersion?.version
+                    } else {
+                        null
                     }
-                    instanceVersion?.version
-                } else {
-                    response.close()
-                    null
                 }
             } catch (e: Exception) {
                 null
@@ -755,26 +755,27 @@ private constructor(
          * @return server response for this request
          */
         internal fun versionedInstanceRequest(version: Int): Response {
-            val versionString = if (version == 2) {
-                "v2"
-            } else {
-                "v1"
-            }
+            val versionString = if (version == 2) "v2" else "v1"
+
             val clientBuilder = OkHttpClient.Builder()
-            if (trustAllCerts) {
-                configureForTrustAll(clientBuilder)
-            }
-            val client = clientBuilder.build()
-            return client.newCall(
-                Request.Builder().url(
-                    fullUrl(
-                        scheme,
-                        instanceName,
-                        port,
-                        "api/$versionString/instance"
-                    )
-                ).get().build()
-            ).execute()
+            if (trustAllCerts) configureForTrustAll(clientBuilder)
+
+            return clientBuilder
+                .build()
+                .newCall(
+                    Request.Builder()
+                        .url(
+                            fullUrl(
+                                scheme = scheme,
+                                instanceName = instanceName,
+                                port = port,
+                                path = "api/$versionString/instance"
+                            )
+                        )
+                        .get()
+                        .build()
+                )
+                .execute()
         }
 
         fun build(): MastodonClient {

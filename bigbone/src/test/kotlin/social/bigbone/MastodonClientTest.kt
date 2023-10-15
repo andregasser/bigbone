@@ -27,10 +27,12 @@ class MastodonClientTest {
                 every { string() } answers {
                     AssetsUtil.readFromAssets("mastodon_client_v2_instance_response.json")
                 }
+                every { close() } returns Unit
             }
             val responseV2Mock = mockk<Response> {
                 every { body } answers { responseBodyV2Mock }
                 every { isSuccessful } answers { true }
+                every { close() } returns Unit
             }
             every { versionedInstanceRequest(2) } answers { responseV2Mock }
         }
@@ -54,11 +56,13 @@ class MastodonClientTest {
             val responseV1Mock = mockk<Response> {
                 every { isSuccessful } answers { true }
                 every { body } answers { responseBodyV1Mock }
+                every { close() } returns Unit
             }
             every { versionedInstanceRequest(1) } answers { responseV1Mock }
 
             val responseV2Mock = mockk<Response> {
                 every { isSuccessful } answers { false }
+                every { close() } returns Unit
             }
             every { versionedInstanceRequest(2) } answers { responseV2Mock }
         }
@@ -77,6 +81,7 @@ class MastodonClientTest {
                 val invalidResponseBody = "{ \"foo\": \"bar\" }"
                 every { body } answers { invalidResponseBody.toResponseBody("application/json".toMediaType()) }
                 every { isSuccessful } answers { true }
+                every { close() } returns Unit
             }
             every { versionedInstanceRequest(any()) } answers { responseMock }
         }
