@@ -606,11 +606,12 @@ private constructor(
          */
         private fun getInstanceVersion(): String {
             try {
-                NodeInfoClient
+                val serverInfoVersion = NodeInfoClient
                     .retrieveServerInfo(instanceName)
                     ?.software
                     ?.takeIf { it.name == "mastodon" }
                     ?.version
+                if (serverInfoVersion != null) return serverInfoVersion
             } catch (_: BigBoneRequestException) {
             }
 
