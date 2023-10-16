@@ -2,7 +2,6 @@ package social.bigbone.sample;
 
 import social.bigbone.MastodonClient;
 import social.bigbone.api.entity.MediaAttachment;
-import social.bigbone.api.entity.Status.Visibility;
 import social.bigbone.api.exception.BigBoneRequestException;
 
 import java.io.File;
