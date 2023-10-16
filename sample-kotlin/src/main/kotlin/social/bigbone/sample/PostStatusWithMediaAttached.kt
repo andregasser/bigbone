@@ -1,7 +1,6 @@
 package social.bigbone.sample
 
 import social.bigbone.MastodonClient
-import social.bigbone.api.entity.Status
 import social.bigbone.api.entity.data.Visibility
 import java.io.File
 
