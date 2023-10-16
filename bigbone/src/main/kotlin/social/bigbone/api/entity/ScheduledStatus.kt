@@ -3,6 +3,7 @@ package social.bigbone.api.entity
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import social.bigbone.api.entity.data.PollData
+import social.bigbone.api.entity.data.Visibility
 
 /**
  * Represents a status that will be published at a future scheduled date.
@@ -74,7 +75,7 @@ data class ScheduledStatus(
          * The visibility that the status will have once it is posted.
          */
         @SerialName("visibility")
-        val visibility: String = Status.Visibility.Public.value,
+        val visibility: String = Visibility.PUBLIC.value,
 
         /**
          * ID of the Status that will be replied to.

@@ -3,8 +3,8 @@ package social.bigbone.api.method
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import social.bigbone.api.entity.Status
 import social.bigbone.api.entity.data.PollData
+import social.bigbone.api.entity.data.Visibility
 import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.testtool.MockClient
 
@@ -109,7 +109,7 @@ class StatusMethodsTest {
         val statusMethods = StatusMethods(client)
         val status = statusMethods.postStatus(
             status = "a",
-            visibility = Status.Visibility.Unlisted,
+            visibility = Visibility.UNLISTED,
             inReplyToId = null,
             mediaIds = null,
             sensitive = false,
@@ -126,7 +126,7 @@ class StatusMethodsTest {
             val statusMethods = StatusMethods(client)
             statusMethods.postStatus(
                 status = "a",
-                visibility = Status.Visibility.Unlisted,
+                visibility = Visibility.UNLISTED,
                 inReplyToId = null,
                 mediaIds = null,
                 sensitive = false,
@@ -147,7 +147,7 @@ class StatusMethodsTest {
         val status = statusMethods.postPoll(
             status = "a",
             pollData = pollData,
-            visibility = Status.Visibility.Unlisted,
+            visibility = Visibility.UNLISTED,
             language = "en"
         ).execute()
         status.poll?.id shouldBeEqualTo "34830"
@@ -168,7 +168,7 @@ class StatusMethodsTest {
             statusMethods.postPoll(
                 status = "a",
                 pollData = pollData,
-                visibility = Status.Visibility.Unlisted,
+                visibility = Visibility.UNLISTED,
                 language = "en"
             ).execute()
         }
@@ -181,7 +181,7 @@ class StatusMethodsTest {
         val scheduledStatus = statusMethods.scheduleStatus(
             status = "a",
             scheduledAt = "2023-12-31T12:34:56.789Z",
-            visibility = Status.Visibility.Unlisted,
+            visibility = Visibility.UNLISTED,
             inReplyToId = null,
             mediaIds = null,
             sensitive = false,
@@ -201,7 +201,7 @@ class StatusMethodsTest {
             statusMethods.scheduleStatus(
                 status = "a",
                 scheduledAt = "2023-12-31T12:34:56.789Z",
-                visibility = Status.Visibility.Unlisted,
+                visibility = Visibility.UNLISTED,
                 inReplyToId = null,
                 mediaIds = null,
                 sensitive = false,
@@ -225,7 +225,7 @@ class StatusMethodsTest {
             status = "a",
             scheduledAt = "2023-12-31T12:34:56.789Z",
             pollData = pollData,
-            visibility = Status.Visibility.Unlisted,
+            visibility = Visibility.UNLISTED,
             inReplyToId = null,
             sensitive = false,
             spoilerText = null,
@@ -252,7 +252,7 @@ class StatusMethodsTest {
                 status = "a",
                 scheduledAt = "2023-12-31T12:34:56.789Z",
                 pollData = pollData,
-                visibility = Status.Visibility.Unlisted,
+                visibility = Visibility.UNLISTED,
                 inReplyToId = null,
                 sensitive = false,
                 spoilerText = null,
@@ -265,7 +265,7 @@ class StatusMethodsTest {
     fun reblogStatus() {
         val client = MockClient.mock("status.json")
         val statusMethods = StatusMethods(client)
-        val status = statusMethods.reblogStatus("1", visibility = Status.Visibility.Unlisted).execute()
+        val status = statusMethods.reblogStatus("1", visibility = Visibility.UNLISTED).execute()
         status.id shouldBeEqualTo "11111"
     }
 

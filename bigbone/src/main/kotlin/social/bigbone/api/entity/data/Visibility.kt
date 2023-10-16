@@ -1,9 +1,9 @@
 package social.bigbone.api.entity.data
 
 /**
- * Specifies the privacy or visibility for new posts.
+ * Specifies the visibility of the status post.
  */
-enum class Privacy(val value: String) {
+enum class Visibility(val value: String) {
     PUBLIC("public"),
     UNLISTED("unlisted"),
     PRIVATE("private"),

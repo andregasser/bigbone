@@ -13,6 +13,7 @@ import social.bigbone.api.entity.StatusEdit
 import social.bigbone.api.entity.StatusSource
 import social.bigbone.api.entity.Translation
 import social.bigbone.api.entity.data.PollData
+import social.bigbone.api.entity.data.Visibility
 import social.bigbone.api.exception.BigBoneRequestException
 
 /**
@@ -117,7 +118,7 @@ class StatusMethods(private val client: MastodonClient) {
     fun postStatus(
         status: String,
         mediaIds: List<String>? = null,
-        visibility: Status.Visibility = Status.Visibility.Public,
+        visibility: Visibility = Visibility.PUBLIC,
         inReplyToId: String? = null,
         sensitive: Boolean = false,
         spoilerText: String? = null,
@@ -159,7 +160,7 @@ class StatusMethods(private val client: MastodonClient) {
     fun postPoll(
         status: String,
         pollData: PollData,
-        visibility: Status.Visibility = Status.Visibility.Public,
+        visibility: Visibility = Visibility.PUBLIC,
         inReplyToId: String? = null,
         sensitive: Boolean = false,
         spoilerText: String? = null,
@@ -207,7 +208,7 @@ class StatusMethods(private val client: MastodonClient) {
         status: String,
         mediaIds: List<String>? = null,
         scheduledAt: String,
-        visibility: Status.Visibility = Status.Visibility.Public,
+        visibility: Visibility = Visibility.PUBLIC,
         inReplyToId: String? = null,
         sensitive: Boolean = false,
         spoilerText: String? = null,
@@ -252,7 +253,7 @@ class StatusMethods(private val client: MastodonClient) {
         status: String,
         scheduledAt: String,
         pollData: PollData,
-        visibility: Status.Visibility = Status.Visibility.Public,
+        visibility: Visibility = Visibility.PUBLIC,
         inReplyToId: String? = null,
         sensitive: Boolean = false,
         spoilerText: String? = null,
@@ -301,10 +302,10 @@ class StatusMethods(private val client: MastodonClient) {
      */
     @JvmOverloads
     @Throws(BigBoneRequestException::class)
-    fun reblogStatus(statusId: String, visibility: Status.Visibility = Status.Visibility.Public): MastodonRequest<Status> {
-        if (visibility != Status.Visibility.Public &&
-            visibility != Status.Visibility.Unlisted &&
-            visibility != Status.Visibility.Private) {
+    fun reblogStatus(statusId: String, visibility: Visibility = Visibility.PUBLIC): MastodonRequest<Status> {
+        if (visibility != Visibility.PUBLIC &&
+            visibility != Visibility.UNLISTED &&
+            visibility != Visibility.PRIVATE) {
             throw BigBoneRequestException("Visibility must be one of: public, unlisted, private when reblogging.")
         }
         return client.getMastodonRequest(

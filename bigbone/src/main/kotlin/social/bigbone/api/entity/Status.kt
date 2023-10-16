@@ -2,7 +2,7 @@ package social.bigbone.api.entity
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import social.bigbone.api.entity.Status.Visibility
+import social.bigbone.api.entity.data.Visibility
 
 /**
  * Represents a status posted by an account.
@@ -45,7 +45,7 @@ data class Status(
      * @see Visibility
      */
     @SerialName("visibility")
-    val visibility: String = Visibility.Public.value,
+    val visibility: String = Visibility.PUBLIC.value,
 
     /**
      * Is this status marked as sensitive content?
@@ -199,15 +199,6 @@ data class Status(
     @SerialName("filtered")
     val filtered: List<FilterResult>? = null
 ) {
-    /**
-     * Specifies the visibility of the status post.
-     */
-    enum class Visibility(val value: String) {
-        Public("public"),
-        Unlisted("unlisted"),
-        Private("private"),
-        Direct("direct")
-    }
 
     /**
      * Mentions of users within the status content.
