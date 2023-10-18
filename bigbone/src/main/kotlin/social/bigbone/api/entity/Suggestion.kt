@@ -24,6 +24,9 @@ data class Suggestion(
     val account: Account,
 ) {
 
+    /**
+     * Represents a suggested account to follow and an associated reason for the suggestion.
+     */
     enum class SourceSuggestion(val value: String) {
         /**
          * This account was manually recommended by your administration team.
