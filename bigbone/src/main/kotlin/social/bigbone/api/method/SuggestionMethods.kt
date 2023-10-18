@@ -19,9 +19,8 @@ class SuggestionMethods(private val client: MastodonClient) {
      * @param limit to limit number of results
      * @see <a href="https://docs.joinmastodon.org/methods/suggestions/#v2">Mastodon API documentation: methods/suggestions/#v2</a>
      */
-    @JvmOverloads
-    fun getSuggestions(limit: Int? = null): MastodonRequest<Suggestion> {
-        return client.getMastodonRequest(
+    fun getSuggestions(limit: Int? = null): MastodonRequest<List<Suggestion>> {
+        return client.getMastodonRequestForList(
             endpoint = suggestionsEndpointV2,
             method = MastodonClient.Method.GET,
             parameters = Parameters().apply {
