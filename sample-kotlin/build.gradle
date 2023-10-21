@@ -1,5 +1,6 @@
 plugins {
     id 'bigbone.kotlin-conventions'
+    alias(libs.plugins.ktlint)
 }
 
 dependencies {

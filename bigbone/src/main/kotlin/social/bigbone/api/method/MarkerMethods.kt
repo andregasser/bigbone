@@ -24,16 +24,17 @@ class MarkerMethods(private val client: MastodonClient) {
             endpoint = "api/v1/markers",
             method = MastodonClient.Method.GET,
             parameters = Parameters().apply {
-            timeline?.let {
-                when (timeline) {
-                    Timeline.HOME -> append("timeline[]", "home")
-                    Timeline.NOTIFICATIONS -> append("timeline[]", "notifications")
+                timeline?.let {
+                    when (timeline) {
+                        Timeline.HOME -> append("timeline[]", "home")
+                        Timeline.NOTIFICATIONS -> append("timeline[]", "notifications")
+                    }
+                } ?: run {
+                    append("timeline[]", "home")
+                    append("timeline[]", "notifications")
                 }
-            } ?: run {
-                append("timeline[]", "home")
-                append("timeline[]", "notifications")
             }
-        })
+        )
     }
 
     /**
@@ -43,14 +44,20 @@ class MarkerMethods(private val client: MastodonClient) {
      * @param lastReadId the id of the last read post.
      */
     @Throws(BigBoneRequestException::class)
-    fun updateMarker(timeline: Timeline, lastReadId: Int): MastodonRequest<Marker> {
-        return client.getMastodonRequest(endpoint = "api/v1/markers", method = MastodonClient.Method.POST, parameters = Parameters().apply {
-            when (timeline) {
-                Timeline.HOME -> append("home[last_read_id]", lastReadId)
-                Timeline.NOTIFICATIONS -> append("notifications[last_read_id]", lastReadId)
+    fun updateMarker(
+        timeline: Timeline,
+        lastReadId: Int
+    ): MastodonRequest<Marker> {
+        return client.getMastodonRequest(
+            endpoint = "api/v1/markers",
+            method = MastodonClient.Method.POST,
+            parameters = Parameters().apply {
+                when (timeline) {
+                    Timeline.HOME -> append("home[last_read_id]", lastReadId)
+                    Timeline.NOTIFICATIONS -> append("notifications[last_read_id]", lastReadId)
+                }
             }
-        })
-
+        )
     }
 }
 

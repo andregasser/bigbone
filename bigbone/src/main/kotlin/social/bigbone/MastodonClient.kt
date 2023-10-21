@@ -17,6 +17,7 @@ import social.bigbone.api.method.BlockMethods
 import social.bigbone.api.method.BookmarkMethods
 import social.bigbone.api.method.ConversationMethods
 import social.bigbone.api.method.DirectoryMethods
+import social.bigbone.api.method.EndorsementMethods
 import social.bigbone.api.method.FavouriteMethods
 import social.bigbone.api.method.FeaturedTagsMethods
 import social.bigbone.api.method.FilterMethods
@@ -101,6 +102,13 @@ private constructor(
     @Suppress("unused") // public API
     @get:JvmName("directories")
     val directories: DirectoryMethods by lazy { DirectoryMethods(this) }
+
+    /**
+     * Access API methods under "api/vX/endorsements" endpoint.
+     */
+    @Suppress("unused") // public API
+    @get:JvmName("endorsements")
+    val endorsements: EndorsementMethods by lazy { EndorsementMethods(this) }
 
     /**
      * Access API methods under "api/vX/favourites" endpoint.
@@ -688,7 +696,10 @@ private constructor(
             return client.newCall(
                 Request.Builder().url(
                     fullUrl(
-                        scheme, instanceName, port, "api/$versionString/instance"
+                        scheme,
+                        instanceName,
+                        port,
+                        "api/$versionString/instance"
                     )
                 ).get().build()
             ).execute()

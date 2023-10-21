@@ -31,5 +31,5 @@ data class Conversation(
      * The last status in the conversation.
      */
     @SerialName("last_status")
-    val lastStatus: Status? = null,
+    val lastStatus: Status? = null
 )
