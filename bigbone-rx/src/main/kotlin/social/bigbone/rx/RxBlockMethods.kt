@@ -17,7 +17,7 @@ class RxBlockMethods(client: MastodonClient) {
     private val blockMethods = BlockMethods(client)
 
     @JvmOverloads
-    fun getBlocks(range: Range = Range()): Single<Pageable<Account>> = Single.fromCallable(
-        blockMethods.getBlocks(range)::execute
-    )
+    fun getBlocks(range: Range = Range()): Single<Pageable<Account>> = Single.fromCallable {
+        blockMethods.getBlocks(range).execute()
+    }
 }

@@ -14,5 +14,5 @@ class RxInstanceMethods(client: MastodonClient) {
 
     private val instanceMethods = InstanceMethods(client)
 
-    fun getInstance(): Single<Instance> = Single.fromCallable(instanceMethods.getInstance()::execute)
+    fun getInstance(): Single<Instance> = Single.fromCallable { instanceMethods.getInstance().execute() }
 }

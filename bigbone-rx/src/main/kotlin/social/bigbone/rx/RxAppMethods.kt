@@ -21,7 +21,7 @@ class RxAppMethods(client: MastodonClient) {
         redirectUris: String,
         website: String? = null,
         scope: Scope = Scope(Scope.Name.ALL)
-    ): Single<Application> = Single.fromCallable(
-        appMethods.createApp(clientName, redirectUris, website, scope)::execute
-    )
+    ): Single<Application> = Single.fromCallable {
+        appMethods.createApp(clientName, redirectUris, website, scope).execute()
+    }
 }

@@ -17,6 +17,7 @@ class RxMuteMethods(client: MastodonClient) {
     private val muteMethods = MuteMethods(client)
 
     @JvmOverloads
-    fun getMutes(range: Range = Range()): Single<Pageable<Account>> =
-        Single.fromCallable(muteMethods.getMutes(range)::execute)
+    fun getMutes(range: Range = Range()): Single<Pageable<Account>> = Single.fromCallable {
+        muteMethods.getMutes(range).execute()
+    }
 }

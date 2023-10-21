@@ -20,5 +20,7 @@ class RxDirectoryMethods(client: MastodonClient) {
         order: DirectoryMethods.AccountOrder = DirectoryMethods.AccountOrder.ACTIVE,
         offset: Int = 0,
         limit: Int = 40
-    ): Single<List<Account>> = Single.fromCallable(directoryMethods.listAccounts(local, order, offset, limit)::execute)
+    ): Single<List<Account>> = Single.fromCallable {
+        directoryMethods.listAccounts(local, order, offset, limit).execute()
+    }
 }

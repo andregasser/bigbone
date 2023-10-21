@@ -17,6 +17,7 @@ class RxFavouriteMethods(client: MastodonClient) {
     private val favouriteMethods = FavouriteMethods(client)
 
     @JvmOverloads
-    fun getFavourites(range: Range = Range()): Single<Pageable<Status>> =
-        Single.fromCallable(favouriteMethods.getFavourites(range)::execute)
+    fun getFavourites(range: Range = Range()): Single<Pageable<Status>> = Single.fromCallable {
+        favouriteMethods.getFavourites(range).execute()
+    }
 }

@@ -17,9 +17,13 @@ class RxFilterMethods(client: MastodonClient) {
 
     private val filterMethods = FilterMethods(client)
 
-    fun listFilters(): Single<List<Filter>> = Single.fromCallable(filterMethods.listFilters()::execute)
+    fun listFilters(): Single<List<Filter>> = Single.fromCallable {
+        filterMethods.listFilters().execute()
+    }
 
-    fun viewFilter(filterId: String): Single<Filter> = Single.fromCallable(filterMethods.viewFilter(filterId)::execute)
+    fun viewFilter(filterId: String): Single<Filter> = Single.fromCallable {
+        filterMethods.viewFilter(filterId).execute()
+    }
 
     @JvmOverloads
     fun createFilter(
@@ -28,9 +32,15 @@ class RxFilterMethods(client: MastodonClient) {
         filterKeywords: List<FilterKeyword>,
         expiresIn: Int? = null,
         filterAction: Filter.Action = Filter.Action.Warn
-    ): Single<Filter> = Single.fromCallable(
-        filterMethods.createFilter(title, context, filterKeywords, expiresIn, filterAction)::execute
-    )
+    ): Single<Filter> = Single.fromCallable {
+        filterMethods.createFilter(
+            title,
+            context,
+            filterKeywords,
+            expiresIn,
+            filterAction
+        ).execute()
+    }
 
     @JvmOverloads
     fun updateFilter(
@@ -55,32 +65,43 @@ class RxFilterMethods(client: MastodonClient) {
         ).execute()
     }
 
-    fun deleteFilter(filterId: String): Completable = Completable.fromAction { filterMethods.deleteFilter(filterId) }
+    fun deleteFilter(filterId: String): Completable = Completable.fromAction {
+        filterMethods.deleteFilter(filterId)
+    }
 
-    fun listKeywords(filterId: String): Single<List<FilterKeyword>> =
-        Single.fromCallable(filterMethods.listKeywords(filterId)::execute)
+    fun listKeywords(filterId: String): Single<List<FilterKeyword>> = Single.fromCallable {
+        filterMethods.listKeywords(filterId).execute()
+    }
 
-    fun addKeyword(filterId: String, filterKeyword: FilterKeyword): Single<FilterKeyword> =
-        Single.fromCallable(filterMethods.addKeyword(filterId, filterKeyword)::execute)
+    fun addKeyword(filterId: String, filterKeyword: FilterKeyword): Single<FilterKeyword> = Single.fromCallable {
+        filterMethods.addKeyword(filterId, filterKeyword).execute()
+    }
 
-    fun viewKeyword(keywordId: String): Single<FilterKeyword> =
-        Single.fromCallable(filterMethods.viewKeyword(keywordId)::execute)
+    fun viewKeyword(keywordId: String): Single<FilterKeyword> = Single.fromCallable {
+        filterMethods.viewKeyword(keywordId).execute()
+    }
 
-    fun updateKeyword(filterKeyword: FilterKeyword): Single<FilterKeyword> =
-        Single.fromCallable(filterMethods.updateKeyword(filterKeyword)::execute)
+    fun updateKeyword(filterKeyword: FilterKeyword): Single<FilterKeyword> = Single.fromCallable {
+        filterMethods.updateKeyword(filterKeyword).execute()
+    }
 
-    fun deleteKeyword(keywordId: String): Completable =
-        Completable.fromAction { filterMethods.deleteKeyword(keywordId) }
+    fun deleteKeyword(keywordId: String): Completable = Completable.fromAction {
+        filterMethods.deleteKeyword(keywordId)
+    }
 
-    fun listStatusFilters(filterId: String): Single<List<FilterStatus>> =
-        Single.fromCallable(filterMethods.listStatusFilters(filterId)::execute)
+    fun listStatusFilters(filterId: String): Single<List<FilterStatus>> = Single.fromCallable {
+        filterMethods.listStatusFilters(filterId).execute()
+    }
 
-    fun addStatusToFilter(filterId: String, statusId: String): Single<FilterStatus> =
-        Single.fromCallable(filterMethods.addStatusToFilter(filterId, statusId)::execute)
+    fun addStatusToFilter(filterId: String, statusId: String): Single<FilterStatus> = Single.fromCallable {
+        filterMethods.addStatusToFilter(filterId, statusId).execute()
+    }
 
-    fun viewStatusFilter(filterStatusId: String): Single<FilterStatus> =
-        Single.fromCallable(filterMethods.viewStatusFilter(filterStatusId)::execute)
+    fun viewStatusFilter(filterStatusId: String): Single<FilterStatus> = Single.fromCallable {
+        filterMethods.viewStatusFilter(filterStatusId).execute()
+    }
 
-    fun removeStatusFromFilter(filterStatusId: String): Single<FilterStatus> =
-        Single.fromCallable(filterMethods.removeStatusFromFilter(filterStatusId)::execute)
+    fun removeStatusFromFilter(filterStatusId: String): Single<FilterStatus> = Single.fromCallable {
+        filterMethods.removeStatusFromFilter(filterStatusId).execute()
+    }
 }

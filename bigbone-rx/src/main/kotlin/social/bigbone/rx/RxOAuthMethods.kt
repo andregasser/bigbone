@@ -15,22 +15,23 @@ class RxOAuthMethods(client: MastodonClient) {
 
     private val oAuthMethods = OAuthMethods(client)
 
-    fun getOAuthUrl(clientId: String, scope: Scope, redirectUri: String): Single<String> =
-        Single.fromCallable { oAuthMethods.getOAuthUrl(clientId, scope, redirectUri) }
+    fun getOAuthUrl(clientId: String, scope: Scope, redirectUri: String): Single<String> = Single.fromCallable {
+        oAuthMethods.getOAuthUrl(clientId, scope, redirectUri)
+    }
 
     fun getUserAccessTokenWithAuthorizationCodeGrant(
         clientId: String,
         clientSecret: String,
         redirectUri: String,
         code: String
-    ): Single<Token> = Single.fromCallable(
+    ): Single<Token> = Single.fromCallable {
         oAuthMethods.getUserAccessTokenWithAuthorizationCodeGrant(
             clientId,
             clientSecret,
             redirectUri,
             code
-        )::execute
-    )
+        ).execute()
+    }
 
     @JvmOverloads
     fun getUserAccessTokenWithPasswordGrant(
@@ -40,7 +41,7 @@ class RxOAuthMethods(client: MastodonClient) {
         username: String,
         password: String,
         scope: Scope = Scope(Scope.Name.READ)
-    ): Single<Token> = Single.fromCallable(
+    ): Single<Token> = Single.fromCallable {
         oAuthMethods.getUserAccessTokenWithPasswordGrant(
             clientId,
             clientSecret,
@@ -48,6 +49,6 @@ class RxOAuthMethods(client: MastodonClient) {
             username,
             password,
             scope
-        )::execute
-    )
+        ).execute()
+    }
 }

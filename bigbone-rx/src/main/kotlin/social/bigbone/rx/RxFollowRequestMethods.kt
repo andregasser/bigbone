@@ -18,12 +18,15 @@ class RxFollowRequestMethods(client: MastodonClient) {
     private val followRequestMethods = FollowRequestMethods(client)
 
     @JvmOverloads
-    fun getFollowRequests(range: Range = Range()): Single<Pageable<Account>> =
-        Single.fromCallable(followRequestMethods.getFollowRequests(range)::execute)
+    fun getFollowRequests(range: Range = Range()): Single<Pageable<Account>> = Single.fromCallable {
+        followRequestMethods.getFollowRequests(range).execute()
+    }
 
-    fun authorizeFollowRequest(accountId: String): Completable =
-        Completable.fromAction { followRequestMethods.authorizeFollowRequest(accountId) }
+    fun authorizeFollowRequest(accountId: String): Completable = Completable.fromAction {
+        followRequestMethods.authorizeFollowRequest(accountId)
+    }
 
-    fun rejectFollowRequest(accountId: String): Completable =
-        Completable.fromAction { followRequestMethods.rejectFollowRequest(accountId) }
+    fun rejectFollowRequest(accountId: String): Completable = Completable.fromAction {
+        followRequestMethods.rejectFollowRequest(accountId)
+    }
 }

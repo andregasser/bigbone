@@ -21,11 +21,13 @@ class RxNotificationMethods(client: MastodonClient) {
     fun getNotifications(
         excludeTypes: List<Notification.Type>? = null,
         range: Range = Range()
-    ): Single<Pageable<Notification>> =
-        Single.fromCallable(notificationMethods.getNotifications(excludeTypes, range)::execute)
+    ): Single<Pageable<Notification>> = Single.fromCallable {
+        notificationMethods.getNotifications(excludeTypes, range).execute()
+    }
 
-    fun getNotification(id: String): Single<Notification> =
-        Single.fromCallable(notificationMethods.getNotification(id)::execute)
+    fun getNotification(id: String): Single<Notification> = Single.fromCallable {
+        notificationMethods.getNotification(id).execute()
+    }
 
-    fun clearNotifications(): Completable = Completable.fromAction(notificationMethods::clearNotifications)
+    fun clearNotifications(): Completable = Completable.fromAction { notificationMethods.clearNotifications() }
 }

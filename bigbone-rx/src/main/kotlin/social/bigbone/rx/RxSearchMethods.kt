@@ -28,7 +28,7 @@ class RxSearchMethods(client: MastodonClient) {
         limit: Int? = null,
         offset: Int? = null
     ): Single<Search> {
-        return Single.fromCallable(
+        return Single.fromCallable {
             searchMethodsMethod.searchContent(
                 query = query,
                 type = type,
@@ -40,7 +40,7 @@ class RxSearchMethods(client: MastodonClient) {
                 minId = minId,
                 limit = limit,
                 offset = offset
-            )::execute
-        )
+            ).execute()
+        }
     }
 }

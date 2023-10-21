@@ -24,8 +24,8 @@ class RxReportMethods(client: MastodonClient) {
         comment: String? = null,
         category: ReportType? = null
     ): Single<Report> {
-        return Single.fromCallable(
-            reportMethods.fileReport(accountId, forward, statusIds, ruleIds, comment, category)::execute
-        )
+        return Single.fromCallable {
+            reportMethods.fileReport(accountId, forward, statusIds, ruleIds, comment, category).execute()
+        }
     }
 }

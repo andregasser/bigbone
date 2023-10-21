@@ -17,6 +17,7 @@ class RxBookmarkMethods(client: MastodonClient) {
     private val bookmarkMethods = BookmarkMethods(client)
 
     @JvmOverloads
-    fun getBookmarks(range: Range = Range()): Single<Pageable<Status>> =
-        Single.fromCallable(bookmarkMethods.getBookmarks(range)::execute)
+    fun getBookmarks(range: Range = Range()): Single<Pageable<Status>> = Single.fromCallable {
+        bookmarkMethods.getBookmarks(range).execute()
+    }
 }
