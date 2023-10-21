@@ -70,5 +70,4 @@ class FeaturedTagsMethods(private val client: MastodonClient) {
             method = MastodonClient.Method.GET
         )
     }
-
 }

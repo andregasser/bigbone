@@ -2,8 +2,5 @@ plugins {
     id 'bigbone.base-conventions'
     id 'kotlin'
     id 'io.gitlab.arturbosch.detekt'
-}
-
-dependencies {
-    detektPlugins libs.detekt.formatting
+    id 'org.jlleitschuh.gradle.ktlint'
 }

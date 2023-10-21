@@ -52,13 +52,13 @@ class ReportMethods(private val client: MastodonClient) {
             append("account_id", accountId)
             append("forward", forward)
             append("category", setCategoryCorrectly(ruleIds, category).name)
-            if(!statusIds.isNullOrEmpty()) {
+            if (!statusIds.isNullOrEmpty()) {
                 append("status_ids", statusIds)
             }
-            if(!comment.isNullOrEmpty() && comment.isNotBlank()) {
+            if (!comment.isNullOrEmpty() && comment.isNotBlank()) {
                 append("comment", comment)
             }
-            if(!ruleIds.isNullOrEmpty()) {
+            if (!ruleIds.isNullOrEmpty()) {
                 append("ruleIds", ruleIds)
             }
         }

@@ -29,8 +29,14 @@ class RxAccountMethods(client: MastodonClient) {
     ): Single<Token> {
         return Single.create {
             try {
-                val token = accountMethods.registerAccount(username, email, password,
-                    agreement, locale, reason).execute()
+                val token = accountMethods.registerAccount(
+                    username,
+                    email,
+                    password,
+                    agreement,
+                    locale,
+                    reason
+                ).execute()
                 it.onSuccess(token)
             } catch (throwable: Throwable) {
                 it.onErrorIfNotDisposed(throwable)

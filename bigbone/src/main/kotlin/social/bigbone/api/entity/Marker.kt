@@ -25,5 +25,5 @@ data class Marker(
      * The timestamp of when the marker was set (ISO 8601 Datetime).
      */
     @SerialName("updated_at")
-    val updatedAt: String = "",
+    val updatedAt: String = ""
 )

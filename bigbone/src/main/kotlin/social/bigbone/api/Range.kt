@@ -9,7 +9,7 @@ class Range @JvmOverloads constructor(
     val maxId: String? = null,
     val minId: String? = null,
     val sinceId: String? = null,
-    val limit: Int? = null,
+    val limit: Int? = null
 ) {
     fun toParameters() = Parameters().apply {
         maxId?.let { append("max_id", it) }
