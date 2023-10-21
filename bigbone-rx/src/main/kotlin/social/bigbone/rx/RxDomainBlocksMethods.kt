@@ -22,6 +22,7 @@ class RxDomainBlocksMethods(client: MastodonClient) {
      * @see <a href="https://docs.joinmastodon.org/methods/domain_blocks/#get">Mastodon API documentation: methods/domain_blocks/#get</a>
      * @return
      */
+    @JvmOverloads
     fun getDomainBlocks(range: Range = Range()): Single<Pageable<String>> =
         Single.fromCallable { domainBlocksMethods.getDomainBlocks(range).execute() }
 
