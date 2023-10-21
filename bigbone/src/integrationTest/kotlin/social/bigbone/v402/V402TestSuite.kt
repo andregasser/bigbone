@@ -10,5 +10,4 @@ import org.junit.platform.suite.api.SuiteDisplayName
     V402InstanceMethodsIntegrationTest::class,
     V402StatusMethodsIntegrationTest::class
 )
-class V402TestSuite {
-}
+class V402TestSuite

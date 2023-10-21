@@ -11,5 +11,4 @@ import org.junit.platform.suite.api.SuiteDisplayName
     V410StatusMethodsIntegrationTest::class,
     V410MediaMethodsIntegrationTest::class
 )
-class V410TestSuite {
-}
+class V410TestSuite
