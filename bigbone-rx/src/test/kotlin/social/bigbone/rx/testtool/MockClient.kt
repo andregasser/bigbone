@@ -82,12 +82,14 @@ object MockClient {
             )
             .build()
 
-        every { clientMock.delete(any<String>(), any<Parameters>()) }  throws BigBoneRequestException(response)
-        every { clientMock.get(any<String>(), any<Parameters>()) }  throws BigBoneRequestException(response)
-        every { clientMock.patch(any<String>(), any<Parameters>()) }  throws BigBoneRequestException(response)
-        every { clientMock.post(any<String>(), any<Parameters>(), any<Boolean>()) }  throws BigBoneRequestException(response)
-        every { clientMock.postRequestBody(any<String>(), any<RequestBody>()) }  throws BigBoneRequestException(response)
-        every { clientMock.put(any<String>(), any<Parameters>()) }  throws BigBoneRequestException(response)
+        every { clientMock.delete(any<String>(), any<Parameters>()) } throws BigBoneRequestException(response)
+        every { clientMock.get(any<String>(), any<Parameters>()) } throws BigBoneRequestException(response)
+        every { clientMock.patch(any<String>(), any<Parameters>()) } throws BigBoneRequestException(response)
+        every { clientMock.post(any<String>(), any<Parameters>(), any<Boolean>()) } throws BigBoneRequestException(
+            response
+        )
+        every { clientMock.postRequestBody(any<String>(), any<RequestBody>()) } throws BigBoneRequestException(response)
+        every { clientMock.put(any<String>(), any<Parameters>()) } throws BigBoneRequestException(response)
         every {
             clientMock["performAction"](
                 any<String>(),

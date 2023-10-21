@@ -81,5 +81,4 @@ class RxDomainBlocksMethodsTest {
             dispose()
         }
     }
-
 }

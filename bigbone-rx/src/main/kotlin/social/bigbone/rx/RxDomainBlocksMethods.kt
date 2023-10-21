@@ -43,5 +43,4 @@ class RxDomainBlocksMethods(client: MastodonClient) {
      */
     fun unblockDomain(domain: String): Completable =
         Completable.fromAction { domainBlocksMethods.unblockDomain(domain) }
-
 }

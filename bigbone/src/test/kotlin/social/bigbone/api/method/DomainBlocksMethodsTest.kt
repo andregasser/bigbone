@@ -151,5 +151,4 @@ class DomainBlocksMethodsTest {
             DomainBlocksMethods(client).unblockDomain("nsfw.social")
         } shouldThrow BigBoneRequestException::class withMessage "Unprocessable entity"
     }
-
 }
