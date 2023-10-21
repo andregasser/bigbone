@@ -55,7 +55,6 @@ class DomainBlocksMethods(private val client: MastodonClient) {
         require(domain.isNotBlank()) { "domain must not be blank" }
         require(!domain.contains(' ')) { "domain must not contain spaces" }
 
-
         return client.performAction(
             endpoint = domainBlocksEndpoint,
             method = MastodonClient.Method.POST
@@ -75,7 +74,6 @@ class DomainBlocksMethods(private val client: MastodonClient) {
     ) {
         require(domain.isNotBlank()) { "domain must not be blank" }
         require(!domain.contains(' ')) { "domain must not contain spaces" }
-
 
         return client.performAction(
             endpoint = domainBlocksEndpoint,
