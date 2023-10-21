@@ -32,10 +32,10 @@ object MockClient {
             .apply {
                 val linkHeader = buildList {
                     maxId?.let {
-                        add("""<${responseBaseUrl}?limit=20&local=true&max_id=$it>; rel="next"""")
+                        add("""<$responseBaseUrl?limit=20&local=true&max_id=$it>; rel="next"""")
                     }
                     sinceId?.let {
-                        add("""<${responseBaseUrl}?limit=20&local=true&since_id=$it>; rel="prev"""")
+                        add("""<$responseBaseUrl?limit=20&local=true&since_id=$it>; rel="prev"""")
                     }
                 }
                 if (linkHeader.isNotEmpty()) {

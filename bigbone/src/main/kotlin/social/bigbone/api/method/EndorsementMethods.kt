@@ -40,5 +40,4 @@ class EndorsementMethods(private val client: MastodonClient) {
             parameters = range.toParameters()
         )
     }
-
 }

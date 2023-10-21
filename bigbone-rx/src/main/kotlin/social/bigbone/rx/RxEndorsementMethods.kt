@@ -34,5 +34,4 @@ class RxEndorsementMethods(client: MastodonClient) {
             }
         }
     }
-
 }

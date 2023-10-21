@@ -61,5 +61,4 @@ class EndorsementMethodsTest {
             EndorsementMethods(client).getEndorsements().execute()
         } shouldThrow BigBoneRequestException::class withMessage "Unauthorized"
     }
-
 }

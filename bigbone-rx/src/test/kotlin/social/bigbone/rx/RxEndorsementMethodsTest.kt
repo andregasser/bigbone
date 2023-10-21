@@ -39,11 +39,10 @@ class RxEndorsementMethodsTest {
 
             assertError { error: Throwable ->
                 error is IllegalArgumentException &&
-                        error.message == "limit defined in Range must not be higher than 80 but was 90"
+                    error.message == "limit defined in Range must not be higher than 80 but was 90"
             }
 
             dispose()
         }
     }
-
 }
