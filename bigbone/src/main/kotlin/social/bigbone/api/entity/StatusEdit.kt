@@ -65,7 +65,7 @@ data class StatusEdit(
     @Serializable
     data class PollRevision(
         @SerialName("options")
-        val options: List<PollOption> = emptyList(),
+        val options: List<PollOption> = emptyList()
     )
 
     /**

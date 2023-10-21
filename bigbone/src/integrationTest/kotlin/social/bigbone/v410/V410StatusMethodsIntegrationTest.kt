@@ -170,7 +170,7 @@ class V410StatusMethodsIntegrationTest {
                     options = listOf("Ja", "Nein"),
                     expiresIn = "300",
                     multiple = true,
-                    hideTotals = true,
+                    hideTotals = true
                 ),
                 visibility = Status.Visibility.Private,
                 inReplyToId = statusId,
@@ -260,10 +260,10 @@ class V410StatusMethodsIntegrationTest {
             val scheduledPoll = user1Client.statuses.schedulePoll(
                 status = "Will this poll be posted at $inSixMinutes?",
                 scheduledAt = inSixMinutes,
-                pollData = PollData (
+                pollData = PollData(
                     options = listOf("Yes", "No"),
                     expiresIn = "300"
-                ),
+                )
             ).execute()
 
             // then

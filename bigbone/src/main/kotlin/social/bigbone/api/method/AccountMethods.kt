@@ -159,7 +159,7 @@ class AccountMethods(private val client: MastodonClient) {
     fun followAccount(accountId: String): MastodonRequest<Relationship> {
         return client.getMastodonRequest(
             endpoint = "api/v1/accounts/$accountId/follow",
-            method = MastodonClient.Method.POST,
+            method = MastodonClient.Method.POST
         )
     }
 
