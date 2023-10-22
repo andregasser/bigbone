@@ -206,7 +206,7 @@ class StatusMethodsTest {
                 mediaIds = null,
                 sensitive = false,
                 spoilerText = null,
-                language = "en",
+                language = "en"
             ).execute()
         }
     }

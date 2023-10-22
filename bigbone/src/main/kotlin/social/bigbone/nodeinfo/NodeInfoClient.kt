@@ -67,7 +67,6 @@ object NodeInfoClient {
             throw BigBoneRequestException("empty link list in well-known NodeInfo location")
         }
 
-
         // attempt returning URL to schema 2.0 information, but fall back to any - software information exists in all schemas
         return nodeInfo.links
             .firstOrNull { link -> link.rel == "http://nodeinfo.diaspora.software/ns/schema/2.0" }

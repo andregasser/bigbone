@@ -89,41 +89,6 @@ exceptions:
   ThrowingExceptionsWithoutMessageOrCause:
     active: true
 
-formatting:
-  ClassName:
-    active: true
-  DiscouragedCommentLocation:
-    active: true
-  EnumWrapping:
-    active: true
-  FunctionName:
-    active: true
-  FunctionSignature:
-    active: false   # ***** ENABLE! *****
-    maxLineLength: 160
-  IfElseBracing:
-    active: true
-  MaximumLineLength:
-    active: true
-    maxLineLength: 160
-  NoConsecutiveComments:
-    active: true
-  NoEmptyFirstLineInClassBody:
-    active: false   # ***** ENABLE! *****
-  NoSingleLineBlockComment:
-    active: true
-  ParameterListWrapping:
-    active: true
-    maxLineLength: 160
-  PropertyName:
-    active: true
-  StringTemplateIndent:
-    active: true
-  TryCatchFinallySpacing:
-    active: true
-  TypeArgumentListSpacing:
-    active: true
-
 naming:
   BooleanPropertyNaming:
     active: true

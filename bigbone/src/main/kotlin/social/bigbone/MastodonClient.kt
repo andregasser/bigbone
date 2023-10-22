@@ -11,7 +11,32 @@ import okhttp3.Response
 import social.bigbone.api.Pageable
 import social.bigbone.api.entity.data.InstanceVersion
 import social.bigbone.api.exception.BigBoneRequestException
-import social.bigbone.api.method.*
+import social.bigbone.api.method.AccountMethods
+import social.bigbone.api.method.AppMethods
+import social.bigbone.api.method.BlockMethods
+import social.bigbone.api.method.BookmarkMethods
+import social.bigbone.api.method.ConversationMethods
+import social.bigbone.api.method.DirectoryMethods
+import social.bigbone.api.method.DomainBlocksMethods
+import social.bigbone.api.method.EndorsementMethods
+import social.bigbone.api.method.FavouriteMethods
+import social.bigbone.api.method.FeaturedTagsMethods
+import social.bigbone.api.method.FilterMethods
+import social.bigbone.api.method.FollowRequestMethods
+import social.bigbone.api.method.InstanceMethods
+import social.bigbone.api.method.ListMethods
+import social.bigbone.api.method.MarkerMethods
+import social.bigbone.api.method.MediaMethods
+import social.bigbone.api.method.MuteMethods
+import social.bigbone.api.method.NotificationMethods
+import social.bigbone.api.method.OAuthMethods
+import social.bigbone.api.method.PollMethods
+import social.bigbone.api.method.ReportMethods
+import social.bigbone.api.method.SearchMethods
+import social.bigbone.api.method.StatusMethods
+import social.bigbone.api.method.StreamingMethods
+import social.bigbone.api.method.TagMethods
+import social.bigbone.api.method.TimelineMethods
 import social.bigbone.extension.emptyRequestBody
 import social.bigbone.nodeinfo.NodeInfoClient
 import java.io.IOException
@@ -78,6 +103,20 @@ private constructor(
     @Suppress("unused") // public API
     @get:JvmName("directories")
     val directories: DirectoryMethods by lazy { DirectoryMethods(this) }
+
+    /**
+     * Access API methods under "api/vX/domain_blocks" endpoint.
+     */
+    @Suppress("unused") // public API
+    @get:JvmName("domainBlocks")
+    val domainBlocks: DomainBlocksMethods by lazy { DomainBlocksMethods(this) }
+
+    /**
+     * Access API methods under "api/vX/endorsements" endpoint.
+     */
+    @Suppress("unused") // public API
+    @get:JvmName("endorsements")
+    val endorsements: EndorsementMethods by lazy { EndorsementMethods(this) }
 
     /**
      * Access API methods under "api/vX/favourites" endpoint.
@@ -672,7 +711,10 @@ private constructor(
             return client.newCall(
                 Request.Builder().url(
                     fullUrl(
-                        scheme, instanceName, port, "api/$versionString/instance"
+                        scheme,
+                        instanceName,
+                        port,
+                        "api/$versionString/instance"
                     )
                 ).get().build()
             ).execute()

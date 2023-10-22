@@ -5,73 +5,89 @@ import io.mockk.mockk
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.Protocol
 import okhttp3.Request
+import okhttp3.RequestBody
 import okhttp3.Response
 import okhttp3.ResponseBody
 import okhttp3.ResponseBody.Companion.toResponseBody
 import social.bigbone.MastodonClient
+import social.bigbone.Parameters
 import social.bigbone.api.exception.BigBoneRequestException
 import java.net.SocketTimeoutException
 
 object MockClient {
 
-    fun mock(jsonName: String, maxId: String? = null, sinceId: String? = null): MastodonClient {
+    fun mock(
+        jsonName: String,
+        maxId: String? = null,
+        sinceId: String? = null,
+        requestUrl: String = "https://example.com",
+        responseBaseUrl: String = "https://mstdn.jp/api/v1/timelines/public"
+    ): MastodonClient {
         val clientMock: MastodonClient = mockk()
         val response: Response = Response.Builder()
             .code(200)
             .message("OK")
-            .request(Request.Builder().url("https://test.com/").build())
+            .request(Request.Builder().url(requestUrl).build())
             .protocol(Protocol.HTTP_1_1)
             .body(
-                AssetsUtil.readFromAssets(jsonName)
+                AssetsUtil
+                    .readFromAssets(jsonName)
                     .toResponseBody("application/json; charset=utf-8".toMediaTypeOrNull())
             )
             .apply {
-                val linkHeader = arrayListOf<String>().apply {
+                val linkHeader = buildList {
                     maxId?.let {
-                        add("""<https://mstdn.jp/api/v1/timelines/public?limit=20&local=true&max_id=$it>; rel="next"""")
+                        add("""<$responseBaseUrl?limit=20&local=true&max_id=$it>; rel="next"""")
                     }
                     sinceId?.let {
-                        add("""<https://mstdn.jp/api/v1/timelines/public?limit=20&local=true&since_id=$it>; rel="prev"""")
+                        add("""<$responseBaseUrl?limit=20&local=true&since_id=$it>; rel="prev"""")
                     }
-                }.joinToString(separator = ",")
+                }
                 if (linkHeader.isNotEmpty()) {
-                    header("link", linkHeader)
+                    header(
+                        name = "link",
+                        value = linkHeader.joinToString(separator = ",")
+                    )
                 }
             }
             .build()
 
-        every { clientMock.delete(ofType<String>(), any()) } returns response
-        every { clientMock.get(ofType<String>(), isNull(inverse = false)) } returns response
-        every { clientMock.get(ofType<String>(), any()) } returns response
-        every { clientMock.patch(ofType<String>(), any()) } returns response
-        every { clientMock.post(ofType<String>(), any()) } returns response
-        every { clientMock.post(ofType<String>(), any(), any()) } returns response
-        every { clientMock.postRequestBody(ofType<String>(), any()) } returns response
-        every { clientMock.put(ofType<String>(), any()) } returns response
+        every { clientMock.delete(any<String>(), any<Parameters>()) } returns response
+        every { clientMock.get(any<String>(), any<Parameters>()) } returns response
+        every { clientMock.patch(any<String>(), any<Parameters>()) } returns response
+        every { clientMock.post(any<String>(), any<Parameters>(), any<Boolean>()) } returns response
+        every { clientMock.postRequestBody(any<String>(), any<RequestBody>()) } returns response
+        every { clientMock.put(any<String>(), any<Parameters>()) } returns response
         return clientMock
     }
 
-    fun ioException(): MastodonClient {
+    fun ioException(
+        requestUrl: String = "https://example.com"
+    ): MastodonClient {
         val clientMock: MastodonClient = mockk()
         val responseBodyMock: ResponseBody = mockk()
         every { responseBodyMock.toString() } throws SocketTimeoutException()
         val response: Response = Response.Builder()
             .code(200)
             .message("OK")
-            .request(Request.Builder().url("https://test.com/").build())
+            .request(Request.Builder().url(requestUrl).build())
             .protocol(Protocol.HTTP_1_1)
             .body(responseBodyMock)
             .build()
 
-        every { clientMock.delete(ofType<String>(), any()) } returns response
-        every { clientMock.get(ofType<String>(), isNull(inverse = false)) } returns response
-        every { clientMock.get(ofType<String>(), any()) } returns response
-        every { clientMock.patch(ofType<String>(), any()) } returns response
-        every { clientMock.post(ofType<String>(), any()) } returns response
-        every { clientMock.post(ofType<String>(), any(), any()) } returns response
-        every { clientMock.postRequestBody(ofType<String>(), any()) } returns response
-        every { clientMock.put(ofType<String>(), any()) } returns response
-        every { clientMock.performAction(ofType<String>(), any()) } throws BigBoneRequestException("mock")
+        every { clientMock.delete(any<String>(), any<Parameters>()) } returns response
+        every { clientMock.get(any<String>(), any<Parameters>()) } returns response
+        every { clientMock.patch(any<String>(), any<Parameters>()) } returns response
+        every { clientMock.post(any<String>(), any<Parameters>(), any<Boolean>()) } returns response
+        every { clientMock.postRequestBody(any<String>(), any<RequestBody>()) } returns response
+        every { clientMock.put(any<String>(), any<Parameters>()) } returns response
+        every {
+            clientMock.performAction(
+                any<String>(),
+                any<MastodonClient.Method>(),
+                any<Parameters>()
+            )
+        } throws BigBoneRequestException("mock")
         return clientMock
     }
 
@@ -94,15 +110,19 @@ object MockClient {
             )
             .build()
 
-        every { clientMock.delete(ofType<String>(), any()) } returns response
-        every { clientMock.get(ofType<String>(), isNull(inverse = false)) } returns response
-        every { clientMock.get(ofType<String>(), any()) } returns response
-        every { clientMock.patch(ofType<String>(), any()) } returns response
-        every { clientMock.post(ofType<String>(), any()) } returns response
-        every { clientMock.post(ofType<String>(), any(), any()) } returns response
-        every { clientMock.postRequestBody(ofType<String>(), any()) } returns response
-        every { clientMock.put(ofType<String>(), any()) } returns response
-        every { clientMock.performAction(ofType<String>(), any()) } throws BigBoneRequestException("mock")
+        every { clientMock.delete(any<String>(), any<Parameters>()) } returns response
+        every { clientMock.get(any<String>(), any<Parameters>()) } returns response
+        every { clientMock.patch(any<String>(), any<Parameters>()) } returns response
+        every { clientMock.post(any<String>(), any<Parameters>(), any<Boolean>()) } returns response
+        every { clientMock.postRequestBody(any<String>(), any<RequestBody>()) } returns response
+        every { clientMock.put(any<String>(), any<Parameters>()) } returns response
+        every {
+            clientMock.performAction(
+                any<String>(),
+                any<MastodonClient.Method>(),
+                any<Parameters>()
+            )
+        } throws BigBoneRequestException(response)
         return clientMock
     }
 }

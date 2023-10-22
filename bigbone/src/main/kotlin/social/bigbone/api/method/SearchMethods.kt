@@ -36,17 +36,17 @@ class SearchMethods(private val client: MastodonClient) {
      */
     @JvmOverloads
     fun searchContent(
-            query: String,
-            type: SearchType? = null,
-            resolve: Boolean = false,
-            following: Boolean = false,
-            excludeUnreviewed: Boolean = false,
-            accountId: String? = null,
-            maxId: String? = null,
-            minId: String? = null,
-            limit: Int? = null,
-            offset: Int? = null
-            ): MastodonRequest<Search> {
+        query: String,
+        type: SearchType? = null,
+        resolve: Boolean = false,
+        following: Boolean = false,
+        excludeUnreviewed: Boolean = false,
+        accountId: String? = null,
+        maxId: String? = null,
+        minId: String? = null,
+        limit: Int? = null,
+        offset: Int? = null
+    ): MastodonRequest<Search> {
         return client.getMastodonRequest(
             endpoint = "api/v2/search",
             method = MastodonClient.Method.GET,
@@ -66,33 +66,33 @@ class SearchMethods(private val client: MastodonClient) {
         limit: Int? = null,
         offset: Int? = null
     ): Parameters {
-            return Parameters().apply {
-                append("q", query)
-                append("offset", offset ?: 0)
-                if (resolve) {
-                    append("resolve", true)
-                }
-                if (following) {
-                    append("following", true)
-                }
-                if (excludeUnreviewed) {
-                    append("exclude_unreviewed", true)
-                }
-                if (type != null) {
-                    append("type", type.name)
-                }
-                if (!accountId.isNullOrEmpty() && accountId.isNotBlank()) {
-                    append("account_id", accountId)
-                }
-                if (!maxId.isNullOrEmpty() && maxId.isNotBlank()) {
-                    append("max_id", maxId)
-                }
-                if (!minId.isNullOrEmpty() && minId.isNotBlank()) {
-                    append("min_id", minId)
-                }
-                if (limit != null) {
-                    append("limit", limit.coerceIn(20, 40))
-                }
+        return Parameters().apply {
+            append("q", query)
+            append("offset", offset ?: 0)
+            if (resolve) {
+                append("resolve", true)
             }
+            if (following) {
+                append("following", true)
+            }
+            if (excludeUnreviewed) {
+                append("exclude_unreviewed", true)
+            }
+            if (type != null) {
+                append("type", type.name)
+            }
+            if (!accountId.isNullOrEmpty() && accountId.isNotBlank()) {
+                append("account_id", accountId)
+            }
+            if (!maxId.isNullOrEmpty() && maxId.isNotBlank()) {
+                append("max_id", maxId)
+            }
+            if (!minId.isNullOrEmpty() && minId.isNotBlank()) {
+                append("min_id", minId)
+            }
+            if (limit != null) {
+                append("limit", limit.coerceIn(20, 40))
+            }
+        }
     }
 }

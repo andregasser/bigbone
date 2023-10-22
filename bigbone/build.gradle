@@ -2,6 +2,7 @@ plugins {
     id 'bigbone.library-conventions'
     id 'bigbone.integrationtest-conventions'
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.ktlint)
 }
 
 dependencies {
