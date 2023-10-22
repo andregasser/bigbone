@@ -92,7 +92,7 @@ class V410StatusMethodsIntegrationTest {
 
             // then
             assertEquals("<p>Status to be posted</p>", postedStatus.content)
-            assertEquals(Visibility.PUBLIC.value, postedStatus.visibility)
+            assertEquals(Visibility.PUBLIC, postedStatus.visibility)
             assertNull(postedStatus.inReplyToId)
             assertEquals(0, postedStatus.mediaAttachments.size)
             assertFalse(postedStatus.isSensitive)
@@ -121,7 +121,7 @@ class V410StatusMethodsIntegrationTest {
 
             // then
             assertEquals("<p>This is a reply to the previous status</p>", postedStatus.content)
-            assertEquals(Visibility.PRIVATE.value, postedStatus.visibility)
+            assertEquals(Visibility.PRIVATE, postedStatus.visibility)
             assertEquals(statusId, postedStatus.inReplyToId)
             assertEquals(2, postedStatus.mediaAttachments.size)
             assertTrue(postedStatus.isSensitive)
@@ -149,7 +149,7 @@ class V410StatusMethodsIntegrationTest {
 
             // then
             assertEquals("<p>Do you think this test will pass?</p>", postedPoll.content)
-            assertEquals(Visibility.PUBLIC.value, postedPoll.visibility)
+            assertEquals(Visibility.PUBLIC, postedPoll.visibility)
             assertNull(postedPoll.inReplyToId)
             assertEquals(0, postedPoll.mediaAttachments.size)
             assertFalse(postedPoll.isSensitive)
@@ -181,7 +181,7 @@ class V410StatusMethodsIntegrationTest {
 
             // then
             assertEquals("<p>Wird dieser Test erfolgreich sein?</p>", postedPoll.content)
-            assertEquals(Visibility.PRIVATE.value, postedPoll.visibility)
+            assertEquals(Visibility.PRIVATE, postedPoll.visibility)
             assertEquals(statusId, postedPoll.inReplyToId)
             assertEquals(0, postedPoll.mediaAttachments.size)
             assertTrue(postedPoll.isSensitive)
@@ -207,7 +207,7 @@ class V410StatusMethodsIntegrationTest {
 
             // then
             assertEquals("This status is scheduled for $inSixMinutes", scheduledStatus.params.text)
-            assertEquals(Visibility.PUBLIC.value, scheduledStatus.params.visibility)
+            assertEquals(Visibility.PUBLIC, scheduledStatus.params.visibility)
             assertNull(scheduledStatus.params.inReplyToId)
             assertEquals(0, scheduledStatus.mediaAttachments.size)
             assertFalse(scheduledStatus.params.sensitive!!)
@@ -238,7 +238,7 @@ class V410StatusMethodsIntegrationTest {
 
             // then
             assertEquals("Dieser Status wird um $inSixMinutes gepostet", scheduledStatus.params.text)
-            assertEquals(Visibility.PRIVATE.value, scheduledStatus.params.visibility)
+            assertEquals(Visibility.PRIVATE, scheduledStatus.params.visibility)
             assertEquals(statusId, scheduledStatus.params.inReplyToId)
             assertEquals(2, scheduledStatus.mediaAttachments.size)
             assertTrue(scheduledStatus.params.sensitive!!)
@@ -268,7 +268,7 @@ class V410StatusMethodsIntegrationTest {
 
             // then
             assertEquals("Will this poll be posted at $inSixMinutes?", scheduledPoll.params.text)
-            assertEquals(Visibility.PUBLIC.value, scheduledPoll.params.visibility)
+            assertEquals(Visibility.PUBLIC, scheduledPoll.params.visibility)
             assertNull(scheduledPoll.params.inReplyToId)
             assertEquals(0, scheduledPoll.mediaAttachments.size)
             assertFalse(scheduledPoll.params.sensitive!!)
@@ -305,7 +305,7 @@ class V410StatusMethodsIntegrationTest {
             assertEquals(inSixMinutes, scheduledPoll.scheduledAt)
             assertIterableEquals(listOf("Yes", "No"), scheduledPoll.params.poll!!.options)
             assertEquals("300", scheduledPoll.params.poll!!.expiresIn)
-            assertEquals(Visibility.PRIVATE.value, scheduledPoll.params.visibility)
+            assertEquals(Visibility.PRIVATE, scheduledPoll.params.visibility)
             assertEquals(true, scheduledPoll.params.poll!!.multiple)
             assertEquals(statusId, scheduledPoll.params.inReplyToId)
             assertTrue(scheduledPoll.params.sensitive!!)
@@ -330,7 +330,7 @@ class V410StatusMethodsIntegrationTest {
 
             // then
             assertEquals("<p>This post will be reblogged soon</p>", rebloggedStatus.reblog!!.content)
-            assertEquals(Visibility.PUBLIC.value, rebloggedStatus.visibility)
+            assertEquals(Visibility.PUBLIC, rebloggedStatus.visibility)
             assertNull(rebloggedStatus.inReplyToId)
             assertEquals(0, rebloggedStatus.mediaAttachments.size)
             assertFalse(rebloggedStatus.isSensitive)
@@ -353,7 +353,7 @@ class V410StatusMethodsIntegrationTest {
 
             // then
             assertEquals("<p>This post will be reblogged soon (all params set)</p>", rebloggedStatus.reblog!!.content)
-            assertEquals(Visibility.PRIVATE.value, rebloggedStatus.visibility)
+            assertEquals(Visibility.PRIVATE, rebloggedStatus.visibility)
             assertNull(rebloggedStatus.inReplyToId)
             assertEquals(0, rebloggedStatus.mediaAttachments.size)
             assertFalse(rebloggedStatus.isSensitive)

@@ -75,7 +75,7 @@ data class ScheduledStatus(
          * The visibility that the status will have once it is posted.
          */
         @SerialName("visibility")
-        val visibility: String = Visibility.PUBLIC.value,
+        val visibility: Visibility = Visibility.PUBLIC,
 
         /**
          * ID of the Status that will be replied to.

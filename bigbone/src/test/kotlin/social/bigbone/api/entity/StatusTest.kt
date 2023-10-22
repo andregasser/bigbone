@@ -13,7 +13,7 @@ class StatusTest {
         val json = AssetsUtil.readFromAssets("status.json")
         val status: Status = JSON_SERIALIZER.decodeFromString(json)
         status.id shouldBeEqualTo "11111"
-        status.visibility shouldBeEqualTo Visibility.PUBLIC.value
+        status.visibility shouldBeEqualTo Visibility.PUBLIC
         status.content shouldBeEqualTo "Test Status"
         val account = status.account
         requireNotNull(account)
@@ -23,9 +23,9 @@ class StatusTest {
 
     @Test
     fun constructor() {
-        val status = Status(id = "123", visibility = Visibility.PRIVATE.value)
+        val status = Status(id = "123", visibility = Visibility.PRIVATE)
         status.id shouldBeEqualTo "123"
-        status.visibility shouldBeEqualTo Visibility.PRIVATE.value
+        status.visibility shouldBeEqualTo Visibility.PRIVATE
         status.content shouldBeEqualTo ""
     }
 }

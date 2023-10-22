@@ -45,7 +45,7 @@ data class Status(
      * @see Visibility
      */
     @SerialName("visibility")
-    val visibility: String = Visibility.PUBLIC.value,
+    val visibility: Visibility = Visibility.PUBLIC,
 
     /**
      * Is this status marked as sensitive content?
