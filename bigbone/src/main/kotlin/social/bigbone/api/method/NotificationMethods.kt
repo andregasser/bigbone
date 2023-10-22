@@ -8,7 +8,7 @@ import social.bigbone.api.entity.Notification
 import social.bigbone.api.exception.BigBoneRequestException
 
 /**
- * Allows access to API methods with endpoints having an "api/vX/notifications" or "api/vX/notification" prefix.
+ * Allows access to API methods with endpoints having an "api/vX/notifications" prefix.
  * @see <a href="https://docs.joinmastodon.org/methods/notifications/">Mastodon notifications API methods</a>
  */
 class NotificationMethods(private val client: MastodonClient) {
