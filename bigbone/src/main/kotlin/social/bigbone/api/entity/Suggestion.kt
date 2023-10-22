@@ -15,7 +15,7 @@ data class Suggestion(
      * The reason this account is being suggested.
      */
     @SerialName("source")
-    val source: String = SourceSuggestion.STAFF.value,
+    val source: SourceSuggestion = SourceSuggestion.STAFF,
 
     /**
      * The account being recommended to follow.
@@ -27,20 +27,24 @@ data class Suggestion(
     /**
      * Represents a suggested account to follow and an associated reason for the suggestion.
      */
-    enum class SourceSuggestion(val value: String) {
+    @Serializable
+    enum class SourceSuggestion {
         /**
          * This account was manually recommended by your administration team.
          */
-        STAFF("staff"),
+        @SerialName("staff")
+        STAFF,
 
         /**
          * You have interacted with this account previously.
          */
-        PAST_INTERACTIONS("past_interactions"),
+        @SerialName("past_interactions")
+        PAST_INTERACTIONS,
 
         /**
          * This account has many reblogs, favourites, and active local followers within the last 30 days.
          */
-        GLOBAL("global")
+        @SerialName("global")
+        GLOBAL
     }
 }
