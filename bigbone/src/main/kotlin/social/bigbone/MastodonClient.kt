@@ -16,6 +16,7 @@ import social.bigbone.api.method.AppMethods
 import social.bigbone.api.method.BlockMethods
 import social.bigbone.api.method.BookmarkMethods
 import social.bigbone.api.method.ConversationMethods
+import social.bigbone.api.method.CustomEmojisMethods
 import social.bigbone.api.method.DirectoryMethods
 import social.bigbone.api.method.DomainBlocksMethods
 import social.bigbone.api.method.EndorsementMethods
@@ -97,6 +98,13 @@ private constructor(
     @Suppress("unused") // public API
     @get:JvmName("conversations")
     val conversations: ConversationMethods by lazy { ConversationMethods(this) }
+
+    /**
+     * Access API methods under "api/vX/custom_emojis" endpoint.
+     */
+    @Suppress("unused") // public API
+    @get:JvmName("customEmojis")
+    val customEmojis: CustomEmojisMethods by lazy { CustomEmojisMethods(this) }
 
     /**
      * Access API methods under "api/vX/directory" endpoint.
