@@ -13,6 +13,8 @@ import social.bigbone.api.exception.BigBoneRequestException
  */
 class NotificationMethods(private val client: MastodonClient) {
 
+    private val notificationsEndpoint = "/api/v1/notifications"
+
     /**
      * Notifications concerning the user.
      * @param excludeTypes Types to exclude from the results. See Mastodon API documentation for details.
@@ -20,9 +22,12 @@ class NotificationMethods(private val client: MastodonClient) {
      * @see <a href="https://docs.joinmastodon.org/methods/notifications/#get">Mastodon API documentation: methods/notifications/#get</a>
      */
     @JvmOverloads
-    fun getNotifications(excludeTypes: List<Notification.Type>? = null, range: Range = Range()): MastodonRequest<Pageable<Notification>> {
+    fun getNotifications(
+        excludeTypes: List<Notification.Type>? = null,
+        range: Range = Range()
+    ): MastodonRequest<Pageable<Notification>> {
         return client.getPageableMastodonRequest(
-            endpoint = "api/v1/notifications",
+            endpoint = notificationsEndpoint,
             method = MastodonClient.Method.GET,
             parameters = range.toParameters().apply {
                 excludeTypes?.let {
@@ -39,7 +44,7 @@ class NotificationMethods(private val client: MastodonClient) {
      */
     fun getNotification(id: String): MastodonRequest<Notification> {
         return client.getMastodonRequest(
-            endpoint = "api/v1/notification/$id", // singular "notification" is correct here
+            endpoint = "$notificationsEndpoint/$id", // singular "notification" is correct here
             method = MastodonClient.Method.GET
         )
     }
@@ -51,7 +56,7 @@ class NotificationMethods(private val client: MastodonClient) {
     @Throws(BigBoneRequestException::class)
     fun clearNotifications() {
         client.performAction(
-            endpoint = "api/v1/notifications/clear",
+            endpoint = "$notificationsEndpoint/clear",
             method = MastodonClient.Method.POST
         )
     }
