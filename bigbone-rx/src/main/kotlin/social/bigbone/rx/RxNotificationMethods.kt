@@ -18,16 +18,22 @@ class RxNotificationMethods(client: MastodonClient) {
     private val notificationMethods = NotificationMethods(client)
 
     @JvmOverloads
-    fun getNotifications(
+    fun getAllNotifications(
         excludeTypes: List<Notification.Type>? = null,
         range: Range = Range()
     ): Single<Pageable<Notification>> = Single.fromCallable {
-        notificationMethods.getNotifications(excludeTypes, range).execute()
+        notificationMethods.getAllNotifications(excludeTypes, range).execute()
     }
 
     fun getNotification(id: String): Single<Notification> = Single.fromCallable {
         notificationMethods.getNotification(id).execute()
     }
 
-    fun clearNotifications(): Completable = Completable.fromAction { notificationMethods.clearNotifications() }
+    fun dismissAllNotifications(): Completable = Completable.fromAction {
+        notificationMethods.dismissAllNotifications()
+    }
+
+    fun dismissNotification(notificationId: String): Completable = Completable.fromAction {
+        notificationMethods.dismissNotification(notificationId)
+    }
 }

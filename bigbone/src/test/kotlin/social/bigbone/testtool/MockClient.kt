@@ -58,6 +58,7 @@ object MockClient {
         every { clientMock.post(any<String>(), any<Parameters>(), any<Boolean>()) } returns response
         every { clientMock.postRequestBody(any<String>(), any<RequestBody>()) } returns response
         every { clientMock.put(any<String>(), any<Parameters>()) } returns response
+        every { clientMock.performAction(any<String>(), any<MastodonClient.Method>(), any<Parameters>()) } returns Unit
         return clientMock
     }
 

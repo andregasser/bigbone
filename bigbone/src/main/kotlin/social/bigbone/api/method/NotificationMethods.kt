@@ -8,10 +8,12 @@ import social.bigbone.api.entity.Notification
 import social.bigbone.api.exception.BigBoneRequestException
 
 /**
- * Allows access to API methods with endpoints having an "api/vX/notifications" or "api/vX/notification" prefix.
+ * Allows access to API methods with endpoints having an "api/vX/notifications" prefix.
  * @see <a href="https://docs.joinmastodon.org/methods/notifications/">Mastodon notifications API methods</a>
  */
 class NotificationMethods(private val client: MastodonClient) {
+
+    private val notificationsEndpoint = "/api/v1/notifications"
 
     /**
      * Notifications concerning the user.
@@ -20,9 +22,12 @@ class NotificationMethods(private val client: MastodonClient) {
      * @see <a href="https://docs.joinmastodon.org/methods/notifications/#get">Mastodon API documentation: methods/notifications/#get</a>
      */
     @JvmOverloads
-    fun getNotifications(excludeTypes: List<Notification.Type>? = null, range: Range = Range()): MastodonRequest<Pageable<Notification>> {
+    fun getAllNotifications(
+        excludeTypes: List<Notification.Type>? = null,
+        range: Range = Range()
+    ): MastodonRequest<Pageable<Notification>> {
         return client.getPageableMastodonRequest(
-            endpoint = "api/v1/notifications",
+            endpoint = notificationsEndpoint,
             method = MastodonClient.Method.GET,
             parameters = range.toParameters().apply {
                 excludeTypes?.let {
@@ -39,7 +44,7 @@ class NotificationMethods(private val client: MastodonClient) {
      */
     fun getNotification(id: String): MastodonRequest<Notification> {
         return client.getMastodonRequest(
-            endpoint = "api/v1/notification/$id", // singular "notification" is correct here
+            endpoint = "$notificationsEndpoint/$id",
             method = MastodonClient.Method.GET
         )
     }
@@ -49,9 +54,22 @@ class NotificationMethods(private val client: MastodonClient) {
      * @see <a href="https://docs.joinmastodon.org/methods/notifications/#clear">Mastodon API documentation: methods/notifications/#clear</a>
      */
     @Throws(BigBoneRequestException::class)
-    fun clearNotifications() {
+    fun dismissAllNotifications() {
         client.performAction(
-            endpoint = "api/v1/notifications/clear",
+            endpoint = "$notificationsEndpoint/clear",
+            method = MastodonClient.Method.POST
+        )
+    }
+
+    /**
+     * Dismiss a single notification from the server.
+     * @param notificationId The ID of the Notification in the database to be deleted.
+     * @see <a href="https://docs.joinmastodon.org/methods/notifications/#dismiss">Mastodon API documentation: methods/notifications/#dismiss</a>
+     */
+    @Throws(BigBoneRequestException::class)
+    fun dismissNotification(notificationId: String) {
+        client.performAction(
+            endpoint = "$notificationsEndpoint/$notificationId/dismiss",
             method = MastodonClient.Method.POST
         )
     }
