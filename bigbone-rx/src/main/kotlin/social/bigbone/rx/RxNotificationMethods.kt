@@ -52,4 +52,8 @@ class RxNotificationMethods(client: MastodonClient) {
             }
         }
     }
+
+    fun dismissNotification(notificationId: String): Completable = Completable.fromAction {
+        notificationMethods.dismissNotification(notificationId)
+    }
 }

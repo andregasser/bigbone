@@ -60,4 +60,17 @@ class NotificationMethods(private val client: MastodonClient) {
             method = MastodonClient.Method.POST
         )
     }
+
+    /**
+     * Dismiss a single notification from the server.
+     * @param notificationId The ID of the Notification in the database to be deleted.
+     * @see <a href="https://docs.joinmastodon.org/methods/notifications/#dismiss">Mastodon API documentation: methods/notifications/#dismiss</a>
+     */
+    @Throws(BigBoneRequestException::class)
+    fun dismissNotification(notificationId: String) {
+        client.performAction(
+            endpoint = "$notificationsEndpoint/$notificationId/dismiss",
+            method = MastodonClient.Method.POST
+        )
+    }
 }
