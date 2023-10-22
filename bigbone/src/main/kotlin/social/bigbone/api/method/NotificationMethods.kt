@@ -22,7 +22,7 @@ class NotificationMethods(private val client: MastodonClient) {
      * @see <a href="https://docs.joinmastodon.org/methods/notifications/#get">Mastodon API documentation: methods/notifications/#get</a>
      */
     @JvmOverloads
-    fun getNotifications(
+    fun getAllNotifications(
         excludeTypes: List<Notification.Type>? = null,
         range: Range = Range()
     ): MastodonRequest<Pageable<Notification>> {
@@ -54,7 +54,7 @@ class NotificationMethods(private val client: MastodonClient) {
      * @see <a href="https://docs.joinmastodon.org/methods/notifications/#clear">Mastodon API documentation: methods/notifications/#clear</a>
      */
     @Throws(BigBoneRequestException::class)
-    fun clearNotifications() {
+    fun dismissAllNotifications() {
         client.performAction(
             endpoint = "$notificationsEndpoint/clear",
             method = MastodonClient.Method.POST

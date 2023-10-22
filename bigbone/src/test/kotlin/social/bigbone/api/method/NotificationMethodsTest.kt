@@ -12,7 +12,7 @@ class NotificationMethodsTest {
     fun getFavoriteNotification() {
         val client = MockClient.mock("notifications.json")
         val notificationMethods = NotificationMethods(client)
-        val pageable = notificationMethods.getNotifications().execute()
+        val pageable = notificationMethods.getAllNotifications().execute()
         val favoriteNotification = pageable.part.first()
         favoriteNotification.type shouldBeEqualTo "favourite"
         favoriteNotification.account shouldNotBe null
@@ -23,7 +23,7 @@ class NotificationMethodsTest {
     fun getReportNotification() {
         val client = MockClient.mock("notifications.json")
         val notificationMethods = NotificationMethods(client)
-        val pageable = notificationMethods.getNotifications().execute()
+        val pageable = notificationMethods.getAllNotifications().execute()
 
         val reportNotification = pageable.part[1]
         reportNotification.type shouldBeEqualTo "admin.report"
@@ -37,7 +37,7 @@ class NotificationMethodsTest {
         Assertions.assertThrows(BigBoneRequestException::class.java) {
             val client = MockClient.ioException()
             val notificationMethods = NotificationMethods(client)
-            notificationMethods.getNotifications().execute()
+            notificationMethods.getAllNotifications().execute()
         }
     }
 
