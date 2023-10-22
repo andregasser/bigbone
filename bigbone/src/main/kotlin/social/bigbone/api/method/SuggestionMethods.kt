@@ -20,11 +20,14 @@ class SuggestionMethods(private val client: MastodonClient) {
      * @see <a href="https://docs.joinmastodon.org/methods/suggestions/#v2">Mastodon API documentation: methods/suggestions/#v2</a>
      */
     fun getSuggestions(limit: Int? = null): MastodonRequest<List<Suggestion>> {
+        if (limit != null && (limit <= 0 || limit > QUERY_RESULT_LIMIT)) {
+            throw IllegalArgumentException("Limit param must positive and not be higher than $QUERY_RESULT_LIMIT but was $limit")
+        }
         return client.getMastodonRequestForList(
             endpoint = suggestionsEndpointV2,
             method = MastodonClient.Method.GET,
             parameters = Parameters().apply {
-                append("limit", limit?.coerceIn(1, 80) ?: 40)
+                append("limit", limit ?: 40)
             }
         )
     }
@@ -39,5 +42,9 @@ class SuggestionMethods(private val client: MastodonClient) {
             endpoint = "$suggestionsEndpointV1/$accountId",
             method = MastodonClient.Method.DELETE
         )
+    }
+
+    companion object {
+        private const val QUERY_RESULT_LIMIT = 80
     }
 }

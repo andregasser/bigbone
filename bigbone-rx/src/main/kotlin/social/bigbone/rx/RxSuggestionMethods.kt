@@ -16,6 +16,7 @@ class RxSuggestionMethods(client: MastodonClient) {
 
     private val suggestionMethods = SuggestionMethods(client)
 
+    @JvmOverloads
     fun getSuggestions(limit: Int? = null): Single<List<Suggestion>> {
         return Single.create {
             try {
