@@ -5,10 +5,12 @@ import io.mockk.mockk
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.Protocol
 import okhttp3.Request
+import okhttp3.RequestBody
 import okhttp3.Response
 import okhttp3.ResponseBody
 import okhttp3.ResponseBody.Companion.toResponseBody
 import social.bigbone.MastodonClient
+import social.bigbone.Parameters
 import social.bigbone.api.exception.BigBoneRequestException
 import java.net.SocketTimeoutException
 
@@ -50,14 +52,12 @@ object MockClient {
             }
             .build()
 
-        every { clientMock.delete(ofType<String>(), any()) } returns response
-        every { clientMock.get(ofType<String>(), isNull(inverse = false)) } returns response
-        every { clientMock.get(ofType<String>(), any()) } returns response
-        every { clientMock.patch(ofType<String>(), any()) } returns response
-        every { clientMock.post(ofType<String>(), any()) } returns response
-        every { clientMock.post(ofType<String>(), any(), any()) } returns response
-        every { clientMock.postRequestBody(ofType<String>(), any()) } returns response
-        every { clientMock.put(ofType<String>(), any()) } returns response
+        every { clientMock.delete(any<String>(), any<Parameters>()) } returns response
+        every { clientMock.get(any<String>(), any<Parameters>()) } returns response
+        every { clientMock.patch(any<String>(), any<Parameters>()) } returns response
+        every { clientMock.post(any<String>(), any<Parameters>(), any<Boolean>()) } returns response
+        every { clientMock.postRequestBody(any<String>(), any<RequestBody>()) } returns response
+        every { clientMock.put(any<String>(), any<Parameters>()) } returns response
         return clientMock
     }
 
@@ -75,15 +75,19 @@ object MockClient {
             .body(responseBodyMock)
             .build()
 
-        every { clientMock.delete(ofType<String>(), any()) } returns response
-        every { clientMock.get(ofType<String>(), isNull(inverse = false)) } returns response
-        every { clientMock.get(ofType<String>(), any()) } returns response
-        every { clientMock.patch(ofType<String>(), any()) } returns response
-        every { clientMock.post(ofType<String>(), any()) } returns response
-        every { clientMock.post(ofType<String>(), any(), any()) } returns response
-        every { clientMock.postRequestBody(ofType<String>(), any()) } returns response
-        every { clientMock.put(ofType<String>(), any()) } returns response
-        every { clientMock.performAction(ofType<String>(), any()) } throws BigBoneRequestException("mock")
+        every { clientMock.delete(any<String>(), any<Parameters>()) } returns response
+        every { clientMock.get(any<String>(), any<Parameters>()) } returns response
+        every { clientMock.patch(any<String>(), any<Parameters>()) } returns response
+        every { clientMock.post(any<String>(), any<Parameters>(), any<Boolean>()) } returns response
+        every { clientMock.postRequestBody(any<String>(), any<RequestBody>()) } returns response
+        every { clientMock.put(any<String>(), any<Parameters>()) } returns response
+        every {
+            clientMock.performAction(
+                any<String>(),
+                any<MastodonClient.Method>(),
+                any<Parameters>()
+            )
+        } throws BigBoneRequestException("mock")
         return clientMock
     }
 
@@ -106,15 +110,19 @@ object MockClient {
             )
             .build()
 
-        every { clientMock.delete(ofType<String>(), any()) } returns response
-        every { clientMock.get(ofType<String>(), isNull(inverse = false)) } returns response
-        every { clientMock.get(ofType<String>(), any()) } returns response
-        every { clientMock.patch(ofType<String>(), any()) } returns response
-        every { clientMock.post(ofType<String>(), any()) } returns response
-        every { clientMock.post(ofType<String>(), any(), any()) } returns response
-        every { clientMock.postRequestBody(ofType<String>(), any()) } returns response
-        every { clientMock.put(ofType<String>(), any()) } returns response
-        every { clientMock.performAction(ofType<String>(), any()) } throws BigBoneRequestException("mock")
+        every { clientMock.delete(any<String>(), any<Parameters>()) } returns response
+        every { clientMock.get(any<String>(), any<Parameters>()) } returns response
+        every { clientMock.patch(any<String>(), any<Parameters>()) } returns response
+        every { clientMock.post(any<String>(), any<Parameters>(), any<Boolean>()) } returns response
+        every { clientMock.postRequestBody(any<String>(), any<RequestBody>()) } returns response
+        every { clientMock.put(any<String>(), any<Parameters>()) } returns response
+        every {
+            clientMock.performAction(
+                any<String>(),
+                any<MastodonClient.Method>(),
+                any<Parameters>()
+            )
+        } throws BigBoneRequestException(response)
         return clientMock
     }
 }

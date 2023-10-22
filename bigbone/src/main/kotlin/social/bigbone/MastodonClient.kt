@@ -17,6 +17,7 @@ import social.bigbone.api.method.BlockMethods
 import social.bigbone.api.method.BookmarkMethods
 import social.bigbone.api.method.ConversationMethods
 import social.bigbone.api.method.DirectoryMethods
+import social.bigbone.api.method.DomainBlocksMethods
 import social.bigbone.api.method.EndorsementMethods
 import social.bigbone.api.method.FavouriteMethods
 import social.bigbone.api.method.FeaturedTagsMethods
@@ -103,6 +104,13 @@ private constructor(
     @Suppress("unused") // public API
     @get:JvmName("directories")
     val directories: DirectoryMethods by lazy { DirectoryMethods(this) }
+
+    /**
+     * Access API methods under "api/vX/domain_blocks" endpoint.
+     */
+    @Suppress("unused") // public API
+    @get:JvmName("domainBlocks")
+    val domainBlocks: DomainBlocksMethods by lazy { DomainBlocksMethods(this) }
 
     /**
      * Access API methods under "api/vX/endorsements" endpoint.
