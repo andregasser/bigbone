@@ -21,7 +21,7 @@ data class Suggestion(
      * The account being recommended to follow.
      */
     @SerialName("account")
-    val account: Account,
+    val account: Account
 ) {
 
     /**
@@ -32,10 +32,12 @@ data class Suggestion(
          * This account was manually recommended by your administration team.
          */
         STAFF("staff"),
+
         /**
          * You have interacted with this account previously.
          */
         PAST_INTERACTIONS("past_interactions"),
+
         /**
          * This account has many reblogs, favourites, and active local followers within the last 30 days.
          */

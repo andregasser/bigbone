@@ -34,6 +34,7 @@ import social.bigbone.api.method.ReportMethods
 import social.bigbone.api.method.SearchMethods
 import social.bigbone.api.method.StatusMethods
 import social.bigbone.api.method.StreamingMethods
+import social.bigbone.api.method.SuggestionMethods
 import social.bigbone.api.method.TagMethods
 import social.bigbone.api.method.TimelineMethods
 import social.bigbone.extension.emptyRequestBody
