@@ -1,11 +1,22 @@
 package social.bigbone.api.entity.data
 
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
 /**
  * Specifies the visibility of the status post.
  */
-enum class Visibility(val value: String) {
-    PUBLIC("public"),
-    UNLISTED("unlisted"),
-    PRIVATE("private"),
-    DIRECT("direct")
+@Serializable
+enum class Visibility {
+    @SerialName("public")
+    PUBLIC,
+
+    @SerialName("unlisted")
+    UNLISTED,
+
+    @SerialName("private")
+    PRIVATE,
+
+    @SerialName("direct")
+    DIRECT
 }

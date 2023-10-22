@@ -43,9 +43,15 @@ data class Preferences(
     /**
      * Specifies whether media attachments should be automatically displayed or blurred/hidden.
      */
-    enum class Media(val value: String) {
-        DEFAULT("default"),
-        SHOW_ALL("show_all"),
-        HIDE_ALL("hide_all")
+    @Serializable
+    enum class Media {
+        @SerialName("default")
+        DEFAULT,
+
+        @SerialName("show_all")
+        SHOW_ALL,
+
+        @SerialName("hide_all")
+        HIDE_ALL
     }
 }
