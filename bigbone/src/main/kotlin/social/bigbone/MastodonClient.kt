@@ -31,6 +31,7 @@ import social.bigbone.api.method.MuteMethods
 import social.bigbone.api.method.NotificationMethods
 import social.bigbone.api.method.OAuthMethods
 import social.bigbone.api.method.PollMethods
+import social.bigbone.api.method.PreferenceMethods
 import social.bigbone.api.method.ReportMethods
 import social.bigbone.api.method.SearchMethods
 import social.bigbone.api.method.StatusMethods

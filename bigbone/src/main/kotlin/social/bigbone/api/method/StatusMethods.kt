@@ -305,7 +305,8 @@ class StatusMethods(private val client: MastodonClient) {
     fun reblogStatus(statusId: String, visibility: Visibility = Visibility.PUBLIC): MastodonRequest<Status> {
         if (visibility != Visibility.PUBLIC &&
             visibility != Visibility.UNLISTED &&
-            visibility != Visibility.PRIVATE) {
+            visibility != Visibility.PRIVATE
+        ) {
             throw BigBoneRequestException("Visibility must be one of: public, unlisted, private when reblogging.")
         }
         return client.getMastodonRequest(

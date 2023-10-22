@@ -18,8 +18,8 @@ class PreferenceMethodsTest {
         val preference = preferenceMethods.getPreferences().execute()
         preference.defaultLanguage shouldBeEqualTo "en"
         preference.defaultSensitive shouldBeEqualTo false
-        preference.defaultVisibility shouldBeEqualTo Visibility.PUBLIC.value
-        preference.expandMedia shouldBeEqualTo Preferences.Media.DEFAULT.value
+        preference.defaultVisibility shouldBeEqualTo Visibility.PUBLIC
+        preference.expandMedia shouldBeEqualTo Preferences.Media.DEFAULT
         preference.expandSpoilers shouldBeEqualTo false
     }
 

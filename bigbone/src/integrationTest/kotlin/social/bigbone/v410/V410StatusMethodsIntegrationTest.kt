@@ -20,7 +20,6 @@ import social.bigbone.TestConstants.Companion.USER2_EMAIL
 import social.bigbone.TestConstants.Companion.USER2_PASSWORD
 import social.bigbone.TestHelpers
 import social.bigbone.TestHelpers.toISO8601DateTime
-import social.bigbone.api.entity.Status
 import social.bigbone.api.entity.Token
 import social.bigbone.api.entity.data.PollData
 import social.bigbone.api.entity.data.Visibility

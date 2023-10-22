@@ -14,7 +14,7 @@ data class Preferences(
      * Default visibility for new posts.
      */
     @SerialName("posting:default:visibility")
-    val defaultVisibility: String = Visibility.PUBLIC.value,
+    val defaultVisibility: Visibility = Visibility.PUBLIC,
 
     /**
      * Default sensitivity flag for new posts.
@@ -32,7 +32,7 @@ data class Preferences(
      * Whether media attachments should be automatically displayed or blurred/hidden.
      */
     @SerialName("reading:expand:media")
-    val expandMedia: String = Media.DEFAULT.value,
+    val expandMedia: Media = Media.DEFAULT,
 
     /**
      * Whether CWs should be expanded by default.
@@ -41,7 +41,7 @@ data class Preferences(
     val expandSpoilers: Boolean = false
 ) {
     /**
-     * Specifies the notification type.
+     * Specifies whether media attachments should be automatically displayed or blurred/hidden.
      */
     enum class Media(val value: String) {
         DEFAULT("default"),
