@@ -1,10 +1,10 @@
 package social.bigbone.rx
 
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import social.bigbone.MastodonClient
 import social.bigbone.api.entity.Suggestion
 import social.bigbone.api.method.SuggestionMethods
-import io.reactivex.rxjava3.core.Completable
 import social.bigbone.rx.extensions.onErrorIfNotDisposed
 
 /**
