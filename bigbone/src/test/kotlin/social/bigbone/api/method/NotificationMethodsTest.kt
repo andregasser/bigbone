@@ -6,9 +6,10 @@ import org.amshove.kluent.invoking
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldNotBe
 import org.amshove.kluent.shouldNotThrow
-import org.junit.jupiter.api.Assertions
+import org.amshove.kluent.shouldThrow
 import org.junit.jupiter.api.Test
 import social.bigbone.MastodonClient
+import social.bigbone.Parameters
 import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.testtool.MockClient
 
@@ -22,6 +23,13 @@ class NotificationMethodsTest {
         favoriteNotification.type shouldBeEqualTo "favourite"
         favoriteNotification.account shouldNotBe null
         favoriteNotification.status shouldNotBe null
+
+        verify {
+            client.get(
+                path = "/api/v1/notifications",
+                query = any<Parameters>()
+            )
+        }
     }
 
     @Test
@@ -35,23 +43,39 @@ class NotificationMethodsTest {
         reportNotification.report shouldNotBe null
         reportNotification.report?.id shouldBeEqualTo "48914"
         reportNotification.report?.actionTaken shouldBeEqualTo false
-    }
 
-    @Test
-    fun getNotificationsWithException() {
-        Assertions.assertThrows(BigBoneRequestException::class.java) {
-            val client = MockClient.ioException()
-            val notificationMethods = NotificationMethods(client)
-            notificationMethods.getAllNotifications().execute()
+        verify {
+            client.get(
+                path = "/api/v1/notifications",
+                query = any<Parameters>()
+            )
         }
     }
 
     @Test
+    fun getNotificationsWithException() {
+        val client = MockClient.ioException()
+        val notificationMethods = NotificationMethods(client)
+
+        invoking {
+            notificationMethods.getAllNotifications().execute()
+        } shouldThrow BigBoneRequestException::class
+    }
+
+    @Test
     fun getNotificationWithException() {
-        Assertions.assertThrows(BigBoneRequestException::class.java) {
-            val client = MockClient.ioException()
-            val notificationMethods = NotificationMethods(client)
+        val client = MockClient.ioException()
+        val notificationMethods = NotificationMethods(client)
+
+        invoking {
             notificationMethods.getNotification("1").execute()
+        } shouldThrow BigBoneRequestException::class
+
+        verify {
+            client.get(
+                path = "/api/v1/notifications/1",
+                query = any<Parameters>()
+            )
         }
     }
 

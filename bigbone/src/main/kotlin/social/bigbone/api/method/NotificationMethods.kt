@@ -44,7 +44,7 @@ class NotificationMethods(private val client: MastodonClient) {
      */
     fun getNotification(id: String): MastodonRequest<Notification> {
         return client.getMastodonRequest(
-            endpoint = "$notificationsEndpoint/$id", // singular "notification" is correct here
+            endpoint = "$notificationsEndpoint/$id",
             method = MastodonClient.Method.GET
         )
     }
