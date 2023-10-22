@@ -34,7 +34,7 @@ data class Instance(
     val sourceUrl: String = "",
 
     /**
-     * A short, plain-text description defined by the admin
+     * A short, plain-text description defined by the admin.
      */
     @SerialName("description")
     val description: String = "",
@@ -90,6 +90,9 @@ data class Instance(
         @SerialName("users")
         val users: Users = Users()
     ) {
+        /**
+         * Usage data related to users on this instance.
+         */
         @Serializable
         data class Users(
             /**
@@ -112,7 +115,8 @@ data class Instance(
         val url: String = "",
 
         /**
-         * A hash computed by <a href="https://github.com/woltapp/blurhash">the BlurHash algorithm</a>, for generating colorful preview thumbnails when media has not been downloaded yet.
+         * A hash computed by <a href="https://github.com/woltapp/blurhash">the BlurHash algorithm</a>,
+         * for generating colorful preview thumbnails when media has not been downloaded yet.
          */
         @SerialName("blurhash")
         val blurHash: String? = "",
@@ -121,8 +125,11 @@ data class Instance(
          * Links to scaled resolution images, for high DPI screens.
          */
         @SerialName("versions")
-        val versions: Versions? = null,
+        val versions: Versions? = null
     ) {
+        /**
+         * Links to scaled resolution images, for high DPI screens.
+         */
         @Serializable
         data class Versions(
             /**
@@ -387,5 +394,74 @@ data class InstanceActivity(
      * String (cast from an integer). The number of user registrations since the week began.
      */
     @SerialName("registrations")
-    val registrations: String = "",
+    val registrations: String = ""
+)
+
+/**
+ * Represents a domain that is blocked by the instance.
+ * @see <a href="https://docs.joinmastodon.org/entities/DomainBlock/">entities/DomainBlock</a>
+ */
+@Serializable
+data class DomainBlock(
+    /**
+     * The domain which is blocked. This may be obfuscated or partially censored.
+     */
+    @SerialName("domain")
+    val domain: String = "",
+
+    /**
+     * The SHA256 hash digest of the domain string.
+     */
+    @SerialName("digest")
+    val digest: String = "",
+
+    /**
+     * The level to which the domain is blocked.
+     */
+    @SerialName("severity")
+    val severity: Severity = Severity.SILENCE,
+
+    /**
+     * An optional reason for the domain block.
+     */
+    @SerialName("comment")
+    val comment: String? = null
+) {
+    /**
+     * The level to which the domain is blocked.
+     */
+    @Serializable
+    enum class Severity {
+        /**
+         * Users from this domain will be hidden from timelines, threads, and notifications (unless you follow the user).
+         */
+        @SerialName("silence")
+        SILENCE,
+
+        /**
+         * Incoming messages from this domain will be rejected and dropped entirely.
+         */
+        @SerialName("suspend")
+        SUSPEND
+    }
+}
+
+/**
+ * Represents an extended description for the instance, to be shown on its about page.
+ */
+@Serializable
+data class ExtendedDescription(
+    /**
+     * A timestamp of when the extended description was last updated.
+     * String (ISO 8601 Datetime)
+     */
+    @SerialName("updated_at")
+    val updatedAt: String = "",
+
+    /**
+     * The rendered HTML content of the extended description.
+     * String (HTML)
+     */
+    @SerialName("content")
+    val content: String = ""
 )
