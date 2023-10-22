@@ -6,16 +6,21 @@ import social.bigbone.api.entity.Instance
 
 /**
  * Allows access to API methods with endpoints having an "api/vX/instance" prefix.
+ * Discover information about a Mastodon website.
  * @see <a href="https://docs.joinmastodon.org/methods/instance/">Mastodon instance API methods</a>
  */
 class InstanceMethods(private val client: MastodonClient) {
+
+    private val instanceEndpointV1 = "/api/v1/instance"
+    private val instanceEndpointV2 = "/api/v2/instance"
+
     /**
-     * Retrieve instance details.
-     * @see <a href="https://docs.joinmastodon.org/entities/V1_Instance/">Mastodon API documentation: entities/V1_Instance</a>
+     * Obtain general information about the server.
+     * @see <a href="https://docs.joinmastodon.org/methods/instance/#v2">Mastodon API documentation: methods/instance/#v2</a>
      */
     fun getInstance(): MastodonRequest<Instance> {
         return client.getMastodonRequest(
-            endpoint = "api/v1/instance",
+            endpoint = instanceEndpointV2,
             method = MastodonClient.Method.GET
         )
     }
