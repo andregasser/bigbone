@@ -21,6 +21,23 @@ automatically during the first build.
 
 Please also note that the project requires at least Java 8 in order to build successfully. But we don't think this is really an issue nowadays.
 
+### Project Structure Overview
+
+The project comprises five primary Gradle modules:
+
+- **bigbone:** This module contains the core code for interacting with the Mastodon REST API, including tests.
+- **bigbone-rx:** This module serves as the proxy layer for forwarding requests to the main bigbone Gradle module.
+- **buildSrc:** This section contains Gradle plugin code written in Groovy. Generally, you won't need to make changes here, as it's exclusively used for the build process. However, in specific cases, such as introducing a new dependency, you might need to make adjustments.
+- **sample-java:** This module contains Java sample code that demonstrates the usage of BigBone.
+- **sample-kotlin:** Similar to sample-java, this module provides sample code written in Kotlin.
+
+Additionally, there are other folders within the project, including:
+
+- **config:** This folder houses tooling configurations for code analysis tools like PMD, Checkstyle, and Detekt.
+- **docker:** Here, you can find Docker Compose configurations for setting up a functional Mastodon instance. This instance is intended for running integration tests on a developer's local machine. While it essentially works, it may require further refinement to operate seamlessly.
+- **gradle:** This section contains the Gradle version catalog and wrapper configurations for the build process.
+- **.github:** Within this folder, you'll find GitHub workflow configurations and settings related to Dependabot.
+
 ### Find Something to Work On
 
 Now as everything is set up nicely on your local machine, it is time to find something for you to work on. Here are some ideas for you:
