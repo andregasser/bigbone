@@ -2,9 +2,8 @@ package social.bigbone.sample;
 
 import social.bigbone.MastodonClient;
 import social.bigbone.api.entity.MediaAttachment;
-import social.bigbone.api.entity.Status.Visibility;
+import social.bigbone.api.entity.data.Visibility;
 import social.bigbone.api.exception.BigBoneRequestException;
-
 import java.io.File;
 import java.util.Collections;
 import java.util.List;
@@ -30,7 +29,7 @@ public class PostStatusWithMediaAttached {
         // Post status with media attached
         final String statusText = "Status posting test";
         final List<String> mediaIds = Collections.singletonList(mediaId);
-        final Visibility visibility = Visibility.Private;
+        final Visibility visibility = Visibility.PRIVATE;
         final String inReplyToId = null;
         final boolean sensitive = false;
         final String spoilerText = "A castle";

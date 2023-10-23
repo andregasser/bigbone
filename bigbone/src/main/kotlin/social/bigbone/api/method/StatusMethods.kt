@@ -13,6 +13,7 @@ import social.bigbone.api.entity.StatusEdit
 import social.bigbone.api.entity.StatusSource
 import social.bigbone.api.entity.Translation
 import social.bigbone.api.entity.data.PollData
+import social.bigbone.api.entity.data.Visibility
 import social.bigbone.api.exception.BigBoneRequestException
 
 /**
@@ -117,7 +118,7 @@ class StatusMethods(private val client: MastodonClient) {
     fun postStatus(
         status: String,
         mediaIds: List<String>? = null,
-        visibility: Status.Visibility = Status.Visibility.Public,
+        visibility: Visibility = Visibility.PUBLIC,
         inReplyToId: String? = null,
         sensitive: Boolean = false,
         spoilerText: String? = null,
@@ -129,7 +130,7 @@ class StatusMethods(private val client: MastodonClient) {
             method = MastodonClient.Method.POST,
             parameters = Parameters().apply {
                 append("status", status)
-                append("visibility", visibility.value)
+                append("visibility", visibility.name.lowercase())
                 inReplyToId?.let { append("in_reply_to_id", it) }
                 mediaIds?.let { append("media_ids", it) }
                 append("sensitive", sensitive)
@@ -159,7 +160,7 @@ class StatusMethods(private val client: MastodonClient) {
     fun postPoll(
         status: String,
         pollData: PollData,
-        visibility: Status.Visibility = Status.Visibility.Public,
+        visibility: Visibility = Visibility.PUBLIC,
         inReplyToId: String? = null,
         sensitive: Boolean = false,
         spoilerText: String? = null,
@@ -173,7 +174,7 @@ class StatusMethods(private val client: MastodonClient) {
                 append("status", status)
                 append("poll[options]", pollData.options)
                 append("poll[expires_in]", pollData.expiresIn)
-                append("visibility", visibility.value)
+                append("visibility", visibility.name.lowercase())
                 append("poll[multiple]", pollData.multiple ?: false)
                 append("poll[hide_totals", pollData.hideTotals ?: false)
                 inReplyToId?.let { append("in_reply_to_id", it) }
@@ -207,7 +208,7 @@ class StatusMethods(private val client: MastodonClient) {
         status: String,
         mediaIds: List<String>? = null,
         scheduledAt: String,
-        visibility: Status.Visibility = Status.Visibility.Public,
+        visibility: Visibility = Visibility.PUBLIC,
         inReplyToId: String? = null,
         sensitive: Boolean = false,
         spoilerText: String? = null,
@@ -220,7 +221,7 @@ class StatusMethods(private val client: MastodonClient) {
             parameters = Parameters().apply {
                 append("status", status)
                 append("scheduled_at", scheduledAt)
-                append("visibility", visibility.value)
+                append("visibility", visibility.name.lowercase())
                 inReplyToId?.let { append("in_reply_to_id", it) }
                 mediaIds?.let { append("media_ids", it) }
                 append("sensitive", sensitive)
@@ -252,7 +253,7 @@ class StatusMethods(private val client: MastodonClient) {
         status: String,
         scheduledAt: String,
         pollData: PollData,
-        visibility: Status.Visibility = Status.Visibility.Public,
+        visibility: Visibility = Visibility.PUBLIC,
         inReplyToId: String? = null,
         sensitive: Boolean = false,
         spoilerText: String? = null,
@@ -267,7 +268,7 @@ class StatusMethods(private val client: MastodonClient) {
                 append("scheduled_at", scheduledAt)
                 append("poll[options]", pollData.options)
                 append("poll[expires_in]", pollData.expiresIn)
-                append("visibility", visibility.value)
+                append("visibility", visibility.name.lowercase())
                 append("poll[multiple]", pollData.multiple ?: false)
                 append("poll[hide_totals]", pollData.multiple ?: false)
                 inReplyToId?.let { append("in_reply_to_id", it) }
@@ -301,10 +302,10 @@ class StatusMethods(private val client: MastodonClient) {
      */
     @JvmOverloads
     @Throws(BigBoneRequestException::class)
-    fun reblogStatus(statusId: String, visibility: Status.Visibility = Status.Visibility.Public): MastodonRequest<Status> {
-        if (visibility != Status.Visibility.Public &&
-            visibility != Status.Visibility.Unlisted &&
-            visibility != Status.Visibility.Private
+    fun reblogStatus(statusId: String, visibility: Visibility = Visibility.PUBLIC): MastodonRequest<Status> {
+        if (visibility != Visibility.PUBLIC &&
+            visibility != Visibility.UNLISTED &&
+            visibility != Visibility.PRIVATE
         ) {
             throw BigBoneRequestException("Visibility must be one of: public, unlisted, private when reblogging.")
         }
@@ -312,7 +313,7 @@ class StatusMethods(private val client: MastodonClient) {
             endpoint = "api/v1/statuses/$statusId/reblog",
             method = MastodonClient.Method.POST,
             parameters = Parameters().apply {
-                append("visibility", visibility.value)
+                append("visibility", visibility.name.lowercase())
             }
         )
     }

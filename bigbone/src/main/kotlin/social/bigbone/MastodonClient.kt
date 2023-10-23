@@ -32,6 +32,7 @@ import social.bigbone.api.method.MuteMethods
 import social.bigbone.api.method.NotificationMethods
 import social.bigbone.api.method.OAuthMethods
 import social.bigbone.api.method.PollMethods
+import social.bigbone.api.method.PreferenceMethods
 import social.bigbone.api.method.ReportMethods
 import social.bigbone.api.method.SearchMethods
 import social.bigbone.api.method.StatusMethods
@@ -252,6 +253,14 @@ private constructor(
     @Suppress("unused") // public API
     @get:JvmName("timelines")
     val timelines: TimelineMethods by lazy { TimelineMethods(this) }
+
+    /**
+
+     * Access API methods under "preferences" endpoint.
+     */
+    @Suppress("unused") // public API
+    @get:JvmName("preferences")
+    val preferences: PreferenceMethods by lazy { PreferenceMethods(this) }
 
     /**
      * Access API methods under "api/vX/suggestions" endpoint.
