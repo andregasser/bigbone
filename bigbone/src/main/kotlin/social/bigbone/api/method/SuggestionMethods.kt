@@ -21,7 +21,7 @@ class SuggestionMethods(private val client: MastodonClient) {
      */
     fun getSuggestions(limit: Int? = null): MastodonRequest<List<Suggestion>> {
         if (limit != null && (limit <= 0 || limit > QUERY_RESULT_LIMIT)) {
-            throw IllegalArgumentException("Limit param must positive and not be higher than $QUERY_RESULT_LIMIT but was $limit")
+            throw IllegalArgumentException("Limit param must be greater than zero and not be higher than $QUERY_RESULT_LIMIT but was $limit")
         }
         return client.getMastodonRequestForList(
             endpoint = suggestionsEndpointV2,
