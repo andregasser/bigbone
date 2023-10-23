@@ -36,6 +36,7 @@ import social.bigbone.api.method.ReportMethods
 import social.bigbone.api.method.SearchMethods
 import social.bigbone.api.method.StatusMethods
 import social.bigbone.api.method.StreamingMethods
+import social.bigbone.api.method.SuggestionMethods
 import social.bigbone.api.method.TagMethods
 import social.bigbone.api.method.TimelineMethods
 import social.bigbone.extension.emptyRequestBody
@@ -251,6 +252,13 @@ private constructor(
     @Suppress("unused") // public API
     @get:JvmName("timelines")
     val timelines: TimelineMethods by lazy { TimelineMethods(this) }
+
+    /**
+     * Access API methods under "api/vX/suggestions" endpoint.
+     */
+    @Suppress("unused") // public API
+    @get:JvmName("suggestions")
+    val suggestions: SuggestionMethods by lazy { SuggestionMethods(this) }
 
     /**
      * Specifies the HTTP methods / HTTP verb that can be used by this class.
