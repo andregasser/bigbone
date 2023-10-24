@@ -1,7 +1,7 @@
 package social.bigbone.sample
 
 import social.bigbone.MastodonClient
-import social.bigbone.api.entity.Status
+import social.bigbone.api.entity.data.Visibility
 import java.io.File
 
 object PostStatusWithMediaAttached {
@@ -26,7 +26,7 @@ object PostStatusWithMediaAttached {
         // Post status with media attached
         val statusText = "Status posting test"
         val mediaIds = listOf(mediaId)
-        val visibility = Status.Visibility.Private
+        val visibility = Visibility.PRIVATE
         val inReplyToId: String? = null
         val sensitive = false
         val spoilerText = "A castle"

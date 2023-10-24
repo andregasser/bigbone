@@ -20,9 +20,9 @@ import social.bigbone.TestConstants.Companion.USER2_EMAIL
 import social.bigbone.TestConstants.Companion.USER2_PASSWORD
 import social.bigbone.TestHelpers
 import social.bigbone.TestHelpers.toISO8601DateTime
-import social.bigbone.api.entity.Status
 import social.bigbone.api.entity.Token
 import social.bigbone.api.entity.data.PollData
+import social.bigbone.api.entity.data.Visibility
 import social.bigbone.api.exception.BigBoneRequestException
 import java.time.Instant
 import java.time.ZoneId
@@ -92,7 +92,7 @@ class V410StatusMethodsIntegrationTest {
 
             // then
             assertEquals("<p>Status to be posted</p>", postedStatus.content)
-            assertEquals(Status.Visibility.Public.value, postedStatus.visibility)
+            assertEquals(Visibility.PUBLIC, postedStatus.visibility)
             assertNull(postedStatus.inReplyToId)
             assertEquals(0, postedStatus.mediaAttachments.size)
             assertFalse(postedStatus.isSensitive)
@@ -111,7 +111,7 @@ class V410StatusMethodsIntegrationTest {
             // when
             val postedStatus = user1Client.statuses.postStatus(
                 status = "This is a reply to the previous status",
-                visibility = Status.Visibility.Private,
+                visibility = Visibility.PRIVATE,
                 inReplyToId = statusId,
                 mediaIds = listOf(uploadedMediaId1, uploadedMediaId2),
                 sensitive = true,
@@ -121,7 +121,7 @@ class V410StatusMethodsIntegrationTest {
 
             // then
             assertEquals("<p>This is a reply to the previous status</p>", postedStatus.content)
-            assertEquals(Status.Visibility.Private.value, postedStatus.visibility)
+            assertEquals(Visibility.PRIVATE, postedStatus.visibility)
             assertEquals(statusId, postedStatus.inReplyToId)
             assertEquals(2, postedStatus.mediaAttachments.size)
             assertTrue(postedStatus.isSensitive)
@@ -149,7 +149,7 @@ class V410StatusMethodsIntegrationTest {
 
             // then
             assertEquals("<p>Do you think this test will pass?</p>", postedPoll.content)
-            assertEquals(Status.Visibility.Public.value, postedPoll.visibility)
+            assertEquals(Visibility.PUBLIC, postedPoll.visibility)
             assertNull(postedPoll.inReplyToId)
             assertEquals(0, postedPoll.mediaAttachments.size)
             assertFalse(postedPoll.isSensitive)
@@ -172,7 +172,7 @@ class V410StatusMethodsIntegrationTest {
                     multiple = true,
                     hideTotals = true
                 ),
-                visibility = Status.Visibility.Private,
+                visibility = Visibility.PRIVATE,
                 inReplyToId = statusId,
                 sensitive = true,
                 spoilerText = "Das ist der Spoilertext zur Umfrage",
@@ -181,7 +181,7 @@ class V410StatusMethodsIntegrationTest {
 
             // then
             assertEquals("<p>Wird dieser Test erfolgreich sein?</p>", postedPoll.content)
-            assertEquals(Status.Visibility.Private.value, postedPoll.visibility)
+            assertEquals(Visibility.PRIVATE, postedPoll.visibility)
             assertEquals(statusId, postedPoll.inReplyToId)
             assertEquals(0, postedPoll.mediaAttachments.size)
             assertTrue(postedPoll.isSensitive)
@@ -207,7 +207,7 @@ class V410StatusMethodsIntegrationTest {
 
             // then
             assertEquals("This status is scheduled for $inSixMinutes", scheduledStatus.params.text)
-            assertEquals(Status.Visibility.Public.value, scheduledStatus.params.visibility)
+            assertEquals(Visibility.PUBLIC, scheduledStatus.params.visibility)
             assertNull(scheduledStatus.params.inReplyToId)
             assertEquals(0, scheduledStatus.mediaAttachments.size)
             assertFalse(scheduledStatus.params.sensitive!!)
@@ -228,7 +228,7 @@ class V410StatusMethodsIntegrationTest {
             val scheduledStatus = user1Client.statuses.scheduleStatus(
                 status = "Dieser Status wird um $inSixMinutes gepostet",
                 scheduledAt = inSixMinutes,
-                visibility = Status.Visibility.Private,
+                visibility = Visibility.PRIVATE,
                 inReplyToId = statusId,
                 mediaIds = listOf(uploadedMediaId1, uploadedMediaId2),
                 sensitive = true,
@@ -238,7 +238,7 @@ class V410StatusMethodsIntegrationTest {
 
             // then
             assertEquals("Dieser Status wird um $inSixMinutes gepostet", scheduledStatus.params.text)
-            assertEquals(Status.Visibility.Private.value, scheduledStatus.params.visibility)
+            assertEquals(Visibility.PRIVATE, scheduledStatus.params.visibility)
             assertEquals(statusId, scheduledStatus.params.inReplyToId)
             assertEquals(2, scheduledStatus.mediaAttachments.size)
             assertTrue(scheduledStatus.params.sensitive!!)
@@ -268,7 +268,7 @@ class V410StatusMethodsIntegrationTest {
 
             // then
             assertEquals("Will this poll be posted at $inSixMinutes?", scheduledPoll.params.text)
-            assertEquals(Status.Visibility.Public.value, scheduledPoll.params.visibility)
+            assertEquals(Visibility.PUBLIC, scheduledPoll.params.visibility)
             assertNull(scheduledPoll.params.inReplyToId)
             assertEquals(0, scheduledPoll.mediaAttachments.size)
             assertFalse(scheduledPoll.params.sensitive!!)
@@ -293,7 +293,7 @@ class V410StatusMethodsIntegrationTest {
                     multiple = true,
                     hideTotals = true
                 ),
-                visibility = Status.Visibility.Private,
+                visibility = Visibility.PRIVATE,
                 inReplyToId = statusId,
                 sensitive = true,
                 spoilerText = "Das ist ein Spoilertext",
@@ -305,7 +305,7 @@ class V410StatusMethodsIntegrationTest {
             assertEquals(inSixMinutes, scheduledPoll.scheduledAt)
             assertIterableEquals(listOf("Yes", "No"), scheduledPoll.params.poll!!.options)
             assertEquals("300", scheduledPoll.params.poll!!.expiresIn)
-            assertEquals(Status.Visibility.Private.value, scheduledPoll.params.visibility)
+            assertEquals(Visibility.PRIVATE, scheduledPoll.params.visibility)
             assertEquals(true, scheduledPoll.params.poll!!.multiple)
             assertEquals(statusId, scheduledPoll.params.inReplyToId)
             assertTrue(scheduledPoll.params.sensitive!!)
@@ -330,7 +330,7 @@ class V410StatusMethodsIntegrationTest {
 
             // then
             assertEquals("<p>This post will be reblogged soon</p>", rebloggedStatus.reblog!!.content)
-            assertEquals(Status.Visibility.Public.value, rebloggedStatus.visibility)
+            assertEquals(Visibility.PUBLIC, rebloggedStatus.visibility)
             assertNull(rebloggedStatus.inReplyToId)
             assertEquals(0, rebloggedStatus.mediaAttachments.size)
             assertFalse(rebloggedStatus.isSensitive)
@@ -348,12 +348,12 @@ class V410StatusMethodsIntegrationTest {
             // when
             val rebloggedStatus = user2Client.statuses.reblogStatus(
                 statusId = statusId,
-                visibility = Status.Visibility.Private
+                visibility = Visibility.PRIVATE
             ).execute()
 
             // then
             assertEquals("<p>This post will be reblogged soon (all params set)</p>", rebloggedStatus.reblog!!.content)
-            assertEquals(Status.Visibility.Private.value, rebloggedStatus.visibility)
+            assertEquals(Visibility.PRIVATE, rebloggedStatus.visibility)
             assertNull(rebloggedStatus.inReplyToId)
             assertEquals(0, rebloggedStatus.mediaAttachments.size)
             assertFalse(rebloggedStatus.isSensitive)

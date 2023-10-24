@@ -1,0 +1,18 @@
+[
+  {
+    "source": "past_interactions",
+    "account": {
+      "id": "784058",
+      "username": "katie",
+      "acct": "katie@pleroma.voidlurker.net"
+    }
+  },
+  {
+    "source": "global",
+    "account": {
+      "id": "108194863260762493",
+      "username": "thunderbird",
+      "acct": "thunderbird@mastodon.online"
+    }
+  }
+]
