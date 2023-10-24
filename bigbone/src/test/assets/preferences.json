@@ -1,0 +1,7 @@
+{
+  "posting:default:visibility": "public",
+  "posting:default:sensitive": false,
+  "posting:default:language": "en",
+  "reading:expand:media": "default",
+  "reading:expand:spoilers": false
+}

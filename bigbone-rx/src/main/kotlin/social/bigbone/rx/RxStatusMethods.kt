@@ -12,6 +12,7 @@ import social.bigbone.api.entity.StatusEdit
 import social.bigbone.api.entity.StatusSource
 import social.bigbone.api.entity.Translation
 import social.bigbone.api.entity.data.PollData
+import social.bigbone.api.entity.data.Visibility
 import social.bigbone.api.method.StatusMethods
 
 /**
@@ -84,7 +85,7 @@ class RxStatusMethods(client: MastodonClient) {
     fun postStatus(
         status: String,
         mediaIds: List<String>? = null,
-        visibility: Status.Visibility = Status.Visibility.Public,
+        visibility: Visibility = Visibility.PUBLIC,
         inReplyToId: String? = null,
         sensitive: Boolean = false,
         spoilerText: String? = null,
@@ -104,7 +105,7 @@ class RxStatusMethods(client: MastodonClient) {
     fun postPoll(
         status: String,
         pollData: PollData,
-        visibility: Status.Visibility = Status.Visibility.Public,
+        visibility: Visibility = Visibility.PUBLIC,
         inReplyToId: String? = null,
         sensitive: Boolean = false,
         spoilerText: String? = null,
@@ -133,7 +134,7 @@ class RxStatusMethods(client: MastodonClient) {
         status: String,
         mediaIds: List<String>? = null,
         scheduledAt: String,
-        visibility: Status.Visibility = Status.Visibility.Public,
+        visibility: Visibility = Visibility.PUBLIC,
         inReplyToId: String? = null,
         sensitive: Boolean = false,
         spoilerText: String? = null,
@@ -154,7 +155,7 @@ class RxStatusMethods(client: MastodonClient) {
         status: String,
         scheduledAt: String,
         pollData: PollData,
-        visibility: Status.Visibility = Status.Visibility.Public,
+        visibility: Visibility = Visibility.PUBLIC,
         inReplyToId: String? = null,
         sensitive: Boolean = false,
         spoilerText: String? = null,
@@ -191,7 +192,7 @@ class RxStatusMethods(client: MastodonClient) {
     }
 
     @JvmOverloads
-    fun reblogStatus(statusId: String, visibility: Status.Visibility = Status.Visibility.Public): Single<Status> {
+    fun reblogStatus(statusId: String, visibility: Visibility = Visibility.PUBLIC): Single<Status> {
         return Single.create {
             try {
                 val status = statusMethods.reblogStatus(statusId, visibility)
