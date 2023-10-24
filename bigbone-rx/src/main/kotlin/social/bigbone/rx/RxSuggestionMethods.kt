@@ -5,7 +5,6 @@ import io.reactivex.rxjava3.core.Single
 import social.bigbone.MastodonClient
 import social.bigbone.api.entity.Suggestion
 import social.bigbone.api.method.SuggestionMethods
-import social.bigbone.rx.extensions.onErrorIfNotDisposed
 
 /**
  * Reactive implementation of [SuggestionMethods].
@@ -17,25 +16,11 @@ class RxSuggestionMethods(client: MastodonClient) {
     private val suggestionMethods = SuggestionMethods(client)
 
     @JvmOverloads
-    fun getSuggestions(limit: Int? = null): Single<List<Suggestion>> {
-        return Single.create {
-            try {
-                val suggestion = suggestionMethods.getSuggestions(limit)
-                it.onSuccess(suggestion.execute())
-            } catch (e: Throwable) {
-                it.onError(e)
-            }
-        }
+    fun getSuggestions(limit: Int? = null): Single<List<Suggestion>> = Single.fromCallable {
+        suggestionMethods.getSuggestions(limit).execute()
     }
 
-    fun removeSuggestion(accountId: String): Completable {
-        return Completable.create {
-            try {
-                suggestionMethods.removeSuggestion(accountId)
-                it.onComplete()
-            } catch (throwable: Throwable) {
-                it.onErrorIfNotDisposed(throwable)
-            }
-        }
+    fun removeSuggestion(accountId: String): Completable = Completable.fromAction {
+        suggestionMethods.removeSuggestion(accountId)
     }
 }
