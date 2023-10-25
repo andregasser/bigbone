@@ -20,6 +20,7 @@ class AnnouncementMethods(private val client: MastodonClient) {
      * @param withDismissed Boolean If true, response will include announcements dismissed by the user. Defaults to false.
      * @see <a href="https://docs.joinmastodon.org/methods/announcements/#get">Mastodon API documentation: methods/announcements/#get</a>
      */
+    @JvmOverloads
     fun getAllAnnouncements(
         withDismissed: Boolean = false
     ): MastodonRequest<Pageable<Announcement>> {
@@ -46,13 +47,14 @@ class AnnouncementMethods(private val client: MastodonClient) {
 
     /**
      * React to an announcement with an emoji.
-     * @param announcementId String The ID of the Announcement in the database.
      * @param emojiName String Unicode emoji, or the shortcode of a custom emoji.
-     * @see <a href="https://docs.joinmastodon.org/methods/announcements/#put-reactions"> Mastodon API documentation:methods/announcements/#put-reactions</a>
+     * @param announcementId String The ID of the Announcement in the database.
+     * @see <a href="https://docs.joinmastodon.org/methods/announcements/#put-reactions">
+     * Mastodon API documentation:methods/announcements/#put-reactions</a>
      */
-    fun putReaction(
-        announcementId: String,
-        emojiName: String
+    fun addReactionToAnnouncement(
+        emojiName: String,
+        announcementId: String
     ) {
         client.performAction(
             endpoint = "$announcementsEndpoint/$announcementId/reactions/$emojiName",
@@ -62,14 +64,14 @@ class AnnouncementMethods(private val client: MastodonClient) {
 
     /**
      * Undo a react emoji to an announcement.
-     * @param announcementId String The ID of the Announcement in the database.
      * @param emojiName String Unicode emoji, or the shortcode of a custom emoji.
+     * @param announcementId String The ID of the Announcement in the database.
      * @see <a href="https://docs.joinmastodon.org/methods/announcements/#delete-reactions">
      * Mastodon API documentation:methods/announcements/#delete-reactions</a>
      */
-    fun deleteReaction(
-        announcementId: String,
-        emojiName: String
+    fun removeReactionFromAnnouncement(
+        emojiName: String,
+        announcementId: String
     ) {
         client.performAction(
             endpoint = "$announcementsEndpoint/$announcementId/reactions/$emojiName",

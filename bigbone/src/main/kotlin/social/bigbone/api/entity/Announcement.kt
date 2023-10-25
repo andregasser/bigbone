@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 
 /**
  * Represents an announcement set by an administrator.
- * @see <a href="https://docs.joinmastodon.org/entities/Announcement/"> Mastadon API Announcment </a>
+ * @see <a href="https://docs.joinmastodon.org/entities/Announcement/"> Mastodon API Announcement </a>
  */
 
 @Serializable
@@ -63,19 +63,19 @@ data class Announcement(
      * Whether the announcement has been read by the current user.
      */
     @SerialName("read")
-    val read: Boolean = true,
+    val read: Boolean? = true,
 
     /**
      * Accounts mentioned in the announcement text.
      */
     @SerialName("mentions")
-    val mentions: List<Account> = emptyList(),
+    val mentions: List<Announcement.Account> = emptyList(),
 
     /**
      * Statuses linked in the announcement text.
      */
     @SerialName("statuses")
-    val statuses: List<Status> = emptyList(),
+    val statuses: List<Announcement.Status> = emptyList(),
 
     /**
      * Tags linked in the announcement text.
@@ -94,4 +94,55 @@ data class Announcement(
      */
     @SerialName("reactions")
     val reactions: List<Reaction> = emptyList()
-)
+) {
+    /**
+     * Represents a user in Mastodon.
+     * @see <a href="https://docs.joinmastodon.org/entities/Announcement/#Account">Mastodon API Announcement::Account</a>
+     */
+    @Serializable
+    data class Account(
+        /**
+         * The account ID of the mentioned user.
+         */
+        @SerialName("id")
+        val id: String = "0",
+
+        /**
+         * The username of the mentioned user.
+         */
+        @SerialName("username")
+        val username: String = "",
+
+        /**
+         * The location of the mentioned user’s profile.
+         */
+        @SerialName("url")
+        val url: String = "",
+
+        /**
+         * The webfinger acct: URI of the mentioned user.
+         * Equivalent to username for local users, or username@domain for remote users.
+         */
+        @SerialName("acct")
+        val acct: String = ""
+    )
+
+    /**
+     * Describes the status of the announcement.
+     * @see <a href="https://docs.joinmastodon.org/entities/Announcement/#Status">Mastodon API Announcement::Status</a>
+     */
+    @Serializable
+    data class Status(
+        /**
+         * The ID of an attached Status in the database.
+         */
+        @SerialName("id")
+        val id: String = "0",
+
+        /**
+         * The URL of an attached Status.
+         */
+        @SerialName("url")
+        val url: String = ""
+    )
+}
