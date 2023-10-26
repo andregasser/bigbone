@@ -31,7 +31,7 @@ class RxFilterMethods(client: MastodonClient) {
         context: List<Filter.Context>,
         filterKeywords: List<FilterKeyword>,
         expiresIn: Int? = null,
-        filterAction: Filter.Action = Filter.Action.Warn
+        filterAction: Filter.Action = Filter.Action.WARN
     ): Single<Filter> = Single.fromCallable {
         filterMethods.createFilter(
             title,
