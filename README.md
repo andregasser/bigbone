@@ -67,6 +67,19 @@ BigBone uses [Semantic Versioning 2.0.0](http://semver.org/spec/v2.0.0.html).
 
 # Adding BigBone to Your Project
 
+## Structure
+
+BigBone consists of two main modules:
+
+1. `bigbone` which exposes the Mastodon API endpoints as handy methods usable via a `MastodonClient`
+2. `bigbone-rx` which adds a thin RxJava3 layer around the `bigbone` module
+
+### `bigbone-rx` for RxJava3
+
+To find out more about the RxJava3 module—especially about default error handling—, please check
+the [`bigbone-rx` README](bigbone-rx/README.md).
+
+
 ## Gradle (Groovy DSL)
 
 Instructions for adding BigBone `2.0.0-SNAPSHOT` to your Gradle project (using Groovy DSL):
@@ -86,6 +99,7 @@ Dependencies:
 ```groovy
 dependencies {
     implementation "social.bigbone:bigbone:2.0.0-SNAPSHOT"
+    // Optional, if you want to use the BigBone RxJava3 wrappers
     implementation "social.bigbone:bigbone-rx:2.0.0-SNAPSHOT"
 }
 ```
@@ -109,6 +123,7 @@ Dependencies:
 ```groovy
 dependencies {
     implementation("social.bigbone:bigbone:2.0.0-SNAPSHOT")
+    // Optional, if you want to use the BigBone RxJava3 wrappers
     implementation("social.bigbone:bigbone-rx:2.0.0-SNAPSHOT")
 }
 ```
@@ -143,6 +158,8 @@ Dependencies:
     <artifactId>bigbone</artifactId>
     <version>2.0.0-SNAPSHOT</version>
 </dependency>
+
+        <!-- Optional, if you want to use the BigBone RxJava3 wrappers -->
 <dependency>
     <groupId>social.bigbone</groupId>
     <artifactId>bigbone-rx</artifactId>

@@ -21,64 +21,30 @@ import social.bigbone.api.method.StatusMethods
  * @see <a href="https://docs.joinmastodon.org/methods/statuses/">Mastodon statuses API methods</a>
  */
 class RxStatusMethods(client: MastodonClient) {
+
     private val statusMethods = StatusMethods(client)
 
-    fun getStatus(statusId: String): Single<Status> {
-        return Single.create {
-            try {
-                val status = statusMethods.getStatus(statusId)
-                it.onSuccess(status.execute())
-            } catch (e: Throwable) {
-                it.onError(e)
-            }
-        }
+    fun getStatus(statusId: String): Single<Status> = Single.fromCallable {
+        statusMethods.getStatus(statusId).execute()
     }
 
-    fun getContext(statusId: String): Single<Context> {
-        return Single.create {
-            try {
-                val context = statusMethods.getContext(statusId)
-                it.onSuccess(context.execute())
-            } catch (e: Throwable) {
-                it.onError(e)
-            }
-        }
+    fun getContext(statusId: String): Single<Context> = Single.fromCallable {
+        statusMethods.getContext(statusId).execute()
     }
 
     @JvmOverloads
-    fun translateStatus(statusId: String, language: String? = null): Single<Translation> {
-        return Single.create {
-            try {
-                val translation = statusMethods.translateStatus(statusId, language)
-                it.onSuccess(translation.execute())
-            } catch (e: Throwable) {
-                it.onError(e)
-            }
-        }
+    fun translateStatus(statusId: String, language: String? = null): Single<Translation> = Single.fromCallable {
+        statusMethods.translateStatus(statusId, language).execute()
     }
 
     @JvmOverloads
-    fun getRebloggedBy(statusId: String, range: Range = Range()): Single<Pageable<Account>> {
-        return Single.create {
-            try {
-                val accounts = statusMethods.getRebloggedBy(statusId, range)
-                it.onSuccess(accounts.execute())
-            } catch (e: Throwable) {
-                it.onError(e)
-            }
-        }
+    fun getRebloggedBy(statusId: String, range: Range = Range()): Single<Pageable<Account>> = Single.fromCallable {
+        statusMethods.getRebloggedBy(statusId, range).execute()
     }
 
     @JvmOverloads
-    fun getFavouritedBy(statusId: String, range: Range = Range()): Single<Pageable<Account>> {
-        return Single.create {
-            try {
-                val accounts = statusMethods.getFavouritedBy(statusId, range)
-                it.onSuccess(accounts.execute())
-            } catch (e: Throwable) {
-                it.onError(e)
-            }
-        }
+    fun getFavouritedBy(statusId: String, range: Range = Range()): Single<Pageable<Account>> = Single.fromCallable {
+        statusMethods.getFavouritedBy(statusId, range).execute()
     }
 
     @JvmOverloads
@@ -90,15 +56,16 @@ class RxStatusMethods(client: MastodonClient) {
         sensitive: Boolean = false,
         spoilerText: String? = null,
         language: String? = null
-    ): Single<Status> {
-        return Single.create {
-            try {
-                val result = statusMethods.postStatus(status, mediaIds, visibility, inReplyToId, sensitive, spoilerText, language)
-                it.onSuccess(result.execute())
-            } catch (e: Throwable) {
-                it.onError(e)
-            }
-        }
+    ): Single<Status> = Single.fromCallable {
+        statusMethods.postStatus(
+            status,
+            mediaIds,
+            visibility,
+            inReplyToId,
+            sensitive,
+            spoilerText,
+            language
+        ).execute()
     }
 
     @JvmOverloads
@@ -110,23 +77,16 @@ class RxStatusMethods(client: MastodonClient) {
         sensitive: Boolean = false,
         spoilerText: String? = null,
         language: String? = null
-    ): Single<Status> {
-        return Single.create {
-            try {
-                val result = statusMethods.postPoll(
-                    status,
-                    pollData,
-                    visibility,
-                    inReplyToId,
-                    sensitive,
-                    spoilerText,
-                    language
-                )
-                it.onSuccess(result.execute())
-            } catch (e: Throwable) {
-                it.onError(e)
-            }
-        }
+    ): Single<Status> = Single.fromCallable {
+        statusMethods.postPoll(
+            status,
+            pollData,
+            visibility,
+            inReplyToId,
+            sensitive,
+            spoilerText,
+            language
+        ).execute()
     }
 
     @JvmOverloads
@@ -139,15 +99,17 @@ class RxStatusMethods(client: MastodonClient) {
         sensitive: Boolean = false,
         spoilerText: String? = null,
         language: String? = null
-    ): Single<ScheduledStatus> {
-        return Single.create {
-            try {
-                val result = statusMethods.scheduleStatus(status, mediaIds, scheduledAt, visibility, inReplyToId, sensitive, spoilerText, language)
-                it.onSuccess(result.execute())
-            } catch (e: Throwable) {
-                it.onError(e)
-            }
-        }
+    ): Single<ScheduledStatus> = Single.fromCallable {
+        statusMethods.scheduleStatus(
+            status,
+            mediaIds,
+            scheduledAt,
+            visibility,
+            inReplyToId,
+            sensitive,
+            spoilerText,
+            language
+        ).execute()
     }
 
     @JvmOverloads
@@ -160,146 +122,61 @@ class RxStatusMethods(client: MastodonClient) {
         sensitive: Boolean = false,
         spoilerText: String? = null,
         language: String? = null
-    ): Single<ScheduledStatus> {
-        return Single.create {
-            try {
-                val result = statusMethods.schedulePoll(
-                    status,
-                    scheduledAt,
-                    pollData,
-                    visibility,
-                    inReplyToId,
-                    sensitive,
-                    spoilerText,
-                    language
-                )
-                it.onSuccess(result.execute())
-            } catch (e: Throwable) {
-                it.onError(e)
-            }
-        }
+    ): Single<ScheduledStatus> = Single.fromCallable {
+        statusMethods.schedulePoll(
+            status,
+            scheduledAt,
+            pollData,
+            visibility,
+            inReplyToId,
+            sensitive,
+            spoilerText,
+            language
+        ).execute()
     }
 
-    fun deleteStatus(statusId: String): Single<Status> {
-        return Single.create {
-            try {
-                val status = statusMethods.deleteStatus(statusId)
-                it.onSuccess(status.execute())
-            } catch (e: Throwable) {
-                it.onError(e)
-            }
-        }
+    fun deleteStatus(statusId: String): Single<Status> = Single.fromCallable {
+        statusMethods.deleteStatus(statusId).execute()
     }
 
     @JvmOverloads
-    fun reblogStatus(statusId: String, visibility: Visibility = Visibility.PUBLIC): Single<Status> {
-        return Single.create {
-            try {
-                val status = statusMethods.reblogStatus(statusId, visibility)
-                it.onSuccess(status.execute())
-            } catch (e: Throwable) {
-                it.onError(e)
-            }
-        }
+    fun reblogStatus(statusId: String, visibility: Visibility = Visibility.PUBLIC): Single<Status> =
+        Single.fromCallable { statusMethods.reblogStatus(statusId, visibility).execute() }
+
+    fun unreblogStatus(statusId: String): Single<Status> = Single.fromCallable {
+        statusMethods.unreblogStatus(statusId).execute()
     }
 
-    fun unreblogStatus(statusId: String): Single<Status> {
-        return Single.create {
-            try {
-                val status = statusMethods.unreblogStatus(statusId)
-                it.onSuccess(status.execute())
-            } catch (e: Throwable) {
-                it.onError(e)
-            }
-        }
+    fun favouriteStatus(statusId: String): Single<Status> = Single.fromCallable {
+        statusMethods.favouriteStatus(statusId).execute()
     }
 
-    fun favouriteStatus(statusId: String): Single<Status> {
-        return Single.create {
-            try {
-                val status = statusMethods.favouriteStatus(statusId)
-                it.onSuccess(status.execute())
-            } catch (e: Throwable) {
-                it.onError(e)
-            }
-        }
+    fun unfavouriteStatus(statusId: String): Single<Status> = Single.fromCallable {
+        statusMethods.unfavouriteStatus(statusId).execute()
     }
 
-    fun unfavouriteStatus(statusId: String): Single<Status> {
-        return Single.create {
-            try {
-                val status = statusMethods.unfavouriteStatus(statusId)
-                it.onSuccess(status.execute())
-            } catch (e: Throwable) {
-                it.onError(e)
-            }
-        }
+    fun bookmarkStatus(statusId: String): Single<Status> = Single.fromCallable {
+        statusMethods.bookmarkStatus(statusId).execute()
     }
 
-    fun bookmarkStatus(statusId: String): Single<Status> {
-        return Single.create {
-            try {
-                val status = statusMethods.bookmarkStatus(statusId)
-                it.onSuccess(status.execute())
-            } catch (e: Throwable) {
-                it.onError(e)
-            }
-        }
+    fun unbookmarkStatus(statusId: String): Single<Status> = Single.fromCallable {
+        statusMethods.unbookmarkStatus(statusId).execute()
     }
 
-    fun unbookmarkStatus(statusId: String): Single<Status> {
-        return Single.create {
-            try {
-                val status = statusMethods.unbookmarkStatus(statusId)
-                it.onSuccess(status.execute())
-            } catch (e: Throwable) {
-                it.onError(e)
-            }
-        }
+    fun muteConversation(statusId: String): Single<Status> = Single.fromCallable {
+        statusMethods.muteConversation(statusId).execute()
     }
 
-    fun muteConversation(statusId: String): Single<Status> {
-        return Single.create {
-            try {
-                val status = statusMethods.muteConversation(statusId)
-                it.onSuccess(status.execute())
-            } catch (e: Throwable) {
-                it.onError(e)
-            }
-        }
+    fun unmuteConversation(statusId: String): Single<Status> = Single.fromCallable {
+        statusMethods.unmuteConversation(statusId).execute()
     }
 
-    fun unmuteConversation(statusId: String): Single<Status> {
-        return Single.create {
-            try {
-                val status = statusMethods.unmuteConversation(statusId)
-                it.onSuccess(status.execute())
-            } catch (e: Throwable) {
-                it.onError(e)
-            }
-        }
+    fun pinStatus(statusId: String): Single<Status> = Single.fromCallable {
+        statusMethods.pinStatus(statusId).execute()
     }
 
-    fun pinStatus(statusId: String): Single<Status> {
-        return Single.create {
-            try {
-                val status = statusMethods.pinStatus(statusId)
-                it.onSuccess(status.execute())
-            } catch (e: Throwable) {
-                it.onError(e)
-            }
-        }
-    }
-
-    fun unpinStatus(statusId: String): Single<Status> {
-        return Single.create {
-            try {
-                val status = statusMethods.unpinStatus(statusId)
-                it.onSuccess(status.execute())
-            } catch (e: Throwable) {
-                it.onError(e)
-            }
-        }
+    fun unpinStatus(statusId: String): Single<Status> = Single.fromCallable {
+        statusMethods.unpinStatus(statusId).execute()
     }
 
     @JvmOverloads
@@ -310,15 +187,15 @@ class RxStatusMethods(client: MastodonClient) {
         sensitive: Boolean = false,
         spoilerText: String? = null,
         language: String? = null
-    ): Single<Status> {
-        return Single.create {
-            try {
-                val statusEdit = statusMethods.editStatus(statusId, status, mediaIds, sensitive, spoilerText, language)
-                it.onSuccess(statusEdit.execute())
-            } catch (e: Throwable) {
-                it.onError(e)
-            }
-        }
+    ): Single<Status> = Single.fromCallable {
+        statusMethods.editStatus(
+            statusId,
+            status,
+            mediaIds,
+            sensitive,
+            spoilerText,
+            language
+        ).execute()
     }
 
     @JvmOverloads
@@ -329,43 +206,22 @@ class RxStatusMethods(client: MastodonClient) {
         sensitive: Boolean = false,
         spoilerText: String? = null,
         language: String? = null
-    ): Single<Status> {
-        return Single.create {
-            try {
-                val statusEdit = statusMethods.editPoll(
-                    statusId,
-                    status,
-                    pollData,
-                    sensitive,
-                    spoilerText,
-                    language
-                )
-                it.onSuccess(statusEdit.execute())
-            } catch (e: Throwable) {
-                it.onError(e)
-            }
-        }
+    ): Single<Status> = Single.fromCallable {
+        statusMethods.editPoll(
+            statusId,
+            status,
+            pollData,
+            sensitive,
+            spoilerText,
+            language
+        ).execute()
     }
 
-    fun getEditHistory(statusId: String): Single<List<StatusEdit>> {
-        return Single.create {
-            try {
-                val statusHistory = statusMethods.getEditHistory(statusId)
-                it.onSuccess(statusHistory.execute())
-            } catch (e: Throwable) {
-                it.onError(e)
-            }
-        }
+    fun getEditHistory(statusId: String): Single<List<StatusEdit>> = Single.fromCallable {
+        statusMethods.getEditHistory(statusId).execute()
     }
 
-    fun getStatusSource(statusId: String): Single<StatusSource> {
-        return Single.create {
-            try {
-                val statusSource = statusMethods.getStatusSource(statusId)
-                it.onSuccess(statusSource.execute())
-            } catch (e: Throwable) {
-                it.onError(e)
-            }
-        }
+    fun getStatusSource(statusId: String): Single<StatusSource> = Single.fromCallable {
+        statusMethods.getStatusSource(statusId).execute()
     }
 }

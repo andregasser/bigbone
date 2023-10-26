@@ -8,7 +8,6 @@ import social.bigbone.api.entity.Instance
 import social.bigbone.api.entity.InstanceActivity
 import social.bigbone.api.entity.Rule
 import social.bigbone.api.method.InstanceMethods
-import social.bigbone.rx.extensions.onErrorIfNotDisposed
 
 /**
  * Reactive implementation of [InstanceMethods].
@@ -23,16 +22,7 @@ class RxInstanceMethods(client: MastodonClient) {
      * Obtain general information about the server.
      * @see <a href="https://docs.joinmastodon.org/methods/instance/#v2">Mastodon API documentation: methods/instance/#v2</a>
      */
-    fun getInstance(): Single<Instance> {
-        return Single.create {
-            try {
-                val instance = instanceMethods.getInstance()
-                it.onSuccess(instance.execute())
-            } catch (throwable: Throwable) {
-                it.onErrorIfNotDisposed(throwable)
-            }
-        }
-    }
+    fun getInstance(): Single<Instance> = Single.fromCallable { instanceMethods.getInstance().execute() }
 
     /**
      * Get the list of connected domains: Domains that this instance is aware of.
