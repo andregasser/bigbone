@@ -6,7 +6,6 @@ import social.bigbone.api.Pageable
 import social.bigbone.api.Range
 import social.bigbone.api.entity.Account
 import social.bigbone.api.method.BlockMethods
-import social.bigbone.rx.extensions.onErrorIfNotDisposed
 
 /**
  * Reactive implementation of [BlockMethods].
@@ -14,17 +13,11 @@ import social.bigbone.rx.extensions.onErrorIfNotDisposed
  * @see <a href="https://docs.joinmastodon.org/methods/blocks/">Mastodon blocks API methods</a>
  */
 class RxBlockMethods(client: MastodonClient) {
+
     private val blockMethods = BlockMethods(client)
 
     @JvmOverloads
-    fun getBlocks(range: Range = Range()): Single<Pageable<Account>> {
-        return Single.create {
-            try {
-                val blocks = blockMethods.getBlocks(range)
-                it.onSuccess(blocks.execute())
-            } catch (throwable: Throwable) {
-                it.onErrorIfNotDisposed(throwable)
-            }
-        }
+    fun getBlocks(range: Range = Range()): Single<Pageable<Account>> = Single.fromCallable {
+        blockMethods.getBlocks(range).execute()
     }
 }
