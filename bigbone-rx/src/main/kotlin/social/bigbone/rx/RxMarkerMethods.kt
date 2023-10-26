@@ -6,7 +6,6 @@ import social.bigbone.api.entity.Marker
 import social.bigbone.api.entity.Markers
 import social.bigbone.api.method.MarkerMethods
 import social.bigbone.api.method.Timeline
-import social.bigbone.rx.extensions.onErrorIfNotDisposed
 
 /**
  * Reactive implementation of [MarkerMethods].
@@ -14,28 +13,15 @@ import social.bigbone.rx.extensions.onErrorIfNotDisposed
  * @see <a href="https://docs.joinmastodon.org/methods/markers/">Mastodon markers API methods</a>
  */
 class RxMarkerMethods(client: MastodonClient) {
+
     private val markerMethods = MarkerMethods(client)
 
     @JvmOverloads
-    fun getMarkers(timeline: Timeline? = null): Single<Markers> {
-        return Single.create {
-            try {
-                val markers = markerMethods.getMarkers(timeline)
-                it.onSuccess(markers.execute())
-            } catch (throwable: Throwable) {
-                it.onErrorIfNotDisposed(throwable)
-            }
-        }
+    fun getMarkers(timeline: Timeline? = null): Single<Markers> = Single.fromCallable {
+        markerMethods.getMarkers(timeline).execute()
     }
 
-    fun updateMarker(timeline: Timeline, lastReadId: Int): Single<Marker> {
-        return Single.create {
-            try {
-                val marker = markerMethods.updateMarker(timeline, lastReadId)
-                it.onSuccess(marker.execute())
-            } catch (throwable: Throwable) {
-                it.onErrorIfNotDisposed(throwable)
-            }
-        }
+    fun updateMarker(timeline: Timeline, lastReadId: Int): Single<Marker> = Single.fromCallable {
+        markerMethods.updateMarker(timeline, lastReadId).execute()
     }
 }
