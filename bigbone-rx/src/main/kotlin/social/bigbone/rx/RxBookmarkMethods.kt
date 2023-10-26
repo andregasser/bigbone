@@ -6,7 +6,6 @@ import social.bigbone.api.Pageable
 import social.bigbone.api.Range
 import social.bigbone.api.entity.Status
 import social.bigbone.api.method.BookmarkMethods
-import social.bigbone.rx.extensions.onErrorIfNotDisposed
 
 /**
  * Reactive implementation of [BookmarkMethods].
@@ -14,17 +13,11 @@ import social.bigbone.rx.extensions.onErrorIfNotDisposed
  * @see <a href="https://docs.joinmastodon.org/methods/bookmarks/">Mastodon bookmarks API methods</a>
  */
 class RxBookmarkMethods(client: MastodonClient) {
+
     private val bookmarkMethods = BookmarkMethods(client)
 
     @JvmOverloads
-    fun getBookmarks(range: Range = Range()): Single<Pageable<Status>> {
-        return Single.create {
-            try {
-                val bookmarks = bookmarkMethods.getBookmarks(range)
-                it.onSuccess(bookmarks.execute())
-            } catch (throwable: Throwable) {
-                it.onErrorIfNotDisposed(throwable)
-            }
-        }
+    fun getBookmarks(range: Range = Range()): Single<Pageable<Status>> = Single.fromCallable {
+        bookmarkMethods.getBookmarks(range).execute()
     }
 }

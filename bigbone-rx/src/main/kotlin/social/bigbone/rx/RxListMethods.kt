@@ -8,7 +8,6 @@ import social.bigbone.api.Range
 import social.bigbone.api.entity.Account
 import social.bigbone.api.entity.MastodonList
 import social.bigbone.api.method.ListMethods
-import social.bigbone.rx.extensions.onErrorIfNotDisposed
 
 /**
  * Reactive implementation of [ListMethods].
@@ -16,102 +15,37 @@ import social.bigbone.rx.extensions.onErrorIfNotDisposed
  * @see <a href="https://docs.joinmastodon.org/methods/lists/">Mastodon lists API methods</a>
  */
 class RxListMethods(client: MastodonClient) {
+
     private val listMethods = ListMethods(client)
 
-    fun getLists(): Single<List<MastodonList>> {
-        return Single.create {
-            try {
-                val lists = listMethods.getLists()
-                it.onSuccess(lists.execute())
-            } catch (throwable: Throwable) {
-                it.onErrorIfNotDisposed(throwable)
-            }
-        }
-    }
+    fun getLists(): Single<List<MastodonList>> = Single.fromCallable { listMethods.getLists().execute() }
 
-    fun getList(listId: String): Single<MastodonList> {
-        return Single.create {
-            try {
-                val list = listMethods.getList(listId)
-                it.onSuccess(list.execute())
-            } catch (throwable: Throwable) {
-                it.onErrorIfNotDisposed(throwable)
-            }
-        }
-    }
+    fun getList(listId: String): Single<MastodonList> = Single.fromCallable { listMethods.getList(listId).execute() }
 
     @JvmOverloads
     fun createList(
         title: String,
         repliesPolicy: MastodonList.RepliesPolicy = MastodonList.RepliesPolicy.List
-    ): Single<MastodonList> {
-        return Single.create {
-            try {
-                val list = listMethods.createList(title, repliesPolicy)
-                it.onSuccess(list.execute())
-            } catch (throwable: Throwable) {
-                it.onErrorIfNotDisposed(throwable)
-            }
-        }
-    }
+    ): Single<MastodonList> = Single.fromCallable { listMethods.createList(title, repliesPolicy).execute() }
 
     fun updateList(
         listId: String,
         title: String,
         repliesPolicy: MastodonList.RepliesPolicy
-    ): Single<MastodonList> {
-        return Single.create {
-            try {
-                val list = listMethods.updateList(listId, title, repliesPolicy)
-                it.onSuccess(list.execute())
-            } catch (throwable: Throwable) {
-                it.onErrorIfNotDisposed(throwable)
-            }
-        }
-    }
+    ): Single<MastodonList> = Single.fromCallable { listMethods.updateList(listId, title, repliesPolicy).execute() }
 
-    fun deleteList(listId: String): Completable {
-        return Completable.create {
-            try {
-                listMethods.deleteList(listId)
-                it.onComplete()
-            } catch (throwable: Throwable) {
-                it.onErrorIfNotDisposed(throwable)
-            }
-        }
-    }
+    fun deleteList(listId: String): Completable = Completable.fromAction { listMethods.deleteList(listId) }
 
     @JvmOverloads
-    fun getAccountsInList(listId: String, range: Range = Range()): Single<Pageable<Account>> {
-        return Single.create {
-            try {
-                val accounts = listMethods.getAccountsInList(listId, range)
-                it.onSuccess(accounts.execute())
-            } catch (e: Throwable) {
-                it.onError(e)
-            }
-        }
+    fun getAccountsInList(listId: String, range: Range = Range()): Single<Pageable<Account>> = Single.fromCallable {
+        listMethods.getAccountsInList(listId, range).execute()
     }
 
-    fun addAccountsToList(listId: String, accountIds: List<String>): Completable {
-        return Completable.create {
-            try {
-                listMethods.addAccountsToList(listId, accountIds)
-                it.onComplete()
-            } catch (throwable: Throwable) {
-                it.onErrorIfNotDisposed(throwable)
-            }
-        }
+    fun addAccountsToList(listId: String, accountIds: List<String>): Completable = Completable.fromAction {
+        listMethods.addAccountsToList(listId, accountIds)
     }
 
-    fun deleteAccountsFromList(listId: String, accountIds: List<String>): Completable {
-        return Completable.create {
-            try {
-                listMethods.deleteAccountsFromList(listId, accountIds)
-                it.onComplete()
-            } catch (throwable: Throwable) {
-                it.onErrorIfNotDisposed(throwable)
-            }
-        }
+    fun deleteAccountsFromList(listId: String, accountIds: List<String>): Completable = Completable.fromAction {
+        listMethods.deleteAccountsFromList(listId, accountIds)
     }
 }
