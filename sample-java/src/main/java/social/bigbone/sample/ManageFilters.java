@@ -56,7 +56,7 @@ public class ManageFilters {
         for (final Filter filter: existingFilters) {
             System.out.println(filter.getTitle() + " (ID " + filter.getId() + "):");
             System.out.print(filter.getFilterAction() + " in the following contexts: ");
-            for (final String context: filter.getContext()) {
+            for (final Filter.Context context: filter.getContext()) {
                 System.out.print(context + " ");
             }
             System.out.print("\nkeywords: ");
@@ -80,7 +80,7 @@ public class ManageFilters {
         final String title = "BigBone sample filter: " + keywordToFilter;
 
         // filter context - where do we want statuses to be filtered? (here: in Home and Public timelines)
-        final List<Filter.Context> context = Arrays.asList(Filter.Context.Home, Filter.Context.Public);
+        final List<Filter.Context> context = Arrays.asList(Filter.Context.HOME, Filter.Context.PUBLIC);
 
         // create a proper filter keywords list - filters typically contain more than one keyword, and each keyword
         // can be matched either as a whole word or as part of a string (e.g. "@example.org" matching any "user@example.org").
@@ -91,7 +91,7 @@ public class ManageFilters {
         final int expiryInSeconds = 3600;
 
         // filter action - should filtered statuses be shown with a warning, or be hidden completely?
-        final Filter.Action action = Filter.Action.Warn;
+        final Filter.Action action = Filter.Action.WARN;
 
         // create filter and output its ID
         final Filter createdFilter = client.filters().createFilter(title, context, keywords, expiryInSeconds, action).execute();
