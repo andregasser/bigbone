@@ -16,7 +16,7 @@ class ReportMethodsTest {
 
         val fileReportMethod = ReportMethods(client)
         val result = fileReportMethod.fileReport(accountId = "testId", category = ReportType.SPAM, comment = "spam").execute()
-        result.category `should be equal to` ReportType.SPAM.type
+        result.category `should be equal to` ReportType.SPAM.name.lowercase()
         result.comment shouldContainIgnoringCase "spam"
         result.id `should be equal to` "testId"
     }

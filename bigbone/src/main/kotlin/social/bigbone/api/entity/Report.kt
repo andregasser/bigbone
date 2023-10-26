@@ -73,9 +73,15 @@ data class Report(
     /**
      * Specify the typology of category among spam, violation or other.
      */
-    enum class ReportType(val type: String) {
-        SPAM("spam"),
-        VIOLATION("violation"),
-        OTHER("other")
+    @Serializable
+    enum class ReportType {
+        @SerialName("spam")
+        SPAM,
+
+        @SerialName("violation")
+        VIOLATION,
+
+        @SerialName("other")
+        OTHER
     }
 }

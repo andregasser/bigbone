@@ -54,7 +54,7 @@ class FilterMethods(private val client: MastodonClient) {
         context: List<Filter.Context>,
         filterKeywords: List<FilterKeyword>,
         expiresIn: Int? = null,
-        filterAction: Filter.Action = Filter.Action.Warn
+        filterAction: Filter.Action = Filter.Action.WARN
     ): MastodonRequest<Filter> {
         return client.getMastodonRequest(
             endpoint = "api/v2/filters",
@@ -62,9 +62,9 @@ class FilterMethods(private val client: MastodonClient) {
             parameters = Parameters().apply {
                 append("title", title)
                 for (c in context) {
-                    append("context[]", c.value)
+                    append("context[]", c.name.lowercase())
                 }
-                append("filter_action", filterAction.value)
+                append("filter_action", filterAction.name.lowercase())
                 expiresIn?.let {
                     append("expires_in", it)
                 }
@@ -112,11 +112,11 @@ class FilterMethods(private val client: MastodonClient) {
                 }
                 context?.let {
                     for (c in it) {
-                        append("context[]", c.value)
+                        append("context[]", c.name.lowercase())
                     }
                 }
                 filterAction?.let {
-                    append("filter_action", it.value)
+                    append("filter_action", it.name.lowercase())
                 }
                 expiresIn?.let {
                     append("expires_in", it)

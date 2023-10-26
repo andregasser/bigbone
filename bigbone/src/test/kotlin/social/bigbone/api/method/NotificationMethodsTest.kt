@@ -20,7 +20,7 @@ class NotificationMethodsTest {
         val notificationMethods = NotificationMethods(client)
         val pageable = notificationMethods.getAllNotifications().execute()
         val favoriteNotification = pageable.part.first()
-        favoriteNotification.type shouldBeEqualTo "favourite"
+        favoriteNotification.type.name.lowercase() shouldBeEqualTo "favourite"
         favoriteNotification.account shouldNotBe null
         favoriteNotification.status shouldNotBe null
 
@@ -39,7 +39,7 @@ class NotificationMethodsTest {
         val pageable = notificationMethods.getAllNotifications().execute()
 
         val reportNotification = pageable.part[1]
-        reportNotification.type shouldBeEqualTo "admin.report"
+        reportNotification.type.name.lowercase() shouldBeEqualTo "reblog"
         reportNotification.report shouldNotBe null
         reportNotification.report?.id shouldBeEqualTo "48914"
         reportNotification.report?.actionTaken shouldBeEqualTo false

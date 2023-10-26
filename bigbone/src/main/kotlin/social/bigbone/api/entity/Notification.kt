@@ -19,7 +19,7 @@ data class Notification(
      * The type of event that resulted in the notification.
      */
     @SerialName("type")
-    val type: String = Type.Mention.value,
+    val type: Type = Type.MENTION,
 
     /**
      * The timestamp of the notification (ISO 8601 Datetime).
@@ -48,10 +48,18 @@ data class Notification(
     /**
      * Specifies the notification type.
      */
-    enum class Type(val value: String) {
-        Mention("mention"),
-        Reblog("reblog"),
-        Favourite("favourite"),
-        Follow("follow")
+    @Serializable
+    enum class Type {
+        @SerialName("mention")
+        MENTION,
+
+        @SerialName("reblog")
+        REBLOG,
+
+        @SerialName("favourite")
+        FAVOURITE,
+
+        @SerialName("follow")
+        FOLLOW
     }
 }

@@ -26,7 +26,7 @@ data class Filter(
      * @see Context
      */
     @SerialName("context")
-    val context: List<String> = emptyList(),
+    val context: List<Context> = emptyList(),
 
     /**
      * When the filter should no longer be applied.
@@ -39,7 +39,7 @@ data class Filter(
      * @see Action
      */
     @SerialName("filter_action")
-    val filterAction: String = Action.Warn.value,
+    val filterAction: Action = Action.WARN,
 
     /**
      * The keywords grouped under this filter.
@@ -56,46 +56,55 @@ data class Filter(
     /**
      * The action to be taken when a status matches this filter.
      */
-    enum class Action(val value: String) {
+    @Serializable
+    enum class Action {
         /**
          * Do not show this status if it is received.
          */
-        Hide("hide"),
+        @SerialName("hide")
+        HIDE,
 
         /**
          * Show a warning that identifies the matching filter by title, and allow the user to expand the filtered status.
          * This is the default (and unknown values should be treated as equivalent to warn).
          */
-        Warn("warn")
+        @SerialName("warn")
+        WARN
     }
 
     /**
      * The context(s) in which the filter should be applied.
      */
-    enum class Context(val value: String) {
+    @Serializable
+    enum class Context {
         /**
          * Apply filter when viewing a profile.
          */
-        Account("account"),
+        @SerialName("account")
+        ACCOUNT,
 
         /**
          * Apply filter when viewing home timeline and lists.
          */
-        Home("home"),
+        @SerialName("home")
+        HOME,
 
         /**
          * Apply filter when viewing notifications timeline.
          */
-        Notifications("notifications"),
+        @SerialName("notifications")
+        NOTIFICATIONS,
 
         /**
          * Apply filter when viewing public timelines.
          */
-        Public("public"),
+        @SerialName("public")
+        PUBLIC,
 
         /**
          * Apply filter when viewing expanded thread of a detailed status.
          */
-        Thread("thread")
+        @SerialName("thread")
+        THREAD
     }
 }

@@ -1,5 +1,7 @@
 package social.bigbone.api.method
 
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import social.bigbone.MastodonClient
 import social.bigbone.MastodonRequest
 import social.bigbone.Parameters
@@ -14,10 +16,16 @@ class SearchMethods(private val client: MastodonClient) {
     /**
      * Specify whether to search for only accounts, hashtags, statuses.
      */
-    enum class SearchType(val type: String) {
-        ACCOUNTS("accounts"),
-        HASHTAGS("hashtags"),
-        STATUSES("statuses")
+    @Serializable
+    enum class SearchType {
+        @SerialName("accounts")
+        ACCOUNTS,
+
+        @SerialName("hashtags")
+        HASHTAGS,
+
+        @SerialName("statuses")
+        STATUSES
     }
 
     /**

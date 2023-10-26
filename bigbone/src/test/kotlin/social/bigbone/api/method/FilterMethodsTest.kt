@@ -53,8 +53,8 @@ class FilterMethodsTest {
         val client = MockClient.mock("filter.json")
         val filterMethods = FilterMethods(client)
         val filterKeyword = FilterKeyword("0", "keyword", false)
-        val filter = filterMethods.createFilter("title", listOf(Filter.Context.Public), listOf(filterKeyword)).execute()
-        filter.context.contains(Filter.Context.Public.value) shouldBeEqualTo true
+        val filter = filterMethods.createFilter("title", listOf(Filter.Context.PUBLIC), listOf(filterKeyword)).execute()
+        filter.context.contains(Filter.Context.PUBLIC) shouldBeEqualTo true
         filter.keywords.first().keyword shouldBeEqualTo "from birdsite"
         filter.keywords.first().wholeWord shouldBeEqualTo true
     }
@@ -65,7 +65,7 @@ class FilterMethodsTest {
             val client = MockClient.ioException()
             val filterMethods = FilterMethods(client)
             val filterKeyword = FilterKeyword("0", "keyword", false)
-            filterMethods.createFilter("title", listOf(Filter.Context.Public), listOf(filterKeyword)).execute()
+            filterMethods.createFilter("title", listOf(Filter.Context.PUBLIC), listOf(filterKeyword)).execute()
         }
     }
 
@@ -75,10 +75,10 @@ class FilterMethodsTest {
         val filterMethods = FilterMethods(client)
         val filter = filterMethods.updateFilter(
             filterId = "filterId",
-            filterAction = Filter.Action.Hide,
+            filterAction = Filter.Action.HIDE,
             expiresIn = 3600
         ).execute()
-        filter.filterAction shouldBeEqualTo "hide"
+        filter.filterAction.name.lowercase() shouldBeEqualTo "hide"
     }
 
     @Test
@@ -88,7 +88,7 @@ class FilterMethodsTest {
             val filterMethods = FilterMethods(client)
             filterMethods.updateFilter(
                 filterId = "filterId",
-                filterAction = Filter.Action.Hide,
+                filterAction = Filter.Action.HIDE,
                 expiresIn = 3600
             ).execute()
         }

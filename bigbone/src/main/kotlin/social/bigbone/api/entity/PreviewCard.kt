@@ -34,7 +34,7 @@ data class PreviewCard(
      * @see CardType
      */
     @SerialName("type")
-    val type: String = CardType.Link.value,
+    val type: CardType = CardType.LINK,
 
     /**
      * The author of the original resource.
@@ -107,10 +107,18 @@ data class PreviewCard(
     /**
      * Specifies the type of the preview card.
      */
-    enum class CardType(val value: String) {
-        Link("link"),
-        Photo("photo"),
-        Video("video"),
-        Rich("iframe")
+    @Serializable
+    enum class CardType {
+        @SerialName("link")
+        LINK,
+
+        @SerialName("photo")
+        PHOTO,
+
+        @SerialName("video")
+        VIDEO,
+
+        @SerialName("iframe")
+        RICH
     }
 }
