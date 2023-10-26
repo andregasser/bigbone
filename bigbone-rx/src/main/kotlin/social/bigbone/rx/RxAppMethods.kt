@@ -5,7 +5,6 @@ import social.bigbone.MastodonClient
 import social.bigbone.api.Scope
 import social.bigbone.api.entity.Application
 import social.bigbone.api.method.AppMethods
-import social.bigbone.rx.extensions.onErrorIfNotDisposed
 
 /**
  * Reactive implementation of [AppMethods].
@@ -13,6 +12,7 @@ import social.bigbone.rx.extensions.onErrorIfNotDisposed
  * @see <a href="https://docs.joinmastodon.org/methods/apps/">Mastodon apps API methods</a>
  */
 class RxAppMethods(client: MastodonClient) {
+
     private val appMethods = AppMethods(client)
 
     @JvmOverloads
@@ -21,14 +21,7 @@ class RxAppMethods(client: MastodonClient) {
         redirectUris: String,
         website: String? = null,
         scope: Scope = Scope(Scope.Name.ALL)
-    ): Single<Application> {
-        return Single.create {
-            try {
-                val application = appMethods.createApp(clientName, redirectUris, website, scope)
-                it.onSuccess(application.execute())
-            } catch (throwable: Throwable) {
-                it.onErrorIfNotDisposed(throwable)
-            }
-        }
+    ): Single<Application> = Single.fromCallable {
+        appMethods.createApp(clientName, redirectUris, website, scope).execute()
     }
 }
