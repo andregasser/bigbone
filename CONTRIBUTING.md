@@ -26,7 +26,7 @@ Please also note that the project requires at least Java 8 in order to build suc
 The project comprises five primary Gradle modules:
 
 - **bigbone:** This module contains the core code for interacting with the Mastodon REST API, including tests.
-- **bigbone-rx:** This module serves as a thin layer built on top of the "bigbone" module. It exposes methods available in the "bigbone" module as RxJava3 types, facilitating the use of this library within an RxJava context. Additionally, "bigbone-rx" enhances the functionality of "bigbone" by providing support for reactive streams.
+- **bigbone-rx:** This module serves as a thin layer built on top of the `bigbone` module. It exposes methods available in the `bigbone` module as RxJava3 types, allowing the use of this library within an RxJava context.
 - **buildSrc:** This section contains Gradle plugin code written in Groovy. Generally, you won't need to make changes here, as it's exclusively used for the build process. However, in specific cases, such as introducing a new dependency, you might need to make adjustments.
 - **sample-java:** This module contains Java sample code that demonstrates the usage of BigBone.
 - **sample-kotlin:** Similar to sample-java, this module provides sample code written in Kotlin.
