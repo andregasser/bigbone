@@ -11,7 +11,7 @@ private const val QUERY_RESULT_LIMIT: Int = 200
  * Manage a user's blocked domains.
  * @see <a href="https://docs.joinmastodon.org/methods/domain_blocks/">Mastodon domain_blocks API methods</a>
  */
-class DomainBlocksMethods(private val client: MastodonClient) {
+class DomainBlockMethods(private val client: MastodonClient) {
 
     private val domainBlocksEndpoint = "/api/v1/domain_blocks"
 
