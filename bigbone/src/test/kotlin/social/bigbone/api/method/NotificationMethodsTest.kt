@@ -4,7 +4,7 @@ import io.mockk.verify
 import org.amshove.kluent.AnyException
 import org.amshove.kluent.invoking
 import org.amshove.kluent.shouldBeEqualTo
-import org.amshove.kluent.shouldNotBe
+import org.amshove.kluent.shouldNotBeNull
 import org.amshove.kluent.shouldNotThrow
 import org.amshove.kluent.shouldThrow
 import org.junit.jupiter.api.Test
@@ -12,17 +12,25 @@ import social.bigbone.MastodonClient
 import social.bigbone.Parameters
 import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.testtool.MockClient
+import java.time.Instant
 
 class NotificationMethodsTest {
     @Test
-    fun getFavoriteNotification() {
+    fun getMentionNotification() {
         val client = MockClient.mock("notifications.json")
         val notificationMethods = NotificationMethods(client)
+
         val pageable = notificationMethods.getAllNotifications().execute()
-        val favoriteNotification = pageable.part.first()
-        favoriteNotification.type shouldBeEqualTo "favourite"
-        favoriteNotification.account shouldNotBe null
-        favoriteNotification.status shouldNotBe null
+
+        with(pageable.part.first()) {
+            type shouldBeEqualTo "mention"
+            createdAt shouldBeEqualTo Instant.parse("2019-11-23T07:49:02.064Z")
+            account.shouldNotBeNull()
+        }
+        with(pageable.part.first().status) {
+            shouldNotBeNull()
+            createdAt shouldBeEqualTo Instant.parse("2019-11-23T07:49:01.940Z")
+        }
 
         verify {
             client.get(
@@ -33,16 +41,19 @@ class NotificationMethodsTest {
     }
 
     @Test
-    fun getReportNotification() {
+    fun getFavouriteNotification() {
         val client = MockClient.mock("notifications.json")
         val notificationMethods = NotificationMethods(client)
         val pageable = notificationMethods.getAllNotifications().execute()
 
-        val reportNotification = pageable.part[1]
-        reportNotification.type shouldBeEqualTo "admin.report"
-        reportNotification.report shouldNotBe null
-        reportNotification.report?.id shouldBeEqualTo "48914"
-        reportNotification.report?.actionTaken shouldBeEqualTo false
+        with(pageable.part[1]) {
+            type shouldBeEqualTo "favourite"
+            createdAt shouldBeEqualTo Instant.parse("2019-11-23T07:29:18.903Z")
+        }
+        with(pageable.part[1].status) {
+            shouldNotBeNull()
+            createdAt shouldBeEqualTo Instant.parse("2019-11-23T07:28:34.210Z")
+        }
 
         verify {
             client.get(

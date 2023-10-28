@@ -11,6 +11,7 @@ import social.bigbone.api.entity.FeaturedTag
 import social.bigbone.api.entity.Tag
 import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.testtool.MockClient
+import java.time.Instant
 
 class FeaturedTagMethodsTest {
 
@@ -27,7 +28,7 @@ class FeaturedTagMethodsTest {
         name shouldBeEqualTo "nowplaying"
         url shouldBeEqualTo "https://mastodon.example/@user/tagged/nowplaying"
         statusesCount shouldBeEqualTo 70
-        lastStatusAt shouldBeEqualTo "2022-08-29T12:03:35.061Z"
+        lastStatusAt shouldBeEqualTo Instant.parse("2022-08-29T12:03:35.061Z")
     }
 
     @Test
@@ -56,7 +57,7 @@ class FeaturedTagMethodsTest {
         name shouldBeEqualTo "nowplaying"
         url shouldBeEqualTo "https://mastodon.example/@user/tagged/nowplaying"
         statusesCount shouldBeEqualTo 23
-        lastStatusAt shouldBeEqualTo "2021-10-22T14:47:35.357Z"
+        lastStatusAt shouldBeEqualTo Instant.parse("2021-10-22T14:47:35.357Z")
     }
 
     @Test

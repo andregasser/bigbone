@@ -2,6 +2,9 @@ package social.bigbone.api.entity
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import social.bigbone.InstantSerializer
+import social.bigbone.api.entity.Report.ReportType
+import java.time.Instant
 
 /**
  * Reports filed against users and/or statuses, to be taken action on by moderators.
@@ -25,7 +28,8 @@ data class Report(
      * When an action was taken against the report. (ISO 8601 Datetime)
      */
     @SerialName("action_taken_at")
-    val actionTakenAt: String? = "",
+    @Serializable(with = InstantSerializer::class)
+    val actionTakenAt: Instant? = null,
 
     /**
      * The generic reason for the report.
@@ -50,7 +54,8 @@ data class Report(
      * When the report was created. (ISO 8601 Datetime)
      */
     @SerialName("created_at")
-    val createdAt: String = "",
+    @Serializable(with = InstantSerializer::class)
+    val createdAt: Instant,
 
     /**
      * IDs of statuses that have been attached to this report for additional context.

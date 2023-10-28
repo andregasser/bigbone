@@ -2,7 +2,9 @@ package social.bigbone.api.entity
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import social.bigbone.InstantSerializer
 import social.bigbone.api.entity.data.Visibility
+import java.time.Instant
 
 /**
  * Represents a status posted by an account.
@@ -26,7 +28,8 @@ data class Status(
      * The date when this status was created (ISO 8601 Datetime).
      */
     @SerialName("created_at")
-    val createdAt: String = "",
+    @Serializable(with = InstantSerializer::class)
+    val createdAt: Instant,
 
     /**
      * The account that authored this status.
@@ -160,7 +163,8 @@ data class Status(
      * Timestamp of when the status was last edited (ISO 8601 Datetime).
      */
     @SerialName("edited_at")
-    val editedAt: String? = null,
+    @Serializable(with = InstantSerializer::class)
+    val editedAt: Instant? = null,
 
     /**
      * If the current token has an authorized user: Have you favourited this status? (optional)

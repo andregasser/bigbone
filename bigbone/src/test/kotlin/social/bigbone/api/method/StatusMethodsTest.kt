@@ -7,6 +7,7 @@ import social.bigbone.api.entity.data.PollData
 import social.bigbone.api.entity.data.Visibility
 import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.testtool.MockClient
+import java.time.Instant
 
 class StatusMethodsTest {
     @Test
@@ -189,7 +190,7 @@ class StatusMethodsTest {
             language = "en"
         ).execute()
         scheduledStatus.id shouldBeEqualTo "12345"
-        scheduledStatus.scheduledAt shouldBeEqualTo "2023-12-31T12:34:56.789Z"
+        scheduledStatus.scheduledAt shouldBeEqualTo Instant.parse("2023-12-31T12:34:56.789Z")
         scheduledStatus.params.text shouldBeEqualTo "test post"
     }
 
@@ -517,8 +518,8 @@ class StatusMethodsTest {
         val statusEditWithPoll = statusHistory[3]
         statusEditInitial.content shouldBeEqualTo "<p>this is a status that will be edited</p>"
         statusEditRevision.content shouldBeEqualTo "<p>this is a status that has been edited</p>"
-        statusEditInitial.createdAt shouldBeEqualTo "2022-09-04T23:22:13.704Z"
-        statusEditRevision.createdAt shouldBeEqualTo "2022-09-04T23:22:42.555Z"
+        statusEditInitial.createdAt shouldBeEqualTo Instant.parse("2022-09-04T23:22:13.704Z")
+        statusEditRevision.createdAt shouldBeEqualTo Instant.parse("2022-09-04T23:22:42.555Z")
         statusEditWithPoll.poll?.options?.get(0)?.title shouldBeEqualTo "cool"
         statusEditWithPoll.poll?.options?.get(1)?.title shouldBeEqualTo "uncool"
         statusEditWithPoll.poll?.options?.get(2)?.title shouldBeEqualTo "spiderman"

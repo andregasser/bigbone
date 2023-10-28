@@ -2,6 +2,8 @@ package social.bigbone.api.entity
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import social.bigbone.InstantSerializer
+import java.time.Instant
 
 /**
  * Represents a notification of an event relevant to the user.
@@ -25,7 +27,8 @@ data class Notification(
      * The timestamp of the notification (ISO 8601 Datetime).
      */
     @SerialName("created_at")
-    val createdAt: String = "",
+    @Serializable(with = InstantSerializer::class)
+    val createdAt: Instant,
 
     /**
      * The account that performed the action that generated the notification.

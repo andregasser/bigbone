@@ -10,6 +10,7 @@ import social.bigbone.api.Range
 import social.bigbone.api.entity.Account
 import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.testtool.MockClient
+import java.time.Instant
 
 class EndorsementMethodsTest {
 
@@ -26,7 +27,7 @@ class EndorsementMethodsTest {
         firstEndorsement.isLocked shouldBeEqualTo true
         firstEndorsement.isBot shouldBeEqualTo false
         firstEndorsement.statusesCount shouldBeEqualTo 955
-        firstEndorsement.lastStatusAt shouldBeEqualTo "2019-11-23T07:05:50.682Z"
+        firstEndorsement.lastStatusAt shouldBeEqualTo Instant.parse("2019-11-23T07:05:50.682Z")
         firstEndorsement.emojis.isEmpty() shouldBeEqualTo true
 
         val secondEndorsement = endorsements.part[1]
@@ -34,7 +35,7 @@ class EndorsementMethodsTest {
         secondEndorsement.isLocked shouldBeEqualTo true
         secondEndorsement.isBot shouldBeEqualTo false
         secondEndorsement.statusesCount shouldBeEqualTo 5906
-        secondEndorsement.lastStatusAt shouldBeEqualTo "2019-11-23T05:23:47.911Z"
+        secondEndorsement.lastStatusAt shouldBeEqualTo Instant.parse("2019-11-23T05:23:47.911Z")
         secondEndorsement.emojis.isEmpty() shouldBeEqualTo false
     }
 
