@@ -5,16 +5,16 @@ import social.bigbone.api.Pageable
 import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.rx.testtool.MockClient
 
-class RxDomainBlocksMethodsTest {
+class RxDomainBlockMethodsTest {
 
     @Test
     fun `Given a client returning success, when getting blocked domains, then emit list of blocked domains`() {
         val client = MockClient.mock(
             jsonName = "domain_blocks_view_success.json"
         )
-        val domainBlocksMethods = RxDomainBlocksMethods(client)
+        val domainBlockMethods = RxDomainBlockMethods(client)
 
-        with(domainBlocksMethods.getDomainBlocks().test()) {
+        with(domainBlockMethods.getDomainBlocks().test()) {
             assertNoErrors()
             assertComplete()
 
@@ -32,9 +32,9 @@ class RxDomainBlocksMethodsTest {
             responseCode = 401,
             message = "Unauthorized"
         )
-        val domainBlocksMethods = RxDomainBlocksMethods(client)
+        val domainBlockMethods = RxDomainBlockMethods(client)
 
-        with(domainBlocksMethods.getDomainBlocks().test()) {
+        with(domainBlockMethods.getDomainBlocks().test()) {
             assertNoValues()
             assertNotComplete()
 
@@ -51,9 +51,9 @@ class RxDomainBlocksMethodsTest {
         val client = MockClient.mock(
             jsonName = "domain_blocks_block_success.json"
         )
-        val domainBlocksMethods = RxDomainBlocksMethods(client)
+        val domainBlockMethods = RxDomainBlockMethods(client)
 
-        with(domainBlocksMethods.blockDomain("nsfw.social").test()) {
+        with(domainBlockMethods.blockDomain("nsfw.social").test()) {
             assertNoErrors()
             assertComplete()
 
@@ -68,9 +68,9 @@ class RxDomainBlocksMethodsTest {
             responseCode = 422,
             message = "Unprocessable Entity"
         )
-        val domainBlocksMethods = RxDomainBlocksMethods(client)
+        val domainBlockMethods = RxDomainBlockMethods(client)
 
-        with(domainBlocksMethods.blockDomain("invalidDomain").test()) {
+        with(domainBlockMethods.blockDomain("invalidDomain").test()) {
             assertNoValues()
             assertNotComplete()
 

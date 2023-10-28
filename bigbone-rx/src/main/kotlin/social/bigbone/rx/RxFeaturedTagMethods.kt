@@ -5,16 +5,16 @@ import io.reactivex.rxjava3.core.Single
 import social.bigbone.MastodonClient
 import social.bigbone.api.entity.FeaturedTag
 import social.bigbone.api.entity.Tag
-import social.bigbone.api.method.FeaturedTagsMethods
+import social.bigbone.api.method.FeaturedTagMethods
 
 /**
- * Reactive implementation of [FeaturedTagsMethods].
+ * Reactive implementation of [FeaturedTagMethods].
  * View information about Feature tags that you use frequently on your profile.
  * @see <a href="https://docs.joinmastodon.org/methods/featured_tags/">Mastodon featured_tags API methods</a>
  */
-class RxFeaturedTagsMethods(client: MastodonClient) {
+class RxFeaturedTagMethods(client: MastodonClient) {
 
-    private val featuredTagsMethods = FeaturedTagsMethods(client)
+    private val featuredTagsMethods = FeaturedTagMethods(client)
 
     /**
      * List all hashtags featured on your profile.

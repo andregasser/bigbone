@@ -9,15 +9,15 @@ import social.bigbone.api.entity.CustomEmoji
  * Each site can define and upload its own custom emoji to be attached to profiles or statuses.
  * @see <a href="https://docs.joinmastodon.org/methods/custom_emojis/">Mastodon custom_emojis API methods</a>
  */
-class CustomEmojisMethods(private val client: MastodonClient) {
+class CustomEmojiMethods(private val client: MastodonClient) {
 
     private val customEmojisEndpoint = "api/v1/custom_emojis"
 
     /**
      * Returns custom emojis that are available on the server.
-     * * @see <a href="https://docs.joinmastodon.org/methods/custom_emojis/#get">Mastodon API documentation: methods/custom_emojis/#get</a>
+     * @see <a href="https://docs.joinmastodon.org/methods/custom_emojis/#get">Mastodon API documentation: methods/custom_emojis/#get</a>
      */
-    fun getAllCustomEmoji(): MastodonRequest<List<CustomEmoji>> {
+    fun getAllCustomEmojis(): MastodonRequest<List<CustomEmoji>> {
         return client.getMastodonRequestForList(
             endpoint = customEmojisEndpoint,
             method = MastodonClient.Method.GET
