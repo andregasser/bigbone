@@ -23,7 +23,7 @@ class NotificationMethods(private val client: MastodonClient) {
      */
     @JvmOverloads
     fun getAllNotifications(
-        excludeTypes: List<Notification.Type>? = null,
+        excludeTypes: List<Notification.NotificationType>? = null,
         range: Range = Range()
     ): MastodonRequest<Pageable<Notification>> {
         return client.getPageableMastodonRequest(

@@ -51,10 +51,10 @@ class FilterMethods(private val client: MastodonClient) {
     @Throws(BigBoneRequestException::class)
     fun createFilter(
         title: String,
-        context: List<Filter.Context>,
+        context: List<Filter.FilterContext>,
         filterKeywords: List<FilterKeyword>,
         expiresIn: Int? = null,
-        filterAction: Filter.Action = Filter.Action.WARN
+        filterAction: Filter.FilterAction = Filter.FilterAction.WARN
     ): MastodonRequest<Filter> {
         return client.getMastodonRequest(
             endpoint = "api/v2/filters",
@@ -96,8 +96,8 @@ class FilterMethods(private val client: MastodonClient) {
     fun updateFilter(
         filterId: String,
         title: String? = null,
-        context: List<Filter.Context>? = null,
-        filterAction: Filter.Action? = null,
+        context: List<Filter.FilterContext>? = null,
+        filterAction: Filter.FilterAction? = null,
         expiresIn: Int? = null,
         keywordsToAdd: List<FilterKeyword>? = null,
         keywordsToUpdate: List<FilterKeyword>? = null,

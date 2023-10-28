@@ -23,10 +23,10 @@ data class Filter(
 
     /**
      * The contexts in which the filter should be applied.
-     * @see Context
+     * @see FilterContext
      */
     @SerialName("context")
-    val context: List<Context> = emptyList(),
+    val context: List<FilterContext> = emptyList(),
 
     /**
      * When the filter should no longer be applied.
@@ -36,10 +36,10 @@ data class Filter(
 
     /**
      * The action to be taken when a status matches this filter.
-     * @see Action
+     * @see FilterAction
      */
     @SerialName("filter_action")
-    val filterAction: Action = Action.WARN,
+    val filterAction: FilterAction = FilterAction.WARN,
 
     /**
      * The keywords grouped under this filter.
@@ -57,7 +57,7 @@ data class Filter(
      * The action to be taken when a status matches this filter.
      */
     @Serializable
-    enum class Action {
+    enum class FilterAction {
         /**
          * Do not show this status if it is received.
          */
@@ -76,7 +76,7 @@ data class Filter(
      * The context(s) in which the filter should be applied.
      */
     @Serializable
-    enum class Context {
+    enum class FilterContext {
         /**
          * Apply filter when viewing a profile.
          */

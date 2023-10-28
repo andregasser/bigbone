@@ -28,10 +28,10 @@ class RxFilterMethods(client: MastodonClient) {
     @JvmOverloads
     fun createFilter(
         title: String,
-        context: List<Filter.Context>,
+        context: List<Filter.FilterContext>,
         filterKeywords: List<FilterKeyword>,
         expiresIn: Int? = null,
-        filterAction: Filter.Action = Filter.Action.WARN
+        filterAction: Filter.FilterAction = Filter.FilterAction.WARN
     ): Single<Filter> = Single.fromCallable {
         filterMethods.createFilter(
             title,
@@ -46,8 +46,8 @@ class RxFilterMethods(client: MastodonClient) {
     fun updateFilter(
         filterId: String,
         title: String? = null,
-        context: List<Filter.Context>? = null,
-        filterAction: Filter.Action? = null,
+        context: List<Filter.FilterContext>? = null,
+        filterAction: Filter.FilterAction? = null,
         expiresIn: Int? = null,
         keywordsToAdd: List<FilterKeyword>? = null,
         keywordsToUpdate: List<FilterKeyword>? = null,

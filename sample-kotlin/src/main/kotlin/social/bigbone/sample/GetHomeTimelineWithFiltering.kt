@@ -26,11 +26,11 @@ object GetHomeTimelineWithFiltering {
                     val filter = it.filter
 
                     // only use a filter if it applies to our current context (in this case, the home timeline)
-                    if (filter.context.contains(Filter.Context.HOME)) {
+                    if (filter.context.contains(Filter.FilterContext.HOME)) {
                         // check the filter action set for this filter
                         when (filter.filterAction) {
-                            Filter.Action.WARN -> shouldWarn = true
-                            Filter.Action.HIDE -> shouldHide = true
+                            Filter.FilterAction.WARN -> shouldWarn = true
+                            Filter.FilterAction.HIDE -> shouldHide = true
                         }
                     }
                 }
