@@ -4,6 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import social.bigbone.DateTimeSerializer
 import social.bigbone.PrecisionDateTime
+import social.bigbone.PrecisionDateTime.InvalidPrecisionDateTime
 import social.bigbone.api.entity.Report.ReportType
 
 /**
@@ -25,11 +26,11 @@ data class Report(
     val actionTaken: Boolean = false,
 
     /**
-     * When an action was taken against the report. (ISO 8601 Datetime)
+     * When an action was taken against the report.
      */
     @SerialName("action_taken_at")
     @Serializable(with = DateTimeSerializer::class)
-    val actionTakenAt: PrecisionDateTime = PrecisionDateTime.InvalidPrecisionDateTime.Unavailable,
+    val actionTakenAt: PrecisionDateTime = InvalidPrecisionDateTime.Unavailable,
 
     /**
      * The generic reason for the report.
@@ -51,11 +52,11 @@ data class Report(
     val forwarded: Boolean = false,
 
     /**
-     * When the report was created. (ISO 8601 Datetime)
+     * When the report was created.
      */
     @SerialName("created_at")
     @Serializable(with = DateTimeSerializer::class)
-    val createdAt: PrecisionDateTime = PrecisionDateTime.InvalidPrecisionDateTime.Unavailable,
+    val createdAt: PrecisionDateTime = InvalidPrecisionDateTime.Unavailable,
 
     /**
      * IDs of statuses that have been attached to this report for additional context.

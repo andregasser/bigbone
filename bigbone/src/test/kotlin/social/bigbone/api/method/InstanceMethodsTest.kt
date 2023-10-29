@@ -5,11 +5,12 @@ import org.amshove.kluent.invoking
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldHaveSize
+import org.amshove.kluent.shouldNotBeEmpty
 import org.amshove.kluent.shouldNotBeNull
-import org.amshove.kluent.shouldNotBeTrue
 import org.amshove.kluent.shouldThrow
 import org.amshove.kluent.withMessage
 import org.junit.jupiter.api.Test
+import social.bigbone.PrecisionDateTime.ValidPrecisionDateTime.ExactTime
 import social.bigbone.api.entity.DomainBlock
 import social.bigbone.api.entity.ExtendedDescription
 import social.bigbone.api.entity.InstanceActivity
@@ -17,6 +18,7 @@ import social.bigbone.api.entity.Rule
 import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.testtool.MockClient
 import social.bigbone.testtool.TestUtil
+import java.time.Instant
 
 class InstanceMethodsTest {
     @Test
@@ -386,8 +388,8 @@ class InstanceMethodsTest {
 
         val extendedDescription: ExtendedDescription = instanceMethods.getExtendedDescription().execute()
         with(extendedDescription) {
-            updatedAt shouldBeEqualTo "2022-11-03T04:09:07Z"
-            content.isEmpty().shouldNotBeTrue()
+            updatedAt shouldBeEqualTo ExactTime(Instant.parse("2022-11-03T04:09:07Z"))
+            content.shouldNotBeEmpty()
         }
 
         verify {

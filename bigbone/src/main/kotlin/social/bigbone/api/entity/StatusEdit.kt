@@ -4,6 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import social.bigbone.DateTimeSerializer
 import social.bigbone.PrecisionDateTime
+import social.bigbone.PrecisionDateTime.InvalidPrecisionDateTime
 
 /**
  * Represents a revision of a status that has been edited.
@@ -30,11 +31,11 @@ data class StatusEdit(
     val sensitive: Boolean = false,
 
     /**
-     * The timestamp of when the revision was published (ISO 8601 Datetime string).
+     * The timestamp of when the revision was published.
      */
     @SerialName("created_at")
     @Serializable(with = DateTimeSerializer::class)
-    val createdAt: PrecisionDateTime = PrecisionDateTime.InvalidPrecisionDateTime.Unavailable,
+    val createdAt: PrecisionDateTime = InvalidPrecisionDateTime.Unavailable,
 
     /**
      * The account that published this revision.

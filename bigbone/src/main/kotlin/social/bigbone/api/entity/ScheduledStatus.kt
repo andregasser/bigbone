@@ -4,6 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import social.bigbone.DateTimeSerializer
 import social.bigbone.PrecisionDateTime
+import social.bigbone.PrecisionDateTime.InvalidPrecisionDateTime
 import social.bigbone.api.entity.data.PollData
 import social.bigbone.api.entity.data.Visibility
 
@@ -20,11 +21,11 @@ data class ScheduledStatus(
     val id: String = "",
 
     /**
-     * The timestamp for when the status will be posted (ISO 8601 Datetime).
+     * The timestamp for when the status will be posted.
      */
     @SerialName("scheduled_at")
     @Serializable(with = DateTimeSerializer::class)
-    val scheduledAt: PrecisionDateTime = PrecisionDateTime.InvalidPrecisionDateTime.Unavailable,
+    val scheduledAt: PrecisionDateTime = InvalidPrecisionDateTime.Unavailable,
 
     /**
      * The parameters that were used when scheduling the status, to be used when the status is posted.
