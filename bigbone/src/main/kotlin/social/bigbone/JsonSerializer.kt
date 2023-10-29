@@ -30,7 +30,8 @@ internal val JSON_SERIALIZER: Json = Json {
  */
 object DateTimeSerializer : KSerializer<PrecisionDateTime> {
 
-    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("java.time.Instant", PrimitiveKind.STRING)
+    override val descriptor: SerialDescriptor =
+        PrimitiveSerialDescriptor("social.bigbone.DateTimeSerializer", PrimitiveKind.STRING)
 
     override fun serialize(encoder: Encoder, value: PrecisionDateTime) = encoder.encodeString(value.asJsonString())
 
