@@ -24,7 +24,9 @@ internal val JSON_SERIALIZER: Json = Json {
 object InstantSerializer : KSerializer<Instant> {
 
     override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("java.time.Instant", PrimitiveKind.STRING)
+
     override fun serialize(encoder: Encoder, value: Instant) = encoder.encodeString(value.toString())
+
     override fun deserialize(decoder: Decoder): Instant {
         val decodedString = decoder.decodeString()
         return try {

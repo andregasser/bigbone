@@ -9,6 +9,7 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.ZoneOffset
+import java.time.ZonedDateTime
 import java.time.format.DateTimeParseException
 
 class InstantSerializerTest {
@@ -56,5 +57,21 @@ class InstantSerializerTest {
         invoking {
             JSON_SERIALIZER.decodeFromString(InstantSerializer, jsonString)
         } shouldThrow DateTimeParseException::class
+    }
+
+    @Test
+    fun `Given an Instant, when encoding into JSON string then return expected JSON string, when decoding back to Instant then expect input Instant`() {
+        val instant = ZonedDateTime.of(
+            LocalDateTime.of(2023, 10, 31, 13, 37, 42),
+            ZoneOffset.UTC
+        ).toInstant()
+
+        val encodedInstant = JSON_SERIALIZER.encodeToString(InstantSerializer, instant)
+
+        encodedInstant shouldBeEqualTo "\"2023-10-31T13:37:42Z\""
+
+        val decodedInstant = JSON_SERIALIZER.decodeFromString(InstantSerializer, encodedInstant)
+
+        decodedInstant shouldBeEqualTo instant
     }
 }
