@@ -182,7 +182,7 @@ class StatusMethodsTest {
         val statusMethods = StatusMethods(client)
         val scheduledStatus = statusMethods.scheduleStatus(
             status = "a",
-            scheduledAt = "2023-12-31T12:34:56.789Z",
+            scheduledAt = Instant.parse("2023-12-31T12:34:56.789Z"),
             visibility = Visibility.UNLISTED,
             inReplyToId = null,
             mediaIds = null,
@@ -202,7 +202,7 @@ class StatusMethodsTest {
             val statusMethods = StatusMethods(client)
             statusMethods.scheduleStatus(
                 status = "a",
-                scheduledAt = "2023-12-31T12:34:56.789Z",
+                scheduledAt = Instant.parse("2023-12-31T12:34:56.789Z"),
                 visibility = Visibility.UNLISTED,
                 inReplyToId = null,
                 mediaIds = null,

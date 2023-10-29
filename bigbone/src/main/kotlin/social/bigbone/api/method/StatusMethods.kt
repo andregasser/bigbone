@@ -15,6 +15,7 @@ import social.bigbone.api.entity.Translation
 import social.bigbone.api.entity.data.PollData
 import social.bigbone.api.entity.data.Visibility
 import social.bigbone.api.exception.BigBoneRequestException
+import java.time.Instant
 
 /**
  * Allows access to API methods with endpoints having an "api/vX/statuses" prefix.
@@ -191,7 +192,7 @@ class StatusMethods(private val client: MastodonClient) {
      * To post a status immediately, use [postStatus].
      * @param status the text of the status
      * @param mediaIds the array of media ids to attach to the status (maximum 4)
-     * @param scheduledAt ISO 8601 Datetime at which to schedule a status. Must be at least 5 minutes in the future.
+     * @param scheduledAt [Instant] at which to schedule a status. Must be at least 5 minutes in the future.
      * @param visibility either "direct", "private", "unlisted" or "public"
      * @param inReplyToId the local id of the status you want to reply to
      * @param sensitive set this to mark the media of the status as NSFW
@@ -207,7 +208,7 @@ class StatusMethods(private val client: MastodonClient) {
     fun scheduleStatus(
         status: String,
         mediaIds: List<String>? = null,
-        scheduledAt: String,
+        scheduledAt: Instant,
         visibility: Visibility = Visibility.PUBLIC,
         inReplyToId: String? = null,
         sensitive: Boolean = false,
@@ -220,7 +221,7 @@ class StatusMethods(private val client: MastodonClient) {
             method = MastodonClient.Method.POST,
             parameters = Parameters().apply {
                 append("status", status)
-                append("scheduled_at", scheduledAt)
+                append("scheduled_at", scheduledAt.toString())
                 append("visibility", visibility.name.lowercase())
                 inReplyToId?.let { append("in_reply_to_id", it) }
                 mediaIds?.let { append("media_ids", it) }
@@ -235,7 +236,7 @@ class StatusMethods(private val client: MastodonClient) {
     /**
      * Schedule a status containing a poll with the given parameters. To post immediately, use [postPoll].
      * @param status the text of the status
-     * @param scheduledAt ISO 8601 Datetime at which to schedule a status. Must be at least 5 minutes in the future.
+     * @param scheduledAt [Instant] at which to schedule a status. Must be at least 5 minutes in the future.
      * @param pollData containing all necessary poll data
      * @param visibility either "direct", "private", "unlisted" or "public"
      * @param inReplyToId the local id of the status you want to reply to
@@ -251,7 +252,7 @@ class StatusMethods(private val client: MastodonClient) {
     @Throws(BigBoneRequestException::class)
     fun schedulePoll(
         status: String,
-        scheduledAt: String,
+        scheduledAt: Instant,
         pollData: PollData,
         visibility: Visibility = Visibility.PUBLIC,
         inReplyToId: String? = null,
@@ -265,7 +266,7 @@ class StatusMethods(private val client: MastodonClient) {
             method = MastodonClient.Method.POST,
             parameters = Parameters().apply {
                 append("status", status)
-                append("scheduled_at", scheduledAt)
+                append("scheduled_at", scheduledAt.toString())
                 append("poll[options]", pollData.options)
                 append("poll[expires_in]", pollData.expiresIn)
                 append("visibility", visibility.name.lowercase())
