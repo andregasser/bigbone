@@ -62,7 +62,7 @@ class DateTimeSerializerTest {
     }
 
     @Test
-    fun `Given an Instant, when encoding into JSON string then return expected JSON string, when decoding back to Instant then expect input Instant`() {
+    fun `Given an ExactTime, when encoding into JSON string then return expected JSON string, when decoding back to Instant then expect input Instant`() {
         val instant = ZonedDateTime.of(
             LocalDateTime.of(2023, 10, 31, 13, 37, 42),
             ZoneOffset.UTC
@@ -72,6 +72,20 @@ class DateTimeSerializerTest {
         val encodedInstant = JSON_SERIALIZER.encodeToString(DateTimeSerializer, exactTime)
 
         encodedInstant shouldBeEqualTo "\"2023-10-31T13:37:42Z\""
+
+        val decodedDateTime = JSON_SERIALIZER.decodeFromString(DateTimeSerializer, encodedInstant)
+
+        decodedDateTime shouldBeEqualTo exactTime
+    }
+
+    @Test
+    fun `Given a StartOfDay, when encoding into JSON string then return expected JSON string, when decoding back to Instant then expect input Instant`() {
+        val instant = LocalDate.of(2023, 10, 31).atStartOfDay().toInstant(ZoneOffset.UTC)
+        val exactTime = PrecisionDateTime.ValidPrecisionDateTime.StartOfDay(instant)
+
+        val encodedInstant = JSON_SERIALIZER.encodeToString(DateTimeSerializer, exactTime)
+
+        encodedInstant shouldBeEqualTo "\"2023-10-31\""
 
         val decodedDateTime = JSON_SERIALIZER.decodeFromString(DateTimeSerializer, encodedInstant)
 

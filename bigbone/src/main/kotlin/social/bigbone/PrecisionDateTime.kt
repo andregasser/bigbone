@@ -5,6 +5,7 @@ import social.bigbone.PrecisionDateTime.InvalidPrecisionDateTime.Unavailable
 import social.bigbone.PrecisionDateTime.ValidPrecisionDateTime.ExactTime
 import social.bigbone.PrecisionDateTime.ValidPrecisionDateTime.StartOfDay
 import java.time.Instant
+import java.time.ZoneOffset
 import java.time.format.DateTimeParseException
 
 /**
@@ -50,8 +51,6 @@ sealed interface PrecisionDateTime {
         PrecisionDateTime,
         Comparable<ValidPrecisionDateTime> {
 
-        override fun asJsonString(): String = instant.toString()
-
         override fun mostPreciseInstantOrNull(): Instant = instant
 
         override fun compareTo(other: ValidPrecisionDateTime): Int = this.instant.compareTo(other.instant)
@@ -59,12 +58,16 @@ sealed interface PrecisionDateTime {
         /**
          * Type used when a date property specifies both date and time.
          */
-        data class ExactTime(override val instant: Instant) : ValidPrecisionDateTime(instant)
+        data class ExactTime(override val instant: Instant) : ValidPrecisionDateTime(instant) {
+            override fun asJsonString(): String = instant.toString()
+        }
 
         /**
          * Type used when a date property only specifies a date, but no time.
          */
-        data class StartOfDay(override val instant: Instant) : ValidPrecisionDateTime(instant)
+        data class StartOfDay(override val instant: Instant) : ValidPrecisionDateTime(instant) {
+            override fun asJsonString(): String = instant.atZone(ZoneOffset.UTC).toLocalDate().toString()
+        }
     }
 
     /**

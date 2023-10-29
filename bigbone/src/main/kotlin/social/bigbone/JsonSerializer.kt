@@ -7,7 +7,7 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.json.Json
-import social.bigbone.PrecisionDateTime.InvalidPrecisionDateTime.Invalid
+import social.bigbone.PrecisionDateTime.InvalidPrecisionDateTime
 import social.bigbone.PrecisionDateTime.ValidPrecisionDateTime
 import java.time.Instant
 import java.time.LocalDate
@@ -45,7 +45,7 @@ object DateTimeSerializer : KSerializer<PrecisionDateTime> {
                 parseStartOfDay(decodedString)
             }
         } catch (dateTimeParseException: DateTimeParseException) {
-            Invalid(dateTimeParseException)
+            InvalidPrecisionDateTime.Invalid(dateTimeParseException)
         }
     }
 
