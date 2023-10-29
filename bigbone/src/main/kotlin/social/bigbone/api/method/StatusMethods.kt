@@ -15,7 +15,13 @@ import social.bigbone.api.entity.Translation
 import social.bigbone.api.entity.data.PollData
 import social.bigbone.api.entity.data.Visibility
 import social.bigbone.api.exception.BigBoneRequestException
+import java.time.Duration
 import java.time.Instant
+
+/**
+ * Minimum [Duration] a scheduled status needs to be scheduled into the future.
+ */
+private val SCHEDULED_AT_MIN_AHEAD: Duration = Duration.ofMinutes(5)
 
 /**
  * Allows access to API methods with endpoints having an "api/vX/statuses" prefix.
@@ -216,6 +222,10 @@ class StatusMethods(private val client: MastodonClient) {
         language: String? = null,
         addIdempotencyKey: Boolean = true
     ): MastodonRequest<ScheduledStatus> {
+        require(scheduledAt.isAfter(Instant.now().plus(SCHEDULED_AT_MIN_AHEAD))) {
+            "Scheduled time in scheduleAt must lie ahead at least ${SCHEDULED_AT_MIN_AHEAD.toMinutes()} minutes"
+        }
+
         return client.getMastodonRequest(
             endpoint = "api/v1/statuses",
             method = MastodonClient.Method.POST,
@@ -261,6 +271,10 @@ class StatusMethods(private val client: MastodonClient) {
         language: String? = null,
         addIdempotencyKey: Boolean = true
     ): MastodonRequest<ScheduledStatus> {
+        require(scheduledAt.isAfter(Instant.now().plus(SCHEDULED_AT_MIN_AHEAD))) {
+            "Scheduled time in scheduleAt must lie ahead at least ${SCHEDULED_AT_MIN_AHEAD.toMinutes()} minutes"
+        }
+
         return client.getMastodonRequest(
             endpoint = "api/v1/statuses",
             method = MastodonClient.Method.POST,
