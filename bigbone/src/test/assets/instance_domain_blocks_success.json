@@ -1,0 +1,14 @@
+[
+  {
+    "domain": "birb.elfenban.de",
+    "digest": "5d2c6e02a0cced8fb05f32626437e3d23096480b47efbba659b6d9e80c85d280",
+    "severity": "suspend",
+    "comment": "Third-party bots"
+  },
+  {
+    "domain": "birdbots.leptonics.com",
+    "digest": "ce019d8d32cce8e369ac4367f4dc232103e6f489fbdd247fb99f9c8a646078a4",
+    "severity": "suspend",
+    "comment": "Third-party bots"
+  }
+]
