@@ -100,10 +100,11 @@ data class ScheduledStatus(
         val applicationId: Int = 0,
 
         /**
-         * When the status will be scheduled. This will be null because the status is only scheduled once.
+         * When the status will be scheduled.
          */
         @SerialName("scheduled_at")
-        val scheduledAt: String? = null,
+        @Serializable(with = DateTimeSerializer::class)
+        val scheduledAt: PrecisionDateTime = InvalidPrecisionDateTime.Unavailable,
 
         /**
          * Idempotency key to prevent duplicate statuses.

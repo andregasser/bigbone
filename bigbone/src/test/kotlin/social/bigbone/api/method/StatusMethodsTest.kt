@@ -225,7 +225,7 @@ class StatusMethodsTest {
         )
         val scheduledStatus = statusMethods.schedulePoll(
             status = "a",
-            scheduledAt = "2023-12-31T12:34:56.789Z",
+            scheduledAt = Instant.parse("2023-12-31T12:34:56.789Z"),
             pollData = pollData,
             visibility = Visibility.UNLISTED,
             inReplyToId = null,
@@ -252,7 +252,7 @@ class StatusMethodsTest {
             val statusMethods = StatusMethods(client)
             statusMethods.schedulePoll(
                 status = "a",
-                scheduledAt = "2023-12-31T12:34:56.789Z",
+                scheduledAt = Instant.parse("2023-12-31T12:34:56.789Z"),
                 pollData = pollData,
                 visibility = Visibility.UNLISTED,
                 inReplyToId = null,
