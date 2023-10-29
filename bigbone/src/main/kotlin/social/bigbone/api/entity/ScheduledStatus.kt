@@ -24,7 +24,7 @@ data class ScheduledStatus(
      */
     @SerialName("scheduled_at")
     @Serializable(with = DateTimeSerializer::class)
-    val scheduledAt: PrecisionDateTime = PrecisionDateTime.Unavailable,
+    val scheduledAt: PrecisionDateTime = PrecisionDateTime.InvalidPrecisionDateTime.Unavailable,
 
     /**
      * The parameters that were used when scheduling the status, to be used when the status is posted.

@@ -29,7 +29,7 @@ data class Report(
      */
     @SerialName("action_taken_at")
     @Serializable(with = DateTimeSerializer::class)
-    val actionTakenAt: PrecisionDateTime = PrecisionDateTime.Unavailable,
+    val actionTakenAt: PrecisionDateTime = PrecisionDateTime.InvalidPrecisionDateTime.Unavailable,
 
     /**
      * The generic reason for the report.
@@ -55,7 +55,7 @@ data class Report(
      */
     @SerialName("created_at")
     @Serializable(with = DateTimeSerializer::class)
-    val createdAt: PrecisionDateTime = PrecisionDateTime.Unavailable,
+    val createdAt: PrecisionDateTime = PrecisionDateTime.InvalidPrecisionDateTime.Unavailable,
 
     /**
      * IDs of statuses that have been attached to this report for additional context.

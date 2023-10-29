@@ -29,7 +29,7 @@ data class Status(
      */
     @SerialName("created_at")
     @Serializable(with = DateTimeSerializer::class)
-    val createdAt: PrecisionDateTime = PrecisionDateTime.Unavailable,
+    val createdAt: PrecisionDateTime = PrecisionDateTime.InvalidPrecisionDateTime.Unavailable,
 
     /**
      * The account that authored this status.
@@ -164,7 +164,7 @@ data class Status(
      */
     @SerialName("edited_at")
     @Serializable(with = DateTimeSerializer::class)
-    val editedAt: PrecisionDateTime = PrecisionDateTime.Unavailable,
+    val editedAt: PrecisionDateTime = PrecisionDateTime.InvalidPrecisionDateTime.Unavailable,
 
     /**
      * If the current token has an authorized user: Have you favourited this status? (optional)

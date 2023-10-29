@@ -22,7 +22,7 @@ data class Poll(
      */
     @SerialName("expires_at")
     @Serializable(with = DateTimeSerializer::class)
-    val expiresAt: PrecisionDateTime = PrecisionDateTime.Unavailable,
+    val expiresAt: PrecisionDateTime = PrecisionDateTime.InvalidPrecisionDateTime.Unavailable,
 
     /**
      * Is the poll currently expired?

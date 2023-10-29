@@ -34,7 +34,7 @@ data class StatusEdit(
      */
     @SerialName("created_at")
     @Serializable(with = DateTimeSerializer::class)
-    val createdAt: PrecisionDateTime = PrecisionDateTime.Unavailable,
+    val createdAt: PrecisionDateTime = PrecisionDateTime.InvalidPrecisionDateTime.Unavailable,
 
     /**
      * The account that published this revision.

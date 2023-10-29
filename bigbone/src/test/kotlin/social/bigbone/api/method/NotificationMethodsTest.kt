@@ -10,7 +10,7 @@ import org.amshove.kluent.shouldThrow
 import org.junit.jupiter.api.Test
 import social.bigbone.MastodonClient
 import social.bigbone.Parameters
-import social.bigbone.PrecisionDateTime.ExactTime
+import social.bigbone.PrecisionDateTime.ValidPrecisionDateTime.ExactTime
 import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.testtool.MockClient
 import java.time.Instant

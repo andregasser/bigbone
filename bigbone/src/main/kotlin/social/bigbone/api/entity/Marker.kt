@@ -28,5 +28,5 @@ data class Marker(
      */
     @SerialName("updated_at")
     @Serializable(with = DateTimeSerializer::class)
-    val updatedAt: PrecisionDateTime = PrecisionDateTime.Unavailable
+    val updatedAt: PrecisionDateTime = PrecisionDateTime.InvalidPrecisionDateTime.Unavailable
 )

@@ -28,7 +28,7 @@ data class Notification(
      */
     @SerialName("created_at")
     @Serializable(with = DateTimeSerializer::class)
-    val createdAt: PrecisionDateTime = PrecisionDateTime.Unavailable,
+    val createdAt: PrecisionDateTime = PrecisionDateTime.InvalidPrecisionDateTime.Unavailable,
 
     /**
      * The account that performed the action that generated the notification.

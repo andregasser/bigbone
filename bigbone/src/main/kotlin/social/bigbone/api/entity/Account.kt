@@ -137,7 +137,7 @@ data class Account(
      */
     @SerialName("created_at")
     @Serializable(with = DateTimeSerializer::class)
-    val createdAt: PrecisionDateTime = PrecisionDateTime.Unavailable,
+    val createdAt: PrecisionDateTime = PrecisionDateTime.InvalidPrecisionDateTime.Unavailable,
 
     /**
      * When the most recent status was posted.
@@ -145,7 +145,7 @@ data class Account(
      */
     @SerialName("last_status_at")
     @Serializable(with = DateTimeSerializer::class)
-    val lastStatusAt: PrecisionDateTime = PrecisionDateTime.Unavailable,
+    val lastStatusAt: PrecisionDateTime = PrecisionDateTime.InvalidPrecisionDateTime.Unavailable,
 
     /**
      * How many statuses are attached to this account.
@@ -188,6 +188,6 @@ data class Account(
          */
         @SerialName("verified_at")
         @Serializable(with = DateTimeSerializer::class)
-        val verifiedAt: PrecisionDateTime = PrecisionDateTime.Unavailable
+        val verifiedAt: PrecisionDateTime = PrecisionDateTime.InvalidPrecisionDateTime.Unavailable
     )
 }

@@ -7,7 +7,7 @@ import org.amshove.kluent.shouldNotThrow
 import org.amshove.kluent.shouldThrow
 import org.amshove.kluent.withMessage
 import org.junit.jupiter.api.Test
-import social.bigbone.PrecisionDateTime.ExactTime
+import social.bigbone.PrecisionDateTime.ValidPrecisionDateTime.ExactTime
 import social.bigbone.api.entity.FeaturedTag
 import social.bigbone.api.entity.Tag
 import social.bigbone.api.exception.BigBoneRequestException

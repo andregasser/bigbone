@@ -4,7 +4,7 @@ import org.amshove.kluent.`should not be`
 import org.amshove.kluent.shouldBe
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.Test
-import social.bigbone.PrecisionDateTime.ExactTime
+import social.bigbone.PrecisionDateTime.ValidPrecisionDateTime.ExactTime
 import social.bigbone.testtool.MockClient
 import java.time.Instant
 

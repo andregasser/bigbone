@@ -40,5 +40,5 @@ data class FeaturedTag(
      */
     @SerialName("last_status_at")
     @Serializable(with = DateTimeSerializer::class)
-    val lastStatusAt: PrecisionDateTime = PrecisionDateTime.Unavailable
+    val lastStatusAt: PrecisionDateTime = PrecisionDateTime.InvalidPrecisionDateTime.Unavailable
 )

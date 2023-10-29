@@ -18,8 +18,8 @@ class DateTimeSerializerTest {
 
         val decodedDateTime: PrecisionDateTime = JSON_SERIALIZER.decodeFromString(DateTimeSerializer, jsonString)
 
-        decodedDateTime shouldBeInstanceOf PrecisionDateTime.StartOfDay::class
-        (decodedDateTime as PrecisionDateTime.StartOfDay).instant shouldBeEqualTo LocalDateTime.of(
+        decodedDateTime shouldBeInstanceOf PrecisionDateTime.ValidPrecisionDateTime.StartOfDay::class
+        (decodedDateTime as PrecisionDateTime.ValidPrecisionDateTime.StartOfDay).instant shouldBeEqualTo LocalDateTime.of(
             LocalDate.of(2022, 5, 3),
             LocalTime.of(0, 0, 0, 0)
         ).toInstant(ZoneOffset.UTC)
@@ -31,8 +31,8 @@ class DateTimeSerializerTest {
 
         val decodedDateTime: PrecisionDateTime = JSON_SERIALIZER.decodeFromString(DateTimeSerializer, jsonString)
 
-        decodedDateTime shouldBeInstanceOf PrecisionDateTime.ExactTime::class
-        (decodedDateTime as PrecisionDateTime.ExactTime).instant shouldBeEqualTo LocalDateTime.of(
+        decodedDateTime shouldBeInstanceOf PrecisionDateTime.ValidPrecisionDateTime.ExactTime::class
+        (decodedDateTime as PrecisionDateTime.ValidPrecisionDateTime.ExactTime).instant shouldBeEqualTo LocalDateTime.of(
             LocalDate.of(2022, 5, 3),
             LocalTime.of(13, 37, 42, 0)
         ).toInstant(ZoneOffset.UTC)
@@ -44,8 +44,8 @@ class DateTimeSerializerTest {
 
         val decodedDateTime: PrecisionDateTime = JSON_SERIALIZER.decodeFromString(DateTimeSerializer, jsonString)
 
-        decodedDateTime shouldBeInstanceOf PrecisionDateTime.ExactTime::class
-        (decodedDateTime as PrecisionDateTime.ExactTime).instant shouldBeEqualTo LocalDateTime.of(
+        decodedDateTime shouldBeInstanceOf PrecisionDateTime.ValidPrecisionDateTime.ExactTime::class
+        (decodedDateTime as PrecisionDateTime.ValidPrecisionDateTime.ExactTime).instant shouldBeEqualTo LocalDateTime.of(
             LocalDate.of(2019, 6, 12),
             LocalTime.of(18, 55, 12, 53_000_000)
         ).toInstant(ZoneOffset.UTC)
@@ -57,8 +57,8 @@ class DateTimeSerializerTest {
 
         val decodedDateTime: PrecisionDateTime = JSON_SERIALIZER.decodeFromString(DateTimeSerializer, jsonString)
 
-        decodedDateTime shouldBeInstanceOf PrecisionDateTime.Invalid::class
-        (decodedDateTime as PrecisionDateTime.Invalid).parseException shouldBeInstanceOf DateTimeParseException::class
+        decodedDateTime shouldBeInstanceOf PrecisionDateTime.InvalidPrecisionDateTime.Invalid::class
+        (decodedDateTime as PrecisionDateTime.InvalidPrecisionDateTime.Invalid).parseException shouldBeInstanceOf DateTimeParseException::class
     }
 
     @Test
@@ -67,7 +67,7 @@ class DateTimeSerializerTest {
             LocalDateTime.of(2023, 10, 31, 13, 37, 42),
             ZoneOffset.UTC
         ).toInstant()
-        val exactTime = PrecisionDateTime.ExactTime(instant)
+        val exactTime = PrecisionDateTime.ValidPrecisionDateTime.ExactTime(instant)
 
         val encodedInstant = JSON_SERIALIZER.encodeToString(DateTimeSerializer, exactTime)
 

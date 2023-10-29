@@ -6,7 +6,6 @@ import social.bigbone.JSON_SERIALIZER
 import social.bigbone.PrecisionDateTime
 import social.bigbone.api.entity.data.Visibility
 import social.bigbone.testtool.AssetsUtil
-import java.time.Instant
 
 class StatusTest {
 
@@ -25,13 +24,10 @@ class StatusTest {
 
     @Test
     fun constructor() {
-        val status = Status(
-            id = "123",
-            createdAt = PrecisionDateTime.ExactTime(Instant.now()),
-            visibility = Visibility.PRIVATE
-        )
+        val status = Status(id = "123", visibility = Visibility.PRIVATE)
         status.id shouldBeEqualTo "123"
         status.visibility shouldBeEqualTo Visibility.PRIVATE
         status.content shouldBeEqualTo ""
+        status.createdAt shouldBeEqualTo PrecisionDateTime.InvalidPrecisionDateTime.Unavailable
     }
 }

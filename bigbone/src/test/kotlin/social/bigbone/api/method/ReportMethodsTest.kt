@@ -6,9 +6,9 @@ import org.amshove.kluent.shouldContainIgnoringCase
 import org.amshove.kluent.shouldNotBeNull
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import social.bigbone.PrecisionDateTime.ExactTime
-import social.bigbone.PrecisionDateTime.StartOfDay
-import social.bigbone.PrecisionDateTime.Unavailable
+import social.bigbone.PrecisionDateTime.InvalidPrecisionDateTime.Unavailable
+import social.bigbone.PrecisionDateTime.ValidPrecisionDateTime.ExactTime
+import social.bigbone.PrecisionDateTime.ValidPrecisionDateTime.StartOfDay
 import social.bigbone.api.entity.Report.ReportType
 import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.testtool.MockClient
