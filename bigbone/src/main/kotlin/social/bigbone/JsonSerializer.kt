@@ -19,25 +19,45 @@ internal val JSON_SERIALIZER: Json = Json {
 }
 
 /**
- * Custom [KSerializer] to serialize and deserialize ISO 8601 datetime or date strings into an [Instant] and vice versa.
+ * Custom [KSerializer] to serialize and deserialize ISO 8601 datetime
+ * or date strings into a [PrecisionDateTime] and vice versa.
+ *
+ * This will attempt to retrieve an [PrecisionDateTime.ExactTime] first.
+ * If that fails, it will try with [PrecisionDateTime.StartOfDay].
+ * If that _also_ fails, it will return [PrecisionDateTime.Invalid],
+ * swallowing any [DateTimeParseException]s in the process.
  */
-object InstantSerializer : KSerializer<Instant> {
+object DateTimeSerializer : KSerializer<PrecisionDateTime> {
 
     override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("java.time.Instant", PrimitiveKind.STRING)
 
-    override fun serialize(encoder: Encoder, value: Instant) = encoder.encodeString(value.toString())
+    override fun serialize(encoder: Encoder, value: PrecisionDateTime) = encoder.encodeString(value.asJsonString())
 
-    override fun deserialize(decoder: Decoder): Instant {
+    override fun deserialize(decoder: Decoder): PrecisionDateTime {
         val decodedString = decoder.decodeString()
+
         return try {
-            // Attempt to deserialize ISO 8601 date time strings first
-            Instant.parse(decodedString)
-        } catch (exception: DateTimeParseException) {
-            // If that didn't work, try again with a LocalDate string only. Some properties return ISO 8601 date time
-            // strings for one HTTP endpoint, but an ISO 8601 date only string for other HTTP endpoints with the same
-            // type. Should this fail again, this will implicitly throw a new DateTimeParseException again.
-            val localDate = LocalDate.parse(decodedString)
-            return localDate.atStartOfDay().toInstant(ZoneOffset.UTC)
+            try {
+                parseExactDateTime(decodedString)
+            } catch (dateTimeParseException: DateTimeParseException) {
+                parseStartOfDay(decodedString)
+            }
+        } catch (dateTimeParseException: DateTimeParseException) {
+            PrecisionDateTime.Invalid(dateTimeParseException)
         }
     }
+
+    /**
+     * Attempts to parse an ISO 8601 string as an exact point in time.
+     * @param decodedString ISO 8601 string retrieved from JSON
+     */
+    private fun parseExactDateTime(decodedString: String): PrecisionDateTime.ExactTime =
+        PrecisionDateTime.ExactTime(Instant.parse(decodedString))
+
+    /**
+     * Attempts to parse an ISO 8601 string into a [LocalDate] and returning an [Instant] at the start of that day in UTC.
+     * @param decodedString ISO 8601 string retrieved from JSON
+     */
+    private fun parseStartOfDay(decodedString: String): PrecisionDateTime.StartOfDay =
+        PrecisionDateTime.StartOfDay(LocalDate.parse(decodedString).atStartOfDay().toInstant(ZoneOffset.UTC))
 }

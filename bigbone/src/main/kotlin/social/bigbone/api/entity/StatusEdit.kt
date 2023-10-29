@@ -2,8 +2,8 @@ package social.bigbone.api.entity
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import social.bigbone.InstantSerializer
-import java.time.Instant
+import social.bigbone.DateTimeSerializer
+import social.bigbone.PrecisionDateTime
 
 /**
  * Represents a revision of a status that has been edited.
@@ -33,8 +33,8 @@ data class StatusEdit(
      * The timestamp of when the revision was published (ISO 8601 Datetime string).
      */
     @SerialName("created_at")
-    @Serializable(with = InstantSerializer::class)
-    val createdAt: Instant,
+    @Serializable(with = DateTimeSerializer::class)
+    val createdAt: PrecisionDateTime = PrecisionDateTime.Unavailable,
 
     /**
      * The account that published this revision.

@@ -2,8 +2,8 @@ package social.bigbone.api.entity
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import social.bigbone.InstantSerializer
-import java.time.Instant
+import social.bigbone.DateTimeSerializer
+import social.bigbone.PrecisionDateTime
 
 /**
  * Represents a user of Mastodon and their associated profile.
@@ -136,16 +136,16 @@ data class Account(
      * When the account was created (ISO 8601 Datetime).
      */
     @SerialName("created_at")
-    @Serializable(with = InstantSerializer::class)
-    val createdAt: Instant? = null,
+    @Serializable(with = DateTimeSerializer::class)
+    val createdAt: PrecisionDateTime = PrecisionDateTime.Unavailable,
 
     /**
      * When the most recent status was posted.
      * String (ISO 8601 Date), or null if no statuses
      */
     @SerialName("last_status_at")
-    @Serializable(with = InstantSerializer::class)
-    val lastStatusAt: Instant? = null,
+    @Serializable(with = DateTimeSerializer::class)
+    val lastStatusAt: PrecisionDateTime = PrecisionDateTime.Unavailable,
 
     /**
      * How many statuses are attached to this account.
@@ -187,7 +187,7 @@ data class Account(
          * ISO 8601 Datetime string if [value] is a verified URL. Otherwise, null.
          */
         @SerialName("verified_at")
-        @Serializable(with = InstantSerializer::class)
-        val verifiedAt: Instant? = null
+        @Serializable(with = DateTimeSerializer::class)
+        val verifiedAt: PrecisionDateTime = PrecisionDateTime.Unavailable
     )
 }

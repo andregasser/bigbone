@@ -10,6 +10,7 @@ import org.amshove.kluent.shouldThrow
 import org.junit.jupiter.api.Test
 import social.bigbone.MastodonClient
 import social.bigbone.Parameters
+import social.bigbone.PrecisionDateTime.ExactTime
 import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.testtool.MockClient
 import java.time.Instant
@@ -24,12 +25,12 @@ class NotificationMethodsTest {
 
         with(pageable.part.first()) {
             type shouldBeEqualTo "mention"
-            createdAt shouldBeEqualTo Instant.parse("2019-11-23T07:49:02.064Z")
+            createdAt shouldBeEqualTo ExactTime(Instant.parse("2019-11-23T07:49:02.064Z"))
             account.shouldNotBeNull()
         }
         with(pageable.part.first().status) {
             shouldNotBeNull()
-            createdAt shouldBeEqualTo Instant.parse("2019-11-23T07:49:01.940Z")
+            createdAt shouldBeEqualTo ExactTime(Instant.parse("2019-11-23T07:49:01.940Z"))
         }
 
         verify {
@@ -48,11 +49,11 @@ class NotificationMethodsTest {
 
         with(pageable.part[1]) {
             type shouldBeEqualTo "favourite"
-            createdAt shouldBeEqualTo Instant.parse("2019-11-23T07:29:18.903Z")
+            createdAt shouldBeEqualTo ExactTime(Instant.parse("2019-11-23T07:29:18.903Z"))
         }
         with(pageable.part[1].status) {
             shouldNotBeNull()
-            createdAt shouldBeEqualTo Instant.parse("2019-11-23T07:28:34.210Z")
+            createdAt shouldBeEqualTo ExactTime(Instant.parse("2019-11-23T07:28:34.210Z"))
         }
 
         verify {

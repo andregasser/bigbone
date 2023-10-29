@@ -2,8 +2,8 @@ package social.bigbone.api.entity
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import social.bigbone.InstantSerializer
-import java.time.Instant
+import social.bigbone.DateTimeSerializer
+import social.bigbone.PrecisionDateTime
 
 /**
  * Represents the last read position within a specific timeline of the user.
@@ -27,6 +27,6 @@ data class Marker(
      * The timestamp of when the marker was set (ISO 8601 Datetime).
      */
     @SerialName("updated_at")
-    @Serializable(with = InstantSerializer::class)
-    val updatedAt: Instant
+    @Serializable(with = DateTimeSerializer::class)
+    val updatedAt: PrecisionDateTime = PrecisionDateTime.Unavailable
 )

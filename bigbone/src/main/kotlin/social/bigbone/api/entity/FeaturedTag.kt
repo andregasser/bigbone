@@ -2,8 +2,8 @@ package social.bigbone.api.entity
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import social.bigbone.InstantSerializer
-import java.time.Instant
+import social.bigbone.DateTimeSerializer
+import social.bigbone.PrecisionDateTime
 
 /**
  * Represents a hashtag that is featured on a profile.
@@ -39,6 +39,6 @@ data class FeaturedTag(
      * The timestamp of the last authored status containing this hashtag.
      */
     @SerialName("last_status_at")
-    @Serializable(with = InstantSerializer::class)
-    val lastStatusAt: Instant
+    @Serializable(with = DateTimeSerializer::class)
+    val lastStatusAt: PrecisionDateTime = PrecisionDateTime.Unavailable
 )

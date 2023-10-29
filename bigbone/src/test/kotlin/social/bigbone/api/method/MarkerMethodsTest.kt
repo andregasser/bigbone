@@ -4,6 +4,7 @@ import org.amshove.kluent.`should not be`
 import org.amshove.kluent.shouldBe
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.Test
+import social.bigbone.PrecisionDateTime.ExactTime
 import social.bigbone.testtool.MockClient
 import java.time.Instant
 
@@ -17,13 +18,13 @@ class MarkerMethodsTest {
         marker.home?.let {
             it.lastReadId shouldBeEqualTo "103206604258487607"
             it.version shouldBeEqualTo 468
-            it.updatedAt shouldBeEqualTo Instant.parse("2019-11-26T22:37:25.235Z")
+            it.updatedAt shouldBeEqualTo ExactTime(Instant.parse("2019-11-26T22:37:25.235Z"))
         }
         marker.notifications `should not be` null
         marker.notifications?.let {
             it.lastReadId shouldBeEqualTo "35098814"
             it.version shouldBeEqualTo 361
-            it.updatedAt shouldBeEqualTo Instant.parse("2019-11-26T22:37:25.239Z")
+            it.updatedAt shouldBeEqualTo ExactTime(Instant.parse("2019-11-26T22:37:25.239Z"))
         }
     }
 
@@ -37,7 +38,7 @@ class MarkerMethodsTest {
         marker.home?.let {
             it.lastReadId shouldBeEqualTo "103206604258487607"
             it.version shouldBeEqualTo 468
-            it.updatedAt shouldBeEqualTo Instant.parse("2019-11-26T22:37:25.235Z")
+            it.updatedAt shouldBeEqualTo ExactTime(Instant.parse("2019-11-26T22:37:25.235Z"))
         }
     }
 }

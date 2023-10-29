@@ -2,10 +2,10 @@ package social.bigbone.api.entity
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import social.bigbone.InstantSerializer
+import social.bigbone.DateTimeSerializer
+import social.bigbone.PrecisionDateTime
 import social.bigbone.api.entity.data.PollData
 import social.bigbone.api.entity.data.Visibility
-import java.time.Instant
 
 /**
  * Represents a status that will be published at a future scheduled date.
@@ -23,8 +23,8 @@ data class ScheduledStatus(
      * The timestamp for when the status will be posted (ISO 8601 Datetime).
      */
     @SerialName("scheduled_at")
-    @Serializable(with = InstantSerializer::class)
-    val scheduledAt: Instant,
+    @Serializable(with = DateTimeSerializer::class)
+    val scheduledAt: PrecisionDateTime = PrecisionDateTime.Unavailable,
 
     /**
      * The parameters that were used when scheduling the status, to be used when the status is posted.

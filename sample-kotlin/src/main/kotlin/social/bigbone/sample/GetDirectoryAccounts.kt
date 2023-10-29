@@ -1,7 +1,9 @@
 package social.bigbone.sample
 
 import social.bigbone.MastodonClient
+import social.bigbone.PrecisionDateTime
 import social.bigbone.api.method.DirectoryMethods
+import java.time.Instant
 
 object GetDirectoryAccounts {
     @JvmStatic
@@ -23,7 +25,16 @@ object GetDirectoryAccounts {
         ).execute()
 
         // do something with the result; here, we find the oldest account still active and output information about it
-        val oldestAccount = accounts.sortedWith(compareBy { it.createdAt }).first()
+        val oldestAccount = accounts
+            .filter { it.createdAt is PrecisionDateTime.ExactTime || it.createdAt is PrecisionDateTime.StartOfDay }
+            .minBy {
+                when (it.createdAt) {
+                    is PrecisionDateTime.ExactTime -> (it.createdAt as PrecisionDateTime.ExactTime).instant
+                    is PrecisionDateTime.StartOfDay -> (it.createdAt as PrecisionDateTime.StartOfDay).instant
+                    // Shouldn't happen, but still returning an EPOCH Instant just in case
+                    else -> Instant.ofEpochSecond(0)
+                }
+            }
         oldestAccount.let {
             println("@${it.acct}@$instance posted ${it.statusesCount} times since ${it.createdAt}")
         }
