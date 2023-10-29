@@ -1,5 +1,6 @@
 package social.bigbone
 
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
@@ -33,7 +34,14 @@ object DateTimeSerializer : KSerializer<PrecisionDateTime> {
     override val descriptor: SerialDescriptor =
         PrimitiveSerialDescriptor("social.bigbone.DateTimeSerializer", PrimitiveKind.STRING)
 
-    override fun serialize(encoder: Encoder, value: PrecisionDateTime) = encoder.encodeString(value.asJsonString())
+    @OptIn(ExperimentalSerializationApi::class)
+    override fun serialize(encoder: Encoder, value: PrecisionDateTime) {
+        return if (value is InvalidPrecisionDateTime) {
+            encoder.encodeNull()
+        } else {
+            encoder.encodeString(value.asJsonString())
+        }
+    }
 
     override fun deserialize(decoder: Decoder): PrecisionDateTime {
         val decodedString = decoder.decodeString()

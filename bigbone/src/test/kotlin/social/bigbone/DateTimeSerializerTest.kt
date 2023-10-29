@@ -1,8 +1,10 @@
 package social.bigbone
 
+import kotlinx.serialization.encodeToString
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeInstanceOf
 import org.junit.jupiter.api.Test
+import social.bigbone.api.entity.Account
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -90,5 +92,16 @@ class DateTimeSerializerTest {
         val decodedDateTime = JSON_SERIALIZER.decodeFromString(DateTimeSerializer, encodedInstant)
 
         decodedDateTime shouldBeEqualTo exactTime
+    }
+
+    @Test
+    fun `Given an Account with Unavailable createdAt, when encoding into JSON string then return expected JSON string with created_at as null`() {
+        val account = Account(createdAt = PrecisionDateTime.InvalidPrecisionDateTime.Unavailable)
+
+        val encodedInstant = JSON_SERIALIZER.encodeToString(account)
+
+        encodedInstant shouldBeEqualTo """
+            {"id":"0","username":"","acct":"","url":"","display_name":"","note":"","avatar":"","avatar_static":"","header":"","header_static":"","locked":false,"fields":[],"emojis":[],"bot":false,"group":false,"discoverable":null,"noindex":null,"moved":null,"suspended":null,"limited":null,"created_at":null,"last_status_at":null,"statuses_count":0,"followers_count":0,"following_count":0}
+        """.trimIndent()
     }
 }
