@@ -5,16 +5,16 @@ import io.reactivex.rxjava3.core.Single
 import social.bigbone.MastodonClient
 import social.bigbone.api.Pageable
 import social.bigbone.api.Range
-import social.bigbone.api.method.DomainBlocksMethods
+import social.bigbone.api.method.DomainBlockMethods
 
 /**
- * Reactive implementation of [DomainBlocksMethods]
+ * Reactive implementation of [DomainBlockMethods]
  * Manage a user's blocked domains.
  * @see <a href="https://docs.joinmastodon.org/methods/domain_blocks/">Mastodon domain_blocks API methods</a>
  */
-class RxDomainBlocksMethods(client: MastodonClient) {
+class RxDomainBlockMethods(client: MastodonClient) {
 
-    private val domainBlocksMethods = DomainBlocksMethods(client)
+    private val domainBlockMethods = DomainBlockMethods(client)
 
     /**
      * View domains the user has blocked.
@@ -24,7 +24,7 @@ class RxDomainBlocksMethods(client: MastodonClient) {
      */
     @JvmOverloads
     fun getDomainBlocks(range: Range = Range()): Single<Pageable<String>> =
-        Single.fromCallable { domainBlocksMethods.getDomainBlocks(range).execute() }
+        Single.fromCallable { domainBlockMethods.getDomainBlocks(range).execute() }
 
     /**
      * Block a domain to hide all public posts from it, hide all notifications from it,
@@ -33,7 +33,7 @@ class RxDomainBlocksMethods(client: MastodonClient) {
      * @param domain Domain to block
      * @see <a href="https://docs.joinmastodon.org/methods/domain_blocks/#block">Mastodon API documentation: methods/domain_blocks/#block</a>
      */
-    fun blockDomain(domain: String): Completable = Completable.fromAction { domainBlocksMethods.blockDomain(domain) }
+    fun blockDomain(domain: String): Completable = Completable.fromAction { domainBlockMethods.blockDomain(domain) }
 
     /**
      * Remove a domain block, if it exists in the user’s array of blocked domains.
@@ -42,5 +42,5 @@ class RxDomainBlocksMethods(client: MastodonClient) {
      * @see <a href="https://docs.joinmastodon.org/methods/domain_blocks/#block">Mastodon API documentation: methods/domain_blocks/#block</a>
      */
     fun unblockDomain(domain: String): Completable =
-        Completable.fromAction { domainBlocksMethods.unblockDomain(domain) }
+        Completable.fromAction { domainBlockMethods.unblockDomain(domain) }
 }

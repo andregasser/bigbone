@@ -11,7 +11,7 @@ import social.bigbone.api.exception.BigBoneRequestException
  * View information about Feature tags that you use frequently on your profile.
  * @see <a href="https://docs.joinmastodon.org/methods/featured_tags/">Mastodon featured_tags API methods</a>
  */
-class FeaturedTagsMethods(private val client: MastodonClient) {
+class FeaturedTagMethods(private val client: MastodonClient) {
 
     private val featuredTagsEndpoint = "api/v1/featured_tags"
 

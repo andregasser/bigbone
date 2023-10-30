@@ -17,12 +17,12 @@ import social.bigbone.api.method.AppMethods
 import social.bigbone.api.method.BlockMethods
 import social.bigbone.api.method.BookmarkMethods
 import social.bigbone.api.method.ConversationMethods
-import social.bigbone.api.method.CustomEmojisMethods
+import social.bigbone.api.method.CustomEmojiMethods
 import social.bigbone.api.method.DirectoryMethods
-import social.bigbone.api.method.DomainBlocksMethods
+import social.bigbone.api.method.DomainBlockMethods
 import social.bigbone.api.method.EndorsementMethods
 import social.bigbone.api.method.FavouriteMethods
-import social.bigbone.api.method.FeaturedTagsMethods
+import social.bigbone.api.method.FeaturedTagMethods
 import social.bigbone.api.method.FilterMethods
 import social.bigbone.api.method.FollowRequestMethods
 import social.bigbone.api.method.InstanceMethods
@@ -113,7 +113,7 @@ private constructor(
      */
     @Suppress("unused") // public API
     @get:JvmName("customEmojis")
-    val customEmojis: CustomEmojisMethods by lazy { CustomEmojisMethods(this) }
+    val customEmojis: CustomEmojiMethods by lazy { CustomEmojiMethods(this) }
 
     /**
      * Access API methods under "api/vX/directory" endpoint.
@@ -127,7 +127,7 @@ private constructor(
      */
     @Suppress("unused") // public API
     @get:JvmName("domainBlocks")
-    val domainBlocks: DomainBlocksMethods by lazy { DomainBlocksMethods(this) }
+    val domainBlocks: DomainBlockMethods by lazy { DomainBlockMethods(this) }
 
     /**
      * Access API methods under "api/vX/endorsements" endpoint.
@@ -148,7 +148,7 @@ private constructor(
      */
     @Suppress("unused") // public API
     @get:JvmName("featuredTags")
-    val featuredTags: FeaturedTagsMethods by lazy { FeaturedTagsMethods(this) }
+    val featuredTags: FeaturedTagMethods by lazy { FeaturedTagMethods(this) }
 
     /**
      * Access API methods under "api/vX/filters" endpoint.
@@ -263,7 +263,6 @@ private constructor(
     val timelines: TimelineMethods by lazy { TimelineMethods(this) }
 
     /**
-
      * Access API methods under "preferences" endpoint.
      */
     @Suppress("unused") // public API

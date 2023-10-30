@@ -1,12 +1,18 @@
 package social.bigbone.api.method
 
+import org.amshove.kluent.invoking
 import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldThrow
+import org.amshove.kluent.withMessage
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
+import social.bigbone.PrecisionDateTime.ValidPrecisionDateTime.ExactTime
 import social.bigbone.api.entity.data.PollData
 import social.bigbone.api.entity.data.Visibility
 import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.testtool.MockClient
+import java.time.Duration
+import java.time.Instant
 
 class StatusMethodsTest {
     @Test
@@ -178,9 +184,11 @@ class StatusMethodsTest {
     fun scheduleStatus() {
         val client = MockClient.mock("scheduled_status.json")
         val statusMethods = StatusMethods(client)
+        val scheduledDate: Instant = Instant.now().plus(Duration.ofHours(5))
+
         val scheduledStatus = statusMethods.scheduleStatus(
             status = "a",
-            scheduledAt = "2023-12-31T12:34:56.789Z",
+            scheduledAt = scheduledDate,
             visibility = Visibility.UNLISTED,
             inReplyToId = null,
             mediaIds = null,
@@ -188,9 +196,30 @@ class StatusMethodsTest {
             spoilerText = null,
             language = "en"
         ).execute()
+
         scheduledStatus.id shouldBeEqualTo "12345"
-        scheduledStatus.scheduledAt shouldBeEqualTo "2023-12-31T12:34:56.789Z"
+        scheduledStatus.scheduledAt shouldBeEqualTo ExactTime(Instant.parse("2023-12-31T12:34:56.789Z"))
         scheduledStatus.params.text shouldBeEqualTo "test post"
+    }
+
+    @Test
+    fun `Given a client that would return success, when scheduling a status less than 5min ahead, then throw Exception`() {
+        val client = MockClient.mock("scheduled_status.json")
+        val statusMethods = StatusMethods(client)
+        val scheduledDate: Instant = Instant.now().plus(Duration.ofMinutes(2))
+
+        invoking {
+            statusMethods.scheduleStatus(
+                status = "a",
+                scheduledAt = scheduledDate,
+                visibility = Visibility.UNLISTED,
+                inReplyToId = null,
+                mediaIds = null,
+                sensitive = false,
+                spoilerText = null,
+                language = "en"
+            ).execute()
+        } shouldThrow IllegalArgumentException::class withMessage "Scheduled time in scheduleAt must lie ahead at least 5 minutes"
     }
 
     @Test
@@ -198,9 +227,11 @@ class StatusMethodsTest {
         Assertions.assertThrows(BigBoneRequestException::class.java) {
             val client = MockClient.ioException()
             val statusMethods = StatusMethods(client)
+            val scheduledDate: Instant = Instant.now().plus(Duration.ofHours(5))
+
             statusMethods.scheduleStatus(
                 status = "a",
-                scheduledAt = "2023-12-31T12:34:56.789Z",
+                scheduledAt = scheduledDate,
                 visibility = Visibility.UNLISTED,
                 inReplyToId = null,
                 mediaIds = null,
@@ -221,9 +252,11 @@ class StatusMethodsTest {
             multiple = true,
             hideTotals = false
         )
+        val scheduledDate: Instant = Instant.now().plus(Duration.ofHours(5))
+
         val scheduledStatus = statusMethods.schedulePoll(
             status = "a",
-            scheduledAt = "2023-12-31T12:34:56.789Z",
+            scheduledAt = scheduledDate,
             pollData = pollData,
             visibility = Visibility.UNLISTED,
             inReplyToId = null,
@@ -231,10 +264,36 @@ class StatusMethodsTest {
             spoilerText = null,
             language = "en"
         ).execute()
+
         scheduledStatus.id shouldBeEqualTo "12345"
         scheduledStatus.params.poll?.options?.get(0) shouldBeEqualTo "foo"
         scheduledStatus.params.poll?.options?.get(1) shouldBeEqualTo "bar"
         scheduledStatus.params.poll?.multiple shouldBeEqualTo true
+    }
+
+    @Test
+    fun `Given a client that would return success, when scheduling a poll less than 5min ahead, then throw Exception`() {
+        val client = MockClient.mock("scheduled_status_with_poll.json")
+        val statusMethods = StatusMethods(client)
+        val scheduledDate: Instant = Instant.now().plus(Duration.ofMinutes(2))
+
+        invoking {
+            statusMethods.schedulePoll(
+                status = "a",
+                scheduledAt = scheduledDate,
+                pollData = PollData(
+                    options = listOf("foo", "bar", "baz"),
+                    expiresIn = "3600",
+                    multiple = true,
+                    hideTotals = false
+                ),
+                visibility = Visibility.UNLISTED,
+                inReplyToId = null,
+                sensitive = false,
+                spoilerText = null,
+                language = "en"
+            ).execute()
+        } shouldThrow IllegalArgumentException::class withMessage "Scheduled time in scheduleAt must lie ahead at least 5 minutes"
     }
 
     @Test
@@ -248,9 +307,11 @@ class StatusMethodsTest {
                 hideTotals = false
             )
             val statusMethods = StatusMethods(client)
+            val scheduledDate: Instant = Instant.now().plus(Duration.ofHours(5))
+
             statusMethods.schedulePoll(
                 status = "a",
-                scheduledAt = "2023-12-31T12:34:56.789Z",
+                scheduledAt = scheduledDate,
                 pollData = pollData,
                 visibility = Visibility.UNLISTED,
                 inReplyToId = null,
@@ -517,8 +578,8 @@ class StatusMethodsTest {
         val statusEditWithPoll = statusHistory[3]
         statusEditInitial.content shouldBeEqualTo "<p>this is a status that will be edited</p>"
         statusEditRevision.content shouldBeEqualTo "<p>this is a status that has been edited</p>"
-        statusEditInitial.createdAt shouldBeEqualTo "2022-09-04T23:22:13.704Z"
-        statusEditRevision.createdAt shouldBeEqualTo "2022-09-04T23:22:42.555Z"
+        statusEditInitial.createdAt shouldBeEqualTo ExactTime(Instant.parse("2022-09-04T23:22:13.704Z"))
+        statusEditRevision.createdAt shouldBeEqualTo ExactTime(Instant.parse("2022-09-04T23:22:42.555Z"))
         statusEditWithPoll.poll?.options?.get(0)?.title shouldBeEqualTo "cool"
         statusEditWithPoll.poll?.options?.get(1)?.title shouldBeEqualTo "uncool"
         statusEditWithPoll.poll?.options?.get(2)?.title shouldBeEqualTo "spiderman"

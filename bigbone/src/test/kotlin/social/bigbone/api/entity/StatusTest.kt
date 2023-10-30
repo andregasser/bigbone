@@ -3,6 +3,7 @@ package social.bigbone.api.entity
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.Test
 import social.bigbone.JSON_SERIALIZER
+import social.bigbone.PrecisionDateTime
 import social.bigbone.api.entity.data.Visibility
 import social.bigbone.testtool.AssetsUtil
 
@@ -27,5 +28,6 @@ class StatusTest {
         status.id shouldBeEqualTo "123"
         status.visibility shouldBeEqualTo Visibility.PRIVATE
         status.content shouldBeEqualTo ""
+        status.createdAt shouldBeEqualTo PrecisionDateTime.InvalidPrecisionDateTime.Unavailable
     }
 }

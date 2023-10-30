@@ -14,6 +14,7 @@ import social.bigbone.api.entity.Translation
 import social.bigbone.api.entity.data.PollData
 import social.bigbone.api.entity.data.Visibility
 import social.bigbone.api.method.StatusMethods
+import java.time.Instant
 
 /**
  * Reactive implementation of [StatusMethods].
@@ -93,7 +94,7 @@ class RxStatusMethods(client: MastodonClient) {
     fun scheduleStatus(
         status: String,
         mediaIds: List<String>? = null,
-        scheduledAt: String,
+        scheduledAt: Instant,
         visibility: Visibility = Visibility.PUBLIC,
         inReplyToId: String? = null,
         sensitive: Boolean = false,
@@ -115,7 +116,7 @@ class RxStatusMethods(client: MastodonClient) {
     @JvmOverloads
     fun schedulePoll(
         status: String,
-        scheduledAt: String,
+        scheduledAt: Instant,
         pollData: PollData,
         visibility: Visibility = Visibility.PUBLIC,
         inReplyToId: String? = null,

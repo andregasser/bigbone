@@ -5,10 +5,6 @@ import social.bigbone.api.entity.Application
 import social.bigbone.api.entity.MediaAttachment
 import social.bigbone.api.entity.Token
 import java.io.File
-import java.time.Instant
-import java.time.ZoneId
-import java.time.ZonedDateTime
-import java.time.format.DateTimeFormatter
 
 object TestHelpers {
     fun uploadMediaFromResourcesFolder(filename: String, mediaType: String, client: MastodonClient): MediaAttachment {
@@ -61,10 +57,5 @@ object TestHelpers {
         pinnedStatuses.part.forEach {
             client.statuses.unpinStatus(it.id).execute()
         }
-    }
-
-    fun Instant.toISO8601DateTime(zoneId: ZoneId): String {
-        val zonedDateTime = ZonedDateTime.ofInstant(this, zoneId)
-        return DateTimeFormatter.ISO_INSTANT.format(zonedDateTime)
     }
 }
