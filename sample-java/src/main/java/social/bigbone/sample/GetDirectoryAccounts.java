@@ -5,7 +5,9 @@ import social.bigbone.api.entity.Account;
 import social.bigbone.api.exception.BigBoneRequestException;
 import social.bigbone.api.method.DirectoryMethods;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class GetDirectoryAccounts {
     public static void main(final String[] args) throws BigBoneRequestException {
@@ -25,10 +27,12 @@ public class GetDirectoryAccounts {
                 40
         ).execute();
 
-        // do something with the result; here, we output how many times each account has posted since it was created
-        accounts.forEach(account -> {
-            System.out.println("@" + account.getAcct() + "@" + instance + " has posted "
-                    + account.getStatusesCount() + " times since " + account.getCreatedAt());
-        });
+        // do something with the result; here, we find the oldest account still active and output information about it
+        final Account account = accounts.stream().min(Comparator.nullsLast(
+                Comparator.comparing((Account acct) -> acct.getCreatedAt().mostPreciseInstantOrNull())
+        )).orElseThrow(NoSuchElementException::new);
+
+        System.out.println("@" + account.getAcct() + "@" + instance + " has posted "
+                + account.getStatusesCount() + " times since " + account.getCreatedAt().mostPreciseInstantOrNull());
     }
 }

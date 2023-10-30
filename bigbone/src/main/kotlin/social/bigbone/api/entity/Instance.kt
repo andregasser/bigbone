@@ -2,6 +2,8 @@ package social.bigbone.api.entity
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import social.bigbone.DateTimeSerializer
+import social.bigbone.PrecisionDateTime
 
 /**
  * Represents the software instance of Mastodon running on this domain.
@@ -453,10 +455,10 @@ data class DomainBlock(
 data class ExtendedDescription(
     /**
      * A timestamp of when the extended description was last updated.
-     * String (ISO 8601 Datetime)
      */
     @SerialName("updated_at")
-    val updatedAt: String = "",
+    @Serializable(with = DateTimeSerializer::class)
+    val updatedAt: PrecisionDateTime = PrecisionDateTime.InvalidPrecisionDateTime.Unavailable,
 
     /**
      * The rendered HTML content of the extended description.

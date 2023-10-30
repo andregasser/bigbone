@@ -2,6 +2,9 @@ package social.bigbone.api.entity
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import social.bigbone.DateTimeSerializer
+import social.bigbone.PrecisionDateTime
+import social.bigbone.PrecisionDateTime.InvalidPrecisionDateTime
 import social.bigbone.api.entity.data.Visibility
 
 /**
@@ -23,10 +26,11 @@ data class Status(
     val uri: String = "",
 
     /**
-     * The date when this status was created (ISO 8601 Datetime).
+     * The date when this status was created.
      */
     @SerialName("created_at")
-    val createdAt: String = "",
+    @Serializable(with = DateTimeSerializer::class)
+    val createdAt: PrecisionDateTime = InvalidPrecisionDateTime.Unavailable,
 
     /**
      * The account that authored this status.
@@ -157,10 +161,11 @@ data class Status(
     val text: String? = null,
 
     /**
-     * Timestamp of when the status was last edited (ISO 8601 Datetime).
+     * Timestamp of when the status was last edited.
      */
     @SerialName("edited_at")
-    val editedAt: String? = null,
+    @Serializable(with = DateTimeSerializer::class)
+    val editedAt: PrecisionDateTime = InvalidPrecisionDateTime.Unavailable,
 
     /**
      * If the current token has an authorized user: Have you favourited this status? (optional)
