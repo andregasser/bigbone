@@ -84,8 +84,6 @@ sealed interface PrecisionDateTime {
 
         /**
          * Type used when we encountered an error when attempting to parse a date.
-         * This differs from [Unavailable] as [Invalid] will only be returned if a date
-         * property was null or otherwise unavailable.
          */
         @JvmInline
         value class Invalid(val parseException: DateTimeParseException) : InvalidPrecisionDateTime
