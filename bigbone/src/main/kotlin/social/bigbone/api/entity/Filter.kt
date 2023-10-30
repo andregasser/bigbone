@@ -2,6 +2,11 @@ package social.bigbone.api.entity
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import social.bigbone.DateTimeSerializer
+import social.bigbone.PrecisionDateTime
+import social.bigbone.PrecisionDateTime.InvalidPrecisionDateTime
+import social.bigbone.api.entity.Filter.Action
+import social.bigbone.api.entity.Filter.Context
 
 /**
  * Represents a user-defined filter for determining which statuses should not be shown to the user.
@@ -30,9 +35,11 @@ data class Filter(
 
     /**
      * When the filter should no longer be applied.
+     * [InvalidPrecisionDateTime.Unavailable] if the filter does not expire.
      */
     @SerialName("expires_at")
-    val expiresAt: String? = null,
+    @Serializable(with = DateTimeSerializer::class)
+    val expiresAt: PrecisionDateTime = InvalidPrecisionDateTime.Unavailable,
 
     /**
      * The action to be taken when a status matches this filter.

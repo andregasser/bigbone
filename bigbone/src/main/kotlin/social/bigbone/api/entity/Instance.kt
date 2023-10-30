@@ -2,6 +2,8 @@ package social.bigbone.api.entity
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import social.bigbone.DateTimeSerializer
+import social.bigbone.PrecisionDateTime
 
 /**
  * Represents the software instance of Mastodon running on this domain.
@@ -12,8 +14,8 @@ data class Instance(
     /**
      * The domain name of the instance.
      */
-    @SerialName("uri")
-    val uri: String = "",
+    @SerialName("domain")
+    val domain: String = "",
 
     /**
      * The title of the website.
@@ -22,157 +24,185 @@ data class Instance(
     val title: String = "",
 
     /**
-     * A short, plain-text description defined by the admin.
-     */
-    @SerialName("short_description")
-    val shortDescription: String = "",
-
-    /**
-     * An HTML-permitted description of the Mastodon site.
-     */
-    @SerialName("description")
-    val description: String = "",
-
-    /**
-     * An email that may be contacted for any inquiries.
-     */
-    @SerialName("email")
-    val email: String = "",
-
-    /**
      * The version of Mastodon installed on the instance.
      */
     @SerialName("version")
     val version: String = "",
 
     /**
-     * URLs of interest for clients apps.
+     * The URL for the source code of the software running on this instance, in keeping with AGPL license requirements.
      */
-    @SerialName("urls")
-    val urls: Urls? = null,
+    @SerialName("source_url")
+    val sourceUrl: String = "",
 
     /**
-     * Statistics about how much information the instance contains.
+     * A short, plain-text description defined by the admin.
      */
-    @SerialName("stats")
-    val stats: Stats? = null,
+    @SerialName("description")
+    val description: String = "",
+
+    @SerialName("usage")
+    val usage: Usage = Usage(),
 
     /**
      * Banner image for the website.
      */
     @SerialName("thumbnail")
-    val thumbnail: String = "",
+    val thumbnail: Thumbnail = Thumbnail(),
 
     /**
      * Primary languages of the website and its staff.
+     * [List] of [String] (ISO 639-1 two-letter code)
      */
     @SerialName("languages")
     val languages: List<String> = emptyList(),
 
     /**
-     * Whether registrations are enabled.
-     */
-    @SerialName("registrations")
-    val registrations: Boolean = false,
-
-    /**
-     * Whether registrations require moderator approval.
-     */
-    @SerialName("approval_required")
-    val approvalRequired: Boolean = false,
-
-    /**
-     * Whether invites are enabled.
-     */
-    @SerialName("invites_enabled")
-    val invitesEnabled: Boolean = false,
-
-    /**
      * Configured values and limits for this website.
      */
     @SerialName("configuration")
-    val configuration: Configuration? = null,
+    val configuration: Configuration = Configuration(),
 
     /**
-     * A user that can be contacted, as an alternative to email.
+     * Information about registering for this website.
      */
-    @SerialName("contact_account")
-    val contactAccount: Account? = null,
+    @SerialName("registrations")
+    val registrations: Registrations = Registrations(),
+
+    /**
+     * Hints related to contacting a representative of the website.
+     */
+    @SerialName("contact")
+    val contact: Contact = Contact(),
 
     /**
      * An itemized list of rules for this website.
      */
     @SerialName("rules")
-    val rules: List<Rule>? = null
+    val rules: List<Rule> = emptyList()
 ) {
     /**
-     * URLs of interest for clients apps.
-     * @see <a href="https://docs.joinmastodon.org/entities/V1_Instance/">Mastodon API V1::Instance</a>
+     * Usage data for this instance.
      */
     @Serializable
-    data class Urls(
+    data class Usage(
         /**
-         * The Websockets URL for connecting to the streaming API.
+         * Usage data related to users on this instance.
          */
-        @SerialName("streaming_api")
-        val streamingApi: String = ""
-    )
+        @SerialName("users")
+        val users: Users = Users()
+    ) {
+        /**
+         * Usage data related to users on this instance.
+         */
+        @Serializable
+        data class Users(
+            /**
+             * The number of active users in the past 4 weeks.
+             */
+            @SerialName("active_month")
+            val activeMonth: Int = 0
+        )
+    }
 
     /**
-     * Statistics about how much information the instance contains.
-     * @see <a href="https://docs.joinmastodon.org/entities/V1_Instance/">Mastodon API V1::Instance</a>
+     * An image used to represent this instance.
      */
     @Serializable
-    data class Stats(
+    data class Thumbnail(
         /**
-         * Total users on this instance.
+         * The URL for the thumbnail image.
          */
-        @SerialName("user_count")
-        val userCount: Long = 0,
+        @SerialName("url")
+        val url: String = "",
 
         /**
-         * Total statuses on this instance.
+         * A hash computed by <a href="https://github.com/woltapp/blurhash">the BlurHash algorithm</a>,
+         * for generating colorful preview thumbnails when media has not been downloaded yet.
          */
-        @SerialName("status_count")
-        val statusCount: Long = 0,
+        @SerialName("blurhash")
+        val blurHash: String? = "",
 
         /**
-         * Total domains discovered by this instance.
+         * Links to scaled resolution images, for high DPI screens.
          */
-        @SerialName("domain_count")
-        val domainCount: Long = 0
-    )
+        @SerialName("versions")
+        val versions: Versions? = null
+    ) {
+        /**
+         * Links to scaled resolution images, for high DPI screens.
+         */
+        @Serializable
+        data class Versions(
+            /**
+             * The URL for the thumbnail image at 1x resolution.
+             */
+            @SerialName("@1x")
+            val resolution1x: String? = null,
+
+            /**
+             * The URL for the thumbnail image at 2x resolution.
+             */
+            @SerialName("@2x")
+            val resolution2x: String? = null
+        )
+    }
 
     /**
      * Configured values and limits for this website.
-     * @see <a href="https://docs.joinmastodon.org/entities/V1_Instance/">Mastodon API V1::Instance</a>
+     * @see <a href="https://docs.joinmastodon.org/entities/Instance/#configuration">Mastodon API Instance/#configuration</a>
      */
     @Serializable
     data class Configuration(
         /**
+         * URLs of interest for clients apps.
+         */
+        @SerialName("urls")
+        val urls: Urls = Urls(),
+
+        /**
          * Limits related to accounts.
          */
         @SerialName("accounts")
-        val accounts: Accounts? = null,
+        val accounts: Accounts = Accounts(),
 
         /**
          * Limits related to authoring statuses.
          */
         @SerialName("statuses")
-        val statuses: Statuses? = null,
+        val statuses: Statuses = Statuses(),
 
         /**
          * Hints for which attachments will be accepted.
          */
         @SerialName("media_attachments")
-        val mediaAttachments: MediaAttachments? = null,
+        val mediaAttachments: MediaAttachments = MediaAttachments(),
 
         /**
          * Limits related to polls.
          */
         @SerialName("polls")
-        val polls: Polls? = null
+        val polls: Polls = Polls(),
+
+        /**
+         * Hints related to translation.
+         */
+        @SerialName("translation")
+        val translation: Translation = Translation()
     ) {
+        /**
+         * URLs of interest for clients apps.
+         * @see <a href="https://docs.joinmastodon.org/entities/Instance/#urls">Mastodon API Instance/#urls</a>
+         */
+        @Serializable
+        data class Urls(
+            /**
+             * The Websockets URL for connecting to the streaming API.
+             */
+            @SerialName("streaming")
+            val streaming: String = ""
+        )
+
         /**
          * Limits related to accounts.
          * @see <a href="https://docs.joinmastodon.org/entities/V1_Instance/">Mastodon API V1::Instance</a>
@@ -284,5 +314,156 @@ data class Instance(
             @SerialName("max_expiration")
             val maxExpiration: Int = 0
         )
+
+        /**
+         * Hints related to translation.
+         */
+        @Serializable
+        data class Translation(
+            /**
+             * Whether the Translations API is available on this instance.
+             */
+            @SerialName("enabled")
+            val enabled: Boolean = false
+        )
+    }
+
+    /**
+     * Information about registering for this website.
+     */
+    @Serializable
+    data class Registrations(
+        /**
+         * Whether registrations are enabled.
+         */
+        @SerialName("enabled")
+        val enabled: Boolean = false,
+
+        /**
+         * Whether registrations require moderator approval.
+         */
+        @SerialName("approval_required")
+        val approvalRequired: Boolean = false,
+
+        /**
+         * A custom message to be shown when registrations are closed.
+         * Nullable String (HTML) or null
+         */
+        @SerialName("message")
+        val message: String? = null
+    )
+
+    /**
+     * Hints related to contacting a representative of the website.
+     */
+    @Serializable
+    data class Contact(
+        /**
+         * An email address that can be messaged regarding inquiries or issues.
+         */
+        @SerialName("email")
+        val email: String = "",
+
+        /**
+         * An account that can be contacted natively over the network regarding inquiries or issues.
+         */
+        @SerialName("account")
+        val account: Account = Account()
+    )
+}
+
+/**
+ * Instance activity class that can be returned by e.g. <a href="https://docs.joinmastodon.org/methods/instance/#activity">methods/instance/#activity</a>
+ */
+@Serializable
+data class InstanceActivity(
+    /**
+     * String (UNIX Timestamp). Midnight at the first day of the week.
+     */
+    @SerialName("week")
+    val week: String = "",
+    /**
+     * String (cast from an integer). The number of Statuses created since the week began.
+     */
+    @SerialName("statuses")
+    val statuses: String = "",
+    /**
+     * String (cast from an integer). The number of user logins since the week began.
+     */
+    @SerialName("logins")
+    val logins: String = "",
+    /**
+     * String (cast from an integer). The number of user registrations since the week began.
+     */
+    @SerialName("registrations")
+    val registrations: String = ""
+)
+
+/**
+ * Represents a domain that is blocked by the instance.
+ * @see <a href="https://docs.joinmastodon.org/entities/DomainBlock/">entities/DomainBlock</a>
+ */
+@Serializable
+data class DomainBlock(
+    /**
+     * The domain which is blocked. This may be obfuscated or partially censored.
+     */
+    @SerialName("domain")
+    val domain: String = "",
+
+    /**
+     * The SHA256 hash digest of the domain string.
+     */
+    @SerialName("digest")
+    val digest: String = "",
+
+    /**
+     * The level to which the domain is blocked.
+     */
+    @SerialName("severity")
+    val severity: Severity = Severity.SILENCE,
+
+    /**
+     * An optional reason for the domain block.
+     */
+    @SerialName("comment")
+    val comment: String? = null
+) {
+    /**
+     * The level to which the domain is blocked.
+     */
+    @Serializable
+    enum class Severity {
+        /**
+         * Users from this domain will be hidden from timelines, threads, and notifications (unless you follow the user).
+         */
+        @SerialName("silence")
+        SILENCE,
+
+        /**
+         * Incoming messages from this domain will be rejected and dropped entirely.
+         */
+        @SerialName("suspend")
+        SUSPEND
     }
 }
+
+/**
+ * Represents an extended description for the instance, to be shown on its about page.
+ */
+@Serializable
+data class ExtendedDescription(
+    /**
+     * A timestamp of when the extended description was last updated.
+     */
+    @SerialName("updated_at")
+    @Serializable(with = DateTimeSerializer::class)
+    val updatedAt: PrecisionDateTime = PrecisionDateTime.InvalidPrecisionDateTime.Unavailable,
+
+    /**
+     * The rendered HTML content of the extended description.
+     * String (HTML)
+     */
+    @SerialName("content")
+    val content: String = ""
+)
