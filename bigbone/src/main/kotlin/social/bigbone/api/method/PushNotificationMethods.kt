@@ -23,21 +23,35 @@ class PushNotificationMethods(private val client: MastodonClient) {
     enum class PushDataPolicy {
         @SerialName("all")
         ALL,
+
         @SerialName("followed")
         FOLLOWED,
+
         @SerialName("follower")
         FOLLOWER,
+
         @SerialName("none")
         NONE
     }
 
     @Throws(BigBoneRequestException::class)
     @JvmOverloads
-    fun subscribePushNotification(endpoint: String, userPublicKey: String, userAuthSecret: String,
-                                  mention: Boolean? = false, status: Boolean? = false, reblog: Boolean? = false, follow: Boolean? = false,
-                                  followRequest: Boolean? = false, favourite: Boolean? = false, poll: Boolean? = false,
-                                  update: Boolean? = false, adminSignUp: Boolean? = false, adminReport: Boolean? = false,
-                                  policy: PushDataPolicy? = null): MastodonRequest<WebPushSubscription> {
+    fun subscribePushNotification(
+        endpoint: String,
+        userPublicKey: String,
+        userAuthSecret: String,
+        mention: Boolean? = false,
+        status: Boolean? = false,
+        reblog: Boolean? = false,
+        follow: Boolean? = false,
+        followRequest: Boolean? = false,
+        favourite: Boolean? = false,
+        poll: Boolean? = false,
+        update: Boolean? = false,
+        adminSignUp: Boolean? = false,
+        adminReport: Boolean? = false,
+        policy: PushDataPolicy? = null
+    ): MastodonRequest<WebPushSubscription> {
         return client.getMastodonRequest(
             endpoint = pushEndpoint,
             method = MastodonClient.Method.POST,
@@ -62,10 +76,19 @@ class PushNotificationMethods(private val client: MastodonClient) {
 
     @Throws(BigBoneRequestException::class)
     @JvmOverloads
-    fun updatePushSubscription(mention: Boolean? = false, status: Boolean? = false, reblog: Boolean? = false, follow: Boolean? = false,
-                               followRequest: Boolean? = false, favourite: Boolean? = false, poll: Boolean? = false,
-                               update: Boolean? = false, adminSignUp: Boolean? = false,
-                               adminReport: Boolean? = false, policy: PushDataPolicy? = null): MastodonRequest<WebPushSubscription> {
+    fun updatePushSubscription(
+        mention: Boolean? = false,
+        status: Boolean? = false,
+        reblog: Boolean? = false,
+        follow: Boolean? = false,
+        followRequest: Boolean? = false,
+        favourite: Boolean? = false,
+        poll: Boolean? = false,
+        update: Boolean? = false,
+        adminSignUp: Boolean? = false,
+        adminReport: Boolean? = false,
+        policy: PushDataPolicy? = null
+    ): MastodonRequest<WebPushSubscription> {
         return client.getMastodonRequest(
             endpoint = pushEndpoint,
             method = MastodonClient.Method.PUT,

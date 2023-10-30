@@ -16,21 +16,70 @@ class RxPushNotificationMethods(client: MastodonClient) {
     private val pushNotificationMethods = PushNotificationMethods(client)
 
     @JvmOverloads
-    fun subscribePushNotification(endpoint: String, userPublicKey: String, userAuthSecret: String,
-                                  mention: Boolean? = false, status: Boolean? = false, reblog: Boolean? = false, follow: Boolean? = false,
-                                  followRequest: Boolean? = false, favourite: Boolean? = false, poll: Boolean? = false,
-                                  update: Boolean? = false, adminSignUp: Boolean? = false, adminReport: Boolean? = false,
-                                  policy: PushNotificationMethods.PushDataPolicy? = null): Single<WebPushSubscription> =
-        Single.fromCallable { pushNotificationMethods.subscribePushNotification(endpoint, userPublicKey, userAuthSecret, mention, status, reblog, follow, followRequest, favourite, poll, update, adminSignUp, adminReport, policy).execute() }
-
+    fun subscribePushNotification(
+        endpoint: String,
+        userPublicKey: String,
+        userAuthSecret: String,
+        mention: Boolean? = false,
+        status: Boolean? = false,
+        reblog: Boolean? = false,
+        follow: Boolean? = false,
+        followRequest: Boolean? = false,
+        favourite: Boolean? = false,
+        poll: Boolean? = false,
+        update: Boolean? = false,
+        adminSignUp: Boolean? = false,
+        adminReport: Boolean? = false,
+        policy: PushNotificationMethods.PushDataPolicy? = null
+    ): Single<WebPushSubscription> =
+        Single.fromCallable {
+            pushNotificationMethods.subscribePushNotification(
+                endpoint,
+                userPublicKey,
+                userAuthSecret,
+                mention,
+                status,
+                reblog,
+                follow,
+                followRequest,
+                favourite,
+                poll,
+                update,
+                adminSignUp,
+                adminReport,
+                policy
+            ).execute()
+        }
 
     @JvmOverloads
-    fun updatePushSubscription(mention: Boolean? = false, status: Boolean? = false, reblog: Boolean? = false, follow: Boolean? = false,
-                               followRequest: Boolean? = false, favourite: Boolean? = false, poll: Boolean? = false,
-                               update: Boolean? = false, adminSignUp: Boolean? = false,
-                               adminReport: Boolean? = false, policy: PushNotificationMethods.PushDataPolicy? = null): Single<WebPushSubscription>  =
-        Single.fromCallable { pushNotificationMethods.updatePushSubscription(mention, status, reblog, follow, followRequest, favourite, poll, update, adminSignUp, adminReport, policy).execute() }
-
+    fun updatePushSubscription(
+        mention: Boolean? = false,
+        status: Boolean? = false,
+        reblog: Boolean? = false,
+        follow: Boolean? = false,
+        followRequest: Boolean? = false,
+        favourite: Boolean? = false,
+        poll: Boolean? = false,
+        update: Boolean? = false,
+        adminSignUp: Boolean? = false,
+        adminReport: Boolean? = false,
+        policy: PushNotificationMethods.PushDataPolicy? = null
+    ): Single<WebPushSubscription> =
+        Single.fromCallable {
+            pushNotificationMethods.updatePushSubscription(
+                mention,
+                status,
+                reblog,
+                follow,
+                followRequest,
+                favourite,
+                poll,
+                update,
+                adminSignUp,
+                adminReport,
+                policy
+            ).execute()
+        }
 
     fun getPushNotification(): Single<WebPushSubscription> = Single.fromCallable { pushNotificationMethods.getPushNotification().execute() }
 

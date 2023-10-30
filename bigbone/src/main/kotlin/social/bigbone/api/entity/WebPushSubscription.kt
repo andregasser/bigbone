@@ -1,8 +1,12 @@
 package social.bigbone.api.entity
 
-import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+/**
+ * Represents a subscription to the push streaming server.
+ * @see <a href="https://docs.joinmastodon.org/entities/WebPushSubscription/">Mastodon API Push</a>
+ */
 @Serializable
 data class WebPushSubscription(
 
@@ -12,20 +16,17 @@ data class WebPushSubscription(
     @SerialName("id")
     val id: String,
 
-
     /**
      * Where push alerts will be sent to.
      */
     @SerialName("endpoint")
     val endpoint: String,
 
-
     /**
      * The streaming server’s VAPID key.
      */
     @SerialName("server_key")
     val serverKey: String,
-
 
     /**
      * Which alerts should be delivered to the endpoint.
@@ -34,7 +35,10 @@ data class WebPushSubscription(
     val alerts: Alerts
 )
 
-
+/**
+ * Which alerts should be delivered to the endpoint.
+ * @see <a href="https://docs.joinmastodon.org/entities/WebPushSubscription/">Mastodon API Push</a>
+ */
 @Serializable
 data class Alerts(
     /**

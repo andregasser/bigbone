@@ -1,0 +1,12 @@
+{
+  "id": "328183",
+  "endpoint": "https://yourdomain.example/listener",
+  "alerts": {
+    "follow": true,
+    "favourite": true,
+    "reblog": true,
+    "mention": true,
+    "poll": true
+  },
+  "server_key": "BCk-QqERU0q-CfYZjcuB6lnyyOYfJ2AifKqfeGIm7Z-HiTU5T9eTG5GxVA0_OH5mMlI4UkkDTpaZwozy0TzdZ2M="
+}
