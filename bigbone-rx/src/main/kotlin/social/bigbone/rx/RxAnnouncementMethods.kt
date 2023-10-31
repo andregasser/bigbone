@@ -3,7 +3,6 @@ package social.bigbone.rx
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import social.bigbone.MastodonClient
-import social.bigbone.api.Pageable
 import social.bigbone.api.entity.Announcement
 import social.bigbone.api.method.AnnouncementMethods
 
@@ -18,7 +17,7 @@ class RxAnnouncementMethods(client: MastodonClient) {
     @JvmOverloads
     fun getAllAnnouncements(
         withDismissed: Boolean = false
-    ): Single<Pageable<Announcement>> = Single.fromCallable {
+    ): Single<List<Announcement>> = Single.fromCallable {
         announcementMethods.getAllAnnouncements(withDismissed).execute()
     }
 

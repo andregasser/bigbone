@@ -3,7 +3,6 @@ package social.bigbone.api.method
 import social.bigbone.MastodonClient
 import social.bigbone.MastodonRequest
 import social.bigbone.Parameters
-import social.bigbone.api.Pageable
 import social.bigbone.api.entity.Announcement
 import social.bigbone.api.exception.BigBoneRequestException
 
@@ -23,8 +22,8 @@ class AnnouncementMethods(private val client: MastodonClient) {
     @JvmOverloads
     fun getAllAnnouncements(
         withDismissed: Boolean = false
-    ): MastodonRequest<Pageable<Announcement>> {
-        return client.getPageableMastodonRequest(
+    ): MastodonRequest<List<Announcement>> {
+        return client.getMastodonRequestForList(
             endpoint = announcementsEndpoint,
             method = MastodonClient.Method.GET,
             parameters = Parameters()
