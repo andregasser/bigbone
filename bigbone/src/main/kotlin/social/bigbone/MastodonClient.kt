@@ -282,7 +282,7 @@ private constructor(
      */
     @Suppress("unused") // public API
     @get:JvmName("pushNotifications")
-    val pushNotification: PushNotificationMethods by lazy { PushNotificationMethods(this) }
+    val pushNotifications: PushNotificationMethods by lazy { PushNotificationMethods(this) }
 
     /**
      * Specifies the HTTP methods / HTTP verb that can be used by this class.
