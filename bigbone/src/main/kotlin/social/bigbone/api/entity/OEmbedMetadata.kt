@@ -12,11 +12,10 @@ import social.bigbone.api.method.OEmbedMethods
 data class OEmbedMetadata(
     /**
      * The resource type.
-     * It’s unclear from <a href="https://docs.joinmastodon.org/methods/oembed/#get">Mastodon’s documentation</a>
-     * if this will always be equal to "rich" or if that was only an example.
+     * For now, this will always be "rich".
      */
     @SerialName("type")
-    val type: String = "",
+    val type: String = "rich",
 
     /**
      * The oEmbed version number. Must be 1.0.
