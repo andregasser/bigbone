@@ -5,8 +5,6 @@ import kotlinx.serialization.Serializable
 import social.bigbone.DateTimeSerializer
 import social.bigbone.PrecisionDateTime
 import social.bigbone.PrecisionDateTime.InvalidPrecisionDateTime
-import social.bigbone.api.entity.Filter.Action
-import social.bigbone.api.entity.Filter.Context
 
 /**
  * Represents a user-defined filter for determining which statuses should not be shown to the user.

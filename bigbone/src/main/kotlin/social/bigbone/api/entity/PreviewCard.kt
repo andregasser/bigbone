@@ -118,7 +118,7 @@ data class PreviewCard(
         @SerialName("video")
         VIDEO,
 
-        @SerialName("iframe")
+        @SerialName("rich")
         RICH
     }
 }
