@@ -1,10 +1,8 @@
 package social.bigbone.api.method
 
 import io.mockk.verify
-import org.amshove.kluent.AnyException
 import org.amshove.kluent.invoking
-import org.amshove.kluent.shouldBeEqualTo
-import org.amshove.kluent.shouldNotThrow
+import org.amshove.kluent.shouldHaveSize
 import org.amshove.kluent.shouldThrow
 import org.junit.jupiter.api.Test
 import social.bigbone.MastodonClient
@@ -19,7 +17,7 @@ class AnnouncementMethodsTest {
         val announcementMethods = AnnouncementMethods(client)
         val announcements = announcementMethods.getAllAnnouncements(withDismissed = true).execute()
 
-        announcements.size shouldBeEqualTo 3
+        announcements shouldHaveSize 3
 
         verify {
             client.get(
@@ -31,10 +29,10 @@ class AnnouncementMethodsTest {
 
     @Test
     fun `Dismiss an announcement and verify that the method was called correctly`() {
-        val client = MockClient.mock("announcements.json")
+        val client = MockClient.mock("announcement_dismiss_success.json")
         val announcementMethods = AnnouncementMethods(client)
 
-        invoking { announcementMethods.dismissAnnouncement("8") } shouldNotThrow AnyException
+        announcementMethods.dismissAnnouncement("8")
 
         verify {
             client.performAction(
@@ -61,15 +59,13 @@ class AnnouncementMethodsTest {
 
     @Test
     fun `Add reaction to announcement and verify that the method was called correctly`() {
-        val client = MockClient.mock("announcements.json")
+        val client = MockClient.mock("announcements_add_reaction_success.json")
         val announcementMethods = AnnouncementMethods(client)
 
-        invoking {
-            announcementMethods.addReactionToAnnouncement(
-                "😀",
-                "8"
-            )
-        } shouldNotThrow AnyException
+        announcementMethods.addReactionToAnnouncement(
+            "😀",
+            "8"
+        )
 
         verify {
             client.performAction(
@@ -81,15 +77,13 @@ class AnnouncementMethodsTest {
 
     @Test
     fun `Remove reaction from announcement and verify that the method was called correctly`() {
-        val client = MockClient.mock("announcements.json")
+        val client = MockClient.mock("announcements_remove_reaction_success.json")
         val announcementMethods = AnnouncementMethods(client)
 
-        invoking {
-            announcementMethods.removeReactionFromAnnouncement(
-                "😀",
-                "8"
-            )
-        } shouldNotThrow AnyException
+        announcementMethods.removeReactionFromAnnouncement(
+            "😀",
+            "8"
+        )
 
         verify {
             client.performAction(
