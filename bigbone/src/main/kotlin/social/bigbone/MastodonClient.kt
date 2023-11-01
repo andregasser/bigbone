@@ -12,6 +12,7 @@ import social.bigbone.api.Pageable
 import social.bigbone.api.entity.data.InstanceVersion
 import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.api.method.AccountMethods
+import social.bigbone.api.method.AnnouncementMethods
 import social.bigbone.api.method.AppMethods
 import social.bigbone.api.method.BlockMethods
 import social.bigbone.api.method.BookmarkMethods
@@ -71,6 +72,13 @@ private constructor(
     @Suppress("unused") // public API
     @get:JvmName("accounts")
     val accounts: AccountMethods by lazy { AccountMethods(this) }
+
+    /**
+     * Access API methods under "api/vX/announcements" endpoint.
+     */
+    @Suppress("unused") // public API
+    @get:JvmName("announcements")
+    val announcements: AnnouncementMethods by lazy { AnnouncementMethods(this) }
 
     /**
      * Access API methods under "api/vX/apps" endpoint.
