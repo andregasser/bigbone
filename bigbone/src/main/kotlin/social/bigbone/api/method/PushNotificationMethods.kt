@@ -1,7 +1,5 @@
 package social.bigbone.api.method
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
 import social.bigbone.MastodonClient
 import social.bigbone.MastodonRequest
 import social.bigbone.Parameters
@@ -19,21 +17,21 @@ class PushNotificationMethods(private val client: MastodonClient) {
     /**
      * Specify whether to receive push notifications from all, followed, follower, or none users.
      */
-    @Serializable
     enum class PushDataPolicy {
-        @SerialName("all")
         ALL,
 
-        @SerialName("followed")
         FOLLOWED,
 
-        @SerialName("follower")
         FOLLOWER,
 
-        @SerialName("none")
         NONE
     }
 
+    /**
+     * Add a Web Push API subscription to receive notifications.
+     * Each access token can have one push subscription. If you create a new subscription, the old subscription is deleted.
+     * @see <a href="https://docs.joinmastodon.org/methods/push/#v1">Mastodon API documentation: methods/push/#v1</a>
+     */
     @Throws(BigBoneRequestException::class)
     @JvmOverloads
     fun subscribePushNotification(
@@ -74,6 +72,11 @@ class PushNotificationMethods(private val client: MastodonClient) {
         )
     }
 
+    /**
+     * Updates the current push subscription. Only the data part can be updated.
+     * To change fundamentals, a new subscription must be created instead.
+     * @see <a href="https://docs.joinmastodon.org/methods/push/#v1">Mastodon API documentation: methods/push/#v1</a>
+     */
     @Throws(BigBoneRequestException::class)
     @JvmOverloads
     fun updatePushSubscription(
@@ -108,6 +111,10 @@ class PushNotificationMethods(private val client: MastodonClient) {
         )
     }
 
+    /**
+     * View the PushSubscription currently associated with this access token.
+     * @see <a href="https://docs.joinmastodon.org/methods/push/#v1">Mastodon API documentation: methods/push/#v1</a>
+     */
     @Throws(BigBoneRequestException::class)
     fun getPushNotification(): MastodonRequest<WebPushSubscription> {
         return client.getMastodonRequest(
@@ -116,6 +123,10 @@ class PushNotificationMethods(private val client: MastodonClient) {
         )
     }
 
+    /**
+     * Removes the current Web Push API subscription.
+     * @see <a href="https://docs.joinmastodon.org/methods/push/#v1">Mastodon API documentation: methods/push/#v1</a>
+     */
     @Throws(BigBoneRequestException::class)
     fun removePushSubscription() {
         client.performAction(
