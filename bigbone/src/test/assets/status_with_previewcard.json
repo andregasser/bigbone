@@ -1,0 +1,103 @@
+{
+  "id": "111337272989523541",
+  "created_at": "2023-11-01T20:52:43.341Z",
+  "in_reply_to_id": null,
+  "in_reply_to_account_id": null,
+  "sensitive": false,
+  "spoiler_text": "",
+  "visibility": "public",
+  "language": "en",
+  "uri": "https://fosstodon.org/users/jaxwxboss/statuses/111337272989523541",
+  "url": "https://fosstodon.org/@jaxwxboss/111337272989523541",
+  "replies_count": 0,
+  "reblogs_count": 0,
+  "favourites_count": 0,
+  "edited_at": null,
+  "favourited": false,
+  "reblogged": false,
+  "muted": false,
+  "bookmarked": false,
+  "content": "\u003cp\u003eJust a hot take.\u003c/p\u003e\u003cp\u003eNo matter how \u0026#39;advanced\u0026#39; governments and peoples believe themselves to be today, they still struggle with the concepts of restraint, dialog and objectivity, which inevitably become pathways to violence, conflict and war.\u003c/p\u003e\u003cp\u003eWouldn\u0026#39;t it be interesting for a change to look at someone else and see some resemblance of ourselves - that is our own weaknesses, fears and doubts.\u003c/p\u003e\u003cp\u003e\u003ca href=\"https://youtu.be/X_TLztvV4ns?si=uGz-23iyZs0yoe5r\" target=\"_blank\" rel=\"nofollow noopener noreferrer\" translate=\"no\"\u003e\u003cspan class=\"invisible\"\u003ehttps://\u003c/span\u003e\u003cspan class=\"ellipsis\"\u003eyoutu.be/X_TLztvV4ns?si=uGz-23\u003c/span\u003e\u003cspan class=\"invisible\"\u003eiyZs0yoe5r\u003c/span\u003e\u003c/a\u003e\u003c/p\u003e",
+  "filtered": [],
+  "reblog": null,
+  "application": null,
+  "account": {
+    "id": "110643428313746763",
+    "username": "jaxwxboss",
+    "acct": "jaxwxboss",
+    "display_name": "jaxwxboss :linux: :casio:",
+    "locked": false,
+    "bot": false,
+    "discoverable": true,
+    "group": false,
+    "created_at": "2023-07-02T00:00:00.000Z",
+    "note": "\u003cp\u003eLinux enthusiast, GrapheneOS user and G-Shock loyalist. I enjoy privacy/security/FOSS related subjects. \u2029Other interests include nature photography, weather, philosophy, Jazz and retro-tech recollections.\u003c/p\u003e",
+    "url": "https://fosstodon.org/@jaxwxboss",
+    "uri": "https://fosstodon.org/users/jaxwxboss",
+    "avatar": "https://cdn.fosstodon.org/accounts/avatars/110/643/428/313/746/763/original/1b9cc34e7df85d5c.gif",
+    "avatar_static": "https://cdn.fosstodon.org/accounts/avatars/110/643/428/313/746/763/static/1b9cc34e7df85d5c.png",
+    "header": "https://cdn.fosstodon.org/accounts/headers/110/643/428/313/746/763/original/5df428147d5fd5bf.jpg",
+    "header_static": "https://cdn.fosstodon.org/accounts/headers/110/643/428/313/746/763/original/5df428147d5fd5bf.jpg",
+    "followers_count": 67,
+    "following_count": 156,
+    "statuses_count": 670,
+    "last_status_at": "2023-11-01",
+    "noindex": true,
+    "emojis": [
+      {
+        "shortcode": "linux",
+        "url": "https://cdn.fosstodon.org/custom_emojis/images/000/025/115/original/077a5cfa08a16bcb.png",
+        "static_url": "https://cdn.fosstodon.org/custom_emojis/images/000/025/115/static/077a5cfa08a16bcb.png",
+        "visible_in_picker": true
+      },
+      {
+        "shortcode": "casio",
+        "url": "https://cdn.fosstodon.org/custom_emojis/images/000/770/032/original/204af1cc35b8cb45.png",
+        "static_url": "https://cdn.fosstodon.org/custom_emojis/images/000/770/032/static/204af1cc35b8cb45.png",
+        "visible_in_picker": true
+      }
+    ],
+    "roles": [],
+    "fields": [
+      {
+        "name": "SDF Moniker",
+        "value": "wxboss",
+        "verified_at": null
+      },
+      {
+        "name": "Location",
+        "value": "127.0.0.1",
+        "verified_at": null
+      },
+      {
+        "name": "Currently Playing",
+        "value": "Pillars of Eternity",
+        "verified_at": null
+      }
+    ]
+  },
+  "media_attachments": [],
+  "mentions": [],
+  "tags": [],
+  "emojis": [],
+  "card": {
+    "url": "https://www.youtube.com/watch?si=uGz-23iyZs0yoe5r\u0026v=X_TLztvV4ns\u0026feature=youtu.be",
+    "title": "Thirteen Days - Theyll Fire Their Missiles, Then Well Fire Ours...",
+    "description": "",
+    "language": null,
+    "type": "video",
+    "author_name": "President John Fitzgerald Kennedy",
+    "author_url": "https://www.youtube.com/@JFKennedyPresident",
+    "provider_name": "YouTube",
+    "provider_url": "https://www.youtube.com/",
+    "html": "\u003ciframe width=\"200\" height=\"113\" src=\"https://www.youtube.com/embed/X_TLztvV4ns?feature=oembed\" frameborder=\"0\" allowfullscreen=\"\" sandbox=\"allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-forms\"\u003e\u003c/iframe\u003e",
+    "width": 200,
+    "height": 113,
+    "image": "https://cdn.fosstodon.org/cache/preview_cards/images/025/144/130/original/da4042782bf951f7.jpg",
+    "image_description": "",
+    "embed_url": "",
+    "blurhash": "UBBVb7}?-Q589aRQIpt70#NeX9xZtQSh$*af",
+    "published_at": null
+  },
+  "poll": null
+}

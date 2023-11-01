@@ -7,6 +7,7 @@ import org.amshove.kluent.withMessage
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import social.bigbone.PrecisionDateTime.ValidPrecisionDateTime.ExactTime
+import social.bigbone.api.entity.PreviewCard
 import social.bigbone.api.entity.data.PollData
 import social.bigbone.api.entity.data.Visibility
 import social.bigbone.api.exception.BigBoneRequestException
@@ -21,6 +22,25 @@ class StatusMethodsTest {
         val statusMethods = StatusMethods(client)
         val status = statusMethods.getStatus("1").execute()
         status.id shouldBeEqualTo "11111"
+    }
+
+    @Test
+    fun getStatusWithPreviewCard() {
+        val client = MockClient.mock("status_with_previewcard.json")
+        val statusMethods = StatusMethods(client)
+        val status = statusMethods.getStatus("111337272989523541").execute()
+        status.id shouldBeEqualTo "111337272989523541"
+        status.card?.let {
+            it.url shouldBeEqualTo "https://www.youtube.com/watch?si=uGz-23iyZs0yoe5r&v=X_TLztvV4ns&feature=youtu.be"
+            it.title shouldBeEqualTo "Thirteen Days - Theyll Fire Their Missiles, Then Well Fire Ours..."
+            it.type shouldBeEqualTo PreviewCard.CardType.Video.name.lowercase()
+            it.html shouldBeEqualTo "<iframe width=\"200\" height=\"113\" src=\"https://www.youtube.com/embed/X_TLztvV4ns?feature=oembed\" frameborder=\"0\" allowfullscreen=\"\" sandbox=\"allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-forms\"></iframe>"
+            it.width shouldBeEqualTo 200
+            it.height shouldBeEqualTo 113
+            it.image shouldBeEqualTo "https://cdn.fosstodon.org/cache/preview_cards/images/025/144/130/original/da4042782bf951f7.jpg"
+            it.embedUrl shouldBeEqualTo ""
+            it.blurhash shouldBeEqualTo "UBBVb7}?-Q589aRQIpt70#NeX9xZtQSh\$*af"
+        }
     }
 
     @Test
