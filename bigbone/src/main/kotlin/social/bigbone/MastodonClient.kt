@@ -68,217 +68,217 @@ private constructor(
     private var port: Int = 443
 
     /**
-     * Access API methods under "api/vX/accounts" endpoint.
+     * Access API methods under the "accounts" endpoint.
      */
     @Suppress("unused") // public API
     @get:JvmName("accounts")
     val accounts: AccountMethods by lazy { AccountMethods(this) }
 
     /**
-     * Access API methods under "api/vX/announcements" endpoint.
+     * Access API methods under the "announcements" endpoint.
      */
     @Suppress("unused") // public API
     @get:JvmName("announcements")
     val announcements: AnnouncementMethods by lazy { AnnouncementMethods(this) }
 
     /**
-     * Access API methods under "api/vX/apps" endpoint.
+     * Access API methods under the "apps" endpoint.
      */
     @Suppress("unused") // public API
     @get:JvmName("apps")
     val apps: AppMethods by lazy { AppMethods(this) }
 
     /**
-     * Access API methods under "api/vX/blocks" endpoint.
+     * Access API methods under the "blocks" endpoint.
      */
     @Suppress("unused") // public API
     @get:JvmName("blocks")
     val blocks: BlockMethods by lazy { BlockMethods(this) }
 
     /**
-     * Access API methods under "api/vX/bookmarks" endpoint.
+     * Access API methods under the "bookmarks" endpoint.
      */
     @Suppress("unused") // public API
     @get:JvmName("bookmarks")
     val bookmarks: BookmarkMethods by lazy { BookmarkMethods(this) }
 
     /**
-     * Access API methods under "api/vX/conversations" endpoint.
+     * Access API methods under the "conversations" endpoint.
      */
     @Suppress("unused") // public API
     @get:JvmName("conversations")
     val conversations: ConversationMethods by lazy { ConversationMethods(this) }
 
     /**
-     * Access API methods under "api/vX/custom_emojis" endpoint.
+     * Access API methods under the "custom_emojis" endpoint.
      */
     @Suppress("unused") // public API
     @get:JvmName("customEmojis")
     val customEmojis: CustomEmojiMethods by lazy { CustomEmojiMethods(this) }
 
     /**
-     * Access API methods under "api/vX/directory" endpoint.
+     * Access API methods under the "directory" endpoint.
      */
     @Suppress("unused") // public API
     @get:JvmName("directories")
     val directories: DirectoryMethods by lazy { DirectoryMethods(this) }
 
     /**
-     * Access API methods under "api/vX/domain_blocks" endpoint.
+     * Access API methods under the "domain_blocks" endpoint.
      */
     @Suppress("unused") // public API
     @get:JvmName("domainBlocks")
     val domainBlocks: DomainBlockMethods by lazy { DomainBlockMethods(this) }
 
     /**
-     * Access API methods under "api/vX/endorsements" endpoint.
+     * Access API methods under the "endorsements" endpoint.
      */
     @Suppress("unused") // public API
     @get:JvmName("endorsements")
     val endorsements: EndorsementMethods by lazy { EndorsementMethods(this) }
 
     /**
-     * Access API methods under "api/vX/favourites" endpoint.
+     * Access API methods under the "favourites" endpoint.
      */
     @Suppress("unused") // public API
     @get:JvmName("favourites")
     val favourites: FavouriteMethods by lazy { FavouriteMethods(this) }
 
     /**
-     * Access API methods under "api/vX/featured_tags" endpoint.
+     * Access API methods under the "featured_tags" endpoint.
      */
     @Suppress("unused") // public API
     @get:JvmName("featuredTags")
     val featuredTags: FeaturedTagMethods by lazy { FeaturedTagMethods(this) }
 
     /**
-     * Access API methods under "api/vX/filters" endpoint.
+     * Access API methods under the "filters" endpoint.
      */
     @Suppress("unused") // public API
     @get:JvmName("filters")
     val filters: FilterMethods by lazy { FilterMethods(this) }
 
     /**
-     * Access API methods under "api/vX/follow_requests" endpoint.
+     * Access API methods under the "follow_requests" endpoint.
      */
     @Suppress("unused") // public API
     @get:JvmName("followRequests")
     val followRequests: FollowRequestMethods by lazy { FollowRequestMethods(this) }
 
     /**
-     * Access API methods under "api/vX/instance" endpoint.
+     * Access API methods under the "instance" endpoint.
      */
     @Suppress("unused") // public API
     @get:JvmName("instances")
     val instances: InstanceMethods by lazy { InstanceMethods(this) }
 
     /**
-     * Access API methods under "api/vX/lists" endpoint.
+     * Access API methods under the "lists" endpoint.
      */
     @Suppress("unused") // public API
     @get:JvmName("lists")
     val lists: ListMethods by lazy { ListMethods(this) }
 
     /**
-     * Save and restore your position in timelines.
+     * Access API methods under the "markers" endpoint.
      */
     @Suppress("unused") // public API
     @get:JvmName("markers")
     val markers: MarkerMethods by lazy { MarkerMethods(this) }
 
     /**
-     * Access API methods under "api/vX/media" endpoint.
+     * Access API methods under the "media" endpoint.
      */
     @Suppress("unused") // public API
     @get:JvmName("media")
     val media: MediaMethods by lazy { MediaMethods(this) }
 
     /**
-     * Access API methods under "api/vX/mutes" endpoint.
+     * Access API methods under the "mutes" endpoint.
      */
     @Suppress("unused") // public API
     @get:JvmName("mutes")
     val mutes: MuteMethods by lazy { MuteMethods(this) }
 
     /**
-     * Access API methods under "api/vX/notification[s]" endpoint.
+     * Access API methods under the "notification" endpoint.
      */
     @Suppress("unused") // public API
     @get:JvmName("notifications")
     val notifications: NotificationMethods by lazy { NotificationMethods(this) }
 
     /**
-     * Access API methods under "oauth" endpoint.
+     * Access API methods under the "oauth" endpoint.
      */
     @Suppress("unused") // public API
     @get:JvmName("oauth")
     val oauth: OAuthMethods by lazy { OAuthMethods(this) }
 
     /**
-     * Access API methods under "oembed" endpoint.
+     * Access API methods under the "oembed" endpoint.
      */
     @Suppress("unused") // public API
     @get:JvmName("oembed")
     val oembed: OEmbedMethods by lazy { OEmbedMethods(this) }
 
     /**
-     * Access API methods under "polls" endpoint.
+     * Access API methods under the "polls" endpoint.
      */
     @Suppress("unused") // public API
     @get:JvmName("polls")
     val polls: PollMethods by lazy { PollMethods(this) }
 
     /**
-     * Access API methods under "api/vX/reports" endpoint.
+     * Access API methods under the "reports" endpoint.
      */
     @Suppress("unused") // public API
     @get:JvmName("reports")
     val reports: ReportMethods by lazy { ReportMethods(this) }
 
     /**
-     * Access API methods under "api/vX/search" endpoint.
+     * Access API methods under the "search" endpoint.
      */
     @Suppress("unused") // public API
     @get:JvmName("search")
     val search: SearchMethods by lazy { SearchMethods(this) }
 
     /**
-     * Access API methods under "api/vX/statuses" endpoint.
+     * Access API methods under the "statuses" endpoint.
      */
     @Suppress("unused") // public API
     @get:JvmName("statuses")
     val statuses: StatusMethods by lazy { StatusMethods(this) }
 
     /**
-     * Access API methods under "api/vX/streaming" endpoint.
+     * Access API methods under the "streaming" endpoint.
      */
     @Suppress("unused") // public API
     @get:JvmName("streaming")
     val streaming: StreamingMethods by lazy { StreamingMethods(this) }
 
     /**
-     * Access API methods under "api/vX/tags" endpoint.
+     * Access API methods under the "tags" endpoint.
      */
     @Suppress("unused") // public API
     @get:JvmName("tags")
     val tags: TagMethods by lazy { TagMethods(this) }
 
     /**
-     * Access API methods under "api/vX/timelines" endpoint.
+     * Access API methods under the "timelines" endpoint.
      */
     @Suppress("unused") // public API
     @get:JvmName("timelines")
     val timelines: TimelineMethods by lazy { TimelineMethods(this) }
 
     /**
-     * Access API methods under "preferences" endpoint.
+     * Access API methods under the "preferences" endpoint.
      */
     @Suppress("unused") // public API
     @get:JvmName("preferences")
     val preferences: PreferenceMethods by lazy { PreferenceMethods(this) }
 
     /**
-     * Access API methods under "api/vX/suggestions" endpoint.
+     * Access API methods under the "suggestions" endpoint.
      */
     @Suppress("unused") // public API
     @get:JvmName("suggestions")
