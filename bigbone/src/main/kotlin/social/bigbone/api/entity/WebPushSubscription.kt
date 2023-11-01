@@ -42,61 +42,61 @@ data class WebPushSubscription(
 @Serializable
 data class Alerts(
     /**
-     * Receive mention notifications?.
+     * Receive a push notification when someone else has mentioned you in a status?
      */
     @SerialName("mention")
     val mention: Boolean? = false,
 
     /**
-     * Receive new subscribed account notifications?
+     * Receive a push notification when a subscribed account posts a status?
      */
     @SerialName("status")
     val status: Boolean? = false,
 
     /**
-     * Receive reblog notifications?
+     * Receive a push notification when a status you created has been boosted by someone else?
      */
     @SerialName("reblog")
     val reblog: Boolean? = false,
 
     /**
-     * Receive follow notifications?
+     * Receive a push notification when someone has followed you?
      */
     @SerialName("follow")
     val follow: Boolean? = false,
 
     /**
-     * Receive follow request notifications?
+     * Receive a push notification when someone has requested to followed you?
      */
     @SerialName("follow_request")
     val followRequest: Boolean? = false,
 
     /**
-     * Receive favourite notifications?
+     * Receive a push notification when a status you created has been favourited by someone else?
      */
     @SerialName("favourite")
     val favourite: Boolean? = false,
 
     /**
-     * Receive poll notifications?
+     * Receive a push notification when a poll you voted in or created has ended?
      */
     @SerialName("poll")
     val poll: Boolean? = false,
 
     /**
-     * Receive status edited notifications?
+     * Receive a push notification when a status you interacted with has been edited?
      */
     @SerialName("update")
     val update: Boolean? = false,
 
     /**
-     * Receive new user signup notifications? Must have a role with the appropriate permissions.
+     * Receive a push notification when a new user has signed up?
      */
     @SerialName("admin.sign_up")
     val adminSignUp: Boolean? = false,
 
     /**
-     * Receive new report notifications? Must have a role with the appropriate permissions.
+     * Receive a push notification when a new report has been filed?
      */
     @SerialName("admin.report")
     val adminReport: Boolean? = false
