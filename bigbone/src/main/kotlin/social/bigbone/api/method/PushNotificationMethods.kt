@@ -18,19 +18,13 @@ class PushNotificationMethods(private val client: MastodonClient) {
      * Specify whether to receive push notifications from all, followed, follower, or none users.
      */
     enum class PushDataPolicy {
-        ALL,
-
-        FOLLOWED,
-
-        FOLLOWER,
-
-        NONE
+        ALL, FOLLOWED, FOLLOWER, NONE
     }
 
     /**
      * Add a Web Push API subscription to receive notifications.
      * Each access token can have one push subscription. If you create a new subscription, the old subscription is deleted.
-     * @see <a href="https://docs.joinmastodon.org/methods/push/#v1">Mastodon API documentation: methods/push/#v1</a>
+     * @see <a href="https://docs.joinmastodon.org/methods/push/#create">Mastodon API documentation: methods/push/#create</a>
      */
     @Throws(BigBoneRequestException::class)
     @JvmOverloads
@@ -67,7 +61,7 @@ class PushNotificationMethods(private val client: MastodonClient) {
                 update?.let { append("data[alerts][update]", it) }
                 adminSignUp?.let { append("data[alerts][admin.sign_up]", it) }
                 adminReport?.let { append("data[alerts][admin.report]", it) }
-                append("data[policy]", policy?.name?.lowercase() ?: PushDataPolicy.NONE.name.lowercase())
+                policy?.let { append("data[policy]", it.name.lowercase()) }
             }
         )
     }
@@ -75,7 +69,7 @@ class PushNotificationMethods(private val client: MastodonClient) {
     /**
      * Updates the current push subscription. Only the data part can be updated.
      * To change fundamentals, a new subscription must be created instead.
-     * @see <a href="https://docs.joinmastodon.org/methods/push/#v1">Mastodon API documentation: methods/push/#v1</a>
+     * @see <a href="https://docs.joinmastodon.org/methods/push/#update">Mastodon API documentation: methods/push/#update</a>
      */
     @Throws(BigBoneRequestException::class)
     @JvmOverloads
@@ -106,14 +100,14 @@ class PushNotificationMethods(private val client: MastodonClient) {
                 update?.let { append("data[alerts][update]", it) }
                 adminSignUp?.let { append("data[alerts][admin.sign_up]", it) }
                 adminReport?.let { append("data[alerts][admin.report]", it) }
-                append("policy", policy?.name?.lowercase() ?: PushDataPolicy.NONE.name.lowercase())
+                policy?.let { append("policy", it.name.lowercase()) }
             }
         )
     }
 
     /**
      * View the PushSubscription currently associated with this access token.
-     * @see <a href="https://docs.joinmastodon.org/methods/push/#v1">Mastodon API documentation: methods/push/#v1</a>
+     * @see <a href="https://docs.joinmastodon.org/methods/push/#get">Mastodon API documentation: methods/push/#get</a>
      */
     @Throws(BigBoneRequestException::class)
     fun getPushNotification(): MastodonRequest<WebPushSubscription> {
@@ -125,7 +119,7 @@ class PushNotificationMethods(private val client: MastodonClient) {
 
     /**
      * Removes the current Web Push API subscription.
-     * @see <a href="https://docs.joinmastodon.org/methods/push/#v1">Mastodon API documentation: methods/push/#v1</a>
+     * @see <a href="https://docs.joinmastodon.org/methods/push/#delete">Mastodon API documentation: methods/push/#delete</a>
      */
     @Throws(BigBoneRequestException::class)
     fun removePushSubscription() {
