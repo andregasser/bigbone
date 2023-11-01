@@ -229,6 +229,13 @@ private constructor(
     val polls: PollMethods by lazy { PollMethods(this) }
 
     /**
+     * Access API methods under the "preferences" endpoint.
+     */
+    @Suppress("unused") // public API
+    @get:JvmName("preferences")
+    val preferences: PreferenceMethods by lazy { PreferenceMethods(this) }
+
+    /**
      * Access API methods under the "reports" endpoint.
      */
     @Suppress("unused") // public API
@@ -257,6 +264,13 @@ private constructor(
     val streaming: StreamingMethods by lazy { StreamingMethods(this) }
 
     /**
+     * Access API methods under the "suggestions" endpoint.
+     */
+    @Suppress("unused") // public API
+    @get:JvmName("suggestions")
+    val suggestions: SuggestionMethods by lazy { SuggestionMethods(this) }
+
+    /**
      * Access API methods under the "tags" endpoint.
      */
     @Suppress("unused") // public API
@@ -269,20 +283,6 @@ private constructor(
     @Suppress("unused") // public API
     @get:JvmName("timelines")
     val timelines: TimelineMethods by lazy { TimelineMethods(this) }
-
-    /**
-     * Access API methods under the "preferences" endpoint.
-     */
-    @Suppress("unused") // public API
-    @get:JvmName("preferences")
-    val preferences: PreferenceMethods by lazy { PreferenceMethods(this) }
-
-    /**
-     * Access API methods under the "suggestions" endpoint.
-     */
-    @Suppress("unused") // public API
-    @get:JvmName("suggestions")
-    val suggestions: SuggestionMethods by lazy { SuggestionMethods(this) }
 
     /**
      * Specifies the HTTP methods / HTTP verb that can be used by this class.
