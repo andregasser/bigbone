@@ -23,9 +23,12 @@ Please describe the tests that you ran to verify your changes.
 - [ ] I have performed a self-review of my code
 - [ ] I have added tests that prove my fix is effective or that my feature works
 - [ ] New and existing unit tests pass locally with my changes
+- [ ] KDoc added to all public methods
 
 # Optional Things To Check
 
-- In case you worked on new features: Did you also do the Rx part?
+The items below are some more things to check before asking other people to review your code.
+
+- In case you worked on new features: Did you also implement the reactive endpoint (bigbone-rx)?
 - In case you added new *Methods classes: Did you also add it to `MastodonClient`?
 - In case you worked on endpoints: Please mention in the PR that [API Coverage](https://github.com/andregasser/bigbone/wiki/Mastodon-API-Coverage) page needs to be updated (if needed)
