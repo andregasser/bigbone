@@ -2,6 +2,7 @@ package social.bigbone.api.method
 
 import org.amshove.kluent.invoking
 import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldNotBeNull
 import org.amshove.kluent.shouldThrow
 import org.amshove.kluent.withMessage
 import org.junit.jupiter.api.Assertions
@@ -31,16 +32,17 @@ class StatusMethodsTest {
         val statusMethods = StatusMethods(client)
         val status = statusMethods.getStatus("111337272989523541").execute()
         status.id shouldBeEqualTo "111337272989523541"
-        status.card?.let {
-            it.url shouldBeEqualTo "https://www.youtube.com/watch?si=uGz-23iyZs0yoe5r&v=X_TLztvV4ns&feature=youtu.be"
-            it.title shouldBeEqualTo "Thirteen Days - Theyll Fire Their Missiles, Then Well Fire Ours..."
-            it.type shouldBeEqualTo PreviewCard.CardType.Video.name.lowercase()
-            it.html shouldBeEqualTo "<iframe width=\"200\" height=\"113\" src=\"https://www.youtube.com/embed/X_TLztvV4ns?feature=oembed\" frameborder=\"0\" allowfullscreen=\"\" sandbox=\"allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-forms\"></iframe>"
-            it.width shouldBeEqualTo 200
-            it.height shouldBeEqualTo 113
-            it.image shouldBeEqualTo "https://cdn.fosstodon.org/cache/preview_cards/images/025/144/130/original/da4042782bf951f7.jpg"
-            it.embedUrl shouldBeEqualTo ""
-            it.blurhash shouldBeEqualTo "UBBVb7}?-Q589aRQIpt70#NeX9xZtQSh\$*af"
+        with(status.card) {
+            shouldNotBeNull()
+            url shouldBeEqualTo "https://www.youtube.com/watch?si=uGz-23iyZs0yoe5r&v=X_TLztvV4ns&feature=youtu.be"
+            title shouldBeEqualTo "Thirteen Days - Theyll Fire Their Missiles, Then Well Fire Ours..."
+            type shouldBeEqualTo PreviewCard.CardType.Video.name.lowercase()
+            html shouldBeEqualTo "<iframe width=\"200\" height=\"113\" src=\"https://www.youtube.com/embed/X_TLztvV4ns?feature=oembed\" frameborder=\"0\" allowfullscreen=\"\" sandbox=\"allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-forms\"></iframe>"
+            width shouldBeEqualTo 200
+            height shouldBeEqualTo 113
+            image shouldBeEqualTo "https://cdn.fosstodon.org/cache/preview_cards/images/025/144/130/original/da4042782bf951f7.jpg"
+            embedUrl shouldBeEqualTo ""
+            blurhash shouldBeEqualTo "UBBVb7}?-Q589aRQIpt70#NeX9xZtQSh\$*af"
         }
     }
 
