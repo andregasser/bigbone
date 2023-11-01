@@ -24,6 +24,20 @@ class PushNotificationMethods(private val client: MastodonClient) {
     /**
      * Add a Web Push API subscription to receive notifications.
      * Each access token can have one push subscription. If you create a new subscription, the old subscription is deleted.
+     * @param endpoint The endpoint URL that is called when a notification event occurs.
+     * @param userPublicKey  User agent public key. Base64 encoded string of a public key from a ECDH keypair using the prime256v1 curve.
+     * @param userAuthSecret Auth secret, Base64 encoded string of 16 bytes of random data.
+     * @param mention Receive mention notifications?
+     * @param status Receive new subscribed account notifications?
+     * @param reblog Receive reblog notifications?
+     * @param follow Receive follow notifications?
+     * @param followRequest Receive follow request notifications?
+     * @param favourite Receive favourite notifications?
+     * @param poll Receive poll notifications?
+     * @param update Receive status edited notifications?
+     * @param adminSignUp Receive new user signup notifications? Defaults to false. Must have a role with the appropriate permissions.
+     * @param adminReport Receive new report notifications? Defaults to false. Must have a role with the appropriate permissions.
+     * @param policy Specify which to receive push notifications from.
      * @see <a href="https://docs.joinmastodon.org/methods/push/#create">Mastodon API documentation: methods/push/#create</a>
      */
     @Throws(BigBoneRequestException::class)
@@ -69,6 +83,17 @@ class PushNotificationMethods(private val client: MastodonClient) {
     /**
      * Updates the current push subscription. Only the data part can be updated.
      * To change fundamentals, a new subscription must be created instead.
+     * @param mention Receive mention notifications?
+     * @param status Receive new subscribed account notifications?
+     * @param reblog Receive reblog notifications?
+     * @param follow Receive follow notifications?
+     * @param followRequest Receive follow request notifications?
+     * @param favourite Receive favourite notifications?
+     * @param poll Receive poll notifications?
+     * @param update Receive status edited notifications?
+     * @param adminSignUp Receive new user signup notifications? Defaults to false. Must have a role with the appropriate permissions.
+     * @param adminReport Receive new report notifications? Defaults to false. Must have a role with the appropriate permissions.
+     * @param policy Specify which to receive push notifications from.
      * @see <a href="https://docs.joinmastodon.org/methods/push/#update">Mastodon API documentation: methods/push/#update</a>
      */
     @Throws(BigBoneRequestException::class)
