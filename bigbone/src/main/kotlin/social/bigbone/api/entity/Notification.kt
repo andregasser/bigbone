@@ -2,6 +2,9 @@ package social.bigbone.api.entity
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import social.bigbone.DateTimeSerializer
+import social.bigbone.PrecisionDateTime
+import social.bigbone.PrecisionDateTime.InvalidPrecisionDateTime
 
 /**
  * Represents a notification of an event relevant to the user.
@@ -22,10 +25,11 @@ data class Notification(
     val type: NotificationType = NotificationType.MENTION,
 
     /**
-     * The timestamp of the notification (ISO 8601 Datetime).
+     * The timestamp of the notification.
      */
     @SerialName("created_at")
-    val createdAt: String = "",
+    @Serializable(with = DateTimeSerializer::class)
+    val createdAt: PrecisionDateTime = InvalidPrecisionDateTime.Unavailable,
 
     /**
      * The account that performed the action that generated the notification.

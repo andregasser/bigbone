@@ -15,14 +15,14 @@ import social.bigbone.api.Range
 import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.testtool.MockClient
 
-class DomainBlocksMethodsTest {
+class DomainBlockMethodsTest {
 
     @Test
     fun `Given a client returning success, when getting blocked domains, then expect values of response`() {
         val client = MockClient.mock("domain_blocks_view_success.json")
 
-        val domainBlocksMethods = DomainBlocksMethods(client)
-        val blockedDomains: Pageable<String> = domainBlocksMethods.getDomainBlocks().execute()
+        val domainBlockMethods = DomainBlockMethods(client)
+        val blockedDomains: Pageable<String> = domainBlockMethods.getDomainBlocks().execute()
 
         blockedDomains.part.size shouldBeEqualTo 2
         blockedDomains.part[0] shouldBeEqualTo "nsfw.social"
@@ -41,7 +41,7 @@ class DomainBlocksMethodsTest {
         val client = MockClient.mock("domain_blocks_view_success.json")
 
         invoking {
-            DomainBlocksMethods(client).getDomainBlocks(
+            DomainBlockMethods(client).getDomainBlocks(
                 range = Range(limit = 210)
             ).execute()
         } shouldThrow IllegalArgumentException::class withMessage "limit defined in Range must not be higher than 200 but was 210"
@@ -56,7 +56,7 @@ class DomainBlocksMethodsTest {
         )
 
         invoking {
-            DomainBlocksMethods(client).getDomainBlocks().execute()
+            DomainBlockMethods(client).getDomainBlocks().execute()
         } shouldThrow BigBoneRequestException::class withMessage "Unauthorized"
     }
 
@@ -64,8 +64,8 @@ class DomainBlocksMethodsTest {
     fun `Given a client returning success, when blocking a valid domain, then expect no errors`() {
         val client = MockClient.mock("domain_blocks_block_success.json")
 
-        val domainBlocksMethods = DomainBlocksMethods(client)
-        invoking { domainBlocksMethods.blockDomain("nsfw.social") } shouldNotThrow BigBoneRequestException::class
+        val domainBlockMethods = DomainBlockMethods(client)
+        invoking { domainBlockMethods.blockDomain("nsfw.social") } shouldNotThrow BigBoneRequestException::class
 
         verify {
             client.performAction(
@@ -79,17 +79,17 @@ class DomainBlocksMethodsTest {
     fun `Given a client returning success, when blocking an invalid domain, then throw IllegalArgumentException`() {
         val client = MockClient.mock("domain_blocks_block_success.json")
 
-        val domainBlocksMethods = DomainBlocksMethods(client)
+        val domainBlockMethods = DomainBlockMethods(client)
         invoking {
-            domainBlocksMethods.blockDomain("")
+            domainBlockMethods.blockDomain("")
         } shouldThrow IllegalArgumentException::class withMessage "domain must not be blank"
 
         invoking {
-            domainBlocksMethods.blockDomain("    ")
+            domainBlockMethods.blockDomain("    ")
         } shouldThrow IllegalArgumentException::class withMessage "domain must not be blank"
 
         invoking {
-            domainBlocksMethods.blockDomain("example . com")
+            domainBlockMethods.blockDomain("example . com")
         } shouldThrow IllegalArgumentException::class withMessage "domain must not contain spaces"
     }
 
@@ -102,7 +102,7 @@ class DomainBlocksMethodsTest {
         )
 
         invoking {
-            DomainBlocksMethods(client).blockDomain("nsfw.social")
+            DomainBlockMethods(client).blockDomain("nsfw.social")
         } shouldThrow BigBoneRequestException::class withMessage "Unprocessable entity"
     }
 
@@ -110,8 +110,8 @@ class DomainBlocksMethodsTest {
     fun `Given a client returning success, when unblocking a valid domain, then expect no errors`() {
         val client = spyk(MockClient.mock("domain_blocks_unblock_success.json"))
 
-        val domainBlocksMethods = DomainBlocksMethods(client)
-        invoking { domainBlocksMethods.unblockDomain("nsfw.social") } shouldNotThrow BigBoneRequestException::class
+        val domainBlockMethods = DomainBlockMethods(client)
+        invoking { domainBlockMethods.unblockDomain("nsfw.social") } shouldNotThrow BigBoneRequestException::class
 
         verify {
             client.performAction(
@@ -125,17 +125,17 @@ class DomainBlocksMethodsTest {
     fun `Given a client returning success, when unblocking an invalid domain, then throw IllegalArgumentException`() {
         val client = MockClient.mock("domain_blocks_unblock_success.json")
 
-        val domainBlocksMethods = DomainBlocksMethods(client)
+        val domainBlockMethods = DomainBlockMethods(client)
         invoking {
-            domainBlocksMethods.unblockDomain("")
+            domainBlockMethods.unblockDomain("")
         } shouldThrow IllegalArgumentException::class withMessage "domain must not be blank"
 
         invoking {
-            domainBlocksMethods.unblockDomain("    ")
+            domainBlockMethods.unblockDomain("    ")
         } shouldThrow IllegalArgumentException::class withMessage "domain must not be blank"
 
         invoking {
-            domainBlocksMethods.unblockDomain("example . com")
+            domainBlockMethods.unblockDomain("example . com")
         } shouldThrow IllegalArgumentException::class withMessage "domain must not contain spaces"
     }
 
@@ -148,7 +148,7 @@ class DomainBlocksMethodsTest {
         )
 
         invoking {
-            DomainBlocksMethods(client).unblockDomain("nsfw.social")
+            DomainBlockMethods(client).unblockDomain("nsfw.social")
         } shouldThrow BigBoneRequestException::class withMessage "Unprocessable entity"
     }
 }

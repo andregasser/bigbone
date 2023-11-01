@@ -2,6 +2,9 @@ package social.bigbone.api.entity
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import social.bigbone.DateTimeSerializer
+import social.bigbone.PrecisionDateTime
+import social.bigbone.PrecisionDateTime.InvalidPrecisionDateTime
 
 /**
  * Represents a poll attached to a status.
@@ -16,10 +19,12 @@ data class Poll(
     val id: String = "",
 
     /**
-     * When the poll ends. ISO 8601 Datetime string, or null if the poll does not end.
+     * When the poll ends.
+     * [InvalidPrecisionDateTime.Unavailable] if the poll does not end.
      */
     @SerialName("expires_at")
-    val expiresAt: String? = null,
+    @Serializable(with = DateTimeSerializer::class)
+    val expiresAt: PrecisionDateTime = InvalidPrecisionDateTime.Unavailable,
 
     /**
      * Is the poll currently expired?

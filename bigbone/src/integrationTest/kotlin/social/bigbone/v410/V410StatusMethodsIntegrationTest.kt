@@ -19,13 +19,11 @@ import social.bigbone.TestConstants.Companion.USER2_APP_NAME
 import social.bigbone.TestConstants.Companion.USER2_EMAIL
 import social.bigbone.TestConstants.Companion.USER2_PASSWORD
 import social.bigbone.TestHelpers
-import social.bigbone.TestHelpers.toISO8601DateTime
 import social.bigbone.api.entity.Token
 import social.bigbone.api.entity.data.PollData
 import social.bigbone.api.entity.data.Visibility
 import social.bigbone.api.exception.BigBoneRequestException
 import java.time.Instant
-import java.time.ZoneId
 import java.time.temporal.ChronoUnit
 
 /**
@@ -58,7 +56,8 @@ class V410StatusMethodsIntegrationTest {
             val user1Client = TestHelpers.getTrustAllClient(user1UserToken.accessToken)
 
             // when
-            val postedStatus = user1Client.statuses.postStatus(status = "This is my status", spoilerText = "Test").execute()
+            val postedStatus =
+                user1Client.statuses.postStatus(status = "This is my status", spoilerText = "Test").execute()
 
             // then
             val retrievedStatus = user1Client.statuses.getStatus(postedStatus.id).execute()
@@ -105,8 +104,10 @@ class V410StatusMethodsIntegrationTest {
             // given
             val user1Client = TestHelpers.getTrustAllClient(user1UserToken.accessToken)
             val statusId = user1Client.statuses.postStatus(status = "Status to be posted").execute().id
-            val uploadedMediaId1 = TestHelpers.uploadMediaFromResourcesFolder("castle-1280x853.jpg", "image/jpg", user1Client).id
-            val uploadedMediaId2 = TestHelpers.uploadMediaFromResourcesFolder("castle-1280x853.jpg", "image/jpg", user1Client).id
+            val uploadedMediaId1 =
+                TestHelpers.uploadMediaFromResourcesFolder("castle-1280x853.jpg", "image/jpg", user1Client).id
+            val uploadedMediaId2 =
+                TestHelpers.uploadMediaFromResourcesFolder("castle-1280x853.jpg", "image/jpg", user1Client).id
 
             // when
             val postedStatus = user1Client.statuses.postStatus(
@@ -197,7 +198,7 @@ class V410StatusMethodsIntegrationTest {
         fun `should schedule status when mandatory params set`() {
             // given
             val user1Client = TestHelpers.getTrustAllClient(user1UserToken.accessToken)
-            val inSixMinutes = Instant.now().plus(6, ChronoUnit.MINUTES).toISO8601DateTime(ZoneId.systemDefault())
+            val inSixMinutes = Instant.now().plus(6, ChronoUnit.MINUTES)
 
             // when
             val scheduledStatus = user1Client.statuses.scheduleStatus(
@@ -220,9 +221,11 @@ class V410StatusMethodsIntegrationTest {
             // given
             val user1Client = TestHelpers.getTrustAllClient(user1UserToken.accessToken)
             val statusId = user1Client.statuses.postStatus(status = "Test eines geplanten Posts").execute().id
-            val inSixMinutes = Instant.now().plus(6, ChronoUnit.MINUTES).toISO8601DateTime(ZoneId.systemDefault())
-            val uploadedMediaId1 = TestHelpers.uploadMediaFromResourcesFolder("castle-1280x853.jpg", "image/jpg", user1Client).id
-            val uploadedMediaId2 = TestHelpers.uploadMediaFromResourcesFolder("castle-1280x853.jpg", "image/jpg", user1Client).id
+            val inSixMinutes = Instant.now().plus(6, ChronoUnit.MINUTES)
+            val uploadedMediaId1 =
+                TestHelpers.uploadMediaFromResourcesFolder("castle-1280x853.jpg", "image/jpg", user1Client).id
+            val uploadedMediaId2 =
+                TestHelpers.uploadMediaFromResourcesFolder("castle-1280x853.jpg", "image/jpg", user1Client).id
 
             // when
             val scheduledStatus = user1Client.statuses.scheduleStatus(
@@ -254,7 +257,7 @@ class V410StatusMethodsIntegrationTest {
         fun `should schedule poll when mandatory params set`() {
             // given
             val user1Client = TestHelpers.getTrustAllClient(user1UserToken.accessToken)
-            val inSixMinutes = Instant.now().plus(6, ChronoUnit.MINUTES).toISO8601DateTime(ZoneId.systemDefault())
+            val inSixMinutes = Instant.now().plus(6, ChronoUnit.MINUTES)
 
             // when
             val scheduledPoll = user1Client.statuses.schedulePoll(
@@ -281,7 +284,7 @@ class V410StatusMethodsIntegrationTest {
             // given
             val user1Client = TestHelpers.getTrustAllClient(user1UserToken.accessToken)
             val statusId = user1Client.statuses.postStatus(status = "Test eines geplanten Posts").execute().id
-            val inSixMinutes = Instant.now().plus(6, ChronoUnit.MINUTES).toISO8601DateTime(ZoneId.systemDefault())
+            val inSixMinutes = Instant.now().plus(6, ChronoUnit.MINUTES)
 
             // when
             val scheduledPoll = user1Client.statuses.schedulePoll(
@@ -343,7 +346,8 @@ class V410StatusMethodsIntegrationTest {
             // given
             val user1Client = TestHelpers.getTrustAllClient(user1UserToken.accessToken)
             val user2Client = TestHelpers.getTrustAllClient(user2UserToken.accessToken)
-            val statusId = user1Client.statuses.postStatus(status = "This post will be reblogged soon (all params set)").execute().id
+            val statusId = user1Client.statuses.postStatus(status = "This post will be reblogged soon (all params set)")
+                .execute().id
 
             // when
             val rebloggedStatus = user2Client.statuses.reblogStatus(
@@ -407,7 +411,9 @@ class V410StatusMethodsIntegrationTest {
             // given
             val user1Client = TestHelpers.getTrustAllClient(user1UserToken.accessToken)
             val user2Client = TestHelpers.getTrustAllClient(user2UserToken.accessToken)
-            val statusId = user1Client.statuses.postStatus(status = "This post will be bookmarked soon, then unbookmarked").execute().id
+            val statusId =
+                user1Client.statuses.postStatus(status = "This post will be bookmarked soon, then unbookmarked")
+                    .execute().id
             user2Client.statuses.bookmarkStatus(statusId).execute()
 
             // when
@@ -444,7 +450,9 @@ class V410StatusMethodsIntegrationTest {
             // given
             val user1Client = TestHelpers.getTrustAllClient(user1UserToken.accessToken)
             val user2Client = TestHelpers.getTrustAllClient(user2UserToken.accessToken)
-            val statusId = user1Client.statuses.postStatus(status = "This post will be favourited soon, then unfavourited again").execute().id
+            val statusId =
+                user1Client.statuses.postStatus(status = "This post will be favourited soon, then unfavourited again")
+                    .execute().id
             user1Client.statuses.favouriteStatus(statusId).execute()
 
             // when
@@ -480,7 +488,9 @@ class V410StatusMethodsIntegrationTest {
         fun `should unpin status when all params set`() {
             // given
             val user1Client = TestHelpers.getTrustAllClient(user1UserToken.accessToken)
-            val statusId = user1Client.statuses.postStatus(status = "This post will be pinned soon, then unpinned again").execute().id
+            val statusId =
+                user1Client.statuses.postStatus(status = "This post will be pinned soon, then unpinned again")
+                    .execute().id
             TestHelpers.unpinAllPinnedStatuses(user1Client)
             user1Client.statuses.pinStatus(statusId).execute()
 
@@ -518,7 +528,9 @@ class V410StatusMethodsIntegrationTest {
             // given
             val user1Client = TestHelpers.getTrustAllClient(user1UserToken.accessToken)
             val user2Client = TestHelpers.getTrustAllClient(user2UserToken.accessToken)
-            val statusId = user1Client.statuses.postStatus(status = "This conversation will be muted soon, then unmuted again").execute().id
+            val statusId =
+                user1Client.statuses.postStatus(status = "This conversation will be muted soon, then unmuted again")
+                    .execute().id
             user2Client.statuses.muteConversation(statusId).execute()
 
             // when
@@ -557,11 +569,24 @@ class V410StatusMethodsIntegrationTest {
             // given
             val user1Client = TestHelpers.getTrustAllClient(user1UserToken.accessToken)
             val user2Client = TestHelpers.getTrustAllClient(user2UserToken.accessToken)
-            val firstStatus = user1Client.statuses.postStatus(status = "Hello, this is the first post in this thread!").execute()
-            val secondStatus = user2Client.statuses.postStatus(status = "This is the second status in this thread", inReplyToId = firstStatus.id).execute()
-            val thirdStatus = user1Client.statuses.postStatus(status = "This is the third status in this thread", inReplyToId = secondStatus.id).execute()
-            val fourthStatus = user2Client.statuses.postStatus(status = "This is the fourth status in this thread", inReplyToId = thirdStatus.id).execute()
-            user1Client.statuses.postStatus(status = "This is the fifth status in this thread", inReplyToId = fourthStatus.id).execute()
+            val firstStatus =
+                user1Client.statuses.postStatus(status = "Hello, this is the first post in this thread!").execute()
+            val secondStatus = user2Client.statuses.postStatus(
+                status = "This is the second status in this thread",
+                inReplyToId = firstStatus.id
+            ).execute()
+            val thirdStatus = user1Client.statuses.postStatus(
+                status = "This is the third status in this thread",
+                inReplyToId = secondStatus.id
+            ).execute()
+            val fourthStatus = user2Client.statuses.postStatus(
+                status = "This is the fourth status in this thread",
+                inReplyToId = thirdStatus.id
+            ).execute()
+            user1Client.statuses.postStatus(
+                status = "This is the fifth status in this thread",
+                inReplyToId = fourthStatus.id
+            ).execute()
 
             // when
             val context = user1Client.statuses.getContext(fourthStatus.id).execute()
@@ -580,7 +605,8 @@ class V410StatusMethodsIntegrationTest {
             // given
             val user1Client = TestHelpers.getTrustAllClient(user1UserToken.accessToken)
             val user2Client = TestHelpers.getTrustAllClient(user2UserToken.accessToken)
-            val status = user1Client.statuses.postStatus(status = "Hello, this is something that gets reblogged").execute()
+            val status =
+                user1Client.statuses.postStatus(status = "Hello, this is something that gets reblogged").execute()
             user1Client.statuses.reblogStatus(status.id).execute()
             user2Client.statuses.reblogStatus(status.id).execute()
 

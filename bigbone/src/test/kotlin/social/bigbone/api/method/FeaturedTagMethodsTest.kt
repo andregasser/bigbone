@@ -7,19 +7,21 @@ import org.amshove.kluent.shouldNotThrow
 import org.amshove.kluent.shouldThrow
 import org.amshove.kluent.withMessage
 import org.junit.jupiter.api.Test
+import social.bigbone.PrecisionDateTime.ValidPrecisionDateTime.ExactTime
 import social.bigbone.api.entity.FeaturedTag
 import social.bigbone.api.entity.Tag
 import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.testtool.MockClient
+import java.time.Instant
 
-class FeaturedTagsMethodsTest {
+class FeaturedTagMethodsTest {
 
     @Test
     fun `Given a client returning success, when getting featured_tags, then expect values of response`() {
         val client = MockClient.mock("featured_tags_view_success.json")
 
-        val featuredTagsMethods = FeaturedTagsMethods(client)
-        val featuredTags: List<FeaturedTag> = featuredTagsMethods.getFeaturedTags().execute()
+        val featuredTagMethods = FeaturedTagMethods(client)
+        val featuredTags: List<FeaturedTag> = featuredTagMethods.getFeaturedTags().execute()
 
         featuredTags.size shouldBeEqualTo 1
         val (id, name, url, statusesCount, lastStatusAt) = featuredTags.first()
@@ -27,7 +29,7 @@ class FeaturedTagsMethodsTest {
         name shouldBeEqualTo "nowplaying"
         url shouldBeEqualTo "https://mastodon.example/@user/tagged/nowplaying"
         statusesCount shouldBeEqualTo 70
-        lastStatusAt shouldBeEqualTo "2022-08-29T12:03:35.061Z"
+        lastStatusAt shouldBeEqualTo ExactTime(Instant.parse("2022-08-29T12:03:35.061Z"))
     }
 
     @Test
@@ -39,7 +41,7 @@ class FeaturedTagsMethodsTest {
         )
 
         invoking {
-            FeaturedTagsMethods(client).getFeaturedTags().execute()
+            FeaturedTagMethods(client).getFeaturedTags().execute()
         } shouldThrow BigBoneRequestException::class withMessage "Unauthorized"
     }
 
@@ -47,8 +49,8 @@ class FeaturedTagsMethodsTest {
     fun `Given a client returning success, when featuring a tag, then expect values of response`() {
         val client = MockClient.mock("featured_tags_post_success.json")
 
-        val featuredTagsMethods = FeaturedTagsMethods(client)
-        val (id, name, url, statusesCount, lastStatusAt) = featuredTagsMethods
+        val featuredTagMethods = FeaturedTagMethods(client)
+        val (id, name, url, statusesCount, lastStatusAt) = featuredTagMethods
             .featureTag("nowplaying")
             .execute()
 
@@ -56,16 +58,16 @@ class FeaturedTagsMethodsTest {
         name shouldBeEqualTo "nowplaying"
         url shouldBeEqualTo "https://mastodon.example/@user/tagged/nowplaying"
         statusesCount shouldBeEqualTo 23
-        lastStatusAt shouldBeEqualTo "2021-10-22T14:47:35.357Z"
+        lastStatusAt shouldBeEqualTo ExactTime(Instant.parse("2021-10-22T14:47:35.357Z"))
     }
 
     @Test
     fun `Given a client returning success, when attempting to feature a tag starting with #, then throw IllegalArgumentException`() {
         val client = MockClient.mock("featured_tags_post_success.json")
 
-        val featuredTagsMethods = FeaturedTagsMethods(client)
+        val featuredTagMethods = FeaturedTagMethods(client)
         invoking {
-            featuredTagsMethods.featureTag("#nowplaying").execute()
+            featuredTagMethods.featureTag("#nowplaying").execute()
         } shouldThrow IllegalArgumentException::class withMessage "Tag name to be featured must not contain '#'"
     }
 
@@ -78,7 +80,7 @@ class FeaturedTagsMethodsTest {
         )
 
         invoking {
-            FeaturedTagsMethods(client).featureTag("nowplaying").execute()
+            FeaturedTagMethods(client).featureTag("nowplaying").execute()
         } shouldThrow BigBoneRequestException::class withMessage "Unprocessable entity"
     }
 
@@ -86,21 +88,21 @@ class FeaturedTagsMethodsTest {
     fun `Given a client returning success, when unfeaturing a tag, then expect no errors`() {
         val client = MockClient.mock("featured_tags_delete_success.json")
 
-        val featuredTagsMethods = FeaturedTagsMethods(client)
-        invoking { featuredTagsMethods.unfeatureTag("12345") } shouldNotThrow BigBoneRequestException::class
+        val featuredTagMethods = FeaturedTagMethods(client)
+        invoking { featuredTagMethods.unfeatureTag("12345") } shouldNotThrow BigBoneRequestException::class
     }
 
     @Test
     fun `Given a client returning success, when attempting to unfeature a tag with blank tag id, then throw IllegalArgumentException`() {
         val client = MockClient.mock("featured_tags_delete_success.json")
 
-        val featuredTagsMethods = FeaturedTagsMethods(client)
+        val featuredTagMethods = FeaturedTagMethods(client)
         invoking {
-            featuredTagsMethods.unfeatureTag("")
+            featuredTagMethods.unfeatureTag("")
         } shouldThrow IllegalArgumentException::class withMessage "Tag ID must not be blank"
 
         invoking {
-            featuredTagsMethods.unfeatureTag("    ")
+            featuredTagMethods.unfeatureTag("    ")
         } shouldThrow IllegalArgumentException::class withMessage "Tag ID must not be blank"
     }
 
@@ -113,7 +115,7 @@ class FeaturedTagsMethodsTest {
         )
 
         invoking {
-            FeaturedTagsMethods(client).featureTag("12345").execute()
+            FeaturedTagMethods(client).featureTag("12345").execute()
         } shouldThrow BigBoneRequestException::class withMessage "Not found"
     }
 
@@ -121,8 +123,8 @@ class FeaturedTagsMethodsTest {
     fun `Given a client returning success, when getting suggested featured_tags, then expect values of response`() {
         val client = MockClient.mock("featured_tags_view_suggested_success.json")
 
-        val featuredTagsMethods = FeaturedTagsMethods(client)
-        val suggestions: List<Tag> = featuredTagsMethods.getSuggestedTags().execute()
+        val featuredTagMethods = FeaturedTagMethods(client)
+        val suggestions: List<Tag> = featuredTagMethods.getSuggestedTags().execute()
 
         suggestions.size shouldBeEqualTo 2
 
