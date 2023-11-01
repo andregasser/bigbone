@@ -18,11 +18,54 @@ class PushNotificationMethodsTest {
             userPublicKey = "userPublicKey",
             userAuthSecret = "userAuthSecret",
             follow = true,
-            mention = true
+            mention = true,
+            favourite = true
         ).execute()
         subscription.serverKey shouldNotBeEqualTo ""
         subscription.alerts.follow shouldBeEqualTo true
         subscription.alerts.mention shouldBeEqualTo true
+        subscription.alerts.poll shouldBeEqualTo false
+        subscription.alerts.reblog shouldBeEqualTo false
+        subscription.alerts.favourite shouldBeEqualTo true
+    }
+
+    @Test
+    fun updatePushNotification() {
+        val client = MockClient.mock("push_notification_subscription.json")
+        val pushNotificationMethods = PushNotificationMethods(client)
+        val subscription = pushNotificationMethods.updatePushSubscription(
+            follow = true,
+            mention = true,
+            favourite = true
+        ).execute()
+        subscription.serverKey shouldNotBeEqualTo ""
+        subscription.alerts.follow shouldBeEqualTo true
+        subscription.alerts.mention shouldBeEqualTo true
+        subscription.alerts.poll shouldBeEqualTo false
+        subscription.alerts.reblog shouldBeEqualTo false
+        subscription.alerts.favourite shouldBeEqualTo true
+    }
+
+    @Test
+    fun deletePushSubscriptionWithException() {
+        Assertions.assertThrows(BigBoneRequestException::class.java) {
+            val client = MockClient.ioException()
+            val pushNotificationMethods = PushNotificationMethods(client)
+            pushNotificationMethods.removePushSubscription()
+        }
+    }
+
+    @Test
+    fun getPushNotification() {
+        val client = MockClient.mock("push_notification_subscription.json")
+        val pushNotificationMethods = PushNotificationMethods(client)
+        val response = pushNotificationMethods.getPushNotification().execute()
+        response.serverKey shouldNotBeEqualTo ""
+        response.alerts.follow shouldBeEqualTo true
+        response.alerts.mention shouldBeEqualTo true
+        response.alerts.poll shouldBeEqualTo false
+        response.alerts.reblog shouldBeEqualTo false
+        response.alerts.favourite shouldBeEqualTo true
     }
 
     @Test
