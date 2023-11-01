@@ -46,46 +46,55 @@ data class Alerts(
      */
     @SerialName("mention")
     val mention: Boolean? = false,
+
     /**
      * Receive new subscribed account notifications?
      */
     @SerialName("status")
     val status: Boolean? = false,
+
     /**
      * Receive reblog notifications?
      */
     @SerialName("reblog")
     val reblog: Boolean? = false,
+
     /**
      * Receive follow notifications?
      */
     @SerialName("follow")
     val follow: Boolean? = false,
+
     /**
      * Receive follow request notifications?
      */
     @SerialName("follow_request")
     val followRequest: Boolean? = false,
+
     /**
      * Receive favourite notifications?
      */
     @SerialName("favourite")
     val favourite: Boolean? = false,
+
     /**
      * Receive poll notifications?
      */
     @SerialName("poll")
     val poll: Boolean? = false,
+
     /**
      * Receive status edited notifications?
      */
     @SerialName("update")
     val update: Boolean? = false,
+
     /**
      * Receive new user signup notifications? Must have a role with the appropriate permissions.
      */
     @SerialName("admin_sign_up")
     val adminSignUp: Boolean? = false,
+
     /**
      * Receive new report notifications? Must have a role with the appropriate permissions.
      */
