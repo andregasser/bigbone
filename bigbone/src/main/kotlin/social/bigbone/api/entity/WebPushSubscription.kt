@@ -92,12 +92,12 @@ data class Alerts(
     /**
      * Receive new user signup notifications? Must have a role with the appropriate permissions.
      */
-    @SerialName("admin_sign_up")
+    @SerialName("admin.sign_up")
     val adminSignUp: Boolean? = false,
 
     /**
      * Receive new report notifications? Must have a role with the appropriate permissions.
      */
-    @SerialName("admin_report")
+    @SerialName("admin.report")
     val adminReport: Boolean? = false
 )
