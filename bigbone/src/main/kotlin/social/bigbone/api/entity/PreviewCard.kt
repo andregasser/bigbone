@@ -3,7 +3,6 @@ package social.bigbone.api.entity
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import social.bigbone.api.entity.PreviewCard.CardType
-import social.bigbone.api.entity.data.History
 
 /**
  * Represents a rich preview card that is generated using OpenGraph tags from a URL.
@@ -87,8 +86,8 @@ data class PreviewCard(
     /**
      * Used for photo embeds, instead of custom html.
      */
-    @SerialName("method_url")
-    val methodUrl: String = "",
+    @SerialName("embed_url")
+    val embedUrl: String = "",
 
     /**
      * A hash computed by the BlurHash algorithm,
@@ -96,13 +95,7 @@ data class PreviewCard(
      * when media has not been downloaded yet.
      */
     @SerialName("blurhash")
-    val blurhash: String? = null,
-
-    /**
-     * Usage statistics for given days (typically the past week).
-     */
-    @SerialName("history")
-    val history: List<History> = emptyList()
+    val blurhash: String? = null
 ) {
     /**
      * Specifies the type of the preview card.
