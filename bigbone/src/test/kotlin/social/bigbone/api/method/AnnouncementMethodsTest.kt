@@ -21,7 +21,7 @@ class AnnouncementMethodsTest {
 
         verify {
             client.get(
-                path = "/api/v1/announcements",
+                path = "api/v1/announcements",
                 query = any<Parameters>()
             )
         }
@@ -36,7 +36,7 @@ class AnnouncementMethodsTest {
 
         verify {
             client.performAction(
-                endpoint = "/api/v1/announcements/8/dismiss",
+                endpoint = "api/v1/announcements/8/dismiss",
                 method = MastodonClient.Method.POST
             )
         }
@@ -51,7 +51,7 @@ class AnnouncementMethodsTest {
 
         verify {
             client.performAction(
-                endpoint = "/api/v1/announcements/8/dismiss",
+                endpoint = "api/v1/announcements/8/dismiss",
                 method = MastodonClient.Method.POST
             )
         }
@@ -69,7 +69,7 @@ class AnnouncementMethodsTest {
 
         verify {
             client.performAction(
-                endpoint = "/api/v1/announcements/8/reactions/😀",
+                endpoint = "api/v1/announcements/8/reactions/😀",
                 method = MastodonClient.Method.PUT
             )
         }
@@ -87,7 +87,7 @@ class AnnouncementMethodsTest {
 
         verify {
             client.performAction(
-                endpoint = "/api/v1/announcements/8/reactions/😀",
+                endpoint = "api/v1/announcements/8/reactions/😀",
                 method = MastodonClient.Method.DELETE
             )
         }

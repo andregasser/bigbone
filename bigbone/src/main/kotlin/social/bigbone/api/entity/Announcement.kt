@@ -2,6 +2,9 @@ package social.bigbone.api.entity
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import social.bigbone.DateTimeSerializer
+import social.bigbone.PrecisionDateTime
+import social.bigbone.PrecisionDateTime.InvalidPrecisionDateTime
 
 /**
  * Represents an announcement set by an administrator.
@@ -26,13 +29,15 @@ data class Announcement(
      * When the announcement will start.
      */
     @SerialName("starts_at")
-    val startsAt: String? = null,
+    @Serializable(with = DateTimeSerializer::class)
+    val startsAt: PrecisionDateTime = InvalidPrecisionDateTime.Unavailable,
 
     /**
      * When the announcement will end.
      */
     @SerialName("ends_at")
-    val endsAt: String? = null,
+    @Serializable(with = DateTimeSerializer::class)
+    val endsAt: PrecisionDateTime = InvalidPrecisionDateTime.Unavailable,
 
     /**
      * Whether the announcement is currently active.
@@ -51,13 +56,15 @@ data class Announcement(
      * When the announcement was published.
      */
     @SerialName("published_at")
-    val publishedAt: String = "",
+    @Serializable(with = DateTimeSerializer::class)
+    val publishedAt: PrecisionDateTime = InvalidPrecisionDateTime.Unavailable,
 
     /**
      * When the announcement will end.
      */
     @SerialName("updated_at")
-    val updatedAt: String? = null,
+    @Serializable(with = DateTimeSerializer::class)
+    val updatedAt: PrecisionDateTime = InvalidPrecisionDateTime.Unavailable,
 
     /**
      * Whether the announcement has been read by the current user.

@@ -12,7 +12,7 @@ import social.bigbone.api.exception.BigBoneRequestException
  */
 class AnnouncementMethods(private val client: MastodonClient) {
 
-    private val announcementsEndpoint = "/api/v1/announcements"
+    private val announcementsEndpoint = "api/v1/announcements"
 
     /**
      * See all currently active announcements set by admins.

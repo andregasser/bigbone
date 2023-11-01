@@ -8,7 +8,7 @@ import social.bigbone.api.method.AnnouncementMethods
 
 /**
  * Reactive implementation of [AnnouncementMethods].
- * Allows access to API methods with endpoints having an "api/vX/announcements" or "api/vX/announcement" prefix.
+ * Allows access to API methods with endpoints having an "api/vX/announcements" prefix.
  * @see <a href="https://docs.joinmastodon.org/methods/announcements/"> Mastodon announcements API methods </a>
  */
 class RxAnnouncementMethods(client: MastodonClient) {
