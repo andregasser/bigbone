@@ -16,6 +16,6 @@ class MediaAttachmentTest {
         status.remoteUrl shouldNotBe null
         status.previewUrl shouldBeEqualTo "preview"
         status.textUrl shouldNotBe null
-        status.type shouldBeEqualTo MediaAttachment.Type.Video.value
+        status.type shouldBeEqualTo MediaAttachment.MediaType.VIDEO
     }
 }
