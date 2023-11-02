@@ -286,20 +286,6 @@ private constructor(
     val timelines: TimelineMethods by lazy { TimelineMethods(this) }
 
     /**
-     * Access API methods under "preferences" endpoint.
-     */
-    @Suppress("unused") // public API
-    @get:JvmName("preferences")
-    val preferences: PreferenceMethods by lazy { PreferenceMethods(this) }
-
-    /**
-     * Access API methods under "suggestions" endpoint.
-     */
-    @Suppress("unused") // public API
-    @get:JvmName("suggestions")
-    val suggestions: SuggestionMethods by lazy { SuggestionMethods(this) }
-
-    /**
      * Access API methods under "push" endpoint.
      */
     @Suppress("unused") // public API
