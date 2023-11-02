@@ -25,7 +25,7 @@ class RxListMethods(client: MastodonClient) {
     @JvmOverloads
     fun createList(
         title: String,
-        repliesPolicy: MastodonList.RepliesPolicy = MastodonList.RepliesPolicy.List
+        repliesPolicy: MastodonList.RepliesPolicy = MastodonList.RepliesPolicy.LIST
     ): Single<MastodonList> = Single.fromCallable { listMethods.createList(title, repliesPolicy).execute() }
 
     fun updateList(

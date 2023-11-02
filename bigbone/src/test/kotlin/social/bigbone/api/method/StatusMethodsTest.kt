@@ -36,7 +36,7 @@ class StatusMethodsTest {
             shouldNotBeNull()
             url shouldBeEqualTo "https://www.youtube.com/watch?si=uGz-23iyZs0yoe5r&v=X_TLztvV4ns&feature=youtu.be"
             title shouldBeEqualTo "Thirteen Days - Theyll Fire Their Missiles, Then Well Fire Ours..."
-            type shouldBeEqualTo PreviewCard.CardType.Video.name.lowercase()
+            type shouldBeEqualTo PreviewCard.CardType.VIDEO
             html shouldBeEqualTo "<iframe width=\"200\" height=\"113\" src=\"https://www.youtube.com/embed/X_TLztvV4ns?feature=oembed\" frameborder=\"0\" allowfullscreen=\"\" sandbox=\"allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-forms\"></iframe>"
             width shouldBeEqualTo 200
             height shouldBeEqualTo 113

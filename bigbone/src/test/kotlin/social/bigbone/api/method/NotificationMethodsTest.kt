@@ -24,7 +24,7 @@ class NotificationMethodsTest {
         val pageable = notificationMethods.getAllNotifications().execute()
 
         with(pageable.part.first()) {
-            type shouldBeEqualTo "mention"
+            type.name.lowercase() shouldBeEqualTo "mention"
             createdAt shouldBeEqualTo ExactTime(Instant.parse("2019-11-23T07:49:02.064Z"))
             account.shouldNotBeNull()
         }
@@ -48,7 +48,7 @@ class NotificationMethodsTest {
         val pageable = notificationMethods.getAllNotifications().execute()
 
         with(pageable.part[1]) {
-            type shouldBeEqualTo "favourite"
+            type.name.lowercase() shouldBeEqualTo "favourite"
             createdAt shouldBeEqualTo ExactTime(Instant.parse("2019-11-23T07:29:18.903Z"))
         }
         with(pageable.part[1].status) {

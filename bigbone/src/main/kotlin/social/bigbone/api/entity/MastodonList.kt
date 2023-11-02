@@ -26,14 +26,20 @@ data class MastodonList(
      * @see [RepliesPolicy]
      */
     @SerialName("replies_policy")
-    val repliesPolicy: String = RepliesPolicy.List.value
+    val repliesPolicy: RepliesPolicy = RepliesPolicy.LIST
 ) {
     /**
      * Specifies the replies policy for a list.
      */
-    enum class RepliesPolicy(val value: String) {
-        Followed("followed"),
-        List("list"),
-        None("none")
+    @Serializable
+    enum class RepliesPolicy {
+        @SerialName("followed")
+        FOLLOWED,
+
+        @SerialName("list")
+        LIST,
+
+        @SerialName("none")
+        NONE
     }
 }

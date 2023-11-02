@@ -60,7 +60,7 @@ object ManageFilters {
         val title = "BigBone sample filter: $keywordToFilter"
 
         // filter context - where do we want statuses to be filtered? (here: in Home and Public timelines)
-        val context = listOf(Filter.Context.Home, Filter.Context.Public)
+        val context = listOf(Filter.FilterContext.HOME, Filter.FilterContext.PUBLIC)
 
         // create a proper filter keywords list - filters typically contain more than one keyword, and each keyword
         // can be matched either as a whole word or as part of a string (e.g. "@example.org" matching any "user@example.org").
@@ -71,7 +71,7 @@ object ManageFilters {
         val expiryInSeconds = 3600
 
         // filter action - should filtered statuses be shown with a warning, or be hidden completely?
-        val action = Filter.Action.Warn
+        val action = Filter.FilterAction.WARN
 
         // create filter and output its ID
         val createdFilter = client.filters.createFilter(title, context, keywords, expiryInSeconds, action).execute()

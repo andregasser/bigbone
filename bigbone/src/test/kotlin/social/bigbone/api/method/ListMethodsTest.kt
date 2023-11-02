@@ -16,7 +16,7 @@ class ListMethodsTest {
         val list = lists.first()
         list.id shouldBeEqualTo "12249"
         list.title shouldBeEqualTo "Friends"
-        list.repliesPolicy shouldBeEqualTo MastodonList.RepliesPolicy.Followed.value
+        list.repliesPolicy shouldBeEqualTo MastodonList.RepliesPolicy.FOLLOWED
     }
 
     @Test
@@ -35,7 +35,7 @@ class ListMethodsTest {
         val list = listMethods.getList("listID").execute()
         list.id shouldBeEqualTo "13585"
         list.title shouldBeEqualTo "test"
-        list.repliesPolicy shouldBeEqualTo MastodonList.RepliesPolicy.List.value
+        list.repliesPolicy shouldBeEqualTo MastodonList.RepliesPolicy.LIST
     }
 
     @Test
@@ -51,10 +51,10 @@ class ListMethodsTest {
     fun createList() {
         val client = MockClient.mock("list.json")
         val listMethods = ListMethods(client)
-        val list = listMethods.createList("title", MastodonList.RepliesPolicy.List).execute()
+        val list = listMethods.createList("title", MastodonList.RepliesPolicy.LIST).execute()
         list.id shouldBeEqualTo "13585"
         list.title shouldBeEqualTo "test"
-        list.repliesPolicy shouldBeEqualTo MastodonList.RepliesPolicy.List.value
+        list.repliesPolicy shouldBeEqualTo MastodonList.RepliesPolicy.LIST
     }
 
     @Test
@@ -62,7 +62,7 @@ class ListMethodsTest {
         Assertions.assertThrows(BigBoneRequestException::class.java) {
             val client = MockClient.ioException()
             val listMethods = ListMethods(client)
-            listMethods.createList("title", MastodonList.RepliesPolicy.List).execute()
+            listMethods.createList("title", MastodonList.RepliesPolicy.LIST).execute()
         }
     }
 
@@ -70,10 +70,10 @@ class ListMethodsTest {
     fun updateList() {
         val client = MockClient.mock("list.json")
         val listMethods = ListMethods(client)
-        val list = listMethods.updateList("listID", "title", MastodonList.RepliesPolicy.List).execute()
+        val list = listMethods.updateList("listID", "title", MastodonList.RepliesPolicy.LIST).execute()
         list.id shouldBeEqualTo "13585"
         list.title shouldBeEqualTo "test"
-        list.repliesPolicy shouldBeEqualTo MastodonList.RepliesPolicy.List.value
+        list.repliesPolicy shouldBeEqualTo MastodonList.RepliesPolicy.LIST
     }
 
     @Test
@@ -81,7 +81,7 @@ class ListMethodsTest {
         Assertions.assertThrows(BigBoneRequestException::class.java) {
             val client = MockClient.ioException()
             val listMethods = ListMethods(client)
-            listMethods.updateList("listID", "title", MastodonList.RepliesPolicy.Followed).execute()
+            listMethods.updateList("listID", "title", MastodonList.RepliesPolicy.FOLLOWED).execute()
         }
     }
 
