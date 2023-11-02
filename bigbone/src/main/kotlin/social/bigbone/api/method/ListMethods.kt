@@ -46,14 +46,14 @@ class ListMethods(private val client: MastodonClient) {
     @JvmOverloads
     fun createList(
         title: String,
-        repliesPolicy: MastodonList.RepliesPolicy = MastodonList.RepliesPolicy.List
+        repliesPolicy: MastodonList.RepliesPolicy = MastodonList.RepliesPolicy.LIST
     ): MastodonRequest<MastodonList> {
         return client.getMastodonRequest(
             endpoint = "api/v1/lists",
             method = MastodonClient.Method.POST,
             parameters = Parameters().apply {
                 append("title", title)
-                append("replies_policy", repliesPolicy.value)
+                append("replies_policy", repliesPolicy.name.lowercase())
             }
         )
     }
@@ -75,7 +75,7 @@ class ListMethods(private val client: MastodonClient) {
             method = MastodonClient.Method.PUT,
             parameters = Parameters().apply {
                 append("title", title)
-                append("replies_policy", repliesPolicy.value)
+                append("replies_policy", repliesPolicy.name.lowercase())
             }
         )
     }

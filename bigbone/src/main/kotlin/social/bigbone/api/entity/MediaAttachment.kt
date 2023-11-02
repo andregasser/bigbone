@@ -20,7 +20,7 @@ data class MediaAttachment(
      * The type of the attachment.
      */
     @SerialName("type")
-    val type: String = Type.Image.value,
+    val type: MediaType = MediaType.IMAGE,
 
     /**
      * The location of the original full-size attachment.
@@ -79,11 +79,21 @@ data class MediaAttachment(
     /**
      * The available media types.
      */
-    enum class Type(val value: String) {
-        Audio("audio"),
-        Image("image"),
-        Video("video"),
-        Gifv("gifv"),
-        Unknown("unknown")
+    @Serializable
+    enum class MediaType {
+        @SerialName("audio")
+        AUDIO,
+
+        @SerialName("image")
+        IMAGE,
+
+        @SerialName("video")
+        VIDEO,
+
+        @SerialName("gifv")
+        GIFV,
+
+        @SerialName("unknown")
+        UNKNOWN
     }
 }

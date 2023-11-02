@@ -23,7 +23,7 @@ class NotificationMethods(private val client: MastodonClient) {
      */
     @JvmOverloads
     fun getAllNotifications(
-        excludeTypes: List<Notification.Type>? = null,
+        excludeTypes: List<Notification.NotificationType>? = null,
         range: Range = Range()
     ): MastodonRequest<Pageable<Notification>> {
         return client.getPageableMastodonRequest(
@@ -31,7 +31,7 @@ class NotificationMethods(private val client: MastodonClient) {
             method = MastodonClient.Method.GET,
             parameters = range.toParameters().apply {
                 excludeTypes?.let {
-                    append("exclude_types", excludeTypes.map { it.value })
+                    append("exclude_types", excludeTypes.map { it.name.lowercase() })
                 }
             }
         )

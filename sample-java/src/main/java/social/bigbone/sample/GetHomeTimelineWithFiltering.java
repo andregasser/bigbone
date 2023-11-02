@@ -31,13 +31,13 @@ public class GetHomeTimelineWithFiltering {
                     Filter filter = filterResult.getFilter();
 
                     // only use a filter if it applies to our current context (in this case, the home timeline)
-                    if (filter.getContext().contains(Filter.Context.Home.getValue())) {
+                    if (filter.getContext().contains(Filter.FilterContext.HOME)) {
 
                         // check the filter action set for this filter
-                        if (filter.getFilterAction().equals(Filter.Action.Warn.getValue())) {
+                        if (filter.getFilterAction().equals(Filter.FilterAction.WARN)) {
                             shouldWarn.set(true);
                         }
-                        if (filter.getFilterAction().equals(Filter.Action.Hide.getValue())) {
+                        if (filter.getFilterAction().equals(Filter.FilterAction.HIDE)) {
                             shouldHide.set(true);
                         }
 
