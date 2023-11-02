@@ -1,0 +1,13 @@
+{
+  "type": "rich",
+  "version": "1.0",
+  "title": "New status by trwnh",
+  "author_name": "infinite love ⴳ",
+  "author_url": "https://mastodon.social/@trwnh",
+  "provider_name": "mastodon.social",
+  "provider_url": "https://mastodon.social/",
+  "cache_age": 86400,
+  "html": "<iframe src=\"https://mastodon.social/@trwnh/99664077509711321/embed\" class=\"mastodon-embed\" style=\"max-width: 100%; border: 0\" width=\"400\" allowfullscreen=\"allowfullscreen\"></iframe><script src=\"https://mastodon.social/embed.js\" async=\"async\"></script>",
+  "width": 400,
+  "height": null
+}
