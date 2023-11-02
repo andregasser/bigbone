@@ -5,8 +5,6 @@ import kotlinx.serialization.Serializable
 import social.bigbone.DateTimeSerializer
 import social.bigbone.PrecisionDateTime
 import social.bigbone.PrecisionDateTime.InvalidPrecisionDateTime
-import social.bigbone.api.entity.Filter.Action
-import social.bigbone.api.entity.Filter.Context
 
 /**
  * Represents a user-defined filter for determining which statuses should not be shown to the user.
@@ -28,10 +26,10 @@ data class Filter(
 
     /**
      * The contexts in which the filter should be applied.
-     * @see Context
+     * @see FilterContext
      */
     @SerialName("context")
-    val context: List<String> = emptyList(),
+    val context: List<FilterContext> = emptyList(),
 
     /**
      * When the filter should no longer be applied.
@@ -43,10 +41,10 @@ data class Filter(
 
     /**
      * The action to be taken when a status matches this filter.
-     * @see Action
+     * @see FilterAction
      */
     @SerialName("filter_action")
-    val filterAction: String = Action.Warn.value,
+    val filterAction: FilterAction = FilterAction.WARN,
 
     /**
      * The keywords grouped under this filter.
@@ -63,46 +61,55 @@ data class Filter(
     /**
      * The action to be taken when a status matches this filter.
      */
-    enum class Action(val value: String) {
+    @Serializable
+    enum class FilterAction {
         /**
          * Do not show this status if it is received.
          */
-        Hide("hide"),
+        @SerialName("hide")
+        HIDE,
 
         /**
          * Show a warning that identifies the matching filter by title, and allow the user to expand the filtered status.
          * This is the default (and unknown values should be treated as equivalent to warn).
          */
-        Warn("warn")
+        @SerialName("warn")
+        WARN
     }
 
     /**
      * The context(s) in which the filter should be applied.
      */
-    enum class Context(val value: String) {
+    @Serializable
+    enum class FilterContext {
         /**
          * Apply filter when viewing a profile.
          */
-        Account("account"),
+        @SerialName("account")
+        ACCOUNT,
 
         /**
          * Apply filter when viewing home timeline and lists.
          */
-        Home("home"),
+        @SerialName("home")
+        HOME,
 
         /**
          * Apply filter when viewing notifications timeline.
          */
-        Notifications("notifications"),
+        @SerialName("notifications")
+        NOTIFICATIONS,
 
         /**
          * Apply filter when viewing public timelines.
          */
-        Public("public"),
+        @SerialName("public")
+        PUBLIC,
 
         /**
          * Apply filter when viewing expanded thread of a detailed status.
          */
-        Thread("thread")
+        @SerialName("thread")
+        THREAD
     }
 }

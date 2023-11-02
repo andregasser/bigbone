@@ -20,7 +20,7 @@ class MediaMethodsTest {
         val focus = Focus(0.5f, 0.5f)
         val attachment = mediaMethods.uploadMedia(file, mediaType, description, focus).execute()
         attachment.id shouldBeEqualTo "10"
-        attachment.type shouldBeEqualTo "video"
+        attachment.type.name.lowercase() shouldBeEqualTo "video"
         attachment.url shouldBeEqualTo "youtube"
         attachment.remoteUrl shouldNotBe null
         attachment.previewUrl shouldBeEqualTo "preview"

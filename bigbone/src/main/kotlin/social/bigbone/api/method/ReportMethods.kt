@@ -4,7 +4,7 @@ import social.bigbone.MastodonClient
 import social.bigbone.MastodonRequest
 import social.bigbone.Parameters
 import social.bigbone.api.entity.Report
-import social.bigbone.api.entity.Report.ReportType
+import social.bigbone.api.entity.Report.ReportCategory
 import social.bigbone.api.exception.BigBoneRequestException
 
 /**
@@ -31,7 +31,7 @@ class ReportMethods(private val client: MastodonClient) {
         statusIds: List<String>? = emptyList(),
         ruleIds: List<Int>? = emptyList(),
         comment: String? = null,
-        category: ReportType? = null
+        category: ReportCategory? = null
     ): MastodonRequest<Report> {
         return client.getMastodonRequest(
             endpoint = "api/v1/reports",
@@ -46,7 +46,7 @@ class ReportMethods(private val client: MastodonClient) {
         comment: String? = null,
         forward: Boolean = false,
         ruleIds: List<Int>? = emptyList(),
-        category: ReportType? = null
+        category: ReportCategory? = null
     ): Parameters {
         return Parameters().apply {
             append("account_id", accountId)
@@ -64,10 +64,10 @@ class ReportMethods(private val client: MastodonClient) {
         }
     }
 
-    private fun setCategoryCorrectly(ruleIds: List<Int>? = emptyList(), category: ReportType? = null): ReportType {
+    private fun setCategoryCorrectly(ruleIds: List<Int>? = emptyList(), category: ReportCategory? = null): ReportCategory {
         return when {
-            !ruleIds.isNullOrEmpty() -> ReportType.VIOLATION
-            category == null -> ReportType.OTHER
+            !ruleIds.isNullOrEmpty() -> ReportCategory.VIOLATION
+            category == null -> ReportCategory.OTHER
             else -> category
         }
     }

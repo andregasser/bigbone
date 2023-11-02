@@ -5,7 +5,6 @@ import kotlinx.serialization.Serializable
 import social.bigbone.DateTimeSerializer
 import social.bigbone.PrecisionDateTime
 import social.bigbone.PrecisionDateTime.InvalidPrecisionDateTime
-import social.bigbone.api.entity.Report.ReportType
 
 /**
  * Reports filed against users and/or statuses, to be taken action on by moderators.
@@ -34,10 +33,10 @@ data class Report(
 
     /**
      * The generic reason for the report.
-     * @see ReportType
+     * @see ReportCategory
      */
     @SerialName("category")
-    val category: String = ReportType.OTHER.name,
+    val category: String = ReportCategory.OTHER.name,
 
     /**
      * The reason for the report.
@@ -79,9 +78,15 @@ data class Report(
     /**
      * Specify the typology of category among spam, violation or other.
      */
-    enum class ReportType(val type: String) {
-        SPAM("spam"),
-        VIOLATION("violation"),
-        OTHER("other")
+    @Serializable
+    enum class ReportCategory {
+        @SerialName("spam")
+        SPAM,
+
+        @SerialName("violation")
+        VIOLATION,
+
+        @SerialName("other")
+        OTHER
     }
 }
