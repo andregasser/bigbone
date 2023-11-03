@@ -19,10 +19,11 @@ class RxNotificationMethods(client: MastodonClient) {
 
     @JvmOverloads
     fun getAllNotifications(
+        includeTypes: List<Notification.NotificationType>? = null,
         excludeTypes: List<Notification.NotificationType>? = null,
         range: Range = Range()
     ): Single<Pageable<Notification>> = Single.fromCallable {
-        notificationMethods.getAllNotifications(excludeTypes, range).execute()
+        notificationMethods.getAllNotifications(includeTypes, excludeTypes, range).execute()
     }
 
     fun getNotification(id: String): Single<Notification> = Single.fromCallable {
