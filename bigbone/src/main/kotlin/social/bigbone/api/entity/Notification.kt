@@ -1,5 +1,6 @@
 package social.bigbone.api.entity
 
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import social.bigbone.DateTimeSerializer
@@ -56,14 +57,10 @@ data class Notification(
     enum class NotificationType {
 
         @SerialName("admin.report")
-        ADMIN_REPORT {
-            override val apiName: String = "admin.report"
-        },
+        ADMIN_REPORT,
 
         @SerialName("admin.sign_up")
-        ADMIN_SIGN_UP {
-            override val apiName: String = "admin.sign_up"
-        },
+        ADMIN_SIGN_UP,
 
         @SerialName("favourite")
         FAVOURITE,
@@ -89,6 +86,7 @@ data class Notification(
         @SerialName("update")
         UPDATE;
 
-        open val apiName: String = name.lowercase()
+        @OptIn(ExperimentalSerializationApi::class)
+        val apiName: String get() = serializer().descriptor.getElementName(ordinal)
     }
 }
