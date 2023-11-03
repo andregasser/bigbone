@@ -237,6 +237,13 @@ private constructor(
     val preferences: PreferenceMethods by lazy { PreferenceMethods(this) }
 
     /**
+     * Access API methods under "push" endpoint.
+     */
+    @Suppress("unused") // public API
+    @get:JvmName("pushNotifications")
+    val pushNotifications: PushNotificationMethods by lazy { PushNotificationMethods(this) }
+
+    /**
      * Access API methods under the "reports" endpoint.
      */
     @Suppress("unused") // public API
@@ -284,13 +291,6 @@ private constructor(
     @Suppress("unused") // public API
     @get:JvmName("timelines")
     val timelines: TimelineMethods by lazy { TimelineMethods(this) }
-
-    /**
-     * Access API methods under "push" endpoint.
-     */
-    @Suppress("unused") // public API
-    @get:JvmName("pushNotifications")
-    val pushNotifications: PushNotificationMethods by lazy { PushNotificationMethods(this) }
 
     /**
      * Specifies the HTTP methods / HTTP verb that can be used by this class.
