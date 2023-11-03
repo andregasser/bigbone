@@ -55,7 +55,7 @@ class NotificationMethodsTest {
 
         verify {
             client.get(
-                path = "/api/v1/notifications",
+                path = "api/v1/notifications",
                 query = any<Parameters>()
             )
         }
@@ -118,7 +118,6 @@ class NotificationMethodsTest {
         }
     }
 
-
     @Test
     fun getFavouriteNotification() {
         val client = MockClient.mock("notifications.json")
@@ -137,7 +136,7 @@ class NotificationMethodsTest {
 
         verify {
             client.get(
-                path = "/api/v1/notifications",
+                path = "api/v1/notifications",
                 query = any<Parameters>()
             )
         }
@@ -164,7 +163,7 @@ class NotificationMethodsTest {
 
         verify {
             client.get(
-                path = "/api/v1/notifications/1",
+                path = "api/v1/notifications/1",
                 query = any<Parameters>()
             )
         }
@@ -179,7 +178,7 @@ class NotificationMethodsTest {
 
         verify {
             client.performAction(
-                endpoint = "/api/v1/notifications/1/dismiss",
+                endpoint = "api/v1/notifications/1/dismiss",
                 method = MastodonClient.Method.POST
             )
         }
@@ -194,7 +193,7 @@ class NotificationMethodsTest {
 
         verify {
             client.performAction(
-                endpoint = "/api/v1/notifications/clear",
+                endpoint = "api/v1/notifications/clear",
                 method = MastodonClient.Method.POST
             )
         }

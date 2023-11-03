@@ -13,7 +13,7 @@ import social.bigbone.api.exception.BigBoneRequestException
  */
 class NotificationMethods(private val client: MastodonClient) {
 
-    private val notificationsEndpoint = "/api/v1/notifications"
+    private val notificationsEndpoint = "api/v1/notifications"
 
     /**
      * Notifications concerning the user.
