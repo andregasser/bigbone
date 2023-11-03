@@ -62,7 +62,7 @@ class NotificationMethodsTest {
     }
 
     @Test
-    fun `When getting all notifications with valid includeTypes and excludeTypes, then call endpoint with correct parameters`() {
+    fun `When getting all notifications with valid includeTypes, excludeTypes, and accountId, then call endpoint with correct parameters`() {
         val client = MockClient.mock("notifications.json")
         val notificationMethods = NotificationMethods(client)
 
@@ -75,7 +75,8 @@ class NotificationMethodsTest {
         )
         notificationMethods.getAllNotifications(
             includeTypes = includeTypes,
-            excludeTypes = excludeTypes
+            excludeTypes = excludeTypes,
+            accountId = "1234567"
         ).execute()
 
         val parametersCapturingSlot = slot<Parameters>()
@@ -88,8 +89,9 @@ class NotificationMethodsTest {
         with(parametersCapturingSlot.captured) {
             parameters["types[]"]?.shouldContainAll(includeTypes.map(Notification.NotificationType::apiName))
             parameters["exclude_types[]"]?.shouldContainAll(excludeTypes.map(Notification.NotificationType::apiName))
+            parameters["account_id"]?.shouldContainAll(listOf("1234567"))
 
-            toQuery() shouldBeEqualTo "types[]=follow&types[]=mention&exclude_types[]=favourite"
+            toQuery() shouldBeEqualTo "types[]=follow&types[]=mention&exclude_types[]=favourite&account_id=1234567"
         }
     }
 
@@ -113,6 +115,7 @@ class NotificationMethodsTest {
         with(parametersCapturingSlot.captured) {
             parameters["types[]"].shouldBeNull()
             parameters["exclude_types[]"].shouldBeNull()
+            parameters["account_id"].shouldBeNull()
 
             toQuery() shouldBeEqualTo ""
         }

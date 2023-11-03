@@ -17,13 +17,22 @@ class RxNotificationMethods(client: MastodonClient) {
 
     private val notificationMethods = NotificationMethods(client)
 
+    /**
+     * Notifications concerning the user.
+     * @param includeTypes Types to include in the results.
+     * @param excludeTypes Types to exclude from the results.
+     * @param accountId Return only notifications received from the specified account.
+     * @param range optional Range for the pageable return value.
+     * @see <a href="https://docs.joinmastodon.org/methods/notifications/#get">Mastodon API documentation: methods/notifications/#get</a>
+     */
     @JvmOverloads
     fun getAllNotifications(
         includeTypes: List<Notification.NotificationType>? = null,
         excludeTypes: List<Notification.NotificationType>? = null,
+        accountId: String? = null,
         range: Range = Range()
     ): Single<Pageable<Notification>> = Single.fromCallable {
-        notificationMethods.getAllNotifications(includeTypes, excludeTypes, range).execute()
+        notificationMethods.getAllNotifications(includeTypes, excludeTypes, accountId, range).execute()
     }
 
     fun getNotification(id: String): Single<Notification> = Single.fromCallable {
