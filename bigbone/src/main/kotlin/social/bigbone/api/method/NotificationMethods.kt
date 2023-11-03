@@ -33,10 +33,10 @@ class NotificationMethods(private val client: MastodonClient) {
             method = MastodonClient.Method.GET,
             parameters = range.toParameters().apply {
                 includeTypes?.let {
-                    append("types", includeTypes.map { it.name.lowercase() })
+                    append("types", includeTypes.map(Notification.NotificationType::apiName))
                 }
                 excludeTypes?.let {
-                    append("exclude_types", excludeTypes.map { it.name.lowercase() })
+                    append("exclude_types", excludeTypes.map(Notification.NotificationType::apiName))
                 }
             }
         )

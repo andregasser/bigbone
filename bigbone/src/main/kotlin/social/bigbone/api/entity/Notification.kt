@@ -22,7 +22,7 @@ data class Notification(
      * The type of event that resulted in the notification.
      */
     @SerialName("type")
-    val type: NotificationType = NotificationType.MENTION,
+    val type: NotificationType? = null,
 
     /**
      * The timestamp of the notification.
@@ -54,16 +54,41 @@ data class Notification(
      */
     @Serializable
     enum class NotificationType {
-        @SerialName("mention")
-        MENTION,
 
-        @SerialName("reblog")
-        REBLOG,
+        @SerialName("admin.report")
+        ADMIN_REPORT {
+            override val apiName: String = "admin.report"
+        },
+
+        @SerialName("admin.sign_up")
+        ADMIN_SIGN_UP {
+            override val apiName: String = "admin.sign_up"
+        },
 
         @SerialName("favourite")
         FAVOURITE,
 
         @SerialName("follow")
-        FOLLOW
+        FOLLOW,
+
+        @SerialName("follow_request")
+        FOLLOW_REQUEST,
+
+        @SerialName("mention")
+        MENTION,
+
+        @SerialName("poll")
+        POLL,
+
+        @SerialName("reblog")
+        REBLOG,
+
+        @SerialName("status")
+        STATUS,
+
+        @SerialName("update")
+        UPDATE;
+
+        open val apiName: String = name.lowercase()
     }
 }

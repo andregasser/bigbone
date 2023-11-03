@@ -8,14 +8,30 @@ import org.amshove.kluent.shouldNotBeNull
 import org.amshove.kluent.shouldNotThrow
 import org.amshove.kluent.shouldThrow
 import org.junit.jupiter.api.Test
+import social.bigbone.JSON_SERIALIZER
 import social.bigbone.MastodonClient
 import social.bigbone.Parameters
 import social.bigbone.PrecisionDateTime.ValidPrecisionDateTime.ExactTime
+import social.bigbone.api.entity.Notification
 import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.testtool.MockClient
 import java.time.Instant
 
 class NotificationMethodsTest {
+
+    @Test
+    fun `Given a JSON response with invalid status, when deserialising, then default to null`() {
+        val json = """
+            {
+                "type": "new_unknown_type"
+            }
+        """.trimIndent()
+
+        val notification: Notification = JSON_SERIALIZER.decodeFromString(json)
+
+        notification.type.shouldBeNull()
+    }
+
     @Test
     fun getMentionNotification() {
         val client = MockClient.mock("notifications.json")
@@ -24,7 +40,8 @@ class NotificationMethodsTest {
         val pageable = notificationMethods.getAllNotifications().execute()
 
         with(pageable.part.first()) {
-            type.name.lowercase() shouldBeEqualTo "mention"
+            type.shouldNotBeNull()
+            type!!.name.lowercase() shouldBeEqualTo "mention"
             createdAt shouldBeEqualTo ExactTime(Instant.parse("2019-11-23T07:49:02.064Z"))
             account.shouldNotBeNull()
         }
@@ -48,7 +65,8 @@ class NotificationMethodsTest {
         val pageable = notificationMethods.getAllNotifications().execute()
 
         with(pageable.part[1]) {
-            type.name.lowercase() shouldBeEqualTo "favourite"
+            type.shouldNotBeNull()
+            type!!.name.lowercase() shouldBeEqualTo "favourite"
             createdAt shouldBeEqualTo ExactTime(Instant.parse("2019-11-23T07:29:18.903Z"))
         }
         with(pageable.part[1].status) {
