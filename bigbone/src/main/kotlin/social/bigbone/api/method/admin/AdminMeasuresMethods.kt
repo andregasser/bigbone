@@ -3,7 +3,7 @@ package social.bigbone.api.method.admin
 import social.bigbone.MastodonClient
 import social.bigbone.MastodonRequest
 import social.bigbone.Parameters
-import social.bigbone.api.entity.Admin
+import social.bigbone.api.entity.Admin.Measure
 import java.time.Instant
 
 /**
@@ -17,19 +17,22 @@ class AdminMeasuresMethods(private val client: MastodonClient) {
     /**
      * Obtain statistical measures for your server.
      *
+     * @param keys Request specific measures by their keystring.
      * @param startAt The start date for the time period. If a time is provided, it will be ignored.
      * @param endAt The end date for the time period. If a time is provided, it will be ignored.
      *
      * @see <a href="https://docs.joinmastodon.org/methods/admin/measures/#get">Mastodon API documentation: admin/measures/#get</a>
      */
-    fun getMeasurableDate(
+    fun getMeasurableData(
+        keys: List<Measure.Key>,
         startAt: Instant,
         endAt: Instant,
-    ): MastodonRequest<List<Admin.Measure>> {
+    ): MastodonRequest<List<Measure>> {
         return client.getMastodonRequestForList(
             endpoint = adminMeasuresEndpoint,
             method = MastodonClient.Method.POST,
             parameters = Parameters().apply {
+                append("keys", keys.map(Measure.Key::apiName))
                 append("start_at", startAt.toString())
                 append("end_at", endAt.toString())
             }

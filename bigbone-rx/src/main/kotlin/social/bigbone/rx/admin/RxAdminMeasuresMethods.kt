@@ -13,16 +13,19 @@ class RxAdminMeasuresMethods(client: MastodonClient) {
     /**
      * Obtain statistical measures for your server.
      *
+     * @param keys Request specific measures by their keystring.
      * @param startAt The start date for the time period. If a time is provided, it will be ignored.
      * @param endAt The end date for the time period. If a time is provided, it will be ignored.
      *
      * @see <a href="https://docs.joinmastodon.org/methods/admin/measures/#get">Mastodon API documentation: admin/measures/#get</a>
      */
     fun getMeasurableDate(
+        keys: List<Admin.Measure.Key>,
         startAt: Instant,
         endAt: Instant,
     ): Single<List<Admin.Measure>> = Single.fromCallable {
-        adminMeasuresMethods.getMeasurableDate(
+        adminMeasuresMethods.getMeasurableData(
+            keys = keys,
             startAt = startAt,
             endAt = endAt
         ).execute()
