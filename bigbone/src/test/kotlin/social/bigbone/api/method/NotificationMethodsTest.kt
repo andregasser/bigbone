@@ -1,9 +1,12 @@
 package social.bigbone.api.method
 
+import io.mockk.slot
 import io.mockk.verify
 import org.amshove.kluent.AnyException
 import org.amshove.kluent.invoking
 import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeNull
+import org.amshove.kluent.shouldContainAll
 import org.amshove.kluent.shouldNotBeNull
 import org.amshove.kluent.shouldNotThrow
 import org.amshove.kluent.shouldThrow
@@ -57,6 +60,64 @@ class NotificationMethodsTest {
             )
         }
     }
+
+    @Test
+    fun `When getting all notifications with valid includeTypes and excludeTypes, then call endpoint with correct parameters`() {
+        val client = MockClient.mock("notifications.json")
+        val notificationMethods = NotificationMethods(client)
+
+        val includeTypes = listOf(
+            Notification.NotificationType.FOLLOW,
+            Notification.NotificationType.MENTION
+        )
+        val excludeTypes = listOf(
+            Notification.NotificationType.FAVOURITE
+        )
+        notificationMethods.getAllNotifications(
+            includeTypes = includeTypes,
+            excludeTypes = excludeTypes
+        ).execute()
+
+        val parametersCapturingSlot = slot<Parameters>()
+        verify {
+            client.get(
+                path = "api/v1/notifications",
+                query = capture(parametersCapturingSlot)
+            )
+        }
+        with(parametersCapturingSlot.captured) {
+            parameters["types[]"]?.shouldContainAll(includeTypes.map(Notification.NotificationType::apiName))
+            parameters["exclude_types[]"]?.shouldContainAll(excludeTypes.map(Notification.NotificationType::apiName))
+
+            toQuery() shouldBeEqualTo "types[]=follow&types[]=mention&exclude_types[]=favourite"
+        }
+    }
+
+    @Test
+    fun `When getting all notifications with empty includeTypes and includeTypes, then call endpoint without types`() {
+        val client = MockClient.mock("notifications.json")
+        val notificationMethods = NotificationMethods(client)
+
+        notificationMethods.getAllNotifications(
+            includeTypes = emptyList(),
+            excludeTypes = emptyList()
+        ).execute()
+
+        val parametersCapturingSlot = slot<Parameters>()
+        verify {
+            client.get(
+                path = "api/v1/notifications",
+                query = capture(parametersCapturingSlot)
+            )
+        }
+        with(parametersCapturingSlot.captured) {
+            parameters["types[]"].shouldBeNull()
+            parameters["exclude_types[]"].shouldBeNull()
+
+            toQuery() shouldBeEqualTo ""
+        }
+    }
+
 
     @Test
     fun getFavouriteNotification() {
