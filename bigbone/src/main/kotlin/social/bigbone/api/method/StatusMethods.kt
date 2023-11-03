@@ -183,7 +183,7 @@ class StatusMethods(private val client: MastodonClient) {
                 append("poll[expires_in]", pollData.expiresIn)
                 append("visibility", visibility.name.lowercase())
                 append("poll[multiple]", pollData.multiple ?: false)
-                append("poll[hide_totals", pollData.hideTotals ?: false)
+                append("poll[hide_totals]", pollData.hideTotals ?: false)
                 inReplyToId?.let { append("in_reply_to_id", it) }
                 append("sensitive", sensitive)
                 spoilerText?.let { append("spoiler_text", it) }

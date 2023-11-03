@@ -35,6 +35,7 @@ import social.bigbone.api.method.OAuthMethods
 import social.bigbone.api.method.OEmbedMethods
 import social.bigbone.api.method.PollMethods
 import social.bigbone.api.method.PreferenceMethods
+import social.bigbone.api.method.PushNotificationMethods
 import social.bigbone.api.method.ReportMethods
 import social.bigbone.api.method.SearchMethods
 import social.bigbone.api.method.StatusMethods
@@ -283,6 +284,13 @@ private constructor(
     @Suppress("unused") // public API
     @get:JvmName("timelines")
     val timelines: TimelineMethods by lazy { TimelineMethods(this) }
+
+    /**
+     * Access API methods under "push" endpoint.
+     */
+    @Suppress("unused") // public API
+    @get:JvmName("pushNotifications")
+    val pushNotifications: PushNotificationMethods by lazy { PushNotificationMethods(this) }
 
     /**
      * Specifies the HTTP methods / HTTP verb that can be used by this class.
