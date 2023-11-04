@@ -21,27 +21,27 @@ class AdminMeasuresMethodsTest {
     fun `Given client returning success, when calling getMeasurableDate, then ensure proper deserialisation and correct endpoint and parameter usage`() {
         val client = MockClient.mock("admin_measures_get_measurable_data_success.json")
         val adminMeasuresMethods = AdminMeasuresMethods(client)
-        val keys = listOf(
-            Key.ACTIVE_USERS,
-            Key.NEW_USERS,
-            Key.INTERACTIONS,
-            Key.OPENED_REPORTS,
-            Key.RESOLVED_REPORTS,
-            Key.TAG_ACCOUNTS,
-            Key.TAG_USES,
-            Key.TAG_SERVERS,
-            Key.INSTANCE_ACCOUNTS,
-            Key.INSTANCE_MEDIA_ATTACHMENTS,
-            Key.INSTANCE_REPORTS,
-            Key.INSTANCE_STATUSES,
-            Key.INSTANCE_FOLLOWS,
-            Key.INSTANCE_FOLLOWERS
+        val measures: List<RequestMeasure> = listOf(
+            RequestMeasure.ActiveUsers,
+            RequestMeasure.NewUsers,
+            RequestMeasure.Interactions,
+            RequestMeasure.OpenedReports,
+            RequestMeasure.ResolvedReports,
+            RequestMeasure.TagAccounts(tagId = "123"),
+            RequestMeasure.TagUses(tagId = "123"),
+            RequestMeasure.TagServers(tagId = "123"),
+            RequestMeasure.InstanceAccounts(remoteDomain = "mastodon.social"),
+            RequestMeasure.InstanceMediaAttachments(remoteDomain = "mastodon.social"),
+            RequestMeasure.InstanceReports(remoteDomain = "mastodon.social"),
+            RequestMeasure.InstanceStatuses(remoteDomain = "mastodon.social"),
+            RequestMeasure.InstanceFollows(remoteDomain = "mastodon.social"),
+            RequestMeasure.InstanceFollowers(remoteDomain = "mastodon.social")
         )
         val startAt = Instant.now().minusSeconds(600)
         val endAt = Instant.now()
 
         val measurableData: List<Admin.Measure> = adminMeasuresMethods.getMeasurableData(
-            keys = keys,
+            measures = measures,
             startAt = startAt,
             endAt = endAt
         ).execute()
@@ -73,13 +73,42 @@ class AdminMeasuresMethodsTest {
             )
         }
         with(parametersCapturingSlot.captured) {
-            val keysString = keys.joinToString(separator = "&") {
-                "keys[]=${URLEncoder.encode(it.apiName, "utf-8")}"
-            }
+            val measuresString: String = "keys[]=active_users&" +
+                "keys[]=new_users&" +
+                "keys[]=interactions&" +
+                "keys[]=opened_reports&" +
+                "keys[]=resolved_reports&" +
+
+                "keys[]=tag_accounts&" +
+                "tag_accounts[id]=123&" +
+
+                "keys[]=tag_uses&" +
+                "tag_uses[id]=123&" +
+
+                "keys[]=tag_servers&" +
+                "tag_servers[id]=123&" +
+
+                "keys[]=instance_accounts&" +
+                "instance_accounts[domain]=mastodon.social&" +
+
+                "keys[]=instance_media_attachments&" +
+                "instance_media_attachments[domain]=mastodon.social&" +
+
+                "keys[]=instance_reports&" +
+                "instance_reports[domain]=mastodon.social&" +
+
+                "keys[]=instance_statuses&" +
+                "instance_statuses[domain]=mastodon.social&" +
+
+                "keys[]=instance_follows&" +
+                "instance_follows[domain]=mastodon.social&" +
+
+                "keys[]=instance_followers&" +
+                "instance_followers[domain]=mastodon.social"
             val startString = URLEncoder.encode(startAt.toString(), "utf-8")
             val endString = URLEncoder.encode(endAt.toString(), "utf-8")
 
-            toQuery() shouldBeEqualTo "$keysString&start_at=$startString&end_at=$endString"
+            toQuery() shouldBeEqualTo "$measuresString&start_at=$startString&end_at=$endString"
         }
     }
 }
