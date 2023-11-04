@@ -2,15 +2,19 @@ package social.bigbone.api.method.admin
 
 import io.mockk.slot
 import io.mockk.verify
+import org.amshove.kluent.invoking
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldHaveSize
 import org.amshove.kluent.shouldNotBeNull
+import org.amshove.kluent.shouldThrow
+import org.amshove.kluent.withMessage
 import org.junit.jupiter.api.Test
 import social.bigbone.Parameters
 import social.bigbone.PrecisionDateTime.ValidPrecisionDateTime.ExactTime
 import social.bigbone.api.entity.admin.AdminMeasure
 import social.bigbone.api.entity.admin.AdminMeasure.Key
+import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.testtool.MockClient
 import java.net.URLEncoder
 import java.time.Instant
@@ -110,5 +114,22 @@ class AdminMeasuresMethodsTest {
 
             toQuery() shouldBeEqualTo "$measuresString&start_at=$startString&end_at=$endString"
         }
+    }
+
+    @Test
+    fun `Given a client returning forbidden, when getting measurable data, then propagate error`() {
+        val client = MockClient.failWithResponse(
+            responseJsonAssetPath = "error_403_forbidden.json",
+            responseCode = 403,
+            message = "Forbidden"
+        )
+
+        invoking {
+            AdminMeasuresMethods(client).getMeasurableData(
+                measures = listOf(RequestMeasure.ActiveUsers),
+                startAt = Instant.now().minusSeconds(600),
+                endAt = Instant.now()
+            ).execute()
+        } shouldThrow BigBoneRequestException::class withMessage "Forbidden"
     }
 }
