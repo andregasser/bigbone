@@ -3,8 +3,8 @@ package social.bigbone.api.method.admin
 import social.bigbone.MastodonClient
 import social.bigbone.MastodonRequest
 import social.bigbone.Parameters
-import social.bigbone.api.entity.Admin
-import social.bigbone.api.entity.Admin.Measure.Key
+import social.bigbone.api.entity.admin.AdminMeasure
+import social.bigbone.api.entity.admin.AdminMeasure.Key
 import java.time.Instant
 
 /**
@@ -27,8 +27,8 @@ class AdminMeasuresMethods(private val client: MastodonClient) {
     fun getMeasurableData(
         measures: List<RequestMeasure>,
         startAt: Instant,
-        endAt: Instant,
-    ): MastodonRequest<List<Admin.Measure>> {
+        endAt: Instant
+    ): MastodonRequest<List<AdminMeasure>> {
         return client.getMastodonRequestForList(
             endpoint = adminMeasuresEndpoint,
             method = MastodonClient.Method.POST,

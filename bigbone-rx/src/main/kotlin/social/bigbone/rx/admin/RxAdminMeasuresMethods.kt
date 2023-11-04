@@ -2,8 +2,8 @@ package social.bigbone.rx.admin
 
 import io.reactivex.rxjava3.core.Single
 import social.bigbone.MastodonClient
-import social.bigbone.api.entity.Admin
-import social.bigbone.api.entity.Admin.Measure.Key
+import social.bigbone.api.entity.admin.AdminMeasure
+import social.bigbone.api.entity.admin.AdminMeasure.Key
 import social.bigbone.api.method.admin.AdminMeasuresMethods
 import social.bigbone.api.method.admin.RequestMeasure
 import java.time.Instant
@@ -30,8 +30,8 @@ class RxAdminMeasuresMethods(client: MastodonClient) {
     fun getMeasurableDate(
         measures: List<RequestMeasure>,
         startAt: Instant,
-        endAt: Instant,
-    ): Single<List<Admin.Measure>> = Single.fromCallable {
+        endAt: Instant
+    ): Single<List<AdminMeasure>> = Single.fromCallable {
         adminMeasuresMethods.getMeasurableData(
             measures = measures,
             startAt = startAt,

@@ -9,8 +9,8 @@ import org.amshove.kluent.shouldNotBeNull
 import org.junit.jupiter.api.Test
 import social.bigbone.Parameters
 import social.bigbone.PrecisionDateTime.ValidPrecisionDateTime.ExactTime
-import social.bigbone.api.entity.Admin
-import social.bigbone.api.entity.Admin.Measure.Key
+import social.bigbone.api.entity.admin.AdminMeasure
+import social.bigbone.api.entity.admin.AdminMeasure.Key
 import social.bigbone.testtool.MockClient
 import java.net.URLEncoder
 import java.time.Instant
@@ -40,7 +40,7 @@ class AdminMeasuresMethodsTest {
         val startAt = Instant.now().minusSeconds(600)
         val endAt = Instant.now()
 
-        val measurableData: List<Admin.Measure> = adminMeasuresMethods.getMeasurableData(
+        val measurableData: List<AdminMeasure> = adminMeasuresMethods.getMeasurableData(
             measures = measures,
             startAt = startAt,
             endAt = endAt
