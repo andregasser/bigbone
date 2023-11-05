@@ -1,6 +1,7 @@
 package social.bigbone.api.method
 
 import social.bigbone.MastodonClient
+import social.bigbone.MastodonMinServerVersion
 import social.bigbone.MastodonRequest
 import social.bigbone.api.entity.DomainBlock
 import social.bigbone.api.entity.ExtendedDescription
@@ -8,6 +9,8 @@ import social.bigbone.api.entity.Instance
 import social.bigbone.api.entity.InstanceActivity
 import social.bigbone.api.entity.InstanceV1
 import social.bigbone.api.entity.Rule
+import social.bigbone.api.exception.BigBoneVersionException
+import social.bigbone.requireMinVersion
 
 /**
  * Allows access to API methods with endpoints having an "api/vX/instance" prefix.
@@ -21,9 +24,14 @@ class InstanceMethods(private val client: MastodonClient) {
 
     /**
      * Obtain general information about the server.
+     * @throws BigBoneVersionException if the Mastodon server version doesn't match the [MastodonMinServerVersion] for this method
      * @see <a href="https://docs.joinmastodon.org/methods/instance/#v2">Mastodon API documentation: methods/instance/#v2</a>
      */
+    @MastodonMinServerVersion("4.0.0")
+    @Throws(BigBoneVersionException::class)
     fun getInstance(): MastodonRequest<Instance> {
+        InstanceMethods::getInstance.requireMinVersion(client)
+
         return client.getMastodonRequest(
             endpoint = instanceEndpointV2,
             method = MastodonClient.Method.GET

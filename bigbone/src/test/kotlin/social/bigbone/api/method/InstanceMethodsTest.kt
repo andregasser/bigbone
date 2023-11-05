@@ -1,5 +1,6 @@
 package social.bigbone.api.method
 
+import io.mockk.Called
 import io.mockk.verify
 import org.amshove.kluent.invoking
 import org.amshove.kluent.shouldBeEqualTo
@@ -16,6 +17,7 @@ import social.bigbone.api.entity.ExtendedDescription
 import social.bigbone.api.entity.InstanceActivity
 import social.bigbone.api.entity.Rule
 import social.bigbone.api.exception.BigBoneRequestException
+import social.bigbone.api.exception.BigBoneVersionException
 import social.bigbone.testtool.MockClient
 import social.bigbone.testtool.TestUtil
 import java.time.Instant
@@ -23,7 +25,7 @@ import java.time.Instant
 class InstanceMethodsTest {
     @Test
     fun getInstance() {
-        val client = MockClient.mock("instance.json")
+        val client = MockClient.mock(jsonName = "instance.json")
         val instanceMethods = InstanceMethods(client)
 
         val instance = instanceMethods.getInstance().execute()
@@ -39,6 +41,18 @@ class InstanceMethodsTest {
                 query = null
             )
         }
+    }
+
+    @Test
+    fun `Given an instance with Mastodon 3-4-0, when calling getInstance, then fail with BigBoneVersionException`() {
+        val client = MockClient.mock(jsonName = "instance.json", instanceVersion = "3.4.0")
+        val instanceMethods = InstanceMethods(client)
+
+        invoking { instanceMethods.getInstance().execute() }
+            .shouldThrow(BigBoneVersionException::class)
+            .withMessage("getInstance requires the server to run at least Mastodon 4.0.0 but it runs 3.4.0")
+
+        verify { client.get(path = "/api/v2/instance", query = null) wasNot Called }
     }
 
     @Test
