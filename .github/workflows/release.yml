@@ -1,0 +1,60 @@
+name: Release
+
+on:
+  push:
+    tags:
+      # Run on any pushed tag like v2.0.0
+      - 'v*.*.*'
+
+# Cancel any already running builds with that git reference
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  publish-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout project sources
+        uses: actions/checkout@v4
+
+      - name: Ensure that all required checks pass
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: check
+
+      - name: Assemble the library for use in GitHub release
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: assemble generatePomFileForBigbonePublication
+
+      - name: Publish the library
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: publish
+
+      - name: ZIP files
+        id: zip-files
+        run: |
+          tagName=${{ github.ref_name }}
+          
+          # Format the current date like 20231105.180259
+          formattedDate=date +%Y%m%d.%H%M%S
+          archiveName=BigBone-$tagName-$formattedDate.zip
+          
+          # Get all JARs and POM files and zip them into an archive with archiveName
+          find bigbone/build/libs bigbone/build/publications -type f \( -name "*.jar" -o -name "*pom*.xml" \) -print | zip $archiveName -@
+          
+          # Save archive name for reuse in later action steps
+          echo "zipArchive=$archiveName" >> $GITHUB_OUTPUT
+
+      - name: Create a GitHub release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: ${{ github.ref_name }}
+          prerelease: true
+          draft: true
+          fail_on_unmatched_files: true
+          files: ./${{ steps.zip-files.outputs.zipArchive }}
+          generate_release_notes: true
