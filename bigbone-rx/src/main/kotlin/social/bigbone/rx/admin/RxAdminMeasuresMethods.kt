@@ -4,19 +4,19 @@ import io.reactivex.rxjava3.core.Single
 import social.bigbone.MastodonClient
 import social.bigbone.api.entity.admin.AdminMeasure
 import social.bigbone.api.entity.admin.AdminMeasure.Key
-import social.bigbone.api.method.admin.AdminMeasuresMethods
+import social.bigbone.api.method.admin.AdminMeasureMethods
 import social.bigbone.api.method.admin.RequestMeasure
 import java.time.Instant
 
 /**
- * Reactive implementation of [AdminMeasuresMethods].
+ * Reactive implementation of [AdminMeasureMethods].
  *
  * Obtain quantitative metrics about the server.
  * @see <a href="https://docs.joinmastodon.org/methods/admin/measures/">Mastodon admin/measures API methods</a>
  */
 class RxAdminMeasuresMethods(client: MastodonClient) {
 
-    private val adminMeasuresMethods = AdminMeasuresMethods(client)
+    private val adminMeasureMethods = AdminMeasureMethods(client)
 
     /**
      * Obtain statistical measures for your server.
@@ -32,7 +32,7 @@ class RxAdminMeasuresMethods(client: MastodonClient) {
         startAt: Instant,
         endAt: Instant
     ): Single<List<AdminMeasure>> = Single.fromCallable {
-        adminMeasuresMethods.getMeasurableData(
+        adminMeasureMethods.getMeasurableData(
             measures = measures,
             startAt = startAt,
             endAt = endAt

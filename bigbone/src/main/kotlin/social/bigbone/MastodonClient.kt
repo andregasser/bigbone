@@ -43,7 +43,7 @@ import social.bigbone.api.method.StreamingMethods
 import social.bigbone.api.method.SuggestionMethods
 import social.bigbone.api.method.TagMethods
 import social.bigbone.api.method.TimelineMethods
-import social.bigbone.api.method.admin.AdminMeasuresMethods
+import social.bigbone.api.method.admin.AdminMeasureMethods
 import social.bigbone.extension.emptyRequestBody
 import social.bigbone.nodeinfo.NodeInfoClient
 import java.io.IOException
@@ -81,7 +81,7 @@ private constructor(
      */
     @Suppress("unused") // public API
     @get:JvmName("adminMeasures")
-    val adminMeasures: AdminMeasuresMethods by lazy { AdminMeasuresMethods(this) }
+    val adminMeasures: AdminMeasureMethods by lazy { AdminMeasureMethods(this) }
 
     /**
      * Access API methods under the "announcements" endpoint.

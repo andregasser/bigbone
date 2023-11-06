@@ -11,7 +11,7 @@ import java.time.Instant
  * Obtain quantitative metrics about the server.
  * @see <a href="https://docs.joinmastodon.org/methods/admin/measures/">Mastodon admin/measures API methods</a>
  */
-class AdminMeasuresMethods(private val client: MastodonClient) {
+class AdminMeasureMethods(private val client: MastodonClient) {
 
     private val adminMeasuresEndpoint = "api/v1/admin/measures"
 

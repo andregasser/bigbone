@@ -19,12 +19,12 @@ import social.bigbone.testtool.MockClient
 import java.net.URLEncoder
 import java.time.Instant
 
-class AdminMeasuresMethodsTest {
+class AdminMeasureMethodsTest {
 
     @Test
     fun `Given client returning success, when calling getMeasurableDate, then ensure proper deserialisation and correct endpoint and parameter usage`() {
         val client = MockClient.mock("admin_measures_get_measurable_data_success.json")
-        val adminMeasuresMethods = AdminMeasuresMethods(client)
+        val adminMeasureMethods = AdminMeasureMethods(client)
         val measures: List<RequestMeasure> = listOf(
             RequestMeasure.ActiveUsers,
             RequestMeasure.NewUsers,
@@ -44,7 +44,7 @@ class AdminMeasuresMethodsTest {
         val startAt = Instant.now().minusSeconds(600)
         val endAt = Instant.now()
 
-        val measurableData: List<AdminMeasure> = adminMeasuresMethods.getMeasurableData(
+        val measurableData: List<AdminMeasure> = adminMeasureMethods.getMeasurableData(
             measures = measures,
             startAt = startAt,
             endAt = endAt
@@ -125,7 +125,7 @@ class AdminMeasuresMethodsTest {
         )
 
         invoking {
-            AdminMeasuresMethods(client).getMeasurableData(
+            AdminMeasureMethods(client).getMeasurableData(
                 measures = listOf(RequestMeasure.ActiveUsers),
                 startAt = Instant.now().minusSeconds(600),
                 endAt = Instant.now()
