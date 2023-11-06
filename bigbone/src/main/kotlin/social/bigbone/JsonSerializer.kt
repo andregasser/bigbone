@@ -13,6 +13,7 @@ import social.bigbone.PrecisionDateTime.ValidPrecisionDateTime
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
 
 internal val JSON_SERIALIZER: Json = Json {
@@ -62,7 +63,12 @@ object DateTimeSerializer : KSerializer<PrecisionDateTime> {
      * @param decodedString ISO 8601 string retrieved from JSON
      */
     private fun parseExactDateTime(decodedString: String): ValidPrecisionDateTime.ExactTime =
-        ValidPrecisionDateTime.ExactTime(Instant.parse(decodedString))
+        ValidPrecisionDateTime.ExactTime(
+            DateTimeFormatter.ISO_OFFSET_DATE_TIME.parse(
+                decodedString,
+                Instant::from
+            )
+        )
 
     /**
      * Attempts to parse an ISO 8601 string into a [LocalDate] and returning an [Instant] at the start of that day in UTC.
