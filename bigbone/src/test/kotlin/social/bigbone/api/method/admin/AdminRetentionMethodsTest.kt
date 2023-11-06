@@ -41,7 +41,7 @@ class AdminRetentionMethodsTest {
                     shouldNotBeNull()
                     shouldHaveSize(4)
 
-                    get(0).rate shouldBeEqualTo 1.0
+                    get(0).rate shouldBeEqualTo 1.0f
                     get(0).value shouldBeEqualTo "2"
                 }
             }
@@ -87,7 +87,7 @@ class AdminRetentionMethodsTest {
                     shouldNotBeNull()
                     shouldHaveSize(1)
 
-                    get(0).rate shouldBeEqualTo 1.0
+                    get(0).rate shouldBeEqualTo 1.0f
                     get(0).value shouldBeEqualTo "2"
                 }
             }

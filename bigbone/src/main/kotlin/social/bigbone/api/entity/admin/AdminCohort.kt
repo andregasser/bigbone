@@ -70,7 +70,7 @@ data class AdminCohort(
          * The percentage rate of users who registered in the specified period and were active for the given date bucket.
          */
         @SerialName("rate")
-        val rate: Double? = null,
+        val rate: Float? = null,
 
         /**
          * How many users registered in the specified period and were active for the given date bucket.
