@@ -43,6 +43,7 @@ import social.bigbone.api.method.StreamingMethods
 import social.bigbone.api.method.SuggestionMethods
 import social.bigbone.api.method.TagMethods
 import social.bigbone.api.method.TimelineMethods
+import social.bigbone.api.method.admin.AdminRetentionMethods
 import social.bigbone.extension.emptyRequestBody
 import social.bigbone.nodeinfo.NodeInfoClient
 import java.io.IOException
@@ -74,6 +75,13 @@ private constructor(
     @Suppress("unused") // public API
     @get:JvmName("accounts")
     val accounts: AccountMethods by lazy { AccountMethods(this) }
+
+    /**
+     * Access API methods under the "admin/retention" endpoint.
+     */
+    @Suppress("unused") // public API
+    @get:JvmName("adminRetention")
+    val adminRetention: AdminRetentionMethods by lazy { AdminRetentionMethods(this) }
 
     /**
      * Access API methods under the "announcements" endpoint.
