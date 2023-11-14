@@ -13,26 +13,34 @@ import social.bigbone.api.exception.BigBoneRequestException
  */
 class NotificationMethods(private val client: MastodonClient) {
 
-    private val notificationsEndpoint = "/api/v1/notifications"
+    private val notificationsEndpoint = "api/v1/notifications"
 
     /**
      * Notifications concerning the user.
-     * @param excludeTypes Types to exclude from the results. See Mastodon API documentation for details.
-     * @param range optional Range for the pageable return value
+     * @param includeTypes Types to include in the results.
+     * @param excludeTypes Types to exclude from the results.
+     * @param accountId Return only notifications received from the specified account.
+     * @param range optional Range for the pageable return value.
      * @see <a href="https://docs.joinmastodon.org/methods/notifications/#get">Mastodon API documentation: methods/notifications/#get</a>
      */
     @JvmOverloads
     fun getAllNotifications(
+        includeTypes: List<Notification.NotificationType>? = null,
         excludeTypes: List<Notification.NotificationType>? = null,
+        accountId: String? = null,
         range: Range = Range()
     ): MastodonRequest<Pageable<Notification>> {
         return client.getPageableMastodonRequest(
             endpoint = notificationsEndpoint,
             method = MastodonClient.Method.GET,
             parameters = range.toParameters().apply {
-                excludeTypes?.let {
-                    append("exclude_types", excludeTypes.map { it.name.lowercase() })
+                includeTypes?.let {
+                    append("types", includeTypes.map(Notification.NotificationType::apiName))
                 }
+                excludeTypes?.let {
+                    append("exclude_types", excludeTypes.map(Notification.NotificationType::apiName))
+                }
+                accountId?.let { append("account_id", accountId) }
             }
         )
     }
