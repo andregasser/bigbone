@@ -1,0 +1,165 @@
+[
+  {
+    "key": "active_users",
+    "unit": null,
+    "total": "2",
+    "previous_total": "0",
+    "data": [
+      {
+        "date": "2022-09-14T00:00:00Z",
+        "value": "0"
+      }
+    ]
+  },
+  {
+    "key": "new_users",
+    "unit": null,
+    "total": "2",
+    "previous_total": "0",
+    "data": [
+      {
+        "date": "2022-09-14T00:00:00.000+00:00",
+        "value": "0"
+      }
+    ]
+  },
+  {
+    "key": "interactions",
+    "unit": null,
+    "total": "0",
+    "previous_total": "0",
+    "data": [
+      {
+        "date": "2022-09-14T00:00:00Z",
+        "value": "0"
+      }
+    ]
+  },
+  {
+    "key": "opened_reports",
+    "unit": null,
+    "total": "0",
+    "previous_total": "0",
+    "data": [
+      {
+        "date": "2022-09-14T00:00:00.000+00:00",
+        "value": "0"
+      }
+    ]
+  },
+  {
+    "key": "resolved_reports",
+    "unit": null,
+    "total": "0",
+    "previous_total": "0",
+    "data": [
+      {
+        "date": "2022-09-14T00:00:00.000+00:00",
+        "value": "0"
+      }
+    ]
+  },
+  {
+    "key": "tag_accounts",
+    "unit": null,
+    "total": "1",
+    "previous_total": "0",
+    "data": [
+      {
+        "date": "2022-09-14T00:00:00Z",
+        "value": "0"
+      }
+    ]
+  },
+  {
+    "key": "tag_uses",
+    "unit": null,
+    "total": "2",
+    "previous_total": "0",
+    "data": [
+      {
+        "date": "2022-09-14T00:00:00Z",
+        "value": "0"
+      }
+    ]
+  },
+  {
+    "key": "tag_servers",
+    "unit": null,
+    "total": "0",
+    "previous_total": "0",
+    "data": [
+      {
+        "date": "2022-09-14T00:00:00.000+00:00",
+        "value": "0"
+      }
+    ]
+  },
+  {
+    "key": "instance_accounts",
+    "unit": null,
+    "total": "0",
+    "data": [
+      {
+        "date": "2022-09-14T00:00:00.000+00:00",
+        "value": "0"
+      }
+    ]
+  },
+  {
+    "key": "instance_media_attachments",
+    "unit": "bytes",
+    "total": "0",
+    "human_value": "0 Bytes",
+    "data": [
+      {
+        "date": "2022-09-14T00:00:00.000+00:00",
+        "value": ""
+      }
+    ]
+  },
+  {
+    "key": "instance_reports",
+    "unit": null,
+    "total": "0",
+    "data": [
+      {
+        "date": "2022-09-14T00:00:00.000+00:00",
+        "value": "0"
+      }
+    ]
+  },
+  {
+    "key": "instance_statuses",
+    "unit": null,
+    "total": "0",
+    "data": [
+      {
+        "date": "2022-09-14T00:00:00.000+00:00",
+        "value": "0"
+      }
+    ]
+  },
+  {
+    "key": "instance_follows",
+    "unit": null,
+    "total": "0",
+    "data": [
+      {
+        "date": "2022-09-14T00:00:00.000+00:00",
+        "value": "0"
+      }
+    ]
+  },
+  {
+    "key": "instance_followers",
+    "unit": null,
+    "total": "0",
+    "data": [
+      {
+        "date": "2022-09-14T00:00:00.000+00:00",
+        "value": "0"
+      }
+    ]
+  }
+]
