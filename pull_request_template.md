@@ -12,6 +12,10 @@ Please include a summary of the changes and the related issue. Please also inclu
 - This change requires a documentation update
 - Dependency update / replacement
 
+# Breaking Changes
+
+If your change includes any breaking changes, please list them here, otherwise "None".
+
 # How Has This Been Tested?
 
 Please describe the tests that you ran to verify your changes. 
