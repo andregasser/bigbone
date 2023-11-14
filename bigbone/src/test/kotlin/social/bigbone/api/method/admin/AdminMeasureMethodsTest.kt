@@ -82,32 +82,23 @@ class AdminMeasureMethodsTest {
                 "keys[]=interactions&" +
                 "keys[]=opened_reports&" +
                 "keys[]=resolved_reports&" +
-
                 "keys[]=tag_accounts&" +
-                "tag_accounts[id]=123&" +
-
                 "keys[]=tag_uses&" +
-                "tag_uses[id]=123&" +
-
                 "keys[]=tag_servers&" +
-                "tag_servers[id]=123&" +
-
                 "keys[]=instance_accounts&" +
-                "instance_accounts[domain]=mastodon.social&" +
-
                 "keys[]=instance_media_attachments&" +
-                "instance_media_attachments[domain]=mastodon.social&" +
-
                 "keys[]=instance_reports&" +
-                "instance_reports[domain]=mastodon.social&" +
-
                 "keys[]=instance_statuses&" +
-                "instance_statuses[domain]=mastodon.social&" +
-
                 "keys[]=instance_follows&" +
-                "instance_follows[domain]=mastodon.social&" +
-
                 "keys[]=instance_followers&" +
+                "tag_accounts[id]=123&" +
+                "tag_uses[id]=123&" +
+                "tag_servers[id]=123&" +
+                "instance_accounts[domain]=mastodon.social&" +
+                "instance_media_attachments[domain]=mastodon.social&" +
+                "instance_reports[domain]=mastodon.social&" +
+                "instance_statuses[domain]=mastodon.social&" +
+                "instance_follows[domain]=mastodon.social&" +
                 "instance_followers[domain]=mastodon.social"
             val startString = URLEncoder.encode(startAt.toString(), "utf-8")
             val endString = URLEncoder.encode(endAt.toString(), "utf-8")
