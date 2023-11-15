@@ -1,15 +1,18 @@
 package social.bigbone
 
 import java.net.URLEncoder
-import java.util.ArrayList
 import java.util.UUID
 
+typealias Key = String
+typealias Value = String
+
 /**
- * Parameters holds a list of String key/value pairs that can be used as query part of a URL, or in the body of a request.
+ * Parameters holds a mapping of [Key] to [Value]s that can be used as query part of a URL, or in the body of a request.
  * Add new pairs using one of the available append() functions.
  */
 class Parameters {
-    private val parameterList = ArrayList<Pair<String, String>>()
+
+    internal val parameters: MutableMap<Key, MutableList<Value>> = mutableMapOf()
 
     /**
      * Appends a new key/value pair with a String value.
@@ -18,7 +21,7 @@ class Parameters {
      * @return this Parameters instance
      */
     fun append(key: String, value: String): Parameters {
-        parameterList.add(Pair(key, value))
+        parameters.getOrPut(key, ::mutableListOf).add(value)
         return this
     }
 
@@ -77,10 +80,15 @@ class Parameters {
      * Converts this Parameters instance into a query string.
      * @return String, formatted like: "key1=value1&key2=value2&..."
      */
-    fun toQuery(): String =
-        parameterList.joinToString(separator = "&") {
-            "${it.first}=${URLEncoder.encode(it.second, "utf-8")}"
-        }
+    fun toQuery(): String {
+        return parameters
+            .map { (key, values) ->
+                values.joinToString(separator = "&") { value ->
+                    "$key=${URLEncoder.encode(value, "utf-8")}"
+                }
+            }
+            .joinToString(separator = "&")
+    }
 
     /**
      * Generates a UUID string for this parameter list. UUIDs returned for different Parameters instances should be
@@ -89,10 +97,14 @@ class Parameters {
      * @return Type 3 UUID as a String.
      */
     fun uuid(): String {
-        val parameterString = parameterList
-            .sortedWith(compareBy { it.first })
-            .joinToString { "${it.first}${it.second}" }
-        val uuid = UUID.nameUUIDFromBytes(parameterString.toByteArray())
-        return uuid.toString()
+        return UUID
+            .nameUUIDFromBytes(
+                parameters
+                    .entries
+                    .sortedWith(compareBy { (key, _) -> key })
+                    .joinToString { (key, value) -> "$key$value" }
+                    .toByteArray()
+            )
+            .toString()
     }
 }
