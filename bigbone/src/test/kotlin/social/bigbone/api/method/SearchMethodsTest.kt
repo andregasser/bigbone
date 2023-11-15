@@ -1,9 +1,14 @@
 package social.bigbone.api.method
 
+import io.mockk.slot
+import io.mockk.verify
 import org.amshove.kluent.`should be equal to`
 import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldContainAll
+import org.amshove.kluent.shouldNotContain
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
+import social.bigbone.Parameters
 import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.testtool.MockClient
 
@@ -43,6 +48,25 @@ class SearchMethodsTest {
         result.statuses.size shouldBeEqualTo 4
         result.hashtags.size `should be equal to` 0
         result.statuses.all { it.id.toLong() in minId.toLong()..maxId.toLong() }
+    }
+
+    @Test
+    fun searchTypeParameterIsProperlyCapitalized() {
+        val client = MockClient.mock("search.json")
+        val searchMethodsMethod = SearchMethods(client)
+
+        searchMethodsMethod.searchContent("query", SearchMethods.SearchType.STATUSES).execute()
+        val parametersCapturingSlot = slot<Parameters>()
+        verify {
+            client.get(
+                path = "api/v2/search",
+                query = capture(parametersCapturingSlot)
+            )
+        }
+        with(parametersCapturingSlot.captured) {
+            parameters["type"]?.shouldContainAll(listOf("statuses"))
+            parameters["type"]?.shouldNotContain(listOf("STATUSES"))
+        }
     }
 
     @Test

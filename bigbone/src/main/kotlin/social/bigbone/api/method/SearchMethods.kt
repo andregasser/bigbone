@@ -1,5 +1,6 @@
 package social.bigbone.api.method
 
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import social.bigbone.MastodonClient
@@ -25,7 +26,10 @@ class SearchMethods(private val client: MastodonClient) {
         HASHTAGS,
 
         @SerialName("statuses")
-        STATUSES
+        STATUSES;
+
+        @OptIn(ExperimentalSerializationApi::class)
+        val apiName: String get() = serializer().descriptor.getElementName(ordinal)
     }
 
     /**
@@ -87,7 +91,7 @@ class SearchMethods(private val client: MastodonClient) {
                 append("exclude_unreviewed", true)
             }
             if (type != null) {
-                append("type", type.name)
+                append("type", type.apiName)
             }
             if (!accountId.isNullOrEmpty() && accountId.isNotBlank()) {
                 append("account_id", accountId)
