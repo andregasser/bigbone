@@ -6,11 +6,19 @@ Please include a summary of the changes and the related issue. Please also inclu
 
 (Keep the one that applies, remove the rest)
 
-- Bug fix (non-breaking change which fixes an issue)
-- New feature (non-breaking change which adds functionality)
-- Breaking change (fix or feature that would cause existing functionality to not work as expected)
-- This change requires a documentation update
+- Bug fix
+- New feature
+- Documentation
 - Dependency update / replacement
+
+# Breaking Changes
+
+A breaking change is a change to supported functionality between released versions of a library that would require 
+a customer to do work in order to upgrade to the newer version. If your change includes one or more breaking changes, 
+please list/document them here, otherwise set "None". This information will be published in our release notes.
+
+- Breaking change 1
+- ...
 
 # How Has This Been Tested?
 
