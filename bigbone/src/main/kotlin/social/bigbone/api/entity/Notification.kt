@@ -1,5 +1,6 @@
 package social.bigbone.api.entity
 
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import social.bigbone.DateTimeSerializer
@@ -22,7 +23,7 @@ data class Notification(
      * The type of event that resulted in the notification.
      */
     @SerialName("type")
-    val type: NotificationType = NotificationType.MENTION,
+    val type: NotificationType? = null,
 
     /**
      * The timestamp of the notification.
@@ -54,16 +55,38 @@ data class Notification(
      */
     @Serializable
     enum class NotificationType {
-        @SerialName("mention")
-        MENTION,
 
-        @SerialName("reblog")
-        REBLOG,
+        @SerialName("admin.report")
+        ADMIN_REPORT,
+
+        @SerialName("admin.sign_up")
+        ADMIN_SIGN_UP,
 
         @SerialName("favourite")
         FAVOURITE,
 
         @SerialName("follow")
-        FOLLOW
+        FOLLOW,
+
+        @SerialName("follow_request")
+        FOLLOW_REQUEST,
+
+        @SerialName("mention")
+        MENTION,
+
+        @SerialName("poll")
+        POLL,
+
+        @SerialName("reblog")
+        REBLOG,
+
+        @SerialName("status")
+        STATUS,
+
+        @SerialName("update")
+        UPDATE;
+
+        @OptIn(ExperimentalSerializationApi::class)
+        val apiName: String get() = serializer().descriptor.getElementName(ordinal)
     }
 }

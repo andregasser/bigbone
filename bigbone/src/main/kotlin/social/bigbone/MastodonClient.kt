@@ -43,6 +43,7 @@ import social.bigbone.api.method.StreamingMethods
 import social.bigbone.api.method.SuggestionMethods
 import social.bigbone.api.method.TagMethods
 import social.bigbone.api.method.TimelineMethods
+import social.bigbone.api.method.admin.AdminMeasureMethods
 import social.bigbone.api.method.admin.AdminRetentionMethods
 import social.bigbone.extension.emptyRequestBody
 import social.bigbone.nodeinfo.NodeInfoClient
@@ -75,6 +76,13 @@ private constructor(
     @Suppress("unused") // public API
     @get:JvmName("accounts")
     val accounts: AccountMethods by lazy { AccountMethods(this) }
+
+    /**
+     * Access API methods under the "admin/measures" endpoint.
+     */
+    @Suppress("unused") // public API
+    @get:JvmName("adminMeasures")
+    val adminMeasures: AdminMeasureMethods by lazy { AdminMeasureMethods(this) }
 
     /**
      * Access API methods under the "admin/retention" endpoint.
@@ -245,6 +253,13 @@ private constructor(
     val preferences: PreferenceMethods by lazy { PreferenceMethods(this) }
 
     /**
+     * Access API methods under "push" endpoint.
+     */
+    @Suppress("unused") // public API
+    @get:JvmName("pushNotifications")
+    val pushNotifications: PushNotificationMethods by lazy { PushNotificationMethods(this) }
+
+    /**
      * Access API methods under the "reports" endpoint.
      */
     @Suppress("unused") // public API
@@ -292,13 +307,6 @@ private constructor(
     @Suppress("unused") // public API
     @get:JvmName("timelines")
     val timelines: TimelineMethods by lazy { TimelineMethods(this) }
-
-    /**
-     * Access API methods under "push" endpoint.
-     */
-    @Suppress("unused") // public API
-    @get:JvmName("pushNotifications")
-    val pushNotifications: PushNotificationMethods by lazy { PushNotificationMethods(this) }
 
     /**
      * Specifies the HTTP methods / HTTP verb that can be used by this class.

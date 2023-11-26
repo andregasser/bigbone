@@ -3,22 +3,22 @@
 bigbone = "2.0.0-SNAPSHOT"
 
 # 3rd party dependencies
-junit-jupiter = "5.10.0"
+junit-jupiter = "5.10.1"
 junit-platform-launcher = "1.10.1"
-junit-platform-suite-engine = "1.10.0"
+junit-platform-suite-engine = "1.10.1"
 kluent = "1.73"
 kotlin = "1.9.20"
 kotlin-coroutines = "1.7.3"
-kotlinx-serialization-json = "1.6.0"
+kotlinx-serialization-json = "1.6.1"
 mockk = "1.13.7"
 okhttp = "4.12.0"
 rxjava = "3.1.8"
 
 # Gradle plugins
 jacoco = "0.8.9"
-dependency-analysis = "1.25.0"
-detekt = "1.23.1"
-versions = "0.49.0"
+dependency-analysis = "1.26.0"
+detekt = "1.23.3"
+versions = "0.50.0"
 ktlint = "11.6.1"
 
 [libraries]
