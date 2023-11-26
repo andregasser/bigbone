@@ -20,6 +20,7 @@ import social.bigbone.api.method.ConversationMethods
 import social.bigbone.api.method.CustomEmojiMethods
 import social.bigbone.api.method.DirectoryMethods
 import social.bigbone.api.method.DomainBlockMethods
+import social.bigbone.api.method.EmailMethods
 import social.bigbone.api.method.EndorsementMethods
 import social.bigbone.api.method.FavouriteMethods
 import social.bigbone.api.method.FeaturedTagMethods
@@ -146,6 +147,13 @@ private constructor(
     @Suppress("unused") // public API
     @get:JvmName("domainBlocks")
     val domainBlocks: DomainBlockMethods by lazy { DomainBlockMethods(this) }
+
+    /**
+     * Access API methods under the "emails" endpoint.
+     */
+    @Suppress("unused") // public API
+    @get:JvmName("emails")
+    val emails: EmailMethods by lazy { EmailMethods(this) }
 
     /**
      * Access API methods under the "endorsements" endpoint.
