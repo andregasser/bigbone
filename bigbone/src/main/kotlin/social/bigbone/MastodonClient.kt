@@ -10,7 +10,10 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import social.bigbone.api.Pageable
 import social.bigbone.api.entity.data.InstanceVersion
+import social.bigbone.api.exception.BigBoneClientInstantiationException
 import social.bigbone.api.exception.BigBoneRequestException
+import social.bigbone.api.exception.InstanceVersionRetrievalException
+import social.bigbone.api.exception.ServerInfoRetrievalException
 import social.bigbone.api.method.AccountMethods
 import social.bigbone.api.method.AnnouncementMethods
 import social.bigbone.api.method.AppMethods
@@ -47,6 +50,7 @@ import social.bigbone.api.method.admin.AdminMeasureMethods
 import social.bigbone.api.method.admin.AdminRetentionMethods
 import social.bigbone.extension.emptyRequestBody
 import social.bigbone.nodeinfo.NodeInfoClient
+import social.bigbone.nodeinfo.entity.Server
 import java.io.IOException
 import java.security.SecureRandom
 import java.security.cert.X509Certificate
@@ -698,22 +702,50 @@ private constructor(
         /**
          * Get the version string for this Mastodon instance.
          * @return a string corresponding to the version of this Mastodon instance
-         * @throws BigBoneRequestException if instance version can not be retrieved using any known method or API version
+         * @throws BigBoneClientInstantiationException if instance version cannot be retrieved using any known method or API version
          */
+        @Throws(BigBoneClientInstantiationException::class)
         private fun getInstanceVersion(): String {
-            try {
-                val serverInfoVersion = NodeInfoClient
-                    .retrieveServerInfo(instanceName)
-                    ?.software
-                    ?.takeIf { it.name == "mastodon" }
-                    ?.version
-                if (serverInfoVersion != null) return serverInfoVersion
-            } catch (_: BigBoneRequestException) {
+            return try {
+                getInstanceVersionViaServerInfo()
+            } catch (error: BigBoneClientInstantiationException) {
+                // fall back to retrieving from Mastodon API itself
+                try {
+                    getInstanceVersionViaApi()
+                } catch (instanceException: InstanceVersionRetrievalException) {
+                    throw BigBoneClientInstantiationException(
+                        message = "Failed to get instance version of $instanceName",
+                        cause = if (instanceException.cause == instanceException) {
+                            instanceException.initCause(error)
+                        } else {
+                            instanceException
+                        }
+                    )
+                }
             }
+        }
 
-            // fall back to retrieving from Mastodon API itself
-            val instanceVersion = getInstanceVersionFromApi(2) ?: getInstanceVersionFromApi(1)
-            return instanceVersion ?: throw BigBoneRequestException("Unable to fetch instance version")
+        @Throws(ServerInfoRetrievalException::class)
+        private fun getInstanceVersionViaServerInfo(): String {
+            val serverSoftwareInfo: Server.Software? = NodeInfoClient
+                .retrieveServerInfo(instanceName)
+                ?.software
+                ?.takeIf { it.name == "mastodon" }
+
+            if (serverSoftwareInfo != null) return serverSoftwareInfo.version
+
+            throw ServerInfoRetrievalException(
+                cause = IllegalArgumentException("Server $instanceName doesn't appear to run Mastodon")
+            )
+        }
+
+        @Throws(InstanceVersionRetrievalException::class)
+        private fun getInstanceVersionViaApi(): String {
+            return try {
+                getInstanceVersionFromApi(2)
+            } catch (e: InstanceVersionRetrievalException) {
+                getInstanceVersionFromApi(1)
+            }
         }
 
         /**
@@ -722,20 +754,21 @@ private constructor(
          * @return a string corresponding to the version of this Mastodon instance, or null if no version string can be
          *  retrieved using the specified API version.
          */
-        private fun getInstanceVersionFromApi(apiVersion: Int): String? {
-            return try {
-                versionedInstanceRequest(apiVersion).use { response: Response ->
-                    if (response.isSuccessful) {
-                        val instanceVersion: InstanceVersion? = response.body?.string()?.let { responseBody: String ->
-                            JSON_SERIALIZER.decodeFromString(responseBody)
-                        }
-                        instanceVersion?.version
-                    } else {
-                        null
+        @Throws(InstanceVersionRetrievalException::class)
+        private fun getInstanceVersionFromApi(apiVersion: Int): String {
+            return versionedInstanceRequest(apiVersion).use { response: Response ->
+                if (response.isSuccessful) {
+                    val instanceVersion: InstanceVersion? = response.body?.string()?.let { responseBody: String ->
+                        JSON_SERIALIZER.decodeFromString(responseBody)
                     }
+                    instanceVersion
+                        ?.version
+                        ?: throw InstanceVersionRetrievalException(
+                            cause = IllegalStateException("Instance version was null unexpectedly")
+                        )
+                } else {
+                    throw InstanceVersionRetrievalException(response = response)
                 }
-            } catch (e: Exception) {
-                null
             }
         }
 
@@ -778,6 +811,14 @@ private constructor(
                 .execute()
         }
 
+        /**
+         * Builds this MastodonClient.
+         *
+         * @throws BigBoneClientInstantiationException if the client could not be instantiated, likely due to an issue
+         * when getting the instance version of the server in [instanceName]. Other exceptions, e.g. due to no Internet
+         * connection are _not_ caught by this library.
+         */
+        @Throws(BigBoneClientInstantiationException::class)
         fun build(): MastodonClient {
             return MastodonClient(
                 instanceName = instanceName,
