@@ -93,7 +93,7 @@ sealed class RequestDimension(val key: Key, val apiName: String = key.apiName) {
     /**
      * Requests [Key.TAG_SERVERS], i.e., Most-common servers for statuses including a trending tag.
      */
-    data class TagServers(
+    data class TagServers @JvmOverloads constructor(
         /**
          * When [Key.TAG_SERVERS] is one of the requested keys, you must provide a trending tag ID
          * to obtain information about which servers are posting the tag.
@@ -115,7 +115,7 @@ sealed class RequestDimension(val key: Key, val apiName: String = key.apiName) {
     /**
      * Requests [Key.TAG_LANGUAGES], i.e., Most-used languages for statuses including a trending tag.
      */
-    data class TagLanguages(
+    data class TagLanguages @JvmOverloads constructor(
         /**
          * When [Key.TAG_LANGUAGES] is one of the requested keys, you must provide a trending tag ID
          * to obtain information about which languages are posting the tag.
@@ -137,7 +137,7 @@ sealed class RequestDimension(val key: Key, val apiName: String = key.apiName) {
     /**
      * Requests [Key.INSTANCE_ACCOUNTS], i.e., Most-followed accounts from a remote server.
      */
-    data class InstanceAccounts(
+    data class InstanceAccounts @JvmOverloads constructor(
         /**
          * When [Key.INSTANCE_ACCOUNTS] is one of the requested keys, you must provide a domain
          * to obtain information about popular accounts from that server.
@@ -159,7 +159,7 @@ sealed class RequestDimension(val key: Key, val apiName: String = key.apiName) {
     /**
      * Requests [Key.INSTANCE_LANGUAGES], i.e., Most-used languages from a remote server.
      */
-    data class InstanceLanguages(
+    data class InstanceLanguages @JvmOverloads constructor(
         /**
          * When [Key.INSTANCE_LANGUAGES] is one of the requested keys, you must provide a domain
          * to obtain information about popular languages from that server.
