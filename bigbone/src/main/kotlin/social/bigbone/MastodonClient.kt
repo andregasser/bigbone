@@ -416,6 +416,7 @@ private constructor(
      * @param endpoint the Mastodon API endpoint to call
      * @param method the HTTP method to use
      * @param parameters parameters to use in the action; can be null
+     * @throws BigBoneRequestException in case the action to be performed yielded an unsuccessful response
      */
     @Throws(BigBoneRequestException::class)
     internal fun performAction(endpoint: String, method: Method, parameters: Parameters? = null) {
@@ -753,6 +754,7 @@ private constructor(
          * @param apiVersion the version of API call to use in this request
          * @return a string corresponding to the version of this Mastodon instance, or null if no version string can be
          *  retrieved using the specified API version.
+         *  @throws InstanceVersionRetrievalException in case we got a server response but no version, or an unsucessful response
          */
         @Throws(InstanceVersionRetrievalException::class)
         private fun getInstanceVersionFromApi(apiVersion: Int): String {

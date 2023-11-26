@@ -23,6 +23,7 @@ object NodeInfoClient {
      * Retrieve server information.
      * @param host hostname of the server to retrieve information from
      * @return server information, including the name and version of the software running on this server
+     * @throws ServerInfoRetrievalException if the request for a server info to [host] was unsuccessful
      */
     @Throws(ServerInfoRetrievalException::class)
     fun retrieveServerInfo(host: String): Server? {
@@ -47,6 +48,7 @@ object NodeInfoClient {
      * Get the URL to retrieve server information from.
      * @param host the hostname of the server to request information from
      * @return String containing the URL holding server information
+     * @throws ServerInfoUrlRetrievalException if we could not call the [host] or if the [NodeInfo] was empty
      */
     @Throws(ServerInfoUrlRetrievalException::class)
     private fun getServerInfoUrl(host: String): String {
