@@ -71,7 +71,7 @@ private constructor(
     private var debug: Boolean = false,
     private var instanceVersion: String? = null,
     private var scheme: String = "https",
-    private var port: Int = 443,
+    private var port: Int = 443
 ) {
 
     /**

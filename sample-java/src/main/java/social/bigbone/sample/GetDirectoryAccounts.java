@@ -2,6 +2,7 @@ package social.bigbone.sample;
 
 import social.bigbone.MastodonClient;
 import social.bigbone.api.entity.Account;
+import social.bigbone.api.exception.BigBoneClientInstantiationException;
 import social.bigbone.api.exception.BigBoneRequestException;
 import social.bigbone.api.method.DirectoryMethods;
 
@@ -15,9 +16,14 @@ public class GetDirectoryAccounts {
         final String accessToken = args[1];
 
         // instantiate client
-        final MastodonClient client = new MastodonClient.Builder(instance)
-                .accessToken(accessToken)
-                .build();
+        final MastodonClient client;
+        try {
+            client = new MastodonClient.Builder(instance)
+                    .accessToken(accessToken)
+                    .build();
+        } catch (BigBoneClientInstantiationException e) {
+            throw new RuntimeException(e);
+        }
 
         // get 40 local accounts that were recently active, skipping the first ten
         final List<Account> accounts = client.directories().listAccounts(

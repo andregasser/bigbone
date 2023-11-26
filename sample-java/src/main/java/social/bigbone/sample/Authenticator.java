@@ -4,6 +4,7 @@ import social.bigbone.MastodonClient;
 import social.bigbone.api.Scope;
 import social.bigbone.api.entity.Application;
 import social.bigbone.api.entity.Token;
+import social.bigbone.api.exception.BigBoneClientInstantiationException;
 import social.bigbone.api.exception.BigBoneRequestException;
 import social.bigbone.api.method.OAuthMethods;
 
@@ -58,17 +59,31 @@ final class Authenticator {
         if (useStreaming) {
             builder.useStreamingApi();
         }
-        return builder.build();
+        try {
+            return builder.build();
+        } catch (BigBoneClientInstantiationException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private static Token getAccessToken(final String instanceName, final String clientId, final String clientSecret, final String email, final String password) throws BigBoneRequestException {
-        final MastodonClient client = new MastodonClient.Builder(instanceName).build();
+        final MastodonClient client;
+        try {
+            client = new MastodonClient.Builder(instanceName).build();
+        } catch (BigBoneClientInstantiationException e) {
+            throw new RuntimeException(e);
+        }
         final OAuthMethods oauthMethods = new OAuthMethods(client);
         return oauthMethods.getUserAccessTokenWithPasswordGrant(clientId, clientSecret, REDIRECT_URI, email, password, new Scope()).execute();
     }
 
     private static Application application(final String instanceName) throws BigBoneRequestException {
-        final MastodonClient client = new MastodonClient.Builder(instanceName).build();
+        final MastodonClient client;
+        try {
+            client = new MastodonClient.Builder(instanceName).build();
+        } catch (BigBoneClientInstantiationException e) {
+            throw new RuntimeException(e);
+        }
         return client.apps().createApp("bigbone-sample-app", REDIRECT_URI, null, new Scope()).execute();
     }
 }

@@ -4,6 +4,7 @@ import social.bigbone.MastodonClient;
 import social.bigbone.api.Pageable;
 import social.bigbone.api.entity.Filter;
 import social.bigbone.api.entity.Status;
+import social.bigbone.api.exception.BigBoneClientInstantiationException;
 import social.bigbone.api.exception.BigBoneRequestException;
 
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -15,9 +16,14 @@ public class GetHomeTimelineWithFiltering {
         final String accessToken = args[1];
 
         // Instantiate client
-        final MastodonClient client = new MastodonClient.Builder(instance)
-                .accessToken(accessToken)
-                .build();
+        final MastodonClient client;
+        try {
+            client = new MastodonClient.Builder(instance)
+                    .accessToken(accessToken)
+                    .build();
+        } catch (BigBoneClientInstantiationException e) {
+            throw new RuntimeException(e);
+        }
 
         // Get statuses from home timeline, then handle each one
         final Pageable<Status> statuses = client.timelines().getHomeTimeline().execute();

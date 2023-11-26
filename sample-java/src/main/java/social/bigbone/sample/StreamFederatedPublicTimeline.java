@@ -6,6 +6,7 @@ import social.bigbone.api.Handler;
 import social.bigbone.api.Shutdownable;
 import social.bigbone.api.entity.Notification;
 import social.bigbone.api.entity.Status;
+import social.bigbone.api.exception.BigBoneClientInstantiationException;
 import social.bigbone.api.exception.BigBoneRequestException;
 
 public class StreamFederatedPublicTimeline {
@@ -14,10 +15,15 @@ public class StreamFederatedPublicTimeline {
         final String accessToken = args[1];
 
         // Instantiate client
-        final MastodonClient client = new MastodonClient.Builder(instance)
-                .accessToken(accessToken)
-                .useStreamingApi()
-                .build();
+        final MastodonClient client;
+        try {
+            client = new MastodonClient.Builder(instance)
+                    .accessToken(accessToken)
+                    .useStreamingApi()
+                    .build();
+        } catch (BigBoneClientInstantiationException e) {
+            throw new RuntimeException(e);
+        }
 
         // Configure status handler
         final Handler handler = new Handler() {

@@ -3,6 +3,7 @@ package social.bigbone.sample;
 import social.bigbone.MastodonClient;
 import social.bigbone.api.entity.Filter;
 import social.bigbone.api.entity.FilterKeyword;
+import social.bigbone.api.exception.BigBoneClientInstantiationException;
 import social.bigbone.api.exception.BigBoneRequestException;
 
 import java.util.Arrays;
@@ -23,10 +24,15 @@ public class ManageFilters {
         final String action = args[2];
 
         // Instantiate client
-        final MastodonClient client = new MastodonClient.Builder(instance)
-                .accessToken(accessToken)
-                .build();
-        
+        final MastodonClient client;
+        try {
+            client = new MastodonClient.Builder(instance)
+                    .accessToken(accessToken)
+                    .build();
+        } catch (BigBoneClientInstantiationException e) {
+            throw new RuntimeException(e);
+        }
+
         switch (action) {
             case "list":
                 listExistingFilters(client);

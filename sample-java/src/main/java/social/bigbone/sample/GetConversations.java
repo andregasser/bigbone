@@ -3,6 +3,7 @@ package social.bigbone.sample;
 import social.bigbone.MastodonClient;
 import social.bigbone.api.Pageable;
 import social.bigbone.api.entity.Conversation;
+import social.bigbone.api.exception.BigBoneClientInstantiationException;
 import social.bigbone.api.exception.BigBoneRequestException;
 
 public class GetConversations {
@@ -11,9 +12,14 @@ public class GetConversations {
         final String accessToken = args[1];
 
         // Instantiate client
-        final MastodonClient client = new MastodonClient.Builder(instance)
-            .accessToken(accessToken)
-            .build();
+        final MastodonClient client;
+        try {
+            client = new MastodonClient.Builder(instance)
+                    .accessToken(accessToken)
+                    .build();
+        } catch (BigBoneClientInstantiationException e) {
+            throw new RuntimeException(e);
+        }
 
         // Get conversations
         final Pageable<Conversation> conversations = client.conversations().getConversations().execute();
