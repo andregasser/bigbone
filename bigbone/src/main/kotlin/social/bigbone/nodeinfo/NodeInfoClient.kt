@@ -2,8 +2,10 @@ package social.bigbone.nodeinfo
 
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import okhttp3.Response
 import social.bigbone.JSON_SERIALIZER
-import social.bigbone.api.exception.BigBoneRequestException
+import social.bigbone.api.exception.ServerInfoRetrievalException
+import social.bigbone.api.exception.ServerInfoUrlRetrievalException
 import social.bigbone.nodeinfo.entity.NodeInfo
 import social.bigbone.nodeinfo.entity.Server
 
@@ -21,24 +23,23 @@ object NodeInfoClient {
      * Retrieve server information.
      * @param host hostname of the server to retrieve information from
      * @return server information, including the name and version of the software running on this server
-     * @throws BigBoneRequestException if server info can not be retrieved via NodeInfo for any reason
      */
+    @Throws(ServerInfoRetrievalException::class)
     fun retrieveServerInfo(host: String): Server? {
-        try {
-            CLIENT.newCall(
-                Request.Builder()
-                    .url(getServerInfoUrl(host))
-                    .get()
-                    .build()
-            ).execute().use { response: Response ->
-                if (!response.isSuccessful) {
-                    throw BigBoneRequestException("request for NodeInfo URL unsuccessful")
-                }
-
-                return response.body?.string()?.let { JSON_SERIALIZER.decodeFromString(it) }
+        CLIENT.newCall(
+            Request.Builder()
+                .url(getServerInfoUrl(host))
+                .get()
+                .build()
+        ).execute().use { response: Response ->
+            if (!response.isSuccessful) {
+                throw ServerInfoRetrievalException(
+                    message = "request for NodeInfo URL unsuccessful",
+                    response = response
+                )
             }
-        } catch (e: Exception) {
-            throw BigBoneRequestException("invalid NodeInfo response")
+
+            return response.body?.string()?.let { JSON_SERIALIZER.decodeFromString(it) }
         }
     }
 
@@ -47,6 +48,7 @@ object NodeInfoClient {
      * @param host the hostname of the server to request information from
      * @return String containing the URL holding server information
      */
+    @Throws(ServerInfoUrlRetrievalException::class)
     private fun getServerInfoUrl(host: String): String {
         CLIENT.newCall(
             Request.Builder()
@@ -55,12 +57,18 @@ object NodeInfoClient {
                 .build()
         ).execute().use { response: Response ->
             if (!response.isSuccessful) {
-                throw BigBoneRequestException("request for well-known NodeInfo URL unsuccessful")
+                throw ServerInfoUrlRetrievalException(
+                    message = "request for well-known NodeInfo URL unsuccessful",
+                    response = response
+                )
             }
 
             val nodeInfo: NodeInfo? = response.body?.string()?.let { JSON_SERIALIZER.decodeFromString(it) }
             if (nodeInfo == null || nodeInfo.links.isEmpty()) {
-                throw BigBoneRequestException("empty link list in well-known NodeInfo location")
+                throw ServerInfoUrlRetrievalException(
+                    message = "empty link list in well-known NodeInfo location",
+                    response = response
+                )
             }
 
             // attempt returning URL to schema 2.0 information, but fall back to any - software information exists in all schemas
