@@ -10,6 +10,6 @@ nav_order: 6
 
 <a href="https://docs.joinmastodon.org/methods/admin/dimensions/" target="_blank">https://docs.joinmastodon.org/methods/admin/dimensions/</a>
 
-| Method                          | Description          | Status | Comments | 
-|---------------------------------|----------------------|--------|----------|
-| `POST /api/v1/admin/dimensions` | Get dimensional data | 🔴     |          |
+| Method                          | Description          | Status                          | Comments | 
+|---------------------------------|----------------------|---------------------------------|----------|
+| `POST /api/v1/admin/dimensions` | Get dimensional data | <img src="/assets/green16.png"> |          |
