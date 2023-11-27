@@ -8,6 +8,7 @@
 
 # Table of Contents
 * [Why BigBone](#why-bigbone)
+* [Project Team](#project-team)
 * [Core Functionality](#core-functionality)
 * [Implementation Status](#implementation-status)
 * [Versioning](#versioning)
