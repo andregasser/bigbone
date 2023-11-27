@@ -10,7 +10,7 @@ import social.bigbone.api.method.TrendMethods
 /**
  * Reactive implementation of [TrendMethods].
  *
- * View hashtags that are currently being used more frequently than usual.
+ * View trending tags, statuses, or links, i.e. those that are currently being used more frequently than usual.
  * @see <a href="https://docs.joinmastodon.org/methods/trends/">Mastodon trends API methods</a>
  */
 class RxTrendMethods(client: MastodonClient) {
