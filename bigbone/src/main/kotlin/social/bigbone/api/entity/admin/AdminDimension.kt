@@ -9,19 +9,20 @@ import kotlinx.serialization.Serializable
  * @see <a href="https://docs.joinmastodon.org/entities/Admin_Dimension/>Mastodon API Admin::Dimension documentation</a>
  */
 @Serializable
-class AdminDimension {
+data class AdminDimension(
 
     /**
      * The unique keystring for the requested dimension.
      */
     @SerialName("key")
-    val key: Key? = null
+    val key: Key? = null,
 
     /**
      * The data available for the requested dimension.
      */
     @SerialName("data")
     val data: List<Data>? = null
+) {
 
     /**
      * The unique keystring for the requested dimension.
