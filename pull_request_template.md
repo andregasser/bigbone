@@ -40,4 +40,4 @@ The items below are some more things to check before asking other people to revi
 
 - In case you worked on a new feature: Did you also implement the reactive endpoint (bigbone-rx)?
 - In case you added new `*Methods` classes: Did you also reference it in the `MastodonClient` main class?
-- Did you also update the documentation in the `/docs` folder (e.g. API Coverage page)
+- Did you also update the documentation in the `/docs` folder (e.g. API Coverage page)?
