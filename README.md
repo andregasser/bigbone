@@ -25,18 +25,21 @@ Maintained and developed with love by [André Gasser](https://fosstodon.org/@and
 
 # Why BigBone
 
-BigBone is a fork of [Mastodon4J](https://github.com/sys1yagi/mastodon4j), a Mastodon client library for Java and Kotlin that was published by Toshihiro Yagi. 
-The goal of Mastodon4J was to provide an easy-to-use library for interacting with the [Mastodon social media network](https://joinmastodon.org/) from Java and 
-Kotlin code. Unfortunately, it became abandoned and has not seen any updates since 2018. 
+BigBone is a fork of [Mastodon4J](https://github.com/sys1yagi/mastodon4j), a Mastodon client library for Java and Kotlin
+that was published by Toshihiro Yagi. The goal of Mastodon4J was to provide an easy-to-use library for interacting with 
+the [Mastodon social media network](https://joinmastodon.org/) from Java and Kotlin code. Unfortunately, it became 
+abandoned and has not seen any updates since 2018. 
 
-Since Elon Musk's Twitter acquisition in 2022, Mastodon has gained tremendous popularity. A project that is so well received by the community deserves to have 
-up-to-date and maintained client libraries. Because of this, we brought the Mastodon4J project back to life in November 2022. That's when this project,
-the BigBone client library for Java and Kotlin, was born. May it serve you well in your Mastodon-related endeavours!
+Since Elon Musk's Twitter acquisition in 2022, Mastodon has gained tremendous popularity. A project that is so well 
+received by the community deserves to have up-to-date and maintained client libraries. Because of this, we brought the 
+Mastodon4J project back to life in November 2022. That's when this project, the BigBone client library for Java and 
+Kotlin, was born. May it serve you well in your Mastodon-related endeavours!
 
-The name **BigBone** has mostly symbolic character. We have chosen the name BigBone for this library because Mastodons represent impressive animals from the 
-Pleistocene, built of big and heavy bones. At the same time, we hope this library will build some sort of "skeleton" for your Mastodon-related projects. 
-Interestingly, there is also [Big Bone Lick State Park in Kentucky](https://parks.ky.gov/union/parks/historic/big-bone-lick-state-historic-site) where 
-American Mastodons have been excavated.
+The name **BigBone** has mostly symbolic character. We have chosen the name BigBone for this library because Mastodons 
+represent impressive animals from the Pleistocene, built of big and heavy bones. At the same time, we hope this library 
+will build some sort of "skeleton" for your Mastodon-related projects. Interestingly, there is also 
+[Big Bone Lick State Park in Kentucky](https://parks.ky.gov/union/parks/historic/big-bone-lick-state-historic-site) 
+where American Mastodons have been excavated.
 
 # Core Functionality
 
@@ -54,12 +57,13 @@ With a library like BigBone, you can build tools that allow you to
 
 # Implementation Status
 
-**We did not release an official version on Maven Central yet**, but there's a `2.0.0-SNAPSHOT` which you can use to play around / experiment with. 
-Just please be aware that with every new snapshot version, there can be breaking changes along the lines. There will be "darker places" in the 
-library, where stuff will not work as expected. If you find issues, please [file an issue](https://github.com/andregasser/bigbone/issues).  
+**We did not release an official version on Maven Central yet**, but there's a `2.0.0-SNAPSHOT` which you can use to 
+play around / experiment with. Just please be aware that with every new snapshot version, there can be breaking changes 
+along the lines. There will be "darker places" in the library, where stuff will not work as expected. If you find 
+issues, please [file an issue](https://github.com/andregasser/bigbone/issues).  
 
-BigBone does not yet implement the full API of Mastodon. Actually, there is still **a lot to do**. For details on the current API coverage 
-please check out our wiki page [Mastodon API Coverage](https://github.com/andregasser/bigbone/wiki/Mastodon-API-Coverage).
+BigBone does not yet implement the full API of Mastodon. Actually, there is still **a lot to do**. For details on the 
+current API coverage please check out our [API Coverage](https://bigbone.social/api-coverage/) page.
 
 # Versioning
 
