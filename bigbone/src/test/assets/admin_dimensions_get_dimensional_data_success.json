@@ -1,0 +1,157 @@
+[
+  {
+    "key": "languages",
+    "data": [
+      {
+        "key": "en",
+        "human_key": "English",
+        "value": "10"
+      },
+      {
+        "key": "es",
+        "human_key": "Spanish",
+        "value": "1"
+      }
+    ]
+  },
+  {
+    "key": "sources",
+    "data": [
+      {
+        "key": "web",
+        "human_key": "Website",
+        "value": "3"
+      }
+    ]
+  },
+  {
+    "key": "servers",
+    "data": [
+      {
+        "key": "botsin.space",
+        "human_key": "botsin.space",
+        "value": "13738"
+      },
+      {
+        "key": "monads.online",
+        "human_key": "monads.online",
+        "value": "8928"
+      }
+    ]
+  },
+  {
+    "key": "space_usage",
+    "data": [
+      {
+        "key": "postgresql",
+        "human_key": "PostgreSQL",
+        "value": "49581359907",
+        "unit": "bytes",
+        "human_value": "46.2 GB"
+      },
+      {
+        "key": "redis",
+        "human_key": "Redis",
+        "value": "100765744",
+        "unit": "bytes",
+        "human_value": "96.1 MB"
+      },
+      {
+        "key": "media",
+        "human_key": "Media storage",
+        "value": "837837315424",
+        "unit": "bytes",
+        "human_value": "780 GB"
+      }
+    ]
+  },
+  {
+    "key": "software_versions",
+    "data": [
+      {
+        "key": "mastodon",
+        "human_key": "Mastodon",
+        "value": "3.5.1+chitter",
+        "human_value": "3.5.1+chitter"
+      },
+      {
+        "key": "ruby",
+        "human_key": "Ruby",
+        "value": "3.0.3p157",
+        "human_value": "3.0.3p157"
+      },
+      {
+        "key": "postgresql",
+        "human_key": "PostgreSQL",
+        "value": "14.3",
+        "human_value": "14.3"
+      },
+      {
+        "key": "redis",
+        "human_key": "Redis",
+        "value": "6.2.7",
+        "human_value": "6.2.7"
+      }
+    ]
+  },
+  {
+    "key": "instance_languages",
+    "data": [
+      {
+        "key": "en",
+        "human_key": "English",
+        "value": "5848"
+      },
+      {
+        "key": "de",
+        "human_key": "German",
+        "value": "155"
+      }
+    ]
+  },
+  {
+    "key": "instance_accounts",
+    "data": [
+      {
+        "key": "fribbledom",
+        "human_key": "fribbledom",
+        "value": "33"
+      },
+      {
+        "key": "ShugoWah",
+        "human_key": "ShugoWah",
+        "value": "26"
+      }
+    ]
+  },
+  {
+    "key": "tag_servers",
+    "data": [
+      {
+        "key": "live.hatnix.net",
+        "human_key": "live.hatnix.net",
+        "value": "6"
+      },
+      {
+        "key": "linuxrocks.online",
+        "human_key": "linuxrocks.online",
+        "value": "4"
+      }
+    ]
+  },
+  {
+    "key": "tag_languages",
+    "data": [
+      {
+        "key": "und",
+        "human_key": "und",
+        "value": "8"
+      },
+      {
+        "key": "en",
+        "human_key": "English",
+        "value": "7"
+      }
+    ]
+  }
+]
