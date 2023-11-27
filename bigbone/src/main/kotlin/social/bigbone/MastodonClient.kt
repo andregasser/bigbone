@@ -20,6 +20,7 @@ import social.bigbone.api.method.ConversationMethods
 import social.bigbone.api.method.CustomEmojiMethods
 import social.bigbone.api.method.DirectoryMethods
 import social.bigbone.api.method.DomainBlockMethods
+import social.bigbone.api.method.EmailMethods
 import social.bigbone.api.method.EndorsementMethods
 import social.bigbone.api.method.FavouriteMethods
 import social.bigbone.api.method.FeaturedTagMethods
@@ -44,6 +45,7 @@ import social.bigbone.api.method.StreamingMethods
 import social.bigbone.api.method.SuggestionMethods
 import social.bigbone.api.method.TagMethods
 import social.bigbone.api.method.TimelineMethods
+import social.bigbone.api.method.admin.AdminDimensionMethods
 import social.bigbone.api.method.admin.AdminMeasureMethods
 import social.bigbone.api.method.admin.AdminRetentionMethods
 import social.bigbone.extension.emptyRequestBody
@@ -77,6 +79,13 @@ private constructor(
     @Suppress("unused") // public API
     @get:JvmName("accounts")
     val accounts: AccountMethods by lazy { AccountMethods(this) }
+
+    /**
+     * Access API methods under the "admin/dimensions" endpoint.
+     */
+    @Suppress("unused") // public API
+    @get:JvmName("adminDimensions")
+    val adminDimensions: AdminDimensionMethods by lazy { AdminDimensionMethods(this) }
 
     /**
      * Access API methods under the "admin/measures" endpoint.
@@ -147,6 +156,13 @@ private constructor(
     @Suppress("unused") // public API
     @get:JvmName("domainBlocks")
     val domainBlocks: DomainBlockMethods by lazy { DomainBlockMethods(this) }
+
+    /**
+     * Access API methods under the "emails" endpoint.
+     */
+    @Suppress("unused") // public API
+    @get:JvmName("emails")
+    val emails: EmailMethods by lazy { EmailMethods(this) }
 
     /**
      * Access API methods under the "endorsements" endpoint.
