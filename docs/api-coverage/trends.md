@@ -19,17 +19,17 @@ View hashtags that are currently being used more frequently than usual.
   </tr>
   <tr>
     <td style="width:45%;text-align:left;"><code>GET /api/v1/trends/tags</code><br>View trending tags</td>
-    <td style="width:10%;text-align:center;"><img src="/assets/red16.png"></td>
-    <td style="width:45%;text-align:left;">Not implemented yet.</td>
+    <td style="width:10%;text-align:center;"><img src="/assets/green16.png"></td>
+    <td style="width:45%;text-align:left;">Fully implemented.</td>
   </tr>
   <tr>
     <td style="width:45%;text-align:left;"><code>GET /api/v1/trends/statuses</code><br>View trending statuses</td>
-    <td style="width:10%;text-align:center;"><img src="/assets/red16.png"></td>
-    <td style="width:45%;text-align:left;">Not implemented yet.</td>
+    <td style="width:10%;text-align:center;"><img src="/assets/green16.png"></td>
+    <td style="width:45%;text-align:left;">Fully implemented.</td>
   </tr>
   <tr>
     <td style="width:45%;text-align:left;"><code>GET /api/v1/trends/links</code><br>View trending links</td>
-    <td style="width:10%;text-align:center;"><img src="/assets/red16.png"></td>
-    <td style="width:45%;text-align:left;">Not implemented yet.</td>
+    <td style="width:10%;text-align:center;"><img src="/assets/green16.png"></td>
+    <td style="width:45%;text-align:left;">Fully implemented.</td>
   </tr>
 </table>

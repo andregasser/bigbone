@@ -1,19 +1,21 @@
-package social.bigbone.api.method
+package social.bigbone.rx
 
+import io.reactivex.rxjava3.core.Single
 import social.bigbone.MastodonClient
-import social.bigbone.MastodonRequest
-import social.bigbone.Parameters
 import social.bigbone.api.entity.Status
 import social.bigbone.api.entity.Tag
 import social.bigbone.api.entity.TrendsLink
+import social.bigbone.api.method.TrendMethods
 
 /**
+ * Reactive implementation of [TrendMethods].
+ *
  * View hashtags that are currently being used more frequently than usual.
  * @see <a href="https://docs.joinmastodon.org/methods/trends/">Mastodon trends API methods</a>
  */
-class TrendMethods(private val client: MastodonClient) {
+class RxTrendMethods(client: MastodonClient) {
 
-    private val trendsEndpoint = "api/v1/trends"
+    private val trendMethods = TrendMethods(client)
 
     /**
      * Tags that are being used more frequently within the past week.
@@ -26,17 +28,8 @@ class TrendMethods(private val client: MastodonClient) {
     fun getTrendingTags(
         offset: Int? = null,
         limit: Int = 10
-    ): MastodonRequest<List<Tag>> {
-        require(limit <= 20) { "Limit must not be larger than 20 but was $limit" }
-
-        return client.getMastodonRequestForList(
-            endpoint = "$trendsEndpoint/tags",
-            method = MastodonClient.Method.GET,
-            parameters = Parameters().apply {
-                append("limit", limit)
-                offset?.let { append("offset", offset) }
-            }
-        )
+    ): Single<List<Tag>> = Single.fromCallable {
+        trendMethods.getTrendingTags(offset, limit).execute()
     }
 
     /**
@@ -49,17 +42,8 @@ class TrendMethods(private val client: MastodonClient) {
     fun getTrendingStatuses(
         offset: Int? = null,
         limit: Int = 20
-    ): MastodonRequest<List<Status>> {
-        require(limit <= 40) { "Limit must not be larger than 40 but was $limit" }
-
-        return client.getMastodonRequestForList(
-            endpoint = "$trendsEndpoint/statuses",
-            method = MastodonClient.Method.GET,
-            parameters = Parameters().apply {
-                append("limit", limit)
-                offset?.let { append("offset", offset) }
-            }
-        )
+    ): Single<List<Status>> = Single.fromCallable {
+        trendMethods.getTrendingStatuses(offset, limit).execute()
     }
 
     /**
@@ -73,16 +57,7 @@ class TrendMethods(private val client: MastodonClient) {
     fun getTrendingLinks(
         offset: Int? = null,
         limit: Int = 10
-    ): MastodonRequest<List<TrendsLink>> {
-        require(limit <= 20) { "Limit must not be larger than 20 but was $limit" }
-
-        return client.getMastodonRequestForList(
-            endpoint = "$trendsEndpoint/links",
-            method = MastodonClient.Method.GET,
-            parameters = Parameters().apply {
-                append("limit", limit)
-                offset?.let { append("offset", offset) }
-            }
-        )
+    ): Single<List<TrendsLink>> = Single.fromCallable {
+        trendMethods.getTrendingLinks(offset, limit).execute()
     }
 }
