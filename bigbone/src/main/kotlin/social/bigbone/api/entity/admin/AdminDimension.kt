@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 
 /**
  * Represents qualitative data about the server.
- * @see <a href="https://docs.joinmastodon.org/entities/Admin_Dimension/>Mastodon API Admin::Dimension documentation</a>
+ * @see <a href="https://docs.joinmastodon.org/entities/Admin_Dimension/">Mastodon API Admin::Dimension documentation</a>
  */
 @Serializable
 data class AdminDimension(
