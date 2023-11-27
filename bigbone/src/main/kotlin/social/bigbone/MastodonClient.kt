@@ -25,6 +25,7 @@ import social.bigbone.api.method.FavouriteMethods
 import social.bigbone.api.method.FeaturedTagMethods
 import social.bigbone.api.method.FilterMethods
 import social.bigbone.api.method.FollowRequestMethods
+import social.bigbone.api.method.FollowedTagMethods
 import social.bigbone.api.method.InstanceMethods
 import social.bigbone.api.method.ListMethods
 import social.bigbone.api.method.MarkerMethods
@@ -189,6 +190,13 @@ private constructor(
     @Suppress("unused") // public API
     @get:JvmName("followRequests")
     val followRequests: FollowRequestMethods by lazy { FollowRequestMethods(this) }
+
+    /**
+     * Access API methods under the "followed_tags" endpoint.
+     */
+    @Suppress("unused") // public API
+    @get:JvmName("followedTags")
+    val followedTags: FollowedTagMethods by lazy { FollowedTagMethods(this) }
 
     /**
      * Access API methods under the "instance" endpoint.
