@@ -19,7 +19,7 @@ Feature other profiles on your own profile. See also accounts/:id/{pin,unpin}.
   </tr>
   <tr>
     <td style="width:45%;text-align:left;"><code>GET /api/v1/endorsements</code><br>View currently features profiles</td>
-    <td style="width:10%;text-align:center;"><img src="/assets/red16.png"></td>
-    <td style="width:45%;text-align:left;">Not implemented yet.</td>
+    <td style="width:10%;text-align:center;"><img src="/assets/green16.png"></td>
+    <td style="width:45%;text-align:left;">Fully implemented.</td>
   </tr>
 </table>
