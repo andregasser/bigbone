@@ -19,7 +19,7 @@ Request a new confirmation email, potentially to a new email address.
   </tr>
   <tr>
     <td style="width:45%;text-align:left;"><code>POST /api/v1/emails/confirmation</code><br>Resend confirmation email</td>
-    <td style="width:10%;text-align:center;"><img src="/assets/red16.png"></td>
-    <td style="width:45%;text-align:left;">Not implemented yet.</td>
+    <td style="width:10%;text-align:center;"><img src="/assets/green16.png"></td>
+    <td style="width:45%;text-align:left;">Fully implemented.</td>
   </tr>
 </table>
