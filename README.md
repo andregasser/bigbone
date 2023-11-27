@@ -6,8 +6,6 @@
 
 **BigBone** is a [Mastodon](https://docs.joinmastodon.org/) client library for Java and Kotlin.
 
-Maintained and developed with love by [André Gasser](https://fosstodon.org/@andregasser) and [contributors](https://github.com/andregasser/bigbone/graphs/contributors).
-
 # Table of Contents
 * [Why BigBone](#why-bigbone)
 * [Core Functionality](#core-functionality)
@@ -41,6 +39,17 @@ will build some sort of "skeleton" for your Mastodon-related projects. Interesti
 [Big Bone Lick State Park in Kentucky](https://parks.ky.gov/union/parks/historic/big-bone-lick-state-historic-site) 
 where American Mastodons have been excavated.
 
+# Project Team
+
+The project is currently taken care of by the following people:
+
+- [André Gasser](https://fosstodon.org/@andregasser)
+- [Andreas Bartels](https://fosstodon.org/@bocops)
+- [Patrick Geselbracht](@PattaFeuFeu@chaos.social)
+
+A big "Thank you" to everyone for the time they invest in this project. Without your help we would not be where we are 
+right now. 
+
 # Core Functionality
 
 With a library like BigBone, you can build tools that allow you to
@@ -53,6 +62,7 @@ With a library like BigBone, you can build tools that allow you to
 - send direct messages to other people
 - manage filters
 - follow/unfollow hashtags
+- administer your Mastodon instance
 - plus lots of other stuff!
 
 # Implementation Status
