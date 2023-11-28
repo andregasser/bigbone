@@ -20,6 +20,6 @@ View your blocks. See also accounts/:id/{block,unblock}.
   <tr>
     <td style="width:45%;text-align:left;"><code>GET /api/v1/blocks</code><br>View blocked users</td>
     <td style="width:10%;text-align:center;"><img src="/assets/green16.png"></td>
-    <td style="width:45%;text-align:left;">Fully implemented</td>
+    <td style="width:45%;text-align:left;">Fully supported.</td>
   </tr>
 </table>

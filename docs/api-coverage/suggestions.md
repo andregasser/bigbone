@@ -20,12 +20,12 @@ Server-generated suggestions on who to follow, based on previous positive intera
   <tr>
     <td style="width:45%;text-align:left;"><code>GET /api/v2/suggestions</code><br>View follow suggestions (v2)</td>
     <td style="width:10%;text-align:center;"><img src="/assets/green16.png"></td>
-    <td style="width:45%;text-align:left;">Fully implemented.</td>
+    <td style="width:45%;text-align:left;">Fully supported.</td>
   </tr>
   <tr>
     <td style="width:45%;text-align:left;"><code>DELETE /api/v1/suggestions/:account_id</code><br>Remove a suggestion</td>
     <td style="width:10%;text-align:center;"><img src="/assets/green16.png"></td>
-    <td style="width:45%;text-align:left;">Fully implemented.</td>
+    <td style="width:45%;text-align:left;">Fully supported.</td>
   </tr>
   <tr>
     <td style="width:45%;text-align:left;"><code>GET /api/v1/suggestions</code><br>(DEPRECATED) View follow suggestions (v1)</td>

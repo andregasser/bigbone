@@ -20,22 +20,22 @@ Receive notifications for activity on your account or statuses.
   <tr>
     <td style="width:45%;text-align:left;"><code>GET /api/v1/notifications</code><br>Get all notifications</td>
     <td style="width:10%;text-align:center;"><img src="/assets/green16.png"></td>
-    <td style="width:45%;text-align:left;">Fully implemented.</td>
+    <td style="width:45%;text-align:left;">Fully supported.</td>
   </tr>
   <tr>
     <td style="width:45%;text-align:left;"><code>GET /api/v1/notifications/:id</code><br>Get a single notifications</td>
     <td style="width:10%;text-align:center;"><img src="/assets/green16.png"></td>
-    <td style="width:45%;text-align:left;">Fully implemented.</td>
+    <td style="width:45%;text-align:left;">Fully supported.</td>
   </tr>
   <tr>
     <td style="width:45%;text-align:left;"><code>POST /api/v1/notifications/clear</code><br>Dismiss all notifications</td>
     <td style="width:10%;text-align:center;"><img src="/assets/green16.png"></td>
-    <td style="width:45%;text-align:left;">Fully implemented.</td>
+    <td style="width:45%;text-align:left;">Fully supported.</td>
   </tr>
   <tr>
     <td style="width:45%;text-align:left;"><code>POST /api/v1/notifications/:id/dismiss</code><br>Dismiss a single notification</td>
     <td style="width:10%;text-align:center;"><img src="/assets/green16.png"></td>
-    <td style="width:45%;text-align:left;">Fully implemented.</td>
+    <td style="width:45%;text-align:left;">Fully supported.</td>
   </tr>
   <tr>
     <td style="width:45%;text-align:left;"><code>POST /api/v1/notifications/dismiss</code><br>(REMOVED) Dismiss a single notification</td>

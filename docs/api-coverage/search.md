@@ -20,6 +20,6 @@ Search for content in accounts, statuses and hashtags.
   <tr>
     <td style="width:45%;text-align:left;"><code>GET /api/v2/search</code><br>Perform a search</td>
     <td style="width:10%;text-align:center;"><img src="/assets/green16.png"></td>
-    <td style="width:45%;text-align:left;">Fully implemented.</td>
+    <td style="width:45%;text-align:left;">Fully supported.</td>
   </tr>
 </table>

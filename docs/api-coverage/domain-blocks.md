@@ -20,16 +20,16 @@ Manage a user's blocked domains.
   <tr>
     <td style="width:45%;text-align:left;"><code>GET /api/v1/domain_blocks</code><br>Get domain blocks</td>
     <td style="width:10%;text-align:center;"><img src="/assets/green16.png"></td>
-    <td style="width:45%;text-align:left;">Fully implemented.</td>
+    <td style="width:45%;text-align:left;">Fully supported.</td>
   </tr>
   <tr>
     <td style="width:45%;text-align:left;"><code>POST /api/v1/domain_blocks</code><br>Block a domain</td>
     <td style="width:10%;text-align:center;"><img src="/assets/green16.png"></td>
-    <td style="width:45%;text-align:left;">Fully implemented.</td>
+    <td style="width:45%;text-align:left;">Fully supported.</td>
   </tr>
   <tr>
     <td style="width:45%;text-align:left;"><code>DELETE /api/v1/domain_blocks</code><br>Unblock a domain</td>
     <td style="width:10%;text-align:center;"><img src="/assets/green16.png"></td>
-    <td style="width:45%;text-align:left;">Fully implemented.</td>
+    <td style="width:45%;text-align:left;">Fully supported.</td>
   </tr>
 </table>

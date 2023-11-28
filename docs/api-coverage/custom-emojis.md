@@ -20,6 +20,6 @@ Each site can define and upload its own custom emoji to be attached to profiles 
   <tr>
     <td style="width:45%;text-align:left;"><code>GET /api/v1/custom_emojis</code><br>View all custom emoji</td>
     <td style="width:10%;text-align:center;"><img src="/assets/green16.png"></td>
-    <td style="width:45%;text-align:left;">Fully implemented.</td>
+    <td style="width:45%;text-align:left;">Fully supported.</td>
   </tr>
 </table>
