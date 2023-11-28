@@ -1,0 +1,44 @@
+[
+  {
+    "name": "Test",
+    "url": "http://mastodon.example/tags/test",
+    "history": [
+      {
+        "day": "1668556800",
+        "accounts": "0",
+        "uses": "0"
+      },
+      {
+        "day": "1668470400",
+        "accounts": "0",
+        "uses": "0"
+      },
+      {
+        "day": "1668384000",
+        "accounts": "0",
+        "uses": "0"
+      },
+      {
+        "day": "1668297600",
+        "accounts": "1",
+        "uses": "1"
+      },
+      {
+        "day": "1668211200",
+        "accounts": "0",
+        "uses": "0"
+      },
+      {
+        "day": "1668124800",
+        "accounts": "0",
+        "uses": "0"
+      },
+      {
+        "day": "1668038400",
+        "accounts": "0",
+        "uses": "0"
+      }
+    ],
+    "following": true
+  }
+]

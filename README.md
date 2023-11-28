@@ -3,13 +3,13 @@
 ![Build](https://github.com/andregasser/bigbone/actions/workflows/build.yml/badge.svg)
 [![codecov](https://codecov.io/gh/andregasser/bigbone/branch/master/graph/badge.svg?token=3AFHQQH547)](https://codecov.io/gh/andregasser/bigbone)
 ![Latest Snapshot](https://img.shields.io/badge/dynamic/xml?url=https://s01.oss.sonatype.org/content/repositories/snapshots/social/bigbone/bigbone/maven-metadata.xml&label=Latest%20Snapshot&color=blue&query=.//versioning/latest)
+[![Slack](https://img.shields.io/badge/Slack-Join%20the%20discussion-brightgreen?logo=slack&color=%2344BDDF)](https://bigboneworkspace.slack.com/)
 
 **BigBone** is a [Mastodon](https://docs.joinmastodon.org/) client library for Java and Kotlin.
 
-Maintained and developed with love by [André Gasser](https://fosstodon.org/@andregasser) and [contributors](https://github.com/andregasser/bigbone/graphs/contributors).
-
 # Table of Contents
 * [Why BigBone](#why-bigbone)
+* [Project Team](#project-team)
 * [Core Functionality](#core-functionality)
 * [Implementation Status](#implementation-status)
 * [Versioning](#versioning)
@@ -25,18 +25,32 @@ Maintained and developed with love by [André Gasser](https://fosstodon.org/@and
 
 # Why BigBone
 
-BigBone is a fork of [Mastodon4J](https://github.com/sys1yagi/mastodon4j), a Mastodon client library for Java and Kotlin that was published by Toshihiro Yagi. 
-The goal of Mastodon4J was to provide an easy-to-use library for interacting with the [Mastodon social media network](https://joinmastodon.org/) from Java and 
-Kotlin code. Unfortunately, it became abandoned and has not seen any updates since 2018. 
+BigBone is a fork of [Mastodon4J](https://github.com/sys1yagi/mastodon4j), a Mastodon client library for Java and Kotlin
+that was published by Toshihiro Yagi. The goal of Mastodon4J was to provide an easy-to-use library for interacting with 
+the [Mastodon social media network](https://joinmastodon.org/) from Java and Kotlin code. Unfortunately, it became 
+abandoned and has not seen any updates since 2018. 
 
-Since Elon Musk's Twitter acquisition in 2022, Mastodon has gained tremendous popularity. A project that is so well received by the community deserves to have 
-up-to-date and maintained client libraries. Because of this, we brought the Mastodon4J project back to life in November 2022. That's when this project,
-the BigBone client library for Java and Kotlin, was born. May it serve you well in your Mastodon-related endeavours!
+Since Elon Musk's Twitter acquisition in 2022, Mastodon has gained tremendous popularity. A project that is so well 
+received by the community deserves to have up-to-date and maintained client libraries. Because of this, we brought the 
+Mastodon4J project back to life in November 2022. That's when this project, the BigBone client library for Java and 
+the BigBone client library for Java and Kotlin, was born.
 
-The name **BigBone** has mostly symbolic character. We have chosen the name BigBone for this library because Mastodons represent impressive animals from the 
-Pleistocene, built of big and heavy bones. At the same time, we hope this library will build some sort of "skeleton" for your Mastodon-related projects. 
-Interestingly, there is also [Big Bone Lick State Park in Kentucky](https://parks.ky.gov/union/parks/historic/big-bone-lick-state-historic-site) where 
-American Mastodons have been excavated.
+The name **BigBone** mostly has symbolic character. We opted for it as a nod to the awe-inspiring Mastodons of the Pleistocene era,
+characterised by their robust and colossal bones. We envision this library serving as a foundational _skeleton_ for your Mastodon-related projects.
+Fun fact: There’s also [Big Bone Lick State Park in Kentucky](https://parks.ky.gov/union/parks/historic/big-bone-lick-state-historic-site),
+a site where American Mastodons were excavated.
+May the BigBone library be as enduring and impactful as its namesake, providing strength and structure to your Mastodon endeavours.
+
+# Project Team
+
+The project is currently taken care of by the following people:
+
+- [André Gasser](https://github.com/andregasser/)
+- [Andreas Bartels](https://github.com/bocops)
+- [Patrick Geselbracht](https://github.com/PattaFeuFeu)
+
+A big "Thank you" to everyone for the time they invest in this project. Without your help we would not be where we are 
+right now. 
 
 # Core Functionality
 
@@ -50,16 +64,18 @@ With a library like BigBone, you can build tools that allow you to
 - send direct messages to other people
 - manage filters
 - follow/unfollow hashtags
+- administer your Mastodon instance
 - plus lots of other stuff!
 
 # Implementation Status
 
-**We did not release an official version on Maven Central yet**, but there's a `2.0.0-SNAPSHOT` which you can use to play around / experiment with. 
-Just please be aware that with every new snapshot version, there can be breaking changes along the lines. There will be "darker places" in the 
-library, where stuff will not work as expected. If you find issues, please [file an issue](https://github.com/andregasser/bigbone/issues).  
+**We did not release an official version on Maven Central yet**, but there's a `2.0.0-SNAPSHOT` which you can use to 
+play around / experiment with. Just please be aware that with every new snapshot version, there can be breaking changes 
+along the lines. There will be "darker places" in the library, where stuff will not work as expected. If you find 
+issues, please [file an issue](https://github.com/andregasser/bigbone/issues).  
 
-BigBone does not yet implement the full API of Mastodon. Actually, there is still **a lot to do**. For details on the current API coverage 
-please check out our wiki page [Mastodon API Coverage](https://github.com/andregasser/bigbone/wiki/Mastodon-API-Coverage).
+BigBone does not yet implement the full API of Mastodon. Actually, there is still **a lot to do**. For details on the 
+current API coverage please check out our [API Coverage](https://bigbone.social/api-coverage/) page.
 
 # Versioning
 
