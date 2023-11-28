@@ -44,9 +44,9 @@ where American Mastodons have been excavated.
 
 The project is currently taken care of by the following people:
 
-- [André Gasser](https://fosstodon.org/@andregasser)
-- [Andreas Bartels](https://fosstodon.org/@bocops)
-- [Patrick Geselbracht](@PattaFeuFeu@chaos.social)
+- [André Gasser](https://github.com/andregasser/)
+- [Andreas Bartels](https://github.com/bocops)
+- [Patrick Geselbracht](https://github.com/PattaFeuFeu)
 
 A big "Thank you" to everyone for the time they invest in this project. Without your help we would not be where we are 
 right now. 
