@@ -32,13 +32,13 @@ abandoned and has not seen any updates since 2018.
 Since Elon Musk's Twitter acquisition in 2022, Mastodon has gained tremendous popularity. A project that is so well 
 received by the community deserves to have up-to-date and maintained client libraries. Because of this, we brought the 
 Mastodon4J project back to life in November 2022. That's when this project, the BigBone client library for Java and 
-Kotlin, was born. May it serve you well in your Mastodon-related endeavours!
+the BigBone client library for Java and Kotlin, was born.
 
-The name **BigBone** has mostly symbolic character. We have chosen the name BigBone for this library because Mastodons 
-represent impressive animals from the Pleistocene, built of big and heavy bones. At the same time, we hope this library 
-will build some sort of "skeleton" for your Mastodon-related projects. Interestingly, there is also 
-[Big Bone Lick State Park in Kentucky](https://parks.ky.gov/union/parks/historic/big-bone-lick-state-historic-site) 
-where American Mastodons have been excavated.
+The name **BigBone** mostly has symbolic character. We opted for it as a nod to the awe-inspiring Mastodons of the Pleistocene era,
+characterised by their robust and colossal bones. We envision this library serving as a foundational _skeleton_ for your Mastodon-related projects.
+Fun fact: There’s also [Big Bone Lick State Park in Kentucky](https://parks.ky.gov/union/parks/historic/big-bone-lick-state-historic-site),
+a site where American Mastodons were excavated.
+May the BigBone library be as enduring and impactful as its namesake, providing strength and structure to your Mastodon endeavours.
 
 # Project Team
 
