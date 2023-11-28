@@ -19,12 +19,17 @@ Server-generated suggestions on who to follow, based on previous positive intera
   </tr>
   <tr>
     <td style="width:45%;text-align:left;"><code>GET /api/v2/suggestions</code><br>View follow suggestions (v2)</td>
-    <td style="width:10%;text-align:center;"><img src="/assets/red16.png"></td>
-    <td style="width:45%;text-align:left;">Not implemented yet.</td>
+    <td style="width:10%;text-align:center;"><img src="/assets/green16.png"></td>
+    <td style="width:45%;text-align:left;">Fully implemented.</td>
   </tr>
   <tr>
     <td style="width:45%;text-align:left;"><code>DELETE /api/v1/suggestions/:account_id</code><br>Remove a suggestion</td>
+    <td style="width:10%;text-align:center;"><img src="/assets/green16.png"></td>
+    <td style="width:45%;text-align:left;">Fully implemented.</td>
+  </tr>
+  <tr>
+    <td style="width:45%;text-align:left;"><code>GET /api/v1/suggestions</code><br>(DEPRECATED) View follow suggestions (v1)</td>
     <td style="width:10%;text-align:center;"><img src="/assets/red16.png"></td>
-    <td style="width:45%;text-align:left;">Not implemented yet.</td>
+    <td style="width:45%;text-align:left;"><b>Will not be implemented.</b></td>
   </tr>
 </table>
