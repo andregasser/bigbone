@@ -10,6 +10,6 @@ nav_order: 11
 
 <a href="https://docs.joinmastodon.org/methods/admin/retention/" target="_blank">https://docs.joinmastodon.org/methods/admin/retention/</a>
 
-| Method                         | Description              | Status | Comments | 
-|--------------------------------|--------------------------|--------|----------|
-| `POST /api/v1/admin/retention` | Calculate retention data | 🔴     |          |
+| Method                         | Description              | Status                          | Comments         | 
+|--------------------------------|--------------------------|---------------------------------|------------------|
+| `POST /api/v1/admin/retention` | Calculate retention data | <img src="/assets/green16.png"> | Fully supported. |
