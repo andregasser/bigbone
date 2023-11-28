@@ -5,6 +5,7 @@ on:
     tags:
       # Run on any pushed tag like v2.0.0
       - 'v*.*.*'
+  workflow_dispatch:
 
 # Cancel any already running builds with that git reference
 concurrency:
