@@ -8,16 +8,11 @@ import social.bigbone.api.exception.BigBoneRequestException;
 @SuppressWarnings("PMD.SystemPrintln")
 public class GetInstanceInfo {
 
-    public static void main(final String[] args) throws BigBoneRequestException {
+    public static void main(final String[] args) throws BigBoneRequestException, BigBoneClientInstantiationException {
         final String instance = args[0];
 
         // Instantiate client
-        final MastodonClient client;
-        try {
-            client = new MastodonClient.Builder(instance).build();
-        } catch (BigBoneClientInstantiationException e) {
-            throw new RuntimeException(e);
-        }
+        final MastodonClient client = new MastodonClient.Builder(instance).build();
 
         // Get instance info and dump it to the console as JSON
         final Instance instanceInfo = client.instances().getInstance().execute();

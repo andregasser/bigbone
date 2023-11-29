@@ -10,20 +10,15 @@ import social.bigbone.api.exception.BigBoneClientInstantiationException;
 import social.bigbone.api.exception.BigBoneRequestException;
 
 public class StreamFederatedPublicTimeline {
-    public static void main(final String[] args) throws BigBoneRequestException, InterruptedException {
+    public static void main(final String[] args) throws BigBoneRequestException, InterruptedException, BigBoneClientInstantiationException {
         final String instance = args[0];
         final String accessToken = args[1];
 
         // Instantiate client
-        final MastodonClient client;
-        try {
-            client = new MastodonClient.Builder(instance)
-                    .accessToken(accessToken)
-                    .useStreamingApi()
-                    .build();
-        } catch (BigBoneClientInstantiationException e) {
-            throw new RuntimeException(e);
-        }
+        final MastodonClient client = new MastodonClient.Builder(instance)
+                .accessToken(accessToken)
+                .useStreamingApi()
+                .build();
 
         // Configure status handler
         final Handler handler = new Handler() {

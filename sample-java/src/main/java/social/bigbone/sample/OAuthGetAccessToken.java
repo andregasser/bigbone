@@ -10,18 +10,13 @@ import social.bigbone.api.exception.BigBoneRequestException;
 import java.util.Scanner;
 
 public class OAuthGetAccessToken {
-    public static void main(final String[] args) throws BigBoneRequestException {
+    public static void main(final String[] args) throws BigBoneRequestException, BigBoneClientInstantiationException {
         final String instanceName = args[0];
         final String clientId = args[1];
         final String clientSecret = args[2];
         final String redirectUri = args[3];
 
-        final MastodonClient client;
-        try {
-            client = new MastodonClient.Builder(instanceName).build();
-        } catch (BigBoneClientInstantiationException e) {
-            throw new RuntimeException(e);
-        }
+        final MastodonClient client = new MastodonClient.Builder(instanceName).build();
         final String url = client.oauth().getOAuthUrl(clientId, new Scope(), redirectUri);
         System.out.println("Open authorization page and copy code:");
         System.out.println(url);

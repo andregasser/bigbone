@@ -9,17 +9,12 @@ import social.bigbone.api.exception.BigBoneRequestException;
 import static social.bigbone.api.method.TimelineMethods.StatusOrigin.LOCAL_AND_REMOTE;
 
 public class GetTagTimeline {
-    public static void main(final String[] args) throws BigBoneRequestException {
+    public static void main(final String[] args) throws BigBoneRequestException, BigBoneClientInstantiationException {
         final String instance = args[0];
         final String hashtag = args[1];
 
         // Instantiate client
-        final MastodonClient client;
-        try {
-            client = new MastodonClient.Builder(instance).build();
-        } catch (BigBoneClientInstantiationException e) {
-            throw new RuntimeException(e);
-        }
+        final MastodonClient client = new MastodonClient.Builder(instance).build();
 
         // Get statuses from public timeline
         final Pageable<Status> statuses = client.timelines().getTagTimeline(hashtag, LOCAL_AND_REMOTE).execute();

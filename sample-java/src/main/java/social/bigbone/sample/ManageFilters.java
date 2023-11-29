@@ -18,20 +18,15 @@ import java.util.List;
  */
 @SuppressWarnings("PMD.SystemPrintln")
 public class ManageFilters {
-    public static void main(final String[] args) throws BigBoneRequestException {
+    public static void main(final String[] args) throws BigBoneRequestException, BigBoneClientInstantiationException {
         final String instance = args[0];
         final String accessToken = args[1];
         final String action = args[2];
 
         // Instantiate client
-        final MastodonClient client;
-        try {
-            client = new MastodonClient.Builder(instance)
-                    .accessToken(accessToken)
-                    .build();
-        } catch (BigBoneClientInstantiationException e) {
-            throw new RuntimeException(e);
-        }
+        final MastodonClient client = new MastodonClient.Builder(instance)
+                .accessToken(accessToken)
+                .build();
 
         switch (action) {
             case "list":
@@ -71,7 +66,6 @@ public class ManageFilters {
             }
             System.out.println("\n-------------------------------------------------------");
         }
-        
     }
 
     /**

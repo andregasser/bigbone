@@ -7,17 +7,12 @@ import social.bigbone.api.exception.BigBoneRequestException;
 
 public class GetOEmbedMetadata {
 
-    public static void main(final String[] args) throws BigBoneRequestException {
+    public static void main(final String[] args) throws BigBoneRequestException, BigBoneClientInstantiationException {
         final String instance = args[0];
         final String statusUrl = args[1];
 
         // Instantiate client
-        final MastodonClient client;
-        try {
-            client = new MastodonClient.Builder(instance).build();
-        } catch (BigBoneClientInstantiationException e) {
-            throw new RuntimeException(e);
-        }
+        final MastodonClient client = new MastodonClient.Builder(instance).build();
 
         // Get oEmbed metadata for [statusUrl]
         final OEmbedMetadata oEmbedMetadata = client.oembed().getOEmbedInfoAsJson(statusUrl).execute();

@@ -20,9 +20,10 @@ final class Authenticator {
     private static final String ACCESS_TOKEN = "access_token";
     private static final String REDIRECT_URI = "urn:ietf:wg:oauth:2.0:oob";
 
-    private Authenticator() { }
+    private Authenticator() {
+    }
 
-    static MastodonClient appRegistrationIfNeeded(final String instanceName, final String credentialFilePath, final boolean useStreaming) throws IOException, BigBoneRequestException {
+    static MastodonClient appRegistrationIfNeeded(final String instanceName, final String credentialFilePath, final boolean useStreaming) throws IOException, BigBoneRequestException, BigBoneClientInstantiationException {
         final File file = new File(credentialFilePath);
         if (!file.exists()) {
             System.out.println("create $credentialFilePath.");
@@ -55,35 +56,21 @@ final class Authenticator {
             System.out.println("access token found...");
         }
         final MastodonClient.Builder builder = new MastodonClient.Builder(instanceName)
-            .accessToken(properties.get(ACCESS_TOKEN).toString());
+                .accessToken(properties.get(ACCESS_TOKEN).toString());
         if (useStreaming) {
             builder.useStreamingApi();
         }
-        try {
-            return builder.build();
-        } catch (BigBoneClientInstantiationException e) {
-            throw new RuntimeException(e);
-        }
+        return builder.build();
     }
 
-    private static Token getAccessToken(final String instanceName, final String clientId, final String clientSecret, final String email, final String password) throws BigBoneRequestException {
-        final MastodonClient client;
-        try {
-            client = new MastodonClient.Builder(instanceName).build();
-        } catch (BigBoneClientInstantiationException e) {
-            throw new RuntimeException(e);
-        }
+    private static Token getAccessToken(final String instanceName, final String clientId, final String clientSecret, final String email, final String password) throws BigBoneRequestException, BigBoneClientInstantiationException {
+        final MastodonClient client = new MastodonClient.Builder(instanceName).build();
         final OAuthMethods oauthMethods = new OAuthMethods(client);
         return oauthMethods.getUserAccessTokenWithPasswordGrant(clientId, clientSecret, REDIRECT_URI, email, password, new Scope()).execute();
     }
 
-    private static Application application(final String instanceName) throws BigBoneRequestException {
-        final MastodonClient client;
-        try {
-            client = new MastodonClient.Builder(instanceName).build();
-        } catch (BigBoneClientInstantiationException e) {
-            throw new RuntimeException(e);
-        }
+    private static Application application(final String instanceName) throws BigBoneRequestException, BigBoneClientInstantiationException {
+        final MastodonClient client = new MastodonClient.Builder(instanceName).build();
         return client.apps().createApp("bigbone-sample-app", REDIRECT_URI, null, new Scope()).execute();
     }
 }
