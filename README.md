@@ -16,6 +16,7 @@
 * [Adding BigBone to Your Project](#adding-bigbone-to-your-project)
 * [Using BigBone](#using-bigbone)
 * [Support](#support)
+* [Security](#security)
 * [Troubleshooting](#troubleshooting)
 * [BigBone Contributors](#bigbone-contributors)
 * [Contribution](#contribution)
@@ -199,6 +200,10 @@ We also provide some guidance in [USAGE.md](USAGE.md).
 # Support
 
 Please check out [SUPPORT.md](SUPPORT.md) for our preferred ways of supporting you.
+
+# Security
+
+Please check out [SECURITY.md](SECURITY.md) for more details on how we handle security issues.
 
 # Troubleshooting
 
