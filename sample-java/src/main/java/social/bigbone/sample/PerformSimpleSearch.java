@@ -2,11 +2,10 @@ package social.bigbone.sample;
 
 import social.bigbone.MastodonClient;
 import social.bigbone.api.entity.Search;
-import social.bigbone.api.exception.BigBoneClientInstantiationException;
 import social.bigbone.api.exception.BigBoneRequestException;
 
 public class PerformSimpleSearch {
-    public static void main(final String[] args) throws BigBoneRequestException, BigBoneClientInstantiationException {
+    public static void main(final String[] args) throws BigBoneRequestException {
         final String instance = args[0];
         final String accessToken = args[1];
         final String searchTerm = args[2];

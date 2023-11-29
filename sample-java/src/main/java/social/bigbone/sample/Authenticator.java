@@ -4,7 +4,6 @@ import social.bigbone.MastodonClient;
 import social.bigbone.api.Scope;
 import social.bigbone.api.entity.Application;
 import social.bigbone.api.entity.Token;
-import social.bigbone.api.exception.BigBoneClientInstantiationException;
 import social.bigbone.api.exception.BigBoneRequestException;
 import social.bigbone.api.method.OAuthMethods;
 
@@ -23,7 +22,7 @@ final class Authenticator {
     private Authenticator() {
     }
 
-    static MastodonClient appRegistrationIfNeeded(final String instanceName, final String credentialFilePath, final boolean useStreaming) throws IOException, BigBoneRequestException, BigBoneClientInstantiationException {
+    static MastodonClient appRegistrationIfNeeded(final String instanceName, final String credentialFilePath, final boolean useStreaming) throws IOException, BigBoneRequestException {
         final File file = new File(credentialFilePath);
         if (!file.exists()) {
             System.out.println("create $credentialFilePath.");
@@ -63,13 +62,13 @@ final class Authenticator {
         return builder.build();
     }
 
-    private static Token getAccessToken(final String instanceName, final String clientId, final String clientSecret, final String email, final String password) throws BigBoneRequestException, BigBoneClientInstantiationException {
+    private static Token getAccessToken(final String instanceName, final String clientId, final String clientSecret, final String email, final String password) throws BigBoneRequestException {
         final MastodonClient client = new MastodonClient.Builder(instanceName).build();
         final OAuthMethods oauthMethods = new OAuthMethods(client);
         return oauthMethods.getUserAccessTokenWithPasswordGrant(clientId, clientSecret, REDIRECT_URI, email, password, new Scope()).execute();
     }
 
-    private static Application application(final String instanceName) throws BigBoneRequestException, BigBoneClientInstantiationException {
+    private static Application application(final String instanceName) throws BigBoneRequestException {
         final MastodonClient client = new MastodonClient.Builder(instanceName).build();
         return client.apps().createApp("bigbone-sample-app", REDIRECT_URI, null, new Scope()).execute();
     }

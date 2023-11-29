@@ -25,7 +25,6 @@ object NodeInfoClient {
      * @return server information, including the name and version of the software running on this server
      * @throws ServerInfoRetrievalException if the request for a server info to [host] was unsuccessful
      */
-    @Throws(ServerInfoRetrievalException::class)
     fun retrieveServerInfo(host: String): Server? {
         CLIENT.newCall(
             Request.Builder()

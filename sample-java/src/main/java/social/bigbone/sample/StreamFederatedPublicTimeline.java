@@ -6,11 +6,10 @@ import social.bigbone.api.Handler;
 import social.bigbone.api.Shutdownable;
 import social.bigbone.api.entity.Notification;
 import social.bigbone.api.entity.Status;
-import social.bigbone.api.exception.BigBoneClientInstantiationException;
 import social.bigbone.api.exception.BigBoneRequestException;
 
 public class StreamFederatedPublicTimeline {
-    public static void main(final String[] args) throws BigBoneRequestException, InterruptedException, BigBoneClientInstantiationException {
+    public static void main(final String[] args) throws BigBoneRequestException, InterruptedException {
         final String instance = args[0];
         final String accessToken = args[1];
 

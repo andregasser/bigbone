@@ -4,14 +4,13 @@ import social.bigbone.MastodonClient;
 import social.bigbone.api.Pageable;
 import social.bigbone.api.entity.Filter;
 import social.bigbone.api.entity.Status;
-import social.bigbone.api.exception.BigBoneClientInstantiationException;
 import social.bigbone.api.exception.BigBoneRequestException;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class GetHomeTimelineWithFiltering {
 
-    public static void main(final String[] args) throws BigBoneRequestException, BigBoneClientInstantiationException {
+    public static void main(final String[] args) throws BigBoneRequestException {
         final String instance = args[0];
         final String accessToken = args[1];
 

@@ -3,7 +3,6 @@ package social.bigbone.sample;
 import social.bigbone.MastodonClient;
 import social.bigbone.api.entity.MediaAttachment;
 import social.bigbone.api.entity.data.Visibility;
-import social.bigbone.api.exception.BigBoneClientInstantiationException;
 import social.bigbone.api.exception.BigBoneRequestException;
 
 import java.io.File;
@@ -11,7 +10,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class PostStatusWithMediaAttached {
-    public static void main(final String[] args) throws BigBoneRequestException, BigBoneClientInstantiationException {
+    public static void main(final String[] args) throws BigBoneRequestException {
         final String instance = args[0];
         final String accessToken = args[1];
 

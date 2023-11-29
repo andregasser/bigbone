@@ -844,7 +844,6 @@ private constructor(
          * when getting the instance version of the server in [instanceName]. Other exceptions, e.g. due to no Internet
          * connection are _not_ caught by this library.
          */
-        @Throws(BigBoneClientInstantiationException::class)
         fun build(): MastodonClient {
             return MastodonClient(
                 instanceName = instanceName,

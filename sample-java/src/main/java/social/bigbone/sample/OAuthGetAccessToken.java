@@ -4,13 +4,12 @@ import social.bigbone.MastodonClient;
 import social.bigbone.MastodonRequest;
 import social.bigbone.api.Scope;
 import social.bigbone.api.entity.Token;
-import social.bigbone.api.exception.BigBoneClientInstantiationException;
 import social.bigbone.api.exception.BigBoneRequestException;
 
 import java.util.Scanner;
 
 public class OAuthGetAccessToken {
-    public static void main(final String[] args) throws BigBoneRequestException, BigBoneClientInstantiationException {
+    public static void main(final String[] args) throws BigBoneRequestException {
         final String instanceName = args[0];
         final String clientId = args[1];
         final String clientSecret = args[2];

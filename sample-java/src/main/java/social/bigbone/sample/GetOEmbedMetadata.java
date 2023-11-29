@@ -2,12 +2,11 @@ package social.bigbone.sample;
 
 import social.bigbone.MastodonClient;
 import social.bigbone.api.entity.OEmbedMetadata;
-import social.bigbone.api.exception.BigBoneClientInstantiationException;
 import social.bigbone.api.exception.BigBoneRequestException;
 
 public class GetOEmbedMetadata {
 
-    public static void main(final String[] args) throws BigBoneRequestException, BigBoneClientInstantiationException {
+    public static void main(final String[] args) throws BigBoneRequestException {
         final String instance = args[0];
         final String statusUrl = args[1];
 
