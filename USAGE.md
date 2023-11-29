@@ -29,7 +29,15 @@ scope = Scope()
 
 ## Registering an App
 
-To access the API of a Mastodon server, we first need to create client credentials. 
+To access the API of a Mastodon server, we first need to create client credentials.
+
+
+> [!IMPORTANT]
+> When building an instance of the `MastodonClient`, it may throw a `BigBoneClientInstantiationException` if we could
+> not
+> successfully retrieve information about an instance you provide. The stacktrace of that exception should either help you
+> find a solution, or give you necessary information you can provide to us, e.g. via the GitHub issues, to help you find
+> one.
 
 __Kotlin__
 
@@ -46,14 +54,19 @@ val appRegistration = client.apps.createApp(
 __Java__
 
 ```java
-MastodonClient client = new MastodonClient.Builder(instanceHostname).build();
 try {
-	AppRegistration appRegistration = client.apps().createApp(
-	    "bigbone-sample-app",
-	    "urn:ietf:wg:oauth:2.0:oob",
-	    new Scope(),
-	    "https://example.org/"
-	).execute();
+    MastodonClient client=new MastodonClient.Builder(instanceHostname).build();
+} catch (BigBoneClientInstantiationException e){
+    // error handling
+}
+
+try {
+    AppRegistration appRegistration=client.apps().createApp(
+        "bigbone-sample-app",
+        "urn:ietf:wg:oauth:2.0:oob",
+        new Scope(),
+        "https://example.org/"
+    ).execute();
 } catch (BigBoneRequestException e) {
 	// error handling
 }

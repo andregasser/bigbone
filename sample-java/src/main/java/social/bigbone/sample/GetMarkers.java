@@ -11,8 +11,8 @@ public class GetMarkers {
 
         // Instantiate client
         final MastodonClient client = new MastodonClient.Builder(instance)
-            .accessToken(accessToken)
-            .build();
+                .accessToken(accessToken)
+                .build();
 
         // Get markers
         final Markers markers = client.markers().getMarkers().execute();

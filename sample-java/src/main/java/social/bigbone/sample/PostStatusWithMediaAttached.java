@@ -4,6 +4,7 @@ import social.bigbone.MastodonClient;
 import social.bigbone.api.entity.MediaAttachment;
 import social.bigbone.api.entity.data.Visibility;
 import social.bigbone.api.exception.BigBoneRequestException;
+
 import java.io.File;
 import java.util.Collections;
 import java.util.List;
@@ -15,8 +16,8 @@ public class PostStatusWithMediaAttached {
 
         // Instantiate client
         final MastodonClient client = new MastodonClient.Builder(instance)
-            .accessToken(accessToken)
-            .build();
+                .accessToken(accessToken)
+                .build();
 
         // Read file from resources folder
         final ClassLoader classLoader = Thread.currentThread().getContextClassLoader();

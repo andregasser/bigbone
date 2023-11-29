@@ -13,8 +13,7 @@ public class GetTagTimeline {
         final String hashtag = args[1];
 
         // Instantiate client
-        final MastodonClient client = new MastodonClient.Builder(instance)
-            .build();
+        final MastodonClient client = new MastodonClient.Builder(instance).build();
 
         // Get statuses from public timeline
         final Pageable<Status> statuses = client.timelines().getTagTimeline(hashtag, LOCAL_AND_REMOTE).execute();

@@ -10,10 +10,10 @@ import java.util.List;
 
 /**
  * The main method of this class accepts the following parameters:
- *  - &lt;instance&gt; &lt;accessToken&gt; list: list all existing filters for this account
- *  - &lt;instance&gt; &lt;accessToken&gt; create &lt;keyword&gt; create a new filter for the keyword
- *  - &lt;instance&gt; &lt;accessToken&gt; delete &lt;filterId&gt; delete the filter with this filterId
- *  - &lt;instance&gt; &lt;accessToken&gt; addKeyword &lt;filterId&gt; &lt;filterId&gt; add keyword to the filter with ID filterId
+ * - &lt;instance&gt; &lt;accessToken&gt; list: list all existing filters for this account
+ * - &lt;instance&gt; &lt;accessToken&gt; create &lt;keyword&gt; create a new filter for the keyword
+ * - &lt;instance&gt; &lt;accessToken&gt; delete &lt;filterId&gt; delete the filter with this filterId
+ * - &lt;instance&gt; &lt;accessToken&gt; addKeyword &lt;filterId&gt; &lt;filterId&gt; add keyword to the filter with ID filterId
  */
 @SuppressWarnings("PMD.SystemPrintln")
 public class ManageFilters {
@@ -26,7 +26,7 @@ public class ManageFilters {
         final MastodonClient client = new MastodonClient.Builder(instance)
                 .accessToken(accessToken)
                 .build();
-        
+
         switch (action) {
             case "list":
                 listExistingFilters(client);
@@ -53,26 +53,25 @@ public class ManageFilters {
      */
     private static void listExistingFilters(final MastodonClient client) throws BigBoneRequestException {
         final List<Filter> existingFilters = client.filters().listFilters().execute();
-        for (final Filter filter: existingFilters) {
+        for (final Filter filter : existingFilters) {
             System.out.println(filter.getTitle() + " (ID " + filter.getId() + "):");
             System.out.print(filter.getFilterAction() + " in the following contexts: ");
-            for (final Filter.FilterContext context: filter.getContext()) {
+            for (final Filter.FilterContext context : filter.getContext()) {
                 System.out.print(context + " ");
             }
             System.out.print("\nkeywords: ");
-            for (final FilterKeyword filterKeyword: filter.getKeywords()) {
+            for (final FilterKeyword filterKeyword : filter.getKeywords()) {
                 System.out.print(filterKeyword.getKeyword() + " ");
             }
             System.out.println("\n-------------------------------------------------------");
         }
-        
     }
 
     /**
      * Creates a new filter for the given keyword. This filter will expire automatically after an hour.
      * Similar functionality exists to update a given filter.
      *
-     * @param client a [MastodonClient] with an authenticated user
+     * @param client          a [MastodonClient] with an authenticated user
      * @param keywordToFilter string that should be filtered by the new filter
      */
     private static void createNewFilter(final MastodonClient client, final String keywordToFilter) throws BigBoneRequestException {
@@ -102,7 +101,7 @@ public class ManageFilters {
      * Delete a filter with the given filter ID.
      * Similar functionality exists to view a given filter.
      *
-     * @param client a [MastodonClient] with an authenticated user
+     * @param client   a [MastodonClient] with an authenticated user
      * @param filterId ID string for the filter that should be deleted
      */
     private static void deleteFilter(final MastodonClient client, final String filterId) throws BigBoneRequestException {
@@ -114,8 +113,8 @@ public class ManageFilters {
      * Add a keyword to an existing filter.
      * Similar functionality exists to view, delete or update individual keywords, or to list all keywords of a given filter.
      *
-     * @param client a [MastodonClient] with an authenticated user
-     * @param filterId ID string for the filter that should be edited
+     * @param client          a [MastodonClient] with an authenticated user
+     * @param filterId        ID string for the filter that should be edited
      * @param keywordToFilter string for a new keyword that should be filtered by the filter
      */
     private static void addKeywordToFilter(final MastodonClient client, final String filterId, final String keywordToFilter) throws BigBoneRequestException {

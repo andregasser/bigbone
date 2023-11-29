@@ -19,7 +19,8 @@ final class Authenticator {
     private static final String ACCESS_TOKEN = "access_token";
     private static final String REDIRECT_URI = "urn:ietf:wg:oauth:2.0:oob";
 
-    private Authenticator() { }
+    private Authenticator() {
+    }
 
     static MastodonClient appRegistrationIfNeeded(final String instanceName, final String credentialFilePath, final boolean useStreaming) throws IOException, BigBoneRequestException {
         final File file = new File(credentialFilePath);
@@ -54,7 +55,7 @@ final class Authenticator {
             System.out.println("access token found...");
         }
         final MastodonClient.Builder builder = new MastodonClient.Builder(instanceName)
-            .accessToken(properties.get(ACCESS_TOKEN).toString());
+                .accessToken(properties.get(ACCESS_TOKEN).toString());
         if (useStreaming) {
             builder.useStreamingApi();
         }
