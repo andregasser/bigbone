@@ -10,7 +10,10 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import social.bigbone.api.Pageable
 import social.bigbone.api.entity.data.InstanceVersion
+import social.bigbone.api.exception.BigBoneClientInstantiationException
 import social.bigbone.api.exception.BigBoneRequestException
+import social.bigbone.api.exception.InstanceVersionRetrievalException
+import social.bigbone.api.exception.ServerInfoRetrievalException
 import social.bigbone.api.method.AccountMethods
 import social.bigbone.api.method.AnnouncementMethods
 import social.bigbone.api.method.AppMethods
@@ -51,6 +54,7 @@ import social.bigbone.api.method.admin.AdminMeasureMethods
 import social.bigbone.api.method.admin.AdminRetentionMethods
 import social.bigbone.extension.emptyRequestBody
 import social.bigbone.nodeinfo.NodeInfoClient
+import social.bigbone.nodeinfo.entity.Server
 import java.io.IOException
 import java.security.SecureRandom
 import java.security.cert.X509Certificate
@@ -67,12 +71,12 @@ import javax.net.ssl.X509TrustManager
 class MastodonClient
 private constructor(
     private val instanceName: String,
-    private val client: OkHttpClient
-) {
-    private var debug = false
-    private var instanceVersion: String? = null
-    private var scheme: String = "https"
+    private val client: OkHttpClient,
+    private var debug: Boolean = false,
+    private var instanceVersion: String? = null,
+    private var scheme: String = "https",
     private var port: Int = 443
+) {
 
     /**
      * Access API methods under the "accounts" endpoint.
@@ -444,19 +448,20 @@ private constructor(
      * @param endpoint the Mastodon API endpoint to call
      * @param method the HTTP method to use
      * @param parameters parameters to use in the action; can be null
+     * @throws BigBoneRequestException in case the action to be performed yielded an unsuccessful response
      */
     @Throws(BigBoneRequestException::class)
     internal fun performAction(endpoint: String, method: Method, parameters: Parameters? = null) {
-        val response = when (method) {
+        when (method) {
             Method.DELETE -> delete(endpoint, parameters)
             Method.GET -> get(endpoint, parameters)
             Method.PATCH -> patch(endpoint, parameters)
             Method.POST -> post(endpoint, parameters)
             Method.PUT -> put(endpoint, parameters)
-        }
-        response.close()
-        if (!response.isSuccessful) {
-            throw BigBoneRequestException(response)
+        }.use { response: Response ->
+            if (!response.isSuccessful) {
+                throw BigBoneRequestException(response)
+            }
         }
     }
 
@@ -730,22 +735,50 @@ private constructor(
         /**
          * Get the version string for this Mastodon instance.
          * @return a string corresponding to the version of this Mastodon instance
-         * @throws BigBoneRequestException if instance version can not be retrieved using any known method or API version
+         * @throws BigBoneClientInstantiationException if instance version cannot be retrieved using any known method or API version
          */
+        @Throws(BigBoneClientInstantiationException::class)
         private fun getInstanceVersion(): String {
-            try {
-                val serverInfoVersion = NodeInfoClient
-                    .retrieveServerInfo(instanceName)
-                    ?.software
-                    ?.takeIf { it.name == "mastodon" }
-                    ?.version
-                if (serverInfoVersion != null) return serverInfoVersion
-            } catch (_: BigBoneRequestException) {
+            return try {
+                getInstanceVersionViaServerInfo()
+            } catch (error: BigBoneClientInstantiationException) {
+                // fall back to retrieving from Mastodon API itself
+                try {
+                    getInstanceVersionViaApi()
+                } catch (instanceException: InstanceVersionRetrievalException) {
+                    throw BigBoneClientInstantiationException(
+                        message = "Failed to get instance version of $instanceName",
+                        cause = if (instanceException.cause == instanceException) {
+                            instanceException.initCause(error)
+                        } else {
+                            instanceException
+                        }
+                    )
+                }
             }
+        }
 
-            // fall back to retrieving from Mastodon API itself
-            val instanceVersion = getInstanceVersionFromApi(2) ?: getInstanceVersionFromApi(1)
-            return instanceVersion ?: throw BigBoneRequestException("Unable to fetch instance version")
+        @Throws(ServerInfoRetrievalException::class)
+        private fun getInstanceVersionViaServerInfo(): String {
+            val serverSoftwareInfo: Server.Software? = NodeInfoClient
+                .retrieveServerInfo(instanceName)
+                ?.software
+                ?.takeIf { it.name == "mastodon" }
+
+            if (serverSoftwareInfo != null) return serverSoftwareInfo.version
+
+            throw ServerInfoRetrievalException(
+                cause = IllegalArgumentException("Server $instanceName doesn't appear to run Mastodon")
+            )
+        }
+
+        @Throws(InstanceVersionRetrievalException::class)
+        private fun getInstanceVersionViaApi(): String {
+            return try {
+                getInstanceVersionFromApi(2)
+            } catch (e: InstanceVersionRetrievalException) {
+                getInstanceVersionFromApi(1)
+            }
         }
 
         /**
@@ -753,21 +786,23 @@ private constructor(
          * @param apiVersion the version of API call to use in this request
          * @return a string corresponding to the version of this Mastodon instance, or null if no version string can be
          *  retrieved using the specified API version.
+         *  @throws InstanceVersionRetrievalException in case we got a server response but no version, or an unsucessful response
          */
-        private fun getInstanceVersionFromApi(apiVersion: Int): String? {
-            return try {
-                val response = versionedInstanceRequest(apiVersion)
+        @Throws(InstanceVersionRetrievalException::class)
+        private fun getInstanceVersionFromApi(apiVersion: Int): String {
+            return versionedInstanceRequest(apiVersion).use { response: Response ->
                 if (response.isSuccessful) {
                     val instanceVersion: InstanceVersion? = response.body?.string()?.let { responseBody: String ->
                         JSON_SERIALIZER.decodeFromString(responseBody)
                     }
-                    instanceVersion?.version
+                    instanceVersion
+                        ?.version
+                        ?: throw InstanceVersionRetrievalException(
+                            cause = IllegalStateException("Instance version was null unexpectedly")
+                        )
                 } else {
-                    response.close()
-                    null
+                    throw InstanceVersionRetrievalException(response = response)
                 }
-            } catch (e: Exception) {
-                null
             }
         }
 
@@ -787,28 +822,36 @@ private constructor(
          * @return server response for this request
          */
         internal fun versionedInstanceRequest(version: Int): Response {
-            val versionString = if (version == 2) {
-                "v2"
-            } else {
-                "v1"
-            }
+            val versionString = if (version == 2) "v2" else "v1"
+
             val clientBuilder = OkHttpClient.Builder()
-            if (trustAllCerts) {
-                configureForTrustAll(clientBuilder)
-            }
-            val client = clientBuilder.build()
-            return client.newCall(
-                Request.Builder().url(
-                    fullUrl(
-                        scheme,
-                        instanceName,
-                        port,
-                        "api/$versionString/instance"
-                    )
-                ).get().build()
-            ).execute()
+            if (trustAllCerts) configureForTrustAll(clientBuilder)
+
+            return clientBuilder
+                .build()
+                .newCall(
+                    Request.Builder()
+                        .url(
+                            fullUrl(
+                                scheme = scheme,
+                                instanceName = instanceName,
+                                port = port,
+                                path = "api/$versionString/instance"
+                            )
+                        )
+                        .get()
+                        .build()
+                )
+                .execute()
         }
 
+        /**
+         * Builds this MastodonClient.
+         *
+         * @throws BigBoneClientInstantiationException if the client could not be instantiated, likely due to an issue
+         * when getting the instance version of the server in [instanceName]. Other exceptions, e.g. due to no Internet
+         * connection are _not_ caught by this library.
+         */
         fun build(): MastodonClient {
             return MastodonClient(
                 instanceName = instanceName,
@@ -817,13 +860,12 @@ private constructor(
                     .readTimeout(readTimeoutSeconds, TimeUnit.SECONDS)
                     .writeTimeout(writeTimeoutSeconds, TimeUnit.SECONDS)
                     .connectTimeout(connectTimeoutSeconds, TimeUnit.SECONDS)
-                    .build()
-            ).also {
-                it.debug = debug
-                it.instanceVersion = getInstanceVersion()
-                it.scheme = scheme
-                it.port = port
-            }
+                    .build(),
+                debug = debug,
+                instanceVersion = getInstanceVersion(),
+                scheme = scheme,
+                port = port
+            )
         }
     }
 

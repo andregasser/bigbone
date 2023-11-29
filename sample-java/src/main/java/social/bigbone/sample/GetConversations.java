@@ -12,8 +12,8 @@ public class GetConversations {
 
         // Instantiate client
         final MastodonClient client = new MastodonClient.Builder(instance)
-            .accessToken(accessToken)
-            .build();
+                .accessToken(accessToken)
+                .build();
 
         // Get conversations
         final Pageable<Conversation> conversations = client.conversations().getConversations().execute();

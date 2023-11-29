@@ -12,8 +12,7 @@ public class GetPublicTimeline {
         final String instance = args[0];
 
         // Instantiate client
-        final MastodonClient client = new MastodonClient.Builder(instance)
-            .build();
+        final MastodonClient client = new MastodonClient.Builder(instance).build();
 
         // Get statuses from public timeline
         final Pageable<Status> statuses = client.timelines().getPublicTimeline(LOCAL_AND_REMOTE).execute();

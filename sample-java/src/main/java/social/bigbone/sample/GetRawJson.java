@@ -10,12 +10,11 @@ public class GetRawJson {
         final String instance = args[0];
 
         // Instantiate client
-        final MastodonClient client = new MastodonClient.Builder(instance)
-            .build();
+        final MastodonClient client = new MastodonClient.Builder(instance).build();
 
         // Print timeline statuses
         client.timelines().getPublicTimeline(LOCAL_AND_REMOTE).doOnJson(
-            System.out::println
+                System.out::println
         ).execute();
     }
 }

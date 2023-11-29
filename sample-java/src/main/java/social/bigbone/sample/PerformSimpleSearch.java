@@ -12,8 +12,8 @@ public class PerformSimpleSearch {
 
         // Instantiate client
         final MastodonClient client = new MastodonClient.Builder(instance)
-            .accessToken(accessToken)
-            .build();
+                .accessToken(accessToken)
+                .build();
 
         // Perform search and print results
         final Search searchResult = client.search().searchContent(searchTerm).execute();

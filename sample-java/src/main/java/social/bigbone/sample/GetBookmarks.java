@@ -12,8 +12,8 @@ public class GetBookmarks {
 
         // Instantiate client
         final MastodonClient client = new MastodonClient.Builder(instance)
-            .accessToken(accessToken)
-            .build();
+                .accessToken(accessToken)
+                .build();
 
         // Get bookmarks
         final Pageable<Status> bookmarks = client.bookmarks().getBookmarks().execute();
