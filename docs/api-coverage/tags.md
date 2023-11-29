@@ -24,8 +24,8 @@ View information about or follow/unfollow hashtags.
   </tr>
   <tr>
     <td style="width:45%;text-align:left;"><code>POST /api/v1/tags/:id/follow</code><br>Follow a hashtag</td>
-    <td style="width:10%;text-align:center;"><img src="/assets/green16.png"></td>
-    <td style="width:45%;text-align:left;">Fully supported.</td>
+    <td style="width:10%;text-align:center;"><img src="/assets/orange16.png"></td>
+    <td style="width:45%;text-align:left;">Idempotency was added in Mastodon 4.1.0 but is not yet handled.</td>
   </tr>
   <tr>
     <td style="width:45%;text-align:left;"><code>POST /api/v1/tags/:id/unfollow</code><br>Unfollow a hashtag</td>
