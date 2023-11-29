@@ -20,26 +20,26 @@ Read and view timelines of statuses.
   <tr>
     <td style="width:45%;text-align:left;"><code>GET /api/v1/timelines/public</code><br>View public timelines</td>
     <td style="width:10%;text-align:center;"><img src="/assets/orange16.png"></td>
-    <td style="width:45%;text-align:left;"><code>only_media</code>, <code>min_id</code> query parameters missing. <code>Status</code> entity needs to be updated.</td>
+    <td style="width:45%;text-align:left;"><code>only_media</code> query parameter missing.</td>
   </tr>
   <tr>
     <td style="width:45%;text-align:left;"><code>GET /api/v1/timelines/tag/:hashtag</code><br>View hashtag timeline</td>
     <td style="width:10%;text-align:center;"><img src="/assets/orange16.png"></td>
-    <td style="width:45%;text-align:left;"><code>any</code>, <code>all</code>, <code>none</code>, <code>only_media</code>, <code>min_id</code> query parameters missing. <code>Status</code> entity needs to be updated.</td>
+    <td style="width:45%;text-align:left;"><code>any</code>, <code>all</code>, <code>none</code>, <code>only_media</code> query parameters missing.</td>
   </tr>
   <tr>
     <td style="width:45%;text-align:left;"><code>GET /api/v1/timelines/home</code><br>View home timeline</td>
-    <td style="width:10%;text-align:center;"><img src="/assets/orange16.png"></td>
-    <td style="width:45%;text-align:left;"><code>min_id</code> query parameter missing. <code>Status</code> entity needs to be updated.</td>
+    <td style="width:10%;text-align:center;"><img src="/assets/green16.png"></td>
+    <td style="width:45%;text-align:left;">Fully supported</td>
   </tr>
   <tr>
     <td style="width:45%;text-align:left;"><code>GET /api/v1/timelines/list/:list_id</code><br>View list timeline</td>
-    <td style="width:10%;text-align:center;"><img src="/assets/red16.png"></td>
-    <td style="width:45%;text-align:left;">Not yet implemented.</td>
+    <td style="width:10%;text-align:center;"><img src="/assets/green16.png"></td>
+    <td style="width:45%;text-align:left;">Fully supported.</td>
   </tr>
   <tr>
     <td style="width:45%;text-align:left;"><code>GET /api/v1/timelines/direct</code><br>(DEPRECATED) View direct timeline</td>
     <td style="width:10%;text-align:center;"><img src="/assets/red16.png"></td>
-    <td style="width:45%;text-align:left;">Not yet implemented.</td>
+    <td style="width:45%;text-align:left;">Won’t be implemented.</td>
   </tr>
 </table>
