@@ -91,7 +91,7 @@ class RxAccountMethods(client: MastodonClient) {
     }
 
     @JvmOverloads
-    fun searchAccounts(query: String, limit: Int = 40): Single<List<Account>> = Single.fromCallable {
+    fun searchAccounts(query: String, limit: Int? = null): Single<List<Account>> = Single.fromCallable {
         accountMethods.searchAccounts(query, limit).execute()
     }
 }

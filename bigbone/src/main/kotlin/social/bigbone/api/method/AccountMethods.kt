@@ -80,7 +80,12 @@ class AccountMethods(private val client: MastodonClient) {
      *  (e.g. data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUoAAADrCAYAAAA...)
      * @see <a href="https://docs.joinmastodon.org/methods/accounts/#update_credentials">Mastodon API documentation: methods/accounts/#update_credentials</a>
      */
-    fun updateCredentials(displayName: String?, note: String?, avatar: String?, header: String?): MastodonRequest<Account> {
+    fun updateCredentials(
+        displayName: String?,
+        note: String?,
+        avatar: String?,
+        header: String?
+    ): MastodonRequest<Account> {
         return client.getMastodonRequest(
             endpoint = "api/v1/accounts/update_credentials",
             method = MastodonClient.Method.PATCH,
@@ -243,13 +248,17 @@ class AccountMethods(private val client: MastodonClient) {
      * @see <a href="https://docs.joinmastodon.org/methods/accounts/#search">Mastodon API documentation: methods/accounts/#search</a>
      */
     @JvmOverloads
-    fun searchAccounts(query: String, limit: Int = 40): MastodonRequest<List<Account>> {
+    fun searchAccounts(
+        query: String,
+        limit: Int? = null
+    ): MastodonRequest<List<Account>> {
         return client.getMastodonRequestForList(
             endpoint = "api/v1/accounts/search",
             method = MastodonClient.Method.GET,
-            parameters = Parameters()
-                .append("q", query)
-                .append("limit", limit)
+            parameters = Parameters().apply {
+                append("q", query)
+                limit?.let { append("limit", limit) }
+            }
         )
     }
 }
