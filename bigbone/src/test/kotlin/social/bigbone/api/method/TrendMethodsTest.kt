@@ -2,10 +2,8 @@
 
 package social.bigbone.api.method
 
-import io.mockk.Called
 import io.mockk.slot
 import io.mockk.verify
-import org.amshove.kluent.invoking
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeFalse
 import org.amshove.kluent.shouldBeNull
@@ -13,8 +11,6 @@ import org.amshove.kluent.shouldBeNullOrEmpty
 import org.amshove.kluent.shouldHaveSize
 import org.amshove.kluent.shouldNotBeNull
 import org.amshove.kluent.shouldNotBeNullOrEmpty
-import org.amshove.kluent.shouldThrow
-import org.amshove.kluent.withMessage
 import org.junit.jupiter.api.Test
 import social.bigbone.Parameters
 import social.bigbone.PrecisionDateTime.ValidPrecisionDateTime.ExactTime
@@ -28,7 +24,7 @@ import java.time.Instant
 class TrendMethodsTest {
 
     @Test
-    fun `Given a client returning success, when getting trending tags with default limit, then request correct endpoint and serialise response correctly`() {
+    fun `Given a client returning success, when getting trending tags, then request correct endpoint and serialise response correctly`() {
         val client = MockClient.mock(jsonName = "trends_view_trending_tags_success.json")
         val trendMethods = TrendMethods(client)
 
@@ -74,20 +70,7 @@ class TrendMethodsTest {
     }
 
     @Test
-    fun `Given a client returning success, when getting trending tags with too high a limit, then fail with IllegalArgumentException and don't call endpoint`() {
-        val client = MockClient.mock(jsonName = "trends_view_trending_tags_success.json")
-        val trendMethods = TrendMethods(client)
-        val requestedLimit = 42
-
-        invoking {
-            trendMethods.getTrendingTags(limit = requestedLimit).execute()
-        } shouldThrow IllegalArgumentException::class withMessage "Limit must not be larger than 20 but was $requestedLimit"
-
-        verify { client wasNot Called }
-    }
-
-    @Test
-    fun `Given a client returning success, when getting trending statuses with default limit, then request correct endpoint and serialise response correctly`() {
+    fun `Given a client returning success, when getting trending statuses, then request correct endpoint and serialise response correctly`() {
         val client = MockClient.mock(jsonName = "trends_view_trending_statuses_success.json")
         val trendMethods = TrendMethods(client)
 
@@ -119,20 +102,7 @@ class TrendMethodsTest {
     }
 
     @Test
-    fun `Given a client returning success, when getting trending statuses with too high a limit, then fail with IllegalArgumentException and don't call endpoint`() {
-        val client = MockClient.mock(jsonName = "trends_view_trending_statuses_success.json")
-        val trendMethods = TrendMethods(client)
-        val requestedLimit = 42
-
-        invoking {
-            trendMethods.getTrendingStatuses(limit = requestedLimit).execute()
-        } shouldThrow IllegalArgumentException::class withMessage "Limit must not be larger than 40 but was $requestedLimit"
-
-        verify { client wasNot Called }
-    }
-
-    @Test
-    fun `Given a client returning success, when getting trending links with default limit, then request correct endpoint and serialise response correctly`() {
+    fun `Given a client returning success, when getting trending links, then request correct endpoint and serialise response correctly`() {
         val client = MockClient.mock(jsonName = "trends_view_trending_links_success.json")
         val trendMethods = TrendMethods(client)
 
@@ -182,18 +152,5 @@ class TrendMethodsTest {
         with(parametersCapturingSlot.captured) {
             toQuery() shouldBeEqualTo "limit=10"
         }
-    }
-
-    @Test
-    fun `Given a client returning success, when getting trending links with too high a limit, then fail with IllegalArgumentException and don't call endpoint`() {
-        val client = MockClient.mock(jsonName = "trends_view_trending_links_success.json")
-        val trendMethods = TrendMethods(client)
-        val requestedLimit = 42
-
-        invoking {
-            trendMethods.getTrendingLinks(limit = requestedLimit).execute()
-        } shouldThrow IllegalArgumentException::class withMessage "Limit must not be larger than 20 but was $requestedLimit"
-
-        verify { client wasNot Called }
     }
 }

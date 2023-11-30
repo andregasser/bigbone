@@ -27,8 +27,6 @@ class TrendMethods(private val client: MastodonClient) {
         offset: Int? = null,
         limit: Int = 10
     ): MastodonRequest<List<Tag>> {
-        require(limit <= 20) { "Limit must not be larger than 20 but was $limit" }
-
         return client.getMastodonRequestForList(
             endpoint = "$trendsEndpoint/tags",
             method = MastodonClient.Method.GET,
@@ -50,8 +48,6 @@ class TrendMethods(private val client: MastodonClient) {
         offset: Int? = null,
         limit: Int = 20
     ): MastodonRequest<List<Status>> {
-        require(limit <= 40) { "Limit must not be larger than 40 but was $limit" }
-
         return client.getMastodonRequestForList(
             endpoint = "$trendsEndpoint/statuses",
             method = MastodonClient.Method.GET,
@@ -74,8 +70,6 @@ class TrendMethods(private val client: MastodonClient) {
         offset: Int? = null,
         limit: Int = 10
     ): MastodonRequest<List<TrendsLink>> {
-        require(limit <= 20) { "Limit must not be larger than 20 but was $limit" }
-
         return client.getMastodonRequestForList(
             endpoint = "$trendsEndpoint/links",
             method = MastodonClient.Method.GET,
