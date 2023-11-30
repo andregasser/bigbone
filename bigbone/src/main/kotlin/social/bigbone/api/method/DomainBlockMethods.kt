@@ -5,8 +5,6 @@ import social.bigbone.MastodonRequest
 import social.bigbone.api.Pageable
 import social.bigbone.api.Range
 
-private const val QUERY_RESULT_LIMIT: Int = 200
-
 /**
  * Manage a user's blocked domains.
  * @see <a href="https://docs.joinmastodon.org/methods/domain_blocks/">Mastodon domain_blocks API methods</a>
@@ -19,20 +17,12 @@ class DomainBlockMethods(private val client: MastodonClient) {
      * View domains the user has blocked.
      * @param range optional Range for the pageable return value
      * @see <a href="https://docs.joinmastodon.org/methods/domain_blocks/#get">Mastodon API documentation: methods/domain_blocks/#get</a>
-     * @throws [IllegalArgumentException] if [range]'s [Range.limit] is larger than [QUERY_RESULT_LIMIT]
      * @return [Pageable] of [String] representing the domains the user has blocked
      */
     @JvmOverloads
-    @Throws(IllegalArgumentException::class)
     fun getDomainBlocks(
         range: Range = Range()
     ): MastodonRequest<Pageable<String>> {
-        if (range.limit != null && range.limit > QUERY_RESULT_LIMIT) {
-            throw IllegalArgumentException(
-                "limit defined in Range must not be higher than $QUERY_RESULT_LIMIT but was ${range.limit}"
-            )
-        }
-
         return client.getPageableMastodonRequest<String>(
             endpoint = domainBlocksEndpoint,
             method = MastodonClient.Method.GET,

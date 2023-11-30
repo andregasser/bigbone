@@ -7,7 +7,6 @@ import org.amshove.kluent.withMessage
 import org.junit.jupiter.api.Test
 import social.bigbone.PrecisionDateTime.ValidPrecisionDateTime.ExactTime
 import social.bigbone.api.Pageable
-import social.bigbone.api.Range
 import social.bigbone.api.entity.Account
 import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.testtool.MockClient
@@ -38,17 +37,6 @@ class EndorsementMethodsTest {
         secondEndorsement.statusesCount shouldBeEqualTo 5906
         secondEndorsement.lastStatusAt shouldBeEqualTo ExactTime(Instant.parse("2019-11-23T05:23:47.911Z"))
         secondEndorsement.emojis.isEmpty() shouldBeEqualTo false
-    }
-
-    @Test
-    fun `Given a client returning success, when getting endorsements with a limit of 90, then throw IllegalArgumentException`() {
-        val client = MockClient.mock("endorsements_view_success.json")
-
-        invoking {
-            EndorsementMethods(client).getEndorsements(
-                range = Range(limit = 90)
-            ).execute()
-        } shouldThrow IllegalArgumentException::class withMessage "limit defined in Range must not be higher than 80 but was 90"
     }
 
     @Test
