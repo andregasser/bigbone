@@ -56,12 +56,14 @@ class TimelineMethods(private val client: MastodonClient) {
      * Get the public timeline of the configured instance. Defaults to a combination of local and remote statuses,
      * but can be restricted to either.
      * @param statusOrigin optionally restrict result to either local or remote (=federated) statuses; defaults to all
+     * @param onlyMedia Show only statuses with media attached? Defaults to false.
      * @param range restrict result to a specific range
      * @see <a href="https://docs.joinmastodon.org/methods/timelines/#public">Mastodon API documentation: methods/timelines/#public</a>
      */
     @JvmOverloads
     fun getPublicTimeline(
         statusOrigin: StatusOrigin = StatusOrigin.LOCAL_AND_REMOTE,
+        onlyMedia: Boolean? = null,
         range: Range = Range()
     ): MastodonRequest<Pageable<Status>> {
         return client.getPageableMastodonRequest(
@@ -71,8 +73,10 @@ class TimelineMethods(private val client: MastodonClient) {
                 when (statusOrigin) {
                     StatusOrigin.LOCAL -> append("local", true)
                     StatusOrigin.REMOTE -> append("remote", true)
-                    else -> { /* append neither, combined results will be shown */ }
+                    // append neither, combined results will be shown
+                    else -> {}
                 }
+                onlyMedia?.let { append("only_media", onlyMedia) }
             }
         )
     }
@@ -98,7 +102,8 @@ class TimelineMethods(private val client: MastodonClient) {
                 when (statusOrigin) {
                     StatusOrigin.LOCAL -> append("local", true)
                     StatusOrigin.REMOTE -> append("remote", true)
-                    else -> { /* append neither, combined results will be shown */ }
+                    // append neither, combined results will be shown
+                    else -> {}
                 }
             }
         )
