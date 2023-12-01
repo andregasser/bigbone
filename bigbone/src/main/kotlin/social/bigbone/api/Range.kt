@@ -12,9 +12,9 @@ class Range @JvmOverloads constructor(
     val limit: Int? = null
 ) {
     fun toParameters() = Parameters().apply {
-        maxId?.let { append("max_id", it) }
-        minId?.let { append("min_id", it) }
-        sinceId?.let { append("since_id", it) }
-        limit?.let { append("limit", it) }
+        maxId?.let { append("max_id", maxId) }
+        minId?.let { append("min_id", minId) }
+        sinceId?.let { append("since_id", sinceId) }
+        limit?.let { append("limit", limit) }
     }
 }

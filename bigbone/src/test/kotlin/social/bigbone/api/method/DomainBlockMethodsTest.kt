@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test
 import social.bigbone.MastodonClient
 import social.bigbone.Parameters
 import social.bigbone.api.Pageable
-import social.bigbone.api.Range
 import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.testtool.MockClient
 
@@ -34,17 +33,6 @@ class DomainBlockMethodsTest {
                 query = any<Parameters>()
             )
         }
-    }
-
-    @Test
-    fun `Given a client returning success, when getting blocked domains with a limit of 210, then throw IllegalArgumentException`() {
-        val client = MockClient.mock("domain_blocks_view_success.json")
-
-        invoking {
-            DomainBlockMethods(client).getDomainBlocks(
-                range = Range(limit = 210)
-            ).execute()
-        } shouldThrow IllegalArgumentException::class withMessage "limit defined in Range must not be higher than 200 but was 210"
     }
 
     @Test

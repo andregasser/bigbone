@@ -34,7 +34,7 @@ class DirectoryMethods(private val client: MastodonClient) {
         local: Boolean,
         order: AccountOrder = AccountOrder.ACTIVE,
         offset: Int = 0,
-        limit: Int = 40
+        limit: Int? = null
     ): MastodonRequest<List<Account>> {
         return client.getMastodonRequestForList(
             endpoint = "api/v1/directory",
@@ -46,7 +46,7 @@ class DirectoryMethods(private val client: MastodonClient) {
                     AccountOrder.NEW -> append("order", "new")
                 }
                 append("offset", offset)
-                append("limit", limit)
+                limit?.let { append("limit", limit) }
             }
         )
     }
