@@ -1,17 +1,13 @@
 package social.bigbone.api.method
 
 import io.mockk.verify
-import org.amshove.kluent.invoking
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeTrue
 import org.amshove.kluent.shouldHaveSize
 import org.amshove.kluent.shouldNotBeNull
-import org.amshove.kluent.shouldThrow
-import org.amshove.kluent.withMessage
 import org.junit.jupiter.api.Test
 import social.bigbone.Parameters
 import social.bigbone.api.Pageable
-import social.bigbone.api.Range
 import social.bigbone.api.entity.Tag
 import social.bigbone.testtool.MockClient
 
@@ -47,15 +43,5 @@ class FollowedTagMethodsTest {
                 query = any<Parameters>()
             )
         }
-    }
-
-    @Test
-    fun `Given a client returning success, when viewing all followed tags with too high a range limit, then throw exception on client side`() {
-        val client = MockClient.mock("followed_tags_view_all_followed_tags_success.json")
-        val followedTagMethods = FollowedTagMethods(client)
-
-        invoking {
-            followedTagMethods.viewAllFollowedTags(Range(limit = 300)).execute()
-        } shouldThrow java.lang.IllegalArgumentException::class withMessage "Limit param must be between 0 and 200 but was 300"
     }
 }

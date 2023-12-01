@@ -28,13 +28,4 @@ class SuggestionMethodsTest {
             suggestionMethods.removeSuggestion("accountId")
         }
     }
-
-    @Test
-    fun overRangedLimitValueThrowsException() {
-        Assertions.assertThrows(IllegalArgumentException::class.java) {
-            val client = MockClient.ioException()
-            val suggestionMethods = SuggestionMethods(client)
-            suggestionMethods.getSuggestions(100).execute()
-        }
-    }
 }

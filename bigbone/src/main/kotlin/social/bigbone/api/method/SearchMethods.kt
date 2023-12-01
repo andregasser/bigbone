@@ -63,7 +63,18 @@ class SearchMethods(private val client: MastodonClient) {
         return client.getMastodonRequest(
             endpoint = "api/v2/search",
             method = MastodonClient.Method.GET,
-            parameters = buildParameters(query, type, resolve, following, excludeUnreviewed, accountId, maxId, minId, limit, offset)
+            parameters = buildParameters(
+                query = query,
+                type = type,
+                resolve = resolve,
+                following = following,
+                excludeUnreviewed = excludeUnreviewed,
+                accountId = accountId,
+                maxId = maxId,
+                minId = minId,
+                limit = limit,
+                offset = offset
+            )
         )
     }
 
@@ -103,9 +114,7 @@ class SearchMethods(private val client: MastodonClient) {
             if (!minId.isNullOrEmpty() && minId.isNotBlank()) {
                 append("min_id", minId)
             }
-            if (limit != null) {
-                append("limit", limit.coerceIn(20, 40))
-            }
+            limit?.let { append("limit", limit) }
         }
     }
 }

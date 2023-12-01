@@ -6,8 +6,6 @@ import social.bigbone.api.Pageable
 import social.bigbone.api.Range
 import social.bigbone.api.entity.Tag
 
-private const val QUERY_RESULT_LIMIT = 200
-
 /**
  * Allows access to API methods with endpoints having an "api/vX/followed_tags" prefix.
  * View your followed hashtags.
@@ -25,12 +23,6 @@ class FollowedTagMethods(private val client: MastodonClient) {
      */
     @JvmOverloads
     fun viewAllFollowedTags(range: Range = Range()): MastodonRequest<Pageable<Tag>> {
-        with(range) {
-            if (limit != null && (limit <= 0 || limit > QUERY_RESULT_LIMIT)) {
-                throw IllegalArgumentException("Limit param must be between 0 and $QUERY_RESULT_LIMIT but was $limit")
-            }
-        }
-
         return client.getPageableMastodonRequest<Tag>(
             endpoint = followedTagsEndpoint,
             method = MastodonClient.Method.GET,
