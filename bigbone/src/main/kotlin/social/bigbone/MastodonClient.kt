@@ -48,6 +48,7 @@ import social.bigbone.api.method.StreamingMethods
 import social.bigbone.api.method.SuggestionMethods
 import social.bigbone.api.method.TagMethods
 import social.bigbone.api.method.TimelineMethods
+import social.bigbone.api.method.TrendMethods
 import social.bigbone.api.method.admin.AdminDimensionMethods
 import social.bigbone.api.method.admin.AdminMeasureMethods
 import social.bigbone.api.method.admin.AdminRetentionMethods
@@ -335,6 +336,13 @@ private constructor(
     @Suppress("unused") // public API
     @get:JvmName("timelines")
     val timelines: TimelineMethods by lazy { TimelineMethods(this) }
+
+    /**
+     * Access API methods under the "trends" endpoint.
+     */
+    @Suppress("unused") // public API
+    @get:JvmName("trends")
+    val trends: TrendMethods by lazy { TrendMethods(this) }
 
     /**
      * Specifies the HTTP methods / HTTP verb that can be used by this class.
