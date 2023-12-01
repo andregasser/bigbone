@@ -87,13 +87,21 @@ class TimelineMethods(private val client: MastodonClient) {
      * @param tag the hashtag for which a timeline should be returned
      * @param statusOrigin optionally restrict result to either local or remote statuses; defaults to all
      * @param range restrict result to a specific range
+     * @param any Return statuses that contain any of these additional tags.
+     * @param all Return statuses that contain all of these additional tags.
+     * @param none Return statuses that contain none of these additional tags.
+     * @param onlyMedia Show only statuses with media attached? Defaults to false.
      * @see <a href="https://docs.joinmastodon.org/methods/timelines/#tag">Mastodon API documentation: methods/timelines/#tag</a>
      */
     @JvmOverloads
     fun getTagTimeline(
         tag: String,
         statusOrigin: StatusOrigin = StatusOrigin.LOCAL_AND_REMOTE,
-        range: Range = Range()
+        range: Range = Range(),
+        any: List<String>? = null,
+        all: List<String>? = null,
+        none: List<String>? = null,
+        onlyMedia: Boolean? = null
     ): MastodonRequest<Pageable<Status>> {
         return client.getPageableMastodonRequest(
             endpoint = "api/v1/timelines/tag/$tag",
@@ -105,6 +113,10 @@ class TimelineMethods(private val client: MastodonClient) {
                     // append neither, combined results will be shown
                     else -> {}
                 }
+                any?.let { append("any", any) }
+                all?.let { append("all", all) }
+                none?.let { append("none", none) }
+                onlyMedia?.let { append("only_media", onlyMedia) }
             }
         )
     }

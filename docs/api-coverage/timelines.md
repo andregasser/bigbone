@@ -24,8 +24,8 @@ Read and view timelines of statuses.
   </tr>
   <tr>
     <td style="width:45%;text-align:left;"><code>GET /api/v1/timelines/tag/:hashtag</code><br>View hashtag timeline</td>
-    <td style="width:10%;text-align:center;"><img src="/assets/orange16.png"></td>
-    <td style="width:45%;text-align:left;"><code>any</code>, <code>all</code>, <code>none</code>, <code>only_media</code>, <code>min_id</code> query parameters missing. <code>Status</code> entity needs to be updated.</td>
+    <td style="width:10%;text-align:center;"><img src="/assets/green16.png"></td>
+    <td style="width:45%;text-align:left;">Fully supported.</td>
   </tr>
   <tr>
     <td style="width:45%;text-align:left;"><code>GET /api/v1/timelines/home</code><br>View home timeline</td>

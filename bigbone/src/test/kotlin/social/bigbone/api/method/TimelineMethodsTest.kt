@@ -86,6 +86,31 @@ class TimelineMethodsTest {
     }
 
     @Test
+    fun `Given a client returning success, when getting tag timeline with any, all, and none specified, then call correct endpoint with correct parameters`() {
+        val client = MockClient.mock("tag_timeline.json", maxId = "3", sinceId = "1")
+        val timelineMethods = TimelineMethods(client)
+        val tag = "mastodon"
+
+        timelineMethods.getTagTimeline(
+            tag = tag,
+            any = listOf("birdsite", "facebook", "twitter"),
+            all = listOf("socialmedia"),
+            none = listOf("xitter")
+        ).execute()
+
+        val parametersCapturingSlot = slot<Parameters>()
+        verify {
+            client.get(
+                path = "api/v1/timelines/tag/$tag",
+                query = capture(parametersCapturingSlot)
+            )
+        }
+        with(parametersCapturingSlot.captured) {
+            toQuery() shouldBeEqualTo "any[]=birdsite&any[]=facebook&any[]=twitter&all[]=socialmedia&none[]=xitter"
+        }
+    }
+
+    @Test
     fun getLocalTagTimeline() {
         val client = MockClient.mock("tag_timeline.json", maxId = "3", sinceId = "1")
         val timelineMethods = TimelineMethods(client)
