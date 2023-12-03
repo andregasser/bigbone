@@ -19,13 +19,13 @@ Read and view timelines of statuses.
   </tr>
   <tr>
     <td style="width:45%;text-align:left;"><code>GET /api/v1/timelines/public</code><br>View public timelines</td>
-    <td style="width:10%;text-align:center;"><img src="/assets/orange16.png"></td>
-    <td style="width:45%;text-align:left;"><code>only_media</code> query parameter missing.</td>
+    <td style="width:10%;text-align:center;"><img src="/assets/green16.png"></td>
+    <td style="width:45%;text-align:left;">Fully supported.</td>
   </tr>
   <tr>
     <td style="width:45%;text-align:left;"><code>GET /api/v1/timelines/tag/:hashtag</code><br>View hashtag timeline</td>
-    <td style="width:10%;text-align:center;"><img src="/assets/orange16.png"></td>
-    <td style="width:45%;text-align:left;"><code>any</code>, <code>all</code>, <code>none</code>, <code>only_media</code> query parameters missing.</td>
+    <td style="width:10%;text-align:center;"><img src="/assets/green16.png"></td>
+    <td style="width:45%;text-align:left;">Fully supported.</td>
   </tr>
   <tr>
     <td style="width:45%;text-align:left;"><code>GET /api/v1/timelines/home</code><br>View home timeline</td>
