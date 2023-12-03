@@ -2,10 +2,13 @@ package social.bigbone.api.method
 
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.slot
+import io.mockk.verify
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import social.bigbone.MastodonClient
+import social.bigbone.Parameters
 import social.bigbone.TestConstants
 import social.bigbone.api.Scope
 import social.bigbone.api.exception.BigBoneRequestException
@@ -144,6 +147,29 @@ class OAuthMethodsTest {
                 username = "test",
                 password = "test"
             ).execute()
+        }
+    }
+
+    @Test
+    fun `Given client returning success, when revoking token, then ensure correct endpoint and parameters are used`() {
+        val client: MastodonClient = MockClient.mock("oauth_revoke_token_success.json")
+        val oAuthMethods = OAuthMethods(client)
+        val clientId = "clientId"
+        val clientSecret = "clientSecret"
+        val token = "token"
+
+        oAuthMethods.revokeToken(clientId, clientSecret, token)
+
+        val parametersCapturingSlot = slot<Parameters>()
+        verify {
+            client.performAction(
+                endpoint = "oauth/revoke",
+                method = MastodonClient.Method.POST,
+                parameters = capture(parametersCapturingSlot)
+            )
+        }
+        with(parametersCapturingSlot.captured) {
+            toQuery() shouldBeEqualTo "client_id=$clientId&client_secret=$clientSecret&token=$token"
         }
     }
 }

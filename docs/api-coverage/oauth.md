@@ -29,7 +29,7 @@ Generate and manage OAuth tokens.
   </tr>
   <tr>
     <td style="width:45%;text-align:left;"><code>POST /oauth/revoke</code><br>Revoke a token</td>
-    <td style="width:10%;text-align:center;"><img src="/assets/red16.png"></td>
-    <td style="width:45%;text-align:left;">Not implemented yet.</td>
+    <td style="width:10%;text-align:center;"><img src="/assets/green16.png"></td>
+    <td style="width:45%;text-align:left;">Fully supported.</td>
   </tr>
 </table>

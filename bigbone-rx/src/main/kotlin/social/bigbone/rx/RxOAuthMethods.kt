@@ -1,5 +1,6 @@
 package social.bigbone.rx
 
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import social.bigbone.MastodonClient
 import social.bigbone.api.Scope
@@ -76,4 +77,18 @@ class RxOAuthMethods(client: MastodonClient) {
             scope
         ).execute()
     }
+
+    /**
+     * Revoke a token.
+     *
+     * @param clientId The client ID, obtained during app registration.
+     * @param clientSecret The client secret, obtained during app registration.
+     * @param token The previously obtained token, to be invalidated.
+     * @see <a href="https://docs.joinmastodon.org/methods/oauth/#revoke">Mastodon oauth API methods #revoke</a>
+     */
+    fun revokeToken(
+        clientId: String,
+        clientSecret: String,
+        token: String
+    ): Completable = Completable.fromAction { oAuthMethods.revokeToken(clientId, clientSecret, token) }
 }

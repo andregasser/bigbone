@@ -147,6 +147,30 @@ class OAuthMethods(private val client: MastodonClient) {
         )
     }
 
+    /**
+     * Revoke a token.
+     *
+     * @param clientId The client ID, obtained during app registration.
+     * @param clientSecret The client secret, obtained during app registration.
+     * @param token The previously obtained token, to be invalidated.
+     * @see <a href="https://docs.joinmastodon.org/methods/oauth/#revoke">Mastodon oauth API methods #revoke</a>
+     */
+    fun revokeToken(
+        clientId: String,
+        clientSecret: String,
+        token: String
+    ) {
+        client.performAction(
+            endpoint = "oauth/revoke",
+            method = MastodonClient.Method.POST,
+            parameters = Parameters().apply {
+                append("client_id", clientId)
+                append("client_secret", clientSecret)
+                append("token", token)
+            }
+        )
+    }
+
     companion object {
         /**
          * Possible grant types and respective parameter values used when requesting an access token.
