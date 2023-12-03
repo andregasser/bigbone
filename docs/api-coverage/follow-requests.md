@@ -19,17 +19,17 @@ View and manage follow requests.
   </tr>
   <tr>
     <td style="width:45%;text-align:left;"><code>GET /api/v1/follow_requests</code><br>View pending follow requests</td>
-    <td style="width:10%;text-align:center;"><img src="/assets/orange16.png"></td>
-    <td style="width:45%;text-align:left;"><code>Account</code> entity needs to be updated.</td>
+    <td style="width:10%;text-align:center;"><img src="/assets/green16.png"></td>
+    <td style="width:45%;text-align:left;">Fully supported.</td>
   </tr>
   <tr>
     <td style="width:45%;text-align:left;"><code>POST /api/v1/follow_requests/:account_id/authorize</code><br>Accept follow request</td>
     <td style="width:10%;text-align:center;"><img src="/assets/orange16.png"></td>
-    <td style="width:45%;text-align:left;"><code>Relationship</code> entity needs to be updated.</td>
+    <td style="width:45%;text-align:left;">Needs to return <code>Relationship</code>.</td>
   </tr>
   <tr>
     <td style="width:45%;text-align:left;"><code>POST /api/v1/follow_requests/:account_id/reject</code><br>Reject follow request</td>
     <td style="width:10%;text-align:center;"><img src="/assets/orange16.png"></td>
-    <td style="width:45%;text-align:left;"><code>Relationship</code> entity needs to be updated.</td>
+    <td style="width:45%;text-align:left;">Needs to return <code>Relationship</code>.</td>
   </tr>
 </table>
