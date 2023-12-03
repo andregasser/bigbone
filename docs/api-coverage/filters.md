@@ -90,26 +90,26 @@ Create and manage filters.
   <tr>
     <td style="width:45%;text-align:left;"><code>GET /api/v1/filters</code><br>View your filters</td>
     <td style="width:10%;text-align:center;"><img src="/assets/red16.png"></td>
-    <td style="width:45%;text-align:left;">Not implemented yet.</td>
+    <td style="width:45%;text-align:left;">Won’t be implemented.</td>
   </tr>
   <tr>
     <td style="width:45%;text-align:left;"><code>GET /api/v1/filters/:id</code><br>View a single filter</td>
     <td style="width:10%;text-align:center;"><img src="/assets/red16.png"></td>
-    <td style="width:45%;text-align:left;">Not implemented yet.</td>
+    <td style="width:45%;text-align:left;">Won’t be implemented.</td>
   </tr>
   <tr>
     <td style="width:45%;text-align:left;"><code>POST /api/v1/filters</code><br>Create a filter</td>
     <td style="width:10%;text-align:center;"><img src="/assets/red16.png"></td>
-    <td style="width:45%;text-align:left;">Not implemented yet.</td>
+    <td style="width:45%;text-align:left;">Won’t be implemented.</td>
   </tr>
   <tr>
     <td style="width:45%;text-align:left;"><code>PUT /api/v1/filters/:id</code><br>Update a filter</td>
     <td style="width:10%;text-align:center;"><img src="/assets/red16.png"></td>
-    <td style="width:45%;text-align:left;">Not implemented yet.</td>
+    <td style="width:45%;text-align:left;">Won’t be implemented.</td>
   </tr>
   <tr>
     <td style="width:45%;text-align:left;"><code>DELETE /api/v1/filters/:id</code><br>Remove a filter</td>
     <td style="width:10%;text-align:center;"><img src="/assets/red16.png"></td>
-    <td style="width:45%;text-align:left;">Not implemented yet.</td>
+    <td style="width:45%;text-align:left;">Won’t be implemented.</td>
   </tr>
 </table>
