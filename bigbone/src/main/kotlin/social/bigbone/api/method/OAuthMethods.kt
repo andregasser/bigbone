@@ -20,6 +20,8 @@ class OAuthMethods(private val client: MastodonClient) {
      * @param clientId The client ID, obtained during app registration.
      * @param redirectUri Set a URI to redirect the user to. Must match one of the redirect_uris declared during app registration.
      * @param scope List of requested OAuth scopes, separated by spaces. Must be a subset of scopes declared during app registration.
+     * @param forceLogin Forces the user to re-login, which is necessary for authorizing with multiple accounts from the same instance.
+     * @param languageCode The ISO 639-1 two-letter language code to use while rendering the authorization form.
      * @see <a href="https://docs.joinmastodon.org/methods/oauth/#authorize">Mastodon oauth API methods #authorize</a>
      */
     @JvmOverloads
@@ -27,6 +29,8 @@ class OAuthMethods(private val client: MastodonClient) {
         clientId: String,
         redirectUri: String,
         scope: Scope? = null,
+        forceLogin: Boolean? = null,
+        languageCode: String? = null
     ): String {
         val endpoint = "oauth/authorize"
         val params = Parameters().apply {

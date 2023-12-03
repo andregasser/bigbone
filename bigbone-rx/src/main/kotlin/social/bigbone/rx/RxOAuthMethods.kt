@@ -15,13 +15,33 @@ class RxOAuthMethods(client: MastodonClient) {
 
     private val oAuthMethods = OAuthMethods(client)
 
+    /**
+     * Returns a URL that can be used to display an authorization form to the user. If approved,
+     * it will create and return an authorization code, then redirect to the desired redirectUri,
+     * or show the authorization code if redirectUri is "urn:ietf:wg:oauth:2.0:oob".
+     * The authorization code can be used while requesting a token to obtain access to user-level methods.
+     * @param clientId The client ID, obtained during app registration.
+     * @param redirectUri Set a URI to redirect the user to. Must match one of the redirect_uris declared during app registration.
+     * @param scope List of requested OAuth scopes, separated by spaces. Must be a subset of scopes declared during app registration.
+     * @param forceLogin Forces the user to re-login, which is necessary for authorizing with multiple accounts from the same instance.
+     * @param languageCode The ISO 639-1 two-letter language code to use while rendering the authorization form.
+     * @see <a href="https://docs.joinmastodon.org/methods/oauth/#authorize">Mastodon oauth API methods #authorize</a>
+     */
     @JvmOverloads
     fun getOAuthUrl(
         clientId: String,
         redirectUri: String,
-        scope: Scope? = null
+        scope: Scope? = null,
+        forceLogin: Boolean? = null,
+        languageCode: String? = null
     ): Single<String> = Single.fromCallable {
-        oAuthMethods.getOAuthUrl(clientId, redirectUri, scope)
+        oAuthMethods.getOAuthUrl(
+            clientId,
+            redirectUri,
+            scope,
+            forceLogin,
+            languageCode
+        )
     }
 
     fun getUserAccessTokenWithAuthorizationCodeGrant(

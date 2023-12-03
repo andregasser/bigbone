@@ -19,8 +19,8 @@ Generate and manage OAuth tokens.
   </tr>
   <tr>
     <td style="width:45%;text-align:left;"><code>GET /oauth/authorize</code><br>Authorize a user</td>
-    <td style="width:10%;text-align:center;"><img src="/assets/orange16.png"></td>
-    <td style="width:45%;text-align:left;"><code>force_login</code>, <code>lang</code> query parameters are missing.</td>
+    <td style="width:10%;text-align:center;"><img src="/assets/green16.png"></td>
+    <td style="width:45%;text-align:left;">Fully supported.</td>
   </tr>
   <tr>
     <td style="width:45%;text-align:left;"><code>POST /oauth/token</code><br>Obtain a token</td>

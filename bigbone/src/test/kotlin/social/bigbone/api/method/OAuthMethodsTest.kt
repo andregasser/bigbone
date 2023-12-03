@@ -32,6 +32,24 @@ class OAuthMethodsTest {
     }
 
     @Test
+    fun getOAuthUrlWithoutScopeWithLanguageWithForceLogin() {
+        val client: MastodonClient = mockk()
+        every { client.getInstanceName() } returns "mastodon.cloud"
+        every { client.getScheme() } returns "https"
+        every { client.getPort() } returns 443
+
+        val url = OAuthMethods(client).getOAuthUrl(
+            clientId = "client_id",
+            redirectUri = TestConstants.REDIRECT_URI,
+            forceLogin = true,
+            languageCode = "de"
+        )
+
+        url shouldBeEqualTo "https://mastodon.cloud/oauth/authorize?client_id=client_id" +
+            "&redirect_uri=urn%3Aietf%3Awg%3Aoauth%3A2.0%3Aoob&response_type=code&force_login=true&lang=de"
+    }
+
+    @Test
     fun getUserAccessTokenWithAuthorizationCodeGrant() {
         val client: MastodonClient = MockClient.mock("access_token.json")
         every { client.getInstanceName() } returns "mastodon.cloud"
