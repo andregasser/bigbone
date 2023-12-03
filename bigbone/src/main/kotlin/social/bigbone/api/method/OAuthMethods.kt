@@ -22,7 +22,11 @@ class OAuthMethods(private val client: MastodonClient) {
      * @param redirectUri Set a URI to redirect the user to. Must match one of the redirect_uris declared during app registration.
      * @see <a href="https://docs.joinmastodon.org/methods/oauth/#authorize">Mastodon oauth API methods #authorize</a>
      */
-    fun getOAuthUrl(clientId: String, scope: Scope, redirectUri: String): String {
+    fun getOAuthUrl(
+        clientId: String,
+        scope: Scope,
+        redirectUri: String
+    ): String {
         val endpoint = "oauth/authorize"
         val params = Parameters()
             .append("client_id", clientId)
