@@ -25,20 +25,53 @@ class RxTimelineMethods(client: MastodonClient) {
         timelineMethods.getListTimeline(listId, range).execute()
     }
 
+    /**
+     * Get the public timeline of the configured instance. Defaults to a combination of local and remote statuses,
+     * but can be restricted to either.
+     * @param statusOrigin optionally restrict result to either local or remote (=federated) statuses; defaults to all
+     * @param onlyMedia Show only statuses with media attached? Defaults to false.
+     * @param range restrict result to a specific range
+     * @see <a href="https://docs.joinmastodon.org/methods/timelines/#public">Mastodon API documentation: methods/timelines/#public</a>
+     */
     @JvmOverloads
     fun getPublicTimeline(
         statusOrigin: TimelineMethods.StatusOrigin = TimelineMethods.StatusOrigin.LOCAL_AND_REMOTE,
+        onlyMedia: Boolean? = null,
         range: Range = Range()
     ): Single<Pageable<Status>> = Single.fromCallable {
-        timelineMethods.getPublicTimeline(statusOrigin, range).execute()
+        timelineMethods.getPublicTimeline(statusOrigin, onlyMedia, range).execute()
     }
 
+    /**
+     * Get the public timeline for a specific hashtag of the configured instance.
+     * Defaults to a combination of local and remote (=federated) statuses, but can be restricted to either.
+     * @param tag the hashtag for which a timeline should be returned
+     * @param statusOrigin optionally restrict result to either local or remote statuses; defaults to all
+     * @param range restrict result to a specific range
+     * @param any Return statuses that contain any of these additional tags.
+     * @param all Return statuses that contain all of these additional tags.
+     * @param none Return statuses that contain none of these additional tags.
+     * @param onlyMedia Show only statuses with media attached? Defaults to false.
+     * @see <a href="https://docs.joinmastodon.org/methods/timelines/#tag">Mastodon API documentation: methods/timelines/#tag</a>
+     */
     @JvmOverloads
     fun getTagTimeline(
         tag: String,
         statusOrigin: TimelineMethods.StatusOrigin = TimelineMethods.StatusOrigin.LOCAL_AND_REMOTE,
-        range: Range = Range()
+        range: Range = Range(),
+        any: List<String>? = null,
+        all: List<String>? = null,
+        none: List<String>? = null,
+        onlyMedia: Boolean? = null
     ): Single<Pageable<Status>> = Single.fromCallable {
-        timelineMethods.getTagTimeline(tag, statusOrigin, range).execute()
+        timelineMethods.getTagTimeline(
+            tag = tag,
+            statusOrigin = statusOrigin,
+            range = range,
+            any = any,
+            all = all,
+            none = none,
+            onlyMedia = onlyMedia
+        ).execute()
     }
 }
