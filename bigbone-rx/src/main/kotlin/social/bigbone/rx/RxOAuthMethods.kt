@@ -45,6 +45,14 @@ class RxOAuthMethods(client: MastodonClient) {
         )
     }
 
+    /**
+     * Obtain a user access token using OAuth 2 authorization code grant type. To be used during API calls that are not public.
+     * @param clientId The client ID, obtained during app registration.
+     * @param clientSecret The client secret, obtained during app registration.
+     * @param redirectUri Set a URI to redirect the user to. Must match one of the redirect_uris declared during app registration.
+     * @param code A user authorization code, obtained via the URL received from getOAuthUrl()
+     * @see <a href="https://docs.joinmastodon.org/methods/oauth/#token">Mastodon oauth API methods #token</a>
+     */
     fun getUserAccessTokenWithAuthorizationCodeGrant(
         clientId: String,
         clientSecret: String,
@@ -59,6 +67,42 @@ class RxOAuthMethods(client: MastodonClient) {
         ).execute()
     }
 
+    /**
+     * Obtain an access token using OAuth 2 client credentials grant type. To be used during API calls that are not public.
+     * @param clientId The client ID, obtained during app registration.
+     * @param clientSecret The client secret, obtained during app registration.
+     * @param redirectUri Set a URI to redirect the user to. Must match one of the redirect_uris declared during app registration.
+     * @param scope Requested OAuth scopes. Must be a subset of scopes declared during app registration.
+     *  If not provided, defaults to read.
+     * @see <a href="https://docs.joinmastodon.org/methods/oauth/#token">Mastodon oauth API methods #token</a>
+     * @see <a href="https://docs.joinmastodon.org/client/token/#methods">Usage of this authentication form</a>
+     */
+    @JvmOverloads
+    fun getAccessTokenWithClientCredentialsGrant(
+        clientId: String,
+        clientSecret: String,
+        redirectUri: String,
+        scope: Scope? = null
+    ): Single<Token> = Single.fromCallable {
+        oAuthMethods.getAccessTokenWithClientCredentialsGrant(
+            clientId,
+            clientSecret,
+            redirectUri,
+            scope
+        ).execute()
+    }
+
+    /**
+     * Obtain a user access token using OAuth 2 password grant type, to be used for bots and other single-user applications.
+     * Where possible, [getUserAccessTokenWithAuthorizationCodeGrant] should be used instead.
+     * @param clientId The client ID, obtained during app registration.
+     * @param clientSecret The client secret, obtained during app registration.
+     * @param redirectUri Set a URI to redirect the user to.
+     * @param username The Mastodon account username.
+     * @param password The Mastodon account password.
+     * @param scope Requested OAuth scopes
+     * @see <a href="https://docs.joinmastodon.org/methods/oauth/#token">Mastodon oauth API methods #token</a>
+     */
     @JvmOverloads
     fun getUserAccessTokenWithPasswordGrant(
         clientId: String,
