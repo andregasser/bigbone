@@ -15,8 +15,13 @@ class RxOAuthMethods(client: MastodonClient) {
 
     private val oAuthMethods = OAuthMethods(client)
 
-    fun getOAuthUrl(clientId: String, scope: Scope, redirectUri: String): Single<String> = Single.fromCallable {
-        oAuthMethods.getOAuthUrl(clientId, scope, redirectUri)
+    @JvmOverloads
+    fun getOAuthUrl(
+        clientId: String,
+        redirectUri: String,
+        scope: Scope? = null
+    ): Single<String> = Single.fromCallable {
+        oAuthMethods.getOAuthUrl(clientId, redirectUri, scope)
     }
 
     fun getUserAccessTokenWithAuthorizationCodeGrant(

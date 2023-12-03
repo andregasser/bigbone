@@ -18,22 +18,35 @@ class OAuthMethods(private val client: MastodonClient) {
      * or show the authorization code if redirectUri is "urn:ietf:wg:oauth:2.0:oob".
      * The authorization code can be used while requesting a token to obtain access to user-level methods.
      * @param clientId The client ID, obtained during app registration.
-     * @param scope List of requested OAuth scopes, separated by spaces. Must be a subset of scopes declared during app registration.
      * @param redirectUri Set a URI to redirect the user to. Must match one of the redirect_uris declared during app registration.
+     * @param scope List of requested OAuth scopes, separated by spaces. Must be a subset of scopes declared during app registration.
      * @see <a href="https://docs.joinmastodon.org/methods/oauth/#authorize">Mastodon oauth API methods #authorize</a>
      */
+    @JvmOverloads
     fun getOAuthUrl(
         clientId: String,
-        scope: Scope,
-        redirectUri: String
+        redirectUri: String,
+        scope: Scope? = null,
     ): String {
         val endpoint = "oauth/authorize"
-        val params = Parameters()
-            .append("client_id", clientId)
-            .append("redirect_uri", redirectUri)
-            .append("response_type", "code")
-            .append("scope", scope.toString())
-        return MastodonClient.fullUrl(client.getScheme(), client.getInstanceName(), client.getPort(), endpoint, params).toString()
+        val params = Parameters().apply {
+            append("client_id", clientId)
+            append("redirect_uri", redirectUri)
+            append("response_type", "code")
+            scope?.let { append("scope", scope.toString()) }
+            forceLogin?.let { append("force_login", forceLogin) }
+            languageCode?.let { append("lang", languageCode) }
+        }
+
+        return MastodonClient
+            .fullUrl(
+                scheme = client.getScheme(),
+                instanceName = client.getInstanceName(),
+                port = client.getPort(),
+                path = endpoint,
+                query = params
+            )
+            .toString()
     }
 
     /**
