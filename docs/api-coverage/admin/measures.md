@@ -10,6 +10,6 @@ nav_order: 10
 
 <a href="https://docs.joinmastodon.org/methods/admin/measures/" target="_blank">https://docs.joinmastodon.org/methods/admin/measures/</a>
 
-| Method                        | Description         | Status | Comments | 
-|-------------------------------|---------------------|--------|----------|
-| `POST /api/v1/admin/measures` | Get measurable data | 🔴     |          |
+| Method                        | Description         | Status                          | Comments         | 
+|-------------------------------|---------------------|---------------------------------|------------------|
+| `POST /api/v1/admin/measures` | Get measurable data | <img src="/assets/green16.png"> | Fully supported. |
