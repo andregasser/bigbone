@@ -19,7 +19,7 @@ jacoco = "0.8.9"
 dependency-analysis = "1.26.0"
 detekt = "1.23.4"
 versions = "0.50.0"
-ktlint = "11.6.1"
+ktlint = "12.0.2"
 
 [libraries]
 junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit-jupiter" }
