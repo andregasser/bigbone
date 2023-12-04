@@ -99,7 +99,8 @@ class RxStatusMethods(client: MastodonClient) {
         inReplyToId: String? = null,
         sensitive: Boolean = false,
         spoilerText: String? = null,
-        language: String? = null
+        language: String? = null,
+        addIdempotencyKey: Boolean = true
     ): Single<Status> = Single.fromCallable {
         statusMethods.postStatus(
             status,
@@ -108,7 +109,8 @@ class RxStatusMethods(client: MastodonClient) {
             inReplyToId,
             sensitive,
             spoilerText,
-            language
+            language,
+            addIdempotencyKey
         ).execute()
     }
 
@@ -134,7 +136,8 @@ class RxStatusMethods(client: MastodonClient) {
         inReplyToId: String? = null,
         sensitive: Boolean = false,
         spoilerText: String? = null,
-        language: String? = null
+        language: String? = null,
+        addIdempotencyKey: Boolean = true
     ): Single<Status> = Single.fromCallable {
         statusMethods.postPoll(
             status,
@@ -143,7 +146,8 @@ class RxStatusMethods(client: MastodonClient) {
             inReplyToId,
             sensitive,
             spoilerText,
-            language
+            language,
+            addIdempotencyKey
         ).execute()
     }
 
@@ -172,7 +176,8 @@ class RxStatusMethods(client: MastodonClient) {
         inReplyToId: String? = null,
         sensitive: Boolean = false,
         spoilerText: String? = null,
-        language: String? = null
+        language: String? = null,
+        addIdempotencyKey: Boolean = true
     ): Single<ScheduledStatus> = Single.fromCallable {
         statusMethods.scheduleStatus(
             status,
@@ -182,7 +187,8 @@ class RxStatusMethods(client: MastodonClient) {
             inReplyToId,
             sensitive,
             spoilerText,
-            language
+            language,
+            addIdempotencyKey
         ).execute()
     }
 
@@ -210,7 +216,8 @@ class RxStatusMethods(client: MastodonClient) {
         inReplyToId: String? = null,
         sensitive: Boolean = false,
         spoilerText: String? = null,
-        language: String? = null
+        language: String? = null,
+        addIdempotencyKey: Boolean = true
     ): Single<ScheduledStatus> = Single.fromCallable {
         statusMethods.schedulePoll(
             status,
@@ -220,7 +227,8 @@ class RxStatusMethods(client: MastodonClient) {
             inReplyToId,
             sensitive,
             spoilerText,
-            language
+            language,
+            addIdempotencyKey
         ).execute()
     }
 
