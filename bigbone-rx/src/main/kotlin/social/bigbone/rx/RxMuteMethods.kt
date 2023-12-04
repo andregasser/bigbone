@@ -16,6 +16,11 @@ class RxMuteMethods(client: MastodonClient) {
 
     private val muteMethods = MuteMethods(client)
 
+    /**
+     * Accounts the user has muted.
+     * @param range optional Range for the pageable return value
+     * @see <a href="https://docs.joinmastodon.org/methods/mutes/#get">Mastodon API documentation: methods/mutes/#get</a>
+     */
     @JvmOverloads
     fun getMutes(range: Range = Range()): Single<Pageable<Account>> = Single.fromCallable {
         muteMethods.getMutes(range).execute()

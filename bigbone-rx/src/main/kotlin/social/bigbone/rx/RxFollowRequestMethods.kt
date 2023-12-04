@@ -17,15 +17,30 @@ class RxFollowRequestMethods(client: MastodonClient) {
 
     private val followRequestMethods = FollowRequestMethods(client)
 
+    /**
+     * View pending follow requests.
+     * @param range optional Range for the pageable return value
+     * @see <a href="https://docs.joinmastodon.org/methods/follow_requests/#get">Mastodon API documentation: methods/follow_requests/#get</a>
+     */
     @JvmOverloads
     fun getFollowRequests(range: Range = Range()): Single<Pageable<Account>> = Single.fromCallable {
         followRequestMethods.getFollowRequests(range).execute()
     }
 
+    /**
+     * Accept follow request.
+     * @param accountId ID of the account whose follow request should be accepted.
+     * @see <a href="https://docs.joinmastodon.org/methods/follow_requests/#accept">Mastodon API documentation: methods/follow_requests/#accept</a>
+     */
     fun authorizeFollowRequest(accountId: String): Completable = Completable.fromAction {
         followRequestMethods.authorizeFollowRequest(accountId)
     }
 
+    /**
+     * Reject follow request.
+     * @param accountId ID of the account whose follow request should be rejected.
+     * @see <a href="https://docs.joinmastodon.org/methods/follow_requests/#reject">Mastodon API documentation: methods/follow_requests/#reject</a>
+     */
     fun rejectFollowRequest(accountId: String): Completable = Completable.fromAction {
         followRequestMethods.rejectFollowRequest(accountId)
     }

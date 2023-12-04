@@ -14,6 +14,10 @@ class RxPreferenceMethods(client: MastodonClient) {
 
     private val preferenceMethods = PreferenceMethods(client)
 
+    /**
+     * Get preferences about an account.
+     * @see <a href="https://docs.joinmastodon.org/methods/preferences/#get">Mastodon API documentation: methods/preferences/#get</a>
+     */
     fun getPreferences(): Single<Preferences> {
         return Single.create {
             try {
