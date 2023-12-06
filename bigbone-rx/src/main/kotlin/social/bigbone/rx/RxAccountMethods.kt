@@ -21,13 +21,14 @@ class RxAccountMethods(client: MastodonClient) {
 
     /**
      * Register an account.
-     * @param username The desired usernamem for the account
+     * @param username The desired username for the account
      * @param email The email address to be used for login
      * @param password The password to be used for login
      * @param agreement Whether the user agrees to the local rules, terms, and policies. These should be presented
      * to the user in order to allow them to consent before setting this parameter to TRUE.
      * @param locale The language of the confirmation email that will be sent
      * @param reason If registrations require manual approval, this text will be reviewed by moderators.
+     * @see <a href="https://docs.joinmastodon.org/methods/accounts/#create">Mastodon API documentation: methods/accounts/#create</a>
      */
     fun registerAccount(
         username: String,

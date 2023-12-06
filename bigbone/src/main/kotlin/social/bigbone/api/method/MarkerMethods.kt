@@ -17,6 +17,7 @@ class MarkerMethods(private val client: MastodonClient) {
      * @param timeline specifies for which timelines the position markers should be returned. This value
      *         is chosen from the [Timeline] enum. When this value is not provided, all known markers
      *         will be returned.
+     * @see <a href="https://docs.joinmastodon.org/methods/markers/#get">Mastodon API documentation: methods/markers/#get</a>
      */
     @JvmOverloads
     fun getMarkers(timeline: Timeline? = null): MastodonRequest<Markers> {
@@ -42,6 +43,7 @@ class MarkerMethods(private val client: MastodonClient) {
      * @param timeline specifies for which timeline the position marker should be updated. This value
      *         is chosen from the [Timeline] enum.
      * @param lastReadId the id of the last read post.
+     * @see <a href="https://docs.joinmastodon.org/methods/markers/#create">Mastodon API documentation: methods/markers/#create</a>
      */
     @Throws(BigBoneRequestException::class)
     fun updateMarker(
