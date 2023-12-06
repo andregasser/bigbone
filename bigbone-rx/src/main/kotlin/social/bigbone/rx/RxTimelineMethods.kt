@@ -13,13 +13,25 @@ import social.bigbone.api.method.TimelineMethods
  * @see <a href="https://docs.joinmastodon.org/methods/timelines/">Mastodon timelines API methods</a>
  */
 class RxTimelineMethods(client: MastodonClient) {
+
     private val timelineMethods = TimelineMethods(client)
 
+    /**
+     * Gets the home timeline of statuses.
+     * @param range restrict result to a specific range
+     * @see <a href="https://docs.joinmastodon.org/methods/timelines/#home">Mastodon API documentation: methods/timelines/#home</a>
+     */
     @JvmOverloads
     fun getHomeTimeline(range: Range = Range()): Single<Pageable<Status>> = Single.fromCallable {
         timelineMethods.getHomeTimeline(range).execute()
     }
 
+    /**
+     * Gets a list timeline of statuses for the given list.
+     * @param listId ID of the list for which a timeline should be returned
+     * @param range restrict result to a specific range
+     * @see <a href="https://docs.joinmastodon.org/methods/timelines/#list">Mastodon API documentation: methods/timelines/#list</a>
+     */
     @JvmOverloads
     fun getListTimeline(listId: String, range: Range = Range()): Single<Pageable<Status>> = Single.fromCallable {
         timelineMethods.getListTimeline(listId, range).execute()

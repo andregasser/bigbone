@@ -16,6 +16,11 @@ class RxBlockMethods(client: MastodonClient) {
 
     private val blockMethods = BlockMethods(client)
 
+    /**
+     * View your blocks. Blocking and unblocking is achieved via accounts methods.
+     * @param range optional Range for the pageable return value
+     * @see <a href="https://docs.joinmastodon.org/methods/blocks/#get">Mastodon API documentation: methods/blocks/#get</a>
+     */
     @JvmOverloads
     fun getBlocks(range: Range = Range()): Single<Pageable<Account>> = Single.fromCallable {
         blockMethods.getBlocks(range).execute()

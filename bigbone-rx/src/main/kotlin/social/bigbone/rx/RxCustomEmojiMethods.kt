@@ -17,7 +17,7 @@ class RxCustomEmojiMethods(client: MastodonClient) {
 
     /**
      * Returns custom emojis that are available on the server.
-     * * @see <a href="https://docs.joinmastodon.org/methods/custom_emojis/#get">Mastodon API documentation: methods/custom_emojis/#get</a>
+     * @see <a href="https://docs.joinmastodon.org/methods/custom_emojis/#get">Mastodon API documentation: methods/custom_emojis/#get</a>
      */
     fun getAllCustomEmojis(): Single<List<CustomEmoji>> = Single.fromCallable {
         customEmojiMethods.getAllCustomEmojis().execute()
