@@ -1,11 +1,11 @@
 package social.bigbone.rx
 
-import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import social.bigbone.MastodonClient
 import social.bigbone.api.Pageable
 import social.bigbone.api.Range
 import social.bigbone.api.entity.Account
+import social.bigbone.api.entity.Relationship
 import social.bigbone.api.method.FollowRequestMethods
 
 /**
@@ -32,8 +32,8 @@ class RxFollowRequestMethods(client: MastodonClient) {
      * @param accountId ID of the account whose follow request should be accepted.
      * @see <a href="https://docs.joinmastodon.org/methods/follow_requests/#accept">Mastodon API documentation: methods/follow_requests/#accept</a>
      */
-    fun authorizeFollowRequest(accountId: String): Completable = Completable.fromAction {
-        followRequestMethods.authorizeFollowRequest(accountId)
+    fun authorizeFollowRequest(accountId: String): Single<Relationship> = Single.fromCallable {
+        followRequestMethods.authorizeFollowRequest(accountId).execute()
     }
 
     /**
@@ -41,7 +41,7 @@ class RxFollowRequestMethods(client: MastodonClient) {
      * @param accountId ID of the account whose follow request should be rejected.
      * @see <a href="https://docs.joinmastodon.org/methods/follow_requests/#reject">Mastodon API documentation: methods/follow_requests/#reject</a>
      */
-    fun rejectFollowRequest(accountId: String): Completable = Completable.fromAction {
-        followRequestMethods.rejectFollowRequest(accountId)
+    fun rejectFollowRequest(accountId: String): Single<Relationship> = Single.fromCallable() {
+        followRequestMethods.rejectFollowRequest(accountId).execute()
     }
 }

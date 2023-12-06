@@ -32,4 +32,12 @@ class RxAppMethods(client: MastodonClient) {
     ): Single<Application> = Single.fromCallable {
         appMethods.createApp(clientName, redirectUris, website, scope).execute()
     }
+
+    /**
+     * Confirm that the app’s OAuth2 credentials work.
+     * @see <a href="https://docs.joinmastodon.org/methods/apps/#verify_credentials">Mastodon API documentation: methods/apps/#verify_credentials</a>
+     */
+    fun verifyCredentials(): Single<Application> = Single.fromCallable {
+        appMethods.verifyCredentials().execute()
+    }
 }
