@@ -74,7 +74,7 @@ class MastodonClient private constructor(
     private var debug: Boolean = false,
     private var instanceVersion: String? = null,
     private var scheme: String = "https",
-    private var port: Int = 443,
+    private var port: Int = 443
 ) {
     /**
      * Access API methods under the "accounts" endpoint.
@@ -373,7 +373,7 @@ class MastodonClient private constructor(
         endpoint: String,
         method: Method,
         parameters: Parameters? = null,
-        addIdempotencyKey: Boolean = false,
+        addIdempotencyKey: Boolean = false
     ): MastodonRequest<T> {
         return MastodonRequest(
             executor = {
@@ -399,7 +399,7 @@ class MastodonClient private constructor(
     internal inline fun <reified T : Any> getPageableMastodonRequest(
         endpoint: String,
         method: Method,
-        parameters: Parameters? = null,
+        parameters: Parameters? = null
     ): MastodonRequest<Pageable<T>> {
         return MastodonRequest<Pageable<T>>(
             executor = {
@@ -425,7 +425,7 @@ class MastodonClient private constructor(
     internal inline fun <reified T : Any> getMastodonRequestForList(
         endpoint: String,
         method: Method,
-        parameters: Parameters? = null,
+        parameters: Parameters? = null
     ): MastodonRequest<List<T>> {
         return MastodonRequest(
             executor = {

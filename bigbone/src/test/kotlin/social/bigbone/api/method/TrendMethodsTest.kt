@@ -21,7 +21,6 @@ import social.bigbone.api.entity.TrendsLink
 import social.bigbone.testtool.MockClient
 import java.time.Instant
 
-@Suppress("ktlint:standard:max-line-length")
 class TrendMethodsTest {
     @Test
     fun `Given a client returning success, when getting trending tags, then request correct endpoint and serialise response correctly`() {

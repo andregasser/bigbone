@@ -8,7 +8,6 @@ import social.bigbone.api.entity.data.Visibility
 import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.testtool.MockClient
 
-@Suppress("ktlint:standard:max-line-length")
 class PreferenceMethodsTest {
     @Test
     fun getPreferences() {

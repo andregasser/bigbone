@@ -20,7 +20,6 @@ import social.bigbone.testtool.MockClient
 import social.bigbone.testtool.TestUtil
 import java.time.Instant
 
-@Suppress("ktlint:standard:max-line-length")
 class InstanceMethodsTest {
     @Test
     fun getInstance() {

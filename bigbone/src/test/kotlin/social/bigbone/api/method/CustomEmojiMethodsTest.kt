@@ -10,7 +10,6 @@ import social.bigbone.api.entity.CustomEmoji
 import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.testtool.MockClient
 
-@Suppress("ktlint:standard:max-line-length")
 class CustomEmojiMethodsTest {
     @Test
     fun `Given a client returning success, when getting all custom emoji, then expect values of response`() {

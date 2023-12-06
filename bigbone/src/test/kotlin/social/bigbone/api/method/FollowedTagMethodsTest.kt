@@ -11,7 +11,6 @@ import social.bigbone.api.Pageable
 import social.bigbone.api.entity.Tag
 import social.bigbone.testtool.MockClient
 
-@Suppress("ktlint:standard:max-line-length")
 class FollowedTagMethodsTest {
     @Test
     fun `Given a client returning success, when viewing all followed tags, then verify correct method was called and response can be parsed`() {

@@ -14,7 +14,6 @@ import java.net.URLEncoder
 import java.time.LocalDate
 import java.time.ZoneOffset
 
-@Suppress("ktlint:standard:max-line-length")
 class AdminRetentionMethodsTest {
     @Test
     fun `Given client returning success, when getting calculated retention data with daily frequency, then call expected endpoint and return expected data`() {

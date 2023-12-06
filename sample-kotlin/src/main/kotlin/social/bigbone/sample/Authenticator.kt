@@ -17,7 +17,7 @@ object Authenticator {
     fun appRegistrationIfNeeded(
         instanceName: String,
         credentialFilePath: String,
-        useStreaming: Boolean = false,
+        useStreaming: Boolean = false
     ): MastodonClient {
         val file = File(credentialFilePath)
         if (!file.exists()) {
@@ -72,7 +72,7 @@ object Authenticator {
         clientId: String,
         clientSecret: String,
         email: String,
-        password: String,
+        password: String
     ): Token {
         val client = MastodonClient.Builder(instanceName).build()
         val oAuthMethods = OAuthMethods(client)
@@ -91,7 +91,7 @@ object Authenticator {
         return client.apps.createApp(
             clientName = "bigbone-sample-app",
             redirectUris = REDIRECT_URI,
-            scope = Scope(),
+            scope = Scope()
         ).execute()
     }
 }

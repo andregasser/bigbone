@@ -20,7 +20,7 @@ object MockClient {
         maxId: String? = null,
         sinceId: String? = null,
         requestUrl: String = "https://example.com",
-        responseBaseUrl: String = "https://mstdn.jp/api/v1/timelines/public",
+        responseBaseUrl: String = "https://mstdn.jp/api/v1/timelines/public"
     ): MastodonClient {
         val client: MastodonClient = mockk()
         val response: Response = Response.Builder()
@@ -65,7 +65,7 @@ object MockClient {
     fun failWithResponse(
         responseJsonAssetPath: String,
         responseCode: Int,
-        message: String,
+        message: String
     ): MastodonClient {
         val clientMock: MastodonClient = mockk()
         val responseBodyMock: ResponseBody = mockk()
