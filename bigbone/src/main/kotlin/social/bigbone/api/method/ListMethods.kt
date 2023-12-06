@@ -47,7 +47,7 @@ class ListMethods(private val client: MastodonClient) {
     @JvmOverloads
     fun createList(
         title: String,
-        repliesPolicy: MastodonList.RepliesPolicy = MastodonList.RepliesPolicy.LIST,
+        repliesPolicy: MastodonList.RepliesPolicy? = null,
         exclusive: Boolean? = null
     ): MastodonRequest<MastodonList> {
         return client.getMastodonRequest(
@@ -55,7 +55,7 @@ class ListMethods(private val client: MastodonClient) {
             method = MastodonClient.Method.POST,
             parameters = Parameters().apply {
                 append("title", title)
-                append("replies_policy", repliesPolicy.name.lowercase())
+                repliesPolicy?.let { append("replies_policy", repliesPolicy.name.lowercase()) }
                 exclusive?.let { append("exclusive", exclusive) }
             }
         )
