@@ -29,8 +29,8 @@ View and manage lists. See also: /api/v1/timelines/list/id for loading a list ti
   </tr>
   <tr>
     <td style="width:45%;text-align:left;"><code>POST /api/v1/lists</code><br>Create a list</td>
-    <td style="width:10%;text-align:center;"><img src="/assets/orange16.png"></td>
-    <td style="width:45%;text-align:left;">Property <code>exclusive</code> is missing which determines “whether members of this list need to get removed from the ‘Home’ feed”</td>
+    <td style="width:10%;text-align:center;"><img src="/assets/green16.png"></td>
+    <td style="width:45%;text-align:left;">Fully supported.</td>
   </tr>
   <tr>
     <td style="width:45%;text-align:left;"><code>PUT /api/v1/lists/:id</code><br>Update a list</td>
