@@ -1,5 +1,6 @@
 package social.bigbone.rx
 
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import social.bigbone.MastodonClient
 import social.bigbone.api.Scope
@@ -21,12 +22,27 @@ class RxOAuthMethods(client: MastodonClient) {
      * or show the authorization code if redirectUri is "urn:ietf:wg:oauth:2.0:oob".
      * The authorization code can be used while requesting a token to obtain access to user-level methods.
      * @param clientId The client ID, obtained during app registration.
-     * @param scope List of requested OAuth scopes, separated by spaces. Must be a subset of scopes declared during app registration.
      * @param redirectUri Set a URI to redirect the user to. Must match one of the redirect_uris declared during app registration.
+     * @param scope List of requested OAuth scopes, separated by spaces. Must be a subset of scopes declared during app registration.
+     * @param forceLogin Forces the user to re-login, which is necessary for authorizing with multiple accounts from the same instance.
+     * @param languageCode The ISO 639-1 two-letter language code to use while rendering the authorization form.
      * @see <a href="https://docs.joinmastodon.org/methods/oauth/#authorize">Mastodon oauth API methods #authorize</a>
      */
-    fun getOAuthUrl(clientId: String, scope: Scope, redirectUri: String): Single<String> = Single.fromCallable {
-        oAuthMethods.getOAuthUrl(clientId, scope, redirectUri)
+    @JvmOverloads
+    fun getOAuthUrl(
+        clientId: String,
+        redirectUri: String,
+        scope: Scope? = null,
+        forceLogin: Boolean? = null,
+        languageCode: String? = null
+    ): Single<String> = Single.fromCallable {
+        oAuthMethods.getOAuthUrl(
+            clientId,
+            redirectUri,
+            scope,
+            forceLogin,
+            languageCode
+        )
     }
 
     /**
@@ -48,6 +64,31 @@ class RxOAuthMethods(client: MastodonClient) {
             clientSecret,
             redirectUri,
             code
+        ).execute()
+    }
+
+    /**
+     * Obtain an access token using OAuth 2 client credentials grant type. To be used during API calls that are not public.
+     * @param clientId The client ID, obtained during app registration.
+     * @param clientSecret The client secret, obtained during app registration.
+     * @param redirectUri Set a URI to redirect the user to. Must match one of the redirect_uris declared during app registration.
+     * @param scope Requested OAuth scopes. Must be a subset of scopes declared during app registration.
+     *  If not provided, defaults to read.
+     * @see <a href="https://docs.joinmastodon.org/methods/oauth/#token">Mastodon oauth API methods #token</a>
+     * @see <a href="https://docs.joinmastodon.org/client/token/#methods">Usage of this authentication form</a>
+     */
+    @JvmOverloads
+    fun getAccessTokenWithClientCredentialsGrant(
+        clientId: String,
+        clientSecret: String,
+        redirectUri: String,
+        scope: Scope? = null
+    ): Single<Token> = Single.fromCallable {
+        oAuthMethods.getAccessTokenWithClientCredentialsGrant(
+            clientId,
+            clientSecret,
+            redirectUri,
+            scope
         ).execute()
     }
 
@@ -80,4 +121,18 @@ class RxOAuthMethods(client: MastodonClient) {
             scope
         ).execute()
     }
+
+    /**
+     * Revoke a token.
+     *
+     * @param clientId The client ID, obtained during app registration.
+     * @param clientSecret The client secret, obtained during app registration.
+     * @param token The previously obtained token, to be invalidated.
+     * @see <a href="https://docs.joinmastodon.org/methods/oauth/#revoke">Mastodon oauth API methods #revoke</a>
+     */
+    fun revokeToken(
+        clientId: String,
+        clientSecret: String,
+        token: String
+    ): Completable = Completable.fromAction { oAuthMethods.revokeToken(clientId, clientSecret, token) }
 }
