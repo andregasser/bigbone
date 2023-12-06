@@ -19,7 +19,7 @@ View your favourites. See also statuses/:id/{favourite,unfavourite}.
   </tr>
   <tr>
     <td style="width:45%;text-align:left;"><code>GET /api/v1/favourites</code><br>View favourited status</td>
-    <td style="width:10%;text-align:center;"><img src="/assets/orange16.png"></td>
-    <td style="width:45%;text-align:left;"><code>min_id</code> query parameter missing. <code>Status</code> entity needs to be updated.</td>
+    <td style="width:10%;text-align:center;"><img src="/assets/green16.png"></td>
+    <td style="width:45%;text-align:left;">Fully supported.</td>
   </tr>
 </table>

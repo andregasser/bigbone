@@ -13,14 +13,9 @@ import social.bigbone.api.method.PreferenceMethods
 class RxPreferenceMethods(client: MastodonClient) {
     private val preferenceMethods = PreferenceMethods(client)
 
-    fun getPreferences(): Single<Preferences> {
-        return Single.create {
-            try {
-                val preferences = preferenceMethods.getPreferences()
-                it.onSuccess(preferences.execute())
-            } catch (e: Throwable) {
-                it.onError(e)
-            }
-        }
-    }
+    /**
+     * Get preferences about an account.
+     * @see <a href="https://docs.joinmastodon.org/methods/preferences/#get">Mastodon API documentation: methods/preferences/#get</a>
+     */
+    fun getPreferences(): Single<Preferences> = Single.fromCallable { preferenceMethods.getPreferences().execute() }
 }

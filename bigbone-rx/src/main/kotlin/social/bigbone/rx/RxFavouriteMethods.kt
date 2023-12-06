@@ -15,7 +15,11 @@ import social.bigbone.api.method.FavouriteMethods
 class RxFavouriteMethods(client: MastodonClient) {
     private val favouriteMethods = FavouriteMethods(client)
 
+    /**
+     * View your favourites. Favouring and unfavouring is achieved via statuses methods.
+     * @param range optional Range for the pageable return value
+     * @see <a href="https://docs.joinmastodon.org/methods/favourites/#get">Mastodon API documentation: methods/favourites/#get</a>
+     */
     @JvmOverloads
-    fun getFavourites(range: Range = Range()): Single<Pageable<Status>> =
-        Single.fromCallable { favouriteMethods.getFavourites(range).execute() }
+    fun getFavourites(range: Range = Range()): Single<Pageable<Status>> = Single.fromCallable { favouriteMethods.getFavourites(range).execute() }
 }

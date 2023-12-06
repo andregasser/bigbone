@@ -15,7 +15,11 @@ import social.bigbone.api.method.BookmarkMethods
 class RxBookmarkMethods(client: MastodonClient) {
     private val bookmarkMethods = BookmarkMethods(client)
 
+    /**
+     * View bookmarked statuses.
+     * @param range optional Range for the pageable return value
+     * @see <a href="https://docs.joinmastodon.org/methods/bookmarks/#get">Mastodon API documentation: methods/bookmarks/#get</a>
+     */
     @JvmOverloads
-    fun getBookmarks(range: Range = Range()): Single<Pageable<Status>> =
-        Single.fromCallable { bookmarkMethods.getBookmarks(range).execute() }
+    fun getBookmarks(range: Range = Range()): Single<Pageable<Status>> = Single.fromCallable { bookmarkMethods.getBookmarks(range).execute() }
 }

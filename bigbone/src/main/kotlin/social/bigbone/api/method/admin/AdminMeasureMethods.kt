@@ -96,8 +96,7 @@ sealed class RequestMeasure(val key: Key, val apiName: String = key.apiName) {
          */
         val tagId: String
     ) : RequestMeasure(key = Key.TAG_ACCOUNTS) {
-        override fun getRequestKeyValues(): List<Pair<String, String>> =
-            super.getRequestKeyValues() + listOf("$apiName[$TAG_ID_NAME]" to tagId)
+        override fun getRequestKeyValues(): List<Pair<String, String>> = super.getRequestKeyValues() + listOf("$apiName[$TAG_ID_NAME]" to tagId)
     }
 
     /**
@@ -111,8 +110,7 @@ sealed class RequestMeasure(val key: Key, val apiName: String = key.apiName) {
          */
         val tagId: String
     ) : RequestMeasure(Key.TAG_USES) {
-        override fun getRequestKeyValues(): List<Pair<String, String>> =
-            super.getRequestKeyValues() + listOf("$apiName[$TAG_ID_NAME]" to tagId)
+        override fun getRequestKeyValues(): List<Pair<String, String>> = super.getRequestKeyValues() + listOf("$apiName[$TAG_ID_NAME]" to tagId)
     }
 
     /**
@@ -126,8 +124,7 @@ sealed class RequestMeasure(val key: Key, val apiName: String = key.apiName) {
          */
         val tagId: String
     ) : RequestMeasure(Key.TAG_SERVERS) {
-        override fun getRequestKeyValues(): List<Pair<String, String>> =
-            super.getRequestKeyValues() + listOf("$apiName[$TAG_ID_NAME]" to tagId)
+        override fun getRequestKeyValues(): List<Pair<String, String>> = super.getRequestKeyValues() + listOf("$apiName[$TAG_ID_NAME]" to tagId)
     }
 
     /**
@@ -141,8 +138,7 @@ sealed class RequestMeasure(val key: Key, val apiName: String = key.apiName) {
          */
         val remoteDomain: String
     ) : RequestMeasure(Key.INSTANCE_ACCOUNTS) {
-        override fun getRequestKeyValues(): List<Pair<String, String>> =
-            super.getRequestKeyValues() + listOf("$apiName[$REMOTE_DOMAIN_NAME]" to remoteDomain)
+        override fun getRequestKeyValues(): List<Pair<String, String>> = super.getRequestKeyValues() + listOf("$apiName[$REMOTE_DOMAIN_NAME]" to remoteDomain)
     }
 
     /**
@@ -156,8 +152,7 @@ sealed class RequestMeasure(val key: Key, val apiName: String = key.apiName) {
          */
         val remoteDomain: String
     ) : RequestMeasure(Key.INSTANCE_MEDIA_ATTACHMENTS) {
-        override fun getRequestKeyValues(): List<Pair<String, String>> =
-            super.getRequestKeyValues() + listOf("$apiName[$REMOTE_DOMAIN_NAME]" to remoteDomain)
+        override fun getRequestKeyValues(): List<Pair<String, String>> = super.getRequestKeyValues() + listOf("$apiName[$REMOTE_DOMAIN_NAME]" to remoteDomain)
     }
 
     /**
@@ -171,8 +166,7 @@ sealed class RequestMeasure(val key: Key, val apiName: String = key.apiName) {
          */
         val remoteDomain: String
     ) : RequestMeasure(Key.INSTANCE_REPORTS) {
-        override fun getRequestKeyValues(): List<Pair<String, String>> =
-            super.getRequestKeyValues() + listOf("$apiName[$REMOTE_DOMAIN_NAME]" to remoteDomain)
+        override fun getRequestKeyValues(): List<Pair<String, String>> = super.getRequestKeyValues() + listOf("$apiName[$REMOTE_DOMAIN_NAME]" to remoteDomain)
     }
 
     /**
@@ -186,8 +180,7 @@ sealed class RequestMeasure(val key: Key, val apiName: String = key.apiName) {
          */
         val remoteDomain: String
     ) : RequestMeasure(Key.INSTANCE_STATUSES) {
-        override fun getRequestKeyValues(): List<Pair<String, String>> =
-            super.getRequestKeyValues() + listOf("$apiName[$REMOTE_DOMAIN_NAME]" to remoteDomain)
+        override fun getRequestKeyValues(): List<Pair<String, String>> = super.getRequestKeyValues() + listOf("$apiName[$REMOTE_DOMAIN_NAME]" to remoteDomain)
     }
 
     /**
@@ -201,8 +194,7 @@ sealed class RequestMeasure(val key: Key, val apiName: String = key.apiName) {
          */
         val remoteDomain: String
     ) : RequestMeasure(Key.INSTANCE_FOLLOWS) {
-        override fun getRequestKeyValues(): List<Pair<String, String>> =
-            super.getRequestKeyValues() + listOf("$apiName[$REMOTE_DOMAIN_NAME]" to remoteDomain)
+        override fun getRequestKeyValues(): List<Pair<String, String>> = super.getRequestKeyValues() + listOf("$apiName[$REMOTE_DOMAIN_NAME]" to remoteDomain)
     }
 
     /**
@@ -216,7 +208,6 @@ sealed class RequestMeasure(val key: Key, val apiName: String = key.apiName) {
          */
         val remoteDomain: String
     ) : RequestMeasure(Key.INSTANCE_FOLLOWERS) {
-        override fun getRequestKeyValues(): List<Pair<String, String>> =
-            super.getRequestKeyValues() + listOf("$apiName[$REMOTE_DOMAIN_NAME]" to remoteDomain)
+        override fun getRequestKeyValues(): List<Pair<String, String>> = super.getRequestKeyValues() + listOf("$apiName[$REMOTE_DOMAIN_NAME]" to remoteDomain)
     }
 }

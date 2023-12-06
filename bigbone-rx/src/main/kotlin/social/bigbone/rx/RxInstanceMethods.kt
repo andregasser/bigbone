@@ -58,14 +58,12 @@ class RxInstanceMethods(client: MastodonClient) {
      * Obtain a list of domains that have been blocked.
      * @see <a href="https://docs.joinmastodon.org/methods/instance/#domain_blocks">Mastodon API documentation: methods/instance/#domain_blocks</a>
      */
-    fun getBlockedDomains(): Single<List<DomainBlock>> =
-        Single.fromCallable { instanceMethods.getBlockedDomains().execute() }
+    fun getBlockedDomains(): Single<List<DomainBlock>> = Single.fromCallable { instanceMethods.getBlockedDomains().execute() }
 
     /**
      * Obtain an extended description of this server.
      * @see <a href="https://docs.joinmastodon.org/methods/instance/#extended_description">
      *     Mastodon API documentation: methods/instance/#extended_description</a>
      */
-    fun getExtendedDescription(): Single<ExtendedDescription> =
-        Single.fromCallable { instanceMethods.getExtendedDescription().execute() }
+    fun getExtendedDescription(): Single<ExtendedDescription> = Single.fromCallable { instanceMethods.getExtendedDescription().execute() }
 }

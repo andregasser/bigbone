@@ -14,7 +14,7 @@ object OAuthGetAccessToken {
         val clientSecret = args[2]
         val redirectUri = args[3]
         val client = MastodonClient.Builder(instanceName).build()
-        val url = client.oauth.getOAuthUrl(clientId, Scope(), redirectUri)
+        val url = client.oauth.getOAuthUrl(clientId, redirectUri, Scope())
         println("Open authorization page and copy code:")
         println(url)
         println("Paste code:")

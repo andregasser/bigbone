@@ -14,10 +14,18 @@ import social.bigbone.api.method.SuggestionMethods
 class RxSuggestionMethods(client: MastodonClient) {
     private val suggestionMethods = SuggestionMethods(client)
 
+    /**
+     * Accounts that are promoted by staff, or that the user has had past positive interactions with, but is not yet following.
+     * @param limit to limit number of results
+     * @see <a href="https://docs.joinmastodon.org/methods/suggestions/#v2">Mastodon API documentation: methods/suggestions/#v2</a>
+     */
     @JvmOverloads
-    fun getSuggestions(limit: Int? = null): Single<List<Suggestion>> =
-        Single.fromCallable { suggestionMethods.getSuggestions(limit).execute() }
+    fun getSuggestions(limit: Int? = null): Single<List<Suggestion>> = Single.fromCallable { suggestionMethods.getSuggestions(limit).execute() }
 
-    fun removeSuggestion(accountId: String): Completable =
-        Completable.fromAction { suggestionMethods.removeSuggestion(accountId) }
+    /**
+     * Remove an account from follow suggestions.
+     * @param accountId of the account of interest
+     * @see <a href="https://docs.joinmastodon.org/methods/suggestions/#v1">Mastodon API documentation: methods/suggestions/#v1</a>
+     */
+    fun removeSuggestion(accountId: String): Completable = Completable.fromAction { suggestionMethods.removeSuggestion(accountId) }
 }

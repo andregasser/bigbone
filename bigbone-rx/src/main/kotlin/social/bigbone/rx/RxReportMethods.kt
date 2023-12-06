@@ -14,6 +14,16 @@ import social.bigbone.api.method.ReportMethods
 class RxReportMethods(client: MastodonClient) {
     private val reportMethods = ReportMethods(client)
 
+    /**
+     * File a report.
+     * @param accountId The ID of the account to report
+     * @param forward To forward the report to the remote admin
+     * @param statusIds List of ID strings for statuses to be reported
+     * @param ruleIds To specify the IDs of the exact rules broken in case of violations
+     * @param comment The reason for the report. Default maximum of 1000 characters
+     * @param category To specify if you are looking for a specific category of report
+     * @see <a href="https://docs.joinmastodon.org/methods/reports/#post">Mastodon API documentation: methods/reports/#post</a>
+     */
     @JvmOverloads
     fun fileReport(
         accountId: String,

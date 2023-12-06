@@ -15,12 +15,19 @@ import java.io.File
 class RxMediaMethods(client: MastodonClient) {
     private val mediaMethods = MediaMethods(client)
 
+    /**
+     * Creates an attachment to be used with a new status. This method will return after the full sized media is done processing.
+     * @param file the file that should be uploaded
+     * @param mediaType media type of the file as a string, e.g. "image/png"
+     * @param description a plain-text description of the media, for accessibility purposes.
+     * @param focus a [Focus] instance which specifies the x- and y- coordinate of the focal point. Valid range for x and y is -1.0 to 1.0.
+     * @see <a href="https://docs.joinmastodon.org/methods/media/#v1">Mastodon API documentation: methods/media/#v1</a>
+     */
     @JvmOverloads
     fun uploadMedia(
         file: File,
         mediaType: String,
         description: String? = null,
         focus: Focus? = null
-    ): Single<MediaAttachment> =
-        Single.fromCallable { mediaMethods.uploadMedia(file, mediaType, description, focus).execute() }
+    ): Single<MediaAttachment> = Single.fromCallable { mediaMethods.uploadMedia(file, mediaType, description, focus).execute() }
 }

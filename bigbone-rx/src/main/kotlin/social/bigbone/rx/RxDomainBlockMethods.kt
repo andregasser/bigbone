@@ -22,8 +22,7 @@ class RxDomainBlockMethods(client: MastodonClient) {
      * @return
      */
     @JvmOverloads
-    fun getDomainBlocks(range: Range = Range()): Single<Pageable<String>> =
-        Single.fromCallable { domainBlockMethods.getDomainBlocks(range).execute() }
+    fun getDomainBlocks(range: Range = Range()): Single<Pageable<String>> = Single.fromCallable { domainBlockMethods.getDomainBlocks(range).execute() }
 
     /**
      * Block a domain to hide all public posts from it, hide all notifications from it,

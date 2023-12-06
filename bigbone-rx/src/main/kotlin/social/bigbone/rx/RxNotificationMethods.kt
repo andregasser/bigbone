@@ -35,12 +35,23 @@ class RxNotificationMethods(client: MastodonClient) {
             notificationMethods.getAllNotifications(includeTypes, excludeTypes, accountId, range).execute()
         }
 
-    fun getNotification(id: String): Single<Notification> =
-        Single.fromCallable { notificationMethods.getNotification(id).execute() }
+    /**
+     * View information about a notification with a given ID.
+     * @param id ID of the notification to view
+     * @see <a href="https://docs.joinmastodon.org/methods/notifications/#get-one">Mastodon API documentation: methods/notifications/#get-one</a>
+     */
+    fun getNotification(id: String): Single<Notification> = Single.fromCallable { notificationMethods.getNotification(id).execute() }
 
-    fun dismissAllNotifications(): Completable =
-        Completable.fromAction { notificationMethods.dismissAllNotifications() }
+    /**
+     * Clear all notifications from the server.
+     * @see <a href="https://docs.joinmastodon.org/methods/notifications/#clear">Mastodon API documentation: methods/notifications/#clear</a>
+     */
+    fun dismissAllNotifications(): Completable = Completable.fromAction { notificationMethods.dismissAllNotifications() }
 
-    fun dismissNotification(notificationId: String): Completable =
-        Completable.fromAction { notificationMethods.dismissNotification(notificationId) }
+    /**
+     * Dismiss a single notification from the server.
+     * @param notificationId The ID of the Notification in the database to be deleted.
+     * @see <a href="https://docs.joinmastodon.org/methods/notifications/#dismiss">Mastodon API documentation: methods/notifications/#dismiss</a>
+     */
+    fun dismissNotification(notificationId: String): Completable = Completable.fromAction { notificationMethods.dismissNotification(notificationId) }
 }

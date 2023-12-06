@@ -11,6 +11,8 @@ Subscribe to server-sent events for real-time updates via a long-lived HTTP conn
 
 <a href="https://docs.joinmastodon.org/methods/streaming/" target="_blank">https://docs.joinmastodon.org/methods/streaming/</a>
 
+<b>All methods currently lack proper documentation via kDoc comments.</b>
+
 <table style="width:100%;table-layout:fixed;">
   <tr>
     <th style="width:45%;text-align:left;">Endpoint</th>
@@ -59,8 +61,8 @@ Subscribe to server-sent events for real-time updates via a long-lived HTTP conn
   </tr>
   <tr>
     <td style="width:45%;text-align:left;"><code>GET /api/v1/streaming/list</code><br>Watch for list updates</td>
-    <td style="width:10%;text-align:center;"><img src="/assets/red16.png"></td>
-    <td style="width:45%;text-align:left;">Not implemented yet.</td>
+    <td style="width:10%;text-align:center;"><img src="/assets/orange16.png"></td>
+    <td style="width:45%;text-align:left;"><code>status.update</code> event types not supported.</td>
   </tr>
   <tr>
     <td style="width:45%;text-align:left;"><code>GET /api/v1/streaming/direct</code><br>Watch for direct messages</td>

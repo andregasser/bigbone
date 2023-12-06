@@ -15,10 +15,23 @@ import social.bigbone.api.method.Timeline
 class RxMarkerMethods(client: MastodonClient) {
     private val markerMethods = MarkerMethods(client)
 
+    /**
+     * Get saved timeline positions.
+     * @param timeline specifies for which timelines the position markers should be returned. This value
+     *         is chosen from the [Timeline] enum. When this value is not provided, all known markers
+     *         will be returned.
+     * @see <a href="https://docs.joinmastodon.org/methods/markers/#get">Mastodon API documentation: methods/markers/#get</a>
+     */
     @JvmOverloads
-    fun getMarkers(timeline: Timeline? = null): Single<Markers> =
-        Single.fromCallable { markerMethods.getMarkers(timeline).execute() }
+    fun getMarkers(timeline: Timeline? = null): Single<Markers> = Single.fromCallable { markerMethods.getMarkers(timeline).execute() }
 
+    /**
+     * Saves the timeline position.
+     * @param timeline specifies for which timeline the position marker should be updated. This value
+     *         is chosen from the [Timeline] enum.
+     * @param lastReadId the id of the last read post.
+     * @see <a href="https://docs.joinmastodon.org/methods/markers/#create">Mastodon API documentation: methods/markers/#create</a>
+     */
     fun updateMarker(
         timeline: Timeline,
         lastReadId: Int

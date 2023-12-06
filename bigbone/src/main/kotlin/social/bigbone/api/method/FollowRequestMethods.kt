@@ -5,6 +5,7 @@ import social.bigbone.MastodonRequest
 import social.bigbone.api.Pageable
 import social.bigbone.api.Range
 import social.bigbone.api.entity.Account
+import social.bigbone.api.entity.Relationship
 import social.bigbone.api.exception.BigBoneRequestException
 
 /**
@@ -32,8 +33,8 @@ class FollowRequestMethods(private val client: MastodonClient) {
      * @see <a href="https://docs.joinmastodon.org/methods/follow_requests/#accept">Mastodon API documentation: methods/follow_requests/#accept</a>
      */
     @Throws(BigBoneRequestException::class)
-    fun authorizeFollowRequest(accountId: String) {
-        client.performAction(
+    fun authorizeFollowRequest(accountId: String): MastodonRequest<Relationship> {
+        return client.getMastodonRequest(
             endpoint = "api/v1/follow_requests/$accountId/authorize",
             method = MastodonClient.Method.POST
         )
@@ -45,8 +46,8 @@ class FollowRequestMethods(private val client: MastodonClient) {
      * @see <a href="https://docs.joinmastodon.org/methods/follow_requests/#reject">Mastodon API documentation: methods/follow_requests/#reject</a>
      */
     @Throws(BigBoneRequestException::class)
-    fun rejectFollowRequest(accountId: String) {
-        client.performAction(
+    fun rejectFollowRequest(accountId: String): MastodonRequest<Relationship> {
+        return client.getMastodonRequest(
             endpoint = "api/v1/follow_requests/$accountId/reject",
             method = MastodonClient.Method.POST
         )

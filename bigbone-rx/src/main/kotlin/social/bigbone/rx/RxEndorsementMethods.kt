@@ -22,6 +22,5 @@ class RxEndorsementMethods(client: MastodonClient) {
      * @return [Pageable] of [Account]s the user is currently featuring on their profile
      */
     @JvmOverloads
-    fun getEndorsements(range: Range = Range()): Single<Pageable<Account>> =
-        Single.fromCallable { endorsementMethods.getEndorsements(range).execute() }
+    fun getEndorsements(range: Range = Range()): Single<Pageable<Account>> = Single.fromCallable { endorsementMethods.getEndorsements(range).execute() }
 }
