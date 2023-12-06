@@ -12,7 +12,6 @@ import social.bigbone.api.entity.Tag
  * @see <a href="https://docs.joinmastodon.org/methods/followed_tags/">Mastodon followed_tags API methods</a>
  */
 class FollowedTagMethods(private val client: MastodonClient) {
-
     private val followedTagsEndpoint = "api/v1/followed_tags"
 
     /**

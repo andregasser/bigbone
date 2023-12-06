@@ -8,6 +8,7 @@ import kotlinx.serialization.Serializable
  * [social.bigbone.api.method.StatusMethods]) and as part of the [social.bigbone.api.entity.ScheduledStatus] entity
  * data class.
  */
+@Suppress("ktlint:standard:no-blank-line-in-list")
 @Serializable
 data class PollData(
     /**

@@ -11,6 +11,7 @@ import social.bigbone.api.entity.data.Visibility
  * Represents a status posted by an account.
  * @see <a href="https://docs.joinmastodon.org/entities/Status/">Mastodon API Status</a>
  */
+@Suppress("ktlint:standard:no-blank-line-in-list")
 @Serializable
 data class Status(
     /**
@@ -204,7 +205,6 @@ data class Status(
     @SerialName("filtered")
     val filtered: List<FilterResult>? = null
 ) {
-
     /**
      * Mentions of users within the status content.
      * @see <a href="https://docs.joinmastodon.org/entities/Status/#Mention">Mastodon API Status::Mention</a>

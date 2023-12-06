@@ -13,7 +13,6 @@ import social.bigbone.testtool.MockClient
 import java.time.Instant
 
 class EndorsementMethodsTest {
-
     @Test
     fun `Given a client returning success, when getting endorsements, then expect values of response`() {
         val client = MockClient.mock("endorsements_view_success.json")

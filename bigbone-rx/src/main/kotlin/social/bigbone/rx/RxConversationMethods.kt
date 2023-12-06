@@ -14,19 +14,15 @@ import social.bigbone.api.method.ConversationMethods
  * @see <a href="https://docs.joinmastodon.org/methods/conversations/">Mastodon conversations API methods</a>
  */
 class RxConversationMethods(client: MastodonClient) {
-
     private val conversationMethods = ConversationMethods(client)
 
     @JvmOverloads
-    fun getConversations(range: Range = Range()): Single<Pageable<Conversation>> = Single.fromCallable {
-        conversationMethods.getConversations(range).execute()
-    }
+    fun getConversations(range: Range = Range()): Single<Pageable<Conversation>> =
+        Single.fromCallable { conversationMethods.getConversations(range).execute() }
 
-    fun deleteConversation(conversationId: String): Completable = Completable.fromAction {
-        conversationMethods.deleteConversation(conversationId)
-    }
+    fun deleteConversation(conversationId: String): Completable =
+        Completable.fromAction { conversationMethods.deleteConversation(conversationId) }
 
-    fun markConversationAsRead(conversationId: String): Single<Conversation> = Single.fromCallable {
-        conversationMethods.markConversationAsRead(conversationId).execute()
-    }
+    fun markConversationAsRead(conversationId: String): Single<Conversation> =
+        Single.fromCallable { conversationMethods.markConversationAsRead(conversationId).execute() }
 }

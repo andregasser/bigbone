@@ -13,7 +13,6 @@ import social.bigbone.api.method.DomainBlockMethods
  * @see <a href="https://docs.joinmastodon.org/methods/domain_blocks/">Mastodon domain_blocks API methods</a>
  */
 class RxDomainBlockMethods(client: MastodonClient) {
-
     private val domainBlockMethods = DomainBlockMethods(client)
 
     /**
@@ -23,9 +22,8 @@ class RxDomainBlockMethods(client: MastodonClient) {
      * @return
      */
     @JvmOverloads
-    fun getDomainBlocks(range: Range = Range()): Single<Pageable<String>> = Single.fromCallable {
-        domainBlockMethods.getDomainBlocks(range).execute()
-    }
+    fun getDomainBlocks(range: Range = Range()): Single<Pageable<String>> =
+        Single.fromCallable { domainBlockMethods.getDomainBlocks(range).execute() }
 
     /**
      * Block a domain to hide all public posts from it, hide all notifications from it,

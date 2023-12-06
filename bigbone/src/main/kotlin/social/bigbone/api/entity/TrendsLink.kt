@@ -9,6 +9,7 @@ import social.bigbone.api.entity.data.History
  * Represents a rich preview card that is generated using OpenGraph tags from a URL.
  * @see <a href="https://docs.joinmastodon.org/entities/PreviewCard/#trends-link">Mastodon API PreviewCard/Trends::Link</a>
  */
+@Suppress("ktlint:standard:no-blank-line-in-list")
 @Serializable
 data class TrendsLink(
     /**

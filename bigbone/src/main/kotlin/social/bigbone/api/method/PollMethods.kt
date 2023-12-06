@@ -11,7 +11,6 @@ import social.bigbone.api.exception.BigBoneRequestException
  * @see <a href="https://docs.joinmastodon.org/methods/polls/">Mastodon polls API methods</a>
  */
 class PollMethods(private val client: MastodonClient) {
-
     /**
      * View a poll attached to a status. To discover poll ID, you will need to GET a Status first and then check for
      *  a poll property.
@@ -34,7 +33,10 @@ class PollMethods(private val client: MastodonClient) {
      * @see <a href="https://docs.joinmastodon.org/methods/polls/#vote">Mastodon API documentation: methods/polls/#vote</a>
      */
     @Throws(BigBoneRequestException::class)
-    fun voteOnPoll(pollId: String, choices: List<Int>): MastodonRequest<Poll> {
+    fun voteOnPoll(
+        pollId: String,
+        choices: List<Int>
+    ): MastodonRequest<Poll> {
         return client.getMastodonRequest(
             endpoint = "api/v1/polls/$pollId/votes",
             method = MastodonClient.Method.POST,

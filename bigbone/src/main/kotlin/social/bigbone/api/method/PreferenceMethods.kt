@@ -10,7 +10,6 @@ import social.bigbone.api.exception.BigBoneRequestException
  * @see [Mastodon preferences API methods](https://docs.joinmastodon.org/methods/preferences/)
  */
 class PreferenceMethods(private val client: MastodonClient) {
-
     private val preferencesEndpoint = "api/v1/preferences"
 
     /**

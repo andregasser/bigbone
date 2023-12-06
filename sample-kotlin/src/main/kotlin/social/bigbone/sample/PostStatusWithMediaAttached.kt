@@ -31,6 +31,14 @@ object PostStatusWithMediaAttached {
         val sensitive = false
         val spoilerText = "A castle"
         val language = "en"
-        client.statuses.postStatus(statusText, mediaIds, visibility, inReplyToId, sensitive, spoilerText, language).execute()
+        client.statuses.postStatus(
+            statusText,
+            mediaIds,
+            visibility,
+            inReplyToId,
+            sensitive,
+            spoilerText,
+            language
+        ).execute()
     }
 }

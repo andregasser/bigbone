@@ -11,7 +11,6 @@ import social.bigbone.api.entity.Status
  * @see <a href="https://docs.joinmastodon.org/methods/favourites/">Mastodon favourites API methods</a>
  */
 class FavouriteMethods(private val client: MastodonClient) {
-
     /**
      * View your favourites. Favouring and unfavouring is achieved via statuses methods.
      * @param range optional Range for the pageable return value

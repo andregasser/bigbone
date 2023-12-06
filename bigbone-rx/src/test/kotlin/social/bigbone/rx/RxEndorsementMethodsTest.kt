@@ -6,11 +6,10 @@ import social.bigbone.api.entity.Account
 import social.bigbone.rx.testtool.MockClient
 
 class RxEndorsementMethodsTest {
-
     @Test
     fun `Given a client returning success, when getting endorsements, then emit list of endorsements`() {
         val client = MockClient.mock(
-            jsonName = "endorsements_view_success.json"
+            jsonName = "endorsements_view_success.json",
         )
         val endorsements = RxEndorsementMethods(client)
 

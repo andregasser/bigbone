@@ -7,6 +7,7 @@ import kotlinx.serialization.Serializable
  * Represents a custom emoji.
  * @see <a href="https://docs.joinmastodon.org/entities/CustomEmoji/">Mastodon API CustomEmoji</a>
  */
+@Suppress("ktlint:standard:no-blank-line-in-list")
 @Serializable
 data class CustomEmoji(
     @SerialName("shortcode")

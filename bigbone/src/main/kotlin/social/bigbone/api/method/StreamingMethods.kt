@@ -93,7 +93,10 @@ class StreamingMethods(private val client: MastodonClient) {
     }
 
     @Throws(BigBoneRequestException::class)
-    fun federatedHashtag(tag: String, handler: Handler): Shutdownable {
+    fun federatedHashtag(
+        tag: String,
+        handler: Handler
+    ): Shutdownable {
         val response = client.get(
             "api/v1/streaming/hashtag",
             Parameters().append("tag", tag)
@@ -136,7 +139,10 @@ class StreamingMethods(private val client: MastodonClient) {
     }
 
     @Throws(BigBoneRequestException::class)
-    fun localHashtag(tag: String, handler: Handler): Shutdownable {
+    fun localHashtag(
+        tag: String,
+        handler: Handler
+    ): Shutdownable {
         val response = client.get(
             "api/v1/streaming/hashtag/local",
             Parameters().append("tag", tag)
@@ -226,7 +232,10 @@ class StreamingMethods(private val client: MastodonClient) {
     }
 
     @Throws(BigBoneRequestException::class)
-    fun userList(handler: Handler, listID: String): Shutdownable {
+    fun userList(
+        handler: Handler,
+        listID: String
+    ): Shutdownable {
         val response = client.get(
             "api/v1/streaming/list",
             Parameters().apply {

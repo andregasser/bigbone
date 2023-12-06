@@ -10,7 +10,6 @@ import social.bigbone.api.method.EmailMethods
  * @see <a href="https://docs.joinmastodon.org/methods/emails/">Mastodon emails API methods</a>
  */
 class RxEmailMethods(client: MastodonClient) {
-
     private val emailMethods = EmailMethods(client)
 
     /**
@@ -23,7 +22,6 @@ class RxEmailMethods(client: MastodonClient) {
      * @see <a href="https://docs.joinmastodon.org/methods/emails/#confirmation">Mastodon API documentation: methods/emails/#confirmation</a>
      */
     @JvmOverloads
-    fun resendConfirmationEmail(emailAddress: String? = null): Completable = Completable.fromAction {
-        emailMethods.resendConfirmationEmail(emailAddress = emailAddress)
-    }
+    fun resendConfirmationEmail(emailAddress: String? = null): Completable =
+        Completable.fromAction { emailMethods.resendConfirmationEmail(emailAddress = emailAddress) }
 }

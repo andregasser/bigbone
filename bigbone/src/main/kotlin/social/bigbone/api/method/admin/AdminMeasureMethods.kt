@@ -12,7 +12,6 @@ import java.time.Instant
  * @see <a href="https://docs.joinmastodon.org/methods/admin/measures/">Mastodon admin/measures API methods</a>
  */
 class AdminMeasureMethods(private val client: MastodonClient) {
-
     private val adminMeasuresEndpoint = "api/v1/admin/measures"
 
     /**
@@ -48,15 +47,12 @@ class AdminMeasureMethods(private val client: MastodonClient) {
  * Wrapper class to ensure that required parameters are added when sending a specific [Key] for which to get measures.
  */
 sealed class RequestMeasure(val key: Key, val apiName: String = key.apiName) {
-
     /**
      * Get the key=value pairs to request this measure.
      * Can be used to craft a [Parameters] entry from.
      * Defaults to [KEYS_NAME] = [apiName] for implementations of [RequestMeasure] that do not have additional properties.
      */
-    open fun getRequestKeyValues(): List<Pair<String, String>> = listOf(
-        KEYS_NAME to apiName
-    )
+    open fun getRequestKeyValues(): List<Pair<String, String>> = listOf(KEYS_NAME to apiName)
 
     companion object {
         private const val KEYS_NAME = "keys[]"

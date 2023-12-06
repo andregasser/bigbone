@@ -10,7 +10,6 @@ import social.bigbone.api.entity.OEmbedMetadata
  * @see <a href="https://docs.joinmastodon.org/methods/oembed/">Mastodon oembed API methods</a>
  */
 class OEmbedMethods(private val mastodonClient: MastodonClient) {
-
     private val oEmbedEndpoint = "api/oembed"
 
     /**

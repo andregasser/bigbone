@@ -6,7 +6,6 @@ import social.bigbone.JSON_SERIALIZER
 import social.bigbone.testtool.AssetsUtil
 
 class ServerTest {
-
     @Test
     fun deserialize() {
         // given

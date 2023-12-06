@@ -8,8 +8,8 @@ import social.bigbone.Parameters
 import social.bigbone.api.entity.OEmbedMetadata
 import social.bigbone.testtool.MockClient
 
+@Suppress("ktlint:standard:max-line-length")
 class OEmbedMethodsTest {
-
     @Test
     fun `Given a client returning successfully, when getting oEmbed info, then ensure correct parsing and correct method was called`() {
         val client = MockClient.mock("oembed_get_success.json")

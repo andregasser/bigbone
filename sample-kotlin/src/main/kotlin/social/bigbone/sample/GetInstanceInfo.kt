@@ -3,7 +3,6 @@ package social.bigbone.sample
 import social.bigbone.MastodonClient
 
 object GetInstanceInfo {
-
     @JvmStatic
     fun main(args: Array<String>) {
         val instance = args[0]

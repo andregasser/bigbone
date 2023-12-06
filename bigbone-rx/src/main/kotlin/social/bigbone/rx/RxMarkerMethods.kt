@@ -13,15 +13,14 @@ import social.bigbone.api.method.Timeline
  * @see <a href="https://docs.joinmastodon.org/methods/markers/">Mastodon markers API methods</a>
  */
 class RxMarkerMethods(client: MastodonClient) {
-
     private val markerMethods = MarkerMethods(client)
 
     @JvmOverloads
-    fun getMarkers(timeline: Timeline? = null): Single<Markers> = Single.fromCallable {
-        markerMethods.getMarkers(timeline).execute()
-    }
+    fun getMarkers(timeline: Timeline? = null): Single<Markers> =
+        Single.fromCallable { markerMethods.getMarkers(timeline).execute() }
 
-    fun updateMarker(timeline: Timeline, lastReadId: Int): Single<Marker> = Single.fromCallable {
-        markerMethods.updateMarker(timeline, lastReadId).execute()
-    }
+    fun updateMarker(
+        timeline: Timeline,
+        lastReadId: Int
+    ): Single<Marker> = Single.fromCallable { markerMethods.updateMarker(timeline, lastReadId).execute() }
 }

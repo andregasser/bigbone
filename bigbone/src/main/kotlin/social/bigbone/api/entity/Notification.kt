@@ -11,6 +11,7 @@ import social.bigbone.PrecisionDateTime.InvalidPrecisionDateTime
  * Represents a notification of an event relevant to the user.
  * @see <a href="https://docs.joinmastodon.org/entities/Notification/">Mastodon API Notification</a>
  */
+@Suppress("ktlint:standard:no-blank-line-in-list")
 @Serializable
 data class Notification(
     /**
@@ -55,7 +56,6 @@ data class Notification(
      */
     @Serializable
     enum class NotificationType {
-
         @SerialName("admin.report")
         ADMIN_REPORT,
 

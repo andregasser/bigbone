@@ -13,7 +13,6 @@ import social.bigbone.testtool.MockClient
 
 @Suppress("FunctionMaxLength")
 class OAuthMethodsTest {
-
     @Test
     fun getOAuthUrl() {
         val client: MastodonClient = mockk()

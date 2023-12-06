@@ -24,7 +24,12 @@ class MediaMethods(private val client: MastodonClient) {
      * @see <a href="https://docs.joinmastodon.org/methods/media/#v1">Mastodon API documentation: methods/media/#v1</a>
      */
     @JvmOverloads
-    fun uploadMedia(file: File, mediaType: String, description: String? = null, focus: Focus? = null): MastodonRequest<MediaAttachment> {
+    fun uploadMedia(
+        file: File,
+        mediaType: String,
+        description: String? = null,
+        focus: Focus? = null
+    ): MastodonRequest<MediaAttachment> {
         val body = file.asRequestBody(mediaType.toMediaTypeOrNull())
         val part = MultipartBody.Part.createFormData("file", file.name, body)
         val requestBodyBuilder = MultipartBody.Builder()

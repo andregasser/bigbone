@@ -14,7 +14,6 @@ import social.bigbone.api.method.FollowedTagMethods
  * @see <a href="https://docs.joinmastodon.org/methods/followed_tags/">Mastodon followed_tags API methods</a>
  */
 class RxFollowedTagMethods(client: MastodonClient) {
-
     private val followedTagMethods = FollowedTagMethods(client)
 
     /**
@@ -24,7 +23,6 @@ class RxFollowedTagMethods(client: MastodonClient) {
      * @see <a href="https://docs.joinmastodon.org/methods/followed_tags/#get">Mastodon API documentation: methods/followed_tags/#get</a>
      */
     @JvmOverloads
-    fun viewAllFollowedTags(range: Range = Range()): Single<Pageable<Tag>> = Single.fromCallable {
-        followedTagMethods.viewAllFollowedTags(range).execute()
-    }
+    fun viewAllFollowedTags(range: Range = Range()): Single<Pageable<Tag>> =
+        Single.fromCallable { followedTagMethods.viewAllFollowedTags(range).execute() }
 }

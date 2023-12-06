@@ -6,7 +6,6 @@ import social.bigbone.JSON_SERIALIZER
 import social.bigbone.testtool.AssetsUtil
 
 class TokenTest {
-
     @Test
     fun deserialize() {
         val json = AssetsUtil.readFromAssets("access_token.json")

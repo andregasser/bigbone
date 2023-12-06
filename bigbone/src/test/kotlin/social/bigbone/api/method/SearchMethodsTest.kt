@@ -13,7 +13,6 @@ import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.testtool.MockClient
 
 class SearchMethodsTest {
-
     @Test
     fun search() {
         val client = MockClient.mock("search.json")
@@ -43,7 +42,12 @@ class SearchMethodsTest {
         val maxId = "10000"
         val minId = "900"
         val searchMethodsMethod = SearchMethods(client)
-        val result = searchMethodsMethod.searchContent("test", type = type, maxId = maxId, minId = minId).execute()
+        val result = searchMethodsMethod.searchContent(
+            query = "test",
+            type = type,
+            maxId = maxId,
+            minId = minId
+        ).execute()
         result.accounts.size `should be equal to` 0
         result.statuses.size shouldBeEqualTo 4
         result.hashtags.size `should be equal to` 0

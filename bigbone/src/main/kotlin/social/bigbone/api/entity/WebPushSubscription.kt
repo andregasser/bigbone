@@ -1,3 +1,5 @@
+@file:Suppress("ktlint:standard:no-blank-line-in-list")
+
 package social.bigbone.api.entity
 
 import kotlinx.serialization.SerialName
@@ -9,7 +11,6 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class WebPushSubscription(
-
     /**
      * The ID of the Web Push subscription in the database.
      */

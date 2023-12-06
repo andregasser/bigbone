@@ -4,8 +4,8 @@ package social.bigbone.api
  * Represents the access permissions that can be requested when registering an app or when
  * requesting access tokens.
  */
+@Suppress("ktlint:standard:annotation")
 class Scope @JvmOverloads constructor(private vararg val scopes: Name = arrayOf(Name.ALL)) {
-
     /**
      * The available scopes.
      */

@@ -8,7 +8,6 @@ import social.bigbone.testtool.MockClient
 import java.util.concurrent.atomic.AtomicInteger
 
 class TimelineMethodsTest {
-
     @Test
     fun getHomeTimeline() {
         val client = MockClient.mock("timelines.json")
@@ -67,7 +66,10 @@ class TimelineMethodsTest {
     fun getLocalTagTimeline() {
         val client = MockClient.mock("tag_timeline.json", maxId = "3", sinceId = "1")
         val timelineMethods = TimelineMethods(client)
-        val statuses = timelineMethods.getTagTimeline(tag = "mastodon", statusOrigin = TimelineMethods.StatusOrigin.LOCAL).execute()
+        val statuses = timelineMethods.getTagTimeline(
+            tag = "mastodon",
+            statusOrigin = TimelineMethods.StatusOrigin.LOCAL
+        ).execute()
         statuses.part.size shouldBeEqualTo 20
     }
 
@@ -76,7 +78,10 @@ class TimelineMethodsTest {
         Assertions.assertThrows(BigBoneRequestException::class.java) {
             val client = MockClient.ioException()
             val timelineMethods = TimelineMethods(client)
-            timelineMethods.getTagTimeline(tag = "mastodon", statusOrigin = TimelineMethods.StatusOrigin.LOCAL).execute()
+            timelineMethods.getTagTimeline(
+                tag = "mastodon",
+                statusOrigin = TimelineMethods.StatusOrigin.LOCAL
+            ).execute()
         }
     }
 

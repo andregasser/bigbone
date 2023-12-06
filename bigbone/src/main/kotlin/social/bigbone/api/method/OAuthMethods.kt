@@ -11,7 +11,6 @@ import social.bigbone.api.entity.Token
  * @see <a href="https://docs.joinmastodon.org/methods/oauth/">Mastodon oauth API methods</a>
  */
 class OAuthMethods(private val client: MastodonClient) {
-
     /**
      * Returns a URL that can be used to display an authorization form to the user. If approved,
      * it will create and return an authorization code, then redirect to the desired redirectUri,
@@ -22,14 +21,24 @@ class OAuthMethods(private val client: MastodonClient) {
      * @param redirectUri Set a URI to redirect the user to. Must match one of the redirect_uris declared during app registration.
      * @see <a href="https://docs.joinmastodon.org/methods/oauth/#authorize">Mastodon oauth API methods #authorize</a>
      */
-    fun getOAuthUrl(clientId: String, scope: Scope, redirectUri: String): String {
+    fun getOAuthUrl(
+        clientId: String,
+        scope: Scope,
+        redirectUri: String
+    ): String {
         val endpoint = "oauth/authorize"
         val params = Parameters()
             .append("client_id", clientId)
             .append("redirect_uri", redirectUri)
             .append("response_type", "code")
             .append("scope", scope.toString())
-        return MastodonClient.fullUrl(client.getScheme(), client.getInstanceName(), client.getPort(), endpoint, params).toString()
+        return MastodonClient.fullUrl(
+            client.getScheme(),
+            client.getInstanceName(),
+            client.getPort(),
+            endpoint,
+            params
+        ).toString()
     }
 
     /**

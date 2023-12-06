@@ -12,14 +12,12 @@ import social.bigbone.api.method.CustomEmojiMethods
  * @see <a href="https://docs.joinmastodon.org/methods/custom_emojis/">Mastodon custom_emojis API methods</a>
  */
 class RxCustomEmojiMethods(client: MastodonClient) {
-
     private val customEmojiMethods = CustomEmojiMethods(client)
 
     /**
      * Returns custom emojis that are available on the server.
      * * @see <a href="https://docs.joinmastodon.org/methods/custom_emojis/#get">Mastodon API documentation: methods/custom_emojis/#get</a>
      */
-    fun getAllCustomEmojis(): Single<List<CustomEmoji>> = Single.fromCallable {
-        customEmojiMethods.getAllCustomEmojis().execute()
-    }
+    fun getAllCustomEmojis(): Single<List<CustomEmoji>> =
+        Single.fromCallable { customEmojiMethods.getAllCustomEmojis().execute() }
 }

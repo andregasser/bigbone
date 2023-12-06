@@ -12,7 +12,6 @@ import social.bigbone.api.exception.BigBoneRequestException
  * @see <a href="https://docs.joinmastodon.org/methods/follow_requests/">Mastodon follow_requests API methods</a>
  */
 class FollowRequestMethods(private val client: MastodonClient) {
-
     /**
      * View pending follow requests.
      * @param range optional Range for the pageable return value

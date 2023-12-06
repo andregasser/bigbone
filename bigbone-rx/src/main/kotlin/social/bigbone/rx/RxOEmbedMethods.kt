@@ -10,7 +10,6 @@ import social.bigbone.api.method.OEmbedMethods
  * @see <a href="https://docs.joinmastodon.org/methods/oembed/">Mastodon oembed API methods</a>
  */
 class RxOEmbedMethods(private val mastodonClient: MastodonClient) {
-
     private val oEmbedMethods = OEmbedMethods(mastodonClient)
 
     /**
@@ -25,11 +24,12 @@ class RxOEmbedMethods(private val mastodonClient: MastodonClient) {
         urlOfStatus: String,
         maxWidth: Int = 400,
         maxHeight: Int? = null
-    ): Single<OEmbedMetadata> = Single.fromCallable {
-        oEmbedMethods.getOEmbedInfoAsJson(
-            urlOfStatus = urlOfStatus,
-            maxWidth = maxWidth,
-            maxHeight = maxHeight
-        ).execute()
-    }
+    ): Single<OEmbedMetadata> =
+        Single.fromCallable {
+            oEmbedMethods.getOEmbedInfoAsJson(
+                urlOfStatus = urlOfStatus,
+                maxWidth = maxWidth,
+                maxHeight = maxHeight
+            ).execute()
+        }
 }

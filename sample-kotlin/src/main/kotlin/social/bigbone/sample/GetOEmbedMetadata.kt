@@ -4,7 +4,6 @@ import social.bigbone.MastodonClient
 import social.bigbone.api.entity.OEmbedMetadata
 
 object GetOEmbedMetadata {
-
     @JvmStatic
     fun main(args: Array<String>) {
         val instance = args[0]

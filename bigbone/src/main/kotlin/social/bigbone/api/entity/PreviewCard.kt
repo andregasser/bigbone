@@ -8,6 +8,7 @@ import social.bigbone.api.entity.PreviewCard.CardType
  * Represents a rich preview card that is generated using OpenGraph tags from a URL.
  * @see <a href="https://docs.joinmastodon.org/entities/PreviewCard/">Mastodon API PreviewCard</a>
  */
+@Suppress("ktlint:standard:no-blank-line-in-list")
 @Serializable
 data class PreviewCard(
     /**

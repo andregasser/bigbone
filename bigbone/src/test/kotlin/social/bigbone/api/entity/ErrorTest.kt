@@ -7,7 +7,6 @@ import social.bigbone.JSON_SERIALIZER
 import social.bigbone.testtool.AssetsUtil
 
 class ErrorTest {
-
     @Test
     fun deserialize() {
         val json = AssetsUtil.readFromAssets("error.json")

@@ -16,6 +16,7 @@ import social.bigbone.testtool.MockClient
 import java.time.Duration
 import java.time.Instant
 
+@Suppress("ktlint:standard:max-line-length")
 class StatusMethodsTest {
     @Test
     fun getStatus() {

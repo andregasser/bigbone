@@ -12,7 +12,6 @@ import social.bigbone.api.method.PushNotificationMethods
  * @see <a href="https://docs.joinmastodon.org/methods/push/">Mastodon push notification API methods</a>
  */
 class RxPushNotificationMethods(client: MastodonClient) {
-
     private val pushNotificationMethods = PushNotificationMethods(client)
 
     /**
@@ -120,11 +119,13 @@ class RxPushNotificationMethods(client: MastodonClient) {
      * View the PushSubscription currently associated with this access token.
      * @see <a href="https://docs.joinmastodon.org/methods/push/#get">Mastodon API documentation: methods/push/#get</a>
      */
-    fun getPushNotification(): Single<WebPushSubscription> = Single.fromCallable { pushNotificationMethods.getPushNotification().execute() }
+    fun getPushNotification(): Single<WebPushSubscription> =
+        Single.fromCallable { pushNotificationMethods.getPushNotification().execute() }
 
     /**
      * Removes the current Web Push API subscription.
      * @see <a href="https://docs.joinmastodon.org/methods/push/#delete">Mastodon API documentation: methods/push/#delete</a>
      */
-    fun removePushSubscription(): Completable = Completable.fromAction { pushNotificationMethods.removePushSubscription() }
+    fun removePushSubscription(): Completable =
+        Completable.fromAction { pushNotificationMethods.removePushSubscription() }
 }

@@ -7,6 +7,7 @@ import kotlinx.serialization.Serializable
  * Represents a filter whose keywords matched a given status.
  * @see <a href="https://docs.joinmastodon.org/entities/FilterResult/">Mastodon API FilterResult</a>
  */
+@Suppress("ktlint:standard:no-blank-line-in-list")
 @Serializable
 data class FilterResult(
     /**

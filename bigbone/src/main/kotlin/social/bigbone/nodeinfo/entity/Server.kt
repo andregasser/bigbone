@@ -8,6 +8,7 @@ import kotlinx.serialization.Serializable
  * on this server.
  * @see <a href="https://github.com/jhass/nodeinfo/blob/main/schemas/2.0/schema.json">NodeInfo schema 2.0</a>
  */
+@Suppress("ktlint:standard:no-blank-line-in-list")
 @Serializable
 data class Server(
     /**
@@ -21,7 +22,6 @@ data class Server(
      */
     @SerialName("software")
     val software: Software? = null
-
 ) {
     /**
      * Information about the software running on a server.

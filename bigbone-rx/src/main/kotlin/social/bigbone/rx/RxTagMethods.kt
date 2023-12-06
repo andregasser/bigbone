@@ -11,7 +11,6 @@ import social.bigbone.api.method.TagMethods
  * @see <a href="https://docs.joinmastodon.org/methods/tags/">Mastodon tags API methods</a>
  */
 class RxTagMethods(client: MastodonClient) {
-
     private val tagMethods = TagMethods(client)
 
     /**

@@ -10,7 +10,6 @@ import social.bigbone.api.entity.CustomEmoji
  * @see <a href="https://docs.joinmastodon.org/methods/custom_emojis/">Mastodon custom_emojis API methods</a>
  */
 class CustomEmojiMethods(private val client: MastodonClient) {
-
     private val customEmojisEndpoint = "api/v1/custom_emojis"
 
     /**

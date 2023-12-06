@@ -10,6 +10,7 @@ import social.bigbone.PrecisionDateTime.InvalidPrecisionDateTime
  * Represents the last read position within a specific timeline of the user.
  * @see <a href="https://docs.joinmastodon.org/entities/Marker/">Mastodon API Marker</a>
  */
+@Suppress("ktlint:standard:no-blank-line-in-list")
 @Serializable
 data class Marker(
     /**

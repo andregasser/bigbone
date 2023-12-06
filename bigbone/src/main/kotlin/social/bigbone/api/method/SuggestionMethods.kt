@@ -10,7 +10,6 @@ import social.bigbone.api.entity.Suggestion
  * @see <a href="https://docs.joinmastodon.org/methods/suggestions/">Mastodon API documentation: methods/suggestions/</a>
  */
 class SuggestionMethods(private val client: MastodonClient) {
-
     private val suggestionsEndpointV2 = "/api/v2/suggestions"
     private val suggestionsEndpointV1 = "/api/v1/suggestions"
 

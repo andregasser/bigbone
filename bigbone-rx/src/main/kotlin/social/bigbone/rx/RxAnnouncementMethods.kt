@@ -15,29 +15,20 @@ class RxAnnouncementMethods(client: MastodonClient) {
     private val announcementMethods = AnnouncementMethods(client)
 
     @JvmOverloads
-    fun getAllAnnouncements(
-        withDismissed: Boolean = false
-    ): Single<List<Announcement>> = Single.fromCallable {
-        announcementMethods.getAllAnnouncements(withDismissed).execute()
-    }
+    fun getAllAnnouncements(withDismissed: Boolean = false): Single<List<Announcement>> =
+        Single.fromCallable { announcementMethods.getAllAnnouncements(withDismissed).execute() }
 
-    fun dismissAnnouncement(
-        announcementId: String
-    ): Completable = Completable.fromAction {
-        announcementMethods.dismissAnnouncement(announcementId)
-    }
+    fun dismissAnnouncement(announcementId: String): Completable =
+        Completable.fromAction { announcementMethods.dismissAnnouncement(announcementId) }
 
     fun addReactionToAnnouncement(
         emojiName: String,
         announcementId: String
-    ): Completable = Completable.fromAction {
-        announcementMethods.addReactionToAnnouncement(emojiName, announcementId)
-    }
+    ): Completable = Completable.fromAction { announcementMethods.addReactionToAnnouncement(emojiName, announcementId) }
 
     fun removeReactionFromAnnouncement(
         emojiName: String,
         announcementId: String
-    ): Completable = Completable.fromAction {
-        announcementMethods.removeReactionFromAnnouncement(emojiName, announcementId)
-    }
+    ): Completable =
+        Completable.fromAction { announcementMethods.removeReactionFromAnnouncement(emojiName, announcementId) }
 }

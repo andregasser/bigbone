@@ -8,9 +8,9 @@ import kotlinx.serialization.Serializable
  * Represents qualitative data about the server.
  * @see <a href="https://docs.joinmastodon.org/entities/Admin_Dimension/">Mastodon API Admin::Dimension documentation</a>
  */
+@Suppress("ktlint:standard:no-blank-line-in-list")
 @Serializable
 data class AdminDimension(
-
     /**
      * The unique keystring for the requested dimension.
      */
@@ -23,13 +23,11 @@ data class AdminDimension(
     @SerialName("data")
     val data: List<Data>? = null
 ) {
-
     /**
      * The unique keystring for the requested dimension.
      */
     @Serializable
     enum class Key {
-
         /**
          * Most-used languages on this server.
          */

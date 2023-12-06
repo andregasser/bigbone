@@ -15,7 +15,6 @@ import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.testtool.MockClient
 
 class DomainBlockMethodsTest {
-
     @Test
     fun `Given a client returning success, when getting blocked domains, then expect values of response`() {
         val client = MockClient.mock("domain_blocks_view_success.json")

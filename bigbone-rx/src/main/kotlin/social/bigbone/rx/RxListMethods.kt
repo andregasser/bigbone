@@ -15,7 +15,6 @@ import social.bigbone.api.method.ListMethods
  * @see <a href="https://docs.joinmastodon.org/methods/lists/">Mastodon lists API methods</a>
  */
 class RxListMethods(client: MastodonClient) {
-
     private val listMethods = ListMethods(client)
 
     fun getLists(): Single<List<MastodonList>> = Single.fromCallable { listMethods.getLists().execute() }
@@ -37,15 +36,18 @@ class RxListMethods(client: MastodonClient) {
     fun deleteList(listId: String): Completable = Completable.fromAction { listMethods.deleteList(listId) }
 
     @JvmOverloads
-    fun getAccountsInList(listId: String, range: Range = Range()): Single<Pageable<Account>> = Single.fromCallable {
-        listMethods.getAccountsInList(listId, range).execute()
-    }
+    fun getAccountsInList(
+        listId: String,
+        range: Range = Range()
+    ): Single<Pageable<Account>> = Single.fromCallable { listMethods.getAccountsInList(listId, range).execute() }
 
-    fun addAccountsToList(listId: String, accountIds: List<String>): Completable = Completable.fromAction {
-        listMethods.addAccountsToList(listId, accountIds)
-    }
+    fun addAccountsToList(
+        listId: String,
+        accountIds: List<String>
+    ): Completable = Completable.fromAction { listMethods.addAccountsToList(listId, accountIds) }
 
-    fun deleteAccountsFromList(listId: String, accountIds: List<String>): Completable = Completable.fromAction {
-        listMethods.deleteAccountsFromList(listId, accountIds)
-    }
+    fun deleteAccountsFromList(
+        listId: String,
+        accountIds: List<String>
+    ): Completable = Completable.fromAction { listMethods.deleteAccountsFromList(listId, accountIds) }
 }

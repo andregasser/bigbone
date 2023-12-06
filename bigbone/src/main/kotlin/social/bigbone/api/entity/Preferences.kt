@@ -8,6 +8,7 @@ import social.bigbone.api.entity.data.Visibility
  * Represents a Preferences about an account.
  * @see <a href="https://docs.joinmastodon.org/entities/Preferences/">Mastodon API Preferences</a>
  */
+@Suppress("ktlint:standard:no-blank-line-in-list")
 @Serializable
 data class Preferences(
     /**

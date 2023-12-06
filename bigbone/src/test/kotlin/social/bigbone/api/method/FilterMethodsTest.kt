@@ -8,8 +8,8 @@ import social.bigbone.api.entity.FilterKeyword
 import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.testtool.MockClient
 
+@Suppress("ktlint:standard:max-line-length")
 class FilterMethodsTest {
-
     @Test
     fun listFilters() {
         val client = MockClient.mock("filter_list.json")
@@ -53,7 +53,11 @@ class FilterMethodsTest {
         val client = MockClient.mock("filter.json")
         val filterMethods = FilterMethods(client)
         val filterKeyword = FilterKeyword("0", "keyword", false)
-        val filter = filterMethods.createFilter("title", listOf(Filter.FilterContext.PUBLIC), listOf(filterKeyword)).execute()
+        val filter = filterMethods.createFilter(
+            "title",
+            listOf(Filter.FilterContext.PUBLIC),
+            listOf(filterKeyword)
+        ).execute()
         filter.context.contains(Filter.FilterContext.PUBLIC) shouldBeEqualTo true
         filter.keywords.first().keyword shouldBeEqualTo "from birdsite"
         filter.keywords.first().wholeWord shouldBeEqualTo true

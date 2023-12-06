@@ -13,7 +13,6 @@ import java.io.File
  * @see <a href="https://docs.joinmastodon.org/methods/media/">Mastodon media API methods</a>
  */
 class RxMediaMethods(client: MastodonClient) {
-
     private val mediaMethods = MediaMethods(client)
 
     @JvmOverloads
@@ -22,7 +21,6 @@ class RxMediaMethods(client: MastodonClient) {
         mediaType: String,
         description: String? = null,
         focus: Focus? = null
-    ): Single<MediaAttachment> = Single.fromCallable {
-        mediaMethods.uploadMedia(file, mediaType, description, focus).execute()
-    }
+    ): Single<MediaAttachment> =
+        Single.fromCallable { mediaMethods.uploadMedia(file, mediaType, description, focus).execute() }
 }

@@ -21,8 +21,8 @@ import social.bigbone.nodeinfo.NodeInfoClient
 import social.bigbone.testtool.AssetsUtil
 import java.net.UnknownHostException
 
+@Suppress("ktlint:standard:max-line-length")
 class MastodonClientTest {
-
     @Test
     fun `Given server response with available v2 endpoint, when building MastodonClient, then return instance version of v2 endpoint`() {
         // given

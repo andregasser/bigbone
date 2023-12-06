@@ -7,6 +7,7 @@ import kotlinx.serialization.Serializable
  * Contains the coordinates to be used for smart thumbnail cropping.
  * For more details, please have a look at https://docs.joinmastodon.org/api/guidelines/#focal-points
  */
+@Suppress("ktlint:standard:no-blank-line-in-list")
 @Serializable
 data class Focus(
     @SerialName("x")

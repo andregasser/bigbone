@@ -8,7 +8,6 @@ import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.testtool.MockClient
 
 class PushNotificationMethodsTest {
-
     @Test
     fun subscribeToPushNotification() {
         val client = MockClient.mock("push_notification_subscription.json")

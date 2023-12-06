@@ -12,7 +12,6 @@ import social.bigbone.api.exception.BigBoneRequestException
  * @see <a href="https://docs.joinmastodon.org/methods/notifications/">Mastodon notifications API methods</a>
  */
 class NotificationMethods(private val client: MastodonClient) {
-
     private val notificationsEndpoint = "api/v1/notifications"
 
     /**

@@ -14,7 +14,11 @@ object Authenticator {
     private const val ACCESS_TOKEN = "access_token"
     private const val REDIRECT_URI = "urn:ietf:wg:oauth:2.0:oob"
 
-    fun appRegistrationIfNeeded(instanceName: String, credentialFilePath: String, useStreaming: Boolean = false): MastodonClient {
+    fun appRegistrationIfNeeded(
+        instanceName: String,
+        credentialFilePath: String,
+        useStreaming: Boolean = false,
+    ): MastodonClient {
         val file = File(credentialFilePath)
         if (!file.exists()) {
             println("create $credentialFilePath.")
@@ -46,7 +50,7 @@ object Authenticator {
                 clientId,
                 clientSecret,
                 email,
-                pass
+                pass,
             )
             properties[ACCESS_TOKEN] = accessToken.accessToken
             properties.store(file.outputStream(), "app registration")
@@ -68,11 +72,18 @@ object Authenticator {
         clientId: String,
         clientSecret: String,
         email: String,
-        password: String
+        password: String,
     ): Token {
         val client = MastodonClient.Builder(instanceName).build()
         val oAuthMethods = OAuthMethods(client)
-        return oAuthMethods.getUserAccessTokenWithPasswordGrant(clientId, clientSecret, REDIRECT_URI, email, password, Scope()).execute()
+        return oAuthMethods.getUserAccessTokenWithPasswordGrant(
+            clientId,
+            clientSecret,
+            REDIRECT_URI,
+            email,
+            password,
+            Scope()
+        ).execute()
     }
 
     private fun appRegistration(instanceName: String): Application {
@@ -80,7 +91,7 @@ object Authenticator {
         return client.apps.createApp(
             clientName = "bigbone-sample-app",
             redirectUris = REDIRECT_URI,
-            scope = Scope()
+            scope = Scope(),
         ).execute()
     }
 }

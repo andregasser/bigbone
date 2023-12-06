@@ -6,7 +6,6 @@ import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.rx.testtool.MockClient
 
 class RxDomainBlockMethodsTest {
-
     @Test
     fun `Given a client returning success, when getting blocked domains, then emit list of blocked domains`() {
         val client = MockClient.mock(

@@ -12,7 +12,6 @@ import social.bigbone.api.exception.BigBoneRequestException
  * @see <a href="https://docs.joinmastodon.org/methods/featured_tags/">Mastodon featured_tags API methods</a>
  */
 class FeaturedTagMethods(private val client: MastodonClient) {
-
     private val featuredTagsEndpoint = "api/v1/featured_tags"
 
     /**

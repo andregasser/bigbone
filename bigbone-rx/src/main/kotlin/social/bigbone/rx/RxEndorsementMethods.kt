@@ -13,7 +13,6 @@ import social.bigbone.api.method.EndorsementMethods
  * @see <a href="https://docs.joinmastodon.org/methods/endorsements/">Mastodon endorsement API methods</a>
  */
 class RxEndorsementMethods(client: MastodonClient) {
-
     private val endorsementMethods = EndorsementMethods(client)
 
     /**
@@ -23,7 +22,6 @@ class RxEndorsementMethods(client: MastodonClient) {
      * @return [Pageable] of [Account]s the user is currently featuring on their profile
      */
     @JvmOverloads
-    fun getEndorsements(range: Range = Range()): Single<Pageable<Account>> = Single.fromCallable {
-        endorsementMethods.getEndorsements(range).execute()
-    }
+    fun getEndorsements(range: Range = Range()): Single<Pageable<Account>> =
+        Single.fromCallable { endorsementMethods.getEndorsements(range).execute() }
 }

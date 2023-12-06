@@ -12,8 +12,8 @@ import java.time.ZoneOffset
 import java.time.ZonedDateTime
 import java.time.format.DateTimeParseException
 
+@Suppress("ktlint:standard:max-line-length")
 class DateTimeSerializerTest {
-
     @Test
     fun `Given a LocalDate string, when decoding from string, then return Instant at start of day for that date in UTC`() {
         val jsonString = "\"2022-05-03\""

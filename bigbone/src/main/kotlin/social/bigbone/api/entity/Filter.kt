@@ -10,6 +10,7 @@ import social.bigbone.PrecisionDateTime.InvalidPrecisionDateTime
  * Represents a user-defined filter for determining which statuses should not be shown to the user.
  * @see <a href="https://docs.joinmastodon.org/entities/Filter/">Mastodon API Filter</a>
  */
+@Suppress("ktlint:standard:no-blank-line-in-list")
 @Serializable
 data class Filter(
     /**

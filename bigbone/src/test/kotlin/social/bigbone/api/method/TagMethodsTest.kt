@@ -7,7 +7,6 @@ import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.testtool.MockClient
 
 class TagMethodsTest {
-
     @Test
     fun getTag() {
         val client = MockClient.mock("tag.json")

@@ -10,7 +10,6 @@ import social.bigbone.api.Range
  * @see <a href="https://docs.joinmastodon.org/methods/domain_blocks/">Mastodon domain_blocks API methods</a>
  */
 class DomainBlockMethods(private val client: MastodonClient) {
-
     private val domainBlocksEndpoint = "/api/v1/domain_blocks"
 
     /**
@@ -20,9 +19,7 @@ class DomainBlockMethods(private val client: MastodonClient) {
      * @return [Pageable] of [String] representing the domains the user has blocked
      */
     @JvmOverloads
-    fun getDomainBlocks(
-        range: Range = Range()
-    ): MastodonRequest<Pageable<String>> {
+    fun getDomainBlocks(range: Range = Range()): MastodonRequest<Pageable<String>> {
         return client.getPageableMastodonRequest<String>(
             endpoint = domainBlocksEndpoint,
             method = MastodonClient.Method.GET,
@@ -39,9 +36,7 @@ class DomainBlockMethods(private val client: MastodonClient) {
      * @throws IllegalArgumentException if [domain] is blank or contains spaces
      */
     @Throws(IllegalArgumentException::class)
-    fun blockDomain(
-        domain: String
-    ) {
+    fun blockDomain(domain: String) {
         require(domain.isNotBlank()) { "domain must not be blank" }
         require(!domain.contains(' ')) { "domain must not contain spaces" }
 
@@ -59,9 +54,7 @@ class DomainBlockMethods(private val client: MastodonClient) {
      * @throws IllegalArgumentException if [domain] is blank or contains spaces
      */
     @Throws(IllegalArgumentException::class)
-    fun unblockDomain(
-        domain: String
-    ) {
+    fun unblockDomain(domain: String) {
         require(domain.isNotBlank()) { "domain must not be blank" }
         require(!domain.contains(' ')) { "domain must not contain spaces" }
 

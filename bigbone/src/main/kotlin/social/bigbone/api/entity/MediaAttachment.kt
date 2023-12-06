@@ -8,6 +8,7 @@ import social.bigbone.api.entity.data.Focus
  * Represents a file or media attachment that can be added to a status.
  * @see <a href="https://docs.joinmastodon.org/entities/MediaAttachment/">Mastodon API MediaAttachment</a>
  */
+@Suppress("ktlint:standard:no-blank-line-in-list")
 @Serializable
 data class MediaAttachment(
     /**

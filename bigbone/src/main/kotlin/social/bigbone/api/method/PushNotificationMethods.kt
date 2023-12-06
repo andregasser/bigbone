@@ -11,14 +11,16 @@ import social.bigbone.api.exception.BigBoneRequestException
  * @see <a href="https://docs.joinmastodon.org/methods/push/">Mastodon push notification API methods</a>
  */
 class PushNotificationMethods(private val client: MastodonClient) {
-
     private val pushEndpoint = "/api/v1/push/subscription"
 
     /**
      * Specify whether to receive push notifications from all, followed, follower, or none users.
      */
     enum class PushDataPolicy {
-        ALL, FOLLOWED, FOLLOWER, NONE
+        ALL,
+        FOLLOWED,
+        FOLLOWER,
+        NONE
     }
 
     /**

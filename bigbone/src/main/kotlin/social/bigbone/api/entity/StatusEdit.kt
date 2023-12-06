@@ -10,6 +10,7 @@ import social.bigbone.PrecisionDateTime.InvalidPrecisionDateTime
  * Represents a revision of a status that has been edited.
  * @see <a href="https://docs.joinmastodon.org/entities/StatusEdit/">Mastodon API StatusEdit</a>
  */
+@Suppress("ktlint:standard:no-blank-line-in-list")
 @Serializable
 data class StatusEdit(
     /**
@@ -62,7 +63,6 @@ data class StatusEdit(
     @SerialName("emojis")
     val emojis: List<CustomEmoji> = emptyList()
 ) {
-
     /**
      * The current state of the poll options at this revision.
      */

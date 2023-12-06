@@ -11,7 +11,6 @@ import social.bigbone.api.entity.Account
  * @see <a href="https://docs.joinmastodon.org/methods/mutes/">Mastodon mutes API methods</a>
  */
 class MuteMethods(private val client: MastodonClient) {
-
     /**
      * Accounts the user has muted.
      * @param range optional Range for the pageable return value

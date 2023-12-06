@@ -15,7 +15,6 @@ import social.bigbone.api.entity.Rule
  * @see <a href="https://docs.joinmastodon.org/methods/instance/">Mastodon instance API methods</a>
  */
 class InstanceMethods(private val client: MastodonClient) {
-
     private val instanceEndpointV1 = "/api/v1/instance"
     private val instanceEndpointV2 = "/api/v2/instance"
 

@@ -44,7 +44,10 @@ class TimelineMethods(private val client: MastodonClient) {
      */
     @JvmOverloads
     @Throws(BigBoneRequestException::class)
-    fun getListTimeline(listId: String, range: Range = Range()): MastodonRequest<Pageable<Status>> {
+    fun getListTimeline(
+        listId: String,
+        range: Range = Range()
+    ): MastodonRequest<Pageable<Status>> {
         return client.getPageableMastodonRequest(
             endpoint = "api/v1/timelines/list/$listId",
             method = MastodonClient.Method.GET,

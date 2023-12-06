@@ -7,6 +7,7 @@ import kotlinx.serialization.Serializable
  * Represents a conversation with "direct message" visibility.
  * @see <a href="https://docs.joinmastodon.org/entities/Conversation/">Mastodon API Conversation</a>
  */
+@Suppress("ktlint:standard:no-blank-line-in-list")
 @Serializable
 data class Conversation(
     /**

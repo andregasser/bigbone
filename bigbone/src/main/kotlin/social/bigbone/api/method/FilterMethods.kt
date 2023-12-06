@@ -178,7 +178,10 @@ class FilterMethods(private val client: MastodonClient) {
      * @see <a href="https://docs.joinmastodon.org/methods/filters/#keywords-create">Mastodon API documentation: methods/filters/#keywords-create</a>
      */
     @Throws(BigBoneRequestException::class)
-    fun addKeyword(filterId: String, filterKeyword: FilterKeyword): MastodonRequest<FilterKeyword> {
+    fun addKeyword(
+        filterId: String,
+        filterKeyword: FilterKeyword
+    ): MastodonRequest<FilterKeyword> {
         return client.getMastodonRequest(
             endpoint = "api/v2/filters/$filterId/keywords",
             method = MastodonClient.Method.POST,
@@ -250,7 +253,10 @@ class FilterMethods(private val client: MastodonClient) {
      * @see <a href="https://docs.joinmastodon.org/methods/filters/#statuses-add">Mastodon API documentation: methods/filters/#statuses-add</a>
      */
     @Throws(BigBoneRequestException::class)
-    fun addStatusToFilter(filterId: String, statusId: String): MastodonRequest<FilterStatus> {
+    fun addStatusToFilter(
+        filterId: String,
+        statusId: String
+    ): MastodonRequest<FilterStatus> {
         return client.getMastodonRequest(
             endpoint = "api/v2/filters/$filterId/statuses",
             method = MastodonClient.Method.POST,

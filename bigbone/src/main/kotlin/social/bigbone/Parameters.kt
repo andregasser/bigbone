@@ -11,7 +11,6 @@ typealias Value = String
  * Add new pairs using one of the available append() functions.
  */
 class Parameters {
-
     internal val parameters: MutableMap<Key, MutableList<Value>> = mutableMapOf()
 
     /**
@@ -20,7 +19,10 @@ class Parameters {
      * @param value the value of this pair
      * @return this Parameters instance
      */
-    fun append(key: String, value: String): Parameters {
+    fun append(
+        key: String,
+        value: String
+    ): Parameters {
         parameters.getOrPut(key, ::mutableListOf).add(value)
         return this
     }
@@ -31,7 +33,10 @@ class Parameters {
      * @param value the value of this pair
      * @return this Parameters instance
      */
-    fun append(key: String, value: Int): Parameters = append(key, value.toString())
+    fun append(
+        key: String,
+        value: Int
+    ): Parameters = append(key, value.toString())
 
     /**
      * Appends a new key/value pair with a Long value.
@@ -39,7 +44,10 @@ class Parameters {
      * @param value the value of this pair
      * @return this Parameters instance
      */
-    fun append(key: String, value: Long): Parameters = append(key, value.toString())
+    fun append(
+        key: String,
+        value: Long
+    ): Parameters = append(key, value.toString())
 
     /**
      * Appends a new key/value pair with a Boolean value.
@@ -47,7 +55,10 @@ class Parameters {
      * @param value the value of this pair
      * @return this Parameters instance
      */
-    fun append(key: String, value: Boolean): Parameters = append(key, value.toString())
+    fun append(
+        key: String,
+        value: Boolean
+    ): Parameters = append(key, value.toString())
 
     /**
      * Appends a new key/value pair, with the value being a list.
@@ -56,7 +67,10 @@ class Parameters {
      * @param value a list of objects; individual elements will be stored via their .toString() method
      * @return this Parameters instance
      */
-    fun <T> append(key: String, value: List<T>): Parameters {
+    fun <T> append(
+        key: String,
+        value: List<T>
+    ): Parameters {
         value.forEach {
             append("$key[]", it.toString())
         }
@@ -69,7 +83,10 @@ class Parameters {
      * @param value a list of integer values
      * @return this Parameters instance
      */
-    fun appendInts(key: String, value: List<Int>): Parameters {
+    fun appendInts(
+        key: String,
+        value: List<Int>
+    ): Parameters {
         value.forEach {
             append("$key[]", it)
         }

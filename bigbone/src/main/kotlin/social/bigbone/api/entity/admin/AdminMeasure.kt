@@ -11,6 +11,7 @@ import social.bigbone.PrecisionDateTime.InvalidPrecisionDateTime
  * Represents quantitative data about the server.
  * @see <a href="https://docs.joinmastodon.org/entities/Admin_Measure/>Mastodon API Admin::Measure documentation</a>
  */
+@Suppress("ktlint:standard:no-blank-line-in-list")
 @Serializable
 data class AdminMeasure(
     /**
@@ -52,7 +53,6 @@ data class AdminMeasure(
     @SerialName("data")
     val data: List<Data>? = null
 ) {
-
     /**
      * The unique keystring for the requested measure.
      */

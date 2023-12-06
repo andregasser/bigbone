@@ -12,6 +12,7 @@ import social.bigbone.api.entity.data.Visibility
  * Represents a status that will be published at a future scheduled date.
  * @see <a href="https://docs.joinmastodon.org/entities/ScheduledStatus/">Mastodon API ScheduledStatus</a>
  */
+@Suppress("ktlint:standard:no-blank-line-in-list")
 @Serializable
 data class ScheduledStatus(
     /**

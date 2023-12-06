@@ -31,12 +31,14 @@ internal val JSON_SERIALIZER: Json = Json {
  * If that _also_ fails, it will return [Invalid], swallowing any [DateTimeParseException]s in the process.
  */
 object DateTimeSerializer : KSerializer<PrecisionDateTime> {
-
     override val descriptor: SerialDescriptor =
         PrimitiveSerialDescriptor("social.bigbone.DateTimeSerializer", PrimitiveKind.STRING)
 
     @OptIn(ExperimentalSerializationApi::class)
-    override fun serialize(encoder: Encoder, value: PrecisionDateTime) {
+    override fun serialize(
+        encoder: Encoder,
+        value: PrecisionDateTime
+    ) {
         return if (value is InvalidPrecisionDateTime) {
             encoder.encodeNull()
         } else {

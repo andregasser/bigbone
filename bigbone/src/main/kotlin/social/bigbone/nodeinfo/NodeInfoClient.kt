@@ -14,7 +14,6 @@ import social.bigbone.nodeinfo.entity.Server
  * @see <a href="https://github.com/jhass/nodeinfo">NodeInfo information</a>
  */
 object NodeInfoClient {
-
     private val CLIENT = OkHttpClient.Builder()
         .followRedirects(true)
         .build()

@@ -7,6 +7,7 @@ import kotlinx.serialization.Serializable
  * Represents an error message.
  * @see <a href="https://docs.joinmastodon.org/entities/Error/">Mastodon API Error</a>
  */
+@Suppress("ktlint:standard:no-blank-line-in-list")
 @Serializable
 data class Error(
     /**

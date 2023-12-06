@@ -105,7 +105,10 @@ class AccountMethods(private val client: MastodonClient) {
      * @see <a href="https://docs.joinmastodon.org/methods/accounts/#followers">Mastodon API documentation: methods/accounts/#followers</a>
      */
     @JvmOverloads
-    fun getFollowers(accountId: String, range: Range = Range()): MastodonRequest<Pageable<Account>> {
+    fun getFollowers(
+        accountId: String,
+        range: Range = Range()
+    ): MastodonRequest<Pageable<Account>> {
         return client.getPageableMastodonRequest(
             endpoint = "api/v1/accounts/$accountId/followers",
             method = MastodonClient.Method.GET,
@@ -120,7 +123,10 @@ class AccountMethods(private val client: MastodonClient) {
      * @see <a href="https://docs.joinmastodon.org/methods/accounts/#following">Mastodon API documentation: methods/accounts/#following</a>
      */
     @JvmOverloads
-    fun getFollowing(accountId: String, range: Range = Range()): MastodonRequest<Pageable<Account>> {
+    fun getFollowing(
+        accountId: String,
+        range: Range = Range()
+    ): MastodonRequest<Pageable<Account>> {
         return client.getPageableMastodonRequest(
             endpoint = "api/v1/accounts/$accountId/following",
             method = MastodonClient.Method.GET,

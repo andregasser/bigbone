@@ -11,6 +11,7 @@ import social.bigbone.PrecisionDateTime
  * @see <a href="https://docs.joinmastodon.org/entities/Admin_Cohort/">Mastodon documentation Admin::Cohort</a>
  *
  */
+@Suppress("ktlint:standard:no-blank-line-in-list")
 @Serializable
 data class AdminCohort(
 

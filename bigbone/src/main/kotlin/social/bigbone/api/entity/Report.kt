@@ -10,6 +10,7 @@ import social.bigbone.PrecisionDateTime.InvalidPrecisionDateTime
  * Reports filed against users and/or statuses, to be taken action on by moderators.
  * @see <a href="https://docs.joinmastodon.org/entities/Report/">Mastodon API Report</a>
  */
+@Suppress("ktlint:standard:no-blank-line-in-list")
 @Serializable
 data class Report(
     /**

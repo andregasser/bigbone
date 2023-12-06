@@ -15,7 +15,6 @@ import social.bigbone.api.exception.BigBoneRequestException
 import java.net.SocketTimeoutException
 
 object MockClient {
-
     fun mock(
         jsonName: String,
         maxId: String? = null,
@@ -62,9 +61,7 @@ object MockClient {
         return clientMock
     }
 
-    fun ioException(
-        requestUrl: String = "https://example.com"
-    ): MastodonClient {
+    fun ioException(requestUrl: String = "https://example.com"): MastodonClient {
         val clientMock: MastodonClient = mockk()
         val responseBodyMock: ResponseBody = mockk()
         every { responseBodyMock.toString() } throws SocketTimeoutException()

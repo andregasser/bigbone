@@ -7,6 +7,7 @@ import kotlinx.serialization.Serializable
  * Represents the results of a search.
  * @see <a href="https://docs.joinmastodon.org/entities/Search/">Mastodon API Search</a>
  */
+@Suppress("ktlint:standard:no-blank-line-in-list")
 @Serializable
 data class Search(
     @SerialName("accounts")

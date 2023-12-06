@@ -7,6 +7,7 @@ import kotlinx.serialization.Serializable
  * Represents a keyword that, if matched, should cause the filter action to be taken.
  * @see <a href="https://docs.joinmastodon.org/entities/FilterKeyword/">Mastodon API FilterKeyword</a>
  */
+@Suppress("ktlint:standard:no-blank-line-in-list")
 @Serializable
 data class FilterKeyword(
     /**

@@ -14,7 +14,6 @@ import java.time.format.DateTimeParseException
  * day precision. On some, we might even be unable to parse a date at all.
  */
 sealed interface PrecisionDateTime {
-
     fun asJsonString(): String
 
     /**
@@ -50,7 +49,6 @@ sealed interface PrecisionDateTime {
     sealed class ValidPrecisionDateTime(open val instant: Instant) :
         PrecisionDateTime,
         Comparable<ValidPrecisionDateTime> {
-
         override fun mostPreciseInstantOrNull(): Instant = instant
 
         override fun compareTo(other: ValidPrecisionDateTime): Int = this.instant.compareTo(other.instant)
@@ -75,7 +73,6 @@ sealed interface PrecisionDateTime {
      * instance this was retrieved from as they are either [Unavailable] or [Invalid].
      */
     sealed interface InvalidPrecisionDateTime : PrecisionDateTime, Comparable<InvalidPrecisionDateTime> {
-
         override fun asJsonString(): String = ""
 
         override fun mostPreciseInstantOrNull(): Instant? = null

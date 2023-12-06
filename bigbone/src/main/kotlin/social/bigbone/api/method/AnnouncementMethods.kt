@@ -11,7 +11,6 @@ import social.bigbone.api.exception.BigBoneRequestException
  * @see <a href="https://docs.joinmastodon.org/methods/notifications/">Mastodon notifications API methods</a>
  */
 class AnnouncementMethods(private val client: MastodonClient) {
-
     private val announcementsEndpoint = "api/v1/announcements"
 
     /**
@@ -20,9 +19,7 @@ class AnnouncementMethods(private val client: MastodonClient) {
      * @see <a href="https://docs.joinmastodon.org/methods/announcements/#get">Mastodon API documentation: methods/announcements/#get</a>
      */
     @JvmOverloads
-    fun getAllAnnouncements(
-        withDismissed: Boolean = false
-    ): MastodonRequest<List<Announcement>> {
+    fun getAllAnnouncements(withDismissed: Boolean = false): MastodonRequest<List<Announcement>> {
         return client.getMastodonRequestForList(
             endpoint = announcementsEndpoint,
             method = MastodonClient.Method.GET,

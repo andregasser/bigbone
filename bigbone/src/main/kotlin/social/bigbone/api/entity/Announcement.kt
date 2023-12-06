@@ -10,7 +10,7 @@ import social.bigbone.PrecisionDateTime.InvalidPrecisionDateTime
  * Represents an announcement set by an administrator.
  * @see <a href="https://docs.joinmastodon.org/entities/Announcement/"> Mastodon API Announcement </a>
  */
-
+@Suppress("ktlint:standard:no-blank-line-in-list")
 @Serializable
 data class Announcement(
     /**

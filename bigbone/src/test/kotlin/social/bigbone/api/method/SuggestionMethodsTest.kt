@@ -9,7 +9,6 @@ import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.testtool.MockClient
 
 class SuggestionMethodsTest {
-
     @Test
     fun getSuggestions() {
         val client = MockClient.mock("suggestions.json")

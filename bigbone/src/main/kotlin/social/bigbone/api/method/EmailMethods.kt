@@ -8,7 +8,6 @@ import social.bigbone.Parameters
  * @see <a href="https://docs.joinmastodon.org/methods/emails/">Mastodon emails API methods</a>
  */
 class EmailMethods(private val client: MastodonClient) {
-
     private val emailsEndpoint = "api/v1/emails"
 
     /**

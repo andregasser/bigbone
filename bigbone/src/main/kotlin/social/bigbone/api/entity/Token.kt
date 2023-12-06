@@ -7,6 +7,7 @@ import kotlinx.serialization.Serializable
  * Represents an OAuth token used for authenticating with the API and performing actions.
  * @see <a href="https://docs.joinmastodon.org/entities/Token/">Mastodon API Token</a>
  */
+@Suppress("ktlint:standard:no-blank-line-in-list")
 @Serializable
 data class Token(
     @SerialName("access_token")

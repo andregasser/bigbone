@@ -7,6 +7,7 @@ import kotlinx.serialization.Serializable
  * Represents a list of some users that the authenticated user follows.
  * @see <a href="https://docs.joinmastodon.org/entities/List/">Mastodon API List</a>
  */
+@Suppress("ktlint:standard:no-blank-line-in-list")
 @Serializable
 data class MastodonList(
     /**

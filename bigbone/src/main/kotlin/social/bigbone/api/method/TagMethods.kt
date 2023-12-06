@@ -9,7 +9,6 @@ import social.bigbone.api.entity.Tag
  * @see <a href="https://docs.joinmastodon.org/methods/tags/">Mastodon tags API methods</a>
  */
 class TagMethods(private val client: MastodonClient) {
-
     /**
      * Show a hashtag and its associated information.
      * @param tagId The name of the hashtag

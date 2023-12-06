@@ -8,6 +8,7 @@ import social.bigbone.api.method.OEmbedMethods
  * oEmbed metadata returned by [OEmbedMethods].
  * @see <a href="https://oembed.com/#section2.3">OEmbed response parameters documentation</a>
  */
+@Suppress("ktlint:standard:no-blank-line-in-list")
 @Serializable
 data class OEmbedMetadata(
     /**

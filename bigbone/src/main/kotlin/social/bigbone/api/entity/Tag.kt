@@ -8,6 +8,7 @@ import social.bigbone.api.entity.data.History
  * Represents a hashtag used within the content of a status.
  * @see <a href="https://docs.joinmastodon.org/entities/Tag/">Mastodon API Tag</a>
  */
+@Suppress("ktlint:standard:no-blank-line-in-list")
 @Serializable
 data class Tag(
     /**

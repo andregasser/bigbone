@@ -12,7 +12,6 @@ import social.bigbone.api.exception.BigBoneRequestException
  * @see <a href="https://docs.joinmastodon.org/methods/reports/">Mastodon reports API methods</a>
  */
 class ReportMethods(private val client: MastodonClient) {
-
     /**
      * File a report.
      * @param accountId The ID of the account to report
@@ -64,7 +63,10 @@ class ReportMethods(private val client: MastodonClient) {
         }
     }
 
-    private fun setCategoryCorrectly(ruleIds: List<Int>? = emptyList(), category: ReportCategory? = null): ReportCategory {
+    private fun setCategoryCorrectly(
+        ruleIds: List<Int>? = emptyList(),
+        category: ReportCategory? = null
+    ): ReportCategory {
         return when {
             !ruleIds.isNullOrEmpty() -> ReportCategory.VIOLATION
             category == null -> ReportCategory.OTHER

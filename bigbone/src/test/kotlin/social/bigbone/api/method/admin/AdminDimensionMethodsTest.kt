@@ -17,8 +17,8 @@ import social.bigbone.testtool.MockClient
 import java.net.URLEncoder
 import java.time.Instant
 
+@Suppress("ktlint:standard:max-line-length")
 class AdminDimensionMethodsTest {
-
     @Test
     fun `Given client returning success, when calling getDimensionalData, then ensure proper deserialisation and correct endpoint and parameter usage`() {
         val client = MockClient.mock("admin_dimensions_get_dimensional_data_success.json")

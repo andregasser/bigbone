@@ -12,8 +12,8 @@ import social.bigbone.Parameters
 import social.bigbone.testtool.MockClient
 import java.net.URLEncoder
 
+@Suppress("ktlint:standard:max-line-length")
 class EmailMethodsTest {
-
     @Test
     fun `Given a client returning success, when resending confirmation mail to existing address, then verify correct method was called`() {
         val client = MockClient.mock(jsonName = "emails_resend_confirmation_mail_success.json")

@@ -11,12 +11,12 @@ import social.bigbone.api.method.PollMethods
  * @see <a href="https://docs.joinmastodon.org/methods/polls/">Mastodon polls API methods</a>
  */
 class RxPollMethods(client: MastodonClient) {
-
     private val pollMethods = PollMethods(client)
 
     fun viewPoll(pollId: String): Single<Poll> = Single.fromCallable { pollMethods.viewPoll(pollId).execute() }
 
-    fun voteOnPoll(pollId: String, choices: List<Int>): Single<Poll> = Single.fromCallable {
-        pollMethods.voteOnPoll(pollId, choices).execute()
-    }
+    fun voteOnPoll(
+        pollId: String,
+        choices: List<Int>
+    ): Single<Poll> = Single.fromCallable { pollMethods.voteOnPoll(pollId, choices).execute() }
 }

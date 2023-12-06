@@ -8,13 +8,17 @@ import social.bigbone.api.entity.Report.ReportCategory
 import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.testtool.MockClient
 
+@Suppress("ktlint:standard:max-line-length")
 class ReportMethodsTest {
-
     @Test
     fun reportFile() {
         val client = MockClient.mock("reports.json")
         val fileReportMethod = ReportMethods(client)
-        val result = fileReportMethod.fileReport(accountId = "testId", category = ReportCategory.SPAM, comment = "spam").execute()
+        val result = fileReportMethod.fileReport(
+            accountId = "testId",
+            category = ReportCategory.SPAM,
+            comment = "spam"
+        ).execute()
         result.category `should be equal to` ReportCategory.SPAM.name.lowercase()
         result.comment shouldContainIgnoringCase "spam"
         result.id `should be equal to` "testId"

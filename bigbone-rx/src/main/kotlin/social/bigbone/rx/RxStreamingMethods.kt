@@ -44,7 +44,10 @@ class RxStreamingMethods(client: MastodonClient) {
         }
     }
 
-    private fun tagStream(tag: String, f: (String, Handler) -> Shutdownable): Flowable<Status> {
+    private fun tagStream(
+        tag: String,
+        f: (String, Handler) -> Shutdownable
+    ): Flowable<Status> {
         return stream { handler ->
             f(tag, handler)
         }

@@ -13,7 +13,6 @@ import social.bigbone.api.entity.MastodonList
  * @see <a href="https://docs.joinmastodon.org/methods/lists/">Mastodon lists API methods</a>
  */
 class ListMethods(private val client: MastodonClient) {
-
     /**
      * Fetch all lists that the user owns.
      * @see <a href="https://docs.joinmastodon.org/methods/lists/#get">Mastodon API documentation: methods/lists/#get</a>
@@ -99,7 +98,10 @@ class ListMethods(private val client: MastodonClient) {
      * @see <a href="https://docs.joinmastodon.org/methods/lists/#accounts">Mastodon API documentation: methods/lists/#accounts</a>
      */
     @JvmOverloads
-    fun getAccountsInList(listId: String, range: Range = Range()): MastodonRequest<Pageable<Account>> {
+    fun getAccountsInList(
+        listId: String,
+        range: Range = Range()
+    ): MastodonRequest<Pageable<Account>> {
         return client.getPageableMastodonRequest(
             endpoint = "api/v1/lists/$listId/accounts",
             method = MastodonClient.Method.GET,
@@ -113,7 +115,10 @@ class ListMethods(private val client: MastodonClient) {
      * @param accountIds The accounts that should be added to the list.
      * @see <a href="https://docs.joinmastodon.org/methods/lists/#accounts-add">Mastodon API documentation: methods/lists/#accounts-add</a>
      */
-    fun addAccountsToList(listId: String, accountIds: List<String>) {
+    fun addAccountsToList(
+        listId: String,
+        accountIds: List<String>
+    ) {
         client.performAction(
             endpoint = "api/v1/lists/$listId/accounts",
             method = MastodonClient.Method.POST,
@@ -129,7 +134,10 @@ class ListMethods(private val client: MastodonClient) {
      * @param accountIds The accounts that should be removed from the list.
      * @see <a href="https://docs.joinmastodon.org/methods/lists/#accounts-remove">Mastodon API documentation: methods/lists/#accounts-remove</a>
      */
-    fun deleteAccountsFromList(listId: String, accountIds: List<String>) {
+    fun deleteAccountsFromList(
+        listId: String,
+        accountIds: List<String>
+    ) {
         client.performAction(
             endpoint = "api/v1/lists/$listId/accounts",
             method = MastodonClient.Method.DELETE,

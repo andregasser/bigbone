@@ -19,8 +19,8 @@ import social.bigbone.testtool.MockClient
 import java.net.URLEncoder
 import java.time.Instant
 
+@Suppress("ktlint:standard:max-line-length")
 class AdminMeasureMethodsTest {
-
     @Test
     fun `Given client returning success, when calling getMeasurableDate, then ensure proper deserialisation and correct endpoint and parameter usage`() {
         val client = MockClient.mock("admin_measures_get_measurable_data_success.json")

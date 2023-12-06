@@ -55,7 +55,10 @@ object ManageFilters {
      * @param client a [MastodonClient] with an authenticated user
      * @param keywordToFilter string that should be filtered by the new filter
      */
-    private fun createNewFilter(client: MastodonClient, keywordToFilter: String) {
+    private fun createNewFilter(
+        client: MastodonClient,
+        keywordToFilter: String,
+    ) {
         // title for new filter
         val title = "BigBone sample filter: $keywordToFilter"
 
@@ -85,7 +88,10 @@ object ManageFilters {
      * @param client a [MastodonClient] with an authenticated user
      * @param filterId ID string for the filter that should be deleted
      */
-    private fun deleteFilter(client: MastodonClient, filterId: String) {
+    private fun deleteFilter(
+        client: MastodonClient,
+        filterId: String,
+    ) {
         client.filters.deleteFilter(filterId)
         println("Filter was deleted")
     }
@@ -98,7 +104,11 @@ object ManageFilters {
      * @param filterId ID string for the filter that should be edited
      * @param keywordToFilter string for a new keyword that should be filtered by the filter
      */
-    private fun addKeywordToFilter(client: MastodonClient, filterId: String, keywordToFilter: String) {
+    private fun addKeywordToFilter(
+        client: MastodonClient,
+        filterId: String,
+        keywordToFilter: String,
+    ) {
         // create a proper filter keyword
         val localFilterKeyword = FilterKeyword("0", keywordToFilter, true)
 

@@ -1,3 +1,5 @@
+@file:Suppress("ktlint:standard:no-blank-line-in-list")
+
 package social.bigbone.api.entity
 
 import kotlinx.serialization.SerialName

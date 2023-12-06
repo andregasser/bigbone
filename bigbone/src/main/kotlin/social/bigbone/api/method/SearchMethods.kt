@@ -13,7 +13,6 @@ import social.bigbone.api.entity.Search
  * @see <a href="https://docs.joinmastodon.org/methods/search/">Mastodon search API methods</a>
  */
 class SearchMethods(private val client: MastodonClient) {
-
     /**
      * Specify whether to search for only accounts, hashtags, statuses.
      */

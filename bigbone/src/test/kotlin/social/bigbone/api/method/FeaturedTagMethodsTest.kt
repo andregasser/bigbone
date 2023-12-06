@@ -14,8 +14,8 @@ import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.testtool.MockClient
 import java.time.Instant
 
+@Suppress("ktlint:standard:max-line-length")
 class FeaturedTagMethodsTest {
-
     @Test
     fun `Given a client returning success, when getting featured_tags, then expect values of response`() {
         val client = MockClient.mock("featured_tags_view_success.json")

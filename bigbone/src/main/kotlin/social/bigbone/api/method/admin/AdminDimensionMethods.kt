@@ -1,3 +1,5 @@
+@file:Suppress("ktlint:standard:annotation")
+
 package social.bigbone.api.method.admin
 
 import social.bigbone.MastodonClient
@@ -12,7 +14,6 @@ import java.time.Instant
  * @see <a href="https://docs.joinmastodon.org/methods/admin/dimensions/">Mastodon admin/dimensions API methods</a>
  */
 class AdminDimensionMethods(private val client: MastodonClient) {
-
     private val adminDimensionsEndpoint = "api/v1/admin/dimensions"
 
     /**
@@ -49,15 +50,12 @@ class AdminDimensionMethods(private val client: MastodonClient) {
  * Wrapper class to ensure that required parameters are added when sending a specific [Key] for which to get dimensions.
  */
 sealed class RequestDimension(val key: Key, val apiName: String = key.apiName) {
-
     /**
      * Get the key=value pairs to request this dimension.
      * Can be used to craft a [Parameters] entry from.
      * Defaults to [KEYS_NAME] = [apiName] for implementations of [RequestDimension] that do not have additional properties.
      */
-    open fun getRequestKeyValues(): List<Pair<String, String>> = listOf(
-        KEYS_NAME to apiName
-    )
+    open fun getRequestKeyValues(): List<Pair<String, String>> = listOf(KEYS_NAME to apiName)
 
     companion object {
         private const val KEYS_NAME = "keys[]"

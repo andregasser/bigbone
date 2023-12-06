@@ -5,7 +5,6 @@ import social.bigbone.api.Pageable
 import social.bigbone.api.entity.Notification
 
 object GetNotifications {
-
     /**
      * Get all notifications for the account having the access token supplied via [args].
      *

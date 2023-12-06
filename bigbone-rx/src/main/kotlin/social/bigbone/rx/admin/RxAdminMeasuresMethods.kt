@@ -15,7 +15,6 @@ import java.time.Instant
  * @see <a href="https://docs.joinmastodon.org/methods/admin/measures/">Mastodon admin/measures API methods</a>
  */
 class RxAdminMeasuresMethods(client: MastodonClient) {
-
     private val adminMeasureMethods = AdminMeasureMethods(client)
 
     /**
@@ -31,11 +30,12 @@ class RxAdminMeasuresMethods(client: MastodonClient) {
         measures: List<RequestMeasure>,
         startAt: Instant,
         endAt: Instant
-    ): Single<List<AdminMeasure>> = Single.fromCallable {
-        adminMeasureMethods.getMeasurableData(
-            measures = measures,
-            startAt = startAt,
-            endAt = endAt
-        ).execute()
-    }
+    ): Single<List<AdminMeasure>> =
+        Single.fromCallable {
+            adminMeasureMethods.getMeasurableData(
+                measures = measures,
+                startAt = startAt,
+                endAt = endAt
+            ).execute()
+        }
 }

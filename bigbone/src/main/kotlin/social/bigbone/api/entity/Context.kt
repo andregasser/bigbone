@@ -7,6 +7,7 @@ import kotlinx.serialization.Serializable
  * Represents the tree around a given status. Used for reconstructing threads of statuses.
  * @see <a href="https://docs.joinmastodon.org/entities/Context/">Mastodon API Context</a>
  */
+@Suppress("ktlint:standard:no-blank-line-in-list")
 @Serializable
 data class Context(
     /**

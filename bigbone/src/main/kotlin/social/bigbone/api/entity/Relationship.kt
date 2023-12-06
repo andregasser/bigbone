@@ -7,6 +7,7 @@ import kotlinx.serialization.Serializable
  * Represents the relationship between accounts, such as following / blocking / muting / etc.
  * @see <a href="https://docs.joinmastodon.org/entities/Relationship/">Mastodon API Relationship</a>
  */
+@Suppress("ktlint:standard:no-blank-line-in-list")
 @Serializable
 data class Relationship(
     /**

@@ -15,13 +15,12 @@ import social.bigbone.api.exception.BigBoneRequestException
 import java.net.SocketTimeoutException
 
 object MockClient {
-
     fun mock(
         jsonName: String,
         maxId: String? = null,
         sinceId: String? = null,
         requestUrl: String = "https://example.com",
-        responseBaseUrl: String = "https://mstdn.jp/api/v1/timelines/public"
+        responseBaseUrl: String = "https://mstdn.jp/api/v1/timelines/public",
     ): MastodonClient {
         val client: MastodonClient = mockk()
         val response: Response = Response.Builder()
@@ -56,7 +55,7 @@ object MockClient {
             client["performAction"](
                 any<String>(),
                 any<MastodonClient.Method>(),
-                any<Parameters>()
+                any<Parameters>(),
             )
         } returns response
 
@@ -66,7 +65,7 @@ object MockClient {
     fun failWithResponse(
         responseJsonAssetPath: String,
         responseCode: Int,
-        message: String
+        message: String,
     ): MastodonClient {
         val clientMock: MastodonClient = mockk()
         val responseBodyMock: ResponseBody = mockk()

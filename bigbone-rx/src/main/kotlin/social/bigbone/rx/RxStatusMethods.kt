@@ -22,31 +22,31 @@ import java.time.Instant
  * @see <a href="https://docs.joinmastodon.org/methods/statuses/">Mastodon statuses API methods</a>
  */
 class RxStatusMethods(client: MastodonClient) {
-
     private val statusMethods = StatusMethods(client)
 
-    fun getStatus(statusId: String): Single<Status> = Single.fromCallable {
-        statusMethods.getStatus(statusId).execute()
-    }
+    fun getStatus(statusId: String): Single<Status> =
+        Single.fromCallable { statusMethods.getStatus(statusId).execute() }
 
-    fun getContext(statusId: String): Single<Context> = Single.fromCallable {
-        statusMethods.getContext(statusId).execute()
-    }
+    fun getContext(statusId: String): Single<Context> =
+        Single.fromCallable { statusMethods.getContext(statusId).execute() }
 
     @JvmOverloads
-    fun translateStatus(statusId: String, language: String? = null): Single<Translation> = Single.fromCallable {
-        statusMethods.translateStatus(statusId, language).execute()
-    }
+    fun translateStatus(
+        statusId: String,
+        language: String? = null
+    ): Single<Translation> = Single.fromCallable { statusMethods.translateStatus(statusId, language).execute() }
 
     @JvmOverloads
-    fun getRebloggedBy(statusId: String, range: Range = Range()): Single<Pageable<Account>> = Single.fromCallable {
-        statusMethods.getRebloggedBy(statusId, range).execute()
-    }
+    fun getRebloggedBy(
+        statusId: String,
+        range: Range = Range()
+    ): Single<Pageable<Account>> = Single.fromCallable { statusMethods.getRebloggedBy(statusId, range).execute() }
 
     @JvmOverloads
-    fun getFavouritedBy(statusId: String, range: Range = Range()): Single<Pageable<Account>> = Single.fromCallable {
-        statusMethods.getFavouritedBy(statusId, range).execute()
-    }
+    fun getFavouritedBy(
+        statusId: String,
+        range: Range = Range()
+    ): Single<Pageable<Account>> = Single.fromCallable { statusMethods.getFavouritedBy(statusId, range).execute() }
 
     @JvmOverloads
     fun postStatus(
@@ -57,17 +57,18 @@ class RxStatusMethods(client: MastodonClient) {
         sensitive: Boolean = false,
         spoilerText: String? = null,
         language: String? = null
-    ): Single<Status> = Single.fromCallable {
-        statusMethods.postStatus(
-            status,
-            mediaIds,
-            visibility,
-            inReplyToId,
-            sensitive,
-            spoilerText,
-            language
-        ).execute()
-    }
+    ): Single<Status> =
+        Single.fromCallable {
+            statusMethods.postStatus(
+                status,
+                mediaIds,
+                visibility,
+                inReplyToId,
+                sensitive,
+                spoilerText,
+                language
+            ).execute()
+        }
 
     @JvmOverloads
     fun postPoll(
@@ -78,17 +79,18 @@ class RxStatusMethods(client: MastodonClient) {
         sensitive: Boolean = false,
         spoilerText: String? = null,
         language: String? = null
-    ): Single<Status> = Single.fromCallable {
-        statusMethods.postPoll(
-            status,
-            pollData,
-            visibility,
-            inReplyToId,
-            sensitive,
-            spoilerText,
-            language
-        ).execute()
-    }
+    ): Single<Status> =
+        Single.fromCallable {
+            statusMethods.postPoll(
+                status,
+                pollData,
+                visibility,
+                inReplyToId,
+                sensitive,
+                spoilerText,
+                language
+            ).execute()
+        }
 
     @JvmOverloads
     fun scheduleStatus(
@@ -100,18 +102,19 @@ class RxStatusMethods(client: MastodonClient) {
         sensitive: Boolean = false,
         spoilerText: String? = null,
         language: String? = null
-    ): Single<ScheduledStatus> = Single.fromCallable {
-        statusMethods.scheduleStatus(
-            status,
-            mediaIds,
-            scheduledAt,
-            visibility,
-            inReplyToId,
-            sensitive,
-            spoilerText,
-            language
-        ).execute()
-    }
+    ): Single<ScheduledStatus> =
+        Single.fromCallable {
+            statusMethods.scheduleStatus(
+                status,
+                mediaIds,
+                scheduledAt,
+                visibility,
+                inReplyToId,
+                sensitive,
+                spoilerText,
+                language
+            ).execute()
+        }
 
     @JvmOverloads
     fun schedulePoll(
@@ -123,62 +126,55 @@ class RxStatusMethods(client: MastodonClient) {
         sensitive: Boolean = false,
         spoilerText: String? = null,
         language: String? = null
-    ): Single<ScheduledStatus> = Single.fromCallable {
-        statusMethods.schedulePoll(
-            status,
-            scheduledAt,
-            pollData,
-            visibility,
-            inReplyToId,
-            sensitive,
-            spoilerText,
-            language
-        ).execute()
-    }
+    ): Single<ScheduledStatus> =
+        Single.fromCallable {
+            statusMethods.schedulePoll(
+                status,
+                scheduledAt,
+                pollData,
+                visibility,
+                inReplyToId,
+                sensitive,
+                spoilerText,
+                language
+            ).execute()
+        }
 
-    fun deleteStatus(statusId: String): Single<Status> = Single.fromCallable {
-        statusMethods.deleteStatus(statusId).execute()
-    }
+    fun deleteStatus(statusId: String): Single<Status> =
+        Single.fromCallable { statusMethods.deleteStatus(statusId).execute() }
 
     @JvmOverloads
-    fun reblogStatus(statusId: String, visibility: Visibility = Visibility.PUBLIC): Single<Status> =
-        Single.fromCallable { statusMethods.reblogStatus(statusId, visibility).execute() }
+    fun reblogStatus(
+        statusId: String,
+        visibility: Visibility = Visibility.PUBLIC
+    ): Single<Status> = Single.fromCallable { statusMethods.reblogStatus(statusId, visibility).execute() }
 
-    fun unreblogStatus(statusId: String): Single<Status> = Single.fromCallable {
-        statusMethods.unreblogStatus(statusId).execute()
-    }
+    fun unreblogStatus(statusId: String): Single<Status> =
+        Single.fromCallable { statusMethods.unreblogStatus(statusId).execute() }
 
-    fun favouriteStatus(statusId: String): Single<Status> = Single.fromCallable {
-        statusMethods.favouriteStatus(statusId).execute()
-    }
+    fun favouriteStatus(statusId: String): Single<Status> =
+        Single.fromCallable { statusMethods.favouriteStatus(statusId).execute() }
 
-    fun unfavouriteStatus(statusId: String): Single<Status> = Single.fromCallable {
-        statusMethods.unfavouriteStatus(statusId).execute()
-    }
+    fun unfavouriteStatus(statusId: String): Single<Status> =
+        Single.fromCallable { statusMethods.unfavouriteStatus(statusId).execute() }
 
-    fun bookmarkStatus(statusId: String): Single<Status> = Single.fromCallable {
-        statusMethods.bookmarkStatus(statusId).execute()
-    }
+    fun bookmarkStatus(statusId: String): Single<Status> =
+        Single.fromCallable { statusMethods.bookmarkStatus(statusId).execute() }
 
-    fun unbookmarkStatus(statusId: String): Single<Status> = Single.fromCallable {
-        statusMethods.unbookmarkStatus(statusId).execute()
-    }
+    fun unbookmarkStatus(statusId: String): Single<Status> =
+        Single.fromCallable { statusMethods.unbookmarkStatus(statusId).execute() }
 
-    fun muteConversation(statusId: String): Single<Status> = Single.fromCallable {
-        statusMethods.muteConversation(statusId).execute()
-    }
+    fun muteConversation(statusId: String): Single<Status> =
+        Single.fromCallable { statusMethods.muteConversation(statusId).execute() }
 
-    fun unmuteConversation(statusId: String): Single<Status> = Single.fromCallable {
-        statusMethods.unmuteConversation(statusId).execute()
-    }
+    fun unmuteConversation(statusId: String): Single<Status> =
+        Single.fromCallable { statusMethods.unmuteConversation(statusId).execute() }
 
-    fun pinStatus(statusId: String): Single<Status> = Single.fromCallable {
-        statusMethods.pinStatus(statusId).execute()
-    }
+    fun pinStatus(statusId: String): Single<Status> =
+        Single.fromCallable { statusMethods.pinStatus(statusId).execute() }
 
-    fun unpinStatus(statusId: String): Single<Status> = Single.fromCallable {
-        statusMethods.unpinStatus(statusId).execute()
-    }
+    fun unpinStatus(statusId: String): Single<Status> =
+        Single.fromCallable { statusMethods.unpinStatus(statusId).execute() }
 
     @JvmOverloads
     fun editStatus(
@@ -188,16 +184,17 @@ class RxStatusMethods(client: MastodonClient) {
         sensitive: Boolean = false,
         spoilerText: String? = null,
         language: String? = null
-    ): Single<Status> = Single.fromCallable {
-        statusMethods.editStatus(
-            statusId,
-            status,
-            mediaIds,
-            sensitive,
-            spoilerText,
-            language
-        ).execute()
-    }
+    ): Single<Status> =
+        Single.fromCallable {
+            statusMethods.editStatus(
+                statusId,
+                status,
+                mediaIds,
+                sensitive,
+                spoilerText,
+                language
+            ).execute()
+        }
 
     @JvmOverloads
     fun editPoll(
@@ -207,22 +204,21 @@ class RxStatusMethods(client: MastodonClient) {
         sensitive: Boolean = false,
         spoilerText: String? = null,
         language: String? = null
-    ): Single<Status> = Single.fromCallable {
-        statusMethods.editPoll(
-            statusId,
-            status,
-            pollData,
-            sensitive,
-            spoilerText,
-            language
-        ).execute()
-    }
+    ): Single<Status> =
+        Single.fromCallable {
+            statusMethods.editPoll(
+                statusId,
+                status,
+                pollData,
+                sensitive,
+                spoilerText,
+                language
+            ).execute()
+        }
 
-    fun getEditHistory(statusId: String): Single<List<StatusEdit>> = Single.fromCallable {
-        statusMethods.getEditHistory(statusId).execute()
-    }
+    fun getEditHistory(statusId: String): Single<List<StatusEdit>> =
+        Single.fromCallable { statusMethods.getEditHistory(statusId).execute() }
 
-    fun getStatusSource(statusId: String): Single<StatusSource> = Single.fromCallable {
-        statusMethods.getStatusSource(statusId).execute()
-    }
+    fun getStatusSource(statusId: String): Single<StatusSource> =
+        Single.fromCallable { statusMethods.getStatusSource(statusId).execute() }
 }

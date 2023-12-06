@@ -7,6 +7,7 @@ import kotlinx.serialization.Serializable
  * Represents the software instance of Mastodon running on this domain.
  * @see <a href="https://docs.joinmastodon.org/entities/V1_Instance/">Mastodon API V1::Instance</a>
  */
+@Suppress("ktlint:standard:no-blank-line-in-list")
 @Serializable
 data class InstanceV1(
     /**

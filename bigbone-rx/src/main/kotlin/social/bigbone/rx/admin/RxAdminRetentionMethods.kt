@@ -15,7 +15,6 @@ import java.time.Instant
  * @see <a href="https://docs.joinmastodon.org/methods/admin/retention/">Mastodon admin/retention API methods</a>
  */
 class RxAdminRetentionMethods(private val client: MastodonClient) {
-
     private val adminRetentionMethods = AdminRetentionMethods(client)
 
     /**
@@ -30,11 +29,12 @@ class RxAdminRetentionMethods(private val client: MastodonClient) {
         startAt: Instant,
         endAt: Instant,
         frequency: FrequencyOneOf
-    ): Single<MastodonRequest<List<AdminCohort>>> = Single.fromCallable {
-        adminRetentionMethods.calculateRetentionData(
-            startAt = startAt,
-            endAt = endAt,
-            frequency = frequency
-        )
-    }
+    ): Single<MastodonRequest<List<AdminCohort>>> =
+        Single.fromCallable {
+            adminRetentionMethods.calculateRetentionData(
+                startAt = startAt,
+                endAt = endAt,
+                frequency = frequency
+            )
+        }
 }

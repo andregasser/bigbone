@@ -12,7 +12,6 @@ import social.bigbone.api.method.SearchMethods.SearchType
  * @see <a href="https://docs.joinmastodon.org/methods/search/">Mastodon search API methods</a>
  */
 class RxSearchMethods(client: MastodonClient) {
-
     private val searchMethodsMethod = SearchMethods(client)
 
     @JvmOverloads

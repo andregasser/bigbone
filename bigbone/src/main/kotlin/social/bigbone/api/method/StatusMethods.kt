@@ -28,7 +28,6 @@ private val SCHEDULED_AT_MIN_AHEAD: Duration = Duration.ofMinutes(5)
  * @see <a href="https://docs.joinmastodon.org/methods/statuses/">Mastodon statuses API methods</a>
  */
 class StatusMethods(private val client: MastodonClient) {
-
     /**
      * Obtain information about a status.
      * @param statusId ID of the status.
@@ -63,7 +62,10 @@ class StatusMethods(private val client: MastodonClient) {
      */
     @JvmOverloads
     @Throws(BigBoneRequestException::class)
-    fun translateStatus(statusId: String, language: String? = null): MastodonRequest<Translation> {
+    fun translateStatus(
+        statusId: String,
+        language: String? = null
+    ): MastodonRequest<Translation> {
         return client.getMastodonRequest(
             endpoint = "api/v1/statuses/$statusId/translate",
             method = MastodonClient.Method.POST,
@@ -81,7 +83,10 @@ class StatusMethods(private val client: MastodonClient) {
      */
     @JvmOverloads
     @Throws(BigBoneRequestException::class)
-    fun getRebloggedBy(statusId: String, range: Range = Range()): MastodonRequest<Pageable<Account>> {
+    fun getRebloggedBy(
+        statusId: String,
+        range: Range = Range()
+    ): MastodonRequest<Pageable<Account>> {
         return client.getPageableMastodonRequest(
             endpoint = "api/v1/statuses/$statusId/reblogged_by",
             method = MastodonClient.Method.GET,
@@ -97,7 +102,10 @@ class StatusMethods(private val client: MastodonClient) {
      */
     @JvmOverloads
     @Throws(BigBoneRequestException::class)
-    fun getFavouritedBy(statusId: String, range: Range = Range()): MastodonRequest<Pageable<Account>> {
+    fun getFavouritedBy(
+        statusId: String,
+        range: Range = Range()
+    ): MastodonRequest<Pageable<Account>> {
         return client.getPageableMastodonRequest(
             endpoint = "api/v1/statuses/$statusId/favourited_by",
             method = MastodonClient.Method.GET,
@@ -317,7 +325,10 @@ class StatusMethods(private val client: MastodonClient) {
      */
     @JvmOverloads
     @Throws(BigBoneRequestException::class)
-    fun reblogStatus(statusId: String, visibility: Visibility = Visibility.PUBLIC): MastodonRequest<Status> {
+    fun reblogStatus(
+        statusId: String,
+        visibility: Visibility = Visibility.PUBLIC
+    ): MastodonRequest<Status> {
         if (visibility != Visibility.PUBLIC &&
             visibility != Visibility.UNLISTED &&
             visibility != Visibility.PRIVATE

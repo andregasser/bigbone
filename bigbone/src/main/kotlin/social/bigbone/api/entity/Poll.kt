@@ -10,6 +10,7 @@ import social.bigbone.PrecisionDateTime.InvalidPrecisionDateTime
  * Represents a poll attached to a status.
  * @see <a href="https://docs.joinmastodon.org/entities/Poll/">Mastodon API Poll</a>
  */
+@Suppress("ktlint:standard:no-blank-line-in-list")
 @Serializable
 data class Poll(
     /**

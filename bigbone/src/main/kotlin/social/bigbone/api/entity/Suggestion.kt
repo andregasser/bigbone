@@ -7,10 +7,9 @@ import kotlinx.serialization.Serializable
  * Represents a suggested account to follow and an associated reason for the suggestion.
  * @see <a href="https://docs.joinmastodon.org/entities/Suggestion/">Mastodon API Suggestion</a>
  */
-
+@Suppress("ktlint:standard:no-blank-line-in-list")
 @Serializable
 data class Suggestion(
-
     /**
      * The reason this account is being suggested.
      */
@@ -23,7 +22,6 @@ data class Suggestion(
     @SerialName("account")
     val account: Account
 ) {
-
     /**
      * Represents a suggested account to follow and an associated reason for the suggestion.
      */

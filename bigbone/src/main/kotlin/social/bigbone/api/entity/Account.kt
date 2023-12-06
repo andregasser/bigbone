@@ -10,6 +10,8 @@ import social.bigbone.PrecisionDateTime.InvalidPrecisionDateTime
  * Represents a user of Mastodon and their associated profile.
  * @see <a href="https://docs.joinmastodon.org/entities/Account/">Mastodon API Account</a>
  */
+
+@Suppress("ktlint:standard:no-blank-line-in-list")
 @Serializable
 data class Account(
     /**
@@ -163,7 +165,7 @@ data class Account(
      * The reported follows of this profile.
      */
     @SerialName("following_count")
-    val followingCount: Long = 0
+    val followingCount: Long = 0,
 ) {
     /**
      * Specifies a name-value pair as used in [fields] of the [Account] entity.
@@ -188,6 +190,6 @@ data class Account(
          */
         @SerialName("verified_at")
         @Serializable(with = DateTimeSerializer::class)
-        val verifiedAt: PrecisionDateTime = InvalidPrecisionDateTime.Unavailable
+        val verifiedAt: PrecisionDateTime = InvalidPrecisionDateTime.Unavailable,
     )
 }

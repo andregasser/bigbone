@@ -20,8 +20,8 @@ import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.testtool.MockClient
 import java.time.Instant
 
+@Suppress("ktlint:standard:max-line-length")
 class NotificationMethodsTest {
-
     @Test
     fun `Given a JSON response with invalid status, when deserialising, then default to null`() {
         val json = """

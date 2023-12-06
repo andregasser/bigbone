@@ -14,7 +14,6 @@ import java.time.Instant
  * @see <a href="https://docs.joinmastodon.org/methods/admin/dimensions/">Mastodon admin/dimensions API methods</a>
  */
 class RxAdminDimensionMethods(client: MastodonClient) {
-
     private val adminDimensionMethods = AdminDimensionMethods(client)
 
     /**
@@ -30,12 +29,13 @@ class RxAdminDimensionMethods(client: MastodonClient) {
     fun getDimensionalData(
         dimensions: List<RequestDimension>,
         startAt: Instant,
-        endAt: Instant
-    ): Single<List<AdminDimension>> = Single.fromCallable {
-        adminDimensionMethods.getDimensionalData(
-            dimensions = dimensions,
-            startAt = startAt,
-            endAt = endAt
-        ).execute()
-    }
+        endAt: Instant,
+    ): Single<List<AdminDimension>> =
+        Single.fromCallable {
+            adminDimensionMethods.getDimensionalData(
+                dimensions = dimensions,
+                startAt = startAt,
+                endAt = endAt
+            ).execute()
+        }
 }

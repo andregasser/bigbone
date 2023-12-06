@@ -12,7 +12,6 @@ import social.bigbone.api.method.AppMethods
  * @see <a href="https://docs.joinmastodon.org/methods/apps/">Mastodon apps API methods</a>
  */
 class RxAppMethods(client: MastodonClient) {
-
     private val appMethods = AppMethods(client)
 
     @JvmOverloads
@@ -21,7 +20,6 @@ class RxAppMethods(client: MastodonClient) {
         redirectUris: String,
         website: String? = null,
         scope: Scope = Scope(Scope.Name.ALL)
-    ): Single<Application> = Single.fromCallable {
-        appMethods.createApp(clientName, redirectUris, website, scope).execute()
-    }
+    ): Single<Application> =
+        Single.fromCallable { appMethods.createApp(clientName, redirectUris, website, scope).execute() }
 }

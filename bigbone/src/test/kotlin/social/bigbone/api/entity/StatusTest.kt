@@ -8,7 +8,6 @@ import social.bigbone.api.entity.data.Visibility
 import social.bigbone.testtool.AssetsUtil
 
 class StatusTest {
-
     @Test
     fun deserialize() {
         val json = AssetsUtil.readFromAssets("status.json")

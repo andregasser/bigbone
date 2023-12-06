@@ -12,15 +12,12 @@ import social.bigbone.api.method.SuggestionMethods
  * @see <a href="https://docs.joinmastodon.org/methods/suggestions/">Mastodon suggestions API methods</a>
  */
 class RxSuggestionMethods(client: MastodonClient) {
-
     private val suggestionMethods = SuggestionMethods(client)
 
     @JvmOverloads
-    fun getSuggestions(limit: Int? = null): Single<List<Suggestion>> = Single.fromCallable {
-        suggestionMethods.getSuggestions(limit).execute()
-    }
+    fun getSuggestions(limit: Int? = null): Single<List<Suggestion>> =
+        Single.fromCallable { suggestionMethods.getSuggestions(limit).execute() }
 
-    fun removeSuggestion(accountId: String): Completable = Completable.fromAction {
-        suggestionMethods.removeSuggestion(accountId)
-    }
+    fun removeSuggestion(accountId: String): Completable =
+        Completable.fromAction { suggestionMethods.removeSuggestion(accountId) }
 }

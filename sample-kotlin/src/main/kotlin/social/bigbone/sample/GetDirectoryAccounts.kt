@@ -20,7 +20,7 @@ object GetDirectoryAccounts {
             local = true,
             order = DirectoryMethods.AccountOrder.ACTIVE,
             offset = 10,
-            limit = 40
+            limit = 40,
         ).execute()
 
         // do something with the result; here, we find the oldest account still active and output information about it

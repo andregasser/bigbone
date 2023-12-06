@@ -11,7 +11,6 @@ import social.bigbone.api.method.PreferenceMethods
  * @see [Mastodon preferences API methods](https://docs.joinmastodon.org/methods/preferences/)
  */
 class RxPreferenceMethods(client: MastodonClient) {
-
     private val preferenceMethods = PreferenceMethods(client)
 
     fun getPreferences(): Single<Preferences> {

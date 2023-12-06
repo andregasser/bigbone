@@ -9,6 +9,7 @@ import social.bigbone.PrecisionDateTime
  * Represents a hashtag that is featured on a profile.
  * @see <a href="https://docs.joinmastodon.org/entities/FeaturedTag/">Mastodon API FeaturedTag</a>
  */
+@Suppress("ktlint:standard:no-blank-line-in-list")
 @Serializable
 data class FeaturedTag(
     /**

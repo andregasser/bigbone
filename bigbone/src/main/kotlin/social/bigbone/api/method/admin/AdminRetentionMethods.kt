@@ -12,7 +12,6 @@ import java.time.Instant
  * @see <a href="https://docs.joinmastodon.org/methods/admin/retention/">Mastodon admin/retention API methods</a>
  */
 class AdminRetentionMethods(private val client: MastodonClient) {
-
     private val adminRetentionEndpoint = "api/v1/admin/retention"
 
     /**

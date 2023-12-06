@@ -12,7 +12,6 @@ import social.bigbone.api.method.ReportMethods
  * @see <a href="https://docs.joinmastodon.org/methods/reports/">Mastodon reports API methods</a>
  */
 class RxReportMethods(client: MastodonClient) {
-
     private val reportMethods = ReportMethods(client)
 
     @JvmOverloads

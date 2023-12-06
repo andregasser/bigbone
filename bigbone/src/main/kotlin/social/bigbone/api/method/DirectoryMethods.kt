@@ -10,7 +10,6 @@ import social.bigbone.api.entity.Account
  * @see <a href="https://docs.joinmastodon.org/methods/directory/">Mastodon directory API methods</a>
  */
 class DirectoryMethods(private val client: MastodonClient) {
-
     /**
      * When listing, use [AccountOrder.ACTIVE] to sort by most recently posted statuses or [AccountOrder.NEW] to sort
      * by most recently created profiles.

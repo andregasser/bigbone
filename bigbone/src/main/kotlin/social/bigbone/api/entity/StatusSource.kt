@@ -7,6 +7,7 @@ import kotlinx.serialization.Serializable
  * Represents a status's source as plain text.
  * @see <a href="https://docs.joinmastodon.org/entities/StatusSource/">Mastodon API StatusSource</a>
  */
+@Suppress("ktlint:standard:no-blank-line-in-list")
 @Serializable
 data class StatusSource(
     /**

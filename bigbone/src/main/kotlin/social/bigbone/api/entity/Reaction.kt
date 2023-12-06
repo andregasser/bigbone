@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
  * Represents an emoji reaction to an Announcement.
  * @see <a href="https://docs.joinmastodon.org/entities/Reaction/">Mastodon API Reaction</a>
  */
-
+@Suppress("ktlint:standard:no-blank-line-in-list")
 @Serializable
 data class Reaction(
     /**

@@ -31,10 +31,7 @@ class ServerInfoRetrievalException : BigBoneClientInstantiationException {
 class ServerInfoUrlRetrievalException(
     response: Response,
     message: String? = null
-) :
-    BigBoneClientInstantiationException(
-        message = "${message ?: ""}${response.message}"
-    )
+) : BigBoneClientInstantiationException(message = "${message ?: ""}${response.message}")
 
 /**
  * Exception thrown if we could not retrieve the instance version of a Mastodon server during [MastodonClient] instantiation.

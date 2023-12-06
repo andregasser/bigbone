@@ -12,7 +12,6 @@ import social.bigbone.api.entity.TrendsLink
  * @see <a href="https://docs.joinmastodon.org/methods/trends/">Mastodon trends API methods</a>
  */
 class TrendMethods(private val client: MastodonClient) {
-
     private val trendsEndpoint = "api/v1/trends"
 
     /**

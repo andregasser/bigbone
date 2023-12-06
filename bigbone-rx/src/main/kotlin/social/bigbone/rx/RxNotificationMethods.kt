@@ -14,7 +14,6 @@ import social.bigbone.api.method.NotificationMethods
  * @see <a href="https://docs.joinmastodon.org/methods/notifications/">Mastodon notifications API methods</a>
  */
 class RxNotificationMethods(client: MastodonClient) {
-
     private val notificationMethods = NotificationMethods(client)
 
     /**
@@ -31,19 +30,17 @@ class RxNotificationMethods(client: MastodonClient) {
         excludeTypes: List<Notification.NotificationType>? = null,
         accountId: String? = null,
         range: Range = Range()
-    ): Single<Pageable<Notification>> = Single.fromCallable {
-        notificationMethods.getAllNotifications(includeTypes, excludeTypes, accountId, range).execute()
-    }
+    ): Single<Pageable<Notification>> =
+        Single.fromCallable {
+            notificationMethods.getAllNotifications(includeTypes, excludeTypes, accountId, range).execute()
+        }
 
-    fun getNotification(id: String): Single<Notification> = Single.fromCallable {
-        notificationMethods.getNotification(id).execute()
-    }
+    fun getNotification(id: String): Single<Notification> =
+        Single.fromCallable { notificationMethods.getNotification(id).execute() }
 
-    fun dismissAllNotifications(): Completable = Completable.fromAction {
-        notificationMethods.dismissAllNotifications()
-    }
+    fun dismissAllNotifications(): Completable =
+        Completable.fromAction { notificationMethods.dismissAllNotifications() }
 
-    fun dismissNotification(notificationId: String): Completable = Completable.fromAction {
-        notificationMethods.dismissNotification(notificationId)
-    }
+    fun dismissNotification(notificationId: String): Completable =
+        Completable.fromAction { notificationMethods.dismissNotification(notificationId) }
 }

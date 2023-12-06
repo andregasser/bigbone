@@ -7,6 +7,7 @@ import kotlinx.serialization.Serializable
  * Represents an application that interfaces with the REST API to access accounts or post statuses.
  * @see <a href="https://docs.joinmastodon.org/entities/Application/">Mastodon API Application</a>
  */
+@Suppress("ktlint:standard:no-blank-line-in-list")
 @Serializable
 data class Application(
     /**

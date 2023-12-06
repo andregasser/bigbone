@@ -8,9 +8,9 @@ import kotlinx.serialization.Serializable
  * @see <a href="https://docs.joinmastodon.org/entities/Tag/#history">Mastodon API Tag history</a>
  * @see <a href="https://docs.joinmastodon.org/entities/PreviewCard/#history">Mastodon API PreviewCard history
  */
+@Suppress("ktlint:standard:no-blank-line-in-list")
 @Serializable
 data class History(
-
     /**
      * UNIX timestamp on midnight of the given day.
      */

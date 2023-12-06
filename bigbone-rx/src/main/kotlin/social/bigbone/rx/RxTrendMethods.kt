@@ -14,7 +14,6 @@ import social.bigbone.api.method.TrendMethods
  * @see <a href="https://docs.joinmastodon.org/methods/trends/">Mastodon trends API methods</a>
  */
 class RxTrendMethods(client: MastodonClient) {
-
     private val trendMethods = TrendMethods(client)
 
     /**
@@ -28,9 +27,7 @@ class RxTrendMethods(client: MastodonClient) {
     fun getTrendingTags(
         offset: Int? = null,
         limit: Int = 10
-    ): Single<List<Tag>> = Single.fromCallable {
-        trendMethods.getTrendingTags(offset, limit).execute()
-    }
+    ): Single<List<Tag>> = Single.fromCallable { trendMethods.getTrendingTags(offset, limit).execute() }
 
     /**
      * Statuses that have been interacted with more than others.
@@ -42,9 +39,7 @@ class RxTrendMethods(client: MastodonClient) {
     fun getTrendingStatuses(
         offset: Int? = null,
         limit: Int = 20
-    ): Single<List<Status>> = Single.fromCallable {
-        trendMethods.getTrendingStatuses(offset, limit).execute()
-    }
+    ): Single<List<Status>> = Single.fromCallable { trendMethods.getTrendingStatuses(offset, limit).execute() }
 
     /**
      * Links that have been shared more than others.
@@ -57,7 +52,5 @@ class RxTrendMethods(client: MastodonClient) {
     fun getTrendingLinks(
         offset: Int? = null,
         limit: Int = 10
-    ): Single<List<TrendsLink>> = Single.fromCallable {
-        trendMethods.getTrendingLinks(offset, limit).execute()
-    }
+    ): Single<List<TrendsLink>> = Single.fromCallable { trendMethods.getTrendingLinks(offset, limit).execute() }
 }

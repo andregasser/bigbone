@@ -13,11 +13,9 @@ import social.bigbone.api.method.BlockMethods
  * @see <a href="https://docs.joinmastodon.org/methods/blocks/">Mastodon blocks API methods</a>
  */
 class RxBlockMethods(client: MastodonClient) {
-
     private val blockMethods = BlockMethods(client)
 
     @JvmOverloads
-    fun getBlocks(range: Range = Range()): Single<Pageable<Account>> = Single.fromCallable {
-        blockMethods.getBlocks(range).execute()
-    }
+    fun getBlocks(range: Range = Range()): Single<Pageable<Account>> =
+        Single.fromCallable { blockMethods.getBlocks(range).execute() }
 }
