@@ -15,6 +15,7 @@ import social.bigbone.api.entity.Token
  */
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class V402StatusMethodsIntegrationTest {
+    private val fullScope = Scope(Scope.Name.READ, Scope.Name.WRITE, Scope.Name.PUSH)
     private lateinit var appToken: Token
     private lateinit var user2Token: Token
 
@@ -40,7 +41,7 @@ class V402StatusMethodsIntegrationTest {
         val client = MastodonClient.Builder(TestConstants.REST_API_HOSTNAME)
             .withTrustAllCerts()
             .build()
-        return client.apps.createApp(TestConstants.USER2_APP_NAME, TestConstants.REDIRECT_URI, null, Scope(Scope.Name.ALL)).execute()
+        return client.apps.createApp(TestConstants.USER2_APP_NAME, TestConstants.REDIRECT_URI, null, fullScope).execute()
     }
 
     private fun getAppToken(application: Application): Token {
@@ -51,7 +52,7 @@ class V402StatusMethodsIntegrationTest {
             clientId = application.clientId!!,
             clientSecret = application.clientSecret!!,
             redirectUri = TestConstants.REDIRECT_URI,
-            scope = Scope(Scope.Name.ALL)
+            scope = fullScope
         ).execute()
     }
 
@@ -62,7 +63,7 @@ class V402StatusMethodsIntegrationTest {
         return client.oauth.getUserAccessTokenWithPasswordGrant(
             clientId = application.clientId!!,
             clientSecret = application.clientSecret!!,
-            scope = Scope(Scope.Name.ALL),
+            scope = fullScope,
             redirectUri = TestConstants.REDIRECT_URI,
             username = username,
             password = password

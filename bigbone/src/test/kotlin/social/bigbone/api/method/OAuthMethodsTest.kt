@@ -27,11 +27,11 @@ class OAuthMethodsTest {
         val url = OAuthMethods(client).getOAuthUrl(
             clientId = "client_id",
             redirectUri = TestConstants.REDIRECT_URI,
-            scope = Scope(Scope.Name.ALL)
+            scope = Scope(Scope.Name.READ, Scope.Name.WRITE, Scope.Name.PUSH)
         )
 
         url shouldBeEqualTo "https://mastodon.cloud/oauth/authorize?client_id=client_id" +
-            "&redirect_uri=urn%3Aietf%3Awg%3Aoauth%3A2.0%3Aoob&response_type=code&scope=read+write+follow"
+            "&redirect_uri=urn%3Aietf%3Awg%3Aoauth%3A2.0%3Aoob&response_type=code&scope=read+write+push"
     }
 
     @Test
@@ -125,7 +125,7 @@ class OAuthMethodsTest {
             TestConstants.REDIRECT_URI,
             "test",
             "test",
-            Scope(Scope.Name.ALL)
+            Scope(Scope.Name.READ, Scope.Name.WRITE, Scope.Name.PUSH)
         ).execute()
         accessToken.accessToken shouldBeEqualTo "test"
         accessToken.scope shouldBeEqualTo "read write follow"
@@ -142,7 +142,7 @@ class OAuthMethodsTest {
             oauth.getUserAccessTokenWithPasswordGrant(
                 clientId = "test",
                 clientSecret = "test",
-                scope = Scope(Scope.Name.ALL),
+                scope = Scope(Scope.Name.READ, Scope.Name.WRITE, Scope.Name.PUSH),
                 redirectUri = TestConstants.REDIRECT_URI,
                 username = "test",
                 password = "test"

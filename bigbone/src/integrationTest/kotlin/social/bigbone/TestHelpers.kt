@@ -7,6 +7,8 @@ import social.bigbone.api.entity.Token
 import java.io.File
 
 object TestHelpers {
+    private val fullScope = Scope(Scope.Name.READ, Scope.Name.WRITE, Scope.Name.PUSH)
+
     fun uploadMediaFromResourcesFolder(filename: String, mediaType: String, client: MastodonClient): MediaAttachment {
         val classLoader = Thread.currentThread().contextClassLoader
         val uploadFile = File(classLoader.getResource(filename)!!.file)
@@ -26,7 +28,7 @@ object TestHelpers {
 
     fun createApp(appName: String): Application {
         val client = getTrustAllClient()
-        return client.apps.createApp(appName, TestConstants.REDIRECT_URI, null, Scope(Scope.Name.ALL)).execute()
+        return client.apps.createApp(appName, TestConstants.REDIRECT_URI, null, fullScope).execute()
     }
 
     fun getAppToken(application: Application): Token {
@@ -35,7 +37,7 @@ object TestHelpers {
             clientId = application.clientId!!,
             clientSecret = application.clientSecret!!,
             redirectUri = TestConstants.REDIRECT_URI,
-            scope = Scope(Scope.Name.ALL)
+            scope = fullScope
         ).execute()
     }
 
@@ -44,7 +46,7 @@ object TestHelpers {
         return client.oauth.getUserAccessTokenWithPasswordGrant(
             clientId = application.clientId!!,
             clientSecret = application.clientSecret!!,
-            scope = Scope(Scope.Name.ALL),
+            scope = fullScope,
             redirectUri = TestConstants.REDIRECT_URI,
             username = username,
             password = password

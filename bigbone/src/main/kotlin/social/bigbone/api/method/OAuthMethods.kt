@@ -59,13 +59,17 @@ class OAuthMethods(private val client: MastodonClient) {
      * @param clientSecret The client secret, obtained during app registration.
      * @param redirectUri Set a URI to redirect the user to. Must match one of the redirect_uris declared during app registration.
      * @param code A user authorization code, obtained via the URL received from getOAuthUrl()
+     * @param scope Requested OAuth scopes. Must be equal to the scope requested from the user while obtaining [code].
+     *  If not provided, defaults to read.
      * @see <a href="https://docs.joinmastodon.org/methods/oauth/#token">Mastodon oauth API methods #token</a>
      */
+    @JvmOverloads
     fun getUserAccessTokenWithAuthorizationCodeGrant(
         clientId: String,
         clientSecret: String,
         redirectUri: String,
-        code: String
+        code: String,
+        scope: Scope? = null
     ): MastodonRequest<Token> {
         return client.getMastodonRequest(
             endpoint = "oauth/token",
@@ -76,6 +80,7 @@ class OAuthMethods(private val client: MastodonClient) {
                 append("redirect_uri", redirectUri)
                 append("code", code)
                 append("grant_type", GrantTypes.AUTHORIZATION_CODE.value)
+                scope?.let { append("scope", scope.toString()) }
             }
         )
     }
@@ -120,7 +125,8 @@ class OAuthMethods(private val client: MastodonClient) {
      * @param redirectUri Set a URI to redirect the user to.
      * @param username The Mastodon account username.
      * @param password The Mastodon account password.
-     * @param scope Requested OAuth scopes
+     * @param scope Requested OAuth scopes. Must be a subset of scopes declared during app registration.
+     *  If not provided, defaults to read.
      * @see <a href="https://docs.joinmastodon.org/methods/oauth/#token">Mastodon oauth API methods #token</a>
      */
     @JvmOverloads
@@ -130,7 +136,7 @@ class OAuthMethods(private val client: MastodonClient) {
         redirectUri: String,
         username: String,
         password: String,
-        scope: Scope = Scope(Scope.Name.READ)
+        scope: Scope? = null
     ): MastodonRequest<Token> {
         return client.getMastodonRequest(
             endpoint = "oauth/token",
@@ -138,11 +144,11 @@ class OAuthMethods(private val client: MastodonClient) {
             parameters = Parameters().apply {
                 append("client_id", clientId)
                 append("client_secret", clientSecret)
-                append("scope", scope.toString())
                 append("redirect_uri", redirectUri)
                 append("username", username)
                 append("password", password)
                 append("grant_type", GrantTypes.PASSWORD.value)
+                scope?.let { append("scope", scope.toString()) }
             }
         )
     }

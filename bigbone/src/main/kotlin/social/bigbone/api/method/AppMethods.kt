@@ -16,7 +16,7 @@ class AppMethods(private val client: MastodonClient) {
      * @param clientName A name for your application
      * @param redirectUris Where the user should be redirected after authorization.
      * @param website A URL to the homepage of your app, defaults to null.
-     * @param scope Space separated list of scopes. Defaults to all scopes.
+     * @param scope Space separated list of scopes. Defaults to null, which is interpreted as requesting full "read" scope.
      * @see <a href="https://docs.joinmastodon.org/methods/apps/#create">Mastodon apps API methods #create</a>
      */
     @JvmOverloads
@@ -24,18 +24,19 @@ class AppMethods(private val client: MastodonClient) {
         clientName: String,
         redirectUris: String,
         website: String? = null,
-        scope: Scope = Scope(Scope.Name.ALL)
+        scope: Scope? = null
     ): MastodonRequest<Application> {
-        scope.validate()
         return client.getMastodonRequest(
             endpoint = "api/v1/apps",
             method = MastodonClient.Method.POST,
             parameters = Parameters().apply {
                 append("client_name", clientName)
-                append("scopes", scope.toString())
                 append("redirect_uris", redirectUris)
                 website?.let {
                     append("website", it)
+                }
+                scope?.let {
+                    append("scopes", scope.toString())
                 }
             }
         )

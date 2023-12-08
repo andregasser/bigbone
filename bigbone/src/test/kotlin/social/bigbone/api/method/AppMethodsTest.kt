@@ -20,7 +20,7 @@ class AppMethodsTest {
         val application = appMethods.createApp(
             clientName = "bigbone-sample-app",
             redirectUris = TestConstants.REDIRECT_URI,
-            scope = Scope(Scope.Name.ALL)
+            scope = Scope(Scope.Name.READ, Scope.Name.WRITE, Scope.Name.PUSH)
         ).execute()
 
         application.clientId shouldBeEqualTo "client id"
@@ -35,7 +35,7 @@ class AppMethodsTest {
             appMethods.createApp(
                 clientName = "bigbone-sample-app",
                 redirectUris = TestConstants.REDIRECT_URI,
-                scope = Scope(Scope.Name.ALL)
+                scope = Scope(Scope.Name.READ, Scope.Name.WRITE, Scope.Name.PUSH)
             ).execute()
         }
     }
