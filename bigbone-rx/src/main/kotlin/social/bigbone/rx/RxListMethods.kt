@@ -34,13 +34,15 @@ class RxListMethods(client: MastodonClient) {
      * Create a new list.
      * @param title The title of the list to be created.
      * @param repliesPolicy One of [MastodonList.RepliesPolicy], defaults to [MastodonList.RepliesPolicy.List].
+     * @param exclusive Whether members of this list need to get removed from the “Home” feed.
      * @see <a href="https://docs.joinmastodon.org/methods/lists/#create">Mastodon API documentation: methods/lists/#create</a>
      */
     @JvmOverloads
     fun createList(
         title: String,
-        repliesPolicy: MastodonList.RepliesPolicy = MastodonList.RepliesPolicy.LIST
-    ): Single<MastodonList> = Single.fromCallable { listMethods.createList(title, repliesPolicy).execute() }
+        repliesPolicy: MastodonList.RepliesPolicy? = null,
+        exclusive: Boolean? = null
+    ): Single<MastodonList> = Single.fromCallable { listMethods.createList(title, repliesPolicy, exclusive).execute() }
 
     /**
      * Change the title of a list, or which replies to show.

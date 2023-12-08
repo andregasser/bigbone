@@ -40,19 +40,22 @@ class ListMethods(private val client: MastodonClient) {
      * Create a new list.
      * @param title The title of the list to be created.
      * @param repliesPolicy One of [MastodonList.RepliesPolicy], defaults to [MastodonList.RepliesPolicy.List].
+     * @param exclusive Whether members of this list need to get removed from the “Home” feed.
      * @see <a href="https://docs.joinmastodon.org/methods/lists/#create">Mastodon API documentation: methods/lists/#create</a>
      */
     @JvmOverloads
     fun createList(
         title: String,
-        repliesPolicy: MastodonList.RepliesPolicy = MastodonList.RepliesPolicy.LIST
+        repliesPolicy: MastodonList.RepliesPolicy? = null,
+        exclusive: Boolean? = null
     ): MastodonRequest<MastodonList> {
         return client.getMastodonRequest(
             endpoint = "api/v1/lists",
             method = MastodonClient.Method.POST,
             parameters = Parameters().apply {
                 append("title", title)
-                append("replies_policy", repliesPolicy.name.lowercase())
+                repliesPolicy?.let { append("replies_policy", repliesPolicy.name.lowercase()) }
+                exclusive?.let { append("exclusive", exclusive) }
             }
         )
     }
