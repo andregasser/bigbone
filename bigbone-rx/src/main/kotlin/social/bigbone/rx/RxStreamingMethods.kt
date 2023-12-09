@@ -23,7 +23,7 @@ class RxStreamingMethods(client: MastodonClient) {
      *
      * @param onlyMedia Filter for media attachments. Analogous to the federated timeline with “only media” enabled.
      */
-    fun federatedPublic(onlyMedia: Boolean): Flowable<WebSocketEvent> = streamTimeline {
+    fun federatedPublic(onlyMedia: Boolean): Flowable<WebSocketEvent> = stream {
         streamingMethods.federatedPublic(onlyMedia, it)
     }
 
@@ -32,7 +32,7 @@ class RxStreamingMethods(client: MastodonClient) {
      *
      * @param onlyMedia Filter for media attachments. Analogous to the local timeline with “only media” enabled.
      */
-    fun localPublic(onlyMedia: Boolean): Flowable<WebSocketEvent> = streamTimeline {
+    fun localPublic(onlyMedia: Boolean): Flowable<WebSocketEvent> = stream {
         streamingMethods.localPublic(onlyMedia, it)
     }
 
@@ -41,7 +41,7 @@ class RxStreamingMethods(client: MastodonClient) {
      *
      * @param onlyMedia Filter for media attachments.
      */
-    fun remotePublic(onlyMedia: Boolean): Flowable<WebSocketEvent> = streamTimeline {
+    fun remotePublic(onlyMedia: Boolean): Flowable<WebSocketEvent> = stream {
         streamingMethods.remotePublic(onlyMedia, it)
     }
 
@@ -54,7 +54,7 @@ class RxStreamingMethods(client: MastodonClient) {
     fun hashtag(
         tagName: String,
         onlyFromThisServer: Boolean
-    ): Flowable<WebSocketEvent> = streamTag { callback ->
+    ): Flowable<WebSocketEvent> = stream { callback ->
         streamingMethods.hashtag(
             tagName = tagName,
             onlyFromThisServer = onlyFromThisServer,
@@ -65,19 +65,19 @@ class RxStreamingMethods(client: MastodonClient) {
     /**
      * Stream all events related to the current user, such as home feed updates and notifications.
      */
-    fun user(): Flowable<WebSocketEvent> = streamTimeline(streamingMethods::user)
+    fun user(): Flowable<WebSocketEvent> = stream(streamingMethods::user)
 
     /**
      * Stream all notifications for the current user.
      */
-    fun userNotifications(): Flowable<WebSocketEvent> = streamTimeline(streamingMethods::userNotifications)
+    fun userNotifications(): Flowable<WebSocketEvent> = stream(streamingMethods::userNotifications)
 
     /**
      * Stream updates to the list with [listId].
      *
      * @param listId List you want to receive updates for.
      */
-    fun list(listId: String): Flowable<WebSocketEvent> = streamList { callback ->
+    fun list(listId: String): Flowable<WebSocketEvent> = stream { callback ->
         streamingMethods.list(
             listId = listId,
             callback = callback
@@ -87,28 +87,13 @@ class RxStreamingMethods(client: MastodonClient) {
     /**
      * Stream all updates to direct conversations.
      */
-    fun directConversations(): Flowable<WebSocketEvent> = streamTimeline(streamingMethods::directConversations)
+    fun directConversations(): Flowable<WebSocketEvent> = stream(streamingMethods::directConversations)
 
-    private fun streamTimeline(streamMethod: (WebSocketCallback) -> Closeable): Flowable<WebSocketEvent> {
-        return Flowable.create({ emitter ->
+    private fun stream(streamMethod: (WebSocketCallback) -> Closeable): Flowable<WebSocketEvent> =
+        Flowable.create({ emitter ->
             val closeable = streamMethod(emitter.fromWebSocketCallback())
             emitter.setCancellable(closeable::close)
         }, BackpressureStrategy.BUFFER)
-    }
-
-    private fun streamList(streamMethod: (WebSocketCallback) -> Closeable): Flowable<WebSocketEvent> {
-        return Flowable.create({ emitter ->
-            val closeable = streamMethod(emitter.fromWebSocketCallback())
-            emitter.setCancellable(closeable::close)
-        }, BackpressureStrategy.BUFFER)
-    }
-
-    private fun streamTag(streamMethod: (WebSocketCallback) -> Closeable): Flowable<WebSocketEvent> {
-        return Flowable.create({ emitter ->
-            val closeable = streamMethod(emitter.fromWebSocketCallback())
-            emitter.setCancellable(closeable::close)
-        }, BackpressureStrategy.BUFFER)
-    }
 
     private fun FlowableEmitter<WebSocketEvent>.fromWebSocketCallback(): (event: WebSocketEvent) -> Unit =
         { webSocketEvent ->
