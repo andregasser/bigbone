@@ -54,6 +54,12 @@ sealed interface WebSocketEvent {
     data class StreamEvent(val event: Event) : WebSocketEvent
 
     /**
+     * A message received via the websocket that could not be parsed to an [Event].
+     * Instead of [StreamEvent], an object of this type with the [text] received verbatim is returned.
+     */
+    data class GenericMessage(val text: String) : WebSocketEvent
+
+    /**
      * An error occurred during the websocket connection.
      * This is a final event: No further calls to the [WebSocketCallback] emitting these events
      * will be made.

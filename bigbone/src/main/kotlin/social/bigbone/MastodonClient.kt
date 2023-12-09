@@ -530,7 +530,6 @@ private constructor(
                         port = port,
                         path = path,
                         query = query
-
                     )
                 )
                 .build(),
@@ -552,13 +551,27 @@ private constructor(
 
                 override fun onMessage(webSocket: WebSocket, text: String) {
                     super.onMessage(webSocket, text)
-                    val event = JSON_SERIALIZER.decodeFromString<Event>(text)
-                    callback.onEvent(WebSocketEvent.StreamEvent(event = event))
+                    // We should usually be able to decode WebSocket messages as an [Event] type but if that fails,
+                    // we return the text received in this message verbatim via the [GenericMessage] type.
+                    try {
+                        val event = JSON_SERIALIZER.decodeFromString<Event>(text)
+                        callback.onEvent(WebSocketEvent.StreamEvent(event = event))
+                    } catch (e: IllegalArgumentException) {
+                        callback.onEvent(WebSocketEvent.GenericMessage(text))
+                    }
                 }
 
                 override fun onMessage(webSocket: WebSocket, bytes: ByteString) {
                     super.onMessage(webSocket, bytes)
-                    println("onMessage with bytes $bytes")
+                    // We should usually be able to decode WebSocket messages as an [Event] type but if that fails,
+                    // we return the text received in this message verbatim via the [GenericMessage] type.
+                    val bytesAsString: String = bytes.utf8()
+                    try {
+                        val event = JSON_SERIALIZER.decodeFromString<Event>(bytesAsString)
+                        callback.onEvent(WebSocketEvent.StreamEvent(event = event))
+                    } catch (e: IllegalArgumentException) {
+                        callback.onEvent(WebSocketEvent.GenericMessage(bytesAsString))
+                    }
                 }
 
                 override fun onOpen(webSocket: WebSocket, response: Response) {

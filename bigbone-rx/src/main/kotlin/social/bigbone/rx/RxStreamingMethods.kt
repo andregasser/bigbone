@@ -117,7 +117,8 @@ class RxStreamingMethods(client: MastodonClient) {
                 is WebSocketEvent.Failure -> tryOnError(webSocketEvent.error)
                 WebSocketEvent.Open,
                 is WebSocketEvent.Closing,
-                is WebSocketEvent.StreamEvent -> onNext(webSocketEvent)
+                is WebSocketEvent.StreamEvent,
+                is WebSocketEvent.GenericMessage -> onNext(webSocketEvent)
             }
         }
 }
