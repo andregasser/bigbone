@@ -54,8 +54,7 @@ class StreamingMethods(private val client: MastodonClient) {
         )
 
         return Closeable {
-            println("Closing websocket…")
-            val closed = webSocket.close(
+            webSocket.close(
                 /*
                 1000 indicates a normal closure,
                 meaning that the purpose for which the connection was established has been fulfilled.
@@ -64,7 +63,6 @@ class StreamingMethods(private val client: MastodonClient) {
                 code = 1000,
                 reason = null
             )
-            println("WebSocket closed? $closed")
         }
     }
 
