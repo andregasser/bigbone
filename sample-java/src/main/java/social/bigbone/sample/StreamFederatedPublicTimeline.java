@@ -17,14 +17,8 @@ public class StreamFederatedPublicTimeline {
                 .useStreamingApi()
                 .build();
 
-
         // Start federated timeline streaming and stop after 20 seconds
-        try (Closeable ignored = client
-                .streaming()
-                .federatedPublic(
-                        false,
-                        System.out::println
-                )) {
+        try (Closeable ignored = client.streaming().federatedPublic(false, System.out::println)) {
             Thread.sleep(20_000L);
         }
     }
