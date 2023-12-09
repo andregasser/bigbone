@@ -20,7 +20,6 @@ object RxStreamPublicTimeline {
 
         println("init")
         val disposable = streaming.federatedPublic(
-            accessToken = accessToken,
             onlyMedia = false
         )
             .subscribeOn(Schedulers.io())

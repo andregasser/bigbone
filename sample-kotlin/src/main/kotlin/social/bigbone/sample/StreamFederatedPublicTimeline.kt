@@ -15,7 +15,6 @@ object StreamFederatedPublicTimeline {
             .build()
 
         client.streaming.federatedPublic(
-            accessToken = accessToken,
             onlyMedia = false,
             callback = ::println
         ).use {

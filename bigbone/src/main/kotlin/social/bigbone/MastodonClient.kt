@@ -78,6 +78,7 @@ class MastodonClient
 private constructor(
     private val instanceName: String,
     private val client: OkHttpClient,
+    private var accessToken: String? = null,
     private var debug: Boolean = false,
     private var instanceVersion: String? = null,
     private var scheme: String = "https",
@@ -513,9 +514,14 @@ private constructor(
         }
     }
 
-    fun stream(accessToken: String, path: String, query: Parameters?, callback: WebSocketCallback): WebSocket {
+    fun stream(path: String, query: Parameters?, callback: WebSocketCallback): WebSocket {
         return client.newWebSocket(
             request = Request.Builder()
+                /*
+                OKHTTP doesn’t currently (at least when checked in 4.12.0) use the [AuthorizationInterceptor] for
+                WebSocket connections, so we need to set it in the header ourselves again here.
+                See also: https://github.com/square/okhttp/issues/6454
+                 */
                 .header("Authorization", "Bearer $accessToken")
                 .url(
                     fullUrl(
@@ -917,6 +923,7 @@ private constructor(
                     .writeTimeout(writeTimeoutSeconds, TimeUnit.SECONDS)
                     .connectTimeout(connectTimeoutSeconds, TimeUnit.SECONDS)
                     .build(),
+                accessToken = accessToken,
                 debug = debug,
                 instanceVersion = getInstanceVersion(),
                 scheme = scheme,

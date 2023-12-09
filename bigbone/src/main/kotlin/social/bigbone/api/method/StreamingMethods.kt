@@ -293,14 +293,12 @@ class StreamingMethods(private val client: MastodonClient) {
     }
 
     private fun stream(
-        accessToken: String,
         streamType: StreamType,
         callback: WebSocketCallback,
         listId: String? = null,
         tagName: String? = null
     ): Closeable {
         val webSocket = client.stream(
-            accessToken = accessToken,
             path = "api/v1/streaming",
             query = Parameters().apply {
                 append("stream", streamType.apiName)
@@ -338,96 +336,74 @@ class StreamingMethods(private val client: MastodonClient) {
     }
 
     fun federatedPublic(
-        accessToken: String,
         onlyMedia: Boolean,
         callback: WebSocketCallback
     ): Closeable {
         return stream(
-            accessToken = accessToken,
             streamType = if (onlyMedia) PUBLIC_MEDIA else PUBLIC,
             callback = callback
         )
     }
 
     fun localPublic(
-        accessToken: String,
         onlyMedia: Boolean,
         callback: WebSocketCallback
     ): Closeable {
         return stream(
-            accessToken = accessToken,
             streamType = if (onlyMedia) PUBLIC_LOCAL_MEDIA else PUBLIC_LOCAL,
             callback = callback
         )
     }
 
     fun remotePublic(
-        accessToken: String,
         onlyMedia: Boolean,
         callback: WebSocketCallback
     ): Closeable {
         return stream(
-            accessToken = accessToken,
             streamType = if (onlyMedia) PUBLIC_REMOTE_MEDIA else PUBLIC_REMOTE,
             callback = callback
         )
     }
 
     fun hashtag(
-        accessToken: String,
         tagName: String,
         onlyFromThisServer: Boolean,
         callback: WebSocketCallback
     ): Closeable {
         return stream(
-            accessToken = accessToken,
             streamType = if (onlyFromThisServer) HASHTAG_LOCAL else HASHTAG,
             tagName = tagName,
             callback = callback
         )
     }
 
-    fun user(
-        accessToken: String,
-        callback: WebSocketCallback
-    ): Closeable {
+    fun user(callback: WebSocketCallback): Closeable {
         return stream(
-            accessToken = accessToken,
             streamType = USER,
             callback = callback
         )
     }
 
-    fun userNotifications(
-        accessToken: String,
-        callback: WebSocketCallback
-    ): Closeable {
+    fun userNotifications(callback: WebSocketCallback): Closeable {
         return stream(
-            accessToken = accessToken,
             streamType = USER_NOTIFICATION,
             callback = callback
         )
     }
 
     fun list(
-        accessToken: String,
         listId: String,
         callback: WebSocketCallback
     ): Closeable {
         return stream(
-            accessToken = accessToken,
             streamType = LIST,
             listId = listId,
             callback = callback
         )
     }
 
-    fun directConversations(
-        accessToken: String,
-        callback: WebSocketCallback
-    ): Closeable {
+    fun directConversations(callback: WebSocketCallback): Closeable {
         return stream(
-            accessToken = accessToken,
             streamType = DIRECT,
             callback = callback
         )

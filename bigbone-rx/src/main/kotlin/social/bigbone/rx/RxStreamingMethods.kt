@@ -12,55 +12,79 @@ import java.io.Closeable
 /**
  * Reactive implementation of [StreamingMethods].
  * Allows access to API methods with endpoints having an "api/vX/streaming" prefix.
- * @see <a href="https://docs.joinmastodon.org/methods/streaming/">Mastodon streaming API methods</a>
+ * @see <a href="https://docs.joinmastodon.org/methods/streaming/#streams">Mastodon streaming API methods</a>
  */
 class RxStreamingMethods(client: MastodonClient) {
 
     private val streamingMethods = StreamingMethods(client)
 
-    fun federatedPublic(accessToken: String, onlyMedia: Boolean): Flowable<WebSocketEvent> = streamTimeline {
-        streamingMethods.federatedPublic(accessToken, onlyMedia, it)
+    /**
+     * Stream all public posts known to this server. Analogous to the federated timeline.
+     *
+     * @param onlyMedia Filter for media attachments. Analogous to the federated timeline with “only media” enabled.
+     */
+    fun federatedPublic(onlyMedia: Boolean): Flowable<WebSocketEvent> = streamTimeline {
+        streamingMethods.federatedPublic(onlyMedia, it)
     }
 
-    fun localPublic(accessToken: String, onlyMedia: Boolean): Flowable<WebSocketEvent> = streamTimeline {
-        streamingMethods.localPublic(accessToken, onlyMedia, it)
+    /**
+     * Stream all public posts originating from this server. Analogous to the local timeline.
+     *
+     * @param onlyMedia Filter for media attachments. Analogous to the local timeline with “only media” enabled.
+     */
+    fun localPublic(onlyMedia: Boolean): Flowable<WebSocketEvent> = streamTimeline {
+        streamingMethods.localPublic(onlyMedia, it)
     }
 
-    fun remotePublic(accessToken: String, onlyMedia: Boolean): Flowable<WebSocketEvent> = streamTimeline {
-        streamingMethods.remotePublic(accessToken, onlyMedia, it)
+    /**
+     * Stream all public posts originating from other servers.
+     *
+     * @param onlyMedia Filter for media attachments.
+     */
+    fun remotePublic(onlyMedia: Boolean): Flowable<WebSocketEvent> = streamTimeline {
+        streamingMethods.remotePublic(onlyMedia, it)
     }
 
+    /**
+     * Stream all public posts using the hashtag [tagName].
+     *
+     * @param onlyFromThisServer Filter for public posts originating from this server.
+     */
     fun hashtag(
-        accessToken: String,
         tagName: String,
         onlyFromThisServer: Boolean
-    ): Flowable<WebSocketEvent> = streamTag(tagName, onlyFromThisServer) { tag, onlyLocal, callback ->
+    ): Flowable<WebSocketEvent> = streamTag { callback ->
         streamingMethods.hashtag(
-            accessToken = accessToken,
-            tagName = tag,
-            onlyFromThisServer = onlyLocal,
+            tagName = tagName,
+            onlyFromThisServer = onlyFromThisServer,
             callback = callback
         )
     }
 
-    fun user(accessToken: String): Flowable<WebSocketEvent> = streamTimeline {
-        streamingMethods.user(accessToken, it)
-    }
+    /**
+     * Stream all events related to the current user, such as home feed updates and notifications.
+     */
+    fun user(): Flowable<WebSocketEvent> = streamTimeline(streamingMethods::user)
 
-    fun list(
-        accessToken: String,
-        listId: String,
-    ): Flowable<WebSocketEvent> = streamList(listId) { list, callback ->
+    /**
+     * Stream all notifications for the current user.
+     */
+    fun userNotifications(): Flowable<WebSocketEvent> = streamTimeline(streamingMethods::userNotifications)
+
+    /**
+     * Stream updates to the list with [listId].
+     */
+    fun list(listId: String): Flowable<WebSocketEvent> = streamList { callback ->
         streamingMethods.list(
-            accessToken = accessToken,
-            listId = list,
+            listId = listId,
             callback = callback
         )
     }
 
-    fun directConversations(accessToken: String): Flowable<WebSocketEvent> = streamTimeline {
-        streamingMethods.directConversations(accessToken, it)
-    }
+    /**
+     * Stream all updates to direct conversations.
+     */
+    fun directConversations(): Flowable<WebSocketEvent> = streamTimeline(streamingMethods::directConversations)
 
     private fun streamTimeline(streamMethod: (WebSocketCallback) -> Closeable): Flowable<WebSocketEvent> {
         return Flowable.create({ emitter ->
@@ -69,23 +93,16 @@ class RxStreamingMethods(client: MastodonClient) {
         }, BackpressureStrategy.BUFFER)
     }
 
-    private fun streamList(
-        listId: String,
-        streamMethod: (String, WebSocketCallback) -> Closeable
-    ): Flowable<WebSocketEvent> {
+    private fun streamList(streamMethod: (WebSocketCallback) -> Closeable): Flowable<WebSocketEvent> {
         return Flowable.create({ emitter ->
-            val closeable = streamMethod(listId, emitter.fromWebSocketCallback())
+            val closeable = streamMethod(emitter.fromWebSocketCallback())
             emitter.setCancellable(closeable::close)
         }, BackpressureStrategy.BUFFER)
     }
 
-    private fun streamTag(
-        tagName: String,
-        onlyFromThisServer: Boolean,
-        streamMethod: (String, Boolean, WebSocketCallback) -> Closeable
-    ): Flowable<WebSocketEvent> {
+    private fun streamTag(streamMethod: (WebSocketCallback) -> Closeable): Flowable<WebSocketEvent> {
         return Flowable.create({ emitter ->
-            val closeable = streamMethod(tagName, onlyFromThisServer, emitter.fromWebSocketCallback())
+            val closeable = streamMethod(emitter.fromWebSocketCallback())
             emitter.setCancellable(closeable::close)
         }, BackpressureStrategy.BUFFER)
     }
