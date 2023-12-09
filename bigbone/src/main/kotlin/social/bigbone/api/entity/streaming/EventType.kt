@@ -9,7 +9,7 @@ import kotlinx.serialization.Serializable
  * @see <a href="https://docs.joinmastodon.org/methods/streaming/#events">Mastodon streaming#events entities</a>
  */
 @Serializable
-enum class EventType {
+internal enum class EventType {
 
     /**
      * A new Status has appeared.

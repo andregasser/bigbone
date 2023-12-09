@@ -10,7 +10,7 @@ import kotlinx.serialization.Serializable
  * @see <a href="https://docs.joinmastodon.org/methods/streaming/#events">Mastodon streaming#events entities</a>
  */
 @Serializable
-enum class StreamType {
+internal enum class StreamType {
 
     /**
      * All public posts known to the server.
