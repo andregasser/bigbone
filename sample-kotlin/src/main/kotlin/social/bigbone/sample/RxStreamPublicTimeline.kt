@@ -1,28 +1,36 @@
 package social.bigbone.sample
 
 import io.reactivex.rxjava3.schedulers.Schedulers
+import social.bigbone.MastodonClient
 import social.bigbone.rx.RxStreamingMethods
+import java.time.Duration
 
 object RxStreamPublicTimeline {
-    private const val TEN_SECONDS = 10_000L
 
     @JvmStatic
     fun main(args: Array<String>) {
         val instanceName = args[0]
-        val credentialFilePath = args[1]
+        val accessToken = args[1]
 
         // require authentication even if public streaming
-        val client = Authenticator.appRegistrationIfNeeded(instanceName, credentialFilePath, true)
-
+        val client = MastodonClient.Builder(instanceName)
+            .accessToken(accessToken)
+            .build()
         val streaming = RxStreamingMethods(client)
 
         println("init")
-        val disposable = streaming.localPublic()
+        val disposable = streaming.federatedPublic(
+            accessToken = accessToken,
+            onlyMedia = false
+        )
             .subscribeOn(Schedulers.io())
-            .subscribe {
-                println("${it.createdAt}: ${it.account?.acct} < ${it.content.replace("<.*?>".toRegex(), "")}")
-            }
-        Thread.sleep(TEN_SECONDS)
+            .subscribe(
+                /* onNext = */ ::println,
+                /* onError = */ ::println,
+                /* onComplete = */ { println("onComplete") }
+            )
+
+        Thread.sleep(Duration.ofSeconds(10).toSeconds())
         disposable.dispose()
     }
 }

@@ -1,9 +1,6 @@
 package social.bigbone.sample
 
 import social.bigbone.MastodonClient
-import social.bigbone.api.Handler
-import social.bigbone.api.entity.Notification
-import social.bigbone.api.entity.Status
 
 object StreamFederatedPublicTimeline {
     @JvmStatic
@@ -17,24 +14,12 @@ object StreamFederatedPublicTimeline {
             .useStreamingApi()
             .build()
 
-        // Configure status handler
-        val handler: Handler = object : Handler {
-            override fun onStatus(status: Status) {
-                println(status.content)
-            }
-
-            override fun onNotification(notification: Notification) {
-                // No op
-            }
-
-            override fun onDelete(id: String) {
-                // No op
-            }
+        client.streaming.federatedPublic(
+            accessToken = accessToken,
+            onlyMedia = false,
+            callback = ::println
+        ).use {
+            Thread.sleep(15_000L)
         }
-
-        // Start federated timeline streaming and stop after 20 seconds
-        val shutdownable = client.streaming.federatedPublic(handler)
-        Thread.sleep(20_000L)
-        shutdownable.shutdown()
     }
 }
