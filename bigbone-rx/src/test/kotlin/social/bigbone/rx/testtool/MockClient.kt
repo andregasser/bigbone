@@ -9,12 +9,32 @@ import okhttp3.RequestBody
 import okhttp3.Response
 import okhttp3.ResponseBody
 import okhttp3.ResponseBody.Companion.toResponseBody
+import okhttp3.WebSocket
 import social.bigbone.MastodonClient
 import social.bigbone.Parameters
+import social.bigbone.api.WebSocketCallback
+import social.bigbone.api.entity.streaming.WebSocketEvent
 import social.bigbone.api.exception.BigBoneRequestException
 import java.net.SocketTimeoutException
 
 object MockClient {
+
+    /**
+     * Mocks a [MastodonClient] for functions testing the websocket streaming APIs.
+     *
+     * @param events [WebSocketEvent]s that should be lined up to be returned by the [WebSocketCallback]
+     */
+    fun mockWebSocket(events: Collection<WebSocketEvent>): MastodonClient {
+        val webSocket = mockk<WebSocket> {
+            every { close(any<Int>(), any<String>()) } returns true
+        }
+        return mockk<MastodonClient> {
+            every { stream(any<String>(), any<Parameters>(), any<WebSocketCallback>()) } answers {
+                events.forEach { event: WebSocketEvent -> thirdArg<WebSocketCallback>().onEvent(event) }
+                webSocket
+            }
+        }
+    }
 
     fun mock(
         jsonName: String,
