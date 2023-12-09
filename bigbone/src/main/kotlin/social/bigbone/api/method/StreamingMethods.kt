@@ -7,6 +7,7 @@ import social.bigbone.api.Dispatcher
 import social.bigbone.api.Handler
 import social.bigbone.api.Shutdownable
 import social.bigbone.api.WebSocketCallback
+import social.bigbone.api.WebSocketEvent
 import social.bigbone.api.entity.Status
 import social.bigbone.api.entity.streaming.StreamType
 import social.bigbone.api.entity.streaming.StreamType.DIRECT
@@ -335,6 +336,13 @@ class StreamingMethods(private val client: MastodonClient) {
         }
     }
 
+    /**
+     * Stream all public posts known to this server. Analogous to the federated timeline.
+     *
+     * @param onlyMedia Filter for media attachments. Analogous to the federated timeline with “only media” enabled.
+     * @param callback Your implementation of [WebSocketCallback] to receive stream of [WebSocketEvent]s.
+     * @return [Closeable] for you to close the websocket once you’re done with streaming.
+     */
     fun federatedPublic(
         onlyMedia: Boolean,
         callback: WebSocketCallback
@@ -345,6 +353,13 @@ class StreamingMethods(private val client: MastodonClient) {
         )
     }
 
+    /**
+     * Stream all public posts originating from this server. Analogous to the local timeline.
+     *
+     * @param onlyMedia Filter for media attachments. Analogous to the local timeline with “only media” enabled.
+     * @param callback Your implementation of [WebSocketCallback] to receive stream of [WebSocketEvent]s.
+     * @return [Closeable] for you to close the websocket once you’re done with streaming.
+     */
     fun localPublic(
         onlyMedia: Boolean,
         callback: WebSocketCallback
@@ -355,6 +370,13 @@ class StreamingMethods(private val client: MastodonClient) {
         )
     }
 
+    /**
+     * Stream all public posts originating from other servers.
+     *
+     * @param onlyMedia Filter for media attachments.
+     * @param callback Your implementation of [WebSocketCallback] to receive stream of [WebSocketEvent]s.
+     * @return [Closeable] for you to close the websocket once you’re done with streaming.
+     */
     fun remotePublic(
         onlyMedia: Boolean,
         callback: WebSocketCallback
@@ -365,6 +387,14 @@ class StreamingMethods(private val client: MastodonClient) {
         )
     }
 
+    /**
+     * Stream all public posts using the hashtag [tagName].
+     *
+     * @param tagName Hashtag the public posts you want to stream should have.
+     * @param onlyFromThisServer Filter for public posts originating from this server.
+     * @param callback Your implementation of [WebSocketCallback] to receive stream of [WebSocketEvent]s.
+     * @return [Closeable] for you to close the websocket once you’re done with streaming.
+     */
     fun hashtag(
         tagName: String,
         onlyFromThisServer: Boolean,
@@ -377,6 +407,12 @@ class StreamingMethods(private val client: MastodonClient) {
         )
     }
 
+    /**
+     * Stream all events related to the current user, such as home feed updates and notifications.
+     *
+     * @param callback Your implementation of [WebSocketCallback] to receive stream of [WebSocketEvent]s.
+     * @return [Closeable] for you to close the websocket once you’re done with streaming.
+     */
     fun user(callback: WebSocketCallback): Closeable {
         return stream(
             streamType = USER,
@@ -384,6 +420,12 @@ class StreamingMethods(private val client: MastodonClient) {
         )
     }
 
+    /**
+     * Stream all notifications for the current user.
+     *
+     * @param callback Your implementation of [WebSocketCallback] to receive stream of [WebSocketEvent]s.
+     * @return [Closeable] for you to close the websocket once you’re done with streaming.
+     */
     fun userNotifications(callback: WebSocketCallback): Closeable {
         return stream(
             streamType = USER_NOTIFICATION,
@@ -391,6 +433,13 @@ class StreamingMethods(private val client: MastodonClient) {
         )
     }
 
+    /**
+     * Stream updates to the list with [listId].
+     *
+     * @param listId List you want to receive updates for.
+     * @param callback Your implementation of [WebSocketCallback] to receive stream of [WebSocketEvent]s.
+     * @return [Closeable] for you to close the websocket once you’re done with streaming.
+     */
     fun list(
         listId: String,
         callback: WebSocketCallback
@@ -402,11 +451,16 @@ class StreamingMethods(private val client: MastodonClient) {
         )
     }
 
+    /**
+     * Stream all updates to direct conversations.
+     *
+     * @param callback Your implementation of [WebSocketCallback] to receive stream of [WebSocketEvent]s.
+     * @return [Closeable] for you to close the websocket once you’re done with streaming.
+     */
     fun directConversations(callback: WebSocketCallback): Closeable {
         return stream(
             streamType = DIRECT,
             callback = callback
         )
     }
-
 }

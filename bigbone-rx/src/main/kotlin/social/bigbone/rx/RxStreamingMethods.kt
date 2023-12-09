@@ -48,6 +48,7 @@ class RxStreamingMethods(client: MastodonClient) {
     /**
      * Stream all public posts using the hashtag [tagName].
      *
+     * @param tagName Hashtag the public posts you want to stream should have.
      * @param onlyFromThisServer Filter for public posts originating from this server.
      */
     fun hashtag(
@@ -73,6 +74,8 @@ class RxStreamingMethods(client: MastodonClient) {
 
     /**
      * Stream updates to the list with [listId].
+     *
+     * @param listId List you want to receive updates for.
      */
     fun list(listId: String): Flowable<WebSocketEvent> = streamList { callback ->
         streamingMethods.list(
