@@ -108,5 +108,4 @@ class RxStreamingMethods(client: MastodonClient) {
             }
             emitter.setCancellable { closeable.close() }
         }, BackpressureStrategy.BUFFER)
-
 }

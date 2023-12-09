@@ -20,7 +20,8 @@ import social.bigbone.api.Pageable
 import social.bigbone.api.StreamEvent
 import social.bigbone.api.WebSocketCallback
 import social.bigbone.api.entity.data.InstanceVersion
-import social.bigbone.api.entity.streaming.Event
+import social.bigbone.api.entity.streaming.ParsedStreamEvent.Companion.toStreamEvent
+import social.bigbone.api.entity.streaming.RawStreamEvent
 import social.bigbone.api.exception.BigBoneClientInstantiationException
 import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.api.exception.InstanceVersionRetrievalException
@@ -559,8 +560,9 @@ private constructor(
                     // We should usually be able to decode WebSocket messages as an [Event] type but if that fails,
                     // we return the text received in this message verbatim via the [GenericMessage] type.
                     try {
-                        val event = JSON_SERIALIZER.decodeFromString<Event>(text)
-                        callback.onEvent(StreamEvent(event = event))
+                        val rawEvent: RawStreamEvent = JSON_SERIALIZER.decodeFromString<RawStreamEvent>(text)
+                        val streamEvent = rawEvent.toStreamEvent()
+                        callback.onEvent(StreamEvent(event = streamEvent))
                     } catch (e: IllegalArgumentException) {
                         callback.onEvent(GenericMessage(text))
                     }
@@ -572,8 +574,9 @@ private constructor(
                     // we return the text received in this message verbatim via the [GenericMessage] type.
                     val bytesAsString: String = bytes.utf8()
                     try {
-                        val event = JSON_SERIALIZER.decodeFromString<Event>(bytesAsString)
-                        callback.onEvent(StreamEvent(event = event))
+                        val rawEvent = JSON_SERIALIZER.decodeFromString<RawStreamEvent>(bytesAsString)
+                        val streamEvent = rawEvent.toStreamEvent()
+                        callback.onEvent(StreamEvent(event = streamEvent))
                     } catch (e: IllegalArgumentException) {
                         callback.onEvent(GenericMessage(bytesAsString))
                     }

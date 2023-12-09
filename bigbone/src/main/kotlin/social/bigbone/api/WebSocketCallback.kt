@@ -1,6 +1,7 @@
 package social.bigbone.api
 
-import social.bigbone.api.entity.streaming.Event
+import social.bigbone.api.entity.streaming.EventType
+import social.bigbone.api.entity.streaming.ParsedStreamEvent
 import social.bigbone.api.method.StreamingMethods
 
 /**
@@ -60,11 +61,13 @@ data class Closed(
 
 /**
  * An event from the Mastodon API has been received via the websocket.
+ *
+ * @property event The parsed stream event. May be null if we got an [EventType] we don’t know yet.
  */
-data class StreamEvent(val event: Event) : MastodonApiEvent
+data class StreamEvent(val event: ParsedStreamEvent?) : MastodonApiEvent
 
 /**
- * A message received via the websocket that could not be parsed to an [Event].
+ * A message received via the websocket that could not be parsed to a [ParsedStreamEvent].
  * Instead of [StreamEvent], an object of this type with the [text] received verbatim is returned.
  */
 data class GenericMessage(val text: String) : MastodonApiEvent

@@ -1,6 +1,10 @@
 package social.bigbone.sample
 
 import social.bigbone.MastodonClient
+import social.bigbone.api.GenericMessage
+import social.bigbone.api.MastodonApiEvent
+import social.bigbone.api.StreamEvent
+import social.bigbone.api.TechnicalEvent
 
 object StreamFederatedPublicTimeline {
     @JvmStatic
@@ -16,9 +20,15 @@ object StreamFederatedPublicTimeline {
 
         client.streaming.federatedPublic(
             onlyMedia = false,
-            callback = ::println
-        ).use {
-            Thread.sleep(15_000L)
-        }
+            callback = {
+                when (it) {
+                    is TechnicalEvent -> println("Technical event: $it")
+                    is MastodonApiEvent -> when (it) {
+                        is GenericMessage -> println("Generic message: $it")
+                        is StreamEvent -> println("API event: ${it.event!!::class.java.simpleName}")
+                    }
+                }
+            }
+        )
     }
 }

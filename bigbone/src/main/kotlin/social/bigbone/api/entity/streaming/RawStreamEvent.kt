@@ -4,11 +4,13 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 /**
- * Streaming event constantly emitted by the streaming APIs.
+ * Raw streaming event constantly emitted by the streaming APIs.
+ * Can be parsed to a [ParsedStreamEvent] which then contains specific data classes and objects for the different
+ * [EventType]s that can occur here.
  * @see <a href="https://docs.joinmastodon.org/methods/streaming/#events">Mastodon streaming#events entity docs</a>
  */
 @Serializable
-data class Event(
+internal data class RawStreamEvent(
 
     /**
      * Types of stream as subscribed to via the streaming API call, represented by [StreamType].
@@ -20,10 +22,10 @@ data class Event(
      * Type of event, such as status update, represented by [EventType].
      */
     @SerialName("event")
-    val event: EventType? = null,
+    val eventType: EventType? = null,
 
     /**
-     * Payload sent with the event. Content depends on [event] type.
+     * Payload sent with the event. Content depends on [eventType] type.
      * See [EventType] for documentation about possible payloads.
      */
     @SerialName("payload")

@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 
 /**
  * Event types that can be used for streaming specific timelines,
- * or received as part of [Event] when using streaming APIs.
+ * or received as part of [RawStreamEvent] when using streaming APIs.
  * @see <a href="https://docs.joinmastodon.org/methods/streaming/#events">Mastodon streaming#events entities</a>
  */
 @Serializable
