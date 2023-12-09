@@ -1,11 +1,10 @@
 package social.bigbone.sample
 
-import io.reactivex.rxjava3.schedulers.Schedulers
 import social.bigbone.MastodonClient
-import social.bigbone.api.MastodonApiEvent
-import social.bigbone.api.TechnicalEvent
+import social.bigbone.api.entity.streaming.MastodonApiEvent
 import social.bigbone.rx.RxStreamingMethods
-import java.time.Duration
+import java.util.Timer
+import kotlin.concurrent.schedule
 
 object RxStreamPublicTimeline {
 
@@ -24,19 +23,16 @@ object RxStreamPublicTimeline {
         val disposable = streaming.federatedPublic(
             onlyMedia = false
         )
-            .subscribeOn(Schedulers.io())
+            .filter { it is MastodonApiEvent }
+            .map { it as MastodonApiEvent }
             .subscribe(
-                /* onNext = */ {
-                    when (it) {
-                        is TechnicalEvent -> println("Technical event: $it")
-                        is MastodonApiEvent -> println("Mastodon API event: $it")
-                    }
-                },
+                /* onNext = */ { println("Mastodon API event: $it") },
                 /* onError = */ ::println,
                 /* onComplete = */ { println("onComplete") }
             )
 
-        Thread.sleep(Duration.ofSeconds(10).toSeconds())
-        disposable.dispose()
+        Timer().schedule(15_000L) {
+            disposable.dispose()
+        }
     }
 }

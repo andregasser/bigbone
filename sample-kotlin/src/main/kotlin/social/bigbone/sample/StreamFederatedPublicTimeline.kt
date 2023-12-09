@@ -1,10 +1,10 @@
 package social.bigbone.sample
 
 import social.bigbone.MastodonClient
-import social.bigbone.api.GenericMessage
-import social.bigbone.api.MastodonApiEvent
-import social.bigbone.api.StreamEvent
-import social.bigbone.api.TechnicalEvent
+import social.bigbone.api.entity.streaming.MastodonApiEvent
+import social.bigbone.api.entity.streaming.MastodonApiEvent.GenericMessage
+import social.bigbone.api.entity.streaming.MastodonApiEvent.StreamEvent
+import social.bigbone.api.entity.streaming.TechnicalEvent
 
 object StreamFederatedPublicTimeline {
     @JvmStatic
