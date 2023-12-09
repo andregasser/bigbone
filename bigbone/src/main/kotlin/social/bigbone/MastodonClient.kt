@@ -11,9 +11,14 @@ import okhttp3.Response
 import okhttp3.WebSocket
 import okhttp3.WebSocketListener
 import okio.ByteString
+import social.bigbone.api.Closed
+import social.bigbone.api.Closing
+import social.bigbone.api.Failure
+import social.bigbone.api.GenericMessage
+import social.bigbone.api.Open
 import social.bigbone.api.Pageable
+import social.bigbone.api.StreamEvent
 import social.bigbone.api.WebSocketCallback
-import social.bigbone.api.WebSocketEvent
 import social.bigbone.api.entity.data.InstanceVersion
 import social.bigbone.api.entity.streaming.Event
 import social.bigbone.api.exception.BigBoneClientInstantiationException
@@ -536,17 +541,17 @@ private constructor(
             listener = object : WebSocketListener() {
                 override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
                     super.onClosed(webSocket, code, reason)
-                    callback.onEvent(WebSocketEvent.Closed(code, reason))
+                    callback.onEvent(Closed(code, reason))
                 }
 
                 override fun onClosing(webSocket: WebSocket, code: Int, reason: String) {
                     super.onClosing(webSocket, code, reason)
-                    callback.onEvent(WebSocketEvent.Closing(code, reason))
+                    callback.onEvent(Closing(code, reason))
                 }
 
                 override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
                     super.onFailure(webSocket, t, response)
-                    callback.onEvent(WebSocketEvent.Failure(t))
+                    callback.onEvent(Failure(t))
                 }
 
                 override fun onMessage(webSocket: WebSocket, text: String) {
@@ -555,9 +560,9 @@ private constructor(
                     // we return the text received in this message verbatim via the [GenericMessage] type.
                     try {
                         val event = JSON_SERIALIZER.decodeFromString<Event>(text)
-                        callback.onEvent(WebSocketEvent.StreamEvent(event = event))
+                        callback.onEvent(StreamEvent(event = event))
                     } catch (e: IllegalArgumentException) {
-                        callback.onEvent(WebSocketEvent.GenericMessage(text))
+                        callback.onEvent(GenericMessage(text))
                     }
                 }
 
@@ -568,15 +573,15 @@ private constructor(
                     val bytesAsString: String = bytes.utf8()
                     try {
                         val event = JSON_SERIALIZER.decodeFromString<Event>(bytesAsString)
-                        callback.onEvent(WebSocketEvent.StreamEvent(event = event))
+                        callback.onEvent(StreamEvent(event = event))
                     } catch (e: IllegalArgumentException) {
-                        callback.onEvent(WebSocketEvent.GenericMessage(bytesAsString))
+                        callback.onEvent(GenericMessage(bytesAsString))
                     }
                 }
 
                 override fun onOpen(webSocket: WebSocket, response: Response) {
                     super.onOpen(webSocket, response)
-                    callback.onEvent(WebSocketEvent.Open)
+                    callback.onEvent(Open)
                 }
             }
         )

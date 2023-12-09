@@ -1,6 +1,5 @@
 package social.bigbone.api
 
-import social.bigbone.api.WebSocketEvent.StreamEvent
 import social.bigbone.api.entity.streaming.Event
 import social.bigbone.api.method.StreamingMethods
 
@@ -25,44 +24,54 @@ fun interface WebSocketCallback {
  * by the Mastodon API when streaming via a websocket connection.
  * All others are more technical events pertaining to the websocket connection itself.
  */
-sealed interface WebSocketEvent {
+sealed interface WebSocketEvent
 
-    /**
-     * The websocket has been opened. A connection is established.
-     */
-    data object Open : WebSocketEvent
+/**
+ * Technical events that occurred during websocket connection, such as [Open] or [Closed].
+ */
+sealed interface TechnicalEvent : WebSocketEvent
 
-    /**
-     * The websocket is about to close.
-     */
-    data class Closing(
-        val code: Int,
-        val reason: String
-    ) : WebSocketEvent
+/**
+ * (Ideally parsed) event received through the websocket from the Mastodon server.
+ * In most situations, this—and specifically [StreamEvent]—is likely what you’re looking for when streaming.
+ */
+sealed interface MastodonApiEvent : WebSocketEvent
 
-    /**
-     * The websocket is now closed.
-     */
-    data class Closed(
-        val code: Int,
-        val reason: String
-    ) : WebSocketEvent
+/**
+ * The websocket has been opened. A connection is established.
+ */
+data object Open : TechnicalEvent
 
-    /**
-     * An event from the Mastodon API has been received via the websocket.
-     */
-    data class StreamEvent(val event: Event) : WebSocketEvent
+/**
+ * The websocket is about to close.
+ */
+data class Closing(
+    val code: Int,
+    val reason: String
+) : TechnicalEvent
 
-    /**
-     * A message received via the websocket that could not be parsed to an [Event].
-     * Instead of [StreamEvent], an object of this type with the [text] received verbatim is returned.
-     */
-    data class GenericMessage(val text: String) : WebSocketEvent
+/**
+ * The websocket is now closed.
+ */
+data class Closed(
+    val code: Int,
+    val reason: String
+) : TechnicalEvent
 
-    /**
-     * An error occurred during the websocket connection.
-     * This is a final event: No further calls to the [WebSocketCallback] emitting these events
-     * will be made.
-     */
-    data class Failure(val error: Throwable) : WebSocketEvent
-}
+/**
+ * An event from the Mastodon API has been received via the websocket.
+ */
+data class StreamEvent(val event: Event) : MastodonApiEvent
+
+/**
+ * A message received via the websocket that could not be parsed to an [Event].
+ * Instead of [StreamEvent], an object of this type with the [text] received verbatim is returned.
+ */
+data class GenericMessage(val text: String) : MastodonApiEvent
+
+/**
+ * An error occurred during the websocket connection.
+ * This is a final event:
+ * No further calls to the [WebSocketCallback] emitting these events will be made.
+ */
+data class Failure(val error: Throwable) : TechnicalEvent

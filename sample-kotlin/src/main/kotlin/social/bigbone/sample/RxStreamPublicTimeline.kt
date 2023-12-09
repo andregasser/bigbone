@@ -2,6 +2,8 @@ package social.bigbone.sample
 
 import io.reactivex.rxjava3.schedulers.Schedulers
 import social.bigbone.MastodonClient
+import social.bigbone.api.MastodonApiEvent
+import social.bigbone.api.TechnicalEvent
 import social.bigbone.rx.RxStreamingMethods
 import java.time.Duration
 
@@ -24,7 +26,12 @@ object RxStreamPublicTimeline {
         )
             .subscribeOn(Schedulers.io())
             .subscribe(
-                /* onNext = */ ::println,
+                /* onNext = */ {
+                    when (it) {
+                        is TechnicalEvent -> println("Technical event: $it")
+                        is MastodonApiEvent -> println("Mastodon API event: $it")
+                    }
+                },
                 /* onError = */ ::println,
                 /* onComplete = */ { println("onComplete") }
             )

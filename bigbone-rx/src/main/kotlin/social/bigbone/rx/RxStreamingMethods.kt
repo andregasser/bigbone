@@ -2,8 +2,13 @@ package social.bigbone.rx
 
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
-import io.reactivex.rxjava3.core.FlowableEmitter
 import social.bigbone.MastodonClient
+import social.bigbone.api.Closed
+import social.bigbone.api.Closing
+import social.bigbone.api.Failure
+import social.bigbone.api.GenericMessage
+import social.bigbone.api.Open
+import social.bigbone.api.StreamEvent
 import social.bigbone.api.WebSocketCallback
 import social.bigbone.api.WebSocketEvent
 import social.bigbone.api.method.StreamingMethods
@@ -91,19 +96,17 @@ class RxStreamingMethods(client: MastodonClient) {
 
     private fun stream(streamMethod: (WebSocketCallback) -> Closeable): Flowable<WebSocketEvent> =
         Flowable.create({ emitter ->
-            val closeable = streamMethod(emitter.fromWebSocketCallback())
-            emitter.setCancellable(closeable::close)
+            val closeable = streamMethod { webSocketEvent ->
+                when (webSocketEvent) {
+                    is Closed -> emitter.onComplete()
+                    is Failure -> emitter.tryOnError(webSocketEvent.error)
+                    Open,
+                    is Closing,
+                    is StreamEvent,
+                    is GenericMessage -> emitter.onNext(webSocketEvent)
+                }
+            }
+            emitter.setCancellable { closeable.close() }
         }, BackpressureStrategy.BUFFER)
 
-    private fun FlowableEmitter<WebSocketEvent>.fromWebSocketCallback(): (event: WebSocketEvent) -> Unit =
-        { webSocketEvent ->
-            when (webSocketEvent) {
-                is WebSocketEvent.Closed -> onComplete()
-                is WebSocketEvent.Failure -> tryOnError(webSocketEvent.error)
-                WebSocketEvent.Open,
-                is WebSocketEvent.Closing,
-                is WebSocketEvent.StreamEvent,
-                is WebSocketEvent.GenericMessage -> onNext(webSocketEvent)
-            }
-        }
 }
