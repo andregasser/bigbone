@@ -36,6 +36,8 @@ class AppMethods(private val client: MastodonClient) {
                     append("website", it)
                 }
                 scope?.let {
+                    // note: Mastodon uses "scopes" in its own API, but "scope" in OAuth APIs
+                    //  see https://docs.joinmastodon.org/api/oauth-scopes/#oauth-scopes
                     append("scopes", scope.toString())
                 }
             }
