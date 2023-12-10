@@ -76,6 +76,6 @@ data class AdminIpBlock(
         NO_ACCESS;
 
         @OptIn(ExperimentalSerializationApi::class)
-        val apiName: String get() = SearchMethods.SearchType.serializer().descriptor.getElementName(ordinal)
+        val apiName: String get() = serializer().descriptor.getElementName(ordinal)
     }
 }

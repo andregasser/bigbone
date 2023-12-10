@@ -13,7 +13,7 @@ import social.bigbone.api.entity.admin.AdminIpBlock
  */
 class AdminIpBlocksMethods(private val client: MastodonClient) {
 
-    private val adminIpBlocksEndpoint = "api/v1/admin/ip_blocks"
+    private val adminIpBlocksEndpoint = "/api/v1/admin/ip_blocks"
     private val ipSubdomainRegex = "^\\d+\\.\\d+\\.\\d+\\.\\d+/\\d+$".toRegex()
 
     /**
