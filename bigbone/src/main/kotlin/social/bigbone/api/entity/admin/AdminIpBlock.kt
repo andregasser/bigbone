@@ -5,7 +5,6 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import social.bigbone.DateTimeSerializer
 import social.bigbone.PrecisionDateTime
-import social.bigbone.api.method.SearchMethods
 
 /**
  * Represents an IP address range that cannot be used to sign up.

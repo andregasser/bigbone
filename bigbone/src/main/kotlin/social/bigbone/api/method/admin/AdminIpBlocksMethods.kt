@@ -8,13 +8,13 @@ import social.bigbone.api.Range
 import social.bigbone.api.entity.admin.AdminIpBlock
 
 /**
- * Allow management of ip addresses blocked and to be blocked
+ * Allow management of ip addresses blocked and to be blocked.
  * @see <a href="https://docs.joinmastodon.org/methods/admin/ip_blocks/">Mastodon admin/ip_blocks API methods</a>
  */
 class AdminIpBlocksMethods(private val client: MastodonClient) {
 
     private val adminIpBlocksEndpoint = "/api/v1/admin/ip_blocks"
-    private val ipSubdomainRegex = "^\\d+\\.\\d+\\.\\d+\\.\\d+/\\d+$".toRegex()
+    private val ipSubdomainRegex = """^\\d+\\.\\d+\\.\\d+\\.\\d+/\\d+$""".toRegex()
 
     /**
      * Show information about all blocked IP ranges.
@@ -50,7 +50,12 @@ class AdminIpBlocksMethods(private val client: MastodonClient) {
      * @param expiresIn The number of seconds in which this IP block will expire.
      * @see <a href="https://docs.joinmastodon.org/methods/admin/ip_blocks/#create">Mastodon API documentation: admin/ip_blocks/#create</a>
      */
-    fun addIpToTheBlockedOnes(ipAddress: String = "0.0.0.0/32", severity: AdminIpBlock.Severity, comment: String, expiresIn: Int): MastodonRequest<AdminIpBlock> {
+    fun addIpToTheBlockedOnes(
+        ipAddress: String = "0.0.0.0/32",
+        severity: AdminIpBlock.Severity,
+        comment: String,
+        expiresIn: Int
+    ): MastodonRequest<AdminIpBlock> {
         require(ipSubdomainRegex.matches(ipAddress)) { "The ip does not match the pattern to represent an ip address and subdomain" }
         return client.getMastodonRequest(
             endpoint = adminIpBlocksEndpoint,
@@ -73,7 +78,13 @@ class AdminIpBlocksMethods(private val client: MastodonClient) {
      * @param expiresIn The number of seconds in which this IP block will expire.
      * @see <a href="https://docs.joinmastodon.org/methods/admin/ip_blocks/#update">Mastodon API documentation: admin/ip_blocks/#update</a>
      */
-    fun updateSingleIpToTheBlockedOnes(id: String, ipAddress: String = "0.0.0.0/32", severity: AdminIpBlock.Severity, comment: String, expiresIn: Int): MastodonRequest<AdminIpBlock> {
+    fun updateSingleIpToTheBlockedOnes(
+        id: String,
+        ipAddress: String = "0.0.0.0/32",
+        severity: AdminIpBlock.Severity,
+        comment: String,
+        expiresIn: Int
+    ): MastodonRequest<AdminIpBlock> {
         require(ipSubdomainRegex.matches(ipAddress)) { "The ip does not match the pattern to represent an ip address and subdomain" }
         return client.getMastodonRequest(
             endpoint = "$adminIpBlocksEndpoint/$id",

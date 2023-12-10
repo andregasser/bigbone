@@ -51,7 +51,12 @@ class RxAdminIpBlocksMethods(client: MastodonClient) {
      */
     fun addIpToTheBlockedOnes(ipAddress: String, severity: AdminIpBlock.Severity, comment: String, expiresIn: Int): Single<AdminIpBlock> {
         return Single.fromCallable {
-            adminIpBlocksMethods.addIpToTheBlockedOnes(ipAddress = ipAddress, severity = severity, comment = comment, expiresIn = expiresIn).execute()
+            adminIpBlocksMethods.addIpToTheBlockedOnes(
+                ipAddress = ipAddress,
+                severity = severity,
+                comment = comment,
+                expiresIn = expiresIn
+            ).execute()
         }
     }
 
@@ -66,7 +71,13 @@ class RxAdminIpBlocksMethods(client: MastodonClient) {
      */
     fun updateSingleIpToTheBlockedOnes(id: String, ipAddress: String, severity: AdminIpBlock.Severity, comment: String, expiresIn: Int): Single<AdminIpBlock> {
         return Single.fromCallable {
-            adminIpBlocksMethods.updateSingleIpToTheBlockedOnes(id = id, ipAddress = ipAddress, severity = severity, comment = comment, expiresIn = expiresIn).execute()
+            adminIpBlocksMethods.updateSingleIpToTheBlockedOnes(
+                id = id,
+                ipAddress = ipAddress,
+                severity = severity,
+                comment = comment,
+                expiresIn = expiresIn
+            ).execute()
         }
     }
 

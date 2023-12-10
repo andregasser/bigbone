@@ -1,17 +1,9 @@
 package social.bigbone.api.method.admin
 
-import io.mockk.verify
 import org.amshove.kluent.shouldBeEqualTo
-import org.amshove.kluent.shouldHaveSize
-import org.amshove.kluent.shouldNotBeNull
 import org.junit.jupiter.api.Test
-import social.bigbone.PrecisionDateTime
 import social.bigbone.api.Range
-import social.bigbone.api.entity.admin.AdminCohort
 import social.bigbone.testtool.MockClient
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.ZoneOffset
 
 class AdminIpBlocksMethodsTest {
 
@@ -40,6 +32,4 @@ class AdminIpBlocksMethodsTest {
             severity?.apiName shouldBeEqualTo "no_access"
         }
     }
-
-
 }
