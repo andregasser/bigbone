@@ -11,7 +11,7 @@ import social.bigbone.api.entity.admin.AdminIpBlock
  * Allow management of ip addresses blocked and to be blocked
  * @see <a href="https://docs.joinmastodon.org/methods/admin/ip_blocks/">Mastodon admin/ip_blocks API methods</a>
  */
-class IpBlockMethods(private val client: MastodonClient) {
+class AdminIpBlocksMethods(private val client: MastodonClient) {
 
     private val adminIpBlocksEndpoint = "api/v1/admin/ip_blocks"
     private val ipSubdomainRegex = "^\\d+\\.\\d+\\.\\d+\\.\\d+/\\d+$".toRegex()
