@@ -21,8 +21,8 @@ Subscribe to server-sent events for real-time updates via a long-lived HTTP conn
   </tr>
   <tr>
     <td style="width:45%;text-align:left;"><code>GET /api/v1/streaming/health</code><br>Check if the server is alive</td>
-    <td style="width:10%;text-align:center;"><img src="/assets/red16.png"></td>
-    <td style="width:45%;text-align:left;">Not implemented yet.</td>
+    <td style="width:10%;text-align:center;"><img src="/assets/green16.png"></td>
+    <td style="width:45%;text-align:left;">Fully supported.</td>
   </tr>
   <tr>
     <td style="width:45%;text-align:left;"><code>GET /api/v1/streaming/user</code><br>Watch your home timeline and notifications</td>

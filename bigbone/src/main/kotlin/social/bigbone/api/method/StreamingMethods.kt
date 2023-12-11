@@ -67,6 +67,18 @@ class StreamingMethods(private val client: MastodonClient) {
     }
 
     /**
+     * Verify that the streaming service is alive before connecting to it.
+     * Returns "OK" if the streaming service is alive.
+     * @see <a href="https://docs.joinmastodon.org/methods/streaming/#health">streaming/#health API documentation</a>
+     */
+    fun checkServerHealth() {
+        client.performAction(
+            endpoint = "api/v1/streaming/health",
+            method = MastodonClient.Method.GET
+        )
+    }
+
+    /**
      * Stream all public posts known to this server. Analogous to the federated timeline.
      *
      * @param onlyMedia Filter for media attachments. Analogous to the federated timeline with “only media” enabled.

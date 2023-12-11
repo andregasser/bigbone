@@ -1,6 +1,7 @@
 package social.bigbone.rx
 
 import io.reactivex.rxjava3.core.BackpressureStrategy
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Flowable
 import social.bigbone.MastodonClient
 import social.bigbone.api.WebSocketCallback
@@ -22,6 +23,15 @@ import java.io.Closeable
 class RxStreamingMethods(client: MastodonClient) {
 
     private val streamingMethods = StreamingMethods(client)
+
+    /**
+     * Verify that the streaming service is alive before connecting to it.
+     *
+     * @see <a href="https://docs.joinmastodon.org/methods/streaming/#health">streaming/#health API documentation</a>
+     */
+    fun checkServerHealth(): Completable = Completable.fromAction {
+        streamingMethods.checkServerHealth()
+    }
 
     /**
      * Stream all public posts known to this server. Analogous to the federated timeline.

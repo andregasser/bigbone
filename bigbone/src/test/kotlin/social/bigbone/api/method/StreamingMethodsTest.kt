@@ -4,10 +4,13 @@ import io.mockk.mockk
 import io.mockk.slot
 import io.mockk.verify
 import okio.IOException
+import org.amshove.kluent.invoking
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldContainSame
+import org.amshove.kluent.shouldNotThrow
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
+import social.bigbone.MastodonClient
 import social.bigbone.Parameters
 import social.bigbone.api.WebSocketCallback
 import social.bigbone.api.entity.streaming.MastodonApiEvent
@@ -15,11 +18,28 @@ import social.bigbone.api.entity.streaming.ParsedStreamEvent
 import social.bigbone.api.entity.streaming.StreamType
 import social.bigbone.api.entity.streaming.TechnicalEvent
 import social.bigbone.api.entity.streaming.WebSocketEvent
+import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.testtool.MockClient
 import social.bigbone.testtool.TestUtil.urlEncode
 
 
 class StreamingMethodsTest {
+
+    @Test
+    fun `Given a client returning success, when checking server health, then expect no errors`() {
+        val client = MockClient.mockClearText(clearTextResponse = "OK")
+        val streamingMethods = StreamingMethods(client)
+
+        invoking { streamingMethods.checkServerHealth() } shouldNotThrow BigBoneRequestException::class
+
+        verify {
+            client.performAction(
+                endpoint = "api/v1/streaming/health",
+                method = MastodonClient.Method.GET,
+                parameters = null
+            )
+        }
+    }
 
     @Test
     fun `Given websocket with 6 events lined up, when streaming federated public timeline, then expect emissions and no errors`() {

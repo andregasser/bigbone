@@ -16,6 +16,19 @@ class RxStreamingMethodsTest {
     private val testScheduler = TestScheduler()
 
     @Test
+    fun `Given client returning OK, when checking server health, then complete without errors`() {
+        val client = MockClient.mockClearText(clearTextResponse = "OK")
+        val streamingMethods = RxStreamingMethods(client)
+
+        val serverHealth = streamingMethods.checkServerHealth().test()
+
+        with(serverHealth) {
+            assertComplete()
+            assertNoErrors()
+        }
+    }
+
+    @Test
     fun `Given websocket with 6 events lined up, when streaming federated public timeline, then expect emissions and no errors`() {
         val mockedEvents: List<WebSocketEvent> = listOf(
             TechnicalEvent.Open,

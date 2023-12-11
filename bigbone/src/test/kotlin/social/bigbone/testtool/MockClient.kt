@@ -36,6 +36,30 @@ object MockClient {
         }
     }
 
+    fun mockClearText(
+        clearTextResponse: String,
+        requestUrl: String = "https://example.com",
+    ): MastodonClient {
+        val response: Response = Response.Builder()
+            .code(200)
+            .message("OK")
+            .request(Request.Builder().url(requestUrl).build())
+            .protocol(Protocol.HTTP_1_1)
+            .body(clearTextResponse.toResponseBody())
+            .build()
+
+        return mockk {
+            every { get(any<String>(), any()) } returns response
+            every {
+                this@mockk["performAction"](
+                    any<String>(),
+                    any<MastodonClient.Method>(),
+                    any<Parameters>()
+                )
+            } returns response
+        }
+    }
+
     fun mock(
         jsonName: String,
         maxId: String? = null,
