@@ -1,259 +1,438 @@
 package social.bigbone.api
 
 /**
- * Represents the access permissions that can be requested when registering an app or when
- * requesting access tokens.
+ * Represents the access permissions that can be requested when registering an app or when requesting access tokens.
+ * Existing scopes are available via members of this class, arranged hierarchically. It is recommended that you request
+ * as little as possible for your application.
  * @param scopes individual scopes that should be requested.
+ * @see <a href="https://docs.joinmastodon.org/api/oauth-scopes/">Mastodon OAuth scopes</a>
  */
+@Suppress("UseDataClass") // data class can not be used with primary constructor vararg parameters
 class Scope(private vararg val scopes: Name) {
 
     /**
-     * The available scopes. These scopes are hierarchical, i.e. if you have access to [READ], you automatically have
-     * access to [READ_ACCOUNTS]. It is recommended that you request as little as possible for your application.
+     * Interface to define scopes. While existing Mastodon scopes are generally available as objects of the [Scope]
+     * class, potential new scopes defined by Mastodon but not yet implemented here can be added by using this interface.
      */
-    enum class Name(val scopeName: String) {
+    interface Name {
+        val name: String
+    }
+
+    /**
+     * Scopes granting access to read data are grouped here. Use [READ.ALL] to request full read access, or preferably
+     * individual child scopes to limit access to a minimum.
+     */
+    object READ {
+
         /**
-         * Grants access to read data. Requesting this scope will also grant its child scopes.
+         * Grants access to read all data. Requesting this scope is equivalent to requesting all other [READ] child scopes.
          */
-        READ("read"),
+        @JvmField
+        val ALL = object : Name {
+            override val name: String
+                get() = "read"
+        }
 
         /**
          * Child scope of [READ].
          */
-        READ_ACCOUNTS("read:accounts"),
+        @JvmField
+        val ACCOUNTS = object : Name {
+            override val name: String get() = "read:accounts"
+        }
 
         /**
          * Child scope of [READ].
          */
-        READ_BLOCKS("read:blocks"),
+        @JvmField
+        val BLOCKS = object : Name {
+            override val name: String get() = "read:blocks"
+        }
 
         /**
          * Child scope of [READ].
          */
-        READ_BOOKMARKS("read:bookmarks"),
+        @JvmField
+        val BOOKMARKS = object : Name {
+            override val name: String get() = "read:bookmarks"
+        }
 
         /**
          * Child scope of [READ].
          */
-        READ_FAVOURITES("read:favourites"),
+        @JvmField
+        val FAVOURITES = object : Name {
+            override val name: String get() = "read:favourites"
+        }
 
         /**
          * Child scope of [READ].
          */
-        READ_FILTERS("read:filters"),
+        @JvmField
+        val FILTERS = object : Name {
+            override val name: String get() = "read:filters"
+        }
 
         /**
          * Child scope of [READ].
          */
-        READ_FOLLOWS("read:follows"),
+        @JvmField
+        val FOLLOWS = object : Name {
+            override val name: String get() = "read:follows"
+        }
 
         /**
          * Child scope of [READ].
          */
-        READ_LISTS("read:lists"),
+        @JvmField
+        val LISTS = object : Name {
+            override val name: String get() = "read:lists"
+        }
 
         /**
          * Child scope of [READ].
          */
-        READ_MUTES("read:mutes"),
+        @JvmField
+        val MUTES = object : Name {
+            override val name: String get() = "read:mutes"
+        }
 
         /**
          * Child scope of [READ].
          */
-        READ_NOTIFICATIONS("read:notifications"),
+        @JvmField
+        val NOTIFICATIONS = object : Name {
+            override val name: String get() = "read:notifications"
+        }
 
         /**
          * Child scope of [READ].
          */
-        READ_SEARCH("read:search"),
+        @JvmField
+        val SEARCH = object : Name {
+            override val name: String get() = "read:search"
+        }
 
         /**
          * Child scope of [READ].
          */
-        READ_STATUSES("read:statuses"),
+        @JvmField
+        val STATUSES = object : Name {
+            override val name: String get() = "read:statuses"
+        }
+    }
+
+    /**
+     * Scopes granting access to write data are grouped here. Use [WRITE.ALL] to request full write access, or preferably
+     * individual child scopes to limit access to a minimum.
+     */
+    object WRITE {
 
         /**
-         * Grants access to write data. Requesting this scope will also grant its child scopes
+         * Grants access to write all data. Requesting this scope is equivalent to requesting all other child scopes.
          */
-        WRITE("write"),
-
-        /**
-         * Child scope of [WRITE].
-         */
-        WRITE_ACCOUNTS("write:accounts"),
-
-        /**
-         * Child scope of [WRITE].
-         */
-        WRITE_BLOCKS("write:blocks"),
-
-        /**
-         * Child scope of [WRITE].
-         */
-        WRITE_BOOKMARKS("write:bookmarks"),
-
-        /**
-         * Child scope of [WRITE].
-         */
-        WRITE_CONVERSATIONS("write:conversations"),
+        @JvmField
+        val ALL = object : Name {
+            override val name: String
+                get() = "write"
+        }
 
         /**
          * Child scope of [WRITE].
          */
-        WRITE_FAVOURITES("write:favourites"),
+        @JvmField
+        val ACCOUNTS = object : Name {
+            override val name: String get() = "write:accounts"
+        }
 
         /**
          * Child scope of [WRITE].
          */
-        WRITE_FILTERS("write:filters"),
+        @JvmField
+        val BLOCKS = object : Name {
+            override val name: String get() = "write:blocks"
+        }
 
         /**
          * Child scope of [WRITE].
          */
-        WRITE_FOLLOWS("write:follows"),
+        @JvmField
+        val BOOKMARKS = object : Name {
+            override val name: String get() = "write:bookmarks"
+        }
 
         /**
          * Child scope of [WRITE].
          */
-        WRITE_LISTS("write:lists"),
+        @JvmField
+        val CONVERSATIONS = object : Name {
+            override val name: String get() = "write:conversations"
+        }
 
         /**
          * Child scope of [WRITE].
          */
-        WRITE_MEDIA("write:media"),
+        @JvmField
+        val FAVOURITES = object : Name {
+            override val name: String get() = "write:favourites"
+        }
 
         /**
          * Child scope of [WRITE].
          */
-        WRITE_MUTES("write:mutes"),
+        @JvmField
+        val FILTERS = object : Name {
+            override val name: String get() = "write:filters"
+        }
 
         /**
          * Child scope of [WRITE].
          */
-        WRITE_NOTIFICATIONS("write:notifications"),
+        @JvmField
+        val FOLLOWS = object : Name {
+            override val name: String get() = "write:follows"
+        }
 
         /**
          * Child scope of [WRITE].
          */
-        WRITE_REPORTS("write:reports"),
+        @JvmField
+        val LISTS = object : Name {
+            override val name: String get() = "write:lists"
+        }
 
         /**
          * Child scope of [WRITE].
          */
-        WRITE_STATUSES("write:statuses"),
+        @JvmField
+        val MEDIA = object : Name {
+            override val name: String get() = "write:media"
+        }
+
+        /**
+         * Child scope of [WRITE].
+         */
+        @JvmField
+        val MUTES = object : Name {
+            override val name: String get() = "write:mutes"
+        }
+
+        /**
+         * Child scope of [WRITE].
+         */
+        @JvmField
+        val NOTIFICATIONS = object : Name {
+            override val name: String get() = "write:notifications"
+        }
+
+        /**
+         * Child scope of [WRITE].
+         */
+        @JvmField
+        val REPORTS = object : Name {
+            override val name: String get() = "write:reports"
+        }
+
+        /**
+         * Child scope of [WRITE].
+         */
+        @JvmField
+        val STATUSES = object : Name {
+            override val name: String get() = "write:statuses"
+        }
+    }
+
+    /**
+     * Scopes granting access to Web Push API subscriptions are grouped here. Currently, only [PUSH.ALL] exists.
+     */
+    object PUSH {
 
         /**
          * Grants access to Web Push API subscriptions.
          */
-        PUSH("push"),
-
-        /**
-         * Used for moderation API. Requesting this scope will also grant its child scopes.
-         */
-        ADMIN_READ("admin:read"),
-
-        /**
-         * Child scope of [ADMIN_READ].
-         */
-        ADMIN_READ_ACCOUNTS("admin:read:accounts"),
-
-        /**
-         * Child scope of [ADMIN_READ].
-         */
-        ADMIN_READ_REPORTS("admin:read:reports"),
-
-        /**
-         * Child scope of [ADMIN_READ].
-         */
-        ADMIN_READ_DOMAIN_ALLOWS("admin:read:domain_allows"),
-
-        /**
-         * Child scope of [ADMIN_READ].
-         */
-        ADMIN_READ_DOMAIN_BLOCKS("admin:read:domain_blocks"),
-
-        /**
-         * Child scope of [ADMIN_READ].
-         */
-        ADMIN_READ_IP_BLOCKS("admin:read:ip_blocks"),
-
-        /**
-         * Child scope of [ADMIN_READ].
-         */
-        ADMIN_READ_EMAIL_DOMAIN_BLOCKS("admin:read:email_domain_blocks"),
-
-        /**
-         * Child scope of [ADMIN_READ].
-         */
-        ADMIN_READ_CANONICAL_EMAIL_BLOCKS("admin:read:canonical_email_blocks"),
-
-        /**
-         * Used for moderation API. Requesting this scope will also grant its child scopes.
-         */
-        ADMIN_WRITE("admin:write"),
-
-        /**
-         * Child scope of [ADMIN_WRITE].
-         */
-        ADMIN_WRITE_ACCOUNTS("admin:write:accounts"),
-
-        /**
-         * Child scope of [ADMIN_WRITE].
-         */
-        ADMIN_WRITE_REPORTS("admin:write:reports"),
-
-        /**
-         * Child scope of [ADMIN_WRITE].
-         */
-        ADMIN_WRITE_DOMAIN_ALLOWS("admin:write:domain_allows"),
-
-        /**
-         * Child scope of [ADMIN_WRITE].
-         */
-        ADMIN_WRITE_DOMAIN_BLOCKS("admin:write:domain_blocks"),
-
-        /**
-         * Child scope of [ADMIN_WRITE].
-         */
-        ADMIN_WRITE_IP_BLOCKS("admin:write:ip_blocks"),
-
-        /**
-         * Child scope of [ADMIN_WRITE].
-         */
-        ADMIN_WRITE_EMAIL_DOMAIN_BLOCKS("admin:write:email_domain_blocks"),
-
-        /**
-         * Child scope of [ADMIN_WRITE].
-         */
-        ADMIN_WRITE_CANONICAL_EMAIL_BLOCKS("admin:write:canonical_email_blocks"),
-
-        /**
-         * Grants access to manage relationships. Requesting this scope will also grant the child scopes
-         * [READ_BLOCKS], [WRITE_BLOCKS], [READ_FOLLOWS], [WRITE_FOLLOWS], [READ_MUTES] and [WRITE_MUTES].
-         */
-        @Deprecated(
-            message = "Deprecated since Mastodon 3.5.0 and will be removed in the future. Use child scopes of READ and WRITE instead.",
-            level = DeprecationLevel.WARNING
-        )
-        FOLLOW("follow"),
-
-        /**
-         * Grants full non-admin access by requesting the top-level scopes [READ], [WRITE] and [FOLLOW].
-         * It is recommended that you request as little as possible for your application, so consider using individual
-         * scopes instead.
-         */
-        @Deprecated(
-            message = "Includes FOLLOW scope deprecated since Mastodon 3.5.0, and will be removed in the future. " +
-                "If necessary, switch to requesting all top-level scopes directly.",
-            replaceWith = ReplaceWith("Scope(PUSH, READ, WRITE)"),
-            level = DeprecationLevel.WARNING
-        )
-        ALL(Scope(READ, WRITE, FOLLOW).toString())
+        @JvmField
+        val ALL = object : Name {
+            override val name: String get() = "push"
+        }
     }
 
-    fun validate() {
-        require(scopes.size == scopes.distinct().size) { "There is a duplicate scope. : $this" }
+    /**
+     * Scopes granting access to the moderation API are grouped here, split between [ADMIN.READ] and [ADMIN.WRITE] for
+     * read and write access, respectively.
+     */
+    object ADMIN {
+
+        /**
+         * Scopes granting read access to the moderation API are grouped here. Use [ADMIN.READ.ALL] to request full
+         * read access, or preferably individual child scopes to limit access to a minimum.
+         */
+        object READ {
+
+            /**
+             * Grants read access to the moderation API. Requesting this scope is equivalent to requesting all other
+             * child scopes.
+             */
+            @JvmField
+            val ALL = object : Name {
+                override val name: String get() = "admin:read"
+            }
+
+            /**
+             * Child scope of [ADMIN.READ].
+             */
+            @JvmField
+            val ACCOUNTS = object : Name {
+                override val name: String get() = "admin:read:accounts"
+            }
+
+            /**
+             * Child scope of [ADMIN.READ].
+             */
+            @JvmField
+            val REPORTS = object : Name {
+                override val name: String get() = "admin:read:reports"
+            }
+
+            /**
+             * Child scope of [ADMIN.READ].
+             */
+            @JvmField
+            val DOMAIN_ALLOWS = object : Name {
+                override val name: String get() = "admin:read:domain_allows"
+            }
+
+            /**
+             * Child scope of [ADMIN.READ].
+             */
+            @JvmField
+            val DOMAIN_BLOCKS = object : Name {
+                override val name: String get() = "admin:read:domain_blocks"
+            }
+
+            /**
+             * Child scope of [ADMIN.READ].
+             */
+            @JvmField
+            val IP_BLOCKS = object : Name {
+                override val name: String get() = "admin:read:ip_blocks"
+            }
+
+            /**
+             * Child scope of [ADMIN.READ].
+             */
+            @JvmField
+            val EMAIL_DOMAIN_BLOCKS = object : Name {
+                override val name: String get() = "admin:read:email_domain_blocks"
+            }
+
+            /**
+             * Child scope of [ADMIN.READ].
+             */
+            @JvmField
+            val CANONICAL_EMAIL_BLOCKS = object : Name {
+                override val name: String get() = "admin:read:canonical_email_blocks"
+            }
+        }
+
+        /**
+         * Scopes granting write access to the moderation API are grouped here. Use [ADMIN.WRITE.ALL] to request full
+         * write access, or preferably individual child scopes to limit access to a minimum.
+         */
+        object WRITE {
+
+            /**
+             * Grants write access to the moderation API. Requesting this scope is equivalent to requesting all other
+             * child scopes.
+             */
+            @JvmField
+            val ALL = object : Name {
+                override val name: String get() = "admin:write"
+            }
+
+            /**
+             * Child scope of [ADMIN.WRITE].
+             */
+            @JvmField
+            val ACCOUNTS = object : Name {
+                override val name: String get() = "admin:write:accounts"
+            }
+
+            /**
+             * Child scope of [ADMIN.WRITE].
+             */
+            @JvmField
+            val REPORTS = object : Name {
+                override val name: String get() = "admin:write:reports"
+            }
+
+            /**
+             * Child scope of [ADMIN.WRITE].
+             */
+            @JvmField
+            val DOMAIN_ALLOWS = object : Name {
+                override val name: String get() = "admin:write:domain_allows"
+            }
+
+            /**
+             * Child scope of [ADMIN.WRITE].
+             */
+            @JvmField
+            val DOMAIN_BLOCKS = object : Name {
+                override val name: String get() = "admin:write:domain_blocks"
+            }
+
+            /**
+             * Child scope of [ADMIN.WRITE].
+             */
+            @JvmField
+            val IP_BLOCKS = object : Name {
+                override val name: String get() = "admin:write:ip_blocks"
+            }
+
+            /**
+             * Child scope of [ADMIN.WRITE].
+             */
+            @JvmField
+            val EMAIL_DOMAIN_BLOCKS = object : Name {
+                override val name: String get() = "admin:write:email_domain_blocks"
+            }
+
+            /**
+             * Child scope of [ADMIN.WRITE].
+             */
+            @JvmField
+            val CANONICAL_EMAIL_BLOCKS = object : Name {
+                override val name: String get() = "admin:write:canonical_email_blocks"
+            }
+        }
     }
 
-    override fun toString(): String = scopes.distinct().joinToString(separator = " ", transform = { it.scopeName })
+    /**
+     * Grants access to manage relationships. Requesting this scope will also grant the child scopes
+     * [READ.BLOCKS], [WRITE.BLOCKS], [READ.FOLLOWS], [WRITE.FOLLOWS], [READ.MUTES] and [WRITE.MUTES].
+     */
+    @Deprecated(
+        message = "Deprecated since Mastodon 3.5.0 and will be removed in the future. Use child scopes of READ and WRITE instead.",
+        level = DeprecationLevel.WARNING
+    )
+    object FOLLOW : Name {
+        override val name: String get() = "follow"
+    }
+
+    /**
+     * Grants full non-admin access by requesting the top-level scopes [READ], [WRITE] and [FOLLOW].
+     * It is recommended that you request as little as possible for your application, so consider using individual
+     * scopes instead.
+     */
+    @Deprecated(
+        message = "Includes FOLLOW scope deprecated since Mastodon 3.5.0, and will be removed in the future. " +
+            "If necessary, switch to requesting all top-level scopes directly.",
+        replaceWith = ReplaceWith("Scope(READ, WRITE, PUSH)"),
+        level = DeprecationLevel.WARNING
+    )
+    object ALL : Name {
+        override val name: String get() = "read write follow"
+    }
+
+    override fun toString(): String = scopes.distinct().joinToString(separator = " ", transform = { it.name })
 }

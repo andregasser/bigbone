@@ -13,7 +13,7 @@ public class GetAppRegistration {
                 "bigbone-sample-app",
                 "urn:ietf:wg:oauth:2.0:oob",
                 "",
-                new Scope(Scope.Name.READ, Scope.Name.WRITE, Scope.Name.PUSH)
+                new Scope(Scope.READ.ALL, Scope.WRITE.ALL, Scope.PUSH.ALL)
         ).execute();
         System.out.println("client_id=" + application.getClientId());
         System.out.println("client_secret=" + application.getClientSecret());

@@ -18,9 +18,6 @@ class TestConstants {
         const val USER2_EMAIL = "user2@email.dev"
         const val USER2_PASSWORD = "user2abcdef"
 
-        /**
-         * This scope should allow accessing all non-admin endpoints in integration tests.
-         */
-        val fullScope = Scope(Scope.Name.READ, Scope.Name.WRITE, Scope.Name.PUSH)
+        val fullScope = Scope(Scope.READ.ALL, Scope.WRITE.ALL, Scope.PUSH.ALL)
     }
 }

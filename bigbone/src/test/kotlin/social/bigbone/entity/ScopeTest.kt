@@ -7,14 +7,14 @@ import social.bigbone.api.Scope
 class ScopeTest {
     @Test
     fun toStringTest() {
-        Scope(Scope.Name.READ).toString() shouldBeEqualTo "read"
-        Scope(Scope.Name.READ, Scope.Name.WRITE).toString() shouldBeEqualTo "read write"
+        Scope(Scope.READ.ALL).toString() shouldBeEqualTo "read"
+        Scope(Scope.READ.ALL, Scope.WRITE.ALL).toString() shouldBeEqualTo "read write"
         Scope().toString() shouldBeEqualTo ""
     }
 
     @Test
     fun toStringTestWithDuplicates() {
-        Scope(Scope.Name.READ, Scope.Name.READ).toString() shouldBeEqualTo "read"
-        Scope(Scope.Name.READ, Scope.Name.WRITE, Scope.Name.PUSH, Scope.Name.WRITE).toString() shouldBeEqualTo "read write push"
+        Scope(Scope.READ.ALL, Scope.READ.ALL).toString() shouldBeEqualTo "read"
+        Scope(Scope.READ.ALL, Scope.WRITE.ALL, Scope.PUSH.ALL, Scope.WRITE.ALL).toString() shouldBeEqualTo "read write push"
     }
 }

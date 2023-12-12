@@ -27,7 +27,7 @@ class OAuthMethodsTest {
         val url = OAuthMethods(client).getOAuthUrl(
             clientId = "client_id",
             redirectUri = TestConstants.REDIRECT_URI,
-            scope = Scope(Scope.Name.READ, Scope.Name.WRITE_ACCOUNTS, Scope.Name.ADMIN_READ_REPORTS)
+            scope = Scope(Scope.READ.ALL, Scope.WRITE.ACCOUNTS, Scope.ADMIN.READ.REPORTS)
         )
 
         url shouldBeEqualTo "https://mastodon.cloud/oauth/authorize?client_id=client_id" +

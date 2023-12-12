@@ -19,7 +19,7 @@ final class Authenticator {
     private static final String ACCESS_TOKEN = "access_token";
     private static final String REDIRECT_URI = "urn:ietf:wg:oauth:2.0:oob";
 
-    private static final Scope FULL_SCOPE = new Scope(Scope.Name.READ, Scope.Name.WRITE, Scope.Name.PUSH);
+    private static final Scope FULL_SCOPE = new Scope(Scope.READ.ALL, Scope.WRITE.ALL, Scope.PUSH.ALL);
 
     private Authenticator() {
     }
