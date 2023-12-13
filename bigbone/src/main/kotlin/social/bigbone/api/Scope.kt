@@ -407,32 +407,5 @@ class Scope(private vararg val scopes: Name) {
         }
     }
 
-    /**
-     * Grants access to manage relationships. Requesting this scope will also grant the child scopes
-     * [READ.BLOCKS], [WRITE.BLOCKS], [READ.FOLLOWS], [WRITE.FOLLOWS], [READ.MUTES] and [WRITE.MUTES].
-     */
-    @Deprecated(
-        message = "Deprecated since Mastodon 3.5.0 and will be removed in the future. Use child scopes of READ and WRITE instead.",
-        level = DeprecationLevel.WARNING
-    )
-    object FOLLOW : Name {
-        override val name: String get() = "follow"
-    }
-
-    /**
-     * Grants full non-admin access by requesting the top-level scopes [READ], [WRITE] and [FOLLOW].
-     * It is recommended that you request as little as possible for your application, so consider using individual
-     * scopes instead.
-     */
-    @Deprecated(
-        message = "Includes FOLLOW scope deprecated since Mastodon 3.5.0, and will be removed in the future. " +
-            "If necessary, switch to requesting all top-level scopes directly.",
-        replaceWith = ReplaceWith("Scope(READ, WRITE, PUSH)"),
-        level = DeprecationLevel.WARNING
-    )
-    object ALL : Name {
-        override val name: String get() = "read write follow"
-    }
-
     override fun toString(): String = scopes.distinct().joinToString(separator = " ", transform = { it.name })
 }
