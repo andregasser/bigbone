@@ -1,5 +1,7 @@
 package social.bigbone
 
+import social.bigbone.api.Scope
+
 class TestConstants {
     companion object {
         const val REST_API_HOSTNAME = "localhost"
@@ -15,5 +17,7 @@ class TestConstants {
         const val USER2_USERNAME = "user2"
         const val USER2_EMAIL = "user2@email.dev"
         const val USER2_PASSWORD = "user2abcdef"
+
+        val fullScope = Scope(Scope.READ.ALL, Scope.WRITE.ALL, Scope.PUSH.ALL)
     }
 }

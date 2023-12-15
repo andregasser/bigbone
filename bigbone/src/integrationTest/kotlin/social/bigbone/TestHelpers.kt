@@ -1,6 +1,5 @@
 package social.bigbone
 
-import social.bigbone.api.Scope
 import social.bigbone.api.entity.Application
 import social.bigbone.api.entity.MediaAttachment
 import social.bigbone.api.entity.Token
@@ -26,7 +25,7 @@ object TestHelpers {
 
     fun createApp(appName: String): Application {
         val client = getTrustAllClient()
-        return client.apps.createApp(appName, TestConstants.REDIRECT_URI, null, Scope(Scope.Name.ALL)).execute()
+        return client.apps.createApp(appName, TestConstants.REDIRECT_URI, null, TestConstants.fullScope).execute()
     }
 
     fun getAppToken(application: Application): Token {
@@ -35,7 +34,7 @@ object TestHelpers {
             clientId = application.clientId!!,
             clientSecret = application.clientSecret!!,
             redirectUri = TestConstants.REDIRECT_URI,
-            scope = Scope(Scope.Name.ALL)
+            scope = TestConstants.fullScope
         ).execute()
     }
 
@@ -44,7 +43,7 @@ object TestHelpers {
         return client.oauth.getUserAccessTokenWithPasswordGrant(
             clientId = application.clientId!!,
             clientSecret = application.clientSecret!!,
-            scope = Scope(Scope.Name.ALL),
+            scope = TestConstants.fullScope,
             redirectUri = TestConstants.REDIRECT_URI,
             username = username,
             password = password

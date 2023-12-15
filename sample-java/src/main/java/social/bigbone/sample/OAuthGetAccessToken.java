@@ -16,7 +16,8 @@ public class OAuthGetAccessToken {
         final String redirectUri = args[3];
 
         final MastodonClient client = new MastodonClient.Builder(instanceName).build();
-        final String url = client.oauth().getOAuthUrl(clientId, redirectUri, new Scope());
+        final Scope fullScope = new Scope(Scope.READ.ALL, Scope.WRITE.ALL, Scope.PUSH.ALL);
+        final String url = client.oauth().getOAuthUrl(clientId, redirectUri, fullScope);
         System.out.println("Open authorization page and copy code:");
         System.out.println(url);
         System.out.println("Paste code:");
@@ -28,7 +29,8 @@ public class OAuthGetAccessToken {
                 clientId,
                 clientSecret,
                 redirectUri,
-                authCode);
+                authCode,
+                fullScope);
 
         System.out.println("Access Token:");
         System.out.println(token.execute().getAccessToken());
