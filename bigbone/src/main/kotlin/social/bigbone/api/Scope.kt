@@ -14,8 +14,8 @@ class Scope(private vararg val scopes: Name) {
      * Interface to define scopes. While existing Mastodon scopes are generally available as objects of the [Scope]
      * class, potential new scopes defined by Mastodon but not yet implemented here can be added by using this interface.
      */
-    interface Name {
-        val name: String
+    fun interface Name {
+        fun name(): String
     }
 
     /**
@@ -28,98 +28,73 @@ class Scope(private vararg val scopes: Name) {
          * Grants access to read all data. Requesting this scope is equivalent to requesting all other [READ] child scopes.
          */
         @JvmField
-        val ALL = object : Name {
-            override val name: String
-                get() = "read"
-        }
+        val ALL = Name { "read" }
 
         /**
          * Child scope of [READ].
          */
         @JvmField
-        val ACCOUNTS = object : Name {
-            override val name: String get() = "read:accounts"
-        }
+        val ACCOUNTS = Name { "read:accounts" }
 
         /**
          * Child scope of [READ].
          */
         @JvmField
-        val BLOCKS = object : Name {
-            override val name: String get() = "read:blocks"
-        }
+        val BLOCKS = Name { "read:blocks" }
 
         /**
          * Child scope of [READ].
          */
         @JvmField
-        val BOOKMARKS = object : Name {
-            override val name: String get() = "read:bookmarks"
-        }
+        val BOOKMARKS = Name { "read:bookmarks" }
 
         /**
          * Child scope of [READ].
          */
         @JvmField
-        val FAVOURITES = object : Name {
-            override val name: String get() = "read:favourites"
-        }
+        val FAVOURITES = Name { "read:favourites" }
 
         /**
          * Child scope of [READ].
          */
         @JvmField
-        val FILTERS = object : Name {
-            override val name: String get() = "read:filters"
-        }
+        val FILTERS = Name { "read:filters" }
 
         /**
          * Child scope of [READ].
          */
         @JvmField
-        val FOLLOWS = object : Name {
-            override val name: String get() = "read:follows"
-        }
+        val FOLLOWS = Name { "read:follows" }
 
         /**
          * Child scope of [READ].
          */
         @JvmField
-        val LISTS = object : Name {
-            override val name: String get() = "read:lists"
-        }
+        val LISTS = Name { "read:lists" }
 
         /**
          * Child scope of [READ].
          */
         @JvmField
-        val MUTES = object : Name {
-            override val name: String get() = "read:mutes"
-        }
+        val MUTES = Name { "read:mutes" }
 
         /**
          * Child scope of [READ].
          */
         @JvmField
-        val NOTIFICATIONS = object : Name {
-            override val name: String get() = "read:notifications"
-        }
+        val NOTIFICATIONS = Name { "read:notifications" }
 
         /**
          * Child scope of [READ].
          */
         @JvmField
-        val SEARCH = object : Name {
-            override val name: String get() = "read:search"
-        }
+        val SEARCH = Name { "read:search" }
 
         /**
          * Child scope of [READ].
          */
         @JvmField
-        val STATUSES = object : Name {
-            override val name: String get() = "read:statuses"
-        }
+        val STATUSES = Name { "read:statuses" }
     }
 
     /**
@@ -132,114 +107,85 @@ class Scope(private vararg val scopes: Name) {
          * Grants access to write all data. Requesting this scope is equivalent to requesting all other child scopes.
          */
         @JvmField
-        val ALL = object : Name {
-            override val name: String
-                get() = "write"
-        }
+        val ALL = Name { "write" }
 
         /**
          * Child scope of [WRITE].
          */
         @JvmField
-        val ACCOUNTS = object : Name {
-            override val name: String get() = "write:accounts"
-        }
+        val ACCOUNTS = Name { "write:accounts" }
 
         /**
          * Child scope of [WRITE].
          */
         @JvmField
-        val BLOCKS = object : Name {
-            override val name: String get() = "write:blocks"
-        }
+        val BLOCKS = Name { "write:blocks" }
 
         /**
          * Child scope of [WRITE].
          */
         @JvmField
-        val BOOKMARKS = object : Name {
-            override val name: String get() = "write:bookmarks"
-        }
+        val BOOKMARKS = Name { "write:bookmarks" }
 
         /**
          * Child scope of [WRITE].
          */
         @JvmField
-        val CONVERSATIONS = object : Name {
-            override val name: String get() = "write:conversations"
-        }
+        val CONVERSATIONS = Name { "write:conversations" }
 
         /**
          * Child scope of [WRITE].
          */
         @JvmField
-        val FAVOURITES = object : Name {
-            override val name: String get() = "write:favourites"
-        }
+        val FAVOURITES = Name { "write:favourites" }
 
         /**
          * Child scope of [WRITE].
          */
         @JvmField
-        val FILTERS = object : Name {
-            override val name: String get() = "write:filters"
-        }
+        val FILTERS = Name { "write:filters" }
 
         /**
          * Child scope of [WRITE].
          */
         @JvmField
-        val FOLLOWS = object : Name {
-            override val name: String get() = "write:follows"
-        }
+        val FOLLOWS = Name { "write:follows" }
 
         /**
          * Child scope of [WRITE].
          */
         @JvmField
-        val LISTS = object : Name {
-            override val name: String get() = "write:lists"
-        }
+        val LISTS = Name { "write:lists" }
 
         /**
          * Child scope of [WRITE].
          */
         @JvmField
-        val MEDIA = object : Name {
-            override val name: String get() = "write:media"
-        }
+        val MEDIA = Name { "write:media" }
 
         /**
          * Child scope of [WRITE].
          */
         @JvmField
-        val MUTES = object : Name {
-            override val name: String get() = "write:mutes"
-        }
+        val MUTES = Name { "write:mutes" }
 
         /**
          * Child scope of [WRITE].
          */
         @JvmField
-        val NOTIFICATIONS = object : Name {
-            override val name: String get() = "write:notifications"
-        }
+        val NOTIFICATIONS = Name { "write:notifications" }
 
         /**
          * Child scope of [WRITE].
          */
         @JvmField
-        val REPORTS = object : Name {
-            override val name: String get() = "write:reports"
-        }
+        val REPORTS = Name { "write:reports" }
 
         /**
          * Child scope of [WRITE].
          */
         @JvmField
-        val STATUSES = object : Name {
-            override val name: String get() = "write:statuses"
-        }
+        val STATUSES = Name { "write:statuses" }
     }
 
     /**
@@ -251,9 +197,7 @@ class Scope(private vararg val scopes: Name) {
          * Grants access to Web Push API subscriptions.
          */
         @JvmField
-        val ALL = object : Name {
-            override val name: String get() = "push"
-        }
+        val ALL = Name { "push" }
     }
 
     /**
@@ -273,65 +217,49 @@ class Scope(private vararg val scopes: Name) {
              * child scopes.
              */
             @JvmField
-            val ALL = object : Name {
-                override val name: String get() = "admin:read"
-            }
+            val ALL = Name { "admin:read" }
 
             /**
              * Child scope of [ADMIN.READ].
              */
             @JvmField
-            val ACCOUNTS = object : Name {
-                override val name: String get() = "admin:read:accounts"
-            }
+            val ACCOUNTS = Name { "admin:read:accounts" }
 
             /**
              * Child scope of [ADMIN.READ].
              */
             @JvmField
-            val REPORTS = object : Name {
-                override val name: String get() = "admin:read:reports"
-            }
+            val REPORTS = Name { "admin:read:reports" }
 
             /**
              * Child scope of [ADMIN.READ].
              */
             @JvmField
-            val DOMAIN_ALLOWS = object : Name {
-                override val name: String get() = "admin:read:domain_allows"
-            }
+            val DOMAIN_ALLOWS = Name { "admin:read:domain_allows" }
 
             /**
              * Child scope of [ADMIN.READ].
              */
             @JvmField
-            val DOMAIN_BLOCKS = object : Name {
-                override val name: String get() = "admin:read:domain_blocks"
-            }
+            val DOMAIN_BLOCKS = Name { "admin:read:domain_blocks" }
 
             /**
              * Child scope of [ADMIN.READ].
              */
             @JvmField
-            val IP_BLOCKS = object : Name {
-                override val name: String get() = "admin:read:ip_blocks"
-            }
+            val IP_BLOCKS = Name { "admin:read:ip_blocks" }
 
             /**
              * Child scope of [ADMIN.READ].
              */
             @JvmField
-            val EMAIL_DOMAIN_BLOCKS = object : Name {
-                override val name: String get() = "admin:read:email_domain_blocks"
-            }
+            val EMAIL_DOMAIN_BLOCKS = Name { "admin:read:email_domain_blocks" }
 
             /**
              * Child scope of [ADMIN.READ].
              */
             @JvmField
-            val CANONICAL_EMAIL_BLOCKS = object : Name {
-                override val name: String get() = "admin:read:canonical_email_blocks"
-            }
+            val CANONICAL_EMAIL_BLOCKS = Name { "admin:read:canonical_email_blocks" }
         }
 
         /**
@@ -345,67 +273,51 @@ class Scope(private vararg val scopes: Name) {
              * child scopes.
              */
             @JvmField
-            val ALL = object : Name {
-                override val name: String get() = "admin:write"
-            }
+            val ALL = Name { "admin:write" }
 
             /**
              * Child scope of [ADMIN.WRITE].
              */
             @JvmField
-            val ACCOUNTS = object : Name {
-                override val name: String get() = "admin:write:accounts"
-            }
+            val ACCOUNTS = Name { "admin:write:accounts" }
 
             /**
              * Child scope of [ADMIN.WRITE].
              */
             @JvmField
-            val REPORTS = object : Name {
-                override val name: String get() = "admin:write:reports"
-            }
+            val REPORTS = Name { "admin:write:reports" }
 
             /**
              * Child scope of [ADMIN.WRITE].
              */
             @JvmField
-            val DOMAIN_ALLOWS = object : Name {
-                override val name: String get() = "admin:write:domain_allows"
-            }
+            val DOMAIN_ALLOWS = Name { "admin:write:domain_allows" }
 
             /**
              * Child scope of [ADMIN.WRITE].
              */
             @JvmField
-            val DOMAIN_BLOCKS = object : Name {
-                override val name: String get() = "admin:write:domain_blocks"
-            }
+            val DOMAIN_BLOCKS = Name { "admin:write:domain_blocks" }
 
             /**
              * Child scope of [ADMIN.WRITE].
              */
             @JvmField
-            val IP_BLOCKS = object : Name {
-                override val name: String get() = "admin:write:ip_blocks"
-            }
+            val IP_BLOCKS = Name { "admin:write:ip_blocks" }
 
             /**
              * Child scope of [ADMIN.WRITE].
              */
             @JvmField
-            val EMAIL_DOMAIN_BLOCKS = object : Name {
-                override val name: String get() = "admin:write:email_domain_blocks"
-            }
+            val EMAIL_DOMAIN_BLOCKS = Name { "admin:write:email_domain_blocks" }
 
             /**
              * Child scope of [ADMIN.WRITE].
              */
             @JvmField
-            val CANONICAL_EMAIL_BLOCKS = object : Name {
-                override val name: String get() = "admin:write:canonical_email_blocks"
-            }
+            val CANONICAL_EMAIL_BLOCKS = Name { "admin:write:canonical_email_blocks" }
         }
     }
 
-    override fun toString(): String = scopes.distinct().joinToString(separator = " ", transform = { it.name })
+    override fun toString(): String = scopes.distinct().joinToString(separator = " ", transform = { it.name() })
 }
