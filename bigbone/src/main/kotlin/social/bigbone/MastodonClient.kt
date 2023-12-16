@@ -1,5 +1,8 @@
 package social.bigbone
 
+import kotlinx.serialization.json.JsonPrimitive
+import kotlinx.serialization.json.contentOrNull
+import kotlinx.serialization.json.jsonObject
 import okhttp3.HttpUrl
 import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -88,7 +91,8 @@ private constructor(
     private var debug: Boolean = false,
     private var instanceVersion: String? = null,
     private var scheme: String = "https",
-    private var port: Int = 443
+    private var port: Int = 443,
+    private var streamingUrl: String? = null
 ) {
 
     /**
@@ -520,24 +524,40 @@ private constructor(
         }
     }
 
-    fun stream(path: String, query: Parameters?, callback: WebSocketCallback): WebSocket {
+    fun stream(parameters: Parameters?, callback: WebSocketCallback): WebSocket {
+        val url = streamingUrl
+        val streamingUrl: HttpUrl = if (url != null) {
+            // okhttp doesn't support ws/wss scheme, so we need to convert ws to http, wss to https
+            val isSecureScheme: Boolean = url.startsWith("https")
+            val scheme: String = if (isSecureScheme) "https" else "http"
+            // Remove the scheme portion ( https:// or http:// ) from the full url
+            val instanceName: String = url.substring(if (isSecureScheme) 8 else 7)
+            fullUrl(
+                scheme = scheme,
+                instanceName = instanceName,
+                port = port,
+                path = "api/v1/streaming",
+                query = parameters
+            )
+        } else {
+            fullUrl(
+                scheme = scheme,
+                instanceName = instanceName,
+                port = port,
+                path = "api/v1/streaming",
+                query = parameters
+            )
+        }
+
         return client.newWebSocket(
             request = Request.Builder()
                 /*
-                OKHTTP doesn’t currently (at least when checked in 4.12.0) use the [AuthorizationInterceptor] for
+                OKHTTP doesn't currently (at least when checked in 4.12.0) use the [AuthorizationInterceptor] for
                 WebSocket connections, so we need to set it in the header ourselves again here.
                 See also: https://github.com/square/okhttp/issues/6454
                  */
                 .header("Authorization", "Bearer $accessToken")
-                .url(
-                    fullUrl(
-                        scheme = scheme,
-                        instanceName = instanceName,
-                        port = port,
-                        path = path,
-                        query = query
-                    )
-                )
+                .url(streamingUrl)
                 .build(),
             listener = object : WebSocketListener() {
                 override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
@@ -735,6 +755,7 @@ private constructor(
         private var readTimeoutSeconds = 10L
         private var writeTimeoutSeconds = 10L
         private var connectTimeoutSeconds = 10L
+        private var useStreamingApi = false
 
         /**
          * Sets the access token required for calling authenticated endpoints.
@@ -779,6 +800,7 @@ private constructor(
          * Enables this client to support Streaming API methods.
          */
         fun useStreamingApi() = apply {
+            this.useStreamingApi = true
             if (readTimeoutSeconds != 0L) { // a value of 0L means that read timeout is disabled already
                 readTimeoutSeconds.coerceAtLeast(60L)
             }
@@ -813,6 +835,47 @@ private constructor(
 
         fun debug() = apply {
             this.debug = true
+        }
+
+        private fun getStreamingApiUrl(instanceVersion: String?, fallbackUrl: String): String {
+            val majorVersion = instanceVersion?.substringBefore('.')
+            val version: Int = if (majorVersion == null) {
+                2
+            } else {
+                try {
+                    val majorVersionInt = majorVersion.toInt()
+                    if (majorVersionInt < 4) 1 else 2
+                } catch (e: NumberFormatException) {
+                    2
+                }
+            }
+
+            versionedInstanceRequest(version).use { response: Response ->
+                if (!response.isSuccessful) return fallbackUrl
+
+                val streamingUrl: String? = response.body?.string()?.let { responseBody: String ->
+                    val rawJsonObject = JSON_SERIALIZER
+                        .parseToJsonElement(responseBody)
+                        .jsonObject
+
+                    if (version == 2) {
+                        rawJsonObject["configuration"]
+                            ?.jsonObject
+                            ?.get("urls")
+                            ?.jsonObject
+                            ?.get("streaming") as? JsonPrimitive
+                    } else {
+                        rawJsonObject["urls"]
+                            ?.jsonObject
+                            ?.get("streaming_api") as? JsonPrimitive
+                    }?.contentOrNull
+                        // okhttp’s HttpUrl doesn't allow anything other than http(s) so we need to replace ws(s) first
+                        ?.replace("ws:", "http:")
+                        ?.replace("wss:", "https:")
+                }
+
+                return streamingUrl ?: fallbackUrl
+            }
         }
 
         /**
@@ -936,7 +999,7 @@ private constructor(
          * connection are _not_ caught by this library.
          */
         fun build(): MastodonClient {
-            return MastodonClient(
+            val mastodonClient = MastodonClient(
                 instanceName = instanceName,
                 client = okHttpClientBuilder
                     .addNetworkInterceptor(AuthorizationInterceptor(accessToken))
@@ -950,6 +1013,17 @@ private constructor(
                 scheme = scheme,
                 port = port
             )
+
+            if (useStreamingApi) {
+                with(mastodonClient) {
+                    streamingUrl = getStreamingApiUrl(
+                        instanceVersion = instanceVersion,
+                        fallbackUrl = scheme + instanceName
+                    )
+                }
+            }
+
+            return mastodonClient
         }
     }
 

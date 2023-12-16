@@ -32,8 +32,7 @@ class StreamingMethods(private val client: MastodonClient) {
         tagName: String? = null
     ): Closeable {
         val webSocket = client.stream(
-            path = "api/v1/streaming",
-            query = Parameters().apply {
+            parameters = Parameters().apply {
                 append("stream", streamType.apiName)
 
                 if (streamType == LIST) {

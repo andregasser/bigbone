@@ -22,7 +22,6 @@ import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.testtool.MockClient
 import social.bigbone.testtool.TestUtil.urlEncode
 
-
 class StreamingMethodsTest {
 
     @Test
@@ -65,8 +64,7 @@ class StreamingMethodsTest {
         val parametersCapturingSlot = slot<Parameters>()
         verify {
             client.stream(
-                "api/v1/streaming",
-                query = capture(parametersCapturingSlot),
+                parameters = capture(parametersCapturingSlot),
                 callback = callback
             )
         }
@@ -92,8 +90,7 @@ class StreamingMethodsTest {
         val parametersCapturingSlot = slot<Parameters>()
         verify {
             client.stream(
-                "api/v1/streaming",
-                query = capture(parametersCapturingSlot),
+                parameters = capture(parametersCapturingSlot),
                 callback = callback
             )
         }
@@ -119,8 +116,7 @@ class StreamingMethodsTest {
         val parametersCapturingSlot = slot<Parameters>()
         verify {
             client.stream(
-                "api/v1/streaming",
-                query = capture(parametersCapturingSlot),
+                parameters = capture(parametersCapturingSlot),
                 callback = callback
             )
         }
@@ -146,8 +142,7 @@ class StreamingMethodsTest {
         val parametersCapturingSlot = slot<Parameters>()
         verify {
             client.stream(
-                "api/v1/streaming",
-                query = capture(parametersCapturingSlot),
+                parameters = capture(parametersCapturingSlot),
                 callback = callback
             )
         }

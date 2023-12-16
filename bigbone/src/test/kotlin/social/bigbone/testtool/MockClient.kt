@@ -29,8 +29,8 @@ object MockClient {
             every { close(any<Int>(), any<String>()) } returns true
         }
         return mockk<MastodonClient> {
-            every { stream(any<String>(), any<Parameters>(), any<WebSocketCallback>()) } answers {
-                events.forEach { event: WebSocketEvent -> thirdArg<WebSocketCallback>().onEvent(event) }
+            every { stream(any<Parameters>(), any<WebSocketCallback>()) } answers {
+                events.forEach { event: WebSocketEvent -> secondArg<WebSocketCallback>().onEvent(event) }
                 webSocket
             }
         }
@@ -38,7 +38,7 @@ object MockClient {
 
     fun mockClearText(
         clearTextResponse: String,
-        requestUrl: String = "https://example.com",
+        requestUrl: String = "https://example.com"
     ): MastodonClient {
         val response: Response = Response.Builder()
             .code(200)
