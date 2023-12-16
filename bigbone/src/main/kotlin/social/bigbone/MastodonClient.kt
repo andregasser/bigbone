@@ -87,12 +87,12 @@ class MastodonClient
 private constructor(
     private val instanceName: String,
     private val client: OkHttpClient,
-    private var accessToken: String? = null,
-    private var debug: Boolean = false,
-    private var instanceVersion: String? = null,
-    private var scheme: String = "https",
-    private var port: Int = 443,
-    private var streamingUrl: String? = null
+    private val accessToken: String? = null,
+    private val debug: Boolean = false,
+    private val instanceVersion: String? = null,
+    private val scheme: String = "https",
+    private val port: Int = 443,
+    private val streamingUrl: String? = null
 ) {
 
     /**
@@ -380,6 +380,7 @@ private constructor(
 
     fun getPort() = port
 
+
     /**
      * Returns a MastodonRequest for the defined action, allowing to retrieve returned data.
      * @param T
@@ -525,13 +526,12 @@ private constructor(
     }
 
     fun stream(parameters: Parameters?, callback: WebSocketCallback): WebSocket {
-        val url = streamingUrl
-        val streamingUrl: HttpUrl = if (url != null) {
+        val streamingUrl: HttpUrl = if (streamingUrl != null) {
             // okhttp doesn't support ws/wss scheme, so we need to convert ws to http, wss to https
-            val isSecureScheme: Boolean = url.startsWith("https")
+            val isSecureScheme: Boolean = streamingUrl.startsWith("https")
             val scheme: String = if (isSecureScheme) "https" else "http"
             // Remove the scheme portion ( https:// or http:// ) from the full url
-            val instanceName: String = url.substring(if (isSecureScheme) 8 else 7)
+            val instanceName: String = streamingUrl.substring(if (isSecureScheme) 8 else 7)
             fullUrl(
                 scheme = scheme,
                 instanceName = instanceName,
@@ -999,7 +999,9 @@ private constructor(
          * connection are _not_ caught by this library.
          */
         fun build(): MastodonClient {
-            val mastodonClient = MastodonClient(
+            val instanceVersion = getInstanceVersion()
+
+            return MastodonClient(
                 instanceName = instanceName,
                 client = okHttpClientBuilder
                     .addNetworkInterceptor(AuthorizationInterceptor(accessToken))
@@ -1009,21 +1011,15 @@ private constructor(
                     .build(),
                 accessToken = accessToken,
                 debug = debug,
-                instanceVersion = getInstanceVersion(),
+                instanceVersion = instanceVersion,
                 scheme = scheme,
-                port = port
-            )
-
-            if (useStreamingApi) {
-                with(mastodonClient) {
-                    streamingUrl = getStreamingApiUrl(
-                        instanceVersion = instanceVersion,
-                        fallbackUrl = scheme + instanceName
-                    )
+                port = port,
+                streamingUrl = if (useStreamingApi) {
+                    getStreamingApiUrl(instanceVersion = instanceVersion, fallbackUrl = scheme + instanceName)
+                } else {
+                    null
                 }
-            }
-
-            return mastodonClient
+            )
         }
     }
 
