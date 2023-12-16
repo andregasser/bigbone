@@ -95,6 +95,7 @@ private constructor(
     private val streamingUrl: String? = null
 ) {
 
+    //region API methods
     /**
      * Access API methods under the "accounts" endpoint.
      */
@@ -360,6 +361,7 @@ private constructor(
     @Suppress("unused") // public API
     @get:JvmName("trends")
     val trends: TrendMethods by lazy { TrendMethods(this) }
+    //endregion API methods
 
     /**
      * Specifies the HTTP methods / HTTP verb that can be used by this class.
@@ -379,7 +381,6 @@ private constructor(
     fun getScheme() = scheme
 
     fun getPort() = port
-
 
     /**
      * Returns a MastodonRequest for the defined action, allowing to retrieve returned data.
