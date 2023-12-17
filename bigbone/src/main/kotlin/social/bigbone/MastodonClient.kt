@@ -574,6 +574,17 @@ private constructor(
                 override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
                     super.onFailure(webSocket, t, response)
                     callback.onEvent(Failure(t))
+
+                    /*
+                    onFailure represents a terminal event and no further events would be received by this web socket,
+                    so we close it.
+                    1002 indicates that an endpoint is terminating the connection due to a protocol error.
+                    see: https://datatracker.ietf.org/doc/html/rfc6455#section-7.4
+                     */
+                    webSocket.close(
+                        code = 1002,
+                        reason = null
+                    )
                 }
 
                 override fun onMessage(webSocket: WebSocket, text: String) {
