@@ -62,7 +62,7 @@ sealed interface ParsedStreamEvent {
      * An announcement has received an emoji reaction.
      * Available since v3.1.0
      */
-    data class AnnouncementReactionReceived(val reactionPayload: String) : ParsedStreamEvent
+    data class AnnouncementReactionReceived(val reaction: StreamingAnnouncementReaction) : ParsedStreamEvent
 
     /**
      * An announcement has been deleted.
@@ -111,7 +111,7 @@ sealed interface ParsedStreamEvent {
 
                 "announcement.reaction" -> {
                     requireNotNull(payload) { "Payload was null for update $eventType but mustn't be." }
-                    AnnouncementReactionReceived(reactionPayload = json.decodeFromString(payload))
+                    AnnouncementReactionReceived(reaction = json.decodeFromString(payload))
                 }
 
                 "announcement.delete" -> {
