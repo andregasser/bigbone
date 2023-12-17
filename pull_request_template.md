@@ -1,12 +1,13 @@
 # Description
 
-Please include a summary of the changes and the related issue. Please also include relevant motivation and context. 
-List any dependencies that are required for this change. If your change closes an existing issue, please make this 
-explicit by writing "Closes &lt;link to issue&gt;".
+<!-- Please include a summary of the changes and the related issue. 
+Please also include relevant motivation and context. 
+List any dependencies that are required for this change.
+If your change closes an existing issue, please make this explicit by writing “Closes `<link to issue>`”. -->
 
 # Type of Change
 
-(Keep the one that applies, remove the rest - including this comment)
+<!-- Keep the one that applies, remove the rest - including this comment) -->
 
 - Bug fix
 - New feature
@@ -15,16 +16,15 @@ explicit by writing "Closes &lt;link to issue&gt;".
 
 # Breaking Changes
 
-A breaking change is a change to supported functionality between released versions of a library that would require 
+<!-- A breaking change is a change to supported functionality between released versions of a library that would require 
 a customer to do work in order to upgrade to the newer version. If your change includes one or more breaking changes, 
-please list/document them here, otherwise set "None". This information will be published in our release notes.
+please list/document them here, otherwise set "None". This information will be published in our release notes. -->
 
-- Breaking change 1
-- ...
+- Breaking change 1…
 
 # How Has This Been Tested?
 
-Please describe the tests that you ran to verify your changes. 
+<!-- Please describe the tests that you ran to verify your changes. -->
 
 # Mandatory Checklist
 
