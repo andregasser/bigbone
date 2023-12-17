@@ -6,19 +6,9 @@ import social.bigbone.api.entity.Announcement
 import social.bigbone.api.entity.Conversation
 import social.bigbone.api.entity.Notification
 import social.bigbone.api.entity.Status
-import social.bigbone.api.entity.streaming.EventType.ANNOUNCEMENT
-import social.bigbone.api.entity.streaming.EventType.ANNOUNCEMENT_DELETE
-import social.bigbone.api.entity.streaming.EventType.ANNOUNCEMENT_REACTION
-import social.bigbone.api.entity.streaming.EventType.CONVERSATION
-import social.bigbone.api.entity.streaming.EventType.DELETE
-import social.bigbone.api.entity.streaming.EventType.ENCRYPTED_MESSAGE
-import social.bigbone.api.entity.streaming.EventType.FILTERS_CHANGED
-import social.bigbone.api.entity.streaming.EventType.NOTIFICATION
-import social.bigbone.api.entity.streaming.EventType.STATUS_UPDATE
-import social.bigbone.api.entity.streaming.EventType.UPDATE
 
 /**
- * Stream events emitted by the Mastodon API websocket stream for each [EventType] that can potentially occur.
+ * Stream events emitted by the Mastodon API websocket stream for each event type that can occur.
  * This is the parsed variant of the [RawStreamEvent.eventType] and [RawStreamEvent.payload]
  * turned into easily usable data classes and objects for type-specific consumption.
  */
@@ -86,52 +76,57 @@ sealed interface ParsedStreamEvent {
      */
     data object EncryptedMessageReceived : ParsedStreamEvent
 
+    /**
+     * Type received via the Mastodon API that is not (yet) available in BigBone.
+     */
+    data class UnknownType(val eventType: String, val payload: String?) : ParsedStreamEvent
+
     companion object {
-        internal fun RawStreamEvent.toStreamEvent(json: Json = JSON_SERIALIZER): ParsedStreamEvent? {
+        internal fun RawStreamEvent.toStreamEvent(json: Json = JSON_SERIALIZER): ParsedStreamEvent {
             return when (eventType) {
-                UPDATE -> {
-                    requireNotNull(payload) { "Payload was null for update $eventType but mustn’t be." }
+                "update" -> {
+                    requireNotNull(payload) { "Payload was null for update $eventType but mustn't be." }
                     StatusCreated(createdStatus = json.decodeFromString(payload))
                 }
 
-                DELETE -> {
-                    requireNotNull(payload) { "Payload was null for update $eventType but mustn’t be." }
+                "delete" -> {
+                    requireNotNull(payload) { "Payload was null for update $eventType but mustn't be." }
                     StatusDeleted(deletedStatusId = payload)
                 }
 
-                NOTIFICATION -> {
-                    requireNotNull(payload) { "Payload was null for update $eventType but mustn’t be." }
+                "notification" -> {
+                    requireNotNull(payload) { "Payload was null for update $eventType but mustn't be." }
                     NewNotification(newNotification = json.decodeFromString(payload))
                 }
 
-                CONVERSATION -> {
-                    requireNotNull(payload) { "Payload was null for update $eventType but mustn’t be." }
+                "conversation" -> {
+                    requireNotNull(payload) { "Payload was null for update $eventType but mustn't be." }
                     ConversationUpdated(updatedConversation = json.decodeFromString(payload))
                 }
 
-                ANNOUNCEMENT -> {
-                    requireNotNull(payload) { "Payload was null for update $eventType but mustn’t be." }
+                "announcement" -> {
+                    requireNotNull(payload) { "Payload was null for update $eventType but mustn't be." }
                     AnnouncementPublished(publishedAnnouncement = json.decodeFromString(payload))
                 }
 
-                ANNOUNCEMENT_REACTION -> {
-                    requireNotNull(payload) { "Payload was null for update $eventType but mustn’t be." }
+                "announcement.reaction" -> {
+                    requireNotNull(payload) { "Payload was null for update $eventType but mustn't be." }
                     AnnouncementReactionReceived(reactionPayload = json.decodeFromString(payload))
                 }
 
-                ANNOUNCEMENT_DELETE -> {
-                    requireNotNull(payload) { "Payload was null for update $eventType but mustn’t be." }
+                "announcement.delete" -> {
+                    requireNotNull(payload) { "Payload was null for update $eventType but mustn't be." }
                     AnnouncementDeleted(deletedAnnouncementId = payload)
                 }
 
-                STATUS_UPDATE -> {
-                    requireNotNull(payload) { "Payload was null for update $eventType but mustn’t be." }
+                "status.update" -> {
+                    requireNotNull(payload) { "Payload was null for update $eventType but mustn't be." }
                     StatusEdited(editedStatus = json.decodeFromString(payload))
                 }
 
-                FILTERS_CHANGED -> FiltersChanged
-                ENCRYPTED_MESSAGE -> EncryptedMessageReceived
-                else -> null
+                "filters_changed" -> FiltersChanged
+                "encrypted_message" -> EncryptedMessageReceived
+                else -> UnknownType(eventType, payload)
             }
         }
     }

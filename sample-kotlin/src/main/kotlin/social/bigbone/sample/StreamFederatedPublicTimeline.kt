@@ -25,7 +25,7 @@ object StreamFederatedPublicTimeline {
                     is TechnicalEvent -> println("Technical event: $it")
                     is MastodonApiEvent -> when (it) {
                         is GenericMessage -> println("Generic message: $it")
-                        is StreamEvent -> println("API event: ${it.event!!::class.java.simpleName}")
+                        is StreamEvent -> println("API event: ${it.event::class.java.simpleName}")
                     }
                 }
             }

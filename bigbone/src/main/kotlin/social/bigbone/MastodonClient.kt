@@ -583,7 +583,7 @@ private constructor(
                     try {
                         val rawEvent: RawStreamEvent = JSON_SERIALIZER.decodeFromString<RawStreamEvent>(text)
                         val streamEvent = rawEvent.toStreamEvent()
-                        callback.onEvent(StreamEvent(event = streamEvent))
+                        callback.onEvent(StreamEvent(event = streamEvent, streamTypes = rawEvent.stream))
                     } catch (e: IllegalArgumentException) {
                         callback.onEvent(GenericMessage(text))
                     }
@@ -597,7 +597,7 @@ private constructor(
                     try {
                         val rawEvent = JSON_SERIALIZER.decodeFromString<RawStreamEvent>(bytesAsString)
                         val streamEvent = rawEvent.toStreamEvent()
-                        callback.onEvent(StreamEvent(event = streamEvent))
+                        callback.onEvent(StreamEvent(event = streamEvent, streamTypes = rawEvent.stream))
                     } catch (e: IllegalArgumentException) {
                         callback.onEvent(GenericMessage(bytesAsString))
                     }

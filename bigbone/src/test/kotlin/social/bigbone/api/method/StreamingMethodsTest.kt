@@ -44,11 +44,26 @@ class StreamingMethodsTest {
     fun `Given websocket with 6 events lined up, when streaming federated public timeline, then expect emissions and no errors`() {
         val sentEvents = listOf(
             TechnicalEvent.Open,
-            MastodonApiEvent.StreamEvent(ParsedStreamEvent.FiltersChanged),
-            MastodonApiEvent.StreamEvent(ParsedStreamEvent.StatusCreated(mockk())),
-            MastodonApiEvent.StreamEvent(ParsedStreamEvent.StatusDeleted(deletedStatusId = "12345")),
-            MastodonApiEvent.StreamEvent(ParsedStreamEvent.AnnouncementDeleted(deletedAnnouncementId = "54321")),
-            MastodonApiEvent.StreamEvent(ParsedStreamEvent.StatusCreated(createdStatus = mockk()))
+            MastodonApiEvent.StreamEvent(
+                ParsedStreamEvent.FiltersChanged,
+                listOf(StreamType.PUBLIC)
+            ),
+            MastodonApiEvent.StreamEvent(
+                ParsedStreamEvent.StatusCreated(mockk()),
+                listOf(StreamType.PUBLIC)
+            ),
+            MastodonApiEvent.StreamEvent(
+                ParsedStreamEvent.StatusDeleted(deletedStatusId = "12345"),
+                listOf(StreamType.PUBLIC)
+            ),
+            MastodonApiEvent.StreamEvent(
+                ParsedStreamEvent.AnnouncementDeleted(deletedAnnouncementId = "54321"),
+                listOf(StreamType.PUBLIC)
+            ),
+            MastodonApiEvent.StreamEvent(
+                ParsedStreamEvent.StatusCreated(createdStatus = mockk()),
+                listOf(StreamType.PUBLIC)
+            )
         )
         val client = MockClient.mockWebSocket(sentEvents)
         val streamingMethods = StreamingMethods(client)

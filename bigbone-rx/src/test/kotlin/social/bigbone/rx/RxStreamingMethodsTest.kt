@@ -7,6 +7,7 @@ import okio.IOException
 import org.junit.jupiter.api.Test
 import social.bigbone.api.entity.streaming.MastodonApiEvent
 import social.bigbone.api.entity.streaming.ParsedStreamEvent
+import social.bigbone.api.entity.streaming.StreamType
 import social.bigbone.api.entity.streaming.TechnicalEvent
 import social.bigbone.api.entity.streaming.WebSocketEvent
 import social.bigbone.rx.testtool.MockClient
@@ -32,11 +33,26 @@ class RxStreamingMethodsTest {
     fun `Given websocket with 6 events lined up, when streaming federated public timeline, then expect emissions and no errors`() {
         val mockedEvents: List<WebSocketEvent> = listOf(
             TechnicalEvent.Open,
-            MastodonApiEvent.StreamEvent(ParsedStreamEvent.FiltersChanged),
-            MastodonApiEvent.StreamEvent(ParsedStreamEvent.StatusDeleted(deletedStatusId = "12345")),
-            MastodonApiEvent.StreamEvent(ParsedStreamEvent.AnnouncementDeleted(deletedAnnouncementId = "54321")),
-            MastodonApiEvent.StreamEvent(ParsedStreamEvent.FiltersChanged),
-            MastodonApiEvent.StreamEvent(ParsedStreamEvent.StatusCreated(createdStatus = mockk()))
+            MastodonApiEvent.StreamEvent(
+                ParsedStreamEvent.FiltersChanged,
+                listOf(StreamType.PUBLIC)
+            ),
+            MastodonApiEvent.StreamEvent(
+                ParsedStreamEvent.StatusCreated(mockk()),
+                listOf(StreamType.PUBLIC)
+            ),
+            MastodonApiEvent.StreamEvent(
+                ParsedStreamEvent.StatusDeleted(deletedStatusId = "12345"),
+                listOf(StreamType.PUBLIC)
+            ),
+            MastodonApiEvent.StreamEvent(
+                ParsedStreamEvent.AnnouncementDeleted(deletedAnnouncementId = "54321"),
+                listOf(StreamType.PUBLIC)
+            ),
+            MastodonApiEvent.StreamEvent(
+                ParsedStreamEvent.StatusCreated(createdStatus = mockk()),
+                listOf(StreamType.PUBLIC)
+            )
         )
         val client = MockClient.mockWebSocket(events = mockedEvents)
         val streamingMethods = RxStreamingMethods(client)
@@ -76,7 +92,7 @@ class RxStreamingMethodsTest {
 
         with(testSubscriber) {
             assertNotComplete()
-            assertError { it == expectedError }
+            assertError(expectedError)
             cancel()
         }
     }

@@ -57,9 +57,10 @@ sealed interface MastodonApiEvent : WebSocketEvent {
     /**
      * An event from the Mastodon API has been received via the websocket.
      *
-     * @property event The parsed stream event. May be null if we got an [EventType] we don’t know yet.
+     * @property event The parsed stream event. May be [ParsedStreamEvent.UnknownType] if it's unknown to BigBone.
+     * @property streamTypes The [StreamType]s received as part of the event.
      */
-    data class StreamEvent(val event: ParsedStreamEvent?) : MastodonApiEvent
+    data class StreamEvent(val event: ParsedStreamEvent, val streamTypes: List<StreamType>?) : MastodonApiEvent
 
     /**
      * A message received via the websocket that could not be parsed to a [ParsedStreamEvent].
