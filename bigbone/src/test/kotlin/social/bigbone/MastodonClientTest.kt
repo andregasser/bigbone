@@ -18,6 +18,7 @@ import social.bigbone.api.exception.BigBoneClientInstantiationException
 import social.bigbone.api.exception.InstanceVersionRetrievalException
 import social.bigbone.api.exception.ServerInfoRetrievalException
 import social.bigbone.nodeinfo.NodeInfoClient
+import social.bigbone.nodeinfo.entity.Server
 import social.bigbone.testtool.AssetsUtil
 import java.net.UnknownHostException
 
@@ -125,13 +126,27 @@ class MastodonClientTest {
 
     @Test
     fun `Given a server that doesn't run Mastodon, when building MastodonClient, then fail with InstanceVersionRetrievalException`() {
-        val testUrl = "pod.dapor.net"
-        val clientBuilder: MastodonClient.Builder = spyk(MastodonClient.Builder(testUrl))
+        val serverUrl = "diasp.eu"
+        val clientBuilder = spyk(MastodonClient.Builder(serverUrl)) {
+            // Mock internal NodeInfoClient so that we don't open the site in unit testing
+            mockkObject(NodeInfoClient)
+            every { NodeInfoClient.retrieveServerInfo(serverUrl) } returns Server(
+                schemaVersion = "2.0",
+                software = Server.Software(name = "diaspora", version = "0.7.18.2-p84e7e411")
+            )
 
+            val responseMock = mockk<Response> {
+                every { code } answers { 404 }
+                every { message } answers { "Not Found" }
+                every { isSuccessful } answers { false }
+                every { close() } returns Unit
+            }
+            every { versionedInstanceRequest(any()) } answers { responseMock }
+        }
         invoking(clientBuilder::build)
             .shouldThrow(BigBoneClientInstantiationException::class)
             .withCause(InstanceVersionRetrievalException::class)
-            .withMessage("Failed to get instance version of $testUrl")
+            .withMessage("Failed to get instance version of $serverUrl")
     }
 
     @Test

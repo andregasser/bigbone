@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import social.bigbone.MastodonClient
 import social.bigbone.TestConstants
-import social.bigbone.api.Scope
 import social.bigbone.api.entity.Application
 import social.bigbone.api.entity.Token
 
@@ -40,7 +39,7 @@ class V402StatusMethodsIntegrationTest {
         val client = MastodonClient.Builder(TestConstants.REST_API_HOSTNAME)
             .withTrustAllCerts()
             .build()
-        return client.apps.createApp(TestConstants.USER2_APP_NAME, TestConstants.REDIRECT_URI, null, Scope(Scope.Name.ALL)).execute()
+        return client.apps.createApp(TestConstants.USER2_APP_NAME, TestConstants.REDIRECT_URI, null, TestConstants.fullScope).execute()
     }
 
     private fun getAppToken(application: Application): Token {
@@ -51,7 +50,7 @@ class V402StatusMethodsIntegrationTest {
             clientId = application.clientId!!,
             clientSecret = application.clientSecret!!,
             redirectUri = TestConstants.REDIRECT_URI,
-            scope = Scope(Scope.Name.ALL)
+            scope = TestConstants.fullScope
         ).execute()
     }
 
@@ -62,7 +61,7 @@ class V402StatusMethodsIntegrationTest {
         return client.oauth.getUserAccessTokenWithPasswordGrant(
             clientId = application.clientId!!,
             clientSecret = application.clientSecret!!,
-            scope = Scope(Scope.Name.ALL),
+            scope = TestConstants.fullScope,
             redirectUri = TestConstants.REDIRECT_URI,
             username = username,
             password = password

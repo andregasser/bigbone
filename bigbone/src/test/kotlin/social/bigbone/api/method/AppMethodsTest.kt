@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import social.bigbone.MastodonClient
 import social.bigbone.TestConstants
-import social.bigbone.api.Scope
 import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.testtool.MockClient
 
@@ -19,8 +18,7 @@ class AppMethodsTest {
         val appMethods = AppMethods(client)
         val application = appMethods.createApp(
             clientName = "bigbone-sample-app",
-            redirectUris = TestConstants.REDIRECT_URI,
-            scope = Scope(Scope.Name.ALL)
+            redirectUris = TestConstants.REDIRECT_URI
         ).execute()
 
         application.clientId shouldBeEqualTo "client id"
@@ -34,8 +32,7 @@ class AppMethodsTest {
             val appMethods = AppMethods(client)
             appMethods.createApp(
                 clientName = "bigbone-sample-app",
-                redirectUris = TestConstants.REDIRECT_URI,
-                scope = Scope(Scope.Name.ALL)
+                redirectUris = TestConstants.REDIRECT_URI
             ).execute()
         }
     }

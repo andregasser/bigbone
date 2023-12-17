@@ -22,9 +22,9 @@ Additionally, this guide uses the following values that should be replaced in yo
 // The actual value used instead should be a URL that will be interpreted by your application.
 redirectUris = "urn:ietf:wg:oauth:2.0:oob"
 
-// This is equal to the full range of scopes currently supported by BigBone.
+// This is equal to the full range of non-admin scopes currently supported by BigBone.
 // Instead of this, you should request as little as possible for your application.
-scope = Scope()
+fullScope = Scope(Scope.READ.ALL, Scope.WRITE.ALL, Scope.PUSH.ALL)
 ```
 
 ## Registering an App
@@ -46,7 +46,7 @@ val client: MastodonClient = MastodonClient.Builder(instanceHostname).build()
 val appRegistration = client.apps.createApp(
 	clientName = "bigbone-sample-app",
 	redirectUris = "urn:ietf:wg:oauth:2.0:oob",
-	scope = Scope(),
+	scope = fullScope,
 	website = "https://example.org/"
 ).execute()
 ```
@@ -64,7 +64,7 @@ try {
     AppRegistration appRegistration=client.apps().createApp(
         "bigbone-sample-app",
         "urn:ietf:wg:oauth:2.0:oob",
-        new Scope(),
+        fullScope,
         "https://example.org/"
     ).execute();
 } catch (BigBoneRequestException e) {

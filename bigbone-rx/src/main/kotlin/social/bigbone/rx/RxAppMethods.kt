@@ -20,7 +20,7 @@ class RxAppMethods(client: MastodonClient) {
      * @param clientName A name for your application
      * @param redirectUris Where the user should be redirected after authorization.
      * @param website A URL to the homepage of your app, defaults to null.
-     * @param scope Space separated list of scopes. Defaults to all scopes.
+     * @param scope Space separated list of scopes. Defaults to null, which is interpreted as requesting full "read" scope.
      * @see <a href="https://docs.joinmastodon.org/methods/apps/#create">Mastodon apps API methods #create</a>
      */
     @JvmOverloads
@@ -28,7 +28,7 @@ class RxAppMethods(client: MastodonClient) {
         clientName: String,
         redirectUris: String,
         website: String? = null,
-        scope: Scope = Scope(Scope.Name.ALL)
+        scope: Scope? = null
     ): Single<Application> = Single.fromCallable {
         appMethods.createApp(clientName, redirectUris, website, scope).execute()
     }

@@ -13,7 +13,7 @@ class TokenTest {
         val accessToken: Token = JSON_SERIALIZER.decodeFromString(json)
         accessToken.accessToken shouldBeEqualTo "test"
         accessToken.tokenType shouldBeEqualTo "bearer"
-        accessToken.scope shouldBeEqualTo "read write follow"
+        accessToken.scope shouldBeEqualTo "read write"
         accessToken.createdAt shouldBeEqualTo 1_493_188_835L
     }
 
