@@ -27,6 +27,7 @@ class RxStreamingMethods(client: MastodonClient) {
     /**
      * Verify that the streaming service is alive before connecting to it.
      *
+     * @return Completable that will complete if the server is “healthy” or emit an error via onError otherwise.
      * @see <a href="https://docs.joinmastodon.org/methods/streaming/#health">streaming/#health API documentation</a>
      */
     fun checkServerHealth(): Completable = Completable.fromAction {
