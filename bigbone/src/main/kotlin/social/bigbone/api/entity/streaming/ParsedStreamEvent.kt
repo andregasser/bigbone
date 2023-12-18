@@ -17,56 +17,56 @@ sealed interface ParsedStreamEvent {
     /**
      * A new Status has appeared.
      * Payload contains a Status cast to a string.
-     * Available since v1.0.0
+     * Available since Mastodon server version v1.0.0
      */
     data class StatusCreated(val createdStatus: Status) : ParsedStreamEvent
 
     /**
      * A Status has been edited.
-     * Available since v3.5.0
+     * Available since Mastodon server version v3.5.0
      */
     data class StatusEdited(val editedStatus: Status) : ParsedStreamEvent
 
     /**
      * A status has been deleted.
-     * Available since v1.0.0
+     * Available since Mastodon server version v1.0.0
      */
     data class StatusDeleted(val deletedStatusId: String) : ParsedStreamEvent
 
     /**
      * A new notification has appeared.
-     * Available since v1.4.2
+     * Available since Mastodon server version v1.4.2
      */
     data class NewNotification(val newNotification: Notification) : ParsedStreamEvent
 
     /**
      * Keyword filters have been changed.
      * Does not contain a payload for WebSocket connections.
-     * Available since v2.4.3
+     * Available since Mastodon server version v2.4.3
      */
     data object FiltersChanged : ParsedStreamEvent
 
     /**
      * A direct conversation has been updated.
-     * Available since v2.6.0
+     * Available since Mastodon server version v2.6.0
      */
     data class ConversationUpdated(val updatedConversation: Conversation) : ParsedStreamEvent
 
     /**
      * An announcement has been published.
-     * Available since v3.1.0
+     * Available since Mastodon server version v3.1.0
      */
     data class AnnouncementPublished(val publishedAnnouncement: Announcement) : ParsedStreamEvent
 
     /**
      * An announcement has received an emoji reaction.
-     * Available since v3.1.0
+     * Available since Mastodon server version v3.1.0
      */
     data class AnnouncementReactionReceived(val reaction: StreamingAnnouncementReaction) : ParsedStreamEvent
 
     /**
      * An announcement has been deleted.
-     * Available since v3.1.0
+     * Available since Mastodon server version v3.1.0
      */
     data class AnnouncementDeleted(val deletedAnnouncementId: String) : ParsedStreamEvent
 
