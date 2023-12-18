@@ -17,6 +17,7 @@ import social.bigbone.api.entity.streaming.StreamType.PUBLIC_REMOTE_MEDIA
 import social.bigbone.api.entity.streaming.StreamType.USER
 import social.bigbone.api.entity.streaming.StreamType.USER_NOTIFICATION
 import social.bigbone.api.entity.streaming.WebSocketEvent
+import social.bigbone.api.exception.BigBoneRequestException
 import java.io.Closeable
 
 /**
@@ -67,9 +68,13 @@ class StreamingMethods(private val client: MastodonClient) {
 
     /**
      * Verify that the streaming service is alive before connecting to it.
-     * Returns "OK" if the streaming service is alive.
+     *
+     * Will not return anything in case the server is healthy and will throw [BigBoneRequestException] in case of issues.
+     *
      * @see <a href="https://docs.joinmastodon.org/methods/streaming/#health">streaming/#health API documentation</a>
+     * @throws [BigBoneRequestException] if the request was not successful
      */
+    @Throws(BigBoneRequestException::class)
     fun checkServerHealth() {
         client.performAction(
             endpoint = "api/v1/streaming/health",
