@@ -4,6 +4,7 @@ import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.contentOrNull
 import kotlinx.serialization.json.jsonObject
 import okhttp3.HttpUrl
+import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
@@ -528,17 +529,10 @@ private constructor(
 
     fun stream(parameters: Parameters?, callback: WebSocketCallback): WebSocket {
         val streamingUrl: HttpUrl = if (streamingUrl != null) {
-            // okhttp doesn't support ws/wss scheme, so we need to convert ws to http, wss to https
-            val isSecureScheme: Boolean = streamingUrl.startsWith("https")
-            val scheme: String = if (isSecureScheme) "https" else "http"
-            // Remove the scheme portion ( https:// or http:// ) from the full url
-            val instanceName: String = streamingUrl.substring(if (isSecureScheme) 8 else 7)
             fullUrl(
-                scheme = scheme,
-                instanceName = instanceName,
-                port = port,
+                existingUrl = streamingUrl.toHttpUrl(),
                 path = "api/v1/streaming",
-                query = parameters
+                queryParameters = parameters
             )
         } else {
             fullUrl(
@@ -727,6 +721,7 @@ private constructor(
          * @param path Mastodon API endpoint to be called
          * @param query query part of the URL to build; may be null
          */
+        @JvmOverloads
         fun fullUrl(scheme: String, instanceName: String, port: Int, path: String, query: Parameters? = null): HttpUrl {
             val urlBuilder = HttpUrl.Builder()
                 .scheme(scheme)
@@ -737,6 +732,27 @@ private constructor(
                 urlBuilder.encodedQuery(it.toQuery())
             }
             return urlBuilder.build()
+        }
+
+        /**
+         * Adds [path] and optional [queryParameters] parameters to the [existingUrl] to create a new [HttpUrl].
+         *
+         * @param existingUrl HttpUrl to add [path] and [queryParameters] to
+         * @param path Mastodon API endpoint to be called
+         * @param queryParameters query part of the URL to build; may be null
+         */
+        @JvmOverloads
+        fun fullUrl(
+            existingUrl: HttpUrl,
+            path: String,
+            queryParameters: Parameters? = null
+        ): HttpUrl {
+            with(existingUrl.newBuilder()) {
+                addEncodedPathSegments(path)
+                queryParameters?.let { encodedQuery(queryParameters.toQuery()) }
+
+                return build()
+            }
         }
 
         /**
@@ -881,7 +897,8 @@ private constructor(
                             ?.jsonObject
                             ?.get("streaming_api") as? JsonPrimitive
                     }?.contentOrNull
-                        // okhttp’s HttpUrl doesn't allow anything other than http(s) so we need to replace ws(s) first
+                        // okhttp’s HttpUrl which is used later to parse this result only allows http(s)
+                        // so we need to replace ws(s) first
                         ?.replace("ws:", "http:")
                         ?.replace("wss:", "https:")
                 }
