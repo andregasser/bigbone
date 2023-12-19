@@ -6,17 +6,17 @@ import social.bigbone.MastodonClient
 import social.bigbone.api.Pageable
 import social.bigbone.api.Range
 import social.bigbone.api.entity.admin.AdminIpBlock
-import social.bigbone.api.method.admin.AdminIpBlocksMethods
+import social.bigbone.api.method.admin.AdminIpBlockMethods
 
 /**
- * Reactive implementation of [AdminIpBlocksMethods].
+ * Reactive implementation of [AdminIpBlockMethods].
  *
  * Allow management of ip addresses blocked and to be blocked
  * @see <a href="https://docs.joinmastodon.org/methods/admin/ip_blocks/">Mastodon admin/ip_blocks API methods</a>
  */
-class RxAdminIpBlocksMethods(client: MastodonClient) {
+class RxAdminIpBlockMethods(client: MastodonClient) {
 
-    private val adminIpBlocksMethods = AdminIpBlocksMethods(client)
+    private val adminIpBlockMethods = AdminIpBlockMethods(client)
 
     /**
      * Show information about all blocked IP ranges.
@@ -24,71 +24,65 @@ class RxAdminIpBlocksMethods(client: MastodonClient) {
      * @see <a href="https://docs.joinmastodon.org/methods/ip_blocks/#get">Mastodon API documentation: methods/ip_blocks/#get</a>
      */
     @JvmOverloads
-    fun getAllIpBlocks(range: Range = Range()): Single<Pageable<AdminIpBlock>> {
-        return Single.fromCallable {
-            adminIpBlocksMethods.getAllIpBlocks(range = range).execute()
-        }
+    fun getAllIpBlocks(range: Range = Range()): Single<Pageable<AdminIpBlock>> = Single.fromCallable {
+        adminIpBlockMethods.getAllIpBlocks(range = range).execute()
     }
 
     /**
      * Show information about a single IP block.
-     * @param id for the ID of the IpBlock in the database.
+     * @param id The ID of the IpBlock in the database.
      * @see <a href="https://docs.joinmastodon.org/methods/ip_blocks/#get">Mastodon API documentation: methods/ip_blocks/#get</a>
      */
-    fun getSingleIpBlocked(id: String): Single<AdminIpBlock> {
-        return Single.fromCallable {
-            adminIpBlocksMethods.getSingleIpBlocked(id = id).execute()
-        }
+    fun getBlockedIpRange(id: String): Single<AdminIpBlock> = Single.fromCallable {
+        adminIpBlockMethods.getBlockedIpRange(id = id).execute()
     }
+
 
     /**
      * Add an IP address range to the list of IP blocks.
      * @param ipAddress The IP address and prefix to block.
      * @param severity The policy to apply to this IP range.
      * @param comment The reason for this IP block.
-     * @param expiresIn The number of seconds in which this IP block will expire.
+     * @param expiresInSeconds The number of seconds in which this IP block will expire.
      * @see <a href="https://docs.joinmastodon.org/methods/admin/ip_blocks/#create">Mastodon API documentation: admin/ip_blocks/#create</a>
      */
-    fun addIpToTheBlockedOnes(ipAddress: String, severity: AdminIpBlock.Severity, comment: String, expiresIn: Int): Single<AdminIpBlock> {
-        return Single.fromCallable {
-            adminIpBlocksMethods.addIpToTheBlockedOnes(
-                ipAddress = ipAddress,
-                severity = severity,
-                comment = comment,
-                expiresIn = expiresIn
-            ).execute()
-        }
+    fun blockIpRange(ipAddress: String, severity: AdminIpBlock.Severity, comment: String?, expiresInSeconds: Int?): Single<AdminIpBlock> = Single.fromCallable {
+        adminIpBlockMethods.blockIpRange(
+            ipAddress = ipAddress,
+            severity = severity,
+            comment = comment,
+            expiresInSeconds = expiresInSeconds
+        ).execute()
     }
+
 
     /**
      * Change parameters for an existing IP block.
-     * @param id The ID of the DomainAllow in the database.
+     * @param id The ID of the IpBlock in the database.
      * @param ipAddress The IP address and prefix to block.
      * @param severity The policy to apply to this IP range.
      * @param comment The reason for this IP block.
-     * @param expiresIn The number of seconds in which this IP block will expire.
+     * @param expiresInSeconds The number of seconds in which this IP block will expire.
      * @see <a href="https://docs.joinmastodon.org/methods/admin/ip_blocks/#update">Mastodon API documentation: admin/ip_blocks/#update</a>
      */
-    fun updateSingleIpToTheBlockedOnes(id: String, ipAddress: String, severity: AdminIpBlock.Severity, comment: String, expiresIn: Int): Single<AdminIpBlock> {
-        return Single.fromCallable {
-            adminIpBlocksMethods.updateSingleIpToTheBlockedOnes(
-                id = id,
-                ipAddress = ipAddress,
-                severity = severity,
-                comment = comment,
-                expiresIn = expiresIn
-            ).execute()
-        }
+    fun updateBlockedIpRange(id: String, ipAddress: String, severity: AdminIpBlock.Severity, comment: String?, expiresInSeconds: Int?): Single<AdminIpBlock> = Single.fromCallable {
+        adminIpBlockMethods.updateBlockedIpRange(
+            id = id,
+            ipAddress = ipAddress,
+            severity = severity,
+            comment = comment,
+            expiresInSeconds = expiresInSeconds
+        ).execute()
     }
+
 
     /**
      * Lift a block against an IP range.
-     * @param id The ID of the DomainAllow in the database.
+     * @param id The ID of the IpBlock in the database.
      * @see <a href="https://docs.joinmastodon.org/methods/admin/ip_blocks/#delete">Mastodon API documentation: admin/ip_blocks/#delete</a>
      */
-    fun removeIpBlock(id: String): Completable {
-        return Completable.fromAction {
-            adminIpBlocksMethods.removeIpBlock(id = id)
-        }
+    fun removeIpBlock(id: String): Completable = Completable.fromAction {
+        adminIpBlockMethods.removeIpBlock(id = id)
     }
+
 }

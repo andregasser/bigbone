@@ -5,14 +5,14 @@ import org.junit.jupiter.api.Test
 import social.bigbone.api.Range
 import social.bigbone.testtool.MockClient
 
-class AdminIpBlocksMethodsTest {
+class AdminIpBlockMethodsTest {
 
     @Test
-    fun `When calling to get all blocked ip addresses, given client returning success, returns list of ip addresses`() {
+    fun `Given client returning success, when getting all blocked ip addresses, then return list of ip addresses`() {
         val client = MockClient.mock("admin_ip_blocks_get_all.json")
-        val adminIpBlocksMethods = AdminIpBlocksMethods(client)
+        val adminIpBlockMethods = AdminIpBlockMethods(client)
         val range = Range("1", "10", "1", 10)
-        val blockedIpAddresses = adminIpBlocksMethods.getAllIpBlocks(range).execute()
+        val blockedIpAddresses = adminIpBlockMethods.getAllIpBlocks(range).execute()
         blockedIpAddresses.part.size shouldBeEqualTo 2
         with(blockedIpAddresses.part[0]) {
             id shouldBeEqualTo "1"
@@ -22,10 +22,10 @@ class AdminIpBlocksMethodsTest {
     }
 
     @Test
-    fun `When calling to get specific blocked ip address, given client returning success, returns expected data for single ip`() {
+    fun `Given client returning success, when getting specific blocked ip address, then return expected data for single ip`() {
         val client = MockClient.mock("admin_ip_blocks_single.json")
-        val adminIpBlocksMethods = AdminIpBlocksMethods(client)
-        val blockedIpAddress = adminIpBlocksMethods.getSingleIpBlocked("1").execute()
+        val adminIpBlockMethods = AdminIpBlockMethods(client)
+        val blockedIpAddress = adminIpBlockMethods.getBlockedIpRange("1").execute()
         with(blockedIpAddress) {
             id shouldBeEqualTo "1"
             ip shouldBeEqualTo "8.8.8.8/32"
