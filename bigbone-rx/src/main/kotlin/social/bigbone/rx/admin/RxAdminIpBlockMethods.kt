@@ -37,7 +37,6 @@ class RxAdminIpBlockMethods(client: MastodonClient) {
         adminIpBlockMethods.getBlockedIpRange(id = id).execute()
     }
 
-
     /**
      * Add an IP address range to the list of IP blocks.
      * @param ipAddress The IP address and prefix to block.
@@ -46,7 +45,13 @@ class RxAdminIpBlockMethods(client: MastodonClient) {
      * @param expiresInSeconds The number of seconds in which this IP block will expire.
      * @see <a href="https://docs.joinmastodon.org/methods/admin/ip_blocks/#create">Mastodon API documentation: admin/ip_blocks/#create</a>
      */
-    fun blockIpRange(ipAddress: String, severity: AdminIpBlock.Severity, comment: String?, expiresInSeconds: Int?): Single<AdminIpBlock> = Single.fromCallable {
+    @JvmOverloads
+    fun blockIpRange(
+        ipAddress: String,
+        severity: AdminIpBlock.Severity,
+        comment: String? = null,
+        expiresInSeconds: Int? = null
+    ): Single<AdminIpBlock> = Single.fromCallable {
         adminIpBlockMethods.blockIpRange(
             ipAddress = ipAddress,
             severity = severity,
@@ -54,7 +59,6 @@ class RxAdminIpBlockMethods(client: MastodonClient) {
             expiresInSeconds = expiresInSeconds
         ).execute()
     }
-
 
     /**
      * Change parameters for an existing IP block.
@@ -65,7 +69,14 @@ class RxAdminIpBlockMethods(client: MastodonClient) {
      * @param expiresInSeconds The number of seconds in which this IP block will expire.
      * @see <a href="https://docs.joinmastodon.org/methods/admin/ip_blocks/#update">Mastodon API documentation: admin/ip_blocks/#update</a>
      */
-    fun updateBlockedIpRange(id: String, ipAddress: String, severity: AdminIpBlock.Severity, comment: String?, expiresInSeconds: Int?): Single<AdminIpBlock> = Single.fromCallable {
+    @JvmOverloads
+    fun updateBlockedIpRange(
+        id: String,
+        ipAddress: String,
+        severity: AdminIpBlock.Severity,
+        comment: String? = null,
+        expiresInSeconds: Int? = null
+    ): Single<AdminIpBlock> = Single.fromCallable {
         adminIpBlockMethods.updateBlockedIpRange(
             id = id,
             ipAddress = ipAddress,
@@ -75,7 +86,6 @@ class RxAdminIpBlockMethods(client: MastodonClient) {
         ).execute()
     }
 
-
     /**
      * Lift a block against an IP range.
      * @param id The ID of the IpBlock in the database.
@@ -84,5 +94,4 @@ class RxAdminIpBlockMethods(client: MastodonClient) {
     fun removeIpBlock(id: String): Completable = Completable.fromAction {
         adminIpBlockMethods.removeIpBlock(id = id)
     }
-
 }
