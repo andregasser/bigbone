@@ -15,7 +15,6 @@ object StreamFederatedPublicTimeline {
         // Instantiate client
         val client = MastodonClient.Builder(instance)
             .accessToken(accessToken)
-            .useStreamingApi()
             .build()
 
         client.streaming.federatedPublic(

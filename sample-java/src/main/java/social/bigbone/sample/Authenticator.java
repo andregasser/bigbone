@@ -24,7 +24,7 @@ final class Authenticator {
     private Authenticator() {
     }
 
-    static MastodonClient appRegistrationIfNeeded(final String instanceName, final String credentialFilePath, final boolean useStreaming) throws IOException, BigBoneRequestException {
+    static MastodonClient appRegistrationIfNeeded(final String instanceName, final String credentialFilePath) throws IOException, BigBoneRequestException {
         final File file = new File(credentialFilePath);
         if (!file.exists()) {
             System.out.println("create $credentialFilePath.");
@@ -58,9 +58,6 @@ final class Authenticator {
         }
         final MastodonClient.Builder builder = new MastodonClient.Builder(instanceName)
                 .accessToken(properties.get(ACCESS_TOKEN).toString());
-        if (useStreaming) {
-            builder.useStreamingApi();
-        }
         return builder.build();
     }
 

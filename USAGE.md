@@ -213,7 +213,6 @@ __Kotlin__
 ```kotlin
 val client: MastodonClient = MastodonClient.Builder(instanceHostname)
   .accessToken(accessToken)
-  .useStreamingApi()
   .build()
 
 client.streaming.federatedPublic(
@@ -231,7 +230,6 @@ __Java__
 ```java
 final MastodonClient client = new MastodonClient.Builder(instanceHostname)
         .accessToken(accessToken)
-        .useStreamingApi()
         .build();
 
 // Start federated timeline streaming and stop after 20 seconds

@@ -87,13 +87,13 @@ import javax.net.ssl.X509TrustManager
 class MastodonClient
 private constructor(
     private val instanceName: String,
+    private val streamingUrl: String,
     private val client: OkHttpClient,
     private val accessToken: String? = null,
     private val debug: Boolean = false,
     private val instanceVersion: String? = null,
     private val scheme: String = "https",
-    private val port: Int = 443,
-    private val streamingUrl: String? = null
+    private val port: Int = 443
 ) {
 
     //region API methods
@@ -528,23 +528,12 @@ private constructor(
     }
 
     fun stream(parameters: Parameters?, callback: WebSocketCallback): WebSocket {
-        val streamingUrl: HttpUrl = if (streamingUrl != null) {
-            fullUrl(
-                existingUrl = streamingUrl.toHttpUrl(),
-                path = "api/v1/streaming",
-                queryParameters = parameters
-            )
-        } else {
-            fullUrl(
-                scheme = scheme,
-                instanceName = instanceName,
-                port = port,
-                path = "api/v1/streaming",
-                query = parameters
-            )
-        }
+        val webSocketClient: OkHttpClient = client
+            .newBuilder()
+            .pingInterval(60L, TimeUnit.SECONDS)
+            .build()
 
-        return client.newWebSocket(
+        return webSocketClient.newWebSocket(
             request = Request.Builder()
                 /*
                 OKHTTP doesn't currently (at least when checked in 4.12.0) use the [AuthorizationInterceptor] for
@@ -552,7 +541,13 @@ private constructor(
                 See also: https://github.com/square/okhttp/issues/6454
                  */
                 .header("Authorization", "Bearer $accessToken")
-                .url(streamingUrl)
+                .url(
+                    fullUrl(
+                        existingUrl = streamingUrl.toHttpUrl(),
+                        path = "api/v1/streaming",
+                        queryParameters = parameters
+                    )
+                )
                 .build(),
             listener = object : WebSocketListener() {
                 override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
@@ -783,7 +778,6 @@ private constructor(
         private var readTimeoutSeconds = 10L
         private var writeTimeoutSeconds = 10L
         private var connectTimeoutSeconds = 10L
-        private var useStreamingApi = false
 
         /**
          * Sets the access token required for calling authenticated endpoints.
@@ -822,16 +816,6 @@ private constructor(
          */
         fun withPort(port: Int) = apply {
             this.port = port
-        }
-
-        /**
-         * Enables this client to support Streaming API methods.
-         */
-        fun useStreamingApi() = apply {
-            this.useStreamingApi = true
-            if (readTimeoutSeconds != 0L) { // a value of 0L means that read timeout is disabled already
-                readTimeoutSeconds.coerceAtLeast(60L)
-            }
         }
 
         /**
@@ -1043,11 +1027,10 @@ private constructor(
                 instanceVersion = instanceVersion,
                 scheme = scheme,
                 port = port,
-                streamingUrl = if (useStreamingApi) {
-                    getStreamingApiUrl(instanceVersion = instanceVersion, fallbackUrl = scheme + instanceName)
-                } else {
-                    null
-                }
+                streamingUrl = getStreamingApiUrl(
+                    instanceVersion = instanceVersion,
+                    fallbackUrl = scheme + instanceName
+                )
             )
         }
     }

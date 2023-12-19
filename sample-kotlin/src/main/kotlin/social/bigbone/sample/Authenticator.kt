@@ -15,7 +15,7 @@ object Authenticator {
     private const val REDIRECT_URI = "urn:ietf:wg:oauth:2.0:oob"
     private val fullScope = Scope(Scope.READ.ALL, Scope.WRITE.ALL, Scope.PUSH.ALL)
 
-    fun appRegistrationIfNeeded(instanceName: String, credentialFilePath: String, useStreaming: Boolean = false): MastodonClient {
+    fun appRegistrationIfNeeded(instanceName: String, credentialFilePath: String): MastodonClient {
         val file = File(credentialFilePath)
         if (!file.exists()) {
             println("create $credentialFilePath.")
@@ -56,11 +56,6 @@ object Authenticator {
         }
         return MastodonClient.Builder(instanceName)
             .accessToken(properties[ACCESS_TOKEN].toString())
-            .apply {
-                if (useStreaming) {
-                    useStreamingApi()
-                }
-            }
             .build()
     }
 

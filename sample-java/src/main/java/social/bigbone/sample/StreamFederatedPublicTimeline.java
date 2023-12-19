@@ -14,7 +14,6 @@ public class StreamFederatedPublicTimeline {
         // Instantiate client
         final MastodonClient client = new MastodonClient.Builder(instance)
                 .accessToken(accessToken)
-                .useStreamingApi()
                 .build();
 
         // Start federated timeline streaming and stop after 20 seconds
