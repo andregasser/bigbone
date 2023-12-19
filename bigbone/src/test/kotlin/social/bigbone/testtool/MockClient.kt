@@ -12,7 +12,7 @@ import okhttp3.ResponseBody.Companion.toResponseBody
 import okhttp3.WebSocket
 import social.bigbone.MastodonClient
 import social.bigbone.Parameters
-import social.bigbone.api.WebSocketCallback
+import social.bigbone.api.entity.streaming.WebSocketCallback
 import social.bigbone.api.entity.streaming.WebSocketEvent
 import social.bigbone.api.exception.BigBoneRequestException
 import java.net.SocketTimeoutException

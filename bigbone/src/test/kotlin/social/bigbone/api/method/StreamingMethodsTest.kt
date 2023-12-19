@@ -12,11 +12,11 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import social.bigbone.MastodonClient
 import social.bigbone.Parameters
-import social.bigbone.api.WebSocketCallback
 import social.bigbone.api.entity.streaming.MastodonApiEvent
 import social.bigbone.api.entity.streaming.ParsedStreamEvent
 import social.bigbone.api.entity.streaming.StreamType
 import social.bigbone.api.entity.streaming.TechnicalEvent
+import social.bigbone.api.entity.streaming.WebSocketCallback
 import social.bigbone.api.entity.streaming.WebSocketEvent
 import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.testtool.MockClient

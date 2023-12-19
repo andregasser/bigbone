@@ -1,6 +1,5 @@
-package social.bigbone.api
+package social.bigbone.api.entity.streaming
 
-import social.bigbone.api.entity.streaming.WebSocketEvent
 import social.bigbone.api.method.StreamingMethods
 
 /**

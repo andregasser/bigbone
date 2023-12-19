@@ -2,7 +2,6 @@ package social.bigbone.api.method
 
 import social.bigbone.MastodonClient
 import social.bigbone.Parameters
-import social.bigbone.api.WebSocketCallback
 import social.bigbone.api.entity.streaming.StreamType
 import social.bigbone.api.entity.streaming.StreamType.DIRECT
 import social.bigbone.api.entity.streaming.StreamType.HASHTAG
@@ -16,6 +15,7 @@ import social.bigbone.api.entity.streaming.StreamType.PUBLIC_REMOTE
 import social.bigbone.api.entity.streaming.StreamType.PUBLIC_REMOTE_MEDIA
 import social.bigbone.api.entity.streaming.StreamType.USER
 import social.bigbone.api.entity.streaming.StreamType.USER_NOTIFICATION
+import social.bigbone.api.entity.streaming.WebSocketCallback
 import social.bigbone.api.entity.streaming.WebSocketEvent
 import social.bigbone.api.exception.BigBoneRequestException
 import java.io.Closeable

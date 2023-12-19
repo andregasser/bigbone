@@ -4,13 +4,13 @@ import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Flowable
 import social.bigbone.MastodonClient
-import social.bigbone.api.WebSocketCallback
 import social.bigbone.api.entity.streaming.MastodonApiEvent.GenericMessage
 import social.bigbone.api.entity.streaming.MastodonApiEvent.StreamEvent
 import social.bigbone.api.entity.streaming.TechnicalEvent.Closed
 import social.bigbone.api.entity.streaming.TechnicalEvent.Closing
 import social.bigbone.api.entity.streaming.TechnicalEvent.Failure
 import social.bigbone.api.entity.streaming.TechnicalEvent.Open
+import social.bigbone.api.entity.streaming.WebSocketCallback
 import social.bigbone.api.entity.streaming.WebSocketEvent
 import social.bigbone.api.method.StreamingMethods
 import java.io.Closeable

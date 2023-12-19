@@ -1,6 +1,5 @@
 package social.bigbone.api.entity.streaming
 
-import social.bigbone.api.WebSocketCallback
 import social.bigbone.api.entity.streaming.MastodonApiEvent.StreamEvent
 import social.bigbone.api.entity.streaming.TechnicalEvent.Closed
 import social.bigbone.api.entity.streaming.TechnicalEvent.Open

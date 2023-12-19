@@ -16,7 +16,6 @@ import okhttp3.WebSocket
 import okhttp3.WebSocketListener
 import okio.ByteString
 import social.bigbone.api.Pageable
-import social.bigbone.api.WebSocketCallback
 import social.bigbone.api.entity.data.InstanceVersion
 import social.bigbone.api.entity.streaming.MastodonApiEvent.GenericMessage
 import social.bigbone.api.entity.streaming.MastodonApiEvent.StreamEvent
@@ -26,6 +25,7 @@ import social.bigbone.api.entity.streaming.TechnicalEvent.Closed
 import social.bigbone.api.entity.streaming.TechnicalEvent.Closing
 import social.bigbone.api.entity.streaming.TechnicalEvent.Failure
 import social.bigbone.api.entity.streaming.TechnicalEvent.Open
+import social.bigbone.api.entity.streaming.WebSocketCallback
 import social.bigbone.api.exception.BigBoneClientInstantiationException
 import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.api.exception.InstanceVersionRetrievalException
