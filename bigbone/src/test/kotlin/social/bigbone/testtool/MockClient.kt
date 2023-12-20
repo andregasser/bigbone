@@ -9,12 +9,56 @@ import okhttp3.RequestBody
 import okhttp3.Response
 import okhttp3.ResponseBody
 import okhttp3.ResponseBody.Companion.toResponseBody
+import okhttp3.WebSocket
 import social.bigbone.MastodonClient
 import social.bigbone.Parameters
+import social.bigbone.api.entity.streaming.WebSocketCallback
+import social.bigbone.api.entity.streaming.WebSocketEvent
 import social.bigbone.api.exception.BigBoneRequestException
 import java.net.SocketTimeoutException
 
 object MockClient {
+
+    /**
+     * Mocks a [MastodonClient] for functions testing the websocket streaming APIs.
+     *
+     * @param events [WebSocketEvent]s that should be lined up to be returned by the [WebSocketCallback]
+     */
+    fun mockWebSocket(events: Collection<WebSocketEvent>): MastodonClient {
+        val webSocket = mockk<WebSocket> {
+            every { close(any<Int>(), any<String>()) } returns true
+        }
+        return mockk<MastodonClient> {
+            every { stream(any<Parameters>(), any<WebSocketCallback>()) } answers {
+                events.forEach { event: WebSocketEvent -> secondArg<WebSocketCallback>().onEvent(event) }
+                webSocket
+            }
+        }
+    }
+
+    fun mockClearText(
+        clearTextResponse: String,
+        requestUrl: String = "https://example.com"
+    ): MastodonClient {
+        val response: Response = Response.Builder()
+            .code(200)
+            .message("OK")
+            .request(Request.Builder().url(requestUrl).build())
+            .protocol(Protocol.HTTP_1_1)
+            .body(clearTextResponse.toResponseBody())
+            .build()
+
+        return mockk {
+            every { get(any<String>(), any()) } returns response
+            every {
+                this@mockk["performAction"](
+                    any<String>(),
+                    any<MastodonClient.Method>(),
+                    any<Parameters>()
+                )
+            } returns response
+        }
+    }
 
     fun mock(
         jsonName: String,

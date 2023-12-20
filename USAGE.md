@@ -208,57 +208,32 @@ public class GetRawJson {
 
 ## Streaming API
 
-v1.0.0 or later
-
 __Kotlin__
 
 ```kotlin
 val client: MastodonClient = MastodonClient.Builder(instanceHostname)
   .accessToken(accessToken)
-  .useStreamingApi()
   .build()
 
-val handler = object : Handler {
-  override fun onStatus(status: Status) {
-    println(status.content)
-  }
-  override fun onNotification(notification: Notification) {/* no op */}
-  override fun onDelete(id: String) {/* no op */}
-}
-
-try {
-  val shutdownable = client.streaming.localPublic(handler)
-  Thread.sleep(10000L)
-  shutdownable.shutdown()
-} catch(e: BigBoneRequestException) {
-  e.printStackTrace()
+client.streaming.federatedPublic(
+    onlyMedia = false,
+    callback = { event: WebSocketEvent ->
+        println(event)
+    }
+).use {
+    Thread.sleep(15_000L)
 }
 ```
 
 __Java__
 
 ```java
-MastodonClient client = new MastodonClient.Builder(instanceHostname)
+final MastodonClient client = new MastodonClient.Builder(instanceHostname)
         .accessToken(accessToken)
-        .useStreamingApi()
         .build();
-Handler handler = new Handler() {
-    @Override
-    public void onStatus(@NotNull Status status) {
-        System.out.println(status.getContent());
-    }
 
-    @Override
-    public void onNotification(@NotNull Notification notification) {/* no op */}
-    @Override
-    public void onDelete(String id) {/* no op */}
-};
-
-try {
-    Shutdownable shutdownable = client.streaming().localPublic(handler);
-    Thread.sleep(10000L);
-    shutdownable.shutdown();
-} catch (Exception e) {
-    e.printStackTrace();
+// Start federated timeline streaming and stop after 20 seconds
+try (Closeable ignored = client.streaming().federatedPublic(false, System.out::println)) {
+        Thread.sleep(20_000L);
 }
 ```

@@ -1,6 +1,10 @@
 package social.bigbone
 
+import kotlinx.serialization.json.JsonPrimitive
+import kotlinx.serialization.json.contentOrNull
+import kotlinx.serialization.json.jsonObject
 import okhttp3.HttpUrl
+import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
@@ -8,8 +12,20 @@ import okhttp3.Request
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
+import okhttp3.WebSocket
+import okhttp3.WebSocketListener
+import okio.ByteString
 import social.bigbone.api.Pageable
 import social.bigbone.api.entity.data.InstanceVersion
+import social.bigbone.api.entity.streaming.MastodonApiEvent.GenericMessage
+import social.bigbone.api.entity.streaming.MastodonApiEvent.StreamEvent
+import social.bigbone.api.entity.streaming.ParsedStreamEvent.Companion.toStreamEvent
+import social.bigbone.api.entity.streaming.RawStreamEvent
+import social.bigbone.api.entity.streaming.TechnicalEvent.Closed
+import social.bigbone.api.entity.streaming.TechnicalEvent.Closing
+import social.bigbone.api.entity.streaming.TechnicalEvent.Failure
+import social.bigbone.api.entity.streaming.TechnicalEvent.Open
+import social.bigbone.api.entity.streaming.WebSocketCallback
 import social.bigbone.api.exception.BigBoneClientInstantiationException
 import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.api.exception.InstanceVersionRetrievalException
@@ -72,13 +88,16 @@ import javax.net.ssl.X509TrustManager
 class MastodonClient
 private constructor(
     private val instanceName: String,
+    private val streamingUrl: String,
     private val client: OkHttpClient,
-    private var debug: Boolean = false,
-    private var instanceVersion: String? = null,
-    private var scheme: String = "https",
-    private var port: Int = 443
+    private val accessToken: String? = null,
+    private val debug: Boolean = false,
+    private val instanceVersion: String? = null,
+    private val scheme: String = "https",
+    private val port: Int = 443
 ) {
 
+    //region API methods
     /**
      * Access API methods under the "accounts" endpoint.
      */
@@ -351,6 +370,7 @@ private constructor(
     @Suppress("unused") // public API
     @get:JvmName("trends")
     val trends: TrendMethods by lazy { TrendMethods(this) }
+    //endregion API methods
 
     /**
      * Specifies the HTTP methods / HTTP verb that can be used by this class.
@@ -515,6 +535,90 @@ private constructor(
         }
     }
 
+    fun stream(parameters: Parameters?, callback: WebSocketCallback): WebSocket {
+        val webSocketClient: OkHttpClient = client
+            .newBuilder()
+            .pingInterval(60L, TimeUnit.SECONDS)
+            .build()
+
+        return webSocketClient.newWebSocket(
+            request = Request.Builder()
+                /*
+                OKHTTP doesn't currently (at least when checked in 4.12.0) use the [AuthorizationInterceptor] for
+                WebSocket connections, so we need to set it in the header ourselves again here.
+                See also: https://github.com/square/okhttp/issues/6454
+                 */
+                .header("Authorization", "Bearer $accessToken")
+                .url(
+                    fullUrl(
+                        existingUrl = streamingUrl.toHttpUrl(),
+                        path = "api/v1/streaming",
+                        queryParameters = parameters
+                    )
+                )
+                .build(),
+            listener = object : WebSocketListener() {
+                override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
+                    super.onClosed(webSocket, code, reason)
+                    callback.onEvent(Closed(code, reason))
+                }
+
+                override fun onClosing(webSocket: WebSocket, code: Int, reason: String) {
+                    super.onClosing(webSocket, code, reason)
+                    callback.onEvent(Closing(code, reason))
+                }
+
+                override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
+                    super.onFailure(webSocket, t, response)
+                    callback.onEvent(Failure(t))
+
+                    /*
+                    onFailure represents a terminal event and no further events would be received by this web socket,
+                    so we close it.
+                    1002 indicates that an endpoint is terminating the connection due to a protocol error.
+                    see: https://datatracker.ietf.org/doc/html/rfc6455#section-7.4
+                     */
+                    webSocket.close(
+                        code = 1002,
+                        reason = null
+                    )
+                }
+
+                override fun onMessage(webSocket: WebSocket, text: String) {
+                    super.onMessage(webSocket, text)
+                    // We should usually be able to decode WebSocket messages as an [Event] type but if that fails,
+                    // we return the text received in this message verbatim via the [GenericMessage] type.
+                    try {
+                        val rawEvent: RawStreamEvent = JSON_SERIALIZER.decodeFromString<RawStreamEvent>(text)
+                        val streamEvent = rawEvent.toStreamEvent()
+                        callback.onEvent(StreamEvent(event = streamEvent, streamTypes = rawEvent.stream))
+                    } catch (e: IllegalArgumentException) {
+                        callback.onEvent(GenericMessage(text))
+                    }
+                }
+
+                override fun onMessage(webSocket: WebSocket, bytes: ByteString) {
+                    super.onMessage(webSocket, bytes)
+                    // We should usually be able to decode WebSocket messages as an [Event] type but if that fails,
+                    // we return the text received in this message verbatim via the [GenericMessage] type.
+                    val bytesAsString: String = bytes.utf8()
+                    try {
+                        val rawEvent = JSON_SERIALIZER.decodeFromString<RawStreamEvent>(bytesAsString)
+                        val streamEvent = rawEvent.toStreamEvent()
+                        callback.onEvent(StreamEvent(event = streamEvent, streamTypes = rawEvent.stream))
+                    } catch (e: IllegalArgumentException) {
+                        callback.onEvent(GenericMessage(bytesAsString))
+                    }
+                }
+
+                override fun onOpen(webSocket: WebSocket, response: Response) {
+                    super.onOpen(webSocket, response)
+                    callback.onEvent(Open)
+                }
+            }
+        )
+    }
+
     /**
      * Get a response from the Mastodon instance defined for this client using the PATCH method.
      * @param path an absolute path to the API endpoint to call
@@ -620,6 +724,7 @@ private constructor(
          * @param path Mastodon API endpoint to be called
          * @param query query part of the URL to build; may be null
          */
+        @JvmOverloads
         fun fullUrl(scheme: String, instanceName: String, port: Int, path: String, query: Parameters? = null): HttpUrl {
             val urlBuilder = HttpUrl.Builder()
                 .scheme(scheme)
@@ -630,6 +735,27 @@ private constructor(
                 urlBuilder.encodedQuery(it.toQuery())
             }
             return urlBuilder.build()
+        }
+
+        /**
+         * Adds [path] and optional [queryParameters] parameters to the [existingUrl] to create a new [HttpUrl].
+         *
+         * @param existingUrl HttpUrl to add [path] and [queryParameters] to
+         * @param path Mastodon API endpoint to be called
+         * @param queryParameters query part of the URL to build; may be null
+         */
+        @JvmOverloads
+        fun fullUrl(
+            existingUrl: HttpUrl,
+            path: String,
+            queryParameters: Parameters? = null
+        ): HttpUrl {
+            with(existingUrl.newBuilder()) {
+                addEncodedPathSegments(path)
+                queryParameters?.let { encodedQuery(queryParameters.toQuery()) }
+
+                return build()
+            }
         }
 
         /**
@@ -701,15 +827,6 @@ private constructor(
         }
 
         /**
-         * Enables this client to support Streaming API methods.
-         */
-        fun useStreamingApi() = apply {
-            if (readTimeoutSeconds != 0L) { // a value of 0L means that read timeout is disabled already
-                readTimeoutSeconds.coerceAtLeast(60L)
-            }
-        }
-
-        /**
          * Sets the read timeout for connections of this client.
          * @param timeoutSeconds the new timeout value in seconds; default value is 10 seconds, setting this to 0
          *  disables the timeout completely
@@ -738,6 +855,48 @@ private constructor(
 
         fun debug() = apply {
             this.debug = true
+        }
+
+        private fun getStreamingApiUrl(instanceVersion: String?, fallbackUrl: String): String {
+            val majorVersion = instanceVersion?.substringBefore('.')
+            val version: Int = if (majorVersion == null) {
+                2
+            } else {
+                try {
+                    val majorVersionInt = majorVersion.toInt()
+                    if (majorVersionInt < 4) 1 else 2
+                } catch (e: NumberFormatException) {
+                    2
+                }
+            }
+
+            versionedInstanceRequest(version).use { response: Response ->
+                if (!response.isSuccessful) return fallbackUrl
+
+                val streamingUrl: String? = response.body?.string()?.let { responseBody: String ->
+                    val rawJsonObject = JSON_SERIALIZER
+                        .parseToJsonElement(responseBody)
+                        .jsonObject
+
+                    if (version == 2) {
+                        rawJsonObject["configuration"]
+                            ?.jsonObject
+                            ?.get("urls")
+                            ?.jsonObject
+                            ?.get("streaming") as? JsonPrimitive
+                    } else {
+                        rawJsonObject["urls"]
+                            ?.jsonObject
+                            ?.get("streaming_api") as? JsonPrimitive
+                    }?.contentOrNull
+                        // okhttp’s HttpUrl which is used later to parse this result only allows http(s)
+                        // so we need to replace ws(s) first
+                        ?.replace("ws:", "http:")
+                        ?.replace("wss:", "https:")
+                }
+
+                return streamingUrl ?: fallbackUrl
+            }
         }
 
         /**
@@ -861,6 +1020,8 @@ private constructor(
          * connection are _not_ caught by this library.
          */
         fun build(): MastodonClient {
+            val instanceVersion = getInstanceVersion()
+
             return MastodonClient(
                 instanceName = instanceName,
                 client = okHttpClientBuilder
@@ -869,10 +1030,15 @@ private constructor(
                     .writeTimeout(writeTimeoutSeconds, TimeUnit.SECONDS)
                     .connectTimeout(connectTimeoutSeconds, TimeUnit.SECONDS)
                     .build(),
+                accessToken = accessToken,
                 debug = debug,
-                instanceVersion = getInstanceVersion(),
+                instanceVersion = instanceVersion,
                 scheme = scheme,
-                port = port
+                port = port,
+                streamingUrl = getStreamingApiUrl(
+                    instanceVersion = instanceVersion,
+                    fallbackUrl = scheme + instanceName
+                )
             )
         }
     }

@@ -7,7 +7,6 @@ import kotlinx.serialization.Serializable
  * Represents an emoji reaction to an Announcement.
  * @see <a href="https://docs.joinmastodon.org/entities/Reaction/">Mastodon API Reaction</a>
  */
-
 @Serializable
 data class Reaction(
     /**
@@ -17,7 +16,7 @@ data class Reaction(
     val name: String = "",
 
     /**
-     *  The total number of users who have added this reaction.
+     * The total number of users who have added this reaction.
      */
     @SerialName("count")
     val count: Int = 0,
