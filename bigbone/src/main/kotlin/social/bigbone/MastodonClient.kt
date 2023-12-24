@@ -66,6 +66,7 @@ import social.bigbone.api.method.TagMethods
 import social.bigbone.api.method.TimelineMethods
 import social.bigbone.api.method.TrendMethods
 import social.bigbone.api.method.admin.AdminDimensionMethods
+import social.bigbone.api.method.admin.AdminDomainBlockMethods
 import social.bigbone.api.method.admin.AdminIpBlockMethods
 import social.bigbone.api.method.admin.AdminMeasureMethods
 import social.bigbone.api.method.admin.AdminRetentionMethods
@@ -113,6 +114,20 @@ private constructor(
     val adminDimensions: AdminDimensionMethods by lazy { AdminDimensionMethods(this) }
 
     /**
+     * Access API methods under the "admin/domain_blocks" endpoint.
+     */
+    @Suppress("unused") // public API
+    @get:JvmName("adminDomainBlock")
+    val adminDomainBlock: AdminDomainBlockMethods by lazy { AdminDomainBlockMethods(this) }
+
+    /**
+     * Access API methods under the "admin/ip_blocks" endpoint.
+     */
+    @Suppress("unused") // public API
+    @get:JvmName("adminIpBlock")
+    val adminIpBlock: AdminIpBlockMethods by lazy { AdminIpBlockMethods(this) }
+
+    /**
      * Access API methods under the "admin/measures" endpoint.
      */
     @Suppress("unused") // public API
@@ -125,13 +140,6 @@ private constructor(
     @Suppress("unused") // public API
     @get:JvmName("adminRetention")
     val adminRetention: AdminRetentionMethods by lazy { AdminRetentionMethods(this) }
-
-    /**
-     * Access API methods under the "admin/retention" endpoint.
-     */
-    @Suppress("unused") // public API
-    @get:JvmName("adminIpBlock")
-    val adminIpBlock: AdminIpBlockMethods by lazy { AdminIpBlockMethods(this) }
 
     /**
      * Access API methods under the "announcements" endpoint.
