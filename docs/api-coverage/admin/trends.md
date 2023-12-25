@@ -10,8 +10,8 @@ nav_order: 4
 
 <a href="https://docs.joinmastodon.org/methods/admin/trends/" target="_blank">https://docs.joinmastodon.org/methods/admin/trends/</a>
 
-| Method                              | Description            | Status | Comments | 
-|-------------------------------------|------------------------|--------|----------|
-| `GET /api/v1/admin/trends/links`    | View trending links    | 🔴     |          |
-| `GET /api/v1/admin/trends/statuses` | View trending statuses | 🔴     |          |
-| `GET /api/v1/admin/trends/tags`     | View trending tags     | 🔴     |          |
+| Method                              | Description            | Status                          | Comments        | 
+|-------------------------------------|------------------------|---------------------------------|-----------------|
+| `GET /api/v1/admin/trends/links`    | View trending links    | <img src="/assets/green16.png"> | Fully supported |
+| `GET /api/v1/admin/trends/statuses` | View trending statuses | <img src="/assets/green16.png"> | Fully supported |
+| `GET /api/v1/admin/trends/tags`     | View trending tags     | <img src="/assets/green16.png"> | Fully supported |
