@@ -40,7 +40,7 @@ class RxAdminCanonicalEmailBlockMethods(client: MastodonClient) {
      * @see <a href="https://docs.joinmastodon.org/methods/admin/canonical_email_blocks/#get-one">
      *     Mastodon API documentation: admin/canonical_email_blocks/#get-one</a>
      */
-    fun getEmailDomainBlock(id: String): Single<AdminCanonicalEmailBlock> = Single.fromCallable {
+    fun getCanonicalEmailBlock(id: String): Single<AdminCanonicalEmailBlock> = Single.fromCallable {
         adminCanonicalEmailBlockMethods.getCanonicalEmailBlock(id).execute()
     }
 
@@ -52,7 +52,7 @@ class RxAdminCanonicalEmailBlockMethods(client: MastodonClient) {
      * @see <a href="https://docs.joinmastodon.org/methods/admin/canonical_email_blocks/#create">
      *     Mastodon API documentation: admin/canonical_email_blocks/#create</a>
      */
-    fun blockEmailDomain(variant: BlockCanonicalEmailVariant): Single<AdminCanonicalEmailBlock> =
+    fun blockCanonicalEmail(variant: BlockCanonicalEmailVariant): Single<AdminCanonicalEmailBlock> =
         Single.fromCallable { adminCanonicalEmailBlockMethods.blockCanonicalEmail(variant).execute() }
 
     /**
