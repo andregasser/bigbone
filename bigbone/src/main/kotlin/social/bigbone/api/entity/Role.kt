@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import social.bigbone.DateTimeSerializer
 import social.bigbone.PrecisionDateTime
-import social.bigbone.api.entity.Role.PermissionFlag
+import social.bigbone.api.entity.Role.Permission
 
 /**
  * Represents a custom user role that grants permissions.
@@ -34,10 +34,12 @@ data class Role(
 
     /**
      * A bitmask that represents the sum of all permissions granted to the role.
-     * Possible values can be found in [PermissionFlag].
+     * Possible values can be found in [Permission].
+     *
+     * For convenience, use [getParsedPermissions] to directly get a list of [Permission]s seen in this field.
      */
     @SerialName("permissions")
-    val permissions: Int,
+    val rawPermissions: Int,
 
     /**
      * Whether the role is publicly visible as a badge on user profiles.
@@ -59,39 +61,52 @@ data class Role(
     @Serializable(with = DateTimeSerializer::class)
     val updatedAt: PrecisionDateTime = PrecisionDateTime.InvalidPrecisionDateTime.Unavailable
 ) {
+
     /**
-     * Possible Permission Flag values masked in [permissions].
-     *
-     * To determine the permissions available to a certain role,
-     * convert the permissions attribute to binary and compare from the least significant bit upwards.
-     *
-     * For convenience (and to prevent the terms from growing too long),
-     * permissions will be presented below using hexadecimal values.
+     * Returns whether this role grants the [Permission] specified in [permission].
+     * The Mastodon API returns permissions as a bitmask in [rawPermissions].
      */
-    enum class PermissionFlag(val bitValue: Int) {
-        Administrator(0x01),
-        DevOps(0x02),
+    @Suppress("DataClassContainsFunctions")
+    fun hasPermission(permission: Permission): Boolean = rawPermissions and permission.bitValue == permission.bitValue
 
-        ViewAuditLog(0x04),
-        ViewDashboard(0x08),
+    /**
+     * Gets [rawPermissions] and checks for all available [Permission]s which of them are part of the bitmask.
+     *
+     * @return [Permission]s masked in [rawPermissions], i.e. permissions this Role has.
+     */
+    @Suppress("DataClassContainsFunctions")
+    fun getParsedPermissions(): List<Permission> = Permission.entries.filter(::hasPermission)
 
-        ManageReports(0x10),
-        ManageFederation(0x20),
-        ManageSettings(0x40),
-        ManageBlocks(0x80),
-        ManageTaxonomies(0x100),
-        ManageAppeals(0x200),
-        ManageUsers(0x400),
-        ManageInvites(0x800),
-        ManageRules(0x1_000),
-        ManageAnnouncements(0x2_000),
-        ManageCustomEmojis(0x4_000),
-        ManageWebhooks(0x8_000),
-        ManageRoles(0x20_000),
-        ManageUserAccess(0x40_000),
+    /**
+     * Possible Permission Flag values masked in [rawPermissions].
+     *
+     * Use [hasPermission] to check for a specific permission’s availability, or [getParsedPermissions] to get a list
+     * of [Permission]s.
+     */
+    enum class Permission(val bitValue: Int) {
+        Administrator(0b1), // 1
+        DevOps(0b10), // 2
 
-        InviteUsers(0x10_000),
+        ViewAuditLog(0b100), // 4
+        ViewDashboard(0b1000), // 8
 
-        DeleteUserData(0x80_000)
+        ManageReports(0b10000), // 10
+        ManageFederation(0b100000), // 20
+        ManageSettings(0b1000000), // 40
+        ManageBlocks(0b10000000), // 80
+        ManageTaxonomies(0b100000000), // 100
+        ManageAppeals(0b1000000000), // 200
+        ManageUsers(0b10000000000), // 400
+        ManageInvites(0b100000000000), // 800
+        ManageRules(0b1000000000000), // 1_000
+        ManageAnnouncements(0b10000000000000), // 2_000
+        ManageCustomEmojis(0b100000000000000), // 4_000
+        ManageWebhooks(0b1000000000000000), // 8_000
+        ManageRoles(0b100000000000000000), // 20_000
+        ManageUserAccess(0b1000000000000000000), // 40_000
+
+        InviteUsers(0b10000000000000000), // 10_000
+
+        DeleteUserData(0b10000000000000000000) // 80_000
     }
 }

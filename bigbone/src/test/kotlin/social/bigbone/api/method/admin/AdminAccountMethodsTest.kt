@@ -7,6 +7,7 @@ import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeFalse
 import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldBeTrue
+import org.amshove.kluent.shouldContainSame
 import org.amshove.kluent.shouldHaveSize
 import org.junit.jupiter.api.Test
 import social.bigbone.MastodonClient.Method
@@ -14,6 +15,7 @@ import social.bigbone.Parameters
 import social.bigbone.PrecisionDateTime.ValidPrecisionDateTime.ExactTime
 import social.bigbone.api.Pageable
 import social.bigbone.api.Range
+import social.bigbone.api.entity.Role
 import social.bigbone.api.entity.admin.AccountOrigin
 import social.bigbone.api.entity.admin.AccountStatus
 import social.bigbone.api.entity.admin.ActionAgainstAccount
@@ -92,7 +94,8 @@ class AdminAccountMethodsTest {
                 this.id shouldBeEqualTo 3
                 name shouldBeEqualTo "Owner"
                 color.shouldBeEmpty()
-                permissions shouldBeEqualTo 1
+                rawPermissions shouldBeEqualTo 1
+                getParsedPermissions() shouldContainSame listOf(Role.Permission.Administrator)
                 highlighted.shouldBeTrue()
                 this.createdAt shouldBeEqualTo ExactTime(Instant.parse("2022-09-08T22:48:07.983Z"))
                 this.updatedAt shouldBeEqualTo ExactTime(Instant.parse("2022-09-08T22:48:07.983Z"))
