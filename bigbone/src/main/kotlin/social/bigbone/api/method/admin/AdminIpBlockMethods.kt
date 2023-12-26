@@ -18,7 +18,7 @@ class AdminIpBlockMethods(private val client: MastodonClient) {
     /**
      * Show information about all blocked IP ranges.
      * @param range optional Range for the pageable return value
-     * @see <a href="https://docs.joinmastodon.org/methods/ip_blocks/#get">Mastodon API documentation: methods/ip_blocks/#get</a>
+     * @see <a href="https://docs.joinmastodon.org/methods/admin/ip_blocks/#get">Mastodon API documentation: admin/ip_blocks/#get</a>
      */
     @JvmOverloads
     fun getAllIpBlocks(range: Range = Range()): MastodonRequest<Pageable<AdminIpBlock>> {
@@ -32,7 +32,7 @@ class AdminIpBlockMethods(private val client: MastodonClient) {
     /**
      * Show information about a single IP block.
      * @param id The ID of the IpBlock in the database.
-     * @see <a href="https://docs.joinmastodon.org/methods/ip_blocks/#get-one">Mastodon API documentation: methods/ip_blocks/#get-one</a>
+     * @see <a href="https://docs.joinmastodon.org/methods/admin/ip_blocks/#get-one">Mastodon API documentation: admin/ip_blocks/#get-one</a>
      */
     fun getBlockedIpRange(id: String): MastodonRequest<AdminIpBlock> {
         return client.getMastodonRequest(
