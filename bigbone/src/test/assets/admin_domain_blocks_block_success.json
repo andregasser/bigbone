@@ -1,0 +1,11 @@
+{
+  "id": "1",
+  "domain": "example.com",
+  "created_at": "2022-11-16T08:15:34.238Z",
+  "severity": "noop",
+  "reject_media": true,
+  "reject_reports": false,
+  "private_comment": "private comment",
+  "public_comment": "public comment",
+  "obfuscate": true
+}
