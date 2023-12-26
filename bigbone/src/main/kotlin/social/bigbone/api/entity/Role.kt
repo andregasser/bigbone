@@ -65,12 +65,34 @@ data class Role(
     /**
      * Returns whether this role grants the [Permission] specified in [permission].
      * The Mastodon API returns permissions as a bitmask in [rawPermissions].
+     *
+     * Example: [rawPermissions] reading 65536 (0b10000000000000000) would return true for [Permission.InviteUsers]
+     * because its bits match when comparing bitwise.
      */
     @Suppress("DataClassContainsFunctions")
     fun hasPermission(permission: Permission): Boolean = rawPermissions and permission.bitValue == permission.bitValue
 
     /**
      * Gets [rawPermissions] and checks for all available [Permission]s which of them are part of the bitmask.
+     *
+     * 458_736 returned by the API.
+     * In binary, that would be: 1101111111111110000
+     *
+     * 1101111111111110000 contains all the following permissions represented by their binary values:
+     *               10000 --- ManageReports
+     *              100000 --- ManageFederation
+     *             1000000 --- ManageSettings
+     *            10000000 --- ManageBlocks
+     *           100000000 --- ManageTaxonomies
+     *          1000000000 --- ManageAppeals
+     *         10000000000 --- ManageUsers
+     *        100000000000 --- ManageInvites
+     *       1000000000000 --- ManageRules
+     *      10000000000000 --- ManageAnnouncements
+     *     100000000000000 --- ManageCustomEmojis
+     *    1000000000000000 --- ManageWebhooks
+     *  100000000000000000 --- ManageRoles
+     * 1000000000000000000 --- ManageUserAccess
      *
      * @return [Permission]s masked in [rawPermissions], i.e. permissions this Role has.
      */
@@ -84,29 +106,29 @@ data class Role(
      * of [Permission]s.
      */
     enum class Permission(val bitValue: Int) {
-        Administrator(0b1), // 1
-        DevOps(0b10), // 2
+        Administrator(0b1), // 0x1 / 1
+        DevOps(0b10), // 0x2 / 2
 
-        ViewAuditLog(0b100), // 4
-        ViewDashboard(0b1000), // 8
+        ViewAuditLog(0b100), // 0x4 / 4
+        ViewDashboard(0b1000), // 0x8 / 8
 
-        ManageReports(0b10000), // 10
-        ManageFederation(0b100000), // 20
-        ManageSettings(0b1000000), // 40
-        ManageBlocks(0b10000000), // 80
-        ManageTaxonomies(0b100000000), // 100
-        ManageAppeals(0b1000000000), // 200
-        ManageUsers(0b10000000000), // 400
-        ManageInvites(0b100000000000), // 800
-        ManageRules(0b1000000000000), // 1_000
-        ManageAnnouncements(0b10000000000000), // 2_000
-        ManageCustomEmojis(0b100000000000000), // 4_000
-        ManageWebhooks(0b1000000000000000), // 8_000
-        ManageRoles(0b100000000000000000), // 20_000
-        ManageUserAccess(0b1000000000000000000), // 40_000
+        ManageReports(0b10000), // 0x10 / 16
+        ManageFederation(0b100000), // 0x20 / 32
+        ManageSettings(0b1000000), // 0x40 / 64
+        ManageBlocks(0b10000000), // 0x80 / 128
+        ManageTaxonomies(0b100000000), // 0x100 / 256
+        ManageAppeals(0b1000000000), // 0x200 / 512
+        ManageUsers(0b10000000000), // 0x400 / 1024
+        ManageInvites(0b100000000000), // 0x800 / 2048
+        ManageRules(0b1000000000000), // 0x1000 / 4096
+        ManageAnnouncements(0b10000000000000), // 0x2000 / 8192
+        ManageCustomEmojis(0b100000000000000), // 0x4000 / 16384
+        ManageWebhooks(0b1000000000000000), // 0x8000 / 32768
+        ManageRoles(0b100000000000000000), // 0x20000 / 131072
+        ManageUserAccess(0b1000000000000000000), // 0x40000 / 262144
 
-        InviteUsers(0b10000000000000000), // 10_000
+        InviteUsers(0b10000000000000000), // 0x10000 / 65536
 
-        DeleteUserData(0b10000000000000000000) // 80_000
+        DeleteUserData(0b10000000000000000000) // 0x80000 / 524288
     }
 }
