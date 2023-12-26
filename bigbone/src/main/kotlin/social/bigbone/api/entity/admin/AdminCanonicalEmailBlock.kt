@@ -2,6 +2,7 @@ package social.bigbone.api.entity.admin
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import social.bigbone.Parameters
 import social.bigbone.api.method.admin.AdminCanonicalEmailBlockMethods
 
 /**
@@ -56,4 +57,7 @@ sealed class BlockCanonicalEmailVariant(val apiKey: String, val value: String) {
         apiKey = "canonical_email_hash",
         value = canonicalEmailHash
     )
+
+    fun appendToParameters(parameters: Parameters = Parameters()): Parameters =
+        parameters.apply { append(apiKey, value) }
 }

@@ -61,9 +61,7 @@ class AdminCanonicalEmailBlockMethods(private val client: MastodonClient) {
         return client.getMastodonRequest(
             endpoint = adminCanonicalEmailBlockEndpoint,
             method = MastodonClient.Method.POST,
-            parameters = Parameters().apply {
-                append(variant.apiKey, variant.value)
-            }
+            parameters = variant.appendToParameters()
         )
     }
 
