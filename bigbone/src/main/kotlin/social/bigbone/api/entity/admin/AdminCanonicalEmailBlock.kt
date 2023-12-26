@@ -58,6 +58,6 @@ sealed class BlockCanonicalEmailVariant(val apiKey: String, val value: String) {
         value = canonicalEmailHash
     )
 
-    fun appendToParameters(parameters: Parameters = Parameters()): Parameters =
+    internal fun appendToParameters(parameters: Parameters = Parameters()): Parameters =
         parameters.apply { append(apiKey, value) }
 }
