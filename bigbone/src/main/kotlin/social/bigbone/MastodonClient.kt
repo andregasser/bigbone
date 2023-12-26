@@ -120,7 +120,7 @@ private constructor(
     @Suppress("unused") // public API
     @get:JvmName("adminDomainBlocks")
     val adminDomainBlocks: AdminDomainBlockMethods by lazy { AdminDomainBlockMethods(this) }
-    
+
     /**
      * Access API methods under the "admin/email_domain_blocks" endpoint.
      */
