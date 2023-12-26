@@ -114,6 +114,13 @@ private constructor(
     val adminDimensions: AdminDimensionMethods by lazy { AdminDimensionMethods(this) }
 
     /**
+     * Access API methods under the "admin/ip_blocks" endpoint.
+     */
+    @Suppress("unused") // public API
+    @get:JvmName("adminIpBlock")
+    val adminIpBlock: AdminIpBlockMethods by lazy { AdminIpBlockMethods(this) }
+
+    /**
      * Access API methods under the "admin/measures" endpoint.
      */
     @Suppress("unused") // public API
@@ -133,13 +140,6 @@ private constructor(
     @Suppress("unused") // public API
     @get:JvmName("adminTrends")
     val adminTrends: AdminTrendMethods by lazy { AdminTrendMethods(this) }
-
-    /**
-     * Access API methods under the "admin/retention" endpoint.
-     */
-    @Suppress("unused") // public API
-    @get:JvmName("adminIpBlock")
-    val adminIpBlock: AdminIpBlockMethods by lazy { AdminIpBlockMethods(this) }
 
     /**
      * Access API methods under the "announcements" endpoint.
