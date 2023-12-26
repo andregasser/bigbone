@@ -16,7 +16,7 @@ import social.bigbone.api.method.admin.AdminCanonicalEmailBlockMethods
  *
  * @see <a href="https://docs.joinmastodon.org/methods/admin/canonical_email_blocks/">Mastodon admin/canonical_email_blocks API methods</a>
  */
-class RxAdminEmailDomainBlockMethods(client: MastodonClient) {
+class RxAdminCanonicalEmailBlockMethods(client: MastodonClient) {
 
     private val adminCanonicalEmailBlockMethods = AdminCanonicalEmailBlockMethods(client)
 

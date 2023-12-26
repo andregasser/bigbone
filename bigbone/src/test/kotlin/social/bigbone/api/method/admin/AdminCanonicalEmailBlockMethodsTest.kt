@@ -15,7 +15,7 @@ import social.bigbone.api.entity.admin.BlockCanonicalEmailVariant
 import social.bigbone.testtool.MockClient
 import social.bigbone.testtool.TestUtil.urlEncode
 
-class AdminEmailDomainBlockMethodsTest {
+class AdminCanonicalEmailBlockMethodsTest {
 
     @Test
     fun `Given client returning success, when getting all canonical email blocks without Range, then call correct endpoint and parse response`() {
