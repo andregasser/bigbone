@@ -14,6 +14,9 @@ import social.bigbone.Parameters
 import social.bigbone.PrecisionDateTime.ValidPrecisionDateTime.ExactTime
 import social.bigbone.api.Pageable
 import social.bigbone.api.Range
+import social.bigbone.api.entity.admin.AccountOrigin
+import social.bigbone.api.entity.admin.AccountStatus
+import social.bigbone.api.entity.admin.ActionAgainstAccount
 import social.bigbone.api.entity.admin.AdminAccount
 import social.bigbone.testtool.MockClient
 import java.time.Instant
@@ -26,8 +29,8 @@ class AdminAccountMethodsTest {
         val accountMethods = AdminAccountMethods(client)
 
         val adminAccountPageable: Pageable<AdminAccount> = accountMethods.viewAccounts(
-            origin = AdminAccountMethods.AccountOrigin.Remote,
-            status = AdminAccountMethods.AccountStatus.Active,
+            origin = AccountOrigin.Remote,
+            status = AccountStatus.Active,
             permissions = "permissions",
             roleIds = emptyList(),
             invitedById = "12345",
@@ -117,7 +120,7 @@ class AdminAccountMethodsTest {
 
         accountMethods.performActionAgainstAccount(
             withId = accountId,
-            type = AdminAccountMethods.ActionAgainstAccount.Silence,
+            type = ActionAgainstAccount.Silence,
             text = "Turd",
             reportId = "2345",
             warningPresetId = "13374223",

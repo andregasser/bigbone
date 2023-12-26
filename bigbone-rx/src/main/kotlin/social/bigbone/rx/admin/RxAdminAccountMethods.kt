@@ -5,11 +5,11 @@ import io.reactivex.rxjava3.core.Single
 import social.bigbone.MastodonClient
 import social.bigbone.api.Pageable
 import social.bigbone.api.Range
+import social.bigbone.api.entity.admin.AccountOrigin
+import social.bigbone.api.entity.admin.AccountStatus
+import social.bigbone.api.entity.admin.ActionAgainstAccount
 import social.bigbone.api.entity.admin.AdminAccount
 import social.bigbone.api.method.admin.AdminAccountMethods
-import social.bigbone.api.method.admin.AdminAccountMethods.AccountOrigin
-import social.bigbone.api.method.admin.AdminAccountMethods.AccountStatus
-import social.bigbone.api.method.admin.AdminAccountMethods.ActionAgainstAccount
 
 /**
  * Reactive implementation of [AdminAccountMethods].

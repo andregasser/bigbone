@@ -6,8 +6,10 @@ import social.bigbone.MastodonRequest
 import social.bigbone.Parameters
 import social.bigbone.api.Pageable
 import social.bigbone.api.Range
+import social.bigbone.api.entity.admin.AccountOrigin
+import social.bigbone.api.entity.admin.AccountStatus
+import social.bigbone.api.entity.admin.ActionAgainstAccount
 import social.bigbone.api.entity.admin.AdminAccount
-import java.util.Locale
 
 /**
  * Perform moderation actions with accounts.
@@ -18,33 +20,6 @@ class AdminAccountMethods(private val client: MastodonClient) {
 
     private val adminAccountsEndpointV1 = "api/v1/admin/accounts"
     private val adminAccountsEndpointV2 = "api/v2/admin/accounts"
-
-    /**
-     * Filter that can be used when viewing all accounts via [viewAccounts].
-     * Filters for accounts that are either only local or only remote.
-     */
-    enum class AccountOrigin {
-
-        Local,
-        Remote;
-
-        fun apiName(): String = name.lowercase(Locale.ENGLISH)
-    }
-
-    /**
-     * Filter that can be used when viewing all accounts via [viewAccounts].
-     * Filters for accounts that have one of the available status types of this class.
-     */
-    enum class AccountStatus {
-
-        Active,
-        Pending,
-        Disabled,
-        Silenced,
-        Suspended;
-
-        fun apiName(): String = name.lowercase(Locale.ENGLISH)
-    }
 
     /**
      * View all accounts, optionally matching certain criteria for filtering, up to 100 at a time.
@@ -151,20 +126,6 @@ class AdminAccountMethods(private val client: MastodonClient) {
             endpoint = "$adminAccountsEndpointV1/$withId",
             method = Method.DELETE
         )
-    }
-
-    /**
-     * Defines the type of action to be taken against an account when using [performActionAgainstAccount].
-     */
-    enum class ActionAgainstAccount {
-
-        None,
-        Sensitive,
-        Disable,
-        Silence,
-        Suspend;
-
-        fun apiName(): String = name.lowercase(Locale.ENGLISH)
     }
 
     /**
