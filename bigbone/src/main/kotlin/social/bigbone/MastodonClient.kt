@@ -66,6 +66,7 @@ import social.bigbone.api.method.TagMethods
 import social.bigbone.api.method.TimelineMethods
 import social.bigbone.api.method.TrendMethods
 import social.bigbone.api.method.admin.AdminDimensionMethods
+import social.bigbone.api.method.admin.AdminEmailDomainBlockMethods
 import social.bigbone.api.method.admin.AdminIpBlockMethods
 import social.bigbone.api.method.admin.AdminMeasureMethods
 import social.bigbone.api.method.admin.AdminRetentionMethods
@@ -111,6 +112,13 @@ private constructor(
     @Suppress("unused") // public API
     @get:JvmName("adminDimensions")
     val adminDimensions: AdminDimensionMethods by lazy { AdminDimensionMethods(this) }
+
+    /**
+     * Access API methods under the "admin/email_domain_blocks" endpoint.
+     */
+    @Suppress("unused") // public API
+    @get:JvmName("adminEmailDomainBlocks")
+    val adminEmailDomainBlocks: AdminEmailDomainBlockMethods by lazy { AdminEmailDomainBlockMethods(this) }
 
     /**
      * Access API methods under the "admin/measures" endpoint.
