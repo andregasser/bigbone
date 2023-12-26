@@ -21,7 +21,7 @@ class RxAdminIpBlockMethods(client: MastodonClient) {
     /**
      * Show information about all blocked IP ranges.
      * @param range optional Range for the pageable return value
-     * @see <a href="https://docs.joinmastodon.org/methods/ip_blocks/#get">Mastodon API documentation: methods/ip_blocks/#get</a>
+     * @see <a href="https://docs.joinmastodon.org/methods/admin/ip_blocks/#get">Mastodon API documentation: admin/ip_blocks/#get</a>
      */
     @JvmOverloads
     fun getAllIpBlocks(range: Range = Range()): Single<Pageable<AdminIpBlock>> = Single.fromCallable {
@@ -31,7 +31,7 @@ class RxAdminIpBlockMethods(client: MastodonClient) {
     /**
      * Show information about a single IP block.
      * @param id The ID of the IpBlock in the database.
-     * @see <a href="https://docs.joinmastodon.org/methods/ip_blocks/#get">Mastodon API documentation: methods/ip_blocks/#get</a>
+     * @see <a href="https://docs.joinmastodon.org/methods/admin/ip_blocks/#get">Mastodon API documentation: admin/ip_blocks/#get</a>
      */
     fun getBlockedIpRange(id: String): Single<AdminIpBlock> = Single.fromCallable {
         adminIpBlockMethods.getBlockedIpRange(id = id).execute()

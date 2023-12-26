@@ -119,6 +119,13 @@ private constructor(
     @Suppress("unused") // public API
     @get:JvmName("adminEmailDomainBlocks")
     val adminEmailDomainBlocks: AdminEmailDomainBlockMethods by lazy { AdminEmailDomainBlockMethods(this) }
+     
+    /**
+     * Access API methods under the "admin/ip_blocks" endpoint.
+     */
+    @Suppress("unused") // public API
+    @get:JvmName("adminIpBlock")
+    val adminIpBlock: AdminIpBlockMethods by lazy { AdminIpBlockMethods(this) }
 
     /**
      * Access API methods under the "admin/measures" endpoint.
@@ -133,13 +140,6 @@ private constructor(
     @Suppress("unused") // public API
     @get:JvmName("adminRetention")
     val adminRetention: AdminRetentionMethods by lazy { AdminRetentionMethods(this) }
-
-    /**
-     * Access API methods under the "admin/retention" endpoint.
-     */
-    @Suppress("unused") // public API
-    @get:JvmName("adminIpBlock")
-    val adminIpBlock: AdminIpBlockMethods by lazy { AdminIpBlockMethods(this) }
 
     /**
      * Access API methods under the "announcements" endpoint.
