@@ -7,6 +7,7 @@ import kotlinx.serialization.Serializable
  * Usage statistics for given days (typically the past week).
  * @see <a href="https://docs.joinmastodon.org/entities/Tag/#history">Mastodon API Tag history</a>
  * @see <a href="https://docs.joinmastodon.org/entities/PreviewCard/#history">Mastodon API PreviewCard history
+ * @see <a href="https://docs.joinmastodon.org/entities/Admin_EmailDomainBlock/#history">Mastodon API Admin::EmailDomainBlock history
  */
 @Serializable
 data class History(
