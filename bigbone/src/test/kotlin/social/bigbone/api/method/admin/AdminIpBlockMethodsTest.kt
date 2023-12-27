@@ -16,7 +16,7 @@ import java.net.URLEncoder
 
 class AdminIpBlockMethodsTest {
 
-    private val adminIpBlockEndpoint = "/api/v1/admin/ip_blocks"
+    private val adminIpBlockEndpoint = "api/v1/admin/ip_blocks"
 
     @Test
     fun `Given client returning success, when getting all blocked ip addresses, then return list of ip addresses`() {

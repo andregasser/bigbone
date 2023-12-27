@@ -11,8 +11,8 @@ import social.bigbone.api.entity.Suggestion
  */
 class SuggestionMethods(private val client: MastodonClient) {
 
-    private val suggestionsEndpointV2 = "/api/v2/suggestions"
-    private val suggestionsEndpointV1 = "/api/v1/suggestions"
+    private val suggestionsEndpointV2 = "api/v2/suggestions"
+    private val suggestionsEndpointV1 = "api/v1/suggestions"
 
     /**
      * Accounts that are promoted by staff, or that the user has had past positive interactions with, but is not yet following.

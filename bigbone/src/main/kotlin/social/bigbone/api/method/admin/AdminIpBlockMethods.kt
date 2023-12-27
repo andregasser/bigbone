@@ -13,7 +13,7 @@ import social.bigbone.api.entity.admin.AdminIpBlock
  */
 class AdminIpBlockMethods(private val client: MastodonClient) {
 
-    private val adminIpBlockEndpoint = "/api/v1/admin/ip_blocks"
+    private val adminIpBlockEndpoint = "api/v1/admin/ip_blocks"
 
     /**
      * Show information about all blocked IP ranges.

@@ -12,7 +12,7 @@ import social.bigbone.api.entity.Account
  */
 class EndorsementMethods(private val client: MastodonClient) {
 
-    private val endorsementsEndpoint = "/api/v1/endorsements"
+    private val endorsementsEndpoint = "api/v1/endorsements"
 
     /**
      * Accounts that the user is currently featuring on their profile.

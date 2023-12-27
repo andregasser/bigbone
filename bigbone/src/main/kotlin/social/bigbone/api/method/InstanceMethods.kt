@@ -16,8 +16,8 @@ import social.bigbone.api.entity.Rule
  */
 class InstanceMethods(private val client: MastodonClient) {
 
-    private val instanceEndpointV1 = "/api/v1/instance"
-    private val instanceEndpointV2 = "/api/v2/instance"
+    private val instanceEndpointV1 = "api/v1/instance"
+    private val instanceEndpointV2 = "api/v2/instance"
 
     /**
      * Obtain general information about the server.

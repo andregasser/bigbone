@@ -11,7 +11,7 @@ import social.bigbone.api.Range
  */
 class DomainBlockMethods(private val client: MastodonClient) {
 
-    private val domainBlocksEndpoint = "/api/v1/domain_blocks"
+    private val domainBlocksEndpoint = "api/v1/domain_blocks"
 
     /**
      * View domains the user has blocked.
