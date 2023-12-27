@@ -55,6 +55,7 @@ class RxMediaMethods(client: MastodonClient) {
      * @param mediaType media type of the file as a string, e.g. "image/png"
      * @param description a plain-text description of the media, for accessibility purposes.
      * @param focus a [Focus] instance which specifies the x- and y- coordinate of the focal point. Valid range for x and y is -1.0 to 1.0.
+     * @param customThumbnail The custom thumbnail of the media to be attached.
      * @see <a href="https://docs.joinmastodon.org/methods/media/#v1">Mastodon API documentation: methods/media/#v1</a>
      */
     @JvmOverloads
@@ -62,8 +63,9 @@ class RxMediaMethods(client: MastodonClient) {
         file: File,
         mediaType: String,
         description: String? = null,
-        focus: Focus? = null
+        focus: Focus? = null,
+        customThumbnail: CustomThumbnail? = null
     ): Single<MediaAttachment> = Single.fromCallable {
-        mediaMethods.uploadMedia(file, mediaType, description, focus).execute()
+        mediaMethods.uploadMedia(file, mediaType, description, focus, customThumbnail).execute()
     }
 }

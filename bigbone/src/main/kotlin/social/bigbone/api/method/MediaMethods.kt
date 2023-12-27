@@ -79,6 +79,8 @@ class MediaMethods(private val client: MastodonClient) {
      * @param mediaType media type of the file as a string, e.g. "image/png"
      * @param description a plain-text description of the media, for accessibility purposes.
      * @param focus a [Focus] instance which specifies the x- and y- coordinate of the focal point. Valid range for x and y is -1.0 to 1.0.
+     * @param customThumbnail The custom thumbnail of the media to be attached.
+     *
      * @see <a href="https://docs.joinmastodon.org/methods/media/#v1">Mastodon API documentation: methods/media/#v1</a>
      */
     @JvmOverloads
@@ -86,7 +88,8 @@ class MediaMethods(private val client: MastodonClient) {
         file: File,
         mediaType: String,
         description: String? = null,
-        focus: Focus? = null
+        focus: Focus? = null,
+        customThumbnail: CustomThumbnail? = null,
     ): MastodonRequest<MediaAttachment> {
         val body = file.asRequestBody(mediaType.toMediaTypeOrNull())
         val part = MultipartBody.Part.createFormData("file", file.name, body)
@@ -94,6 +97,17 @@ class MediaMethods(private val client: MastodonClient) {
         val requestBodyBuilder = MultipartBody.Builder()
             .setType(MultipartBody.FORM)
             .addPart(part)
+
+        if (customThumbnail != null) {
+            val (thumbnailFile, thumbnailMediaType) = customThumbnail
+            val thumbnailPart: MultipartBody.Part = MultipartBody.Part.createFormData(
+                name = "thumbnail",
+                filename = thumbnailFile.name,
+                body = thumbnailFile.asRequestBody(thumbnailMediaType.toMediaTypeOrNull())
+            )
+            requestBodyBuilder.addPart(thumbnailPart)
+        }
+
         description?.let { requestBodyBuilder.addFormDataPart("description", description) }
         focus?.let { requestBodyBuilder.addFormDataPart("focus", focus.toString()) }
 
