@@ -5,6 +5,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import social.bigbone.JSON_SERIALIZER
 import social.bigbone.MastodonClient
+import social.bigbone.MastodonClient.Method
 import social.bigbone.MastodonRequest
 import social.bigbone.api.entity.MediaAttachment
 import social.bigbone.api.entity.data.Focus
@@ -17,6 +18,21 @@ import java.io.File
 class MediaMethods(private val client: MastodonClient) {
 
     val endpoint: String = "api/v1/media"
+
+    /**
+     * Get a media attachment, before it is attached to a status and posted, but after it is accepted for processing.
+     * Use this method to check that the full-size media has finished processing.
+     *
+     * @param withId The ID of the [MediaAttachment] in the database.
+     *
+     * @see <a href="https://docs.joinmastodon.org/methods/media/#get">Mastodon API documentation: methods/media/#get</a>
+     */
+    fun getMediaAttachment(withId: String): MastodonRequest<MediaAttachment> {
+        return client.getMastodonRequest(
+            endpoint = "$endpoint/$withId",
+            method = Method.GET
+        )
+    }
 
     /**
      * Creates an attachment to be used with a new status. This method will return after the full sized media is done processing.

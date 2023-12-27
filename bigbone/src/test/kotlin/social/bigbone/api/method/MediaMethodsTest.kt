@@ -1,15 +1,75 @@
 package social.bigbone.api.method
 
+import io.mockk.verify
 import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldNotBe
+import org.amshove.kluent.shouldNotBeNull
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
+import social.bigbone.api.entity.MediaAttachment
 import social.bigbone.api.entity.data.Focus
 import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.testtool.MockClient
 import java.io.File
 
 class MediaMethodsTest {
+
+    @Test
+    fun `Given client that succeeds, when getting media attachment, then call correct endpoint and parse response`() {
+        val client = MockClient.mock("media_get_attachment_success.json")
+        val mediaMethods = MediaMethods(client)
+        val mediaId = "1357"
+
+        val mediaAttachment: MediaAttachment = mediaMethods.getMediaAttachment(withId = mediaId).execute()
+
+        with(mediaAttachment) {
+            id shouldBeEqualTo "22348641"
+            type shouldBeEqualTo MediaAttachment.MediaType.IMAGE
+            url shouldBeEqualTo "https://files.mastodon.social/media_attachments/files/022/348/641/original/e96382f26c72a29c.jpeg"
+            previewUrl shouldBeEqualTo "https://files.mastodon.social/media_attachments/files/022/348/641/small/e96382f26c72a29c.jpeg"
+            remoteUrl.shouldBeNull()
+            textUrl shouldBeEqualTo "https://mastodon.social/media/4Zj6ewxzzzDi0g8JnZQ"
+
+            with(meta) {
+                shouldNotBeNull()
+
+                with(focus) {
+                    shouldNotBeNull()
+                    x shouldBeEqualTo -0.42f
+                    y shouldBeEqualTo 0.69f
+                }
+
+                with(original) {
+                    shouldNotBeNull()
+
+                    width shouldBeEqualTo 640
+                    height shouldBeEqualTo 480
+                    size shouldBeEqualTo "640x480"
+                    aspectRatio shouldBeEqualTo 1.3333333333333333
+                }
+
+                with(small) {
+                    shouldNotBeNull()
+
+                    width shouldBeEqualTo 461
+                    height shouldBeEqualTo 346
+                    size shouldBeEqualTo "461x346"
+                    aspectRatio shouldBeEqualTo 1.3323699421965318
+                }
+            }
+
+            description shouldBeEqualTo "test uploaded via api, but updated"
+            blurhash shouldBeEqualTo "UFBWY:8_0Jxv4mx]t8t64.%M-:IUWGWAt6M}"
+        }
+        verify {
+            client.get(
+                path = "api/v1/media/1357",
+                query = null
+            )
+        }
+    }
+
     @Test
     fun uploadMedia() {
         val client = MockClient.mock("attachment.json")
