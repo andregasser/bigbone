@@ -60,8 +60,12 @@ signing {
     def signingKey = findProperty("signingKey")
     def signingPassword = findProperty("signingPassword")
     //useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)
-    useInMemoryPgpKeys(signingKey, signingPassword)
-    sign publishing.publications.bigbone
+    if (signingKey.isPresent && signingPassword.isPresent) {
+        useInMemoryPgpKeys(signingKey, signingPassword)
+        sign publishing.publications.bigbone
+    } else {
+        logger.warn("PGP signing key not defined, skipping signing configuration")
+    }
 }
 
 jacoco {
