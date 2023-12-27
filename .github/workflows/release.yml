@@ -32,7 +32,7 @@ jobs:
       - name: Publish the library
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: publish
+          arguments: publish --debug
         env:
           SONATYPE_USERNAME: ${{ secrets.OSS_SONATYPE_USERNAME }}
           SONATYPE_PASSWORD: ${{ secrets.OSS_SONATYPE_PASSWORD }}
