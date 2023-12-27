@@ -65,12 +65,14 @@ object MockClient {
         maxId: String? = null,
         sinceId: String? = null,
         requestUrl: String = "https://example.com",
-        responseBaseUrl: String = "https://mstdn.jp/api/v1/timelines/public"
+        responseBaseUrl: String = "https://mstdn.jp/api/v1/timelines/public",
+        responseCode: Int = 200,
+        responseMessage: String = "OK"
     ): MastodonClient {
         val clientMock: MastodonClient = mockk()
         val response: Response = Response.Builder()
-            .code(200)
-            .message("OK")
+            .code(responseCode)
+            .message(responseMessage)
             .request(Request.Builder().url(requestUrl).build())
             .protocol(Protocol.HTTP_1_1)
             .body(

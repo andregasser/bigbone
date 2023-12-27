@@ -18,6 +18,38 @@ class RxMediaMethods(client: MastodonClient) {
     private val mediaMethods = MediaMethods(client)
 
     /**
+     * Creates a [MediaAttachment] to be used with a new status.
+     * NOTE: The full-sized media will be processed asynchronously in the background for large uploads.
+     *
+     * Starting with Mastodon server version 4.0.0:
+     * Smaller media formats (image) will be processed synchronously and return 200 instead of 202.
+     * Larger media formats (video, gifv, audio) will continue to be processed asynchronously and return 202.
+     *
+     * Users of this method will not get the raw HTTP status: If this method succeeds, you will get a [MediaAttachment]
+     * with either the [MediaAttachment.url] null because the full-sized media has not been processed yet, or non-null
+     * because it was small enough to be processes synchronously.
+     *
+     * Use [getMediaAttachment] for retrieving the status of processing. If its [MediaAttachment.url] is not null,
+     * processing is done.
+     *
+     * @param mediaAttachment The file with media type that should be attached
+     * @param description a plain-text description of the media, for accessibility purposes.
+     * @param focus a [Focus] instance which specifies the x- and y- coordinate of the focal point. Valid range for x and y is -1.0 to 1.0.
+     * @param customThumbnail The custom thumbnail of the media to be attached.
+     *
+     * @see <a href="https://docs.joinmastodon.org/methods/media/#v1">Mastodon API documentation: methods/media/#v1</a>
+     */
+    @JvmOverloads
+    fun uploadMediaAsync(
+        mediaAttachment: FileAsMediaAttachment,
+        description: String? = null,
+        focus: Focus? = null,
+        customThumbnail: FileAsMediaAttachment? = null
+    ): Single<MediaAttachment> = Single.fromCallable {
+        mediaMethods.uploadMediaAsync(mediaAttachment, description, focus, customThumbnail).execute()
+    }
+
+    /**
      * Get a media attachment, before it is attached to a status and posted, but after it is accepted for processing.
      * Use this method to check that the full-size media has finished processing.
      *
@@ -86,6 +118,10 @@ class RxMediaMethods(client: MastodonClient) {
      * @see <a href="https://docs.joinmastodon.org/methods/media/#v1">Mastodon API documentation: methods/media/#v1</a>
      */
     @JvmOverloads
+    @Deprecated(
+        message = "Use async variant which returns after upload but before media attachment has been processed.",
+        replaceWith = ReplaceWith("uploadMediaAsync(mediaAttachment, description, focus, customThumbnail)")
+    )
     fun uploadMedia(
         mediaAttachment: FileAsMediaAttachment,
         description: String? = null,

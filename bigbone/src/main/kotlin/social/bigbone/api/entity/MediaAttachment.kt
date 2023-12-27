@@ -26,7 +26,7 @@ data class MediaAttachment(
      * The location of the original full-size attachment.
      */
     @SerialName("url")
-    val url: String = "",
+    val url: String? = null,
 
     /**
      * The location of the full-size original attachment on the remote website.

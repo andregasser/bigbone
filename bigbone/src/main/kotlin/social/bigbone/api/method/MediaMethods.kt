@@ -17,7 +17,63 @@ import java.io.File
  */
 class MediaMethods(private val client: MastodonClient) {
 
-    val endpoint: String = "api/v1/media"
+    private val endpoint: String = "api/v1/media"
+    private val endpointV2: String = "api/v2/media"
+
+    /**
+     * Creates a [MediaAttachment] to be used with a new status.
+     * NOTE: The full-sized media will be processed asynchronously in the background for large uploads.
+     *
+     * Starting with Mastodon server version 4.0.0:
+     * Smaller media formats (image) will be processed synchronously and return 200 instead of 202.
+     * Larger media formats (video, gifv, audio) will continue to be processed asynchronously and return 202.
+     *
+     * Users of this method will not get the raw HTTP status: If this method succeeds, you will get a [MediaAttachment]
+     * with either the [MediaAttachment.url] null because the full-sized media has not been processed yet, or non-null
+     * because it was small enough to be processes synchronously.
+     *
+     * Use [getMediaAttachment] for retrieving the status of processing. If its [MediaAttachment.url] is not null,
+     * processing is done.
+     *
+     * @param mediaAttachment The file with media type that should be attached
+     * @param description a plain-text description of the media, for accessibility purposes.
+     * @param focus a [Focus] instance which specifies the x- and y- coordinate of the focal point. Valid range for x and y is -1.0 to 1.0.
+     * @param customThumbnail The custom thumbnail of the media to be attached.
+     *
+     * @see <a href="https://docs.joinmastodon.org/methods/media/#v1">Mastodon API documentation: methods/media/#v1</a>
+     */
+    @JvmOverloads
+    fun uploadMediaAsync(
+        mediaAttachment: FileAsMediaAttachment,
+        description: String? = null,
+        focus: Focus? = null,
+        customThumbnail: FileAsMediaAttachment? = null
+    ): MastodonRequest<MediaAttachment> {
+        val requestBodyBuilder: MultipartBody.Builder = MultipartBody.Builder().setType(MultipartBody.FORM)
+
+        val (file, mediaType) = mediaAttachment
+        val body = file.asRequestBody(mediaType.toMediaTypeOrNull())
+        val part = MultipartBody.Part.createFormData("file", file.name, body)
+        requestBodyBuilder.addPart(part)
+
+        if (customThumbnail != null) {
+            val (thumbnailFile, thumbnailMediaType) = customThumbnail
+            val thumbnailPart: MultipartBody.Part = MultipartBody.Part.createFormData(
+                name = "thumbnail",
+                filename = thumbnailFile.name,
+                body = thumbnailFile.asRequestBody(thumbnailMediaType.toMediaTypeOrNull())
+            )
+            requestBodyBuilder.addPart(thumbnailPart)
+        }
+
+        description?.let { requestBodyBuilder.addFormDataPart("description", description) }
+        focus?.let { requestBodyBuilder.addFormDataPart("focus", focus.toString()) }
+
+        return MastodonRequest(
+            executor = { client.postRequestBody(path = endpointV2, body = requestBodyBuilder.build()) },
+            mapper = { JSON_SERIALIZER.decodeFromString<MediaAttachment>(it) }
+        )
+    }
 
     /**
      * Get a media attachment, before it is attached to a status and posted, but after it is accepted for processing.
@@ -93,9 +149,13 @@ class MediaMethods(private val client: MastodonClient) {
         mediaType: String,
         description: String? = null,
         focus: Focus? = null,
-        customThumbnail: FileAsMediaAttachment? = null,
-    ): MastodonRequest<MediaAttachment> =
-        uploadMedia(FileAsMediaAttachment(file, mediaType), description, focus, customThumbnail)
+        customThumbnail: FileAsMediaAttachment? = null
+    ): MastodonRequest<MediaAttachment> = uploadMedia(
+        mediaAttachment = FileAsMediaAttachment(file = file, mediaType = mediaType),
+        description = description,
+        focus = focus,
+        customThumbnail = customThumbnail
+    )
 
     /**
      * Creates an attachment to be used with a new status. This method will return after the full sized media is done processing.
@@ -108,11 +168,15 @@ class MediaMethods(private val client: MastodonClient) {
      * @see <a href="https://docs.joinmastodon.org/methods/media/#v1">Mastodon API documentation: methods/media/#v1</a>
      */
     @JvmOverloads
+    @Deprecated(
+        message = "Use async variant which returns after upload but before media attachment has been processed.",
+        replaceWith = ReplaceWith("uploadMediaAsync(mediaAttachment, description, focus, customThumbnail)")
+    )
     fun uploadMedia(
         mediaAttachment: FileAsMediaAttachment,
         description: String? = null,
         focus: Focus? = null,
-        customThumbnail: FileAsMediaAttachment? = null,
+        customThumbnail: FileAsMediaAttachment? = null
     ): MastodonRequest<MediaAttachment> {
         val requestBodyBuilder: MultipartBody.Builder = MultipartBody.Builder().setType(MultipartBody.FORM)
 
