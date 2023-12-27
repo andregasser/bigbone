@@ -16,6 +16,8 @@ import java.io.File
  */
 class MediaMethods(private val client: MastodonClient) {
 
+    val endpoint: String = "api/v1/media"
+
     /**
      * Creates an attachment to be used with a new status. This method will return after the full sized media is done processing.
      *
@@ -44,7 +46,7 @@ class MediaMethods(private val client: MastodonClient) {
         val requestBody = requestBodyBuilder.build()
 
         return MastodonRequest(
-            executor = { client.postRequestBody("api/v1/media", requestBody) },
+            executor = { client.postRequestBody(endpoint, requestBody) },
             mapper = { JSON_SERIALIZER.decodeFromString<MediaAttachment>(it) }
         )
     }
