@@ -79,7 +79,7 @@ class MediaMethodsTest {
     fun `Given client returning success, when updating media attachment, then call correct endpoint`() {
         val client = MockClient.mock("media_update_attachment_success.json")
         val mediaMethods = MediaMethods(client)
-        val customThumbnail = CustomThumbnail(File("foo.bar"), "image/foo")
+        val customThumbnail = FileAsMediaAttachment(File("foo.bar"), "image/foo")
         val mediaAttachmentId = "13579"
         val description = "test uploaded via api, but updated"
         val focus = Focus(0.5f, 0.5f)

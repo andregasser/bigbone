@@ -4,7 +4,7 @@ import io.reactivex.rxjava3.core.Single
 import social.bigbone.MastodonClient
 import social.bigbone.api.entity.MediaAttachment
 import social.bigbone.api.entity.data.Focus
-import social.bigbone.api.method.CustomThumbnail
+import social.bigbone.api.method.FileAsMediaAttachment
 import social.bigbone.api.method.MediaMethods
 import java.io.File
 
@@ -42,7 +42,7 @@ class RxMediaMethods(client: MastodonClient) {
     @JvmOverloads
     fun updateMediaAttachment(
         withId: String,
-        customThumbnail: CustomThumbnail? = null,
+        customThumbnail: FileAsMediaAttachment? = null,
         description: String? = null,
         focus: Focus? = null
     ): Single<MediaAttachment> = Single.fromCallable {
@@ -51,21 +51,47 @@ class RxMediaMethods(client: MastodonClient) {
 
     /**
      * Creates an attachment to be used with a new status. This method will return after the full sized media is done processing.
+     *
      * @param file the file that should be uploaded
      * @param mediaType media type of the file as a string, e.g. "image/png"
      * @param description a plain-text description of the media, for accessibility purposes.
      * @param focus a [Focus] instance which specifies the x- and y- coordinate of the focal point. Valid range for x and y is -1.0 to 1.0.
      * @param customThumbnail The custom thumbnail of the media to be attached.
+     *
      * @see <a href="https://docs.joinmastodon.org/methods/media/#v1">Mastodon API documentation: methods/media/#v1</a>
      */
     @JvmOverloads
+    @Deprecated(
+        message = "Use variant with combined MediaForUpload parameter instead.",
+        replaceWith = ReplaceWith("uploadMedia(FileAsMediaAttachment(file, mediaType), description, focus, customThumbnail)")
+    )
     fun uploadMedia(
         file: File,
         mediaType: String,
         description: String? = null,
         focus: Focus? = null,
-        customThumbnail: CustomThumbnail? = null
+        customThumbnail: FileAsMediaAttachment? = null
     ): Single<MediaAttachment> = Single.fromCallable {
         mediaMethods.uploadMedia(file, mediaType, description, focus, customThumbnail).execute()
+    }
+
+    /**
+     * Creates an attachment to be used with a new status. This method will return after the full sized media is done processing.
+     *
+     * @param mediaAttachment The file with media type that should be attached
+     * @param description a plain-text description of the media, for accessibility purposes.
+     * @param focus a [Focus] instance which specifies the x- and y- coordinate of the focal point. Valid range for x and y is -1.0 to 1.0.
+     * @param customThumbnail The custom thumbnail of the media to be attached.
+     *
+     * @see <a href="https://docs.joinmastodon.org/methods/media/#v1">Mastodon API documentation: methods/media/#v1</a>
+     */
+    @JvmOverloads
+    fun uploadMedia(
+        mediaAttachment: FileAsMediaAttachment,
+        description: String? = null,
+        focus: Focus? = null,
+        customThumbnail: FileAsMediaAttachment? = null
+    ): Single<MediaAttachment> = Single.fromCallable {
+        mediaMethods.uploadMedia(mediaAttachment, description, focus, customThumbnail).execute()
     }
 }

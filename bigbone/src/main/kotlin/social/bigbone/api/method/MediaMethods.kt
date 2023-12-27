@@ -47,7 +47,7 @@ class MediaMethods(private val client: MastodonClient) {
     @JvmOverloads
     fun updateMediaAttachment(
         withId: String,
-        customThumbnail: CustomThumbnail? = null,
+        customThumbnail: FileAsMediaAttachment? = null,
         description: String? = null,
         focus: Focus? = null
     ): MastodonRequest<MediaAttachment> {
@@ -84,19 +84,42 @@ class MediaMethods(private val client: MastodonClient) {
      * @see <a href="https://docs.joinmastodon.org/methods/media/#v1">Mastodon API documentation: methods/media/#v1</a>
      */
     @JvmOverloads
+    @Deprecated(
+        message = "Use variant with combined MediaForUpload parameter instead.",
+        replaceWith = ReplaceWith("uploadMedia(FileAsMediaAttachment(file, mediaType), description, focus, customThumbnail)")
+    )
     fun uploadMedia(
         file: File,
         mediaType: String,
         description: String? = null,
         focus: Focus? = null,
-        customThumbnail: CustomThumbnail? = null,
+        customThumbnail: FileAsMediaAttachment? = null,
+    ): MastodonRequest<MediaAttachment> =
+        uploadMedia(FileAsMediaAttachment(file, mediaType), description, focus, customThumbnail)
+
+    /**
+     * Creates an attachment to be used with a new status. This method will return after the full sized media is done processing.
+     *
+     * @param mediaAttachment The file with media type that should be attached
+     * @param description a plain-text description of the media, for accessibility purposes.
+     * @param focus a [Focus] instance which specifies the x- and y- coordinate of the focal point. Valid range for x and y is -1.0 to 1.0.
+     * @param customThumbnail The custom thumbnail of the media to be attached.
+     *
+     * @see <a href="https://docs.joinmastodon.org/methods/media/#v1">Mastodon API documentation: methods/media/#v1</a>
+     */
+    @JvmOverloads
+    fun uploadMedia(
+        mediaAttachment: FileAsMediaAttachment,
+        description: String? = null,
+        focus: Focus? = null,
+        customThumbnail: FileAsMediaAttachment? = null,
     ): MastodonRequest<MediaAttachment> {
+        val requestBodyBuilder: MultipartBody.Builder = MultipartBody.Builder().setType(MultipartBody.FORM)
+
+        val (file, mediaType) = mediaAttachment
         val body = file.asRequestBody(mediaType.toMediaTypeOrNull())
         val part = MultipartBody.Part.createFormData("file", file.name, body)
-
-        val requestBodyBuilder = MultipartBody.Builder()
-            .setType(MultipartBody.FORM)
-            .addPart(part)
+        requestBodyBuilder.addPart(part)
 
         if (customThumbnail != null) {
             val (thumbnailFile, thumbnailMediaType) = customThumbnail
@@ -111,22 +134,20 @@ class MediaMethods(private val client: MastodonClient) {
         description?.let { requestBodyBuilder.addFormDataPart("description", description) }
         focus?.let { requestBodyBuilder.addFormDataPart("focus", focus.toString()) }
 
-        val requestBody = requestBodyBuilder.build()
-
         return MastodonRequest(
-            executor = { client.postRequestBody(endpoint, requestBody) },
+            executor = { client.postRequestBody(path = endpoint, body = requestBodyBuilder.build()) },
             mapper = { JSON_SERIALIZER.decodeFromString<MediaAttachment>(it) }
         )
     }
 }
 
 /**
- * Wrapper that can be used to update a [MediaAttachment] via [MediaMethods.updateMediaAttachment].
+ * Wrapper that can be used to upload a [MediaAttachment].
  *
- * @property file [File] representation of the thumbnail that should be used.
+ * @property file [File] representation of the media attachment that should be used when uploading.
  * @property mediaType [String] representation of [file]’s media type. Defaults to image/jpeg.
  */
-data class CustomThumbnail(
+data class FileAsMediaAttachment(
     val file: File,
     val mediaType: String = "image/jpeg"
 )
