@@ -60,7 +60,7 @@ signing {
     def signingKey = findProperty("signingKey")
     def signingPassword = findProperty("signingPassword")
     //useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)
-    if (signingKey.isPresent && signingPassword.isPresent) {
+    if (signingKey != null && signingPassword != null) {
         useInMemoryPgpKeys(signingKey, signingPassword)
         sign publishing.publications.bigbone
     } else {
