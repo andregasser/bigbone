@@ -40,7 +40,7 @@ class MediaMethods(private val client: MastodonClient) {
      * @param focus a [Focus] instance which specifies the x- and y- coordinate of the focal point. Valid range for x and y is -1.0 to 1.0.
      * @param customThumbnail The custom thumbnail of the media to be attached.
      *
-     * @see <a href="https://docs.joinmastodon.org/methods/media/#v1">Mastodon API documentation: methods/media/#v1</a>
+     * @see <a href="https://docs.joinmastodon.org/methods/media/#v2">Mastodon API documentation: methods/media/#v2</a>
      */
     @JvmOverloads
     fun uploadMediaAsync(
@@ -98,7 +98,7 @@ class MediaMethods(private val client: MastodonClient) {
      * @param description A plain-text description of the media, for accessibility purposes.
      * @param focus a [Focus] instance which specifies the x- and y-coordinate of the focal point. Valid range for x and y is -1.0 to 1.0.
      *
-     * @see <a href="https://docs.joinmastodon.org/methods/media/#get">Mastodon API documentation: methods/media/#get</a>
+     * @see <a href="https://docs.joinmastodon.org/methods/media/#update">Mastodon API documentation: methods/media/#update</a>
      */
     @JvmOverloads
     fun updateMediaAttachment(
