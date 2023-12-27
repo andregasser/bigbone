@@ -29,8 +29,8 @@ Attach media to authored statuses.
   </tr>
   <tr>
     <td style="width:45%;text-align:left;"><code>PUT /api/v1/media/:id</code><br>Update media attachment</td>
-    <td style="width:10%;text-align:center;"><img src="/assets/red16.png"></td>
-    <td style="width:45%;text-align:left;">Not yet implemented.</td>
+    <td style="width:10%;text-align:center;"><img src="/assets/green.png"></td>
+    <td style="width:45%;text-align:left;">Fully supported.</td>
   </tr>
   <tr>
     <td style="width:45%;text-align:left;"><code>POST /api/v1/media</code><br>(DEPRECATED) Upload media as an attachment</td>

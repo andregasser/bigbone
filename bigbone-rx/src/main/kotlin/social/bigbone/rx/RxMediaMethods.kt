@@ -4,6 +4,7 @@ import io.reactivex.rxjava3.core.Single
 import social.bigbone.MastodonClient
 import social.bigbone.api.entity.MediaAttachment
 import social.bigbone.api.entity.data.Focus
+import social.bigbone.api.method.CustomThumbnail
 import social.bigbone.api.method.MediaMethods
 import java.io.File
 
@@ -26,6 +27,26 @@ class RxMediaMethods(client: MastodonClient) {
      */
     fun getMediaAttachment(withId: String): Single<MediaAttachment> = Single.fromCallable {
         mediaMethods.getMediaAttachment(withId).execute()
+    }
+
+    /**
+     * Update a [MediaAttachment]’s parameters before it’s attached to a status and posted.
+     *
+     * @param withId The ID of the [MediaAttachment] in the database.
+     * @param customThumbnail The custom thumbnail of the media to be attached.
+     * @param description A plain-text description of the media, for accessibility purposes.
+     * @param focus a [Focus] instance which specifies the x- and y-coordinate of the focal point. Valid range for x and y is -1.0 to 1.0.
+     *
+     * @see <a href="https://docs.joinmastodon.org/methods/media/#get">Mastodon API documentation: methods/media/#get</a>
+     */
+    @JvmOverloads
+    fun updateMediaAttachment(
+        withId: String,
+        customThumbnail: CustomThumbnail? = null,
+        description: String? = null,
+        focus: Focus? = null
+    ): Single<MediaAttachment> = Single.fromCallable {
+        mediaMethods.updateMediaAttachment(withId, customThumbnail, description, focus).execute()
     }
 
     /**

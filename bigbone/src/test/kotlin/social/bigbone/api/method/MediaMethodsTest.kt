@@ -1,8 +1,13 @@
 package social.bigbone.api.method
 
+import io.mockk.slot
 import io.mockk.verify
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeInstanceOf
 import org.amshove.kluent.shouldBeNull
+import org.amshove.kluent.shouldContainIgnoringCase
 import org.amshove.kluent.shouldNotBe
 import org.amshove.kluent.shouldNotBeNull
 import org.junit.jupiter.api.Assertions
@@ -67,6 +72,50 @@ class MediaMethodsTest {
                 path = "api/v1/media/1357",
                 query = null
             )
+        }
+    }
+
+    @Test
+    fun `Given client returning success, when updating media attachment, then call correct endpoint`() {
+        val client = MockClient.mock("media_update_attachment_success.json")
+        val mediaMethods = MediaMethods(client)
+        val customThumbnail = CustomThumbnail(File("foo.bar"), "image/foo")
+        val mediaAttachmentId = "13579"
+        val description = "test uploaded via api, but updated"
+        val focus = Focus(0.5f, 0.5f)
+
+        val updatedAttachment: MediaAttachment = mediaMethods.updateMediaAttachment(
+            withId = mediaAttachmentId,
+            customThumbnail = customThumbnail,
+            description = description,
+            focus = focus
+        ).execute()
+
+        updatedAttachment.description shouldBeEqualTo "test uploaded via api, but updated"
+        val requestBodyCapturingSlot = slot<RequestBody>()
+        verify {
+            client.putRequestBody(
+                path = "api/v1/media/13579",
+                body = capture(requestBodyCapturingSlot)
+            )
+        }
+        with(requestBodyCapturingSlot.captured) {
+            with(contentType()) {
+                shouldNotBeNull()
+                type shouldBeEqualTo "multipart"
+                subtype shouldBeEqualTo "form-data"
+            }
+
+            shouldBeInstanceOf(MultipartBody::class)
+            with(this as MultipartBody) {
+                val partHeaders: List<String> = parts.mapNotNull {
+                    it.headers?.values("Content-Disposition")
+                }.flatten()
+
+                partHeaders.shouldContainIgnoringCase("""name="thumbnail"""")
+                partHeaders.shouldContainIgnoringCase("""name="description"""")
+                partHeaders.shouldContainIgnoringCase("""name="focus"""")
+            }
         }
     }
 
