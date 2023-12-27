@@ -15,8 +15,10 @@ import java.io.File
  * @see <a href="https://docs.joinmastodon.org/methods/media/">Mastodon media API methods</a>
  */
 class MediaMethods(private val client: MastodonClient) {
+
     /**
      * Creates an attachment to be used with a new status. This method will return after the full sized media is done processing.
+     *
      * @param file the file that should be uploaded
      * @param mediaType media type of the file as a string, e.g. "image/png"
      * @param description a plain-text description of the media, for accessibility purposes.
@@ -24,19 +26,23 @@ class MediaMethods(private val client: MastodonClient) {
      * @see <a href="https://docs.joinmastodon.org/methods/media/#v1">Mastodon API documentation: methods/media/#v1</a>
      */
     @JvmOverloads
-    fun uploadMedia(file: File, mediaType: String, description: String? = null, focus: Focus? = null): MastodonRequest<MediaAttachment> {
+    fun uploadMedia(
+        file: File,
+        mediaType: String,
+        description: String? = null,
+        focus: Focus? = null
+    ): MastodonRequest<MediaAttachment> {
         val body = file.asRequestBody(mediaType.toMediaTypeOrNull())
         val part = MultipartBody.Part.createFormData("file", file.name, body)
+
         val requestBodyBuilder = MultipartBody.Builder()
             .setType(MultipartBody.FORM)
             .addPart(part)
-        description?.let {
-            requestBodyBuilder.addFormDataPart("description", it)
-        }
-        focus?.let {
-            requestBodyBuilder.addFormDataPart("focus", it.toString())
-        }
+        description?.let { requestBodyBuilder.addFormDataPart("description", description) }
+        focus?.let { requestBodyBuilder.addFormDataPart("focus", focus.toString()) }
+
         val requestBody = requestBodyBuilder.build()
+
         return MastodonRequest(
             executor = { client.postRequestBody("api/v1/media", requestBody) },
             mapper = { JSON_SERIALIZER.decodeFromString<MediaAttachment>(it) }
