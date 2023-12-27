@@ -4,6 +4,7 @@ import social.bigbone.MastodonClient;
 import social.bigbone.api.entity.MediaAttachment;
 import social.bigbone.api.entity.data.Visibility;
 import social.bigbone.api.exception.BigBoneRequestException;
+import social.bigbone.api.method.FileAsMediaAttachment;
 
 import java.io.File;
 import java.util.Collections;
@@ -24,7 +25,9 @@ public class PostStatusWithMediaAttached {
         final File uploadFile = new File(classLoader.getResource("castle.jpg").getFile());
 
         // Upload image to Mastodon
-        final MediaAttachment uploadedFile = client.media().uploadMedia(uploadFile, "image/jpg").execute();
+        final MediaAttachment uploadedFile = client.media().uploadMediaAsync(
+                new FileAsMediaAttachment(uploadFile, "image/jpg")
+        ).execute();
         final String mediaId = uploadedFile.getId();
 
         // Post status with media attached
