@@ -14,6 +14,8 @@ import social.bigbone.api.entity.Search
  */
 class SearchMethods(private val client: MastodonClient) {
 
+    private val endpoint = "api/v2/search"
+
     /**
      * Specify whether to search for only accounts, hashtags, statuses.
      */
@@ -61,7 +63,7 @@ class SearchMethods(private val client: MastodonClient) {
         offset: Int? = null
     ): MastodonRequest<Search> {
         return client.getMastodonRequest(
-            endpoint = "api/v2/search",
+            endpoint = endpoint,
             method = MastodonClient.Method.GET,
             parameters = buildParameters(
                 query = query,

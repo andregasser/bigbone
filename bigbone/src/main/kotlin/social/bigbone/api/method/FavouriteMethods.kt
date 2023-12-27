@@ -12,6 +12,8 @@ import social.bigbone.api.entity.Status
  */
 class FavouriteMethods(private val client: MastodonClient) {
 
+    private val endpoint = "api/v1/favourites"
+
     /**
      * View your favourites. Favouring and unfavouring is achieved via statuses methods.
      * @param range optional Range for the pageable return value
@@ -20,7 +22,7 @@ class FavouriteMethods(private val client: MastodonClient) {
     @JvmOverloads
     fun getFavourites(range: Range = Range()): MastodonRequest<Pageable<Status>> {
         return client.getPageableMastodonRequest(
-            endpoint = "api/v1/favourites",
+            endpoint = endpoint,
             method = MastodonClient.Method.GET,
             parameters = range.toParameters()
         )

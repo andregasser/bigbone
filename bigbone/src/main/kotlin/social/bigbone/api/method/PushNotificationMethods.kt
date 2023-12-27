@@ -59,7 +59,7 @@ class PushNotificationMethods(private val client: MastodonClient) {
         policy: PushDataPolicy? = null
     ): MastodonRequest<WebPushSubscription> {
         return client.getMastodonRequest(
-            endpoint = this.endpoint,
+            endpoint = endpoint,
             method = MastodonClient.Method.POST,
             parameters = Parameters().apply {
                 append("subscription[endpoint]", endpoint)

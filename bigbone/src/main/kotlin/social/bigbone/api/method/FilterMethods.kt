@@ -13,6 +13,9 @@ import social.bigbone.api.exception.BigBoneRequestException
  * @see <a href="https://docs.joinmastodon.org/methods/filters/">Mastodon filters API methods</a>
  */
 class FilterMethods(private val client: MastodonClient) {
+
+    private val endpoint = "api/v2/filters"
+
     /**
      * Obtain a list of all filter groups for the current user.
      * @see <a href="https://docs.joinmastodon.org/methods/filters/#get">Mastodon API documentation: methods/filters/#get</a>
@@ -20,7 +23,7 @@ class FilterMethods(private val client: MastodonClient) {
     @Throws(BigBoneRequestException::class)
     fun listFilters(): MastodonRequest<List<Filter>> {
         return client.getMastodonRequestForList(
-            endpoint = "api/v2/filters",
+            endpoint = endpoint,
             method = MastodonClient.Method.GET
         )
     }
@@ -57,7 +60,7 @@ class FilterMethods(private val client: MastodonClient) {
         filterAction: Filter.FilterAction = Filter.FilterAction.WARN
     ): MastodonRequest<Filter> {
         return client.getMastodonRequest(
-            endpoint = "api/v2/filters",
+            endpoint = endpoint,
             method = MastodonClient.Method.POST,
             parameters = Parameters().apply {
                 append("title", title)
@@ -104,7 +107,7 @@ class FilterMethods(private val client: MastodonClient) {
         keywordsToRemove: List<FilterKeyword>? = null
     ): MastodonRequest<Filter> {
         return client.getMastodonRequest(
-            endpoint = "api/v2/filters/$filterId",
+            endpoint = "$endpoint/$filterId",
             method = MastodonClient.Method.PUT,
             parameters = Parameters().apply {
                 title?.let {
@@ -153,7 +156,7 @@ class FilterMethods(private val client: MastodonClient) {
     @Throws(BigBoneRequestException::class)
     fun deleteFilter(filterId: String) {
         client.performAction(
-            endpoint = "api/v2/filters/$filterId",
+            endpoint = "$endpoint/$filterId",
             method = MastodonClient.Method.DELETE
         )
     }
@@ -166,7 +169,7 @@ class FilterMethods(private val client: MastodonClient) {
     @Throws(BigBoneRequestException::class)
     fun listKeywords(filterId: String): MastodonRequest<List<FilterKeyword>> {
         return client.getMastodonRequestForList(
-            endpoint = "api/v2/filters/$filterId/keywords",
+            endpoint = "$endpoint/$filterId/keywords",
             method = MastodonClient.Method.GET
         )
     }
@@ -180,7 +183,7 @@ class FilterMethods(private val client: MastodonClient) {
     @Throws(BigBoneRequestException::class)
     fun addKeyword(filterId: String, filterKeyword: FilterKeyword): MastodonRequest<FilterKeyword> {
         return client.getMastodonRequest(
-            endpoint = "api/v2/filters/$filterId/keywords",
+            endpoint = "$endpoint/$filterId/keywords",
             method = MastodonClient.Method.POST,
             Parameters().apply {
                 append("keyword", filterKeyword.keyword)
@@ -197,7 +200,7 @@ class FilterMethods(private val client: MastodonClient) {
     @Throws(BigBoneRequestException::class)
     fun viewKeyword(keywordId: String): MastodonRequest<FilterKeyword> {
         return client.getMastodonRequest(
-            endpoint = "api/v2/filters/keywords/$keywordId",
+            endpoint = "$endpoint/keywords/$keywordId",
             method = MastodonClient.Method.GET
         )
     }
@@ -210,7 +213,7 @@ class FilterMethods(private val client: MastodonClient) {
     @Throws(BigBoneRequestException::class)
     fun updateKeyword(filterKeyword: FilterKeyword): MastodonRequest<FilterKeyword> {
         return client.getMastodonRequest(
-            endpoint = "api/v2/filters/keywords/${filterKeyword.id}",
+            endpoint = "$endpoint/keywords/${filterKeyword.id}",
             method = MastodonClient.Method.PUT,
             Parameters().apply {
                 append("keyword", filterKeyword.keyword)
@@ -227,7 +230,7 @@ class FilterMethods(private val client: MastodonClient) {
     @Throws(BigBoneRequestException::class)
     fun deleteKeyword(keywordId: String) {
         client.performAction(
-            endpoint = "api/v2/filters/keywords/$keywordId",
+            endpoint = "$endpoint/keywords/$keywordId",
             method = MastodonClient.Method.DELETE
         )
     }
@@ -240,7 +243,7 @@ class FilterMethods(private val client: MastodonClient) {
     @Throws(BigBoneRequestException::class)
     fun listStatusFilters(filterId: String): MastodonRequest<List<FilterStatus>> {
         return client.getMastodonRequestForList(
-            endpoint = "api/v2/filters/$filterId/statuses",
+            endpoint = "$endpoint/$filterId/statuses",
             method = MastodonClient.Method.GET
         )
     }
@@ -252,7 +255,7 @@ class FilterMethods(private val client: MastodonClient) {
     @Throws(BigBoneRequestException::class)
     fun addStatusToFilter(filterId: String, statusId: String): MastodonRequest<FilterStatus> {
         return client.getMastodonRequest(
-            endpoint = "api/v2/filters/$filterId/statuses",
+            endpoint = "$endpoint/$filterId/statuses",
             method = MastodonClient.Method.POST,
             parameters = Parameters().apply {
                 append("status_id", statusId)
@@ -268,7 +271,7 @@ class FilterMethods(private val client: MastodonClient) {
     @Throws(BigBoneRequestException::class)
     fun viewStatusFilter(filterStatusId: String): MastodonRequest<FilterStatus> {
         return client.getMastodonRequest(
-            endpoint = "api/v2/filters/statuses/$filterStatusId",
+            endpoint = "$endpoint/statuses/$filterStatusId",
             method = MastodonClient.Method.GET
         )
     }
@@ -281,7 +284,7 @@ class FilterMethods(private val client: MastodonClient) {
     @Throws(BigBoneRequestException::class)
     fun removeStatusFromFilter(filterStatusId: String): MastodonRequest<FilterStatus> {
         return client.getMastodonRequest(
-            endpoint = "api/v2/filters/statuses/$filterStatusId",
+            endpoint = "$endpoint/statuses/$filterStatusId",
             method = MastodonClient.Method.DELETE
         )
     }
