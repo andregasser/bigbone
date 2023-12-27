@@ -12,7 +12,7 @@ import social.bigbone.api.entity.Account
  */
 class EndorsementMethods(private val client: MastodonClient) {
 
-    private val endorsementsEndpoint = "api/v1/endorsements"
+    private val endpoint = "api/v1/endorsements"
 
     /**
      * Accounts that the user is currently featuring on their profile.
@@ -25,7 +25,7 @@ class EndorsementMethods(private val client: MastodonClient) {
         range: Range = Range()
     ): MastodonRequest<Pageable<Account>> {
         return client.getPageableMastodonRequest<Account>(
-            endpoint = endorsementsEndpoint,
+            endpoint = endpoint,
             method = MastodonClient.Method.GET,
             parameters = range.toParameters()
         )

@@ -11,7 +11,7 @@ import social.bigbone.api.exception.BigBoneRequestException
  */
 class PreferenceMethods(private val client: MastodonClient) {
 
-    private val preferencesEndpoint = "api/v1/preferences"
+    private val endpoint = "api/v1/preferences"
 
     /**
      * Get preferences about an account.
@@ -20,7 +20,7 @@ class PreferenceMethods(private val client: MastodonClient) {
     @Throws(BigBoneRequestException::class)
     fun getPreferences(): MastodonRequest<Preferences> {
         return client.getMastodonRequest(
-            endpoint = preferencesEndpoint,
+            endpoint = endpoint,
             method = MastodonClient.Method.GET
         )
     }

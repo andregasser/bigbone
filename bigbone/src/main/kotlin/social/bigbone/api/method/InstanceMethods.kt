@@ -16,8 +16,8 @@ import social.bigbone.api.entity.Rule
  */
 class InstanceMethods(private val client: MastodonClient) {
 
-    private val instanceEndpointV1 = "api/v1/instance"
-    private val instanceEndpointV2 = "api/v2/instance"
+    private val endpointV1 = "api/v1/instance"
+    private val endpointV2 = "api/v2/instance"
 
     /**
      * Obtain general information about the server.
@@ -25,7 +25,7 @@ class InstanceMethods(private val client: MastodonClient) {
      */
     fun getInstance(): MastodonRequest<Instance> {
         return client.getMastodonRequest(
-            endpoint = instanceEndpointV2,
+            endpoint = endpointV2,
             method = MastodonClient.Method.GET
         )
     }
@@ -41,7 +41,7 @@ class InstanceMethods(private val client: MastodonClient) {
     )
     fun getInstanceV1(): MastodonRequest<InstanceV1> {
         return client.getMastodonRequest(
-            endpoint = instanceEndpointV1,
+            endpoint = endpointV1,
             method = MastodonClient.Method.GET
         )
     }
@@ -52,7 +52,7 @@ class InstanceMethods(private val client: MastodonClient) {
      */
     fun getPeers(): MastodonRequest<List<String>> {
         return client.getMastodonRequestForList(
-            endpoint = "$instanceEndpointV1/peers",
+            endpoint = "$endpointV1/peers",
             method = MastodonClient.Method.GET
         )
     }
@@ -63,7 +63,7 @@ class InstanceMethods(private val client: MastodonClient) {
      */
     fun getActivity(): MastodonRequest<List<InstanceActivity>> {
         return client.getMastodonRequestForList<InstanceActivity>(
-            endpoint = "$instanceEndpointV1/activity",
+            endpoint = "$endpointV1/activity",
             method = MastodonClient.Method.GET
         )
     }
@@ -74,7 +74,7 @@ class InstanceMethods(private val client: MastodonClient) {
      */
     fun getRules(): MastodonRequest<List<Rule>> {
         return client.getMastodonRequestForList<Rule>(
-            endpoint = "$instanceEndpointV1/rules",
+            endpoint = "$endpointV1/rules",
             method = MastodonClient.Method.GET
         )
     }
@@ -86,7 +86,7 @@ class InstanceMethods(private val client: MastodonClient) {
      */
     fun getBlockedDomains(): MastodonRequest<List<DomainBlock>> {
         return client.getMastodonRequestForList<DomainBlock>(
-            endpoint = "$instanceEndpointV1/domain_blocks",
+            endpoint = "$endpointV1/domain_blocks",
             method = MastodonClient.Method.GET
         )
     }
@@ -98,7 +98,7 @@ class InstanceMethods(private val client: MastodonClient) {
      */
     fun getExtendedDescription(): MastodonRequest<ExtendedDescription> {
         return client.getMastodonRequest(
-            endpoint = "$instanceEndpointV1/extended_description",
+            endpoint = "$endpointV1/extended_description",
             method = MastodonClient.Method.GET
         )
     }

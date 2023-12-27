@@ -13,7 +13,7 @@ import java.time.Instant
  */
 class AdminRetentionMethods(private val client: MastodonClient) {
 
-    private val adminRetentionEndpoint = "api/v1/admin/retention"
+    private val endpoint = "api/v1/admin/retention"
 
     /**
      * Generate a retention data report for a given time period and bucket.
@@ -29,7 +29,7 @@ class AdminRetentionMethods(private val client: MastodonClient) {
         frequency: FrequencyOneOf
     ): MastodonRequest<List<AdminCohort>> {
         return client.getMastodonRequestForList(
-            endpoint = adminRetentionEndpoint,
+            endpoint = endpoint,
             method = MastodonClient.Method.POST,
             parameters = Parameters().apply {
                 append("start_at", startAt.toString())

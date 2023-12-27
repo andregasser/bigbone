@@ -14,7 +14,7 @@ import social.bigbone.api.entity.admin.AdminEmailDomainBlock
  */
 class AdminEmailDomainBlockMethods(private val client: MastodonClient) {
 
-    private val adminEmailDomainBlockEndpoint = "api/v1/admin/email_domain_blocks"
+    private val endpoint = "api/v1/admin/email_domain_blocks"
 
     /**
      * Show information about all email domains blocked from signing up.
@@ -26,7 +26,7 @@ class AdminEmailDomainBlockMethods(private val client: MastodonClient) {
     @JvmOverloads
     fun getAllEmailDomainBlocks(range: Range = Range()): MastodonRequest<Pageable<AdminEmailDomainBlock>> {
         return client.getPageableMastodonRequest(
-            endpoint = adminEmailDomainBlockEndpoint,
+            endpoint = endpoint,
             method = MastodonClient.Method.GET,
             parameters = range.toParameters()
         )
@@ -41,7 +41,7 @@ class AdminEmailDomainBlockMethods(private val client: MastodonClient) {
      */
     fun getEmailDomainBlock(id: String): MastodonRequest<AdminEmailDomainBlock> {
         return client.getMastodonRequest(
-            endpoint = "$adminEmailDomainBlockEndpoint/$id",
+            endpoint = "$endpoint/$id",
             method = MastodonClient.Method.GET
         )
     }
@@ -54,7 +54,7 @@ class AdminEmailDomainBlockMethods(private val client: MastodonClient) {
      */
     fun blockEmailDomain(domain: String): MastodonRequest<AdminEmailDomainBlock> {
         return client.getMastodonRequest(
-            endpoint = adminEmailDomainBlockEndpoint,
+            endpoint = endpoint,
             method = MastodonClient.Method.POST,
             parameters = Parameters().append("domain", domain)
         )
@@ -69,7 +69,7 @@ class AdminEmailDomainBlockMethods(private val client: MastodonClient) {
      */
     fun removeEmailDomainBlock(id: String) {
         client.performAction(
-            endpoint = "$adminEmailDomainBlockEndpoint/$id",
+            endpoint = "$endpoint/$id",
             method = MastodonClient.Method.DELETE
         )
     }

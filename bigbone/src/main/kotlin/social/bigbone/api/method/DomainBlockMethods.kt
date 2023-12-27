@@ -11,7 +11,7 @@ import social.bigbone.api.Range
  */
 class DomainBlockMethods(private val client: MastodonClient) {
 
-    private val domainBlocksEndpoint = "api/v1/domain_blocks"
+    private val endpoint = "api/v1/domain_blocks"
 
     /**
      * View domains the user has blocked.
@@ -24,7 +24,7 @@ class DomainBlockMethods(private val client: MastodonClient) {
         range: Range = Range()
     ): MastodonRequest<Pageable<String>> {
         return client.getPageableMastodonRequest<String>(
-            endpoint = domainBlocksEndpoint,
+            endpoint = endpoint,
             method = MastodonClient.Method.GET,
             parameters = range.toParameters()
         )
@@ -46,7 +46,7 @@ class DomainBlockMethods(private val client: MastodonClient) {
         require(!domain.contains(' ')) { "domain must not contain spaces" }
 
         return client.performAction(
-            endpoint = domainBlocksEndpoint,
+            endpoint = endpoint,
             method = MastodonClient.Method.POST
         )
     }
@@ -66,7 +66,7 @@ class DomainBlockMethods(private val client: MastodonClient) {
         require(!domain.contains(' ')) { "domain must not contain spaces" }
 
         return client.performAction(
-            endpoint = domainBlocksEndpoint,
+            endpoint = endpoint,
             method = MastodonClient.Method.DELETE
         )
     }

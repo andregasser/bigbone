@@ -13,7 +13,7 @@ import social.bigbone.api.entity.Tag
  */
 class FollowedTagMethods(private val client: MastodonClient) {
 
-    private val followedTagsEndpoint = "api/v1/followed_tags"
+    private val endpoint = "api/v1/followed_tags"
 
     /**
      * View your followed hashtags.
@@ -24,7 +24,7 @@ class FollowedTagMethods(private val client: MastodonClient) {
     @JvmOverloads
     fun viewAllFollowedTags(range: Range = Range()): MastodonRequest<Pageable<Tag>> {
         return client.getPageableMastodonRequest<Tag>(
-            endpoint = followedTagsEndpoint,
+            endpoint = endpoint,
             method = MastodonClient.Method.GET,
             parameters = range.toParameters()
         )
