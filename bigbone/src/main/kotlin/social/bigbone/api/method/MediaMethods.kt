@@ -141,8 +141,11 @@ class MediaMethods(private val client: MastodonClient) {
      */
     @JvmOverloads
     @Deprecated(
-        message = "Use variant with combined MediaForUpload parameter instead.",
-        replaceWith = ReplaceWith("uploadMedia(FileAsMediaAttachment(file, mediaType), description, focus, customThumbnail)")
+        message = "Use async variant which returns after upload but before media attachment has been processed.",
+        replaceWith = ReplaceWith(
+            "uploadMediaAsync(FileAsMediaAttachment(file, mediaType), description, focus, customThumbnail)",
+            "social.bigbone.api.method.FileAsMediaAttachment"
+        )
     )
     fun uploadMedia(
         file: File,
@@ -150,37 +153,9 @@ class MediaMethods(private val client: MastodonClient) {
         description: String? = null,
         focus: Focus? = null,
         customThumbnail: FileAsMediaAttachment? = null
-    ): MastodonRequest<MediaAttachment> = uploadMedia(
-        mediaAttachment = FileAsMediaAttachment(file = file, mediaType = mediaType),
-        description = description,
-        focus = focus,
-        customThumbnail = customThumbnail
-    )
-
-    /**
-     * Creates an attachment to be used with a new status. This method will return after the full sized media is done processing.
-     *
-     * @param mediaAttachment The file with media type that should be attached
-     * @param description a plain-text description of the media, for accessibility purposes.
-     * @param focus a [Focus] instance which specifies the x- and y- coordinate of the focal point. Valid range for x and y is -1.0 to 1.0.
-     * @param customThumbnail The custom thumbnail of the media to be attached.
-     *
-     * @see <a href="https://docs.joinmastodon.org/methods/media/#v1">Mastodon API documentation: methods/media/#v1</a>
-     */
-    @JvmOverloads
-    @Deprecated(
-        message = "Use async variant which returns after upload but before media attachment has been processed.",
-        replaceWith = ReplaceWith("uploadMediaAsync(mediaAttachment, description, focus, customThumbnail)")
-    )
-    fun uploadMedia(
-        mediaAttachment: FileAsMediaAttachment,
-        description: String? = null,
-        focus: Focus? = null,
-        customThumbnail: FileAsMediaAttachment? = null
     ): MastodonRequest<MediaAttachment> {
         val requestBodyBuilder: MultipartBody.Builder = MultipartBody.Builder().setType(MultipartBody.FORM)
 
-        val (file, mediaType) = mediaAttachment
         val body = file.asRequestBody(mediaType.toMediaTypeOrNull())
         val part = MultipartBody.Part.createFormData("file", file.name, body)
         requestBodyBuilder.addPart(part)
