@@ -45,6 +45,11 @@ data class MediaAttachment(
      * A shorter URL for the attachment.
      */
     @SerialName("text_url")
+    @Deprecated(
+        message = "Attribute was removed in Mastodon 3.5 and is due for removal in BigBone in 2024.",
+        replaceWith = ReplaceWith("url"),
+        level = DeprecationLevel.WARNING
+    )
     val textUrl: String? = null,
 
     /**
