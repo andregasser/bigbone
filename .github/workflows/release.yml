@@ -40,28 +40,28 @@ jobs:
           ORG_GRADLE_PROJECT_signingKey: ${{ secrets.SIGNING_PRIVATE_KEY }}
           ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.SIGNING_PASSWORD }}
 
-#      - name: ZIP files
-#        id: zip-files
-#        run: |
-#          tagName=${{ github.ref_name }}
-#
-#          # Format the current date like 20231105.180259
-#          formattedDate=date +%Y%m%d.%H%M%S
-#          archiveName=BigBone-$tagName-$formattedDate.zip
-#
-#          # Get all JARs and POM files and zip them into an archive with archiveName
-#          find bigbone/build/libs bigbone/build/publications -type f \( -name "*.jar" -o -name "*pom*.xml" \) -print | zip $archiveName -@
-#
-#          # Save archive name for reuse in later action steps
-#          echo "zipArchive=$archiveName" >> $GITHUB_OUTPUT
-#
-#      - name: Create a GitHub release
-#        uses: softprops/action-gh-release@v1
-#        with:
-#          tag_name: ${{ github.ref_name }}
-#          name: ${{ github.ref_name }}
-#          prerelease: true
-#          draft: true
-#          fail_on_unmatched_files: true
-#          files: ./${{ steps.zip-files.outputs.zipArchive }}
-#          generate_release_notes: true
+      - name: ZIP files
+        id: zip-files
+        run: |
+          tagName=${{ github.ref_name }}
+
+          # Format the current date like 20231105.180259
+          formattedDate=date +%Y%m%d.%H%M%S
+          archiveName=BigBone-$tagName-$formattedDate.zip
+
+          # Get all JARs and POM files and zip them into an archive with archiveName
+          find bigbone/build/libs bigbone/build/publications -type f \( -name "*.jar" -o -name "*pom*.xml" \) -print | zip $archiveName -@
+
+          # Save archive name for reuse in later action steps
+          echo "zipArchive=$archiveName" >> $GITHUB_OUTPUT
+
+      - name: Create a GitHub release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: ${{ github.ref_name }}
+          prerelease: true
+          draft: true
+          fail_on_unmatched_files: true
+          files: ./${{ steps.zip-files.outputs.zipArchive }}
+          generate_release_notes: true
