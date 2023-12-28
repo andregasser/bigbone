@@ -46,7 +46,7 @@ jobs:
           tagName=${{ github.ref_name }}
 
           # Format the current date like 20231105.180259
-          formattedDate=date +%Y%m%d.%H%M%S
+          formattedDate=$(date +%Y%m%d.%H%M%S)
           archiveName=BigBone-$tagName-$formattedDate.zip
 
           # Get all JARs and POM files and zip them into an archive with archiveName
