@@ -66,6 +66,7 @@ import social.bigbone.api.method.SuggestionMethods
 import social.bigbone.api.method.TagMethods
 import social.bigbone.api.method.TimelineMethods
 import social.bigbone.api.method.TrendMethods
+import social.bigbone.api.method.admin.AdminAccountMethods
 import social.bigbone.api.method.admin.AdminCanonicalEmailBlockMethods
 import social.bigbone.api.method.admin.AdminDimensionMethods
 import social.bigbone.api.method.admin.AdminDomainBlockMethods
@@ -108,6 +109,13 @@ private constructor(
     @Suppress("unused") // public API
     @get:JvmName("accounts")
     val accounts: AccountMethods by lazy { AccountMethods(this) }
+
+    /**
+     * Access API methods under the "admin/accounts" endpoint.
+     */
+    @Suppress("unused") // public API
+    @get:JvmName("adminAccounts")
+    val adminAccounts: AdminAccountMethods by lazy { AdminAccountMethods(this) }
 
     /**
      * Access API methods under the "admin/canonical_email_blocks" endpoint.
