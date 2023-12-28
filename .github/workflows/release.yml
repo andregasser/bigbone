@@ -32,11 +32,10 @@ jobs:
       - name: Publish the library
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: publish --info --stacktrace
+          arguments: publish
         env:
           SONATYPE_USERNAME: ${{ secrets.OSS_SONATYPE_USERNAME }}
           SONATYPE_PASSWORD: ${{ secrets.OSS_SONATYPE_PASSWORD }}
-          ORG_GRADLE_PROJECT_signingKeyId: ${{ secrets.SIGNING_KEY_ID }}
           ORG_GRADLE_PROJECT_signingKey: ${{ secrets.SIGNING_PRIVATE_KEY }}
           ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.SIGNING_PASSWORD }}
 
