@@ -360,14 +360,23 @@ class AccountMethods(private val client: MastodonClient) {
 
     /**
      * Find out whether a given account is followed, blocked, muted, etc.
+     *
      * @param accountIds List of IDs of the accounts to check
+     * @param includeSuspended Whether relationships should be returned for suspended users. Defaults to false if not supplied.
+     *
      * @see <a href="https://docs.joinmastodon.org/methods/accounts/#relationships">Mastodon API documentation: methods/accounts/#relationships</a>
      */
-    fun getRelationships(accountIds: List<String>): MastodonRequest<List<Relationship>> {
+    fun getRelationships(
+        accountIds: List<String>,
+        includeSuspended: Boolean? = null
+    ): MastodonRequest<List<Relationship>> {
         return client.getMastodonRequestForList(
             endpoint = "api/v1/accounts/relationships",
             method = MastodonClient.Method.GET,
-            parameters = Parameters().append("id", accountIds)
+            parameters = Parameters().apply {
+                append("id", accountIds)
+                includeSuspended?.let { append("with_suspended", includeSuspended) }
+            }
         )
     }
 

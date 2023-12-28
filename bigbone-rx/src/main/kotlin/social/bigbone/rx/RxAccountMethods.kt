@@ -260,11 +260,17 @@ class RxAccountMethods(client: MastodonClient) {
 
     /**
      * Find out whether a given account is followed, blocked, muted, etc.
+     *
      * @param accountIds List of IDs of the accounts to check
+     * @param includeSuspended Whether relationships should be returned for suspended users. Defaults to false if not supplied.
+     *
      * @see <a href="https://docs.joinmastodon.org/methods/accounts/#relationships">Mastodon API documentation: methods/accounts/#relationships</a>
      */
-    fun getRelationships(accountIds: List<String>): Single<List<Relationship>> = Single.fromCallable {
-        accountMethods.getRelationships(accountIds).execute()
+    fun getRelationships(
+        accountIds: List<String>,
+        includeSuspended: Boolean? = null
+    ): Single<List<Relationship>> = Single.fromCallable {
+        accountMethods.getRelationships(accountIds, includeSuspended).execute()
     }
 
     /**
