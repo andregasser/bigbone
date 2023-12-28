@@ -61,21 +61,43 @@ class RxAccountMethods(client: MastodonClient) {
 
     /**
      * Update the user’s display and preferences.
+     *
      * @param displayName The name to display in the user's profile
      * @param note A new biography for the user
      * @param avatar A String containing a base64-encoded image to display as the user's avatar
      *  (e.g. data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUoAAADrCAYAAAA...)
      * @param header A String containing a base64-encoded image to display as the user's header image
      *  (e.g. data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUoAAADrCAYAAAA...)
+     * @param locked Whether manual approval of follow requests is required
+     * @param bot Whether the account has a bot flag
+     * @param discoverable Whether the account should be shown in the profile directory
+     * @param hideCollections Whether to hide followers and followed accounts.
+     * @param indexable Whether public posts should be searchable to anyone
+     *
      * @see <a href="https://docs.joinmastodon.org/methods/accounts/#update_credentials">Mastodon API documentation: methods/accounts/#update_credentials</a>
      */
     fun updateCredentials(
         displayName: String?,
         note: String?,
         avatar: String?,
-        header: String?
+        header: String?,
+        locked: Boolean?,
+        bot: Boolean?,
+        discoverable: Boolean?,
+        hideCollections: Boolean?,
+        indexable: Boolean?,
     ): Single<CredentialAccount> = Single.fromCallable {
-        accountMethods.updateCredentials(displayName, note, avatar, header).execute()
+        accountMethods.updateCredentials(
+            displayName = displayName,
+            note = note,
+            avatar = avatar,
+            header = header,
+            locked = locked,
+            bot = bot,
+            discoverable = discoverable,
+            hideCollections = hideCollections,
+            indexable = indexable
+        ).execute()
     }
 
     /**

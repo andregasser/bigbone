@@ -51,7 +51,17 @@ class AccountMethodsTest {
     fun updateCredentials() {
         val client = MockClient.mock("account.json")
         val accountMethods = AccountMethods(client)
-        val account = accountMethods.updateCredentials("test", "test", "test", "test").execute()
+        val account = accountMethods.updateCredentials(
+            displayName = "test",
+            note = "test",
+            avatar = "test",
+            header = "test",
+            locked = false,
+            bot = false,
+            discoverable = false,
+            hideCollections = false,
+            indexable = true
+        ).execute()
         account.acct shouldBeEqualTo "test@test.com"
         account.displayName shouldBeEqualTo "test"
         account.username shouldBeEqualTo "test"
@@ -62,7 +72,17 @@ class AccountMethodsTest {
         Assertions.assertThrows(BigBoneRequestException::class.java) {
             val client = MockClient.ioException()
             val accountMethods = AccountMethods(client)
-            accountMethods.updateCredentials("test", "test", "test", "test").execute()
+            accountMethods.updateCredentials(
+                displayName = "test",
+                note = "test",
+                avatar = "test",
+                header = "test",
+                locked = false,
+                bot = false,
+                discoverable = false,
+                hideCollections = false,
+                indexable = true
+            ).execute()
         }
     }
 

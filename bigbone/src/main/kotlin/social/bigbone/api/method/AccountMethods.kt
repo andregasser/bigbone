@@ -74,28 +74,45 @@ class AccountMethods(private val client: MastodonClient) {
 
     /**
      * Update the user’s display and preferences.
+     *
      * @param displayName The name to display in the user's profile
      * @param note A new biography for the user
      * @param avatar A String containing a base64-encoded image to display as the user's avatar
      *  (e.g. data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUoAAADrCAYAAAA...)
      * @param header A String containing a base64-encoded image to display as the user's header image
      *  (e.g. data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUoAAADrCAYAAAA...)
+     * @param locked Whether manual approval of follow requests is required
+     * @param bot Whether the account has a bot flag
+     * @param discoverable Whether the account should be shown in the profile directory
+     * @param hideCollections Whether to hide followers and followed accounts.
+     * @param indexable Whether public posts should be searchable to anyone
+     *
      * @see <a href="https://docs.joinmastodon.org/methods/accounts/#update_credentials">Mastodon API documentation: methods/accounts/#update_credentials</a>
      */
     fun updateCredentials(
         displayName: String?,
         note: String?,
         avatar: String?,
-        header: String?
+        header: String?,
+        locked: Boolean?,
+        bot: Boolean?,
+        discoverable: Boolean?,
+        hideCollections: Boolean?,
+        indexable: Boolean?,
     ): MastodonRequest<CredentialAccount> {
         return client.getMastodonRequest(
             endpoint = "api/v1/accounts/update_credentials",
             method = MastodonClient.Method.PATCH,
             parameters = Parameters().apply {
-                displayName?.let { append("display_name", it) }
-                note?.let { append("note", it) }
-                avatar?.let { append("avatar", it) }
-                header?.let { append("header", it) }
+                displayName?.let { append("display_name", displayName) }
+                note?.let { append("note", note) }
+                avatar?.let { append("avatar", avatar) }
+                header?.let { append("header", header) }
+                locked?.let { append("locked", locked) }
+                bot?.let { append("bot", bot) }
+                discoverable?.let { append("discoverable", discoverable) }
+                hideCollections?.let { append("hide_collections", hideCollections) }
+                indexable?.let { append("indexable", indexable) }
             }
         )
     }
