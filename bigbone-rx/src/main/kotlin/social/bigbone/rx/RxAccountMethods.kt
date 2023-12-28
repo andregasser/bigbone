@@ -73,6 +73,7 @@ class RxAccountMethods(client: MastodonClient) {
      * @param discoverable Whether the account should be shown in the profile directory
      * @param hideCollections Whether to hide followers and followed accounts.
      * @param indexable Whether public posts should be searchable to anyone
+     * @param profileFields The profile fields to be set
      *
      * @see <a href="https://docs.joinmastodon.org/methods/accounts/#update_credentials">Mastodon API documentation: methods/accounts/#update_credentials</a>
      */
@@ -86,6 +87,7 @@ class RxAccountMethods(client: MastodonClient) {
         discoverable: Boolean?,
         hideCollections: Boolean?,
         indexable: Boolean?,
+        profileFields: AccountMethods.ProfileFields?
     ): Single<CredentialAccount> = Single.fromCallable {
         accountMethods.updateCredentials(
             displayName = displayName,
@@ -96,7 +98,8 @@ class RxAccountMethods(client: MastodonClient) {
             bot = bot,
             discoverable = discoverable,
             hideCollections = hideCollections,
-            indexable = indexable
+            indexable = indexable,
+            profileFields = profileFields
         ).execute()
     }
 

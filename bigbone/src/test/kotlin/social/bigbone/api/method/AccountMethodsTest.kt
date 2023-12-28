@@ -1,8 +1,14 @@
 package social.bigbone.api.method
 
+import io.mockk.slot
+import io.mockk.verify
+import org.amshove.kluent.invoking
 import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldThrow
+import org.amshove.kluent.withMessage
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
+import social.bigbone.Parameters
 import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.testtool.MockClient
 
@@ -28,12 +34,12 @@ class AccountMethodsTest {
 
     @Test
     fun verifyCredentials() {
-        val client = MockClient.mock("account.json")
+        val client = MockClient.mock("accounts_verify_credentials_success.json")
         val accountMethods = AccountMethods(client)
         val account = accountMethods.verifyCredentials().execute()
-        account.acct shouldBeEqualTo "test@test.com"
-        account.displayName shouldBeEqualTo "test"
-        account.username shouldBeEqualTo "test"
+        account.acct shouldBeEqualTo "trwnh"
+        account.displayName shouldBeEqualTo "infinite love ⴳ"
+        account.username shouldBeEqualTo "trwnh"
     }
 
     @Test
@@ -48,8 +54,96 @@ class AccountMethodsTest {
     // TODO getVerifyCredentialsWith401
 
     @Test
+    fun `Given client returning success, when updating credentials with valid profile fields, then ensure correct endpoint parameters`() {
+        val client = MockClient.mock("accounts_update_credentials_success.json")
+        val accountMethods = AccountMethods(client)
+        val profileFields = AccountMethods.ProfileFields(
+            first = AccountMethods.ProfileFieldName("Location") to AccountMethods.ProfileFieldValue("Amsterdam, NL 🇳🇱"),
+            second = AccountMethods.ProfileFieldName("Pronouns") to AccountMethods.ProfileFieldValue("he/they"),
+            third = AccountMethods.ProfileFieldName("Website") to AccountMethods.ProfileFieldValue("https://example.com"),
+            fourth = null
+        )
+
+        accountMethods.updateCredentials(
+            displayName = null,
+            note = null,
+            avatar = null,
+            header = null,
+            locked = null,
+            bot = null,
+            discoverable = null,
+            hideCollections = null,
+            indexable = null,
+            profileFields = profileFields
+        ).execute()
+
+        val parametersCapturingSlot = slot<Parameters>()
+        verify {
+            client.patch(
+                path = "api/v1/accounts/update_credentials",
+                body = capture(parametersCapturingSlot)
+            )
+        }
+        with(parametersCapturingSlot.captured) {
+            toQuery() shouldBeEqualTo
+                "fields_attributes[0][name]=Location" +
+                "&fields_attributes[0][value]=Amsterdam%2C+NL+%F0%9F%87%B3%F0%9F%87%B1" +
+                "&fields_attributes[1][name]=Pronouns" +
+                "&fields_attributes[1][value]=he%2Fthey" +
+                "&fields_attributes[2][name]=Website" +
+                "&fields_attributes[2][value]=https%3A%2F%2Fexample.com"
+        }
+    }
+
+    @Test
+    fun `Given string with more than 255 characters, when creating ProfileFieldName, then fail with exception`() {
+        val tooLongProfileFieldName = "abcdefghijklmnopqrstuvwxyz" +
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+            "abcdefghijklmnopqrstuvwxyz" +
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+            "0123456789" +
+            "abcdefghijklmnopqrstuvwxyz" +
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+            "01234567890123456789" +
+            "01234567890" +
+            "abcdefghijklmnopqrstuvwxyz" +
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+            "toomanycharacters"
+
+        invoking { AccountMethods.ProfileFieldName(tooLongProfileFieldName) }
+            .shouldThrow(IllegalArgumentException::class)
+            .withMessage(
+                "Name of profile field must not be longer than 255 characters but was: " +
+                    "$tooLongProfileFieldName (${tooLongProfileFieldName.length} characters)."
+            )
+    }
+
+    @Test
+    fun `Given string with more than 255 characters, when creating ProfileFieldValue, then fail with exception`() {
+        val tooLongProfileFieldValue = "abcdefghijklmnopqrstuvwxyz" +
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+            "abcdefghijklmnopqrstuvwxyz" +
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+            "0123456789" +
+            "abcdefghijklmnopqrstuvwxyz" +
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+            "01234567890123456789" +
+            "01234567890" +
+            "abcdefghijklmnopqrstuvwxyz" +
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+            "toomanycharacters"
+
+        invoking { AccountMethods.ProfileFieldValue(tooLongProfileFieldValue) }
+            .shouldThrow(IllegalArgumentException::class)
+            .withMessage(
+                "Value of profile field must not be longer than 255 characters but was: " +
+                    "$tooLongProfileFieldValue (${tooLongProfileFieldValue.length} characters)."
+            )
+    }
+
+    @Test
     fun updateCredentials() {
-        val client = MockClient.mock("account.json")
+        val client = MockClient.mock("accounts_update_credentials_success.json")
         val accountMethods = AccountMethods(client)
         val account = accountMethods.updateCredentials(
             displayName = "test",
@@ -60,11 +154,12 @@ class AccountMethodsTest {
             bot = false,
             discoverable = false,
             hideCollections = false,
-            indexable = true
+            indexable = true,
+            profileFields = null
         ).execute()
-        account.acct shouldBeEqualTo "test@test.com"
-        account.displayName shouldBeEqualTo "test"
-        account.username shouldBeEqualTo "test"
+        account.acct shouldBeEqualTo "trwnh"
+        account.displayName shouldBeEqualTo "infinite love ⴳ"
+        account.username shouldBeEqualTo "trwnh"
     }
 
     @Test
@@ -81,7 +176,8 @@ class AccountMethodsTest {
                 bot = false,
                 discoverable = false,
                 hideCollections = false,
-                indexable = true
+                indexable = true,
+                profileFields = null
             ).execute()
         }
     }

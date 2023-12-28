@@ -73,6 +73,58 @@ class AccountMethods(private val client: MastodonClient) {
     }
 
     /**
+     * Name of a profile field used in [ProfileFields].
+     * Must not be longer than 255 characters.
+     */
+    @JvmInline
+    value class ProfileFieldName(val name: String) {
+        init {
+            require(name.length <= 255) {
+                "Name of profile field must not be longer than 255 characters but was: $name (${name.length} characters)."
+            }
+        }
+    }
+
+    /**
+     * Value of a profile field used in [ProfileFields].
+     * Must not be longer than 255 characters.
+     */
+    @JvmInline
+    value class ProfileFieldValue(val value: String) {
+        init {
+            require(value.length <= 255) {
+                "Value of profile field must not be longer than 255 characters but was: $value (${value.length} characters)."
+            }
+        }
+    }
+
+    /**
+     * Profile fields that can be set in [updateCredentials].
+     *
+     * At most four fields are allowed. Each of them has a max key and value length of 255 characters.
+     */
+    data class ProfileFields(
+        val first: Pair<ProfileFieldName, ProfileFieldValue>? = null,
+        val second: Pair<ProfileFieldName, ProfileFieldValue>? = null,
+        val third: Pair<ProfileFieldName, ProfileFieldValue>? = null,
+        val fourth: Pair<ProfileFieldName, ProfileFieldValue>? = null
+    ) {
+        fun toParameters(parameters: Parameters = Parameters()): Parameters {
+            fun appendField(index: Int, name: ProfileFieldName, value: ProfileFieldValue) {
+                parameters.append("fields_attributes[$index][name]", name.name)
+                parameters.append("fields_attributes[$index][value]", value.value)
+            }
+
+            return parameters.apply {
+                first?.let { (name, value) -> appendField(0, name, value) }
+                second?.let { (name, value) -> appendField(1, name, value) }
+                third?.let { (name, value) -> appendField(2, name, value) }
+                fourth?.let { (name, value) -> appendField(3, name, value) }
+            }
+        }
+    }
+
+    /**
      * Update the user’s display and preferences.
      *
      * @param displayName The name to display in the user's profile
@@ -86,6 +138,7 @@ class AccountMethods(private val client: MastodonClient) {
      * @param discoverable Whether the account should be shown in the profile directory
      * @param hideCollections Whether to hide followers and followed accounts.
      * @param indexable Whether public posts should be searchable to anyone
+     * @param profileFields The profile fields to be set
      *
      * @see <a href="https://docs.joinmastodon.org/methods/accounts/#update_credentials">Mastodon API documentation: methods/accounts/#update_credentials</a>
      */
@@ -99,6 +152,7 @@ class AccountMethods(private val client: MastodonClient) {
         discoverable: Boolean?,
         hideCollections: Boolean?,
         indexable: Boolean?,
+        profileFields: ProfileFields?
     ): MastodonRequest<CredentialAccount> {
         return client.getMastodonRequest(
             endpoint = "api/v1/accounts/update_credentials",
@@ -108,11 +162,14 @@ class AccountMethods(private val client: MastodonClient) {
                 note?.let { append("note", note) }
                 avatar?.let { append("avatar", avatar) }
                 header?.let { append("header", header) }
+
                 locked?.let { append("locked", locked) }
                 bot?.let { append("bot", bot) }
                 discoverable?.let { append("discoverable", discoverable) }
                 hideCollections?.let { append("hide_collections", hideCollections) }
                 indexable?.let { append("indexable", indexable) }
+
+                profileFields?.toParameters(this)
             }
         )
     }
