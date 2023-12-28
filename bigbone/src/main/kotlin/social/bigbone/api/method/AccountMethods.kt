@@ -11,6 +11,7 @@ import social.bigbone.api.entity.Relationship
 import social.bigbone.api.entity.Status
 import social.bigbone.api.entity.Token
 import social.bigbone.api.entity.data.Visibility
+import java.time.Duration
 
 /**
  * Allows access to API methods with endpoints having an "api/vX/accounts" prefix.
@@ -304,14 +305,28 @@ class AccountMethods(private val client: MastodonClient) {
     }
 
     /**
-     * Mute the given account. Clients should filter statuses and notifications from this account, if received (e.g. due to a boost in the Home timeline).
+     * Mute the given account.
+     * Clients should filter statuses and notifications from this account, if received (e.g. due to a boost in the Home timeline).
+     *
      * @param accountId ID of the account to mute
+     * @param muteNotifications Mute notifications in addition to statuses? Defaults to true.
+     * @param muteDuration How long the mute should last, in seconds. Defaults to null (mute indefinitely)
+     *
      * @see <a href="https://docs.joinmastodon.org/methods/accounts/#mute">Mastodon API documentation: methods/accounts/#mute</a>
      */
-    fun muteAccount(accountId: String): MastodonRequest<Relationship> {
+    @JvmOverloads
+    fun muteAccount(
+        accountId: String,
+        muteNotifications: Boolean? = null,
+        muteDuration: Duration? = null
+    ): MastodonRequest<Relationship> {
         return client.getMastodonRequest(
             endpoint = "api/v1/accounts/$accountId/mute",
-            method = MastodonClient.Method.POST
+            method = MastodonClient.Method.POST,
+            parameters = Parameters().apply {
+                muteNotifications?.let { append("notifications", muteNotifications) }
+                muteDuration?.let { append("duration", muteDuration.seconds) }
+            }
         )
     }
 

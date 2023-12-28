@@ -11,6 +11,7 @@ import social.bigbone.api.entity.Status
 import social.bigbone.api.entity.Token
 import social.bigbone.api.entity.data.Visibility
 import social.bigbone.api.method.AccountMethods
+import java.time.Duration
 
 /**
  * Reactive implementation of [AccountMethods].
@@ -210,12 +211,25 @@ class RxAccountMethods(client: MastodonClient) {
     }
 
     /**
-     * Mute the given account. Clients should filter statuses and notifications from this account, if received (e.g. due to a boost in the Home timeline).
+     * Mute the given account.
+     * Clients should filter statuses and notifications from this account, if received (e.g. due to a boost in the Home timeline).
+     *
      * @param accountId ID of the account to mute
+     * @param muteNotifications Mute notifications in addition to statuses? Defaults to true.
+     * @param muteDuration How long the mute should last, in seconds. Defaults to null (mute indefinitely)
+     *
      * @see <a href="https://docs.joinmastodon.org/methods/accounts/#mute">Mastodon API documentation: methods/accounts/#mute</a>
      */
-    fun muteAccount(accountId: String): Single<Relationship> = Single.fromCallable {
-        accountMethods.muteAccount(accountId).execute()
+    fun muteAccount(
+        accountId: String,
+        muteNotifications: Boolean? = null,
+        muteDuration: Duration? = null
+    ): Single<Relationship> = Single.fromCallable {
+        accountMethods.muteAccount(
+            accountId = accountId,
+            muteNotifications = muteNotifications,
+            muteDuration = muteDuration
+        ).execute()
     }
 
     /**
