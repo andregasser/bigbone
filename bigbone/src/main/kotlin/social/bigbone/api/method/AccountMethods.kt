@@ -258,13 +258,29 @@ class AccountMethods(private val client: MastodonClient) {
 
     /**
      * Follow the given account. Can also be used to update whether to show reblogs or enable notifications.
+     *
      * @param accountId ID of the account to follow
+     * @param includeReblogs Receive this account’s reblogs in home timeline? Defaults to true if null.
+     * @param notifyOnStatus Receive notifications when this account posts a status? Defaults to false if null.
+     * @param filterForLanguages Filter received statuses for these languages. ISO 639-1 language two-letter codes.
+     * If not provided, you will receive this account’s posts in all languages.
+     *
      * @see <a href="https://docs.joinmastodon.org/methods/accounts/#follow">Mastodon API documentation: methods/accounts/#follow</a>
      */
-    fun followAccount(accountId: String): MastodonRequest<Relationship> {
+    fun followAccount(
+        accountId: String,
+        includeReblogs: Boolean? = null,
+        notifyOnStatus: Boolean? = null,
+        filterForLanguages: List<String>? = null
+    ): MastodonRequest<Relationship> {
         return client.getMastodonRequest(
             endpoint = "api/v1/accounts/$accountId/follow",
-            method = MastodonClient.Method.POST
+            method = MastodonClient.Method.POST,
+            parameters = Parameters().apply {
+                includeReblogs?.let { append("reblogs", includeReblogs) }
+                notifyOnStatus?.let { append("notify", notifyOnStatus) }
+                filterForLanguages?.takeIf { it.isNotEmpty() }?.let { append("languages", filterForLanguages) }
+            }
         )
     }
 

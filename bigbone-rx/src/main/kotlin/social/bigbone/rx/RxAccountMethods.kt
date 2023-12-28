@@ -176,11 +176,28 @@ class RxAccountMethods(client: MastodonClient) {
 
     /**
      * Follow the given account. Can also be used to update whether to show reblogs or enable notifications.
+     *
      * @param accountId ID of the account to follow
+     * @param includeReblogs Receive this account’s reblogs in home timeline? Defaults to true if null.
+     * @param notifyOnStatus Receive notifications when this account posts a status? Defaults to false if null.
+     * @param filterForLanguages Filter received statuses for these languages.
+     * If not provided, you will receive this account’s posts in all languages.
+     *
+     *
      * @see <a href="https://docs.joinmastodon.org/methods/accounts/#follow">Mastodon API documentation: methods/accounts/#follow</a>
      */
-    fun followAccount(accountId: String): Single<Relationship> = Single.fromCallable {
-        accountMethods.followAccount(accountId).execute()
+    fun followAccount(
+        accountId: String,
+        includeReblogs: Boolean? = null,
+        notifyOnStatus: Boolean? = null,
+        filterForLanguages: List<String>? = null
+    ): Single<Relationship> = Single.fromCallable {
+        accountMethods.followAccount(
+            accountId = accountId,
+            includeReblogs = includeReblogs,
+            notifyOnStatus = notifyOnStatus,
+            filterForLanguages = filterForLanguages
+        ).execute()
     }
 
     /**
