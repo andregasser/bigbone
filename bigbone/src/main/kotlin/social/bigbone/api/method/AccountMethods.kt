@@ -382,14 +382,22 @@ class AccountMethods(private val client: MastodonClient) {
 
     /**
      * Search for matching accounts by username or display name.
+     *
      * @param query the search query
-     * @param limit the maximum number of matching accounts to return (default: 40)
+     * @param limit the maximum number of matching accounts to return (default: 40. max: 80)
+     * @param offset skips this amount of results
+     * @param limitToFollowing Limit the search to users you are following. Defaults to false if not supplied.
+     * @param attemptWebFingerLookup Use this when [query] is an exact address. Defaults to false if not supplied.
+     *
      * @see <a href="https://docs.joinmastodon.org/methods/accounts/#search">Mastodon API documentation: methods/accounts/#search</a>
      */
     @JvmOverloads
     fun searchAccounts(
         query: String,
-        limit: Int? = null
+        limit: Int? = null,
+        offset: Int? = null,
+        limitToFollowing: Boolean? = null,
+        attemptWebFingerLookup: Boolean? = null
     ): MastodonRequest<List<Account>> {
         return client.getMastodonRequestForList(
             endpoint = "api/v1/accounts/search",
@@ -397,6 +405,9 @@ class AccountMethods(private val client: MastodonClient) {
             parameters = Parameters().apply {
                 append("q", query)
                 limit?.let { append("limit", limit) }
+                offset?.let { append("offset", offset) }
+                limitToFollowing?.let { append("following", limitToFollowing) }
+                attemptWebFingerLookup?.let { append("resolve", attemptWebFingerLookup) }
             }
         )
     }
