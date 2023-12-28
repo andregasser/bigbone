@@ -221,11 +221,15 @@ class AccountMethods(private val client: MastodonClient) {
 
     /**
      * Statuses posted to the given account.
+     *
      * @param accountId ID of the account to look up
      * @param onlyMedia Filter out statuses without attachments.
      * @param excludeReplies Filter out statuses in reply to a different account.
+     * @param excludeReblogs Filter out boosts from the response.
      * @param pinned Filter for pinned statuses only.
+     * @param filterByTaggedWith Filter for statuses using a specific hashtag.
      * @param range optional Range for the pageable return value
+     *
      * @see <a href="https://docs.joinmastodon.org/methods/accounts/#statuses">Mastodon API documentation: methods/accounts/#statuses</a>
      */
     @JvmOverloads
@@ -233,7 +237,9 @@ class AccountMethods(private val client: MastodonClient) {
         accountId: String,
         onlyMedia: Boolean = false,
         excludeReplies: Boolean = false,
+        excludeReblogs: Boolean = false,
         pinned: Boolean = false,
+        filterByTaggedWith: String? = null,
         range: Range = Range()
     ): MastodonRequest<Pageable<Status>> {
         return client.getPageableMastodonRequest(
@@ -243,6 +249,8 @@ class AccountMethods(private val client: MastodonClient) {
                 if (onlyMedia) append("only_media", true)
                 if (pinned) append("pinned", true)
                 if (excludeReplies) append("exclude_replies", true)
+                if (excludeReblogs) append("exclude_reblogs", true)
+                filterByTaggedWith?.takeIf { it.isNotBlank() }?.let { append("tagged", filterByTaggedWith) }
             }
         )
     }

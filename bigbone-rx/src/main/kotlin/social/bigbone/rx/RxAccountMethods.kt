@@ -141,11 +141,15 @@ class RxAccountMethods(client: MastodonClient) {
 
     /**
      * Statuses posted to the given account.
+     *
      * @param accountId ID of the account to look up
      * @param onlyMedia Filter out statuses without attachments.
      * @param excludeReplies Filter out statuses in reply to a different account.
+     * @param excludeReblogs Filter out boosts from the response.
      * @param pinned Filter for pinned statuses only.
+     * @param filterByTaggedWith Filter for statuses using a specific hashtag.
      * @param range optional Range for the pageable return value
+     *
      * @see <a href="https://docs.joinmastodon.org/methods/accounts/#statuses">Mastodon API documentation: methods/accounts/#statuses</a>
      */
     @JvmOverloads
@@ -153,10 +157,20 @@ class RxAccountMethods(client: MastodonClient) {
         accountId: String,
         onlyMedia: Boolean = false,
         excludeReplies: Boolean = false,
+        excludeReblogs: Boolean = false,
         pinned: Boolean = false,
+        filterByTaggedWith: String? = null,
         range: Range = Range()
     ): Single<Pageable<Status>> = Single.fromCallable {
-        accountMethods.getStatuses(accountId, onlyMedia, excludeReplies, pinned, range).execute()
+        accountMethods.getStatuses(
+            accountId = accountId,
+            onlyMedia = onlyMedia,
+            excludeReplies = excludeReplies,
+            excludeReblogs = excludeReblogs,
+            pinned = pinned,
+            filterByTaggedWith = filterByTaggedWith,
+            range = range
+        ).execute()
     }
 
     /**
