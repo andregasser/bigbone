@@ -10,16 +10,16 @@ nav_order: 1
 
 <a href="https://docs.joinmastodon.org/methods/admin/accounts/" target="_blank">https://docs.joinmastodon.org/methods/admin/accounts/</a>
 
-| Method                                        | Description                          | Status | Comments | 
-|-----------------------------------------------|--------------------------------------|--------|----------|
-| `GET /api/v1/admin/accounts`                  | View accounts (v1)                   | 🔴     |          |
-| `GET /api/v2/admin/accounts`                  | View accounts (v2)                   | 🔴     |          |
-| `GET /api/v1/admin/accounts/:id`              | View a specific account              | 🔴     |          |
-| `POST /api/v1/admin/accounts/:id/approve`     | Approve a pending account            | 🔴     |          |
-| `POST /api/v1/admin/accounts/:id/reject`      | Reject a pending account             | 🔴     |          |
-| `DELETE /api/v1/admin/accounts/:id`           | Delete an account                    | 🔴     |          |
-| `POST /api/v1/admin/accounts/:id/action`      | Perform an action against an account | 🔴     |          |
-| `POST /api/v1/admin/accounts/:id/enable`      | Enable a currently disabled account  | 🔴     |          |
-| `POST /api/v1/admin/accounts/:id/unsilence`   | Unsilence an account                 | 🔴     |          |
-| `POST /api/v1/admin/accounts/:id/unsuspend`   | Unsuspend an account                 | 🔴     |          |
-| `POST /api/v1/admin/accounts/:id/unsensitive` | Unmark an account as sensitive       | 🔴     |          |
+| Method                                        | Description                          | Status                          | Comments                          | 
+|-----------------------------------------------|--------------------------------------|---------------------------------|-----------------------------------|
+| `GET /api/v1/admin/accounts`                  | View accounts (v1)                   | <img src="/assets/red16.png">   | Deprecated. Won’t be implemented. |
+| `GET /api/v2/admin/accounts`                  | View accounts (v2)                   | <img src="/assets/green16.png"> | Fully supported                   |
+| `GET /api/v1/admin/accounts/:id`              | View a specific account              | <img src="/assets/green16.png"> | Fully supported                   |
+| `POST /api/v1/admin/accounts/:id/approve`     | Approve a pending account            | <img src="/assets/green16.png"> | Fully supported                   |
+| `POST /api/v1/admin/accounts/:id/reject`      | Reject a pending account             | <img src="/assets/green16.png"> | Fully supported                   |
+| `DELETE /api/v1/admin/accounts/:id`           | Delete an account                    | <img src="/assets/green16.png"> | Fully supported                   |
+| `POST /api/v1/admin/accounts/:id/action`      | Perform an action against an account | <img src="/assets/green16.png"> | Fully supported                   |
+| `POST /api/v1/admin/accounts/:id/enable`      | Enable a currently disabled account  | <img src="/assets/green16.png"> | Fully supported                   |
+| `POST /api/v1/admin/accounts/:id/unsilence`   | Unsilence an account                 | <img src="/assets/green16.png"> | Fully supported                   |
+| `POST /api/v1/admin/accounts/:id/unsuspend`   | Unsuspend an account                 | <img src="/assets/green16.png"> | Fully supported                   |
+| `POST /api/v1/admin/accounts/:id/unsensitive` | Unmark an account as sensitive       | <img src="/assets/green16.png"> | Fully supported                   |
