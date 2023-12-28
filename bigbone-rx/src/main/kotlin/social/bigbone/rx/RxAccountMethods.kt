@@ -5,6 +5,7 @@ import social.bigbone.MastodonClient
 import social.bigbone.api.Pageable
 import social.bigbone.api.Range
 import social.bigbone.api.entity.Account
+import social.bigbone.api.entity.CredentialAccount
 import social.bigbone.api.entity.Relationship
 import social.bigbone.api.entity.Status
 import social.bigbone.api.entity.Token
@@ -54,7 +55,7 @@ class RxAccountMethods(client: MastodonClient) {
      * Test to make sure that the user token works.
      * @see <a href="https://docs.joinmastodon.org/methods/accounts/#verify_credentials">Mastodon API documentation: methods/accounts/#verify_credentials</a>
      */
-    fun verifyCredentials(): Single<Account> = Single.fromCallable {
+    fun verifyCredentials(): Single<CredentialAccount> = Single.fromCallable {
         accountMethods.verifyCredentials().execute()
     }
 
@@ -68,8 +69,14 @@ class RxAccountMethods(client: MastodonClient) {
      *  (e.g. data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUoAAADrCAYAAAA...)
      * @see <a href="https://docs.joinmastodon.org/methods/accounts/#update_credentials">Mastodon API documentation: methods/accounts/#update_credentials</a>
      */
-    fun updateCredentials(displayName: String?, note: String?, avatar: String?, header: String?): Single<Account> =
-        Single.fromCallable { accountMethods.updateCredentials(displayName, note, avatar, header).execute() }
+    fun updateCredentials(
+        displayName: String?,
+        note: String?,
+        avatar: String?,
+        header: String?
+    ): Single<CredentialAccount> = Single.fromCallable {
+        accountMethods.updateCredentials(displayName, note, avatar, header).execute()
+    }
 
     /**
      * Accounts which follow the given account, if network is not hidden by the account owner.

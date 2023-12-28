@@ -6,6 +6,7 @@ import social.bigbone.Parameters
 import social.bigbone.api.Pageable
 import social.bigbone.api.Range
 import social.bigbone.api.entity.Account
+import social.bigbone.api.entity.CredentialAccount
 import social.bigbone.api.entity.Relationship
 import social.bigbone.api.entity.Status
 import social.bigbone.api.entity.Token
@@ -64,7 +65,7 @@ class AccountMethods(private val client: MastodonClient) {
      * Test to make sure that the user token works.
      * @see <a href="https://docs.joinmastodon.org/methods/accounts/#verify_credentials">Mastodon API documentation: methods/accounts/#verify_credentials</a>
      */
-    fun verifyCredentials(): MastodonRequest<Account> {
+    fun verifyCredentials(): MastodonRequest<CredentialAccount> {
         return client.getMastodonRequest(
             endpoint = "api/v1/accounts/verify_credentials",
             method = MastodonClient.Method.GET
@@ -86,7 +87,7 @@ class AccountMethods(private val client: MastodonClient) {
         note: String?,
         avatar: String?,
         header: String?
-    ): MastodonRequest<Account> {
+    ): MastodonRequest<CredentialAccount> {
         return client.getMastodonRequest(
             endpoint = "api/v1/accounts/update_credentials",
             method = MastodonClient.Method.PATCH,
