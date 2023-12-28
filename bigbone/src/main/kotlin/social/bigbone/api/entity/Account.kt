@@ -5,6 +5,7 @@ import kotlinx.serialization.Serializable
 import social.bigbone.DateTimeSerializer
 import social.bigbone.PrecisionDateTime
 import social.bigbone.PrecisionDateTime.InvalidPrecisionDateTime
+import social.bigbone.PrecisionDateTime.ValidPrecisionDateTime.ExactTime
 
 /**
  * Represents a user of Mastodon and their associated profile.
@@ -14,6 +15,7 @@ import social.bigbone.PrecisionDateTime.InvalidPrecisionDateTime
 data class Account(
     /**
      * The account id.
+     * String cast from an Integer, but not guaranteed to be a number.
      */
     @SerialName("id")
     val id: String = "0",
@@ -25,7 +27,8 @@ data class Account(
     val username: String = "",
 
     /**
-     * The Webfinger account URI. Equal to username for local users, or username@domain for remote users.
+     * The Webfinger account URI.
+     * Equal to [username] for local users, or username@domain for remote users.
      */
     @SerialName("acct")
     val acct: String = "",
@@ -44,30 +47,37 @@ data class Account(
 
     /**
      * The profile’s bio or description.
+     * String containing HTML.
      */
     @SerialName("note")
     val note: String = "",
 
     /**
      * An image icon that is shown next to statuses and in the profile.
+     * String containing a URL.
      */
     @SerialName("avatar")
     val avatar: String = "",
 
     /**
-     * A static version of the avatar. Equal to [avatar] if its value is a static image; different if avatar is an animated GIF.
+     * A static version of the avatar.
+     * Equal to [avatar] if its value is a static image; different if [avatar] is an animated GIF.
+     * String containing a URL.
      */
     @SerialName("avatar_static")
     val avatarStatic: String = "",
 
     /**
      * An image banner that is shown above the profile and in profile cards.
+     * String containing a URL.
      */
     @SerialName("header")
     val header: String = "",
 
     /**
-     * A static version of the header. Equal to [header] if its value is a static image; different if header is an animated GIF.
+     * A static version of the header.
+     * Equal to [header] if its value is a static image; different if [header] is an animated GIF.
+     * String containing a URL.
      */
     @SerialName("header_static")
     val headerStatic: String = "",
@@ -97,7 +107,7 @@ data class Account(
     val isBot: Boolean = false,
 
     /**
-     *  Indicates that the account represents a Group actor.
+     * Indicates that the account represents a Group actor.
      */
     @SerialName("group")
     val isGroup: Boolean = false,
@@ -135,6 +145,7 @@ data class Account(
 
     /**
      * When the account was created.
+     * Resolves to midnight of the creation date instead of an exact time even if [ExactTime] is returned.
      */
     @SerialName("created_at")
     @Serializable(with = DateTimeSerializer::class)
@@ -142,6 +153,7 @@ data class Account(
 
     /**
      * When the most recent status was posted.
+     * Will only have day-accuracy as no time is returned by the Mastodon API.
      */
     @SerialName("last_status_at")
     @Serializable(with = DateTimeSerializer::class)
