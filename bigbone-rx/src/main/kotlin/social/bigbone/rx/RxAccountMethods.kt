@@ -9,6 +9,7 @@ import social.bigbone.api.entity.CredentialAccount
 import social.bigbone.api.entity.Relationship
 import social.bigbone.api.entity.Status
 import social.bigbone.api.entity.Token
+import social.bigbone.api.entity.data.Visibility
 import social.bigbone.api.method.AccountMethods
 
 /**
@@ -62,6 +63,10 @@ class RxAccountMethods(client: MastodonClient) {
     /**
      * Update the user’s display and preferences.
      *
+     * You should use [verifyCredentials] to first obtain plaintext representations from within the source parameter,
+     * then allow the user to edit these plaintext representations before submitting them through this API.
+     * The server will generate the corresponding HTML.
+     *
      * @param displayName The name to display in the user's profile
      * @param note A new biography for the user
      * @param avatar A String containing a base64-encoded image to display as the user's avatar
@@ -74,6 +79,9 @@ class RxAccountMethods(client: MastodonClient) {
      * @param hideCollections Whether to hide followers and followed accounts.
      * @param indexable Whether public posts should be searchable to anyone
      * @param profileFields The profile fields to be set
+     * @param defaultPostVisibility Default post privacy for authored statuses
+     * @param defaultSensitiveMark Whether to mark authored statuses as sensitive by default
+     * @param defaultLanguage Default language to use for authored statuses (ISO 6391)
      *
      * @see <a href="https://docs.joinmastodon.org/methods/accounts/#update_credentials">Mastodon API documentation: methods/accounts/#update_credentials</a>
      */
@@ -87,7 +95,10 @@ class RxAccountMethods(client: MastodonClient) {
         discoverable: Boolean?,
         hideCollections: Boolean?,
         indexable: Boolean?,
-        profileFields: AccountMethods.ProfileFields?
+        profileFields: AccountMethods.ProfileFields?,
+        defaultPostVisibility: Visibility?,
+        defaultSensitiveMark: Boolean?,
+        defaultLanguage: String?
     ): Single<CredentialAccount> = Single.fromCallable {
         accountMethods.updateCredentials(
             displayName = displayName,
@@ -99,7 +110,10 @@ class RxAccountMethods(client: MastodonClient) {
             discoverable = discoverable,
             hideCollections = hideCollections,
             indexable = indexable,
-            profileFields = profileFields
+            profileFields = profileFields,
+            defaultPostVisibility = defaultPostVisibility,
+            defaultSensitiveMark = defaultSensitiveMark,
+            defaultLanguage = defaultLanguage
         ).execute()
     }
 

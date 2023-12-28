@@ -74,7 +74,10 @@ class AccountMethodsTest {
             discoverable = null,
             hideCollections = null,
             indexable = null,
-            profileFields = profileFields
+            profileFields = profileFields,
+            defaultPostVisibility = null,
+            defaultSensitiveMark = null,
+            defaultLanguage = null
         ).execute()
 
         val parametersCapturingSlot = slot<Parameters>()
@@ -155,7 +158,10 @@ class AccountMethodsTest {
             discoverable = false,
             hideCollections = false,
             indexable = true,
-            profileFields = null
+            profileFields = null,
+            defaultPostVisibility = null,
+            defaultSensitiveMark = null,
+            defaultLanguage = null
         ).execute()
         account.acct shouldBeEqualTo "trwnh"
         account.displayName shouldBeEqualTo "infinite love ⴳ"
@@ -177,7 +183,10 @@ class AccountMethodsTest {
                 discoverable = false,
                 hideCollections = false,
                 indexable = true,
-                profileFields = null
+                profileFields = null,
+                defaultPostVisibility = null,
+                defaultSensitiveMark = null,
+                defaultLanguage = null
             ).execute()
         }
     }
