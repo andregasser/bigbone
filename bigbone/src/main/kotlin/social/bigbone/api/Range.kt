@@ -11,7 +11,8 @@ class Range @JvmOverloads constructor(
     val sinceId: String? = null,
     val limit: Int? = null
 ) {
-    fun toParameters() = Parameters().apply {
+    @JvmOverloads
+    fun toParameters(parameters: Parameters = Parameters()) = parameters.apply {
         maxId?.let { append("max_id", maxId) }
         minId?.let { append("min_id", minId) }
         sinceId?.let { append("since_id", sinceId) }

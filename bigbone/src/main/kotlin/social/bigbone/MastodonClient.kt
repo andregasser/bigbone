@@ -65,7 +65,11 @@ import social.bigbone.api.method.SuggestionMethods
 import social.bigbone.api.method.TagMethods
 import social.bigbone.api.method.TimelineMethods
 import social.bigbone.api.method.TrendMethods
+import social.bigbone.api.method.admin.AdminAccountMethods
+import social.bigbone.api.method.admin.AdminCanonicalEmailBlockMethods
 import social.bigbone.api.method.admin.AdminDimensionMethods
+import social.bigbone.api.method.admin.AdminDomainBlockMethods
+import social.bigbone.api.method.admin.AdminEmailDomainBlockMethods
 import social.bigbone.api.method.admin.AdminDomainAllowMethods
 import social.bigbone.api.method.admin.AdminIpBlockMethods
 import social.bigbone.api.method.admin.AdminMeasureMethods
@@ -107,11 +111,46 @@ private constructor(
     val accounts: AccountMethods by lazy { AccountMethods(this) }
 
     /**
+     * Access API methods under the "admin/accounts" endpoint.
+     */
+    @Suppress("unused") // public API
+    @get:JvmName("adminAccounts")
+    val adminAccounts: AdminAccountMethods by lazy { AdminAccountMethods(this) }
+
+    /**
+     * Access API methods under the "admin/canonical_email_blocks" endpoint.
+     */
+    @Suppress("unused") // public API
+    @get:JvmName("adminCanonicalEmailBlocks")
+    val adminCanonicalEmailBlocks: AdminCanonicalEmailBlockMethods by lazy { AdminCanonicalEmailBlockMethods(this) }
+
+    /**
      * Access API methods under the "admin/dimensions" endpoint.
      */
     @Suppress("unused") // public API
     @get:JvmName("adminDimensions")
     val adminDimensions: AdminDimensionMethods by lazy { AdminDimensionMethods(this) }
+
+    /**
+     * Access API methods under the "admin/domain_blocks" endpoint.
+     */
+    @Suppress("unused") // public API
+    @get:JvmName("adminDomainBlocks")
+    val adminDomainBlocks: AdminDomainBlockMethods by lazy { AdminDomainBlockMethods(this) }
+
+    /**
+     * Access API methods under the "admin/email_domain_blocks" endpoint.
+     */
+    @Suppress("unused") // public API
+    @get:JvmName("adminEmailDomainBlocks")
+    val adminEmailDomainBlocks: AdminEmailDomainBlockMethods by lazy { AdminEmailDomainBlockMethods(this) }
+
+    /**
+     * Access API methods under the "admin/ip_blocks" endpoint.
+     */
+    @Suppress("unused") // public API
+    @get:JvmName("adminIpBlock")
+    val adminIpBlock: AdminIpBlockMethods by lazy { AdminIpBlockMethods(this) }
 
     /**
      * Access API methods under the "admin/measures" endpoint.
