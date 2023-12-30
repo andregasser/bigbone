@@ -11,6 +11,8 @@ import social.bigbone.api.entity.Account
  */
 class DirectoryMethods(private val client: MastodonClient) {
 
+    private val endpoint = "api/v1/directory"
+
     /**
      * When listing, use [AccountOrder.ACTIVE] to sort by most recently posted statuses or [AccountOrder.NEW] to sort
      * by most recently created profiles.
@@ -37,7 +39,7 @@ class DirectoryMethods(private val client: MastodonClient) {
         limit: Int? = null
     ): MastodonRequest<List<Account>> {
         return client.getMastodonRequestForList(
-            endpoint = "api/v1/directory",
+            endpoint = endpoint,
             method = MastodonClient.Method.GET,
             parameters = Parameters().apply {
                 append("local", local)

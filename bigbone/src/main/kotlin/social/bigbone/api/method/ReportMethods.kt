@@ -13,6 +13,8 @@ import social.bigbone.api.exception.BigBoneRequestException
  */
 class ReportMethods(private val client: MastodonClient) {
 
+    private val endpoint = "api/v1/reports"
+
     /**
      * File a report.
      * @param accountId The ID of the account to report
@@ -34,7 +36,7 @@ class ReportMethods(private val client: MastodonClient) {
         category: ReportCategory? = null
     ): MastodonRequest<Report> {
         return client.getMastodonRequest(
-            endpoint = "api/v1/reports",
+            endpoint = endpoint,
             method = MastodonClient.Method.POST,
             parameters = buildParameters(accountId, statusIds, comment, forward, ruleIds, category)
         )
@@ -64,7 +66,10 @@ class ReportMethods(private val client: MastodonClient) {
         }
     }
 
-    private fun setCategoryCorrectly(ruleIds: List<Int>? = emptyList(), category: ReportCategory? = null): ReportCategory {
+    private fun setCategoryCorrectly(
+        ruleIds: List<Int>? = emptyList(),
+        category: ReportCategory? = null
+    ): ReportCategory {
         return when {
             !ruleIds.isNullOrEmpty() -> ReportCategory.VIOLATION
             category == null -> ReportCategory.OTHER

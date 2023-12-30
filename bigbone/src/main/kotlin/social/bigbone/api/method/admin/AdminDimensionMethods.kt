@@ -13,7 +13,7 @@ import java.time.Instant
  */
 class AdminDimensionMethods(private val client: MastodonClient) {
 
-    private val adminDimensionsEndpoint = "api/v1/admin/dimensions"
+    private val endpoint = "api/v1/admin/dimensions"
 
     /**
      * Obtain information about popularity of certain accounts, servers, languages, etc.
@@ -31,7 +31,7 @@ class AdminDimensionMethods(private val client: MastodonClient) {
         endAt: Instant
     ): MastodonRequest<List<AdminDimension>> {
         return client.getMastodonRequestForList(
-            endpoint = adminDimensionsEndpoint,
+            endpoint = endpoint,
             method = MastodonClient.Method.POST,
             parameters = Parameters().apply {
                 dimensions

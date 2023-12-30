@@ -12,6 +12,8 @@ import social.bigbone.api.entity.Token
  */
 class OAuthMethods(private val client: MastodonClient) {
 
+    private val endpoint = "oauth"
+
     /**
      * Returns a URL that can be used to display an authorization form to the user. If approved,
      * it will create and return an authorization code, then redirect to the desired redirectUri,
@@ -32,7 +34,7 @@ class OAuthMethods(private val client: MastodonClient) {
         forceLogin: Boolean? = null,
         languageCode: String? = null
     ): String {
-        val endpoint = "oauth/authorize"
+        val endpoint = "$endpoint/authorize"
         val params = Parameters().apply {
             append("client_id", clientId)
             append("redirect_uri", redirectUri)
@@ -72,7 +74,7 @@ class OAuthMethods(private val client: MastodonClient) {
         scope: Scope? = null
     ): MastodonRequest<Token> {
         return client.getMastodonRequest(
-            endpoint = "oauth/token",
+            endpoint = "$endpoint/token",
             method = MastodonClient.Method.POST,
             parameters = Parameters().apply {
                 append("client_id", clientId)
@@ -103,7 +105,7 @@ class OAuthMethods(private val client: MastodonClient) {
         scope: Scope? = null
     ): MastodonRequest<Token> {
         return client.getMastodonRequest(
-            endpoint = "oauth/token",
+            endpoint = "$endpoint/token",
             method = MastodonClient.Method.POST,
             parameters = Parameters().apply {
                 append("client_id", clientId)
@@ -139,7 +141,7 @@ class OAuthMethods(private val client: MastodonClient) {
         scope: Scope? = null
     ): MastodonRequest<Token> {
         return client.getMastodonRequest(
-            endpoint = "oauth/token",
+            endpoint = "$endpoint/token",
             method = MastodonClient.Method.POST,
             parameters = Parameters().apply {
                 append("client_id", clientId)
@@ -167,7 +169,7 @@ class OAuthMethods(private val client: MastodonClient) {
         token: String
     ) {
         client.performAction(
-            endpoint = "oauth/revoke",
+            endpoint = "$endpoint/revoke",
             method = MastodonClient.Method.POST,
             parameters = Parameters().apply {
                 append("client_id", clientId)

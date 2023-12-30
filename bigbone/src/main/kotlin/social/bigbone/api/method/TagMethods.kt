@@ -10,6 +10,8 @@ import social.bigbone.api.entity.Tag
  */
 class TagMethods(private val client: MastodonClient) {
 
+    private val endpoint = "api/v1/tags"
+
     /**
      * Show a hashtag and its associated information.
      * @param tagId The name of the hashtag
@@ -17,7 +19,7 @@ class TagMethods(private val client: MastodonClient) {
      */
     fun getTag(tagId: String): MastodonRequest<Tag> {
         return client.getMastodonRequest(
-            endpoint = "api/v1/tags/$tagId",
+            endpoint = "$endpoint/$tagId",
             method = MastodonClient.Method.GET
         )
     }
@@ -29,7 +31,7 @@ class TagMethods(private val client: MastodonClient) {
      */
     fun followTag(tagId: String): MastodonRequest<Tag> {
         return client.getMastodonRequest(
-            endpoint = "api/v1/tags/$tagId/follow",
+            endpoint = "$endpoint/$tagId/follow",
             method = MastodonClient.Method.POST
         )
     }
@@ -41,7 +43,7 @@ class TagMethods(private val client: MastodonClient) {
      */
     fun unfollowTag(tagId: String): MastodonRequest<Tag> {
         return client.getMastodonRequest(
-            endpoint = "api/v1/tags/$tagId/unfollow",
+            endpoint = "$endpoint/$tagId/unfollow",
             method = MastodonClient.Method.POST
         )
     }

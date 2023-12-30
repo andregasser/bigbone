@@ -12,6 +12,9 @@ import social.bigbone.api.exception.BigBoneRequestException
  * @see <a href="https://docs.joinmastodon.org/methods/markers/">Mastodon markers API methods</a>
  */
 class MarkerMethods(private val client: MastodonClient) {
+
+    private val endpoint = "api/v1/markers"
+
     /**
      * Get saved timeline positions.
      * @param timeline specifies for which timelines the position markers should be returned. This value
@@ -22,7 +25,7 @@ class MarkerMethods(private val client: MastodonClient) {
     @JvmOverloads
     fun getMarkers(timeline: Timeline? = null): MastodonRequest<Markers> {
         return client.getMastodonRequest(
-            endpoint = "api/v1/markers",
+            endpoint = endpoint,
             method = MastodonClient.Method.GET,
             parameters = Parameters().apply {
                 timeline?.let {
@@ -51,7 +54,7 @@ class MarkerMethods(private val client: MastodonClient) {
         lastReadId: Int
     ): MastodonRequest<Marker> {
         return client.getMastodonRequest(
-            endpoint = "api/v1/markers",
+            endpoint = endpoint,
             method = MastodonClient.Method.POST,
             parameters = Parameters().apply {
                 when (timeline) {

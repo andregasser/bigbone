@@ -18,8 +18,8 @@ import social.bigbone.api.entity.admin.AdminAccount
  */
 class AdminAccountMethods(private val client: MastodonClient) {
 
-    private val adminAccountsEndpointV1 = "api/v1/admin/accounts"
-    private val adminAccountsEndpointV2 = "api/v2/admin/accounts"
+    private val endpointV1 = "api/v1/admin/accounts"
+    private val endpointV2 = "api/v2/admin/accounts"
 
     /**
      * View all accounts, optionally matching certain criteria for filtering, up to 100 at a time.
@@ -53,7 +53,7 @@ class AdminAccountMethods(private val client: MastodonClient) {
         ipAddress: String? = null
     ): MastodonRequest<Pageable<AdminAccount>> {
         return client.getPageableMastodonRequest<AdminAccount>(
-            endpoint = adminAccountsEndpointV2,
+            endpoint = endpointV2,
             method = Method.GET,
             parameters = Parameters().apply {
                 range.toParameters(parameters = this)
@@ -81,7 +81,7 @@ class AdminAccountMethods(private val client: MastodonClient) {
      */
     fun viewAccount(withId: String): MastodonRequest<AdminAccount> {
         return client.getMastodonRequest<AdminAccount>(
-            endpoint = "$adminAccountsEndpointV1/$withId",
+            endpoint = "$endpointV1/$withId",
             method = Method.GET
         )
     }
@@ -95,7 +95,7 @@ class AdminAccountMethods(private val client: MastodonClient) {
      */
     fun approvePendingAccount(withId: String): MastodonRequest<AdminAccount> {
         return client.getMastodonRequest<AdminAccount>(
-            endpoint = "$adminAccountsEndpointV1/$withId/approve",
+            endpoint = "$endpointV1/$withId/approve",
             method = Method.POST
         )
     }
@@ -109,7 +109,7 @@ class AdminAccountMethods(private val client: MastodonClient) {
      */
     fun rejectPendingAccount(withId: String): MastodonRequest<AdminAccount> {
         return client.getMastodonRequest<AdminAccount>(
-            endpoint = "$adminAccountsEndpointV1/$withId/reject",
+            endpoint = "$endpointV1/$withId/reject",
             method = Method.POST
         )
     }
@@ -123,7 +123,7 @@ class AdminAccountMethods(private val client: MastodonClient) {
      */
     fun deleteAccount(withId: String): MastodonRequest<AdminAccount> {
         return client.getMastodonRequest<AdminAccount>(
-            endpoint = "$adminAccountsEndpointV1/$withId",
+            endpoint = "$endpointV1/$withId",
             method = Method.DELETE
         )
     }
@@ -151,7 +151,7 @@ class AdminAccountMethods(private val client: MastodonClient) {
         sendEmailNotification: Boolean? = null
     ) {
         return client.performAction(
-            endpoint = "$adminAccountsEndpointV1/$withId/action",
+            endpoint = "$endpointV1/$withId/action",
             method = Method.POST,
             parameters = Parameters().apply {
                 append("type", type.apiName())
@@ -171,7 +171,7 @@ class AdminAccountMethods(private val client: MastodonClient) {
      */
     fun enableDisabledAccount(withId: String): MastodonRequest<AdminAccount> {
         return client.getMastodonRequest<AdminAccount>(
-            endpoint = "$adminAccountsEndpointV1/$withId/enable",
+            endpoint = "$endpointV1/$withId/enable",
             method = Method.POST
         )
     }
@@ -183,7 +183,7 @@ class AdminAccountMethods(private val client: MastodonClient) {
      */
     fun unsilenceAccount(withId: String): MastodonRequest<AdminAccount> {
         return client.getMastodonRequest<AdminAccount>(
-            endpoint = "$adminAccountsEndpointV1/$withId/unsilence",
+            endpoint = "$endpointV1/$withId/unsilence",
             method = Method.POST
         )
     }
@@ -195,7 +195,7 @@ class AdminAccountMethods(private val client: MastodonClient) {
      */
     fun unsuspendAccount(withId: String): MastodonRequest<AdminAccount> {
         return client.getMastodonRequest<AdminAccount>(
-            endpoint = "$adminAccountsEndpointV1/$withId/unsuspend",
+            endpoint = "$endpointV1/$withId/unsuspend",
             method = Method.POST
         )
     }
@@ -207,7 +207,7 @@ class AdminAccountMethods(private val client: MastodonClient) {
      */
     fun unmarkAccountAsSensitive(withId: String): MastodonRequest<AdminAccount> {
         return client.getMastodonRequest<AdminAccount>(
-            endpoint = "$adminAccountsEndpointV1/$withId/unsensitive",
+            endpoint = "$endpointV1/$withId/unsensitive",
             method = Method.POST
         )
     }

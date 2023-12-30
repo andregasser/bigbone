@@ -29,6 +29,8 @@ private val SCHEDULED_AT_MIN_AHEAD: Duration = Duration.ofMinutes(5)
  */
 class StatusMethods(private val client: MastodonClient) {
 
+    private val endpoint = "api/v1/statuses"
+
     /**
      * Obtain information about a status.
      * @param statusId ID of the status.
@@ -37,7 +39,7 @@ class StatusMethods(private val client: MastodonClient) {
     @Throws(BigBoneRequestException::class)
     fun getStatus(statusId: String): MastodonRequest<Status> {
         return client.getMastodonRequest(
-            endpoint = "api/v1/statuses/$statusId",
+            endpoint = "$endpoint/$statusId",
             method = MastodonClient.Method.GET
         )
     }
@@ -50,7 +52,7 @@ class StatusMethods(private val client: MastodonClient) {
     @Throws(BigBoneRequestException::class)
     fun getContext(statusId: String): MastodonRequest<Context> {
         return client.getMastodonRequest(
-            endpoint = "api/v1/statuses/$statusId/context",
+            endpoint = "$endpoint/$statusId/context",
             method = MastodonClient.Method.GET
         )
     }
@@ -65,7 +67,7 @@ class StatusMethods(private val client: MastodonClient) {
     @Throws(BigBoneRequestException::class)
     fun translateStatus(statusId: String, language: String? = null): MastodonRequest<Translation> {
         return client.getMastodonRequest(
-            endpoint = "api/v1/statuses/$statusId/translate",
+            endpoint = "$endpoint/$statusId/translate",
             method = MastodonClient.Method.POST,
             parameters = Parameters().apply {
                 language?.let { append("lang", it) }
@@ -83,7 +85,7 @@ class StatusMethods(private val client: MastodonClient) {
     @Throws(BigBoneRequestException::class)
     fun getRebloggedBy(statusId: String, range: Range = Range()): MastodonRequest<Pageable<Account>> {
         return client.getPageableMastodonRequest(
-            endpoint = "api/v1/statuses/$statusId/reblogged_by",
+            endpoint = "$endpoint/$statusId/reblogged_by",
             method = MastodonClient.Method.GET,
             parameters = range.toParameters()
         )
@@ -99,7 +101,7 @@ class StatusMethods(private val client: MastodonClient) {
     @Throws(BigBoneRequestException::class)
     fun getFavouritedBy(statusId: String, range: Range = Range()): MastodonRequest<Pageable<Account>> {
         return client.getPageableMastodonRequest(
-            endpoint = "api/v1/statuses/$statusId/favourited_by",
+            endpoint = "$endpoint/$statusId/favourited_by",
             method = MastodonClient.Method.GET,
             parameters = range.toParameters()
         )
@@ -133,11 +135,11 @@ class StatusMethods(private val client: MastodonClient) {
         addIdempotencyKey: Boolean = true
     ): MastodonRequest<Status> {
         return client.getMastodonRequest(
-            endpoint = "api/v1/statuses",
+            endpoint = endpoint,
             method = MastodonClient.Method.POST,
             parameters = Parameters().apply {
                 append("status", status)
-                append("visibility", visibility.name.lowercase())
+                append("visibility", visibility.apiName)
                 inReplyToId?.let { append("in_reply_to_id", it) }
                 mediaIds?.let { append("media_ids", it) }
                 append("sensitive", sensitive)
@@ -175,13 +177,13 @@ class StatusMethods(private val client: MastodonClient) {
         addIdempotencyKey: Boolean = true
     ): MastodonRequest<Status> {
         return client.getMastodonRequest(
-            endpoint = "api/v1/statuses",
+            endpoint = endpoint,
             method = MastodonClient.Method.POST,
             parameters = Parameters().apply {
                 append("status", status)
                 append("poll[options]", pollData.options)
                 append("poll[expires_in]", pollData.expiresIn)
-                append("visibility", visibility.name.lowercase())
+                append("visibility", visibility.apiName)
                 append("poll[multiple]", pollData.multiple ?: false)
                 append("poll[hide_totals]", pollData.hideTotals ?: false)
                 inReplyToId?.let { append("in_reply_to_id", it) }
@@ -227,12 +229,12 @@ class StatusMethods(private val client: MastodonClient) {
         }
 
         return client.getMastodonRequest(
-            endpoint = "api/v1/statuses",
+            endpoint = endpoint,
             method = MastodonClient.Method.POST,
             parameters = Parameters().apply {
                 append("status", status)
                 append("scheduled_at", scheduledAt.toString())
-                append("visibility", visibility.name.lowercase())
+                append("visibility", visibility.apiName)
                 inReplyToId?.let { append("in_reply_to_id", it) }
                 mediaIds?.let { append("media_ids", it) }
                 append("sensitive", sensitive)
@@ -276,14 +278,14 @@ class StatusMethods(private val client: MastodonClient) {
         }
 
         return client.getMastodonRequest(
-            endpoint = "api/v1/statuses",
+            endpoint = endpoint,
             method = MastodonClient.Method.POST,
             parameters = Parameters().apply {
                 append("status", status)
                 append("scheduled_at", scheduledAt.toString())
                 append("poll[options]", pollData.options)
                 append("poll[expires_in]", pollData.expiresIn)
-                append("visibility", visibility.name.lowercase())
+                append("visibility", visibility.apiName)
                 append("poll[multiple]", pollData.multiple ?: false)
                 append("poll[hide_totals]", pollData.multiple ?: false)
                 inReplyToId?.let { append("in_reply_to_id", it) }
@@ -303,7 +305,7 @@ class StatusMethods(private val client: MastodonClient) {
     @Throws(BigBoneRequestException::class)
     fun deleteStatus(statusId: String): MastodonRequest<Status> {
         return client.getMastodonRequest(
-            endpoint = "api/v1/statuses/$statusId",
+            endpoint = "$endpoint/$statusId",
             method = MastodonClient.Method.DELETE
         )
     }
@@ -325,10 +327,10 @@ class StatusMethods(private val client: MastodonClient) {
             throw BigBoneRequestException("Visibility must be one of: public, unlisted, private when reblogging.")
         }
         return client.getMastodonRequest(
-            endpoint = "api/v1/statuses/$statusId/reblog",
+            endpoint = "$endpoint/$statusId/reblog",
             method = MastodonClient.Method.POST,
             parameters = Parameters().apply {
-                append("visibility", visibility.name.lowercase())
+                append("visibility", visibility.apiName)
             }
         )
     }
@@ -341,7 +343,7 @@ class StatusMethods(private val client: MastodonClient) {
     @Throws(BigBoneRequestException::class)
     fun unreblogStatus(statusId: String): MastodonRequest<Status> {
         return client.getMastodonRequest(
-            endpoint = "api/v1/statuses/$statusId/unreblog",
+            endpoint = "$endpoint/$statusId/unreblog",
             method = MastodonClient.Method.POST
         )
     }
@@ -354,7 +356,7 @@ class StatusMethods(private val client: MastodonClient) {
     @Throws(BigBoneRequestException::class)
     fun favouriteStatus(statusId: String): MastodonRequest<Status> {
         return client.getMastodonRequest(
-            endpoint = "api/v1/statuses/$statusId/favourite",
+            endpoint = "$endpoint/$statusId/favourite",
             method = MastodonClient.Method.POST
         )
     }
@@ -367,7 +369,7 @@ class StatusMethods(private val client: MastodonClient) {
     @Throws(BigBoneRequestException::class)
     fun unfavouriteStatus(statusId: String): MastodonRequest<Status> {
         return client.getMastodonRequest(
-            endpoint = "api/v1/statuses/$statusId/unfavourite",
+            endpoint = "$endpoint/$statusId/unfavourite",
             method = MastodonClient.Method.POST
         )
     }
@@ -380,7 +382,7 @@ class StatusMethods(private val client: MastodonClient) {
     @Throws(BigBoneRequestException::class)
     fun bookmarkStatus(statusId: String): MastodonRequest<Status> {
         return client.getMastodonRequest(
-            endpoint = "api/v1/statuses/$statusId/bookmark",
+            endpoint = "$endpoint/$statusId/bookmark",
             method = MastodonClient.Method.POST
         )
     }
@@ -393,7 +395,7 @@ class StatusMethods(private val client: MastodonClient) {
     @Throws(BigBoneRequestException::class)
     fun unbookmarkStatus(statusId: String): MastodonRequest<Status> {
         return client.getMastodonRequest(
-            endpoint = "api/v1/statuses/$statusId/unbookmark",
+            endpoint = "$endpoint/$statusId/unbookmark",
             method = MastodonClient.Method.POST
         )
     }
@@ -406,7 +408,7 @@ class StatusMethods(private val client: MastodonClient) {
     @Throws(BigBoneRequestException::class)
     fun muteConversation(statusId: String): MastodonRequest<Status> {
         return client.getMastodonRequest(
-            endpoint = "api/v1/statuses/$statusId/mute",
+            endpoint = "$endpoint/$statusId/mute",
             method = MastodonClient.Method.POST
         )
     }
@@ -419,7 +421,7 @@ class StatusMethods(private val client: MastodonClient) {
     @Throws(BigBoneRequestException::class)
     fun unmuteConversation(statusId: String): MastodonRequest<Status> {
         return client.getMastodonRequest(
-            endpoint = "api/v1/statuses/$statusId/unmute",
+            endpoint = "$endpoint/$statusId/unmute",
             method = MastodonClient.Method.POST
         )
     }
@@ -432,7 +434,7 @@ class StatusMethods(private val client: MastodonClient) {
     @Throws(BigBoneRequestException::class)
     fun pinStatus(statusId: String): MastodonRequest<Status> {
         return client.getMastodonRequest(
-            endpoint = "api/v1/statuses/$statusId/pin",
+            endpoint = "$endpoint/$statusId/pin",
             method = MastodonClient.Method.POST
         )
     }
@@ -445,7 +447,7 @@ class StatusMethods(private val client: MastodonClient) {
     @Throws(BigBoneRequestException::class)
     fun unpinStatus(statusId: String): MastodonRequest<Status> {
         return client.getMastodonRequest(
-            endpoint = "api/v1/statuses/$statusId/unpin",
+            endpoint = "$endpoint/$statusId/unpin",
             method = MastodonClient.Method.POST
         )
     }
@@ -473,7 +475,7 @@ class StatusMethods(private val client: MastodonClient) {
         language: String? = null
     ): MastodonRequest<Status> {
         return client.getMastodonRequest(
-            endpoint = "api/v1/statuses/$statusId",
+            endpoint = "$endpoint/$statusId",
             method = MastodonClient.Method.PUT,
             parameters = Parameters().apply {
                 append("status", status)
@@ -508,7 +510,7 @@ class StatusMethods(private val client: MastodonClient) {
         language: String? = null
     ): MastodonRequest<Status> {
         return client.getMastodonRequest(
-            endpoint = "api/v1/statuses/$statusId",
+            endpoint = "$endpoint/$statusId",
             method = MastodonClient.Method.PUT,
             parameters = Parameters().apply {
                 append("status", status)
@@ -531,7 +533,7 @@ class StatusMethods(private val client: MastodonClient) {
     @Throws(BigBoneRequestException::class)
     fun getEditHistory(statusId: String): MastodonRequest<List<StatusEdit>> {
         return client.getMastodonRequestForList(
-            endpoint = "api/v1/statuses/$statusId/history",
+            endpoint = "$endpoint/$statusId/history",
             method = MastodonClient.Method.GET
         )
     }
@@ -544,7 +546,7 @@ class StatusMethods(private val client: MastodonClient) {
     @Throws(BigBoneRequestException::class)
     fun getStatusSource(statusId: String): MastodonRequest<StatusSource> {
         return client.getMastodonRequest(
-            endpoint = "api/v1/statuses/$statusId/source",
+            endpoint = "$endpoint/$statusId/source",
             method = MastodonClient.Method.GET
         )
     }

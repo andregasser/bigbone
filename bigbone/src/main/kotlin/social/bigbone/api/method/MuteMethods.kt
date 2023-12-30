@@ -12,6 +12,8 @@ import social.bigbone.api.entity.Account
  */
 class MuteMethods(private val client: MastodonClient) {
 
+    private val endpoint = "api/v1/mutes"
+
     /**
      * Accounts the user has muted.
      * @param range optional Range for the pageable return value
@@ -20,7 +22,7 @@ class MuteMethods(private val client: MastodonClient) {
     @JvmOverloads
     fun getMutes(range: Range = Range()): MastodonRequest<Pageable<Account>> {
         return client.getPageableMastodonRequest(
-            endpoint = "api/v1/mutes",
+            endpoint = endpoint,
             method = MastodonClient.Method.GET,
             parameters = range.toParameters()
         )
