@@ -11,6 +11,9 @@ import social.bigbone.api.entity.Application
  * @see <a href="https://docs.joinmastodon.org/methods/apps/">Mastodon apps API methods</a>
  */
 class AppMethods(private val client: MastodonClient) {
+
+    private val endpoint = "api/v1/apps"
+
     /**
      * Create a new application to obtain OAuth2 credentials.
      * @param clientName A name for your application
@@ -27,7 +30,7 @@ class AppMethods(private val client: MastodonClient) {
         scope: Scope? = null
     ): MastodonRequest<Application> {
         return client.getMastodonRequest(
-            endpoint = "api/v1/apps",
+            endpoint = endpoint,
             method = MastodonClient.Method.POST,
             parameters = Parameters().apply {
                 append("client_name", clientName)
@@ -50,7 +53,7 @@ class AppMethods(private val client: MastodonClient) {
      */
     fun verifyCredentials(): MastodonRequest<Application> {
         return client.getMastodonRequest(
-            endpoint = "api/v1/apps/verify_credentials",
+            endpoint = "$endpoint/verify_credentials",
             method = MastodonClient.Method.GET
         )
     }

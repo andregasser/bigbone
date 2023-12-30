@@ -18,6 +18,9 @@ import java.time.Duration
  * @see <a href="https://docs.joinmastodon.org/methods/accounts/">Mastodon accounts API methods</a>
  */
 class AccountMethods(private val client: MastodonClient) {
+
+    private val endpoint = "api/v1/accounts"
+
     /**
      * Register an account.
      * @param username The desired username for the account
@@ -38,7 +41,7 @@ class AccountMethods(private val client: MastodonClient) {
         reason: String?
     ): MastodonRequest<Token> {
         return client.getMastodonRequest(
-            endpoint = "api/v1/accounts",
+            endpoint = endpoint,
             method = MastodonClient.Method.POST,
             parameters = Parameters().apply {
                 append("username", username)
@@ -58,7 +61,7 @@ class AccountMethods(private val client: MastodonClient) {
      */
     fun getAccount(accountId: String): MastodonRequest<Account> {
         return client.getMastodonRequest(
-            endpoint = "api/v1/accounts/$accountId",
+            endpoint = "$endpoint/$accountId",
             method = MastodonClient.Method.GET
         )
     }
@@ -69,7 +72,7 @@ class AccountMethods(private val client: MastodonClient) {
      */
     fun verifyCredentials(): MastodonRequest<CredentialAccount> {
         return client.getMastodonRequest(
-            endpoint = "api/v1/accounts/verify_credentials",
+            endpoint = "$endpoint/verify_credentials",
             method = MastodonClient.Method.GET
         )
     }
@@ -167,7 +170,7 @@ class AccountMethods(private val client: MastodonClient) {
         defaultLanguage: String?
     ): MastodonRequest<CredentialAccount> {
         return client.getMastodonRequest(
-            endpoint = "api/v1/accounts/update_credentials",
+            endpoint = "$endpoint/update_credentials",
             method = MastodonClient.Method.PATCH,
             parameters = Parameters().apply {
                 displayName?.let { append("display_name", displayName) }
@@ -199,7 +202,7 @@ class AccountMethods(private val client: MastodonClient) {
     @JvmOverloads
     fun getFollowers(accountId: String, range: Range = Range()): MastodonRequest<Pageable<Account>> {
         return client.getPageableMastodonRequest(
-            endpoint = "api/v1/accounts/$accountId/followers",
+            endpoint = "$endpoint/$accountId/followers",
             method = MastodonClient.Method.GET,
             parameters = range.toParameters()
         )
@@ -214,7 +217,7 @@ class AccountMethods(private val client: MastodonClient) {
     @JvmOverloads
     fun getFollowing(accountId: String, range: Range = Range()): MastodonRequest<Pageable<Account>> {
         return client.getPageableMastodonRequest(
-            endpoint = "api/v1/accounts/$accountId/following",
+            endpoint = "$endpoint/$accountId/following",
             method = MastodonClient.Method.GET,
             parameters = range.toParameters()
         )
@@ -244,7 +247,7 @@ class AccountMethods(private val client: MastodonClient) {
         range: Range = Range()
     ): MastodonRequest<Pageable<Status>> {
         return client.getPageableMastodonRequest(
-            endpoint = "api/v1/accounts/$accountId/statuses",
+            endpoint = "$endpoint/$accountId/statuses",
             method = MastodonClient.Method.GET,
             parameters = range.toParameters().apply {
                 if (onlyMedia) append("only_media", true)
@@ -275,7 +278,7 @@ class AccountMethods(private val client: MastodonClient) {
         filterForLanguages: List<String>? = null
     ): MastodonRequest<Relationship> {
         return client.getMastodonRequest(
-            endpoint = "api/v1/accounts/$accountId/follow",
+            endpoint = "$endpoint/$accountId/follow",
             method = MastodonClient.Method.POST,
             parameters = Parameters().apply {
                 includeReblogs?.let { append("reblogs", includeReblogs) }
@@ -292,7 +295,7 @@ class AccountMethods(private val client: MastodonClient) {
      */
     fun unfollowAccount(accountId: String): MastodonRequest<Relationship> {
         return client.getMastodonRequest(
-            endpoint = "api/v1/accounts/$accountId/unfollow",
+            endpoint = "$endpoint/$accountId/unfollow",
             method = MastodonClient.Method.POST
         )
     }
@@ -304,7 +307,7 @@ class AccountMethods(private val client: MastodonClient) {
      */
     fun blockAccount(accountId: String): MastodonRequest<Relationship> {
         return client.getMastodonRequest(
-            endpoint = "api/v1/accounts/$accountId/block",
+            endpoint = "$endpoint/$accountId/block",
             method = MastodonClient.Method.POST
         )
     }
@@ -316,7 +319,7 @@ class AccountMethods(private val client: MastodonClient) {
      */
     fun unblockAccount(accountId: String): MastodonRequest<Relationship> {
         return client.getMastodonRequest(
-            endpoint = "api/v1/accounts/$accountId/unblock",
+            endpoint = "$endpoint/$accountId/unblock",
             method = MastodonClient.Method.POST
         )
     }
@@ -338,7 +341,7 @@ class AccountMethods(private val client: MastodonClient) {
         muteDuration: Duration? = null
     ): MastodonRequest<Relationship> {
         return client.getMastodonRequest(
-            endpoint = "api/v1/accounts/$accountId/mute",
+            endpoint = "$endpoint/$accountId/mute",
             method = MastodonClient.Method.POST,
             parameters = Parameters().apply {
                 muteNotifications?.let { append("notifications", muteNotifications) }
@@ -354,7 +357,7 @@ class AccountMethods(private val client: MastodonClient) {
      */
     fun unmuteAccount(accountId: String): MastodonRequest<Relationship> {
         return client.getMastodonRequest(
-            endpoint = "api/v1/accounts/$accountId/unmute",
+            endpoint = "$endpoint/$accountId/unmute",
             method = MastodonClient.Method.POST
         )
     }
@@ -373,7 +376,7 @@ class AccountMethods(private val client: MastodonClient) {
         includeSuspended: Boolean? = null
     ): MastodonRequest<List<Relationship>> {
         return client.getMastodonRequestForList(
-            endpoint = "api/v1/accounts/relationships",
+            endpoint = "$endpoint/relationships",
             method = MastodonClient.Method.GET,
             parameters = Parameters().apply {
                 append("id", accountIds)
@@ -402,7 +405,7 @@ class AccountMethods(private val client: MastodonClient) {
         attemptWebFingerLookup: Boolean? = null
     ): MastodonRequest<List<Account>> {
         return client.getMastodonRequestForList(
-            endpoint = "api/v1/accounts/search",
+            endpoint = "$endpoint/search",
             method = MastodonClient.Method.GET,
             parameters = Parameters().apply {
                 append("q", query)

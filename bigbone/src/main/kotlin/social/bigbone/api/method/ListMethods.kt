@@ -14,13 +14,15 @@ import social.bigbone.api.entity.MastodonList
  */
 class ListMethods(private val client: MastodonClient) {
 
+    private val endpoint = "api/v1/lists"
+
     /**
      * Fetch all lists that the user owns.
      * @see <a href="https://docs.joinmastodon.org/methods/lists/#get">Mastodon API documentation: methods/lists/#get</a>
      */
     fun getLists(): MastodonRequest<List<MastodonList>> {
         return client.getMastodonRequestForList(
-            endpoint = "api/v1/lists",
+            endpoint = endpoint,
             method = MastodonClient.Method.GET
         )
     }
@@ -32,7 +34,7 @@ class ListMethods(private val client: MastodonClient) {
      */
     fun getList(listId: String): MastodonRequest<MastodonList> {
         return client.getMastodonRequest(
-            endpoint = "api/v1/lists/$listId",
+            endpoint = "$endpoint/$listId",
             method = MastodonClient.Method.GET
         )
     }
@@ -40,7 +42,7 @@ class ListMethods(private val client: MastodonClient) {
     /**
      * Create a new list.
      * @param title The title of the list to be created.
-     * @param repliesPolicy One of [MastodonList.RepliesPolicy], defaults to [MastodonList.RepliesPolicy.List].
+     * @param repliesPolicy One of [MastodonList.RepliesPolicy], defaults to [MastodonList.RepliesPolicy.LIST].
      * @param exclusive Whether members of this list need to get removed from the “Home” feed.
      * @see <a href="https://docs.joinmastodon.org/methods/lists/#create">Mastodon API documentation: methods/lists/#create</a>
      */
@@ -51,7 +53,7 @@ class ListMethods(private val client: MastodonClient) {
         exclusive: Boolean? = null
     ): MastodonRequest<MastodonList> {
         return client.getMastodonRequest(
-            endpoint = "api/v1/lists",
+            endpoint = endpoint,
             method = MastodonClient.Method.POST,
             parameters = Parameters().apply {
                 append("title", title)
@@ -74,7 +76,7 @@ class ListMethods(private val client: MastodonClient) {
         repliesPolicy: MastodonList.RepliesPolicy
     ): MastodonRequest<MastodonList> {
         return client.getMastodonRequest(
-            endpoint = "api/v1/lists/$listId",
+            endpoint = "$endpoint/$listId",
             method = MastodonClient.Method.PUT,
             parameters = Parameters().apply {
                 append("title", title)
@@ -90,7 +92,7 @@ class ListMethods(private val client: MastodonClient) {
      */
     fun deleteList(listId: String) {
         client.performAction(
-            endpoint = "api/v1/lists/$listId",
+            endpoint = "$endpoint/$listId",
             method = MastodonClient.Method.DELETE
         )
     }
@@ -104,7 +106,7 @@ class ListMethods(private val client: MastodonClient) {
     @JvmOverloads
     fun getAccountsInList(listId: String, range: Range = Range()): MastodonRequest<Pageable<Account>> {
         return client.getPageableMastodonRequest(
-            endpoint = "api/v1/lists/$listId/accounts",
+            endpoint = "$endpoint/$listId/accounts",
             method = MastodonClient.Method.GET,
             parameters = range.toParameters()
         )
@@ -118,7 +120,7 @@ class ListMethods(private val client: MastodonClient) {
      */
     fun addAccountsToList(listId: String, accountIds: List<String>) {
         client.performAction(
-            endpoint = "api/v1/lists/$listId/accounts",
+            endpoint = "$endpoint/$listId/accounts",
             method = MastodonClient.Method.POST,
             parameters = Parameters().apply {
                 append("account_ids", accountIds)
@@ -134,7 +136,7 @@ class ListMethods(private val client: MastodonClient) {
      */
     fun deleteAccountsFromList(listId: String, accountIds: List<String>) {
         client.performAction(
-            endpoint = "api/v1/lists/$listId/accounts",
+            endpoint = "$endpoint/$listId/accounts",
             method = MastodonClient.Method.DELETE,
             parameters = Parameters().apply {
                 append("account_ids", accountIds)

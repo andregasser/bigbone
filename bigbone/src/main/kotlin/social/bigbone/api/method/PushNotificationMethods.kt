@@ -12,7 +12,7 @@ import social.bigbone.api.exception.BigBoneRequestException
  */
 class PushNotificationMethods(private val client: MastodonClient) {
 
-    private val pushEndpoint = "/api/v1/push/subscription"
+    private val endpoint = "api/v1/push/subscription"
 
     /**
      * Specify whether to receive push notifications from all, followed, follower, or none users.
@@ -59,7 +59,7 @@ class PushNotificationMethods(private val client: MastodonClient) {
         policy: PushDataPolicy? = null
     ): MastodonRequest<WebPushSubscription> {
         return client.getMastodonRequest(
-            endpoint = pushEndpoint,
+            endpoint = endpoint,
             method = MastodonClient.Method.POST,
             parameters = Parameters().apply {
                 append("subscription[endpoint]", endpoint)
@@ -112,7 +112,7 @@ class PushNotificationMethods(private val client: MastodonClient) {
         policy: PushDataPolicy? = null
     ): MastodonRequest<WebPushSubscription> {
         return client.getMastodonRequest(
-            endpoint = pushEndpoint,
+            endpoint = endpoint,
             method = MastodonClient.Method.PUT,
             parameters = Parameters().apply {
                 mention?.let { append("data[alerts][mention]", it) }
@@ -137,7 +137,7 @@ class PushNotificationMethods(private val client: MastodonClient) {
     @Throws(BigBoneRequestException::class)
     fun getPushNotification(): MastodonRequest<WebPushSubscription> {
         return client.getMastodonRequest(
-            endpoint = pushEndpoint,
+            endpoint = endpoint,
             method = MastodonClient.Method.GET
         )
     }
@@ -149,7 +149,7 @@ class PushNotificationMethods(private val client: MastodonClient) {
     @Throws(BigBoneRequestException::class)
     fun removePushSubscription() {
         client.performAction(
-            endpoint = pushEndpoint,
+            endpoint = endpoint,
             method = MastodonClient.Method.DELETE
         )
     }

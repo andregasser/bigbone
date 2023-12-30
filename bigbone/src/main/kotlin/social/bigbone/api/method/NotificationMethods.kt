@@ -13,7 +13,7 @@ import social.bigbone.api.exception.BigBoneRequestException
  */
 class NotificationMethods(private val client: MastodonClient) {
 
-    private val notificationsEndpoint = "api/v1/notifications"
+    private val endpoint = "api/v1/notifications"
 
     /**
      * Notifications concerning the user.
@@ -31,7 +31,7 @@ class NotificationMethods(private val client: MastodonClient) {
         range: Range = Range()
     ): MastodonRequest<Pageable<Notification>> {
         return client.getPageableMastodonRequest(
-            endpoint = notificationsEndpoint,
+            endpoint = endpoint,
             method = MastodonClient.Method.GET,
             parameters = range.toParameters().apply {
                 includeTypes?.let {
@@ -52,7 +52,7 @@ class NotificationMethods(private val client: MastodonClient) {
      */
     fun getNotification(id: String): MastodonRequest<Notification> {
         return client.getMastodonRequest(
-            endpoint = "$notificationsEndpoint/$id",
+            endpoint = "$endpoint/$id",
             method = MastodonClient.Method.GET
         )
     }
@@ -64,7 +64,7 @@ class NotificationMethods(private val client: MastodonClient) {
     @Throws(BigBoneRequestException::class)
     fun dismissAllNotifications() {
         client.performAction(
-            endpoint = "$notificationsEndpoint/clear",
+            endpoint = "$endpoint/clear",
             method = MastodonClient.Method.POST
         )
     }
@@ -77,7 +77,7 @@ class NotificationMethods(private val client: MastodonClient) {
     @Throws(BigBoneRequestException::class)
     fun dismissNotification(notificationId: String) {
         client.performAction(
-            endpoint = "$notificationsEndpoint/$notificationId/dismiss",
+            endpoint = "$endpoint/$notificationId/dismiss",
             method = MastodonClient.Method.POST
         )
     }

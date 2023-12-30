@@ -11,7 +11,7 @@ import social.bigbone.api.entity.CustomEmoji
  */
 class CustomEmojiMethods(private val client: MastodonClient) {
 
-    private val customEmojisEndpoint = "api/v1/custom_emojis"
+    private val endpoint = "api/v1/custom_emojis"
 
     /**
      * Returns custom emojis that are available on the server.
@@ -19,7 +19,7 @@ class CustomEmojiMethods(private val client: MastodonClient) {
      */
     fun getAllCustomEmojis(): MastodonRequest<List<CustomEmoji>> {
         return client.getMastodonRequestForList(
-            endpoint = customEmojisEndpoint,
+            endpoint = endpoint,
             method = MastodonClient.Method.GET
         )
     }

@@ -35,7 +35,7 @@ class InstanceMethodsTest {
 
         verify {
             client.get(
-                path = "/api/v2/instance",
+                path = "api/v2/instance",
                 query = null
             )
         }
@@ -115,7 +115,7 @@ class InstanceMethodsTest {
 
         verify {
             client.get(
-                path = "/api/v2/instance",
+                path = "api/v2/instance",
                 query = null
             )
         }
@@ -173,7 +173,7 @@ class InstanceMethodsTest {
 
         verify {
             client.get(
-                path = "/api/v1/instance",
+                path = "api/v1/instance",
                 query = null
             )
         }
@@ -214,7 +214,7 @@ class InstanceMethodsTest {
 
         verify {
             client.get(
-                path = "/api/v2/instance",
+                path = "api/v2/instance",
                 query = null
             )
         }
@@ -231,7 +231,7 @@ class InstanceMethodsTest {
 
         verify {
             client.get(
-                path = "/api/v2/instance",
+                path = "api/v2/instance",
                 query = null
             )
         }
@@ -251,7 +251,7 @@ class InstanceMethodsTest {
 
         verify {
             client.get(
-                path = "/api/v1/instance/peers",
+                path = "api/v1/instance/peers",
                 query = null
             )
         }
@@ -271,7 +271,7 @@ class InstanceMethodsTest {
 
         verify {
             client.get(
-                path = "/api/v1/instance/peers",
+                path = "api/v1/instance/peers",
                 query = null
             )
         }
@@ -293,7 +293,7 @@ class InstanceMethodsTest {
 
         verify {
             client.get(
-                path = "/api/v1/instance/activity",
+                path = "api/v1/instance/activity",
                 query = null
             )
         }
@@ -313,7 +313,7 @@ class InstanceMethodsTest {
 
         verify {
             client.get(
-                path = "/api/v1/instance/activity",
+                path = "api/v1/instance/activity",
                 query = null
             )
         }
@@ -333,7 +333,7 @@ class InstanceMethodsTest {
 
         verify {
             client.get(
-                path = "/api/v1/instance/rules",
+                path = "api/v1/instance/rules",
                 query = null
             )
         }
@@ -355,7 +355,7 @@ class InstanceMethodsTest {
 
         verify {
             client.get(
-                path = "/api/v1/instance/domain_blocks",
+                path = "api/v1/instance/domain_blocks",
                 query = null
             )
         }
@@ -375,7 +375,7 @@ class InstanceMethodsTest {
 
         verify {
             client.get(
-                path = "/api/v1/instance/domain_blocks",
+                path = "api/v1/instance/domain_blocks",
                 query = null
             )
         }
@@ -394,7 +394,7 @@ class InstanceMethodsTest {
 
         verify {
             client.get(
-                path = "/api/v1/instance/extended_description",
+                path = "api/v1/instance/extended_description",
                 query = null
             )
         }

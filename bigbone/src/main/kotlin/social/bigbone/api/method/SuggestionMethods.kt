@@ -11,8 +11,8 @@ import social.bigbone.api.entity.Suggestion
  */
 class SuggestionMethods(private val client: MastodonClient) {
 
-    private val suggestionsEndpointV2 = "/api/v2/suggestions"
-    private val suggestionsEndpointV1 = "/api/v1/suggestions"
+    private val endpointV2 = "api/v2/suggestions"
+    private val endpointV1 = "api/v1/suggestions"
 
     /**
      * Accounts that are promoted by staff, or that the user has had past positive interactions with, but is not yet following.
@@ -21,7 +21,7 @@ class SuggestionMethods(private val client: MastodonClient) {
      */
     fun getSuggestions(limit: Int? = null): MastodonRequest<List<Suggestion>> {
         return client.getMastodonRequestForList(
-            endpoint = suggestionsEndpointV2,
+            endpoint = endpointV2,
             method = MastodonClient.Method.GET,
             parameters = Parameters().apply {
                 append("limit", limit ?: 40)
@@ -36,7 +36,7 @@ class SuggestionMethods(private val client: MastodonClient) {
      */
     fun removeSuggestion(accountId: String) {
         client.performAction(
-            endpoint = "$suggestionsEndpointV1/$accountId",
+            endpoint = "$endpointV1/$accountId",
             method = MastodonClient.Method.DELETE
         )
     }

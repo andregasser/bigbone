@@ -13,7 +13,7 @@ import java.time.Instant
  */
 class AdminMeasureMethods(private val client: MastodonClient) {
 
-    private val adminMeasuresEndpoint = "api/v1/admin/measures"
+    private val endpoint = "api/v1/admin/measures"
 
     /**
      * Obtain statistical measures for your server.
@@ -30,7 +30,7 @@ class AdminMeasureMethods(private val client: MastodonClient) {
         endAt: Instant
     ): MastodonRequest<List<AdminMeasure>> {
         return client.getMastodonRequestForList(
-            endpoint = adminMeasuresEndpoint,
+            endpoint = endpoint,
             method = MastodonClient.Method.POST,
             parameters = Parameters().apply {
                 measures

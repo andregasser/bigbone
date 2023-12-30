@@ -13,7 +13,7 @@ import social.bigbone.api.exception.BigBoneRequestException
  */
 class FeaturedTagMethods(private val client: MastodonClient) {
 
-    private val featuredTagsEndpoint = "api/v1/featured_tags"
+    private val endpoint = "api/v1/featured_tags"
 
     /**
      * List all hashtags featured on your profile.
@@ -21,7 +21,7 @@ class FeaturedTagMethods(private val client: MastodonClient) {
      */
     fun getFeaturedTags(): MastodonRequest<List<FeaturedTag>> {
         return client.getMastodonRequestForList(
-            endpoint = featuredTagsEndpoint,
+            endpoint = endpoint,
             method = MastodonClient.Method.GET
         )
     }
@@ -37,7 +37,7 @@ class FeaturedTagMethods(private val client: MastodonClient) {
         require(!tagName.contains('#')) { "Tag name to be featured must not contain '#'" }
 
         return client.getMastodonRequest(
-            endpoint = featuredTagsEndpoint,
+            endpoint = endpoint,
             method = MastodonClient.Method.POST,
             parameters = Parameters().append("name", tagName)
         )
@@ -54,7 +54,7 @@ class FeaturedTagMethods(private val client: MastodonClient) {
         require(tagId.isNotBlank()) { "Tag ID must not be blank" }
 
         client.performAction(
-            endpoint = featuredTagsEndpoint,
+            endpoint = endpoint,
             method = MastodonClient.Method.DELETE,
             parameters = Parameters().append("id", tagId)
         )
@@ -66,7 +66,7 @@ class FeaturedTagMethods(private val client: MastodonClient) {
      */
     fun getSuggestedTags(): MastodonRequest<List<Tag>> {
         return client.getMastodonRequestForList(
-            endpoint = "$featuredTagsEndpoint/suggestions",
+            endpoint = "$endpoint/suggestions",
             method = MastodonClient.Method.GET
         )
     }

@@ -12,6 +12,9 @@ import social.bigbone.api.exception.BigBoneRequestException
  * @see <a href="https://docs.joinmastodon.org/methods/timelines/">Mastodon timelines API methods</a>
  */
 class TimelineMethods(private val client: MastodonClient) {
+
+    private val endpoint = "api/v1/timelines"
+
     /**
      * Public timelines can consist of only local statuses, only remote (=federated) statuses, or a combination of both.
      */
@@ -30,7 +33,7 @@ class TimelineMethods(private val client: MastodonClient) {
     @Throws(BigBoneRequestException::class)
     fun getHomeTimeline(range: Range = Range()): MastodonRequest<Pageable<Status>> {
         return client.getPageableMastodonRequest(
-            endpoint = "api/v1/timelines/home",
+            endpoint = "$endpoint/home",
             method = MastodonClient.Method.GET,
             parameters = range.toParameters()
         )
@@ -46,7 +49,7 @@ class TimelineMethods(private val client: MastodonClient) {
     @Throws(BigBoneRequestException::class)
     fun getListTimeline(listId: String, range: Range = Range()): MastodonRequest<Pageable<Status>> {
         return client.getPageableMastodonRequest(
-            endpoint = "api/v1/timelines/list/$listId",
+            endpoint = "$endpoint/list/$listId",
             method = MastodonClient.Method.GET,
             parameters = range.toParameters()
         )
@@ -67,7 +70,7 @@ class TimelineMethods(private val client: MastodonClient) {
         range: Range = Range()
     ): MastodonRequest<Pageable<Status>> {
         return client.getPageableMastodonRequest(
-            endpoint = "api/v1/timelines/public",
+            endpoint = "$endpoint/public",
             method = MastodonClient.Method.GET,
             parameters = range.toParameters().apply {
                 when (statusOrigin) {
@@ -104,7 +107,7 @@ class TimelineMethods(private val client: MastodonClient) {
         onlyMedia: Boolean? = null
     ): MastodonRequest<Pageable<Status>> {
         return client.getPageableMastodonRequest(
-            endpoint = "api/v1/timelines/tag/$tag",
+            endpoint = "$endpoint/tag/$tag",
             method = MastodonClient.Method.GET,
             parameters = range.toParameters().apply {
                 when (statusOrigin) {
