@@ -2,7 +2,6 @@ package social.bigbone.rx.admin
 
 import io.reactivex.rxjava3.core.Single
 import social.bigbone.MastodonClient
-import social.bigbone.MastodonRequest
 import social.bigbone.api.entity.Status
 import social.bigbone.api.entity.TrendsLink
 import social.bigbone.api.entity.admin.AdminTag
@@ -24,8 +23,8 @@ class RxAdminTrendMethods(client: MastodonClient) {
      *
      * @see <a href="https://docs.joinmastodon.org/methods/admin/trends/#links">Mastodon API documentation: admin/trends/#links</a>
      */
-    fun getTrendingLinks(): Single<MastodonRequest<List<TrendsLink>>> = Single.fromCallable {
-        adminTrendMethods.getTrendingLinks()
+    fun getTrendingLinks(): Single<List<TrendsLink>> = Single.fromCallable {
+        adminTrendMethods.getTrendingLinks().execute()
     }
 
     /**
@@ -33,8 +32,8 @@ class RxAdminTrendMethods(client: MastodonClient) {
      *
      * @see <a href="https://docs.joinmastodon.org/methods/admin/trends/#statuses">Mastodon API documentation: admin/trends/#statuses</a>
      */
-    fun getTrendingStatuses(): Single<MastodonRequest<List<Status>>> = Single.fromCallable {
-        adminTrendMethods.getTrendingStatuses()
+    fun getTrendingStatuses(): Single<List<Status>> = Single.fromCallable {
+        adminTrendMethods.getTrendingStatuses().execute()
     }
 
     /**
@@ -42,7 +41,7 @@ class RxAdminTrendMethods(client: MastodonClient) {
      *
      * @see <a href="https://docs.joinmastodon.org/methods/admin/trends/#tags">Mastodon API documentation: admin/trends/#tags</a>
      */
-    fun getTrendingTags(): Single<MastodonRequest<List<AdminTag>>> = Single.fromCallable {
-        adminTrendMethods.getTrendingTags()
+    fun getTrendingTags(): Single<List<AdminTag>> = Single.fromCallable {
+        adminTrendMethods.getTrendingTags().execute()
     }
 }
