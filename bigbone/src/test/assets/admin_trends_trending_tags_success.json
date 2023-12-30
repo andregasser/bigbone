@@ -1,0 +1,47 @@
+[
+  {
+    "name": "caturday",
+    "url": "https://mastodon.example/tags/caturday",
+    "history": [
+      {
+        "day": "1669507200",
+        "accounts": "53",
+        "uses": "56"
+      },
+      {
+        "day": "1669420800",
+        "accounts": "142",
+        "uses": "171"
+      },
+      {
+        "day": "1669334400",
+        "accounts": "11",
+        "uses": "11"
+      },
+      {
+        "day": "1669248000",
+        "accounts": "8",
+        "uses": "9"
+      },
+      {
+        "day": "1669161600",
+        "accounts": "8",
+        "uses": "20"
+      },
+      {
+        "day": "1669075200",
+        "accounts": "11",
+        "uses": "11"
+      },
+      {
+        "day": "1668988800",
+        "accounts": "17",
+        "uses": "22"
+      }
+    ],
+    "id": "802",
+    "trendable": true,
+    "usable": true,
+    "requires_review": false
+  }
+]
