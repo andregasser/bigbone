@@ -13,7 +13,7 @@ import social.bigbone.api.entity.TrendsLink
  */
 class TrendMethods(private val client: MastodonClient) {
 
-    private val trendsEndpoint = "api/v1/trends"
+    private val endpoint = "api/v1/trends"
 
     /**
      * Tags that are being used more frequently within the past week.
@@ -28,7 +28,7 @@ class TrendMethods(private val client: MastodonClient) {
         limit: Int = 10
     ): MastodonRequest<List<Tag>> {
         return client.getMastodonRequestForList(
-            endpoint = "$trendsEndpoint/tags",
+            endpoint = "$endpoint/tags",
             method = MastodonClient.Method.GET,
             parameters = Parameters().apply {
                 append("limit", limit)
@@ -49,7 +49,7 @@ class TrendMethods(private val client: MastodonClient) {
         limit: Int = 20
     ): MastodonRequest<List<Status>> {
         return client.getMastodonRequestForList(
-            endpoint = "$trendsEndpoint/statuses",
+            endpoint = "$endpoint/statuses",
             method = MastodonClient.Method.GET,
             parameters = Parameters().apply {
                 append("limit", limit)
@@ -71,7 +71,7 @@ class TrendMethods(private val client: MastodonClient) {
         limit: Int = 10
     ): MastodonRequest<List<TrendsLink>> {
         return client.getMastodonRequestForList(
-            endpoint = "$trendsEndpoint/links",
+            endpoint = "$endpoint/links",
             method = MastodonClient.Method.GET,
             parameters = Parameters().apply {
                 append("limit", limit)

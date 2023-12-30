@@ -9,7 +9,7 @@ import social.bigbone.Parameters
  */
 class EmailMethods(private val client: MastodonClient) {
 
-    private val emailsEndpoint = "api/v1/emails"
+    private val endpoint = "api/v1/emails"
 
     /**
      * Request a new confirmation email for an unconfirmed user, potentially to a new email address.
@@ -23,7 +23,7 @@ class EmailMethods(private val client: MastodonClient) {
     @JvmOverloads
     fun resendConfirmationEmail(emailAddress: String? = null) {
         client.performAction(
-            endpoint = "$emailsEndpoint/confirmations",
+            endpoint = "$endpoint/confirmations",
             method = MastodonClient.Method.POST,
             parameters = emailAddress?.let { Parameters().append("email", emailAddress) }
         )

@@ -14,6 +14,8 @@ import social.bigbone.api.exception.BigBoneRequestException
  */
 class FollowRequestMethods(private val client: MastodonClient) {
 
+    private val endpoint = "api/v1/follow_requests"
+
     /**
      * View pending follow requests.
      * @param range optional Range for the pageable return value
@@ -22,7 +24,7 @@ class FollowRequestMethods(private val client: MastodonClient) {
     @JvmOverloads
     fun getFollowRequests(range: Range = Range()): MastodonRequest<Pageable<Account>> {
         return client.getPageableMastodonRequest(
-            endpoint = "api/v1/follow_requests",
+            endpoint = endpoint,
             method = MastodonClient.Method.GET,
             parameters = range.toParameters()
         )
@@ -36,7 +38,7 @@ class FollowRequestMethods(private val client: MastodonClient) {
     @Throws(BigBoneRequestException::class)
     fun authorizeFollowRequest(accountId: String): MastodonRequest<Relationship> {
         return client.getMastodonRequest(
-            endpoint = "api/v1/follow_requests/$accountId/authorize",
+            endpoint = "$endpoint/$accountId/authorize",
             method = MastodonClient.Method.POST
         )
     }
@@ -49,7 +51,7 @@ class FollowRequestMethods(private val client: MastodonClient) {
     @Throws(BigBoneRequestException::class)
     fun rejectFollowRequest(accountId: String): MastodonRequest<Relationship> {
         return client.getMastodonRequest(
-            endpoint = "api/v1/follow_requests/$accountId/reject",
+            endpoint = "$endpoint/$accountId/reject",
             method = MastodonClient.Method.POST
         )
     }

@@ -29,7 +29,7 @@ class DomainBlockMethodsTest {
 
         verify {
             client.get(
-                path = "/api/v1/domain_blocks",
+                path = "api/v1/domain_blocks",
                 query = any<Parameters>()
             )
         }
@@ -57,7 +57,7 @@ class DomainBlockMethodsTest {
 
         verify {
             client.performAction(
-                endpoint = "/api/v1/domain_blocks",
+                endpoint = "api/v1/domain_blocks",
                 method = MastodonClient.Method.POST
             )
         }
@@ -103,7 +103,7 @@ class DomainBlockMethodsTest {
 
         verify {
             client.performAction(
-                endpoint = "/api/v1/domain_blocks",
+                endpoint = "api/v1/domain_blocks",
                 method = MastodonClient.Method.DELETE
             )
         }

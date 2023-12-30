@@ -13,7 +13,7 @@ import social.bigbone.api.entity.admin.AdminIpBlock
  */
 class AdminIpBlockMethods(private val client: MastodonClient) {
 
-    private val adminIpBlockEndpoint = "/api/v1/admin/ip_blocks"
+    private val endpoint = "api/v1/admin/ip_blocks"
 
     /**
      * Show information about all blocked IP ranges.
@@ -23,7 +23,7 @@ class AdminIpBlockMethods(private val client: MastodonClient) {
     @JvmOverloads
     fun getAllIpBlocks(range: Range = Range()): MastodonRequest<Pageable<AdminIpBlock>> {
         return client.getPageableMastodonRequest(
-            endpoint = adminIpBlockEndpoint,
+            endpoint = endpoint,
             method = MastodonClient.Method.GET,
             parameters = range.toParameters()
         )
@@ -36,7 +36,7 @@ class AdminIpBlockMethods(private val client: MastodonClient) {
      */
     fun getBlockedIpRange(id: String): MastodonRequest<AdminIpBlock> {
         return client.getMastodonRequest(
-            endpoint = "$adminIpBlockEndpoint/$id",
+            endpoint = "$endpoint/$id",
             method = MastodonClient.Method.GET
         )
     }
@@ -57,7 +57,7 @@ class AdminIpBlockMethods(private val client: MastodonClient) {
         expiresInSeconds: Int? = null
     ): MastodonRequest<AdminIpBlock> {
         return client.getMastodonRequest(
-            endpoint = adminIpBlockEndpoint,
+            endpoint = endpoint,
             method = MastodonClient.Method.POST,
             parameters = Parameters().apply {
                 append("ip", ipAddress)
@@ -86,7 +86,7 @@ class AdminIpBlockMethods(private val client: MastodonClient) {
         expiresInSeconds: Int? = null
     ): MastodonRequest<AdminIpBlock> {
         return client.getMastodonRequest(
-            endpoint = "$adminIpBlockEndpoint/$id",
+            endpoint = "$endpoint/$id",
             method = MastodonClient.Method.PUT,
             parameters = Parameters().apply {
                 append("ip", ipAddress)
@@ -104,7 +104,7 @@ class AdminIpBlockMethods(private val client: MastodonClient) {
      */
     fun removeIpBlock(id: String) {
         client.performAction(
-            endpoint = "$adminIpBlockEndpoint/$id",
+            endpoint = "$endpoint/$id",
             method = MastodonClient.Method.DELETE
         )
     }

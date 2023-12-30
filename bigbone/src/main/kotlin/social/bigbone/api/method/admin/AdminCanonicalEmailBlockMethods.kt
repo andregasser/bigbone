@@ -15,7 +15,7 @@ import social.bigbone.api.entity.admin.BlockCanonicalEmailVariant
  */
 class AdminCanonicalEmailBlockMethods(private val client: MastodonClient) {
 
-    private val adminCanonicalEmailBlockEndpoint = "api/v1/admin/canonical_email_blocks"
+    private val endpoint = "api/v1/admin/canonical_email_blocks"
 
     /**
      * List all canonical email blocks.
@@ -28,7 +28,7 @@ class AdminCanonicalEmailBlockMethods(private val client: MastodonClient) {
     @JvmOverloads
     fun getAllCanonicalEmailBlocks(range: Range = Range()): MastodonRequest<Pageable<AdminCanonicalEmailBlock>> {
         return client.getPageableMastodonRequest(
-            endpoint = adminCanonicalEmailBlockEndpoint,
+            endpoint = endpoint,
             method = MastodonClient.Method.GET,
             parameters = range.toParameters()
         )
@@ -44,7 +44,7 @@ class AdminCanonicalEmailBlockMethods(private val client: MastodonClient) {
      */
     fun getCanonicalEmailBlock(id: String): MastodonRequest<AdminCanonicalEmailBlock> {
         return client.getMastodonRequest(
-            endpoint = "$adminCanonicalEmailBlockEndpoint/$id",
+            endpoint = "$endpoint/$id",
             method = MastodonClient.Method.GET
         )
     }
@@ -59,7 +59,7 @@ class AdminCanonicalEmailBlockMethods(private val client: MastodonClient) {
      */
     fun blockCanonicalEmail(variant: BlockCanonicalEmailVariant): MastodonRequest<AdminCanonicalEmailBlock> {
         return client.getMastodonRequest(
-            endpoint = adminCanonicalEmailBlockEndpoint,
+            endpoint = endpoint,
             method = MastodonClient.Method.POST,
             parameters = variant.appendToParameters()
         )
@@ -75,7 +75,7 @@ class AdminCanonicalEmailBlockMethods(private val client: MastodonClient) {
      */
     fun removeCanonicalEmailBlock(id: String) {
         client.performAction(
-            endpoint = "$adminCanonicalEmailBlockEndpoint/$id",
+            endpoint = "$endpoint/$id",
             method = MastodonClient.Method.DELETE
         )
     }
@@ -91,7 +91,7 @@ class AdminCanonicalEmailBlockMethods(private val client: MastodonClient) {
      */
     fun canonicalizeAndHashEmailAddress(emailAddress: String): MastodonRequest<List<AdminCanonicalEmailBlock>> {
         return client.getMastodonRequestForList(
-            endpoint = "$adminCanonicalEmailBlockEndpoint/test",
+            endpoint = "$endpoint/test",
             method = MastodonClient.Method.POST,
             parameters = Parameters().append("email", emailAddress)
         )

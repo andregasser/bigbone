@@ -11,7 +11,7 @@ import social.bigbone.api.entity.OEmbedMetadata
  */
 class OEmbedMethods(private val mastodonClient: MastodonClient) {
 
-    private val oEmbedEndpoint = "api/oembed"
+    private val endpoint = "api/oembed"
 
     /**
      * Get oEmbed info as JSON.
@@ -27,7 +27,7 @@ class OEmbedMethods(private val mastodonClient: MastodonClient) {
         maxHeight: Int? = null
     ): MastodonRequest<OEmbedMetadata> {
         return mastodonClient.getMastodonRequest<OEmbedMetadata>(
-            endpoint = oEmbedEndpoint,
+            endpoint = endpoint,
             method = MastodonClient.Method.GET,
             parameters = Parameters().apply {
                 append("url", urlOfStatus)

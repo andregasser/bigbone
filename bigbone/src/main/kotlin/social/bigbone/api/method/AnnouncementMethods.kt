@@ -12,7 +12,7 @@ import social.bigbone.api.exception.BigBoneRequestException
  */
 class AnnouncementMethods(private val client: MastodonClient) {
 
-    private val announcementsEndpoint = "api/v1/announcements"
+    private val endpoint = "api/v1/announcements"
 
     /**
      * See all currently active announcements set by admins.
@@ -24,7 +24,7 @@ class AnnouncementMethods(private val client: MastodonClient) {
         withDismissed: Boolean = false
     ): MastodonRequest<List<Announcement>> {
         return client.getMastodonRequestForList(
-            endpoint = announcementsEndpoint,
+            endpoint = endpoint,
             method = MastodonClient.Method.GET,
             parameters = Parameters()
                 .append("with_dismissed", withDismissed)
@@ -39,7 +39,7 @@ class AnnouncementMethods(private val client: MastodonClient) {
     @Throws(BigBoneRequestException::class)
     fun dismissAnnouncement(announcementId: String) {
         client.performAction(
-            endpoint = "$announcementsEndpoint/$announcementId/dismiss",
+            endpoint = "$endpoint/$announcementId/dismiss",
             method = MastodonClient.Method.POST
         )
     }
@@ -56,7 +56,7 @@ class AnnouncementMethods(private val client: MastodonClient) {
         announcementId: String
     ) {
         client.performAction(
-            endpoint = "$announcementsEndpoint/$announcementId/reactions/$emojiName",
+            endpoint = "$endpoint/$announcementId/reactions/$emojiName",
             method = MastodonClient.Method.PUT
         )
     }
@@ -73,7 +73,7 @@ class AnnouncementMethods(private val client: MastodonClient) {
         announcementId: String
     ) {
         client.performAction(
-            endpoint = "$announcementsEndpoint/$announcementId/reactions/$emojiName",
+            endpoint = "$endpoint/$announcementId/reactions/$emojiName",
             method = MastodonClient.Method.DELETE
         )
     }

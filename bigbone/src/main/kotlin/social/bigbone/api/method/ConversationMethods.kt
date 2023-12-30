@@ -11,6 +11,9 @@ import social.bigbone.api.entity.Conversation
  * @see <a href="https://docs.joinmastodon.org/methods/conversations/">Mastodon conversations API methods</a>
  */
 class ConversationMethods(private val client: MastodonClient) {
+
+    private val endpoint = "api/v1/conversations"
+
     /**
      * View your direct conversations with other participants.
      * @param range optional Range for the pageable return value
@@ -19,7 +22,7 @@ class ConversationMethods(private val client: MastodonClient) {
     @JvmOverloads
     fun getConversations(range: Range = Range()): MastodonRequest<Pageable<Conversation>> {
         return client.getPageableMastodonRequest(
-            endpoint = "api/v1/conversations",
+            endpoint = endpoint,
             method = MastodonClient.Method.GET,
             parameters = range.toParameters()
         )
@@ -32,7 +35,7 @@ class ConversationMethods(private val client: MastodonClient) {
      */
     fun deleteConversation(conversationId: String) {
         client.performAction(
-            endpoint = "api/v1/conversations/$conversationId",
+            endpoint = "$endpoint/$conversationId",
             method = MastodonClient.Method.DELETE
         )
     }
@@ -44,7 +47,7 @@ class ConversationMethods(private val client: MastodonClient) {
      */
     fun markConversationAsRead(conversationId: String): MastodonRequest<Conversation> {
         return client.getMastodonRequest(
-            endpoint = "api/v1/conversations/$conversationId/read",
+            endpoint = "$endpoint/$conversationId/read",
             method = MastodonClient.Method.POST
         )
     }

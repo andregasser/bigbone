@@ -26,6 +26,8 @@ import java.io.Closeable
  */
 class StreamingMethods(private val client: MastodonClient) {
 
+    private val endpoint = "api/v1/streaming"
+
     private fun stream(
         streamType: StreamType,
         callback: WebSocketCallback,
@@ -77,7 +79,7 @@ class StreamingMethods(private val client: MastodonClient) {
     @Throws(BigBoneRequestException::class)
     fun checkServerHealth() {
         client.performAction(
-            endpoint = "api/v1/streaming/health",
+            endpoint = "$endpoint/health",
             method = MastodonClient.Method.GET
         )
     }

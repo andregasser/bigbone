@@ -11,6 +11,9 @@ import social.bigbone.api.entity.Status
  * @see <a href="https://docs.joinmastodon.org/methods/bookmarks/">Mastodon bookmarks API methods</a>
  */
 class BookmarkMethods(private val client: MastodonClient) {
+
+    private val endpoint = "api/v1/bookmarks"
+
     /**
      * View bookmarked statuses.
      * @param range optional Range for the pageable return value
@@ -19,7 +22,7 @@ class BookmarkMethods(private val client: MastodonClient) {
     @JvmOverloads
     fun getBookmarks(range: Range = Range()): MastodonRequest<Pageable<Status>> {
         return client.getPageableMastodonRequest(
-            endpoint = "api/v1/bookmarks",
+            endpoint = endpoint,
             method = MastodonClient.Method.GET,
             parameters = range.toParameters()
         )
