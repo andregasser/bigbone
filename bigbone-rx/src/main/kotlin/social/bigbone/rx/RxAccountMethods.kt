@@ -5,10 +5,13 @@ import social.bigbone.MastodonClient
 import social.bigbone.api.Pageable
 import social.bigbone.api.Range
 import social.bigbone.api.entity.Account
+import social.bigbone.api.entity.CredentialAccount
 import social.bigbone.api.entity.Relationship
 import social.bigbone.api.entity.Status
 import social.bigbone.api.entity.Token
+import social.bigbone.api.entity.data.Visibility
 import social.bigbone.api.method.AccountMethods
+import java.time.Duration
 
 /**
  * Reactive implementation of [AccountMethods].
@@ -54,22 +57,66 @@ class RxAccountMethods(client: MastodonClient) {
      * Test to make sure that the user token works.
      * @see <a href="https://docs.joinmastodon.org/methods/accounts/#verify_credentials">Mastodon API documentation: methods/accounts/#verify_credentials</a>
      */
-    fun verifyCredentials(): Single<Account> = Single.fromCallable {
+    fun verifyCredentials(): Single<CredentialAccount> = Single.fromCallable {
         accountMethods.verifyCredentials().execute()
     }
 
     /**
      * Update the user’s display and preferences.
+     *
+     * You should use [verifyCredentials] to first obtain plaintext representations from within the source parameter,
+     * then allow the user to edit these plaintext representations before submitting them through this API.
+     * The server will generate the corresponding HTML.
+     *
      * @param displayName The name to display in the user's profile
      * @param note A new biography for the user
      * @param avatar A String containing a base64-encoded image to display as the user's avatar
      *  (e.g. data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUoAAADrCAYAAAA...)
      * @param header A String containing a base64-encoded image to display as the user's header image
      *  (e.g. data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUoAAADrCAYAAAA...)
+     * @param locked Whether manual approval of follow requests is required
+     * @param bot Whether the account has a bot flag
+     * @param discoverable Whether the account should be shown in the profile directory
+     * @param hideCollections Whether to hide followers and followed accounts.
+     * @param indexable Whether public posts should be searchable to anyone
+     * @param profileFields The profile fields to be set
+     * @param defaultPostVisibility Default post privacy for authored statuses
+     * @param defaultSensitiveMark Whether to mark authored statuses as sensitive by default
+     * @param defaultLanguage Default language to use for authored statuses (ISO 6391)
+     *
      * @see <a href="https://docs.joinmastodon.org/methods/accounts/#update_credentials">Mastodon API documentation: methods/accounts/#update_credentials</a>
      */
-    fun updateCredentials(displayName: String?, note: String?, avatar: String?, header: String?): Single<Account> =
-        Single.fromCallable { accountMethods.updateCredentials(displayName, note, avatar, header).execute() }
+    fun updateCredentials(
+        displayName: String?,
+        note: String?,
+        avatar: String?,
+        header: String?,
+        locked: Boolean?,
+        bot: Boolean?,
+        discoverable: Boolean?,
+        hideCollections: Boolean?,
+        indexable: Boolean?,
+        profileFields: AccountMethods.ProfileFields?,
+        defaultPostVisibility: Visibility?,
+        defaultSensitiveMark: Boolean?,
+        defaultLanguage: String?
+    ): Single<CredentialAccount> = Single.fromCallable {
+        accountMethods.updateCredentials(
+            displayName = displayName,
+            note = note,
+            avatar = avatar,
+            header = header,
+            locked = locked,
+            bot = bot,
+            discoverable = discoverable,
+            hideCollections = hideCollections,
+            indexable = indexable,
+            profileFields = profileFields,
+            defaultPostVisibility = defaultPostVisibility,
+            defaultSensitiveMark = defaultSensitiveMark,
+            defaultLanguage = defaultLanguage
+        ).execute()
+    }
 
     /**
      * Accounts which follow the given account, if network is not hidden by the account owner.
@@ -95,11 +142,15 @@ class RxAccountMethods(client: MastodonClient) {
 
     /**
      * Statuses posted to the given account.
+     *
      * @param accountId ID of the account to look up
      * @param onlyMedia Filter out statuses without attachments.
      * @param excludeReplies Filter out statuses in reply to a different account.
+     * @param excludeReblogs Filter out boosts from the response.
      * @param pinned Filter for pinned statuses only.
+     * @param filterByTaggedWith Filter for statuses using a specific hashtag.
      * @param range optional Range for the pageable return value
+     *
      * @see <a href="https://docs.joinmastodon.org/methods/accounts/#statuses">Mastodon API documentation: methods/accounts/#statuses</a>
      */
     @JvmOverloads
@@ -107,19 +158,47 @@ class RxAccountMethods(client: MastodonClient) {
         accountId: String,
         onlyMedia: Boolean = false,
         excludeReplies: Boolean = false,
+        excludeReblogs: Boolean = false,
         pinned: Boolean = false,
+        filterByTaggedWith: String? = null,
         range: Range = Range()
     ): Single<Pageable<Status>> = Single.fromCallable {
-        accountMethods.getStatuses(accountId, onlyMedia, excludeReplies, pinned, range).execute()
+        accountMethods.getStatuses(
+            accountId = accountId,
+            onlyMedia = onlyMedia,
+            excludeReplies = excludeReplies,
+            excludeReblogs = excludeReblogs,
+            pinned = pinned,
+            filterByTaggedWith = filterByTaggedWith,
+            range = range
+        ).execute()
     }
 
     /**
      * Follow the given account. Can also be used to update whether to show reblogs or enable notifications.
+     *
      * @param accountId ID of the account to follow
+     * @param includeReblogs Receive this account’s reblogs in home timeline? Defaults to true if null.
+     * @param notifyOnStatus Receive notifications when this account posts a status? Defaults to false if null.
+     * @param filterForLanguages Filter received statuses for these languages.
+     * If not provided, you will receive this account’s posts in all languages.
+     *
+     *
      * @see <a href="https://docs.joinmastodon.org/methods/accounts/#follow">Mastodon API documentation: methods/accounts/#follow</a>
      */
-    fun followAccount(accountId: String): Single<Relationship> = Single.fromCallable {
-        accountMethods.followAccount(accountId).execute()
+    @JvmOverloads
+    fun followAccount(
+        accountId: String,
+        includeReblogs: Boolean? = null,
+        notifyOnStatus: Boolean? = null,
+        filterForLanguages: List<String>? = null
+    ): Single<Relationship> = Single.fromCallable {
+        accountMethods.followAccount(
+            accountId = accountId,
+            includeReblogs = includeReblogs,
+            notifyOnStatus = notifyOnStatus,
+            filterForLanguages = filterForLanguages
+        ).execute()
     }
 
     /**
@@ -150,12 +229,26 @@ class RxAccountMethods(client: MastodonClient) {
     }
 
     /**
-     * Mute the given account. Clients should filter statuses and notifications from this account, if received (e.g. due to a boost in the Home timeline).
+     * Mute the given account.
+     * Clients should filter statuses and notifications from this account, if received (e.g. due to a boost in the Home timeline).
+     *
      * @param accountId ID of the account to mute
+     * @param muteNotifications Mute notifications in addition to statuses? Defaults to true.
+     * @param muteDuration How long the mute should last, in seconds. Defaults to null (mute indefinitely)
+     *
      * @see <a href="https://docs.joinmastodon.org/methods/accounts/#mute">Mastodon API documentation: methods/accounts/#mute</a>
      */
-    fun muteAccount(accountId: String): Single<Relationship> = Single.fromCallable {
-        accountMethods.muteAccount(accountId).execute()
+    @JvmOverloads
+    fun muteAccount(
+        accountId: String,
+        muteNotifications: Boolean? = null,
+        muteDuration: Duration? = null
+    ): Single<Relationship> = Single.fromCallable {
+        accountMethods.muteAccount(
+            accountId = accountId,
+            muteNotifications = muteNotifications,
+            muteDuration = muteDuration
+        ).execute()
     }
 
     /**
@@ -169,21 +262,45 @@ class RxAccountMethods(client: MastodonClient) {
 
     /**
      * Find out whether a given account is followed, blocked, muted, etc.
+     *
      * @param accountIds List of IDs of the accounts to check
+     * @param includeSuspended Whether relationships should be returned for suspended users. Defaults to false if not supplied.
+     *
      * @see <a href="https://docs.joinmastodon.org/methods/accounts/#relationships">Mastodon API documentation: methods/accounts/#relationships</a>
      */
-    fun getRelationships(accountIds: List<String>): Single<List<Relationship>> = Single.fromCallable {
-        accountMethods.getRelationships(accountIds).execute()
+    @JvmOverloads
+    fun getRelationships(
+        accountIds: List<String>,
+        includeSuspended: Boolean? = null
+    ): Single<List<Relationship>> = Single.fromCallable {
+        accountMethods.getRelationships(accountIds, includeSuspended).execute()
     }
 
     /**
      * Search for matching accounts by username or display name.
+     *
      * @param query the search query
-     * @param limit the maximum number of matching accounts to return (default: 40)
+     * @param limit the maximum number of matching accounts to return (default: 40. max: 80)
+     * @param offset skips this amount of results
+     * @param limitToFollowing Limit the search to users you are following. Defaults to false if not supplied.
+     * @param attemptWebFingerLookup Use this when [query] is an exact address. Defaults to false if not supplied.
+     *
      * @see <a href="https://docs.joinmastodon.org/methods/accounts/#search">Mastodon API documentation: methods/accounts/#search</a>
      */
     @JvmOverloads
-    fun searchAccounts(query: String, limit: Int? = null): Single<List<Account>> = Single.fromCallable {
-        accountMethods.searchAccounts(query, limit).execute()
+    fun searchAccounts(
+        query: String,
+        limit: Int? = null,
+        offset: Int? = null,
+        limitToFollowing: Boolean? = null,
+        attemptWebFingerLookup: Boolean? = null
+    ): Single<List<Account>> = Single.fromCallable {
+        accountMethods.searchAccounts(
+            query = query,
+            limit = limit,
+            offset = offset,
+            limitToFollowing = limitToFollowing,
+            attemptWebFingerLookup = attemptWebFingerLookup
+        ).execute()
     }
 }

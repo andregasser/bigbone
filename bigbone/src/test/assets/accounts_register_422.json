@@ -1,0 +1,23 @@
+{
+  "error": "Validation failed: Password can't be blank, Username must contain only letters, numbers and underscores, Agreement must be accepted",
+  "details": {
+    "password": [
+      {
+        "error": "ERR_BLANK",
+        "description": "can't be blank"
+      }
+    ],
+    "username": [
+      {
+        "error": "ERR_INVALID",
+        "description": "must contain only letters, numbers and underscores"
+      }
+    ],
+    "agreement": [
+      {
+        "error": "ERR_ACCEPTED",
+        "description": "must be accepted"
+      }
+    ]
+  }
+}
