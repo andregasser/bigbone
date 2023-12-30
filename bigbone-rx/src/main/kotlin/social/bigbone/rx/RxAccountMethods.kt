@@ -186,6 +186,7 @@ class RxAccountMethods(client: MastodonClient) {
      *
      * @see <a href="https://docs.joinmastodon.org/methods/accounts/#follow">Mastodon API documentation: methods/accounts/#follow</a>
      */
+    @JvmOverloads
     fun followAccount(
         accountId: String,
         includeReblogs: Boolean? = null,
@@ -237,6 +238,7 @@ class RxAccountMethods(client: MastodonClient) {
      *
      * @see <a href="https://docs.joinmastodon.org/methods/accounts/#mute">Mastodon API documentation: methods/accounts/#mute</a>
      */
+    @JvmOverloads
     fun muteAccount(
         accountId: String,
         muteNotifications: Boolean? = null,
@@ -266,6 +268,7 @@ class RxAccountMethods(client: MastodonClient) {
      *
      * @see <a href="https://docs.joinmastodon.org/methods/accounts/#relationships">Mastodon API documentation: methods/accounts/#relationships</a>
      */
+    @JvmOverloads
     fun getRelationships(
         accountIds: List<String>,
         includeSuspended: Boolean? = null
