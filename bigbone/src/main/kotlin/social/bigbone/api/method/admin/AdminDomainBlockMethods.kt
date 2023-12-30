@@ -15,7 +15,7 @@ import social.bigbone.api.entity.admin.AdminDomainBlock.Severity
  */
 class AdminDomainBlockMethods(private val client: MastodonClient) {
 
-    private val adminDomainBlocksEndpoint = "api/v1/admin/domain_blocks"
+    private val endpoint = "api/v1/admin/domain_blocks"
 
     /**
      * Show information about all blocked domains.
@@ -27,7 +27,7 @@ class AdminDomainBlockMethods(private val client: MastodonClient) {
     @JvmOverloads
     fun getAllBlockedDomains(range: Range = Range()): MastodonRequest<Pageable<AdminDomainBlock>> {
         return client.getPageableMastodonRequest(
-            endpoint = adminDomainBlocksEndpoint,
+            endpoint = endpoint,
             method = MastodonClient.Method.GET,
             parameters = range.toParameters()
         )
@@ -42,7 +42,7 @@ class AdminDomainBlockMethods(private val client: MastodonClient) {
      */
     fun getBlockedDomain(id: String): MastodonRequest<AdminDomainBlock> {
         return client.getMastodonRequest(
-            endpoint = "$adminDomainBlocksEndpoint/$id",
+            endpoint = "$endpoint/$id",
             method = MastodonClient.Method.GET
         )
     }
@@ -71,7 +71,7 @@ class AdminDomainBlockMethods(private val client: MastodonClient) {
         publicComment: String? = null
     ): MastodonRequest<AdminDomainBlock> {
         return client.getMastodonRequest(
-            endpoint = adminDomainBlocksEndpoint,
+            endpoint = endpoint,
             method = MastodonClient.Method.POST,
             parameters = Parameters().apply {
                 append("domain", domain)
@@ -113,7 +113,7 @@ class AdminDomainBlockMethods(private val client: MastodonClient) {
         publicComment: String? = null
     ): MastodonRequest<AdminDomainBlock> {
         return client.getMastodonRequest(
-            endpoint = "$adminDomainBlocksEndpoint/$id",
+            endpoint = "$endpoint/$id",
             method = MastodonClient.Method.PUT,
             parameters = Parameters().apply {
                 severity?.let { append("severity", severity.apiName) }
@@ -138,7 +138,7 @@ class AdminDomainBlockMethods(private val client: MastodonClient) {
      */
     fun removeBlockedDomain(id: String) {
         client.performAction(
-            endpoint = "$adminDomainBlocksEndpoint/$id",
+            endpoint = "$endpoint/$id",
             method = MastodonClient.Method.DELETE
         )
     }
