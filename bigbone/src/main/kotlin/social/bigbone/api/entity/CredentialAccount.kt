@@ -6,13 +6,16 @@ import social.bigbone.DateTimeSerializer
 import social.bigbone.PrecisionDateTime
 import social.bigbone.PrecisionDateTime.InvalidPrecisionDateTime
 import social.bigbone.PrecisionDateTime.ValidPrecisionDateTime.ExactTime
+import social.bigbone.api.entity.data.Visibility
+import social.bigbone.api.method.AccountMethods
 
 /**
  * Represents a user of Mastodon and their associated profile.
- * @see <a href="https://docs.joinmastodon.org/entities/Account/">Mastodon API Account</a>
+ *
+ * @see <a href="https://docs.joinmastodon.org/entities/Account/#CredentialAccount">Mastodon API Account#CredentialAccount</a>
  */
 @Serializable
-data class Account(
+data class CredentialAccount(
     /**
      * The account id.
      * String cast from an Integer, but not guaranteed to be a number.
@@ -128,7 +131,7 @@ data class Account(
      * Indicates that the profile is currently inactive and that its user has moved to a new account.
      */
     @SerialName("moved")
-    val moved: Account? = null,
+    val moved: CredentialAccount? = null,
 
     /**
      * An extra attribute returned only when an account is suspended.
@@ -175,10 +178,23 @@ data class Account(
      * The reported follows of this profile.
      */
     @SerialName("following_count")
-    val followingCount: Long = 0
+    val followingCount: Long = 0,
+
+    /**
+     * An extra attribute that contains source values
+     * to be used with API methods that [AccountMethods.verifyCredentials] and [AccountMethods.updateCredentials].
+     */
+    @SerialName("source")
+    val source: Source,
+
+    /**
+     * The role assigned to the currently authorized user.
+     */
+    @SerialName("role")
+    val role: Role? = null
 ) {
     /**
-     * Specifies a name-value pair as used in [fields] of the [Account] entity.
+     * Specifies a name-value pair as used in [fields] of the [CredentialAccount] entity.
      */
     @Serializable
     data class Field(
@@ -201,5 +217,51 @@ data class Account(
         @SerialName("verified_at")
         @Serializable(with = DateTimeSerializer::class)
         val verifiedAt: PrecisionDateTime = InvalidPrecisionDateTime.Unavailable
+    )
+
+    /**
+     * An extra attribute that contains source values
+     * to be used with API methods that [AccountMethods.verifyCredentials] and [AccountMethods.updateCredentials].
+     * @see source
+     */
+    @Serializable
+    data class Source(
+        /**
+         * Profile bio.
+         * String containing plain-text content instead of HTML.
+         */
+        @SerialName("note")
+        val note: String,
+
+        /**
+         * Metadata about the account.
+         */
+        @SerialName("fields")
+        val fields: List<Field>,
+
+        /**
+         * The default post privacy to be used for new statuses.
+         */
+        @SerialName("privacy")
+        val privacy: Visibility,
+
+        /**
+         * Whether new statuses should be marked sensitive by default.
+         */
+        @SerialName("sensitive")
+        val sensitive: Boolean,
+
+        /**
+         * The default posting language for new statuses.
+         * String with ISO 639-1 language two-letter code or empty.
+         */
+        @SerialName("language")
+        val language: String = "",
+
+        /**
+         * The number of pending follow requests.
+         */
+        @SerialName("follow_requests_count")
+        val followRequestsCount: Int
     )
 }

@@ -137,7 +137,7 @@ class StatusMethods(private val client: MastodonClient) {
             method = MastodonClient.Method.POST,
             parameters = Parameters().apply {
                 append("status", status)
-                append("visibility", visibility.name.lowercase())
+                append("visibility", visibility.apiName)
                 inReplyToId?.let { append("in_reply_to_id", it) }
                 mediaIds?.let { append("media_ids", it) }
                 append("sensitive", sensitive)
@@ -181,7 +181,7 @@ class StatusMethods(private val client: MastodonClient) {
                 append("status", status)
                 append("poll[options]", pollData.options)
                 append("poll[expires_in]", pollData.expiresIn)
-                append("visibility", visibility.name.lowercase())
+                append("visibility", visibility.apiName)
                 append("poll[multiple]", pollData.multiple ?: false)
                 append("poll[hide_totals]", pollData.hideTotals ?: false)
                 inReplyToId?.let { append("in_reply_to_id", it) }
@@ -232,7 +232,7 @@ class StatusMethods(private val client: MastodonClient) {
             parameters = Parameters().apply {
                 append("status", status)
                 append("scheduled_at", scheduledAt.toString())
-                append("visibility", visibility.name.lowercase())
+                append("visibility", visibility.apiName)
                 inReplyToId?.let { append("in_reply_to_id", it) }
                 mediaIds?.let { append("media_ids", it) }
                 append("sensitive", sensitive)
@@ -283,7 +283,7 @@ class StatusMethods(private val client: MastodonClient) {
                 append("scheduled_at", scheduledAt.toString())
                 append("poll[options]", pollData.options)
                 append("poll[expires_in]", pollData.expiresIn)
-                append("visibility", visibility.name.lowercase())
+                append("visibility", visibility.apiName)
                 append("poll[multiple]", pollData.multiple ?: false)
                 append("poll[hide_totals]", pollData.multiple ?: false)
                 inReplyToId?.let { append("in_reply_to_id", it) }
@@ -328,7 +328,7 @@ class StatusMethods(private val client: MastodonClient) {
             endpoint = "api/v1/statuses/$statusId/reblog",
             method = MastodonClient.Method.POST,
             parameters = Parameters().apply {
-                append("visibility", visibility.name.lowercase())
+                append("visibility", visibility.apiName)
             }
         )
     }
