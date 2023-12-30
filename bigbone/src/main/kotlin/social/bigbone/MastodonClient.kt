@@ -132,6 +132,13 @@ private constructor(
     val adminDimensions: AdminDimensionMethods by lazy { AdminDimensionMethods(this) }
 
     /**
+     * Access API methods under the "admin/domain_allows" endpoint.
+     */
+    @Suppress("unused") // public API
+    @get:JvmName("adminDomainAllow")
+    val adminDomainAllow: AdminDomainAllowMethods by lazy { AdminDomainAllowMethods(this) }
+
+    /**
      * Access API methods under the "admin/domain_blocks" endpoint.
      */
     @Suppress("unused") // public API
@@ -165,13 +172,6 @@ private constructor(
     @Suppress("unused") // public API
     @get:JvmName("adminRetention")
     val adminRetention: AdminRetentionMethods by lazy { AdminRetentionMethods(this) }
-
-    /**
-     * Access API methods under the "admin/domain_allows" endpoint.
-     */
-    @Suppress("unused") // public API
-    @get:JvmName("adminDomainAllow")
-    val adminDomainAllow: AdminDomainAllowMethods by lazy { AdminDomainAllowMethods(this) }
 
     /**
      * Access API methods under the "announcements" endpoint.
