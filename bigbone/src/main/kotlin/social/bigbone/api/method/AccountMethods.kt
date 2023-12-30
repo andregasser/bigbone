@@ -342,7 +342,7 @@ class AccountMethods(private val client: MastodonClient) {
     ): MastodonRequest<Relationship> {
         return client.getMastodonRequest(
             endpoint = "$endpoint/$accountId/mute",
-            method = MastodonClient.Method.POST
+            method = MastodonClient.Method.POST,
             parameters = Parameters().apply {
                 muteNotifications?.let { append("notifications", muteNotifications) }
                 muteDuration?.let { append("duration", muteDuration.seconds) }
