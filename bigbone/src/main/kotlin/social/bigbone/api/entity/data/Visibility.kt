@@ -1,5 +1,6 @@
 package social.bigbone.api.entity.data
 
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -18,5 +19,8 @@ enum class Visibility {
     PRIVATE,
 
     @SerialName("direct")
-    DIRECT
+    DIRECT;
+
+    @OptIn(ExperimentalSerializationApi::class)
+    val apiName: String get() = serializer().descriptor.getElementName(ordinal)
 }
