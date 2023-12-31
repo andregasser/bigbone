@@ -45,7 +45,7 @@ class AccountMethodsTest {
         val parametersCapturingSlot = slot<Parameters>()
         verify {
             client.post(
-                path = "api/v1/accounts",
+                path = accountMethods.endpoint,
                 body = capture(parametersCapturingSlot)
             )
         }
@@ -96,7 +96,7 @@ class AccountMethodsTest {
         }
         verify {
             client.get(
-                path = "api/v1/accounts/1",
+                path = "${accountMethods.endpoint}/1",
                 query = null
             )
         }
@@ -126,7 +126,7 @@ class AccountMethodsTest {
         }
         verify {
             client.get(
-                path = "api/v1/accounts/verify_credentials",
+                path = "${accountMethods.endpoint}/verify_credentials",
                 query = null
             )
         }
@@ -186,7 +186,7 @@ class AccountMethodsTest {
         val parametersCapturingSlot = slot<Parameters>()
         verify {
             client.patch(
-                path = "api/v1/accounts/update_credentials",
+                path = "${accountMethods.endpoint}/update_credentials",
                 body = capture(parametersCapturingSlot)
             )
         }
@@ -276,7 +276,7 @@ class AccountMethodsTest {
         val parametersCapturingSlot = slot<Parameters>()
         verify {
             client.patch(
-                path = "api/v1/accounts/update_credentials",
+                path = "${accountMethods.endpoint}/update_credentials",
                 body = capture(parametersCapturingSlot)
             )
         }
@@ -339,7 +339,7 @@ class AccountMethodsTest {
         val parametersCapturingSlot = slot<Parameters>()
         verify {
             client.get(
-                path = "api/v1/accounts/1/followers",
+                path = "${accountMethods.endpoint}/1/followers",
                 query = capture(parametersCapturingSlot)
             )
         }
@@ -375,7 +375,7 @@ class AccountMethodsTest {
         val parametersCapturingSlot = slot<Parameters>()
         verify {
             client.get(
-                path = "api/v1/accounts/1/following",
+                path = "${accountMethods.endpoint}/1/following",
                 query = capture(parametersCapturingSlot)
             )
         }
@@ -416,7 +416,7 @@ class AccountMethodsTest {
         val parametersCapturingSlot = slot<Parameters>()
         verify {
             client.get(
-                path = "api/v1/accounts/1/statuses",
+                path = "${accountMethods.endpoint}/1/statuses",
                 query = capture(parametersCapturingSlot)
             )
         }
@@ -528,7 +528,7 @@ class AccountMethodsTest {
         val parametersCapturingSlot = slot<Parameters>()
         verify {
             client.post(
-                path = "api/v1/accounts/1/follow",
+                path = "${accountMethods.endpoint}/1/follow",
                 body = capture(parametersCapturingSlot)
             )
         }
@@ -566,7 +566,7 @@ class AccountMethodsTest {
         }
         verify {
             client.post(
-                path = "api/v1/accounts/3361/unfollow",
+                path = "${accountMethods.endpoint}/3361/unfollow",
                 body = null
             )
         }
@@ -592,7 +592,7 @@ class AccountMethodsTest {
         }
         verify {
             client.post(
-                path = "api/v1/accounts/1/remove_from_followers",
+                path = "${accountMethods.endpoint}/1/remove_from_followers",
                 body = null
             )
         }
@@ -615,7 +615,7 @@ class AccountMethodsTest {
         }
         verify {
             client.post(
-                path = "api/v1/accounts/1/block",
+                path = "${accountMethods.endpoint}/1/block",
                 body = null
             )
         }
@@ -646,7 +646,7 @@ class AccountMethodsTest {
         }
         verify {
             client.post(
-                path = "api/v1/accounts/1/unblock",
+                path = "${accountMethods.endpoint}/1/unblock",
                 body = null
             )
         }
@@ -682,7 +682,7 @@ class AccountMethodsTest {
         val parametersCapturingSlot = slot<Parameters>()
         verify {
             client.post(
-                path = "api/v1/accounts/1/mute",
+                path = "${accountMethods.endpoint}/1/mute",
                 body = capture(parametersCapturingSlot)
             )
         }
@@ -716,7 +716,7 @@ class AccountMethodsTest {
         }
         verify {
             client.post(
-                path = "api/v1/accounts/1/unmute",
+                path = "${accountMethods.endpoint}/1/unmute",
                 body = null
             )
         }
@@ -742,7 +742,7 @@ class AccountMethodsTest {
         }
         verify {
             client.post(
-                path = "api/v1/accounts/1/pin",
+                path = "${accountMethods.endpoint}/1/pin",
                 body = null
             )
         }
@@ -760,7 +760,7 @@ class AccountMethodsTest {
         }
         verify {
             client.post(
-                path = "api/v1/accounts/1/unpin",
+                path = "${accountMethods.endpoint}/1/unpin",
                 body = null
             )
         }
@@ -783,7 +783,7 @@ class AccountMethodsTest {
         val parametersCapturingSlot = slot<Parameters>()
         verify {
             client.post(
-                path = "api/v1/accounts/1/note",
+                path = "${accountMethods.endpoint}/1/note",
                 body = capture(parametersCapturingSlot)
             )
         }
@@ -807,7 +807,7 @@ class AccountMethodsTest {
         }
         verify {
             client.post(
-                path = "api/v1/accounts/1/note",
+                path = "${accountMethods.endpoint}/1/note",
                 body = null
             )
         }
@@ -838,7 +838,7 @@ class AccountMethodsTest {
         val parametersCapturingSlot = slot<Parameters>()
         verify {
             client.get(
-                path = "api/v1/accounts/relationships",
+                path = "${accountMethods.endpoint}/relationships",
                 query = capture(parametersCapturingSlot)
             )
         }
@@ -895,7 +895,6 @@ class AccountMethodsTest {
                 id shouldBeEqualTo "2"
                 accounts.shouldBeEmpty()
             }
-
         }
         val parametersCapturingSlot = slot<Parameters>()
         verify {

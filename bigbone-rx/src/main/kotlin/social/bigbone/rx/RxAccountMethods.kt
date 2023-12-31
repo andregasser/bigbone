@@ -361,7 +361,7 @@ class RxAccountMethods(client: MastodonClient) {
      *
      * @see <a href="https://docs.joinmastodon.org/methods/accounts/#familiar_followers">Mastodon API documentation: methods/accounts/#familiar_followers</a>
      */
-    fun findFamiliarFollowers(accountIds: List<String>): Single<FamiliarFollowers> = Single.fromCallable {
+    fun findFamiliarFollowers(accountIds: List<String>): Single<List<FamiliarFollowers>> = Single.fromCallable {
         accountMethods.findFamiliarFollowers(accountIds).execute()
     }
 
