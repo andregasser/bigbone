@@ -7,6 +7,9 @@ import social.bigbone.api.Pageable
 import social.bigbone.api.Range
 import social.bigbone.api.entity.Account
 import social.bigbone.api.entity.CredentialAccount
+import social.bigbone.api.entity.FamiliarFollowers
+import social.bigbone.api.entity.FeaturedTag
+import social.bigbone.api.entity.MastodonList
 import social.bigbone.api.entity.Relationship
 import social.bigbone.api.entity.Status
 import social.bigbone.api.entity.Token
@@ -19,7 +22,7 @@ import java.time.Duration
  */
 class AccountMethods(private val client: MastodonClient) {
 
-    private val endpoint = "api/v1/accounts"
+    internal val endpoint = "api/v1/accounts"
 
     /**
      * Register an account.
@@ -260,6 +263,36 @@ class AccountMethods(private val client: MastodonClient) {
     }
 
     /**
+     * Tags featured by this account.
+     *
+     * @param accountId The ID of the [Account] in the database.
+     *
+     * @see <a href="https://docs.joinmastodon.org/methods/accounts/#featured_tags">Mastodon API documentation: methods/accounts/#featured_tags</a>
+     */
+    fun getFeaturedTags(accountId: String): MastodonRequest<List<FeaturedTag>> {
+        return client.getMastodonRequestForList(
+            endpoint = "$endpoint/$accountId/featured_tags",
+            method = MastodonClient.Method.GET
+        )
+    }
+
+    /**
+     * User lists that you have added this account to.
+     *
+     * @param accountId The ID of the [Account] in the database.
+     * @return If the account is part of any lists, their [MastodonList] entities will be returned.
+     * Otherwise, an empty list is returned.
+     *
+     * @see <a href="https://docs.joinmastodon.org/methods/accounts/#lists">Mastodon API documentation: methods/accounts/#lists</a>
+     */
+    fun getListsContainingAccount(accountId: String): MastodonRequest<List<MastodonList>> {
+        return client.getMastodonRequestForList(
+            endpoint = "$endpoint/$accountId/lists",
+            method = MastodonClient.Method.GET
+        )
+    }
+
+    /**
      * Follow the given account. Can also be used to update whether to show reblogs or enable notifications.
      *
      * @param accountId ID of the account to follow
@@ -296,6 +329,21 @@ class AccountMethods(private val client: MastodonClient) {
     fun unfollowAccount(accountId: String): MastodonRequest<Relationship> {
         return client.getMastodonRequest(
             endpoint = "$endpoint/$accountId/unfollow",
+            method = MastodonClient.Method.POST
+        )
+    }
+
+    /**
+     * Remove the given account from your followers.
+     *
+     * @param accountId The ID of the [Account] in the database.
+     *
+     * @see <a href="https://docs.joinmastodon.org/methods/accounts/#remove_from_followers">
+     *     Mastodon API documentation: methods/accounts/#remove_from_followers</a>
+     */
+    fun removeAccountFromFollowers(accountId: String): MastodonRequest<Relationship> {
+        return client.getMastodonRequest(
+            endpoint = "$endpoint/$accountId/remove_from_followers",
             method = MastodonClient.Method.POST
         )
     }
@@ -363,6 +411,57 @@ class AccountMethods(private val client: MastodonClient) {
     }
 
     /**
+     * Add the given account to the user’s featured profiles.
+     * (Featured profiles are currently shown on the user’s own public profile.)
+     *
+     * @param accountId The ID of the [Account] in the database.
+     *
+     * @see <a href="https://docs.joinmastodon.org/methods/accounts/#pin">Mastodon API documentation: methods/accounts/#pin</a>
+     */
+    fun featureAccountOnProfile(accountId: String): MastodonRequest<Relationship> {
+        return client.getMastodonRequest(
+            endpoint = "$endpoint/$accountId/pin",
+            method = MastodonClient.Method.POST
+        )
+    }
+
+    /**
+     * Remove the given account from the user’s featured profiles.
+     * This reverts [featureAccountOnProfile].
+     *
+     * @param accountId The ID of the [Account] in the database.
+     *
+     * @see <a href="https://docs.joinmastodon.org/methods/accounts/#unpin">Mastodon API documentation: methods/accounts/#unpin</a>
+     */
+    fun unfeatureAccountFromProfile(accountId: String): MastodonRequest<Relationship> {
+        return client.getMastodonRequest(
+            endpoint = "$endpoint/$accountId/unpin",
+            method = MastodonClient.Method.POST
+        )
+    }
+
+    /**
+     * Sets a private note on a user.
+     *
+     * @param accountId The ID of the [Account] in the database.
+     * @param privateNote The comment to be set on that user. Provide empty string or null to clear currently set note.
+     *
+     * @see <a href="https://docs.joinmastodon.org/methods/accounts/#note">Mastodon API documentation: methods/accounts/#note</a>
+     */
+    fun setPrivateNotOnProfile(
+        accountId: String,
+        privateNote: String?
+    ): MastodonRequest<Relationship> {
+        return client.getMastodonRequest(
+            endpoint = "$endpoint/$accountId/note",
+            method = MastodonClient.Method.POST,
+            parameters = privateNote?.let {
+                Parameters().append("comment", privateNote)
+            }
+        )
+    }
+
+    /**
      * Find out whether a given account is followed, blocked, muted, etc.
      *
      * @param accountIds List of IDs of the accounts to check
@@ -381,6 +480,23 @@ class AccountMethods(private val client: MastodonClient) {
             parameters = Parameters().apply {
                 append("id", accountIds)
                 includeSuspended?.let { append("with_suspended", includeSuspended) }
+            }
+        )
+    }
+
+    /**
+     * Obtain a list of all accounts that follow the specified accounts, filtered for accounts you follow.
+     *
+     * @param accountIds Account IDs to find familiar followers for.
+     *
+     * @see <a href="https://docs.joinmastodon.org/methods/accounts/#familiar_followers">Mastodon API documentation: methods/accounts/#familiar_followers</a>
+     */
+    fun findFamiliarFollowers(accountIds: List<String>): MastodonRequest<List<FamiliarFollowers>> {
+        return client.getMastodonRequestForList(
+            endpoint = "$endpoint/familiar_followers",
+            method = MastodonClient.Method.GET,
+            parameters = Parameters().apply {
+                append("id", accountIds)
             }
         )
     }
@@ -414,6 +530,22 @@ class AccountMethods(private val client: MastodonClient) {
                 limitToFollowing?.let { append("following", limitToFollowing) }
                 attemptWebFingerLookup?.let { append("resolve", attemptWebFingerLookup) }
             }
+        )
+    }
+
+    /**
+     * Quickly lookup a username to see if it is available, skipping WebFinger resolution.
+     *
+     * @param usernameOrAddress The username or WebFinger address to lookup.
+     *
+     * @see <a href="https://docs.joinmastodon.org/methods/accounts/#unpin">Mastodon API documentation: methods/accounts/#unpin</a>
+     * @see <a href="https://docs.joinmastodon.org/spec/webfinger/">Mastodon API documentation: WebFinger information</a>
+     */
+    fun getAccountViaWebFingerAddress(usernameOrAddress: String): MastodonRequest<Account> {
+        return client.getMastodonRequest(
+            endpoint = "$endpoint/lookup",
+            method = MastodonClient.Method.POST,
+            parameters = Parameters().append("acct", usernameOrAddress)
         )
     }
 }

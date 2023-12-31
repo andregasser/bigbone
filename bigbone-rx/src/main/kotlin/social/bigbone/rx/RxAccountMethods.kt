@@ -6,6 +6,9 @@ import social.bigbone.api.Pageable
 import social.bigbone.api.Range
 import social.bigbone.api.entity.Account
 import social.bigbone.api.entity.CredentialAccount
+import social.bigbone.api.entity.FamiliarFollowers
+import social.bigbone.api.entity.FeaturedTag
+import social.bigbone.api.entity.MastodonList
 import social.bigbone.api.entity.Relationship
 import social.bigbone.api.entity.Status
 import social.bigbone.api.entity.Token
@@ -175,6 +178,30 @@ class RxAccountMethods(client: MastodonClient) {
     }
 
     /**
+     * Tags featured by this account.
+     *
+     * @param accountId The ID of the [Account] in the database.
+     *
+     * @see <a href="https://docs.joinmastodon.org/methods/accounts/#featured_tags">Mastodon API documentation: methods/accounts/#featured_tags</a>
+     */
+    fun getFeaturedTags(accountId: String): Single<List<FeaturedTag>> = Single.fromCallable {
+        accountMethods.getFeaturedTags(accountId).execute()
+    }
+
+    /**
+     * User lists that you have added this account to.
+     *
+     * @param accountId The ID of the [Account] in the database.
+     * @return If the account is part of any lists, their [MastodonList] entities will be returned.
+     * Otherwise, an empty list is returned.
+     *
+     * @see <a href="https://docs.joinmastodon.org/methods/accounts/#lists">Mastodon API documentation: methods/accounts/#lists</a>
+     */
+    fun getListsContainingAccount(accountId: String): Single<List<MastodonList>> = Single.fromCallable {
+        accountMethods.getListsContainingAccount(accountId).execute()
+    }
+
+    /**
      * Follow the given account. Can also be used to update whether to show reblogs or enable notifications.
      *
      * @param accountId ID of the account to follow
@@ -208,6 +235,18 @@ class RxAccountMethods(client: MastodonClient) {
      */
     fun unfollowAccount(accountId: String): Single<Relationship> = Single.fromCallable {
         accountMethods.unfollowAccount(accountId).execute()
+    }
+
+    /**
+     * Remove the given account from your followers.
+     *
+     * @param accountId The ID of the [Account] in the database.
+     *
+     * @see <a href="https://docs.joinmastodon.org/methods/accounts/#remove_from_followers">
+     *     Mastodon API documentation: methods/accounts/#remove_from_followers</a>
+     */
+    fun removeAccountFromFollowers(accountId: String): Single<Relationship> = Single.fromCallable {
+        accountMethods.removeAccountFromFollowers(accountId).execute()
     }
 
     /**
@@ -261,6 +300,45 @@ class RxAccountMethods(client: MastodonClient) {
     }
 
     /**
+     * Add the given account to the user’s featured profiles.
+     * (Featured profiles are currently shown on the user’s own public profile.)
+     *
+     * @param accountId The ID of the [Account] in the database.
+     *
+     * @see <a href="https://docs.joinmastodon.org/methods/accounts/#pin">Mastodon API documentation: methods/accounts/#pin</a>
+     */
+    fun featureAccountOnProfile(accountId: String): Single<Relationship> = Single.fromCallable {
+        accountMethods.featureAccountOnProfile(accountId).execute()
+    }
+
+    /**
+     * Remove the given account from the user’s featured profiles.
+     * This reverts [featureAccountOnProfile].
+     *
+     * @param accountId The ID of the [Account] in the database.
+     *
+     * @see <a href="https://docs.joinmastodon.org/methods/accounts/#unpin">Mastodon API documentation: methods/accounts/#unpin</a>
+     */
+    fun unfeatureAccountFromProfile(accountId: String): Single<Relationship> = Single.fromCallable {
+        accountMethods.unfeatureAccountFromProfile(accountId).execute()
+    }
+
+    /**
+     * Sets a private note on a user.
+     *
+     * @param accountId The ID of the [Account] in the database.
+     * @param privateNote The comment to be set on that user. Provide empty string or null to clear currently set note.
+     *
+     * @see <a href="https://docs.joinmastodon.org/methods/accounts/#note">Mastodon API documentation: methods/accounts/#note</a>
+     */
+    fun setPrivateNotOnProfile(
+        accountId: String,
+        privateNote: String?
+    ): Single<Relationship> = Single.fromCallable {
+        accountMethods.setPrivateNotOnProfile(accountId, privateNote).execute()
+    }
+
+    /**
      * Find out whether a given account is followed, blocked, muted, etc.
      *
      * @param accountIds List of IDs of the accounts to check
@@ -274,6 +352,17 @@ class RxAccountMethods(client: MastodonClient) {
         includeSuspended: Boolean? = null
     ): Single<List<Relationship>> = Single.fromCallable {
         accountMethods.getRelationships(accountIds, includeSuspended).execute()
+    }
+
+    /**
+     * Obtain a list of all accounts that follow the specified accounts, filtered for accounts you follow.
+     *
+     * @param accountIds Account IDs to find familiar followers for.
+     *
+     * @see <a href="https://docs.joinmastodon.org/methods/accounts/#familiar_followers">Mastodon API documentation: methods/accounts/#familiar_followers</a>
+     */
+    fun findFamiliarFollowers(accountIds: List<String>): Single<FamiliarFollowers> = Single.fromCallable {
+        accountMethods.findFamiliarFollowers(accountIds).execute()
     }
 
     /**
@@ -302,5 +391,17 @@ class RxAccountMethods(client: MastodonClient) {
             limitToFollowing = limitToFollowing,
             attemptWebFingerLookup = attemptWebFingerLookup
         ).execute()
+    }
+
+    /**
+     * Quickly lookup a username to see if it is available, skipping WebFinger resolution.
+     *
+     * @param usernameOrAddress The username or WebFinger address to lookup.
+     *
+     * @see <a href="https://docs.joinmastodon.org/methods/accounts/#unpin">Mastodon API documentation: methods/accounts/#unpin</a>
+     * @see <a href="https://docs.joinmastodon.org/spec/webfinger/">Mastodon API documentation: WebFinger information</a>
+     */
+    fun getAccountViaWebFingerAddress(usernameOrAddress: String): Single<Account> = Single.fromCallable {
+        accountMethods.getAccountViaWebFingerAddress(usernameOrAddress).execute()
     }
 }
