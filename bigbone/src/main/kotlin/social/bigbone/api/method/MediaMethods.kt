@@ -17,7 +17,7 @@ import java.io.File
  */
 class MediaMethods(private val client: MastodonClient) {
 
-    private val endpoint: String = "api/v1/media"
+    private val endpointV1: String = "api/v1/media"
     private val endpointV2: String = "api/v2/media"
 
     /**
@@ -85,7 +85,7 @@ class MediaMethods(private val client: MastodonClient) {
      */
     fun getMediaAttachment(withId: String): MastodonRequest<MediaAttachment> {
         return client.getMastodonRequest(
-            endpoint = "$endpoint/$withId",
+            endpoint = "$endpointV1/$withId",
             method = Method.GET
         )
     }
@@ -123,7 +123,7 @@ class MediaMethods(private val client: MastodonClient) {
         focus?.let { requestBodyBuilder.addFormDataPart("focus", focus.toString()) }
 
         return MastodonRequest(
-            executor = { client.putRequestBody(path = "$endpoint/$withId", body = requestBodyBuilder.build()) },
+            executor = { client.putRequestBody(path = "$endpointV1/$withId", body = requestBodyBuilder.build()) },
             mapper = { JSON_SERIALIZER.decodeFromString<MediaAttachment>(it) }
         )
     }
@@ -174,7 +174,7 @@ class MediaMethods(private val client: MastodonClient) {
         focus?.let { requestBodyBuilder.addFormDataPart("focus", focus.toString()) }
 
         return MastodonRequest(
-            executor = { client.postRequestBody(path = endpoint, body = requestBodyBuilder.build()) },
+            executor = { client.postRequestBody(path = endpointV1, body = requestBodyBuilder.build()) },
             mapper = { JSON_SERIALIZER.decodeFromString<MediaAttachment>(it) }
         )
     }
