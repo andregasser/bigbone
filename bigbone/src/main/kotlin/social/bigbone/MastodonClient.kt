@@ -58,6 +58,7 @@ import social.bigbone.api.method.PollMethods
 import social.bigbone.api.method.PreferenceMethods
 import social.bigbone.api.method.PushNotificationMethods
 import social.bigbone.api.method.ReportMethods
+import social.bigbone.api.method.ScheduledStatusMethods
 import social.bigbone.api.method.SearchMethods
 import social.bigbone.api.method.StatusMethods
 import social.bigbone.api.method.StreamingMethods
@@ -369,6 +370,13 @@ private constructor(
     @Suppress("unused") // public API
     @get:JvmName("reports")
     val reports: ReportMethods by lazy { ReportMethods(this) }
+
+    /**
+     * Access API methods under the "scheduled_statuses" endpoint.
+     */
+    @Suppress("unused") // public API
+    @get:JvmName("scheduledStatuses")
+    val scheduledStatuses: ScheduledStatusMethods by lazy { ScheduledStatusMethods(this) }
 
     /**
      * Access API methods under the "search" endpoint.
