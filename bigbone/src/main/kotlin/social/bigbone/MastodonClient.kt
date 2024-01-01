@@ -750,18 +750,28 @@ private constructor(
     }
 
     /**
-     * Get a response from the Mastodon instance defined for this client using the PUT method.
+     * Get a response from the Mastodon instance defined for this client using the [Method.PUT] method.
+     *
      * @param path an absolute path to the API endpoint to call
      * @param body the parameters to use in the request body for this request
      */
-    fun put(path: String, body: Parameters?): Response {
+    fun put(path: String, body: Parameters?): Response = putRequestBody(path, parameterBody(body))
+
+    /**
+     * Get a response from the Mastodon instance defined for this client using the [Method.PUT] method.
+     * Use this method if you need to build your own RequestBody, otherwise [put] is probably the better option for you.
+     *
+     * @param path an absolute path to the API endpoint to call
+     * @param body the RequestBody to use for this request
+     */
+    fun putRequestBody(path: String, body: RequestBody): Response {
         try {
             val url = fullUrl(scheme, instanceName, port, path)
             debugPrintUrl(url)
             val call = client.newCall(
                 Request.Builder()
                     .url(url)
-                    .put(parameterBody(body))
+                    .put(body)
                     .build()
             )
             return call.execute()
