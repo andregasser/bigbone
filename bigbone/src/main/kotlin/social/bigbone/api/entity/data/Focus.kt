@@ -15,5 +15,9 @@ data class Focus(
     @SerialName("y")
     val y: Float
 ) {
+    init {
+        require(x in -1.0..1.0) { "x coordinate must be between -1.0 and +1.0 but was $x" }
+        require(y in -1.0..1.0) { "y coordinate must be between -1.0 and +1.0 but was $y" }
+    }
     override fun toString(): String = "$x, $y"
 }

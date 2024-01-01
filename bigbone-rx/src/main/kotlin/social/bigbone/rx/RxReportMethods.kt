@@ -3,7 +3,7 @@ package social.bigbone.rx
 import io.reactivex.rxjava3.core.Single
 import social.bigbone.MastodonClient
 import social.bigbone.api.entity.Report
-import social.bigbone.api.entity.Report.ReportCategory
+import social.bigbone.api.entity.data.ReportCategory
 import social.bigbone.api.method.ReportMethods
 
 /**

@@ -17,13 +17,13 @@ data class AdminAccount(
      * String cast from an Integer, but not guaranteed to be a number.
      */
     @SerialName("id")
-    val id: String,
+    val id: String = "",
 
     /**
      * The username of the account.
      */
     @SerialName("username")
-    val username: String,
+    val username: String = "",
 
     /**
      * The domain of the account, if it is remote.
@@ -43,7 +43,7 @@ data class AdminAccount(
      * The email address associated with the account.
      */
     @SerialName("email")
-    val email: String,
+    val email: String = "",
 
     /**
      * The IP address last used to log in to this account.
@@ -55,43 +55,43 @@ data class AdminAccount(
      * All known IP addresses associated with this account.
      */
     @SerialName("ips")
-    val adminIPs: List<IP>,
+    val adminIPs: List<IP> = emptyList(),
 
     /**
      * The current role of the account.
      */
     @SerialName("role")
-    val role: Role,
+    val role: Role = Role(),
 
     /**
      * Whether the account has confirmed their email address.
      */
     @SerialName("confirmed")
-    val confirmed: Boolean,
+    val confirmed: Boolean = false,
 
     /**
      * Whether the account is currently suspended.
      */
     @SerialName("suspended")
-    val suspended: Boolean,
+    val suspended: Boolean = false,
 
     /**
      * Whether the account is currently silenced.
      */
     @SerialName("silenced")
-    val silenced: Boolean,
+    val silenced: Boolean = false,
 
     /**
      * Whether the account is currently disabled.
      */
     @SerialName("disabled")
-    val disabled: Boolean,
+    val disabled: Boolean = false,
 
     /**
      * Whether the account is currently approved.
      */
     @SerialName("approved")
-    val approved: Boolean,
+    val approved: Boolean = false,
 
     /**
      * Whether these account’s post are currently flagged sensitive.
@@ -117,7 +117,7 @@ data class AdminAccount(
      * User-level information about the account.
      */
     @SerialName("account")
-    val account: Account,
+    val account: Account = Account(),
 
     /**
      * The ID of the Application that created this account, if applicable.
@@ -142,7 +142,7 @@ data class AdminAccount(
          * The IP address.
          */
         @SerialName("ip")
-        val ipAddress: String,
+        val ipAddress: String = "",
 
         /**
          * The timestamp of when the IP address was last used for this account.

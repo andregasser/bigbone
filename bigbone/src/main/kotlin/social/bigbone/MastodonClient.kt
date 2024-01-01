@@ -58,6 +58,7 @@ import social.bigbone.api.method.PollMethods
 import social.bigbone.api.method.PreferenceMethods
 import social.bigbone.api.method.PushNotificationMethods
 import social.bigbone.api.method.ReportMethods
+import social.bigbone.api.method.ScheduledStatusMethods
 import social.bigbone.api.method.SearchMethods
 import social.bigbone.api.method.StatusMethods
 import social.bigbone.api.method.StreamingMethods
@@ -73,6 +74,7 @@ import social.bigbone.api.method.admin.AdminDomainBlockMethods
 import social.bigbone.api.method.admin.AdminEmailDomainBlockMethods
 import social.bigbone.api.method.admin.AdminIpBlockMethods
 import social.bigbone.api.method.admin.AdminMeasureMethods
+import social.bigbone.api.method.admin.AdminReportMethods
 import social.bigbone.api.method.admin.AdminRetentionMethods
 import social.bigbone.api.method.admin.AdminTrendMethods
 import social.bigbone.extension.emptyRequestBody
@@ -166,6 +168,13 @@ private constructor(
     @Suppress("unused") // public API
     @get:JvmName("adminMeasures")
     val adminMeasures: AdminMeasureMethods by lazy { AdminMeasureMethods(this) }
+
+    /**
+     * Access API methods under the "admin/reports" endpoint.
+     */
+    @Suppress("unused") // public API
+    @get:JvmName("adminReports")
+    val adminReports: AdminReportMethods by lazy { AdminReportMethods(this) }
 
     /**
      * Access API methods under the "admin/retention" endpoint.
@@ -369,6 +378,13 @@ private constructor(
     @Suppress("unused") // public API
     @get:JvmName("reports")
     val reports: ReportMethods by lazy { ReportMethods(this) }
+
+    /**
+     * Access API methods under the "scheduled_statuses" endpoint.
+     */
+    @Suppress("unused") // public API
+    @get:JvmName("scheduledStatuses")
+    val scheduledStatuses: ScheduledStatusMethods by lazy { ScheduledStatusMethods(this) }
 
     /**
      * Access API methods under the "search" endpoint.
@@ -734,18 +750,28 @@ private constructor(
     }
 
     /**
-     * Get a response from the Mastodon instance defined for this client using the PUT method.
+     * Get a response from the Mastodon instance defined for this client using the [Method.PUT] method.
+     *
      * @param path an absolute path to the API endpoint to call
      * @param body the parameters to use in the request body for this request
      */
-    fun put(path: String, body: Parameters?): Response {
+    fun put(path: String, body: Parameters?): Response = putRequestBody(path, parameterBody(body))
+
+    /**
+     * Get a response from the Mastodon instance defined for this client using the [Method.PUT] method.
+     * Use this method if you need to build your own RequestBody, otherwise [put] is probably the better option for you.
+     *
+     * @param path an absolute path to the API endpoint to call
+     * @param body the RequestBody to use for this request
+     */
+    fun putRequestBody(path: String, body: RequestBody): Response {
         try {
             val url = fullUrl(scheme, instanceName, port, path)
             debugPrintUrl(url)
             val call = client.newCall(
                 Request.Builder()
                     .url(url)
-                    .put(parameterBody(body))
+                    .put(body)
                     .build()
             )
             return call.execute()

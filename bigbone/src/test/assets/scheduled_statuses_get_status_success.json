@@ -1,0 +1,17 @@
+{
+  "id": "3221",
+  "scheduled_at": "2019-12-05T12:33:01.000Z",
+  "params": {
+    "poll": null,
+    "text": "test content",
+    "media_ids": null,
+    "sensitive": null,
+    "visibility": null,
+    "idempotency": null,
+    "scheduled_at": null,
+    "spoiler_text": null,
+    "application_id": 596551,
+    "in_reply_to_id": null
+  },
+  "media_attachments": []
+}
