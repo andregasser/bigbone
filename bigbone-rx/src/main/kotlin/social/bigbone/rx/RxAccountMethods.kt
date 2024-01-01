@@ -331,11 +331,11 @@ class RxAccountMethods(client: MastodonClient) {
      *
      * @see <a href="https://docs.joinmastodon.org/methods/accounts/#note">Mastodon API documentation: methods/accounts/#note</a>
      */
-    fun setPrivateNotOnProfile(
+    fun setPrivateNoteOnProfile(
         accountId: String,
         privateNote: String?
     ): Single<Relationship> = Single.fromCallable {
-        accountMethods.setPrivateNotOnProfile(accountId, privateNote).execute()
+        accountMethods.setPrivateNoteOnProfile(accountId, privateNote).execute()
     }
 
     /**

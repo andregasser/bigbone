@@ -772,7 +772,7 @@ class AccountMethodsTest {
         val accountMethods = AccountMethods(client)
         val privateNote = "Met at 31C3. Slightly awkward, but in a good way!"
 
-        val relationship = accountMethods.setPrivateNotOnProfile(
+        val relationship = accountMethods.setPrivateNoteOnProfile(
             accountId = "1",
             privateNote = privateNote
         ).execute()
@@ -797,7 +797,7 @@ class AccountMethodsTest {
         val client = MockClient.mock("accounts_unset_private_note_on_profile_success.json")
         val accountMethods = AccountMethods(client)
 
-        val relationship = accountMethods.setPrivateNotOnProfile(
+        val relationship = accountMethods.setPrivateNoteOnProfile(
             "1",
             privateNote = null
         ).execute()

@@ -448,7 +448,7 @@ class AccountMethods(private val client: MastodonClient) {
      *
      * @see <a href="https://docs.joinmastodon.org/methods/accounts/#note">Mastodon API documentation: methods/accounts/#note</a>
      */
-    fun setPrivateNotOnProfile(
+    fun setPrivateNoteOnProfile(
         accountId: String,
         privateNote: String?
     ): MastodonRequest<Relationship> {
