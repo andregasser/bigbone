@@ -4,7 +4,7 @@ import org.amshove.kluent.`should be equal to`
 import org.amshove.kluent.shouldContainIgnoringCase
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import social.bigbone.api.entity.Report.ReportCategory
+import social.bigbone.api.entity.data.ReportCategory
 import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.testtool.MockClient
 

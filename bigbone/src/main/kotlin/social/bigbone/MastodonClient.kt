@@ -74,6 +74,7 @@ import social.bigbone.api.method.admin.AdminDomainBlockMethods
 import social.bigbone.api.method.admin.AdminEmailDomainBlockMethods
 import social.bigbone.api.method.admin.AdminIpBlockMethods
 import social.bigbone.api.method.admin.AdminMeasureMethods
+import social.bigbone.api.method.admin.AdminReportMethods
 import social.bigbone.api.method.admin.AdminRetentionMethods
 import social.bigbone.api.method.admin.AdminTrendMethods
 import social.bigbone.extension.emptyRequestBody
@@ -167,6 +168,13 @@ private constructor(
     @Suppress("unused") // public API
     @get:JvmName("adminMeasures")
     val adminMeasures: AdminMeasureMethods by lazy { AdminMeasureMethods(this) }
+
+    /**
+     * Access API methods under the "admin/reports" endpoint.
+     */
+    @Suppress("unused") // public API
+    @get:JvmName("adminReports")
+    val adminReports: AdminReportMethods by lazy { AdminReportMethods(this) }
 
     /**
      * Access API methods under the "admin/retention" endpoint.
