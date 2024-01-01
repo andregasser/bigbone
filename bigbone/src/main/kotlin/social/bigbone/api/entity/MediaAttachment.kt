@@ -127,7 +127,7 @@ data class MediaAttachment(
          * Aspect ratio of this media attachment.
          */
         @SerialName("aspect")
-        val aspectRatio: Int? = null,
+        val aspectRatio: Double? = null,
 
         /**
          * Original, full-res media attachment size.
