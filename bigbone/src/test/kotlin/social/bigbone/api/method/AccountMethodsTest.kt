@@ -12,15 +12,18 @@ import org.amshove.kluent.shouldThrow
 import org.amshove.kluent.withMessage
 import org.junit.jupiter.api.Test
 import social.bigbone.Parameters
+import social.bigbone.PrecisionDateTime.ValidPrecisionDateTime.ExactTime
 import social.bigbone.api.entity.data.Visibility
 import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.testtool.MockClient
+import social.bigbone.testtool.TestUtil.urlEncode
 import java.time.Duration
+import java.time.Instant
 
 class AccountMethodsTest {
 
     @Test
-    fun `Given account returning success, when registering account, then call correct endpoint and parse response`() {
+    fun `Given server returning success, when registering account, then call correct endpoint and parse response`() {
         val client = MockClient.mock("accounts_register_success.json")
         val accountMethods = AccountMethods(client)
 
@@ -42,7 +45,7 @@ class AccountMethodsTest {
         val parametersCapturingSlot = slot<Parameters>()
         verify {
             client.post(
-                path = "api/v1/accounts",
+                path = accountMethods.endpoint,
                 body = capture(parametersCapturingSlot)
             )
         }
@@ -93,7 +96,7 @@ class AccountMethodsTest {
         }
         verify {
             client.get(
-                path = "api/v1/accounts/1",
+                path = "${accountMethods.endpoint}/1",
                 query = null
             )
         }
@@ -123,7 +126,7 @@ class AccountMethodsTest {
         }
         verify {
             client.get(
-                path = "api/v1/accounts/verify_credentials",
+                path = "${accountMethods.endpoint}/verify_credentials",
                 query = null
             )
         }
@@ -183,7 +186,7 @@ class AccountMethodsTest {
         val parametersCapturingSlot = slot<Parameters>()
         verify {
             client.patch(
-                path = "api/v1/accounts/update_credentials",
+                path = "${accountMethods.endpoint}/update_credentials",
                 body = capture(parametersCapturingSlot)
             )
         }
@@ -273,7 +276,7 @@ class AccountMethodsTest {
         val parametersCapturingSlot = slot<Parameters>()
         verify {
             client.patch(
-                path = "api/v1/accounts/update_credentials",
+                path = "${accountMethods.endpoint}/update_credentials",
                 body = capture(parametersCapturingSlot)
             )
         }
@@ -336,7 +339,7 @@ class AccountMethodsTest {
         val parametersCapturingSlot = slot<Parameters>()
         verify {
             client.get(
-                path = "api/v1/accounts/1/followers",
+                path = "${accountMethods.endpoint}/1/followers",
                 query = capture(parametersCapturingSlot)
             )
         }
@@ -372,7 +375,7 @@ class AccountMethodsTest {
         val parametersCapturingSlot = slot<Parameters>()
         verify {
             client.get(
-                path = "api/v1/accounts/1/following",
+                path = "${accountMethods.endpoint}/1/following",
                 query = capture(parametersCapturingSlot)
             )
         }
@@ -413,7 +416,7 @@ class AccountMethodsTest {
         val parametersCapturingSlot = slot<Parameters>()
         verify {
             client.get(
-                path = "api/v1/accounts/1/statuses",
+                path = "${accountMethods.endpoint}/1/statuses",
                 query = capture(parametersCapturingSlot)
             )
         }
@@ -430,6 +433,76 @@ class AccountMethodsTest {
         invoking {
             accountMethods.getStatuses("1", false).execute()
         } shouldThrow BigBoneRequestException::class
+    }
+
+    @Test
+    fun `Given server returning success, when getting featured tags, then call correct endpoint and parse response`() {
+        val client = MockClient.mock("accounts_get_featured_tags_success.json")
+        val accountMethods = AccountMethods(client)
+
+        val featuredTags = accountMethods.getFeaturedTags(
+            accountId = "1234"
+        ).execute()
+
+        with(featuredTags) {
+            shouldHaveSize(1)
+
+            with(first()) {
+                id shouldBeEqualTo "627"
+                name shouldBeEqualTo "nowplaying"
+                statusesCount shouldBeEqualTo 36
+                lastStatusAt shouldBeEqualTo ExactTime(Instant.parse("2019-11-15T07:14:43.524Z"))
+            }
+        }
+        verify {
+            client.get(
+                path = "${accountMethods.endpoint}/1234/featured_tags",
+                query = null
+            )
+        }
+    }
+
+    @Test
+    fun `Given server returning success with entries, when getting lists containing account, then call correct endpoint and parse response`() {
+        val client = MockClient.mock("accounts_get_lists_containing_account_some_success.json")
+        val accountMethods = AccountMethods(client)
+
+        val mastodonLists = accountMethods.getListsContainingAccount(
+            accountId = "1234"
+        ).execute()
+
+        with(mastodonLists) {
+            shouldHaveSize(1)
+
+            with(first()) {
+                id shouldBeEqualTo "13694"
+                title shouldBeEqualTo "dev"
+            }
+        }
+        verify {
+            client.get(
+                path = "${accountMethods.endpoint}/1234/lists",
+                query = null
+            )
+        }
+    }
+
+    @Test
+    fun `Given server returning success with no entries, when getting lists containing account, then call correct endpoint and parse response`() {
+        val client = MockClient.mock("accounts_get_lists_containing_account_none_success.json")
+        val accountMethods = AccountMethods(client)
+
+        val mastodonLists = accountMethods.getListsContainingAccount(
+            accountId = "1234"
+        ).execute()
+
+        mastodonLists.shouldBeEmpty()
+        verify {
+            client.get(
+                path = "${accountMethods.endpoint}/1234/lists",
+                query = null
+            )
+        }
     }
 
     @Test
@@ -455,7 +528,7 @@ class AccountMethodsTest {
         val parametersCapturingSlot = slot<Parameters>()
         verify {
             client.post(
-                path = "api/v1/accounts/1/follow",
+                path = "${accountMethods.endpoint}/1/follow",
                 body = capture(parametersCapturingSlot)
             )
         }
@@ -493,7 +566,7 @@ class AccountMethodsTest {
         }
         verify {
             client.post(
-                path = "api/v1/accounts/3361/unfollow",
+                path = "${accountMethods.endpoint}/3361/unfollow",
                 body = null
             )
         }
@@ -505,6 +578,24 @@ class AccountMethodsTest {
         val accountMethods = AccountMethods(client)
 
         invoking { accountMethods.unfollowAccount("1").execute() } shouldThrow BigBoneRequestException::class
+    }
+
+    @Test
+    fun `Given server returning success, when removing account from followers, then call correct endpoint and parse response`() {
+        val client = MockClient.mock("accounts_remove_from_followers_success.json")
+        val accountMethods = AccountMethods(client)
+
+        val relationship = accountMethods.removeAccountFromFollowers("1").execute()
+
+        with(relationship) {
+            isFollowedBy.shouldBeFalse()
+        }
+        verify {
+            client.post(
+                path = "${accountMethods.endpoint}/1/remove_from_followers",
+                body = null
+            )
+        }
     }
 
     @Test
@@ -524,7 +615,7 @@ class AccountMethodsTest {
         }
         verify {
             client.post(
-                path = "api/v1/accounts/1/block",
+                path = "${accountMethods.endpoint}/1/block",
                 body = null
             )
         }
@@ -555,7 +646,7 @@ class AccountMethodsTest {
         }
         verify {
             client.post(
-                path = "api/v1/accounts/1/unblock",
+                path = "${accountMethods.endpoint}/1/unblock",
                 body = null
             )
         }
@@ -591,7 +682,7 @@ class AccountMethodsTest {
         val parametersCapturingSlot = slot<Parameters>()
         verify {
             client.post(
-                path = "api/v1/accounts/1/mute",
+                path = "${accountMethods.endpoint}/1/mute",
                 body = capture(parametersCapturingSlot)
             )
         }
@@ -625,7 +716,7 @@ class AccountMethodsTest {
         }
         verify {
             client.post(
-                path = "api/v1/accounts/1/unmute",
+                path = "${accountMethods.endpoint}/1/unmute",
                 body = null
             )
         }
@@ -637,6 +728,89 @@ class AccountMethodsTest {
         val accountMethods = AccountMethods(client)
 
         invoking { accountMethods.unmuteAccount("1").execute() } shouldThrow BigBoneRequestException::class
+    }
+
+    @Test
+    fun `Given server returning success, when pinning account, then call correct endpoint and parse response`() {
+        val client = MockClient.mock("accounts_feature_account_on_profile_success.json")
+        val accountMethods = AccountMethods(client)
+
+        val relationship = accountMethods.featureAccountOnProfile("1").execute()
+
+        with(relationship) {
+            endorsed.shouldBeTrue()
+        }
+        verify {
+            client.post(
+                path = "${accountMethods.endpoint}/1/pin",
+                body = null
+            )
+        }
+    }
+
+    @Test
+    fun `Given server returning success, when unpinning account, then call correct endpoint and parse response`() {
+        val client = MockClient.mock("accounts_unfeature_account_from_profile_success.json")
+        val accountMethods = AccountMethods(client)
+
+        val relationship = accountMethods.unfeatureAccountFromProfile("1").execute()
+
+        with(relationship) {
+            endorsed.shouldBeFalse()
+        }
+        verify {
+            client.post(
+                path = "${accountMethods.endpoint}/1/unpin",
+                body = null
+            )
+        }
+    }
+
+    @Test
+    fun `Given server returning success, when setting private note on profile, then call correct endpoint and parse response`() {
+        val client = MockClient.mock("accounts_set_private_note_on_profile_success.json")
+        val accountMethods = AccountMethods(client)
+        val privateNote = "Met at 31C3. Slightly awkward, but in a good way!"
+
+        val relationship = accountMethods.setPrivateNoteOnProfile(
+            accountId = "1",
+            privateNote = privateNote
+        ).execute()
+
+        with(relationship) {
+            note shouldBeEqualTo privateNote
+        }
+        val parametersCapturingSlot = slot<Parameters>()
+        verify {
+            client.post(
+                path = "${accountMethods.endpoint}/1/note",
+                body = capture(parametersCapturingSlot)
+            )
+        }
+        with(parametersCapturingSlot.captured) {
+            toQuery() shouldBeEqualTo "comment=${privateNote.urlEncode()}"
+        }
+    }
+
+    @Test
+    fun `Given server returning success, when unsetting private note on profile, then call correct endpoint and parse response`() {
+        val client = MockClient.mock("accounts_unset_private_note_on_profile_success.json")
+        val accountMethods = AccountMethods(client)
+
+        val relationship = accountMethods.setPrivateNoteOnProfile(
+            "1",
+            privateNote = null
+        ).execute()
+
+        with(relationship) {
+            note.shouldBeEmpty()
+        }
+        verify {
+            client.post(
+                path = "${accountMethods.endpoint}/1/note",
+                body = null
+            )
+        }
     }
 
     @Test
@@ -664,7 +838,7 @@ class AccountMethodsTest {
         val parametersCapturingSlot = slot<Parameters>()
         verify {
             client.get(
-                path = "api/v1/accounts/relationships",
+                path = "${accountMethods.endpoint}/relationships",
                 query = capture(parametersCapturingSlot)
             )
         }
@@ -683,6 +857,55 @@ class AccountMethodsTest {
         val accountMethods = AccountMethods(client)
 
         invoking { accountMethods.getRelationships(listOf("1")).execute() } shouldThrow BigBoneRequestException::class
+    }
+
+    @Test
+    fun `Given server returning success, when finding familiar followers, then call correct endpoint and parse response`() {
+        val client = MockClient.mock("accounts_find_familiar_followers_success.json")
+        val accountMethods = AccountMethods(client)
+        val accountIds = listOf("1", "2")
+
+        val familiarFollowers = accountMethods.findFamiliarFollowers(
+            accountIds = accountIds
+        ).execute()
+
+        with(familiarFollowers) {
+            shouldHaveSize(2)
+
+            with(get(0)) {
+                id shouldBeEqualTo "1"
+
+                with(accounts) {
+                    shouldHaveSize(2)
+
+                    with(get(0)) {
+                        id shouldBeEqualTo "1087990"
+                        username shouldBeEqualTo "moss"
+                        acct shouldBeEqualTo "moss@goblin.camp"
+                    }
+                    with(get(1)) {
+                        id shouldBeEqualTo "1092723"
+                        username shouldBeEqualTo "vivianrose"
+                        acct shouldBeEqualTo "vivianrose"
+                    }
+                }
+            }
+
+            with(get(1)) {
+                id shouldBeEqualTo "2"
+                accounts.shouldBeEmpty()
+            }
+        }
+        val parametersCapturingSlot = slot<Parameters>()
+        verify {
+            client.get(
+                path = "${accountMethods.endpoint}/familiar_followers",
+                query = capture(parametersCapturingSlot)
+            )
+        }
+        with(parametersCapturingSlot.captured) {
+            toQuery() shouldBeEqualTo "id[]=1&id[]=2"
+        }
     }
 
     @Test
@@ -709,5 +932,33 @@ class AccountMethodsTest {
         val accountMethods = AccountMethods(client)
 
         invoking { accountMethods.searchAccounts("test").execute() } shouldThrow BigBoneRequestException::class
+    }
+
+    @Test
+    fun `Given server returning success, when getting account via WebFinger address, then call correct endpoint and parse response`() {
+        val client = MockClient.mock("accounts_webfinger_success.json")
+        val accountMethods = AccountMethods(client)
+
+        val account = accountMethods.getAccountViaWebFingerAddress(
+            usernameOrAddress = "trwnh"
+        ).execute()
+
+        with(account) {
+            id shouldBeEqualTo "14715"
+            username shouldBeEqualTo "trwnh"
+            acct shouldBeEqualTo "trwnh"
+            displayName shouldBeEqualTo "infinite love ⴳ"
+            isLocked.shouldBeFalse()
+        }
+        val parametersCapturingSlot = slot<Parameters>()
+        verify {
+            client.post(
+                path = "${accountMethods.endpoint}/lookup",
+                body = capture(parametersCapturingSlot)
+            )
+        }
+        with(parametersCapturingSlot.captured) {
+            toQuery() shouldBeEqualTo "acct=trwnh"
+        }
     }
 }

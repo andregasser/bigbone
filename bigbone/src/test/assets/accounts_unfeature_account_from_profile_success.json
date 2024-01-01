@@ -1,0 +1,14 @@
+{
+  "id": "1",
+  "following": true,
+  "showing_reblogs": true,
+  "notifying": false,
+  "followed_by": true,
+  "blocking": false,
+  "blocked_by": false,
+  "muting": false,
+  "muting_notifications": false,
+  "requested": false,
+  "domain_blocking": false,
+  "endorsed": false
+}

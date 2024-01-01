@@ -1,0 +1,21 @@
+[
+  {
+    "id": "1",
+    "accounts": [
+      {
+        "id": "1087990",
+        "username": "moss",
+        "acct": "moss@goblin.camp"
+      },
+      {
+        "id": "1092723",
+        "username": "vivianrose",
+        "acct": "vivianrose"
+      }
+    ]
+  },
+  {
+    "id": "2",
+    "accounts": []
+  }
+]
