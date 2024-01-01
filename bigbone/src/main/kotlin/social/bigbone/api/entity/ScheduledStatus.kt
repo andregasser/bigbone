@@ -16,6 +16,7 @@ import social.bigbone.api.entity.data.Visibility
 data class ScheduledStatus(
     /**
      * ID of the scheduled status in the database.
+     * String cast from an Integer, but not guaranteed to be a number.
      */
     @SerialName("id")
     val id: String = "",
@@ -73,13 +74,13 @@ data class ScheduledStatus(
          * The text of the content warning or summary for the status.
          */
         @SerialName("spoiler_text")
-        val spoilerText: String = "",
+        val spoilerText: String? = null,
 
         /**
          * The visibility that the status will have once it is posted.
          */
         @SerialName("visibility")
-        val visibility: Visibility = Visibility.PUBLIC,
+        val visibility: Visibility? = null,
 
         /**
          * ID of the Status that will be replied to.
@@ -88,7 +89,8 @@ data class ScheduledStatus(
         val inReplyToId: String? = null,
 
         /**
-         * The language that will be used for the status (ISO 639-1 two-letter language code).
+         * The language that will be used for the status.
+         * String representing the ISO 639-1 two-letter language code.
          */
         @SerialName("language")
         val language: String? = null,

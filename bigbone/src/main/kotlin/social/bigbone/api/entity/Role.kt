@@ -17,20 +17,20 @@ data class Role(
      * The ID of the Role in the database.
      */
     @SerialName("id")
-    val id: Int,
+    val id: Int = 0,
 
     /**
      * The name of the role.
      */
     @SerialName("name")
-    val name: String,
+    val name: String = "",
 
     /**
      * The hex code assigned to this role.
      * If no hex code is assigned, the string will be empty.
      */
     @SerialName("color")
-    val color: String,
+    val color: String = "",
 
     /**
      * A bitmask that represents the sum of all permissions granted to the role.
@@ -39,13 +39,13 @@ data class Role(
      * For convenience, use [getParsedPermissions] to directly get a list of [Permission]s seen in this field.
      */
     @SerialName("permissions")
-    val rawPermissions: Int,
+    val rawPermissions: Int = 0,
 
     /**
      * Whether the role is publicly visible as a badge on user profiles.
      */
     @SerialName("highlighted")
-    val highlighted: Boolean,
+    val highlighted: Boolean = false,
 
     /**
      * When the role was first assigned.

@@ -4,7 +4,7 @@ import social.bigbone.MastodonClient
 import social.bigbone.MastodonRequest
 import social.bigbone.Parameters
 import social.bigbone.api.entity.Report
-import social.bigbone.api.entity.Report.ReportCategory
+import social.bigbone.api.entity.data.ReportCategory
 import social.bigbone.api.exception.BigBoneRequestException
 
 /**

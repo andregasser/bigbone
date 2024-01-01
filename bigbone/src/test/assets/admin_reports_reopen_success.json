@@ -1,0 +1,10 @@
+{
+  "id": "2",
+  "action_taken": false,
+  "action_taken_at": null,
+  "category": "spam",
+  "comment": "",
+  "forwarded": false,
+  "created_at": "2022-09-09T21:19:44.021Z",
+  "updated_at": "2022-09-11T14:42:21.855Z"
+}
