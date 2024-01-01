@@ -3,11 +3,12 @@ package social.bigbone.sample;
 import social.bigbone.MastodonClient;
 import social.bigbone.api.entity.Instance;
 import social.bigbone.api.exception.BigBoneRequestException;
+import social.bigbone.api.exception.BigBoneVersionException;
 
 @SuppressWarnings("PMD.SystemPrintln")
 public class GetInstanceInfo {
 
-    public static void main(final String[] args) throws BigBoneRequestException {
+    public static void main(final String[] args) throws BigBoneRequestException, BigBoneVersionException {
         final String instance = args[0];
 
         // Instantiate client

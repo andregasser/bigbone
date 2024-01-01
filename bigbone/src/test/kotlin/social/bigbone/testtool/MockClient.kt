@@ -65,7 +65,8 @@ object MockClient {
         maxId: String? = null,
         sinceId: String? = null,
         requestUrl: String = "https://example.com",
-        responseBaseUrl: String = "https://mstdn.jp/api/v1/timelines/public"
+        responseBaseUrl: String = "https://mstdn.jp/api/v1/timelines/public",
+        instanceVersion: String = "1337.42.23"
     ): MastodonClient {
         val clientMock: MastodonClient = mockk()
         val response: Response = Response.Builder()
@@ -103,11 +104,13 @@ object MockClient {
         every { clientMock.postRequestBody(any<String>(), any<RequestBody>()) } returns response
         every { clientMock.put(any<String>(), any<Parameters>()) } returns response
         every { clientMock.performAction(any<String>(), any<MastodonClient.Method>(), any<Parameters>()) } returns Unit
+        every { clientMock.getInstanceVersion() } returns instanceVersion
         return clientMock
     }
 
     fun ioException(
-        requestUrl: String = "https://example.com"
+        requestUrl: String = "https://example.com",
+        instanceVersion: String = "1337.42.23"
     ): MastodonClient {
         val clientMock: MastodonClient = mockk()
         val responseBodyMock: ResponseBody = mockk()
@@ -133,13 +136,15 @@ object MockClient {
                 any<Parameters>()
             )
         } throws BigBoneRequestException("mock")
+        every { clientMock.getInstanceVersion() } returns instanceVersion
         return clientMock
     }
 
     fun failWithResponse(
         responseJsonAssetPath: String,
         responseCode: Int,
-        message: String
+        message: String,
+        instanceVersion: String = "1337.42.23"
     ): MastodonClient {
         val clientMock: MastodonClient = mockk()
         val responseBodyMock: ResponseBody = mockk()
@@ -168,6 +173,7 @@ object MockClient {
                 any<Parameters>()
             )
         } throws BigBoneRequestException(response)
+        every { clientMock.getInstanceVersion() } returns instanceVersion
         return clientMock
     }
 }
