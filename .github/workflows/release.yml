@@ -20,17 +20,17 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Ensure that all required checks pass
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/gradle-build-action@v3
         with:
           arguments: check
 
       - name: Assemble the library for use in GitHub release
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/gradle-build-action@v3
         with:
           arguments: assemble generatePomFileForBigbonePublication
 
       - name: Publish the library
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/gradle-build-action@v3
         with:
           arguments: publish
         env:
