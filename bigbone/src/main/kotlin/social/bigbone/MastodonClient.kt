@@ -93,8 +93,7 @@ import javax.net.ssl.X509TrustManager
  * This class is used by method classes (e.g. AccountMethods, RxAcccountMethods, ...) and performs HTTP calls
  * towards the Mastodon instance specified. Request/response data is serialized/deserialized accordingly.
  */
-class MastodonClient
-private constructor(
+class MastodonClient private constructor(
     private val instanceName: String,
     private val streamingUrl: String,
     private val client: OkHttpClient,
@@ -106,6 +105,7 @@ private constructor(
 ) {
 
     //region API methods
+
     /**
      * Access API methods under the "accounts" endpoint.
      */
@@ -434,6 +434,7 @@ private constructor(
     @Suppress("unused") // public API
     @get:JvmName("trends")
     val trends: TrendMethods by lazy { TrendMethods(this) }
+
     //endregion API methods
 
     /**

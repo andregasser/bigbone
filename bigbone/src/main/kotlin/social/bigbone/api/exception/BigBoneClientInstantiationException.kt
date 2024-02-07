@@ -31,8 +31,7 @@ class ServerInfoRetrievalException : BigBoneClientInstantiationException {
 class ServerInfoUrlRetrievalException(
     response: Response,
     message: String? = null
-) :
-    BigBoneClientInstantiationException(
+) : BigBoneClientInstantiationException(
         message = "${message ?: ""}${response.message}"
     )
 

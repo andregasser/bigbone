@@ -1,3 +1,5 @@
+@file:Suppress("ktlint:standard:no-multi-spaces", "ktlint:standard:discouraged-comment-location")
+
 package social.bigbone.sample
 
 import social.bigbone.MastodonClient
@@ -26,9 +28,9 @@ object RxStreamPublicTimeline {
             .filter { it is MastodonApiEvent }
             .map { it as MastodonApiEvent }
             .subscribe(
-                /* onNext = */ { println("Mastodon API event: $it") },
-                /* onError = */ ::println,
-                /* onComplete = */ { println("onComplete") }
+                { println("Mastodon API event: $it") }, // onNext
+                ::println,                              // onError
+                { println("onComplete") }               // onComplete
             )
 
         Timer().schedule(15_000L) {

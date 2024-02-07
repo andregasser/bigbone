@@ -26,6 +26,7 @@ import java.time.Instant
 
 class AdminDomainBlockMethodsTest {
 
+    @Suppress("ktlint:standard:max-line-length")
     @Test
     fun `Given client returning success, when getting all domain blocks without Range, then ensure proper deserialisation and correct endpoint and parameter usage`() {
         val client = MockClient.mock("admin_domain_blocks_get_all_success.json")
