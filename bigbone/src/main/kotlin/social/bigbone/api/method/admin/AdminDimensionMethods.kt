@@ -1,3 +1,5 @@
+@file:Suppress("ktlint:standard:annotation")
+
 package social.bigbone.api.method.admin
 
 import social.bigbone.MastodonClient

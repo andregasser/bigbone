@@ -41,7 +41,7 @@ class RxFollowRequestMethods(client: MastodonClient) {
      * @param accountId ID of the account whose follow request should be rejected.
      * @see <a href="https://docs.joinmastodon.org/methods/follow_requests/#reject">Mastodon API documentation: methods/follow_requests/#reject</a>
      */
-    fun rejectFollowRequest(accountId: String): Single<Relationship> = Single.fromCallable() {
+    fun rejectFollowRequest(accountId: String): Single<Relationship> = Single.fromCallable {
         followRequestMethods.rejectFollowRequest(accountId).execute()
     }
 }

@@ -25,7 +25,7 @@ class StatusMethodsTest {
         status.id shouldBeEqualTo "11111"
     }
 
-    @Suppress("MaxLineLength")
+    @Suppress("MaxLineLength", "ktlint:standard:max-line-length")
     @Test
     fun getStatusWithPreviewCard() {
         val client = MockClient.mock("status_with_previewcard.json")
