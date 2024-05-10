@@ -4,6 +4,7 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonArray
 import okhttp3.Response
+import social.bigbone.api.entity.Error
 import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.extension.toPageable
 
@@ -80,8 +81,11 @@ class MastodonRequest<T>(
                 throw BigBoneRequestException("Successful response could not be parsed", e)
             }
         } else {
+            val error = response.body?.string()?.let {
+                JSON_SERIALIZER.decodeFromString<Error>(it)
+            }
             response.close()
-            throw BigBoneRequestException(response)
+            throw BigBoneRequestException(response, error)
         }
     }
 }
