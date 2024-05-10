@@ -1,6 +1,7 @@
 package social.bigbone.api.exception
 
 import okhttp3.Response
+import social.bigbone.api.entity.Error
 
 /**
  * Exception which is thrown when there was a problem executing the associated [social.bigbone.MastodonRequest].
@@ -13,6 +14,12 @@ class BigBoneRequestException : Exception {
     var httpStatusCode = INVALID_STATUS_CODE
 
     /**
+     * If BigBoneRequestException was constructed after an unsuccessful request,
+     * error details as returned by the Mastodon instance might be available here.
+     */
+    var errorDetails: Error? = null
+
+    /**
      * true if [httpStatusCode] contains a valid HTTP Status code, false if not.
      */
     val statusCodeValid: Boolean =
@@ -21,10 +28,12 @@ class BigBoneRequestException : Exception {
     /**
      * Create a BigBoneRequestException using a [Response].
      * @param response an unsuccessful response; the HTTP status message will be used as the detail message for this
-     * exception, HTTP status code will be available via [httpStatusCode].
+     *  exception, HTTP status code will be available via [httpStatusCode]
+     * @param error optionally, an [Error] containing additional details about request errors that led to the unsuccessful response
      */
-    constructor(response: Response) : super(response.message) {
+    constructor(response: Response, error: Error? = null) : super(response.message) {
         httpStatusCode = response.code
+        errorDetails = error
     }
 
     /**
