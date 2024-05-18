@@ -5,8 +5,7 @@ on:
     tags:
       # Run on any release tag formatted like v2.0.0
       # Do not run on snapshot tags formatted like v2.0.0-20240518.225913
-      - 'v*.*.*'
-      - '!v*.*.*-**'
+      - v[2-9].[0-9]+.[0-9]+
   workflow_dispatch:
     # Allows the GitHub action to be executed manually (we do this for snapshot builds by running this
     # action on the master branch.
