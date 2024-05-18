@@ -19,20 +19,17 @@ jobs:
       - name: Checkout project sources
         uses: actions/checkout@v4
 
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+
       - name: Ensure that all required checks pass
-        uses: gradle/gradle-build-action@v3
-        with:
-          arguments: check
+        run: ./gradlew check
 
       - name: Assemble the library for use in GitHub release
-        uses: gradle/gradle-build-action@v3
-        with:
-          arguments: assemble generatePomFileForBigbonePublication
+        run: ./gradlew assemble generatePomFileForBigbonePublication
 
       - name: Publish the library
-        uses: gradle/gradle-build-action@v3
-        with:
-          arguments: publish
+        run: ./gradlew publish
         env:
           SONATYPE_USERNAME: ${{ secrets.OSS_SONATYPE_USERNAME }}
           SONATYPE_PASSWORD: ${{ secrets.OSS_SONATYPE_PASSWORD }}
