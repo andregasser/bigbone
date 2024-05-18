@@ -3,9 +3,13 @@ name: Release
 on:
   push:
     tags:
-      # Run on any pushed tag like v2.0.0
+      # Run on any release tag formatted like v2.0.0
+      # Do not run on snapshot tags formatted like v2.0.0-20240518.225913
       - 'v*.*.*'
+      - '!v*.*.*-**'
   workflow_dispatch:
+    # Allows the GitHub action to be executed manually (we do this for snapshot builds by running this
+    # action on the master branch.
 
 # Cancel any already running builds with that git reference
 concurrency:
