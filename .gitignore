@@ -29,3 +29,5 @@ local.properties
 
 // for sample
 credential.properties
+
+**/.DS_Store
