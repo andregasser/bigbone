@@ -33,7 +33,6 @@ jobs:
         env:
           SONATYPE_USERNAME: ${{ secrets.OSS_SONATYPE_USERNAME }}
           SONATYPE_PASSWORD: ${{ secrets.OSS_SONATYPE_PASSWORD }}
-          ORG_GRADLE_PROJECT_signingKeyId: ${{ secrets.SIGNING_KEY_ID }}
           ORG_GRADLE_PROJECT_signingKey: ${{ secrets.SIGNING_PRIVATE_KEY }}
           ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.SIGNING_PASSWORD }}
 
@@ -41,14 +40,14 @@ jobs:
         id: zip-files
         run: |
           tagName=${{ github.ref_name }}
-          
+
           # Format the current date like 20231105.180259
-          formattedDate=date +%Y%m%d.%H%M%S
+          formattedDate=$(date +%Y%m%d.%H%M%S)
           archiveName=BigBone-$tagName-$formattedDate.zip
-          
+
           # Get all JARs and POM files and zip them into an archive with archiveName
           find bigbone/build/libs bigbone/build/publications -type f \( -name "*.jar" -o -name "*pom*.xml" \) -print | zip $archiveName -@
-          
+
           # Save archive name for reuse in later action steps
           echo "zipArchive=$archiveName" >> $GITHUB_OUTPUT
 
