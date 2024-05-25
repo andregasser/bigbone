@@ -932,19 +932,7 @@ class MastodonClient private constructor(
             this.debug = true
         }
 
-        private fun getStreamingApiUrl(instanceVersion: String?, fallbackUrl: String): String {
-            val majorVersion = instanceVersion?.substringBefore('.')
-            val version: Int = if (majorVersion == null) {
-                2
-            } else {
-                try {
-                    val majorVersionInt = majorVersion.toInt()
-                    if (majorVersionInt < 4) 1 else 2
-                } catch (e: NumberFormatException) {
-                    2
-                }
-            }
-
+        private fun getStreamingApiUrl(fallbackUrl: String): String {
             versionedInstanceRequest().use { response: Response ->
                 if (!response.isSuccessful) return fallbackUrl
 
@@ -953,17 +941,8 @@ class MastodonClient private constructor(
                         .parseToJsonElement(responseBody)
                         .jsonObject
 
-                    if (version == 2) {
-                        rawJsonObject["configuration"]
-                            ?.jsonObject
-                            ?.get("urls")
-                            ?.jsonObject
-                            ?.get("streaming") as? JsonPrimitive
-                    } else {
-                        rawJsonObject["urls"]
-                            ?.jsonObject
-                            ?.get("streaming_api") as? JsonPrimitive
-                    }?.contentOrNull
+                    (rawJsonObject["configuration"]?.jsonObject?.get("urls")?.jsonObject?.get("streaming") as? JsonPrimitive)
+                        ?.contentOrNull
                         // okhttp’s HttpUrl which is used later to parse this result only allows http(s)
                         // so we need to replace ws(s) first
                         ?.replace("ws:", "http:")
@@ -1081,8 +1060,6 @@ class MastodonClient private constructor(
          * connection are _not_ caught by this library.
          */
         fun build(): MastodonClient {
-            val instanceVersion = getInstanceVersion()
-
             return MastodonClient(
                 instanceName = instanceName,
                 client = okHttpClientBuilder
@@ -1093,13 +1070,10 @@ class MastodonClient private constructor(
                     .build(),
                 accessToken = accessToken,
                 debug = debug,
-                instanceVersion = instanceVersion,
+                instanceVersion = getInstanceVersion(),
                 scheme = scheme,
                 port = port,
-                streamingUrl = getStreamingApiUrl(
-                    instanceVersion = instanceVersion,
-                    fallbackUrl = scheme + instanceName
-                )
+                streamingUrl = getStreamingApiUrl(fallbackUrl = scheme + instanceName)
             )
         }
     }
