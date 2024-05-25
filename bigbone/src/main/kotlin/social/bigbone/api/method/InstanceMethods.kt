@@ -6,7 +6,6 @@ import social.bigbone.api.entity.DomainBlock
 import social.bigbone.api.entity.ExtendedDescription
 import social.bigbone.api.entity.Instance
 import social.bigbone.api.entity.InstanceActivity
-import social.bigbone.api.entity.InstanceV1
 import social.bigbone.api.entity.Rule
 
 /**
@@ -26,22 +25,6 @@ class InstanceMethods(private val client: MastodonClient) {
     fun getInstance(): MastodonRequest<Instance> {
         return client.getMastodonRequest(
             endpoint = endpointV2,
-            method = MastodonClient.Method.GET
-        )
-    }
-
-    /**
-     * Obtain general information about the server.
-     * @see <a href="https://docs.joinmastodon.org/methods/instance/#v1">Mastodon API documentation: methods/instance/#v1</a>
-     */
-    @Deprecated(
-        message = "Deprecated since 4.0.0. This method is just kept for backward compatibility.",
-        replaceWith = ReplaceWith("getInstance()"),
-        level = DeprecationLevel.WARNING
-    )
-    fun getInstanceV1(): MastodonRequest<InstanceV1> {
-        return client.getMastodonRequest(
-            endpoint = endpointV1,
             method = MastodonClient.Method.GET
         )
     }
