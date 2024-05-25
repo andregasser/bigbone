@@ -16,7 +16,6 @@ import okhttp3.WebSocket
 import okhttp3.WebSocketListener
 import okio.ByteString
 import social.bigbone.api.Pageable
-import social.bigbone.api.entity.data.InstanceVersion
 import social.bigbone.api.entity.streaming.MastodonApiEvent.GenericMessage
 import social.bigbone.api.entity.streaming.MastodonApiEvent.StreamEvent
 import social.bigbone.api.entity.streaming.ParsedStreamEvent.Companion.toStreamEvent
@@ -28,7 +27,6 @@ import social.bigbone.api.entity.streaming.TechnicalEvent.Open
 import social.bigbone.api.entity.streaming.WebSocketCallback
 import social.bigbone.api.exception.BigBoneClientInstantiationException
 import social.bigbone.api.exception.BigBoneRequestException
-import social.bigbone.api.exception.InstanceVersionRetrievalException
 import social.bigbone.api.exception.ServerInfoRetrievalException
 import social.bigbone.api.method.AccountMethods
 import social.bigbone.api.method.AnnouncementMethods
@@ -956,31 +954,10 @@ class MastodonClient private constructor(
         /**
          * Get the version string for this Mastodon instance.
          * @return a string corresponding to the version of this Mastodon instance
-         * @throws BigBoneClientInstantiationException if instance version cannot be retrieved using any known method or API version
+         * @throws BigBoneClientInstantiationException if instance version cannot be retrieved
          */
         @Throws(BigBoneClientInstantiationException::class)
         private fun getInstanceVersion(): String {
-            return try {
-                getInstanceVersionViaServerInfo()
-            } catch (error: BigBoneClientInstantiationException) {
-                // fall back to retrieving from Mastodon API itself
-                try {
-                    getInstanceVersionFromApi()
-                } catch (instanceException: InstanceVersionRetrievalException) {
-                    throw BigBoneClientInstantiationException(
-                        message = "Failed to get instance version of $instanceName",
-                        cause = if (instanceException.cause == instanceException) {
-                            instanceException.initCause(error)
-                        } else {
-                            instanceException
-                        }
-                    )
-                }
-            }
-        }
-
-        @Throws(ServerInfoRetrievalException::class)
-        private fun getInstanceVersionViaServerInfo(): String {
             val serverSoftwareInfo: Server.Software? = NodeInfoClient
                 .retrieveServerInfo(instanceName)
                 ?.software
@@ -988,33 +965,7 @@ class MastodonClient private constructor(
 
             if (serverSoftwareInfo != null) return serverSoftwareInfo.version
 
-            throw ServerInfoRetrievalException(
-                cause = IllegalArgumentException("Server $instanceName doesn't appear to run Mastodon")
-            )
-        }
-
-        /**
-         * Get the version string for this Mastodon instance, using a specific API version.
-         * @return a string corresponding to the version of this Mastodon instance, or null if no version string can be
-         *  retrieved using the specified API version.
-         *  @throws InstanceVersionRetrievalException in case we got a server response but no version, or an unsucessful response
-         */
-        @Throws(InstanceVersionRetrievalException::class)
-        private fun getInstanceVersionFromApi(): String {
-            return versionedInstanceRequest().use { response: Response ->
-                if (response.isSuccessful) {
-                    val instanceVersion: InstanceVersion? = response.body?.string()?.let { responseBody: String ->
-                        JSON_SERIALIZER.decodeFromString(responseBody)
-                    }
-                    instanceVersion
-                        ?.version
-                        ?: throw InstanceVersionRetrievalException(
-                            cause = IllegalStateException("Instance version was null unexpectedly")
-                        )
-                } else {
-                    throw InstanceVersionRetrievalException(response = response)
-                }
-            }
+            throw ServerInfoRetrievalException(message = "Server $instanceName doesn't appear to run Mastodon", cause = null)
         }
 
         private fun configureForTrustAll(clientBuilder: OkHttpClient.Builder) {
