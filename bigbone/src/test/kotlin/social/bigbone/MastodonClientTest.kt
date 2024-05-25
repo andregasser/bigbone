@@ -35,9 +35,6 @@ class MastodonClientTest {
                 null
             )
 
-            val responseV1Mock = mockk<Response>()
-            every { versionedInstanceRequest(1) } answers { responseV1Mock }
-
             val responseBodyV2Mock = mockk<ResponseBody> {
                 every { string() } answers {
                     AssetsUtil.readFromAssets("mastodon_client_v2_instance_response.json")
@@ -49,7 +46,7 @@ class MastodonClientTest {
                 every { isSuccessful } answers { true }
                 every { close() } returns Unit
             }
-            every { versionedInstanceRequest(2) } answers { responseV2Mock }
+            every { versionedInstanceRequest() } answers { responseV2Mock }
         }
 
         // when
@@ -80,15 +77,7 @@ class MastodonClientTest {
                 every { body } answers { responseBodyV1Mock }
                 every { close() } returns Unit
             }
-            every { versionedInstanceRequest(1) } answers { responseV1Mock }
-
-            val responseV2Mock = mockk<Response> {
-                every { isSuccessful } answers { false }
-                every { code } returns 404
-                every { message } returns "Not Found"
-                every { close() } returns Unit
-            }
-            every { versionedInstanceRequest(2) } answers { responseV2Mock }
+            every { versionedInstanceRequest() } answers { responseV1Mock }
         }
 
         // when
@@ -115,7 +104,7 @@ class MastodonClientTest {
                 every { isSuccessful } answers { true }
                 every { close() } returns Unit
             }
-            every { versionedInstanceRequest(any()) } answers { responseMock }
+            every { versionedInstanceRequest() } answers { responseMock }
         }
 
         invoking(clientBuilder::build)
@@ -141,7 +130,7 @@ class MastodonClientTest {
                 every { isSuccessful } answers { false }
                 every { close() } returns Unit
             }
-            every { versionedInstanceRequest(any()) } answers { responseMock }
+            every { versionedInstanceRequest() } answers { responseMock }
         }
         invoking(clientBuilder::build)
             .shouldThrow(BigBoneClientInstantiationException::class)

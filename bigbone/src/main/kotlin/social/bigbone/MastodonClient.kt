@@ -945,7 +945,7 @@ class MastodonClient private constructor(
                 }
             }
 
-            versionedInstanceRequest(version).use { response: Response ->
+            versionedInstanceRequest().use { response: Response ->
                 if (!response.isSuccessful) return fallbackUrl
 
                 val streamingUrl: String? = response.body?.string()?.let { responseBody: String ->
@@ -986,7 +986,7 @@ class MastodonClient private constructor(
             } catch (error: BigBoneClientInstantiationException) {
                 // fall back to retrieving from Mastodon API itself
                 try {
-                    getInstanceVersionViaApi()
+                    getInstanceVersionFromApi()
                 } catch (instanceException: InstanceVersionRetrievalException) {
                     throw BigBoneClientInstantiationException(
                         message = "Failed to get instance version of $instanceName",
@@ -1014,25 +1014,15 @@ class MastodonClient private constructor(
             )
         }
 
-        @Throws(InstanceVersionRetrievalException::class)
-        private fun getInstanceVersionViaApi(): String {
-            return try {
-                getInstanceVersionFromApi(2)
-            } catch (e: InstanceVersionRetrievalException) {
-                getInstanceVersionFromApi(1)
-            }
-        }
-
         /**
          * Get the version string for this Mastodon instance, using a specific API version.
-         * @param apiVersion the version of API call to use in this request
          * @return a string corresponding to the version of this Mastodon instance, or null if no version string can be
          *  retrieved using the specified API version.
          *  @throws InstanceVersionRetrievalException in case we got a server response but no version, or an unsucessful response
          */
         @Throws(InstanceVersionRetrievalException::class)
-        private fun getInstanceVersionFromApi(apiVersion: Int): String {
-            return versionedInstanceRequest(apiVersion).use { response: Response ->
+        private fun getInstanceVersionFromApi(): String {
+            return versionedInstanceRequest().use { response: Response ->
                 if (response.isSuccessful) {
                     val instanceVersion: InstanceVersion? = response.body?.string()?.let { responseBody: String ->
                         JSON_SERIALIZER.decodeFromString(responseBody)
@@ -1059,13 +1049,9 @@ class MastodonClient private constructor(
         /**
          * Returns the server response for an instance request of a specific version. This response needs to be closed
          * by the caller, either by reading from it via response.body?.string(), or by calling response.close().
-         * @param version value corresponding to the version that should be returned; falls
-         *  back to returning version 1 for illegal values.
          * @return server response for this request
          */
-        internal fun versionedInstanceRequest(version: Int): Response {
-            val versionString = if (version == 2) "v2" else "v1"
-
+        internal fun versionedInstanceRequest(): Response {
             val clientBuilder = OkHttpClient.Builder()
             if (trustAllCerts) configureForTrustAll(clientBuilder)
 
@@ -1078,7 +1064,7 @@ class MastodonClient private constructor(
                                 scheme = scheme,
                                 instanceName = instanceName,
                                 port = port,
-                                path = "api/$versionString/instance"
+                                path = "api/v2/instance"
                             )
                         )
                         .get()
