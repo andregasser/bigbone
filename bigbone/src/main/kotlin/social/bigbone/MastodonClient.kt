@@ -78,7 +78,6 @@ import social.bigbone.api.method.admin.AdminRetentionMethods
 import social.bigbone.api.method.admin.AdminTrendMethods
 import social.bigbone.extension.emptyRequestBody
 import social.bigbone.nodeinfo.NodeInfoClient
-import social.bigbone.nodeinfo.entity.Server
 import java.io.IOException
 import java.security.SecureRandom
 import java.security.cert.X509Certificate
@@ -959,14 +958,15 @@ class MastodonClient private constructor(
          */
         @Throws(BigBoneClientInstantiationException::class)
         private fun getInstanceVersion(): String {
-            val serverSoftwareInfo: Server.Software? = NodeInfoClient
+            val serverVersion: String? = NodeInfoClient
                 .retrieveServerInfo(instanceName)
                 ?.software
                 ?.takeIf { it.name == "mastodon" }
+                ?.version
 
-            if (serverSoftwareInfo != null) return serverSoftwareInfo.version
+            if (serverVersion == null) throw InstanceVersionRetrievalException(message = "Server $instanceName doesn't appear to run Mastodon")
 
-            throw InstanceVersionRetrievalException(message = "Server $instanceName doesn't appear to run Mastodon", cause = null)
+            return serverVersion
         }
 
         private fun configureForTrustAll(clientBuilder: OkHttpClient.Builder) {
