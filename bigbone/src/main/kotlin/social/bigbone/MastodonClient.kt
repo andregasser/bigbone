@@ -28,7 +28,7 @@ import social.bigbone.api.entity.streaming.TechnicalEvent.Open
 import social.bigbone.api.entity.streaming.WebSocketCallback
 import social.bigbone.api.exception.BigBoneClientInstantiationException
 import social.bigbone.api.exception.BigBoneRequestException
-import social.bigbone.api.exception.ServerInfoRetrievalException
+import social.bigbone.api.exception.InstanceVersionRetrievalException
 import social.bigbone.api.method.AccountMethods
 import social.bigbone.api.method.AnnouncementMethods
 import social.bigbone.api.method.AppMethods
@@ -966,7 +966,7 @@ class MastodonClient private constructor(
 
             if (serverSoftwareInfo != null) return serverSoftwareInfo.version
 
-            throw ServerInfoRetrievalException(message = "Server $instanceName doesn't appear to run Mastodon", cause = null)
+            throw InstanceVersionRetrievalException(message = "Server $instanceName doesn't appear to run Mastodon", cause = null)
         }
 
         private fun configureForTrustAll(clientBuilder: OkHttpClient.Builder) {

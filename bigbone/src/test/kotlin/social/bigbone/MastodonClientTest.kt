@@ -11,6 +11,7 @@ import org.amshove.kluent.invoking
 import org.amshove.kluent.shouldThrow
 import org.amshove.kluent.withMessage
 import org.junit.jupiter.api.Test
+import social.bigbone.api.exception.InstanceVersionRetrievalException
 import social.bigbone.api.exception.ServerInfoRetrievalException
 import social.bigbone.nodeinfo.NodeInfoClient
 import social.bigbone.nodeinfo.entity.Server
@@ -63,7 +64,7 @@ class MastodonClientTest {
             every { executeInstanceRequest() } answers { responseMock }
         }
         invoking(clientBuilder::build)
-            .shouldThrow(ServerInfoRetrievalException::class)
+            .shouldThrow(InstanceVersionRetrievalException::class)
             .withMessage("Server $serverUrl doesn't appear to run Mastodon")
     }
 
