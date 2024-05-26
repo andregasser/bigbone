@@ -12,6 +12,7 @@ import okhttp3.Request
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
+import okhttp3.ResponseBody
 import okhttp3.WebSocket
 import okhttp3.WebSocketListener
 import okio.ByteString
@@ -931,7 +932,7 @@ class MastodonClient private constructor(
         }
 
         private fun getStreamingApiUrl(fallbackUrl: String): String {
-            versionedInstanceRequest().use { response: Response ->
+            executeInstanceRequest().use { response: Response ->
                 if (!response.isSuccessful) return fallbackUrl
 
                 val streamingUrl: String? = response.body?.string()?.let { responseBody: String ->
@@ -977,11 +978,15 @@ class MastodonClient private constructor(
         }
 
         /**
-         * Returns the server response for an instance request of a specific version. This response needs to be closed
-         * by the caller, either by reading from it via response.body?.string(), or by calling response.close().
-         * @return server response for this request
+         * Executes a call to the instance API endpoint.
+         *
+         * Can be used to gather information about this instance, e.g. to find out the streaming URL to be used.
+         *
+         * The [Response] returned by this method needs to be closed by the caller, either by reading from it
+         * via [ResponseBody.string], or by calling [Response.close].
+         * @return Server response as [Response] for this request
          */
-        internal fun versionedInstanceRequest(): Response {
+        internal fun executeInstanceRequest(): Response {
             val clientBuilder = OkHttpClient.Builder()
             if (trustAllCerts) configureForTrustAll(clientBuilder)
 

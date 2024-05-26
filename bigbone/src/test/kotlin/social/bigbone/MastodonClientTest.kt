@@ -35,7 +35,7 @@ class MastodonClientTest {
                 every { isSuccessful } answers { true }
                 every { close() } returns Unit
             }
-            every { versionedInstanceRequest() } answers { responseMock }
+            every { executeInstanceRequest() } answers { responseMock }
         }
 
         invoking(clientBuilder::build)
@@ -60,7 +60,7 @@ class MastodonClientTest {
                 every { isSuccessful } answers { false }
                 every { close() } returns Unit
             }
-            every { versionedInstanceRequest() } answers { responseMock }
+            every { executeInstanceRequest() } answers { responseMock }
         }
         invoking(clientBuilder::build)
             .shouldThrow(ServerInfoRetrievalException::class)
