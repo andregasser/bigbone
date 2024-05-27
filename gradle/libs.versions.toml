@@ -16,7 +16,7 @@ rxjava = "3.1.8"
 
 # Gradle plugins
 jacoco = "0.8.9"
-dependency-analysis = "1.31.0"
+dependency-analysis = "1.32.0"
 detekt = "1.23.6"
 versions = "0.51.0"
 ktlint = "12.1.1"
