@@ -1,19 +1,8 @@
 plugins {
-    id 'com.gradle.develocity' version '3.17.4'
     id 'org.gradle.toolchains.foojay-resolver-convention' version '0.8.0'
 }
 
 rootProject.name = "bigbone-parent"
-
-gradleEnterprise {
-    if (System.getenv("CI") != null) {
-        buildScan {
-            publishAlways()
-            termsOfServiceUrl = "https://gradle.com/terms-of-service"
-            termsOfServiceAgree = "yes"
-        }
-    }
-}
 
 dependencyResolutionManagement {
     repositories {
