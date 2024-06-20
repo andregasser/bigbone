@@ -122,64 +122,6 @@ class InstanceMethodsTest {
     }
 
     @Test
-    fun getInstanceV1Extended() {
-        val client = MockClient.mock("instance_v1_extended.json")
-        val instanceMethods = InstanceMethods(client)
-
-        val instance = instanceMethods.getInstanceV1().execute()
-        instance.uri shouldBeEqualTo "mastodon.social"
-        instance.title shouldBeEqualTo "Mastodon"
-        instance.description shouldBeEqualTo ""
-        instance.email shouldBeEqualTo "staff@mastodon.social"
-        instance.version shouldBeEqualTo "3.5.3"
-        with(instance.configuration) {
-            shouldNotBeNull()
-
-            with(statuses) {
-                shouldNotBeNull()
-
-                maxCharacters shouldBeEqualTo 500
-                maxMediaAttachments shouldBeEqualTo 4
-                charactersReservedPerUrl shouldBeEqualTo 23
-            }
-
-            with(mediaAttachments) {
-                shouldNotBeNull()
-
-                supportedMimeTypes.size shouldBeEqualTo 25
-                imageSizeLimit shouldBeEqualTo 10_485_760
-                imageMatrixLimit shouldBeEqualTo 16_777_216
-                videoSizeLimit shouldBeEqualTo 41_943_040
-                videoFrameRateLimit shouldBeEqualTo 60
-                videoMatrixLimit shouldBeEqualTo 2_304_000
-            }
-
-            with(polls) {
-                shouldNotBeNull()
-
-                maxOptions shouldBeEqualTo 4
-                maxCharactersPerOption shouldBeEqualTo 50
-                minExpiration shouldBeEqualTo 300
-                maxExpiration shouldBeEqualTo 2_629_746
-            }
-        }
-
-        with(instance.rules) {
-            shouldNotBeNull()
-            shouldHaveSize(6)
-            first().id shouldBeEqualTo "1"
-            first().text shouldBeEqualTo "Sexually explicit or violent media must be marked as sensitive when posting"
-        }
-
-        verify {
-            client.get(
-                path = "api/v1/instance",
-                query = null
-            )
-        }
-    }
-
-    @Test
     fun getInstanceWithJson() {
         val client = MockClient.mock("instance.json")
         val instanceMethods = InstanceMethods(client)

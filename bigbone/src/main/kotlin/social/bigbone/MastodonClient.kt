@@ -12,11 +12,11 @@ import okhttp3.Request
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
+import okhttp3.ResponseBody
 import okhttp3.WebSocket
 import okhttp3.WebSocketListener
 import okio.ByteString
 import social.bigbone.api.Pageable
-import social.bigbone.api.entity.data.InstanceVersion
 import social.bigbone.api.entity.streaming.MastodonApiEvent.GenericMessage
 import social.bigbone.api.entity.streaming.MastodonApiEvent.StreamEvent
 import social.bigbone.api.entity.streaming.ParsedStreamEvent.Companion.toStreamEvent
@@ -29,7 +29,6 @@ import social.bigbone.api.entity.streaming.WebSocketCallback
 import social.bigbone.api.exception.BigBoneClientInstantiationException
 import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.api.exception.InstanceVersionRetrievalException
-import social.bigbone.api.exception.ServerInfoRetrievalException
 import social.bigbone.api.method.AccountMethods
 import social.bigbone.api.method.AnnouncementMethods
 import social.bigbone.api.method.AppMethods
@@ -79,7 +78,6 @@ import social.bigbone.api.method.admin.AdminRetentionMethods
 import social.bigbone.api.method.admin.AdminTrendMethods
 import social.bigbone.extension.emptyRequestBody
 import social.bigbone.nodeinfo.NodeInfoClient
-import social.bigbone.nodeinfo.entity.Server
 import java.io.IOException
 import java.security.SecureRandom
 import java.security.cert.X509Certificate
@@ -932,20 +930,8 @@ class MastodonClient private constructor(
             this.debug = true
         }
 
-        private fun getStreamingApiUrl(instanceVersion: String?, fallbackUrl: String): String {
-            val majorVersion = instanceVersion?.substringBefore('.')
-            val version: Int = if (majorVersion == null) {
-                2
-            } else {
-                try {
-                    val majorVersionInt = majorVersion.toInt()
-                    if (majorVersionInt < 4) 1 else 2
-                } catch (e: NumberFormatException) {
-                    2
-                }
-            }
-
-            versionedInstanceRequest(version).use { response: Response ->
+        private fun getStreamingApiUrl(fallbackUrl: String): String {
+            executeInstanceRequest().use { response: Response ->
                 if (!response.isSuccessful) return fallbackUrl
 
                 val streamingUrl: String? = response.body?.string()?.let { responseBody: String ->
@@ -953,17 +939,8 @@ class MastodonClient private constructor(
                         .parseToJsonElement(responseBody)
                         .jsonObject
 
-                    if (version == 2) {
-                        rawJsonObject["configuration"]
-                            ?.jsonObject
-                            ?.get("urls")
-                            ?.jsonObject
-                            ?.get("streaming") as? JsonPrimitive
-                    } else {
-                        rawJsonObject["urls"]
-                            ?.jsonObject
-                            ?.get("streaming_api") as? JsonPrimitive
-                    }?.contentOrNull
+                    (rawJsonObject["configuration"]?.jsonObject?.get("urls")?.jsonObject?.get("streaming") as? JsonPrimitive)
+                        ?.contentOrNull
                         // okhttp’s HttpUrl which is used later to parse this result only allows http(s)
                         // so we need to replace ws(s) first
                         ?.replace("ws:", "http:")
@@ -977,75 +954,19 @@ class MastodonClient private constructor(
         /**
          * Get the version string for this Mastodon instance.
          * @return a string corresponding to the version of this Mastodon instance
-         * @throws BigBoneClientInstantiationException if instance version cannot be retrieved using any known method or API version
+         * @throws BigBoneClientInstantiationException if instance version cannot be retrieved
          */
         @Throws(BigBoneClientInstantiationException::class)
         private fun getInstanceVersion(): String {
-            return try {
-                getInstanceVersionViaServerInfo()
-            } catch (error: BigBoneClientInstantiationException) {
-                // fall back to retrieving from Mastodon API itself
-                try {
-                    getInstanceVersionViaApi()
-                } catch (instanceException: InstanceVersionRetrievalException) {
-                    throw BigBoneClientInstantiationException(
-                        message = "Failed to get instance version of $instanceName",
-                        cause = if (instanceException.cause == instanceException) {
-                            instanceException.initCause(error)
-                        } else {
-                            instanceException
-                        }
-                    )
-                }
-            }
-        }
-
-        @Throws(ServerInfoRetrievalException::class)
-        private fun getInstanceVersionViaServerInfo(): String {
-            val serverSoftwareInfo: Server.Software? = NodeInfoClient
+            val serverVersion: String? = NodeInfoClient
                 .retrieveServerInfo(instanceName)
                 ?.software
                 ?.takeIf { it.name == "mastodon" }
+                ?.version
 
-            if (serverSoftwareInfo != null) return serverSoftwareInfo.version
+            if (serverVersion == null) throw InstanceVersionRetrievalException(message = "Server $instanceName doesn't appear to run Mastodon")
 
-            throw ServerInfoRetrievalException(
-                cause = IllegalArgumentException("Server $instanceName doesn't appear to run Mastodon")
-            )
-        }
-
-        @Throws(InstanceVersionRetrievalException::class)
-        private fun getInstanceVersionViaApi(): String {
-            return try {
-                getInstanceVersionFromApi(2)
-            } catch (e: InstanceVersionRetrievalException) {
-                getInstanceVersionFromApi(1)
-            }
-        }
-
-        /**
-         * Get the version string for this Mastodon instance, using a specific API version.
-         * @param apiVersion the version of API call to use in this request
-         * @return a string corresponding to the version of this Mastodon instance, or null if no version string can be
-         *  retrieved using the specified API version.
-         *  @throws InstanceVersionRetrievalException in case we got a server response but no version, or an unsucessful response
-         */
-        @Throws(InstanceVersionRetrievalException::class)
-        private fun getInstanceVersionFromApi(apiVersion: Int): String {
-            return versionedInstanceRequest(apiVersion).use { response: Response ->
-                if (response.isSuccessful) {
-                    val instanceVersion: InstanceVersion? = response.body?.string()?.let { responseBody: String ->
-                        JSON_SERIALIZER.decodeFromString(responseBody)
-                    }
-                    instanceVersion
-                        ?.version
-                        ?: throw InstanceVersionRetrievalException(
-                            cause = IllegalStateException("Instance version was null unexpectedly")
-                        )
-                } else {
-                    throw InstanceVersionRetrievalException(response = response)
-                }
-            }
+            return serverVersion
         }
 
         private fun configureForTrustAll(clientBuilder: OkHttpClient.Builder) {
@@ -1057,15 +978,15 @@ class MastodonClient private constructor(
         }
 
         /**
-         * Returns the server response for an instance request of a specific version. This response needs to be closed
-         * by the caller, either by reading from it via response.body?.string(), or by calling response.close().
-         * @param version value corresponding to the version that should be returned; falls
-         *  back to returning version 1 for illegal values.
-         * @return server response for this request
+         * Executes a call to the instance API endpoint.
+         *
+         * Can be used to gather information about this instance, e.g. to find out the streaming URL to be used.
+         *
+         * The [Response] returned by this method needs to be closed by the caller, either by reading from it
+         * via [ResponseBody.string], or by calling [Response.close].
+         * @return Server response as [Response] for this request
          */
-        internal fun versionedInstanceRequest(version: Int): Response {
-            val versionString = if (version == 2) "v2" else "v1"
-
+        internal fun executeInstanceRequest(): Response {
             val clientBuilder = OkHttpClient.Builder()
             if (trustAllCerts) configureForTrustAll(clientBuilder)
 
@@ -1078,7 +999,7 @@ class MastodonClient private constructor(
                                 scheme = scheme,
                                 instanceName = instanceName,
                                 port = port,
-                                path = "api/$versionString/instance"
+                                path = "api/v2/instance"
                             )
                         )
                         .get()
@@ -1095,8 +1016,6 @@ class MastodonClient private constructor(
          * connection are _not_ caught by this library.
          */
         fun build(): MastodonClient {
-            val instanceVersion = getInstanceVersion()
-
             return MastodonClient(
                 instanceName = instanceName,
                 client = okHttpClientBuilder
@@ -1107,13 +1026,10 @@ class MastodonClient private constructor(
                     .build(),
                 accessToken = accessToken,
                 debug = debug,
-                instanceVersion = instanceVersion,
+                instanceVersion = getInstanceVersion(),
                 scheme = scheme,
                 port = port,
-                streamingUrl = getStreamingApiUrl(
-                    instanceVersion = instanceVersion,
-                    fallbackUrl = scheme + instanceName
-                )
+                streamingUrl = getStreamingApiUrl(fallbackUrl = scheme + instanceName)
             )
         }
     }
