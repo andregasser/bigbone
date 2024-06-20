@@ -13,6 +13,9 @@ dependencies {
     testImplementation libs.junit.jupiter
     testRuntimeOnly libs.junit.platform.launcher
     testImplementation libs.kluent
+
+    // Not necessary for bigbone itself, but for mockk to work: https://github.com/mockk/mockk/issues/1216#issuecomment-2176139226
+    testImplementation(libs.kotlin.reflect)
     testImplementation libs.mockk
     testImplementation libs.mockk.dsl
 }

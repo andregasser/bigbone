@@ -26,6 +26,7 @@ junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "jun
 junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher", version.ref = "junit-platform-launcher" }
 junit-platform-suite-engine = { module = "org.junit.platform:junit-platform-suite-engine", version.ref = "junit-platform-suite-engine" }
 kluent = { module = "org.amshove.kluent:kluent", version.ref = "kluent" }
+kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization-json" }
 kotlin-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin-coroutines" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
