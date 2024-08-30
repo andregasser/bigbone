@@ -246,7 +246,7 @@ Below we would like to mention projects that use the BigBone library.
 
 - [Apus](https://github.com/McPringle/apus): A social wall for conferences and other events created by
   [McPringle](https://fosstodon.org/@McPringle). It can display the conference agenda from various sources together
-  with Mastodon posts containing a configurable hashtag. Its purpose is to be displayed at the event on beamers and TVs
+  with Mastodon posts containing a configurable hashtag. Its purpose is to be displayed at the event on projector and TVs
   to show the attendees the next sessions and to boost posting on Mastodon.
 - [MastodonContentMover](https://mastodoncontentmover.github.io/): MastodonContentMover is a command-line tool created by 
   [Tokyo Outsider](https://mas.to/@tokyo_0) that downloads your posts from one Mastodon instance, saving them as a set of 
