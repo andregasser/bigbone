@@ -70,6 +70,12 @@ data class Instance(
     val registrations: Registrations = Registrations(),
 
     /**
+     * Information about which version of the API is implemented by this server.
+     */
+    @SerialName("api_versions")
+    val apiVersions: ApiVersions = ApiVersions(),
+
+    /**
      * Hints related to contacting a representative of the website.
      */
     @SerialName("contact")
@@ -351,6 +357,19 @@ data class Instance(
          */
         @SerialName("message")
         val message: String? = null
+    )
+
+    /**
+     * Information about which version of the API is implemented by this server.
+     */
+    @Serializable
+    data class ApiVersions(
+        /**
+         * API version number that this server implements. Starting from Mastodon v4.3.0,
+         * API changes will come with a version number, which clients can check against this value.
+         */
+        @SerialName("mastodon")
+        val mastodon: Int = 0,
     )
 
     /**
