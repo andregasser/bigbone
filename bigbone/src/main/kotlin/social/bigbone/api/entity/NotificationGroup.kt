@@ -96,5 +96,13 @@ data class NotificationGroup(
      * @since Mastodon 4.3.0
      */
     @SerialName("report")
-    val report: Report? = null
+    val report: Report? = null,
+
+    /**
+     * Summary of the event that caused follow relationships to be severed.
+     * Attached when [type] of the notification is [NotificationType.SEVERED_RELATIONSHIPS].
+     * @since Mastodon 4.3.0
+     */
+    @SerialName("event")
+    val event: RelationshipSeveranceEvent? = null
 )
