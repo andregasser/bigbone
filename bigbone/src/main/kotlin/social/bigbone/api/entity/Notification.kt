@@ -63,5 +63,13 @@ data class Notification(
      * @since Mastodon 4.3.0
      */
     @SerialName("relationship_severance_event")
-    val relationshipSeveranceEvent: RelationshipSeveranceEvent? = null
+    val relationshipSeveranceEvent: RelationshipSeveranceEvent? = null,
+
+    /**
+     * Moderation warning that caused the notification.
+     * Attached when [type] of the notification is [NotificationType.MODERATION_WARNING].
+     * @since Mastodon 4.3.0
+     */
+    @SerialName("moderation_warning")
+    val moderationWarning: AccountWarning? = null
 )
