@@ -16,6 +16,7 @@ import social.bigbone.MastodonClient
 import social.bigbone.Parameters
 import social.bigbone.PrecisionDateTime.ValidPrecisionDateTime.ExactTime
 import social.bigbone.api.entity.Notification
+import social.bigbone.api.entity.NotificationType
 import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.testtool.MockClient
 import java.time.Instant
@@ -67,11 +68,11 @@ class NotificationMethodsTest {
         val notificationMethods = NotificationMethods(client)
 
         val includeTypes = listOf(
-            Notification.NotificationType.FOLLOW,
-            Notification.NotificationType.MENTION
+            NotificationType.FOLLOW,
+            NotificationType.MENTION
         )
         val excludeTypes = listOf(
-            Notification.NotificationType.FAVOURITE
+            NotificationType.FAVOURITE
         )
         notificationMethods.getAllNotifications(
             includeTypes = includeTypes,
@@ -87,8 +88,8 @@ class NotificationMethodsTest {
             )
         }
         with(parametersCapturingSlot.captured) {
-            parameters["types[]"]?.shouldContainAll(includeTypes.map(Notification.NotificationType::apiName))
-            parameters["exclude_types[]"]?.shouldContainAll(excludeTypes.map(Notification.NotificationType::apiName))
+            parameters["types[]"]?.shouldContainAll(includeTypes.map(NotificationType::apiName))
+            parameters["exclude_types[]"]?.shouldContainAll(excludeTypes.map(NotificationType::apiName))
             parameters["account_id"]?.shouldContainAll(listOf("1234567"))
 
             toQuery() shouldBeEqualTo "types[]=follow&types[]=mention&exclude_types[]=favourite&account_id=1234567"
