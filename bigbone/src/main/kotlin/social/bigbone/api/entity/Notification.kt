@@ -1,6 +1,5 @@
 package social.bigbone.api.entity
 
-import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import social.bigbone.DateTimeSerializer
@@ -57,44 +56,4 @@ data class Notification(
      */
     @SerialName("group_key")
     val groupKey: String? = null
-) {
-    /**
-     * Specifies the notification type.
-     */
-    @Serializable
-    enum class NotificationType {
-
-        @SerialName("admin.report")
-        ADMIN_REPORT,
-
-        @SerialName("admin.sign_up")
-        ADMIN_SIGN_UP,
-
-        @SerialName("favourite")
-        FAVOURITE,
-
-        @SerialName("follow")
-        FOLLOW,
-
-        @SerialName("follow_request")
-        FOLLOW_REQUEST,
-
-        @SerialName("mention")
-        MENTION,
-
-        @SerialName("poll")
-        POLL,
-
-        @SerialName("reblog")
-        REBLOG,
-
-        @SerialName("status")
-        STATUS,
-
-        @SerialName("update")
-        UPDATE;
-
-        @OptIn(ExperimentalSerializationApi::class)
-        val apiName: String get() = serializer().descriptor.getElementName(ordinal)
-    }
-}
+)

@@ -3,6 +3,7 @@ package social.bigbone.sample
 import social.bigbone.MastodonClient
 import social.bigbone.api.Pageable
 import social.bigbone.api.entity.Notification
+import social.bigbone.api.entity.NotificationType
 
 object GetNotifications {
 
@@ -34,14 +35,14 @@ object GetNotifications {
         notifications.part.forEach(::println)
     }
 
-    private fun String.explodeToNotificationTypes(): List<Notification.NotificationType>? {
+    private fun String.explodeToNotificationTypes(): List<NotificationType>? {
         return split(",")
             .mapNotNull { it.toNotificationType() }
             .takeIf { it.isNotEmpty() }
     }
 
-    private fun String.toNotificationType(): Notification.NotificationType? {
-        for (notificationType in Notification.NotificationType.entries) {
+    private fun String.toNotificationType(): NotificationType? {
+        for (notificationType in NotificationType.entries) {
             if (notificationType.apiName.equals(this.trim(), ignoreCase = true)) return notificationType
         }
         return null
