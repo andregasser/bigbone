@@ -104,5 +104,13 @@ data class NotificationGroup(
      * @since Mastodon 4.3.0
      */
     @SerialName("event")
-    val event: RelationshipSeveranceEvent? = null
+    val event: RelationshipSeveranceEvent? = null,
+
+    /**
+     * Moderation warning that caused the notification.
+     * Attached when [type] of the notification is [NotificationType.MODERATION_WARNING].
+     * @since Mastodon 4.3.0
+     */
+    @SerialName("moderation_warning")
+    val moderationWarning: AccountWarning? = null
 )
