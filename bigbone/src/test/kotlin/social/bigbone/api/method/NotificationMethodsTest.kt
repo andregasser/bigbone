@@ -2,20 +2,14 @@ package social.bigbone.api.method
 
 import io.mockk.slot
 import io.mockk.verify
-import org.amshove.kluent.AnyException
-import org.amshove.kluent.invoking
-import org.amshove.kluent.shouldBeEqualTo
-import org.amshove.kluent.shouldBeNull
-import org.amshove.kluent.shouldContainAll
-import org.amshove.kluent.shouldNotBeNull
-import org.amshove.kluent.shouldNotThrow
-import org.amshove.kluent.shouldThrow
+import org.amshove.kluent.*
 import org.junit.jupiter.api.Test
 import social.bigbone.JSON_SERIALIZER
 import social.bigbone.MastodonClient
 import social.bigbone.Parameters
 import social.bigbone.PrecisionDateTime.ValidPrecisionDateTime.ExactTime
 import social.bigbone.api.entity.Notification
+import social.bigbone.api.entity.NotificationType
 import social.bigbone.api.exception.BigBoneRequestException
 import social.bigbone.testtool.MockClient
 import java.time.Instant
@@ -67,11 +61,11 @@ class NotificationMethodsTest {
         val notificationMethods = NotificationMethods(client)
 
         val includeTypes = listOf(
-            Notification.NotificationType.FOLLOW,
-            Notification.NotificationType.MENTION
+            NotificationType.FOLLOW,
+            NotificationType.MENTION
         )
         val excludeTypes = listOf(
-            Notification.NotificationType.FAVOURITE
+            NotificationType.FAVOURITE
         )
         notificationMethods.getAllNotifications(
             includeTypes = includeTypes,
@@ -87,8 +81,8 @@ class NotificationMethodsTest {
             )
         }
         with(parametersCapturingSlot.captured) {
-            parameters["types[]"]?.shouldContainAll(includeTypes.map(Notification.NotificationType::apiName))
-            parameters["exclude_types[]"]?.shouldContainAll(excludeTypes.map(Notification.NotificationType::apiName))
+            parameters["types[]"]?.shouldContainAll(includeTypes.map(NotificationType::apiName))
+            parameters["exclude_types[]"]?.shouldContainAll(excludeTypes.map(NotificationType::apiName))
             parameters["account_id"]?.shouldContainAll(listOf("1234567"))
 
             toQuery() shouldBeEqualTo "types[]=follow&types[]=mention&exclude_types[]=favourite&account_id=1234567"
