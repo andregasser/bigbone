@@ -5,6 +5,7 @@ import social.bigbone.MastodonRequest
 import social.bigbone.api.Pageable
 import social.bigbone.api.Range
 import social.bigbone.api.entity.Notification
+import social.bigbone.api.entity.NotificationType
 import social.bigbone.api.exception.BigBoneRequestException
 
 /**
@@ -25,8 +26,8 @@ class NotificationMethods(private val client: MastodonClient) {
      */
     @JvmOverloads
     fun getAllNotifications(
-        includeTypes: List<Notification.NotificationType>? = null,
-        excludeTypes: List<Notification.NotificationType>? = null,
+        includeTypes: List<NotificationType>? = null,
+        excludeTypes: List<NotificationType>? = null,
         accountId: String? = null,
         range: Range = Range()
     ): MastodonRequest<Pageable<Notification>> {
@@ -35,10 +36,10 @@ class NotificationMethods(private val client: MastodonClient) {
             method = MastodonClient.Method.GET,
             parameters = range.toParameters().apply {
                 includeTypes?.let {
-                    append("types", includeTypes.map(Notification.NotificationType::apiName))
+                    append("types", includeTypes.map(NotificationType::apiName))
                 }
                 excludeTypes?.let {
-                    append("exclude_types", excludeTypes.map(Notification.NotificationType::apiName))
+                    append("exclude_types", excludeTypes.map(NotificationType::apiName))
                 }
                 accountId?.let { append("account_id", accountId) }
             }
