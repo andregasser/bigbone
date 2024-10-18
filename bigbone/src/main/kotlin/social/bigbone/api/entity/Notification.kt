@@ -48,7 +48,15 @@ data class Notification(
      * Report that was the object of the notification. Attached when type of the notification is admin.report.
      */
     @SerialName("report")
-    val report: Report? = null
+    val report: Report? = null,
+
+    /**
+     * Group key shared by similar notifications, to be used in the grouped notifications feature.
+     * Should be considered opaque, but ungrouped notifications can be assumed to have a group_key of the form "ungrouped-{notification_id}".
+     * @since Mastodon 4.3.0
+     */
+    @SerialName("group_key")
+    val groupKey: String? = null
 ) {
     /**
      * Specifies the notification type.
