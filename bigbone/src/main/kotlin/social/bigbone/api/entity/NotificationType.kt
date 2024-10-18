@@ -53,6 +53,13 @@ enum class NotificationType {
     MENTION,
 
     /**
+     * A moderator has taken action against your account or has sent you a warning.
+     * @since Mastodon 4.3.0
+     */
+    @SerialName("moderation_warning")
+    MODERATION_WARNING,
+
+    /**
      * A poll you have voted in or created has ended.
      * @since Mastodon 2.8.0
      */
@@ -65,6 +72,13 @@ enum class NotificationType {
      */
     @SerialName("reblog")
     REBLOG,
+
+    /**
+     * Some of your follow relationships have been severed as a result of a moderation or block event.
+     * @since Mastodon 4.3.0
+     */
+    @SerialName("severed_relationships")
+    SEVERED_RELATIONSHIPS,
 
     /**
      * Someone you enabled notifications for has posted a status.
