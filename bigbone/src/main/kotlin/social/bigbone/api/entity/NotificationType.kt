@@ -47,6 +47,12 @@ enum class NotificationType {
     MENTION,
 
     /**
+     * @since Mastodon 4.3.0
+     */
+    @SerialName("moderation_warning")
+    MODERATION_WARNING,
+
+    /**
      * @since Mastodon 2.8.0
      */
     @SerialName("poll")
@@ -57,6 +63,12 @@ enum class NotificationType {
      */
     @SerialName("reblog")
     REBLOG,
+
+    /**
+     * @since Mastodon 4.3.0
+     */
+    @SerialName("severed_relationships")
+    SEVERED_RELATIONSHIPS,
 
     /**
      * @since Mastodon 3.3.0
