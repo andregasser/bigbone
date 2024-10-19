@@ -124,4 +124,18 @@ class GroupedNotificationMethodsTest {
                 "&include_filtered=true"
         }
     }
+
+    @Test
+    fun `When getting grouped notifications, then call endpoint with correct parameters`() {
+        val client = MockClient.mock("grouped_notifications_get_single_success.json")
+        val groupedNotificationMethods = GroupedNotificationMethods(client)
+
+        groupedNotificationMethods.getGroupedNotification(groupKey = "favourite-113010503322889311-479000").execute()
+
+        verify {
+            client.get(
+                path = "api/v2/notifications/favourite-113010503322889311-479000"
+            )
+        }
+    }
 }

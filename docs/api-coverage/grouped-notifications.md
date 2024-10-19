@@ -14,7 +14,7 @@ Receive grouped notifications for activity on your account or statuses.
 | Method                                          | Description                                               | Status                          | Comments          | 
 |-------------------------------------------------|-----------------------------------------------------------|---------------------------------|-------------------|
 | `GET /api/v2/notifications`                     | Get all grouped notifications                             | <img src="/assets/green16.png"> | Fully supported   |
-| `GET /api/v2/notifications/:group_key`          | Get a single notification group                           | <img src="/assets/red16.png">   | Not yet supported |
+| `GET /api/v2/notifications/:group_key`          | Get a single notification group                           | <img src="/assets/green16.png"> | Fully supported   |
 | `POST /api/v2/notifications/:group_key/dismiss` | Dismiss a single notification group                       | <img src="/assets/red16.png">   | Not yet supported |
 | `GET /api/v2/notifications/:group_key/accounts` | Get accounts of all notifications in a notification group | <img src="/assets/red16.png">   | Not yet supported |
 | `GET /api/v2/notifications/unread_count`        | Get the number of unread notifications                    | <img src="/assets/red16.png">   | Not yet supported |
