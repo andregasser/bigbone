@@ -55,8 +55,7 @@ class MastodonRequest<T>(
         val response = executor()
         if (response.isSuccessful) {
             try {
-                val body: String? = response.body?.string()
-                requireNotNull(body)
+                val body: String = response.body.string()
 
                 val element: JsonElement = JSON_SERIALIZER.parseToJsonElement(body)
                 if (element is JsonObject) {
@@ -85,9 +84,7 @@ class MastodonRequest<T>(
                 throw BigBoneRequestException("Successful response could not be parsed", e)
             }
         } else {
-            val error = response.body?.string()?.let {
-                JSON_SERIALIZER.decodeFromString<Error>(it)
-            }
+            val error = JSON_SERIALIZER.decodeFromString<Error>(response.body.string())
             response.close()
             throw BigBoneRequestException(response, error)
         }
