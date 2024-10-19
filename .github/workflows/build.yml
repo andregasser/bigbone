@@ -1,6 +1,6 @@
 name: Build
 
-on: [push, pull_request]
+on: [ push, pull_request ]
 
 jobs:
   build-gradle-project:
@@ -9,7 +9,7 @@ jobs:
       - name: Checkout project sources
         uses: actions/checkout@v4
       - name: Setup Gradle
-        uses: gradle/gradle-build-action@v3
+        uses: gradle/actions/setup-gradle@v4
       - name: Run build with Gradle Wrapper
         run: ./gradlew check jacocoTestReport
       - name: Codecov
