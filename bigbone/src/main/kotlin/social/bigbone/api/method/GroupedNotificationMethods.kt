@@ -4,8 +4,10 @@ import social.bigbone.MastodonClient
 import social.bigbone.MastodonRequest
 import social.bigbone.api.Pageable
 import social.bigbone.api.Range
+import social.bigbone.api.entity.Account
 import social.bigbone.api.entity.GroupedNotificationsResults
 import social.bigbone.api.entity.NotificationType
+import social.bigbone.api.exception.BigBoneRequestException
 
 /**
  * Allows access to API methods with endpoints having an "api/v2/notifications" prefix.
@@ -128,6 +130,20 @@ class GroupedNotificationMethods(private val client: MastodonClient) {
         client.performAction(
             endpoint = "$endpoint/$groupKey/dismiss",
             method = MastodonClient.Method.POST
+        )
+    }
+
+    /**
+     * Get accounts of all notifications in a notification group.
+     * @param groupKey The group key of the notifications to get accounts from.
+     * @see <a href="https://docs.joinmastodon.org/methods/grouped_notifications/#get-group-accounts">
+     *     Mastodon API documentation: methods/grouped_notifications/#get-group-accounts</a>
+     * @since Mastodon 4.3.0
+     */
+    fun getAccountsOfAllNotificationsInGroup(groupKey: String): MastodonRequest<List<Account>> {
+        return client.getMastodonRequestForList(
+            endpoint = "$endpoint/$groupKey/accounts",
+            method = MastodonClient.Method.GET
         )
     }
 }

@@ -10,7 +10,7 @@ import org.amshove.kluent.shouldHaveSize
 import org.amshove.kluent.shouldNotBeNull
 import org.amshove.kluent.shouldNotThrow
 import org.junit.jupiter.api.Test
-import social.bigbone.MastodonClient
+import social.bigbone.MastodonClient.Method
 import social.bigbone.Parameters
 import social.bigbone.PrecisionDateTime.ValidPrecisionDateTime.ExactTime
 import social.bigbone.api.Range
@@ -155,7 +155,23 @@ class GroupedNotificationMethodsTest {
         verify {
             client.performAction(
                 endpoint = "api/v2/notifications/favourite-113010503322889311-479000/dismiss",
-                method = MastodonClient.Method.POST
+                method = Method.POST
+            )
+        }
+    }
+
+    @Test
+    fun `When getting accounts of all notifications in a group, then call endpoint with correct parameters`() {
+        val client = MockClient.mock("grouped_notifications_get_accounts_of_notifications_success.json")
+        val groupedNotificationMethods = GroupedNotificationMethods(client)
+
+        groupedNotificationMethods.getAccountsOfAllNotificationsInGroup(
+            groupKey = "favourite-113010503322889311-479000"
+        ).execute()
+
+        verify {
+            client.get(
+                path = "api/v2/notifications/favourite-113010503322889311-479000/accounts"
             )
         }
     }
