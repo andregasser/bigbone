@@ -42,4 +42,9 @@ Receive notifications for activity on your account or statuses.
     <td style="width:10%;text-align:center;"><img src="/assets/red16.png"></td>
     <td style="width:45%;text-align:left;"><b>Will not be implemented</b>.</td>
   </tr>
+<tr>
+    <td style="width:45%;text-align:left;"><code>GET /api/v1/notifications/unread_count</code><br>Get the number of unread notifications</td>
+    <td style="width:10%;text-align:center;"><img src="/assets/green16.png"></td>
+    <td style="width:45%;text-align:left;">Fully supported.</td>
+  </tr>
 </table>
