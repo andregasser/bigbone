@@ -45,6 +45,7 @@ import social.bigbone.api.method.FeaturedTagMethods
 import social.bigbone.api.method.FilterMethods
 import social.bigbone.api.method.FollowRequestMethods
 import social.bigbone.api.method.FollowedTagMethods
+import social.bigbone.api.method.GroupedNotificationMethods
 import social.bigbone.api.method.InstanceMethods
 import social.bigbone.api.method.ListMethods
 import social.bigbone.api.method.MarkerMethods
@@ -292,6 +293,14 @@ class MastodonClient private constructor(
     @Suppress("unused") // public API
     @get:JvmName("followedTags")
     val followedTags: FollowedTagMethods by lazy { FollowedTagMethods(this) }
+
+    /**
+     * Access API methods under the "notification" endpoint that are specific to grouped notifications.
+     * See also: [notifications]
+     */
+    @Suppress("unused") // public API
+    @get:JvmName("groupedNotifications")
+    val groupedNotifications: GroupedNotificationMethods by lazy { GroupedNotificationMethods(this) }
 
     /**
      * Access API methods under the "instance" endpoint.
