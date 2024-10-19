@@ -62,7 +62,11 @@ class MastodonRequest<T>(
                 if (element is JsonObject) {
                     action(body)
 
-                    return mapper(body) as T
+                    return if (isPageable) {
+                        listOf(mapper(body)).toPageable(response) as T
+                    } else {
+                        mapper(body) as T
+                    }
                 }
 
                 val mappedJsonElements: List<Any> = element.jsonArray.map { jsonElement: JsonElement ->
