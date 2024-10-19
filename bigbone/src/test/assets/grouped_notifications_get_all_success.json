@@ -1,0 +1,74 @@
+{
+  "accounts": [
+    {
+      "id": "16",
+      "username": "eve",
+      "acct": "eve"
+    },
+    {
+      "id": "3547",
+      "username": "alice",
+      "acct": "alice"
+    },
+    {
+      "id": "31460",
+      "username": "bob",
+      "acct": "bob"
+    },
+    {
+      "id": "36509",
+      "username": "mallory",
+      "acct": "mallory"
+    }
+  ],
+  "statuses": [
+    {
+      "id": "113010503322889311",
+      "created_at": "2024-08-23T08:57:12.057Z",
+      "account": {
+        "id": "55911",
+        "username": "user",
+        "acct": "user"
+      }
+    },
+    {
+      "id": "113006771938929950",
+      "created_at": "2024-08-22T17:08:15.654Z",
+      "account": {
+        "id": "55911",
+        "username": "user",
+        "acct": "user"
+      }
+    }
+  ],
+  "notification_groups": [
+    {
+      "group_key": "favourite-113010503322889311-479000",
+      "notifications_count": 2,
+      "type": "favourite",
+      "most_recent_notification_id": 196014,
+      "page_min_id": "196013",
+      "page_max_id": "196014",
+      "latest_page_notification_at": "2024-08-23T08:59:56.743Z",
+      "sample_account_ids": [
+        "16",
+        "3547"
+      ],
+      "status_id": "113010503322889311"
+    },
+    {
+      "group_key": "favourite-113006771938929950-478999",
+      "notifications_count": 2,
+      "type": "favourite",
+      "most_recent_notification_id": 196012,
+      "page_min_id": "196012",
+      "page_max_id": "196012",
+      "latest_page_notification_at": "2024-08-23T08:16:32.112Z",
+      "sample_account_ids": [
+        "31460",
+        "36509"
+      ],
+      "status_id": "113006771938929950"
+    }
+  ]
+}
