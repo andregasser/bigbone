@@ -9,6 +9,8 @@ import org.amshove.kluent.shouldContainAll
 import org.amshove.kluent.shouldHaveSize
 import org.amshove.kluent.shouldNotBeNull
 import org.amshove.kluent.shouldNotThrow
+import org.amshove.kluent.shouldThrow
+import org.amshove.kluent.withMessage
 import org.junit.jupiter.api.Test
 import social.bigbone.MastodonClient.Method
 import social.bigbone.Parameters
@@ -174,5 +176,50 @@ class GroupedNotificationMethodsTest {
                 path = "api/v2/notifications/favourite-113010503322889311-479000/accounts"
             )
         }
+    }
+
+    @Test
+    fun `Given a client returning success, when getting number of unread notifications with parameters, then call endpoint with correct parameter`() {
+        val client = MockClient.mockClearText("""{"count": 42}""")
+        val groupedNotificationMethods = GroupedNotificationMethods(client)
+
+        groupedNotificationMethods.getNumberOfUnreadNotifications(
+            limit = 450,
+            types = listOf(NotificationType.MENTION, NotificationType.REBLOG),
+            excludeTypes = emptyList(),
+            accountId = null,
+            groupedTypes = listOf(NotificationType.REBLOG)
+        ).execute()
+
+        val parametersCapturingSlot = slot<Parameters>()
+        verify {
+            client.get(
+                path = "api/v2/notifications/unread_count",
+                query = capture(parametersCapturingSlot)
+            )
+        }
+        with(parametersCapturingSlot.captured) {
+            toQuery() shouldBeEqualTo "limit=450&types[]=mention&types[]=reblog&types[]=reblog"
+        }
+    }
+
+    @Test
+    fun `Given a client returning success, when getting number of unread notifications, then return UnreadNotificationCount`() {
+        val client = MockClient.mockClearText("""{"count": 42}""")
+        val groupedNotificationMethods = GroupedNotificationMethods(client)
+
+        val unreadNotifications = groupedNotificationMethods.getNumberOfUnreadNotifications().execute()
+
+        unreadNotifications.count shouldBeEqualTo 42
+    }
+
+    @Test
+    fun `Given a client returning success, when attempting get number of unread notifications with too high limit, then throw IllegalArgumentException`() {
+        val client = MockClient.mockClearText("""{"count": 42}""")
+        val groupedNotificationMethods = GroupedNotificationMethods(client)
+
+        invoking {
+            groupedNotificationMethods.getNumberOfUnreadNotifications(limit = 9_001).execute()
+        } shouldThrow IllegalArgumentException::class withMessage "Limit must be no larger than 1000 but was 9001"
     }
 }

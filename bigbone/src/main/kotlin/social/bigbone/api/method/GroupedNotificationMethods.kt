@@ -2,11 +2,13 @@ package social.bigbone.api.method
 
 import social.bigbone.MastodonClient
 import social.bigbone.MastodonRequest
+import social.bigbone.Parameters
 import social.bigbone.api.Pageable
 import social.bigbone.api.Range
 import social.bigbone.api.entity.Account
 import social.bigbone.api.entity.GroupedNotificationsResults
 import social.bigbone.api.entity.NotificationType
+import social.bigbone.api.entity.UnreadNotificationCount
 import social.bigbone.api.exception.BigBoneRequestException
 
 /**
@@ -144,6 +146,56 @@ class GroupedNotificationMethods(private val client: MastodonClient) {
         return client.getMastodonRequestForList(
             endpoint = "$endpoint/$groupKey/accounts",
             method = MastodonClient.Method.GET
+        )
+    }
+
+    /**
+     * Get the (capped) number of unread notification groups for the current user.
+     * A notification is considered unread if it is more recent than the notifications read marker.
+     * Because the count is dependent on the parameters, it is computed every time and is thus a relatively slow operation
+     * (although faster than getting the full corresponding notifications), therefore the number of returned notifications is capped.
+     * @param limit Maximum number of results to return. Defaults to 100 notifications. Max 1_000 notifications.
+     * @param types [NotificationType]s that should count towards unread notifications.
+     * @param excludeTypes [NotificationType]s that should not count towards unread notifications.
+     * @param accountId Only count unread notifications received from the specified account.
+     * @param groupedTypes Restrict which [NotificationType]s can be grouped.
+     * Use this if there are [NotificationType]s for which your client does not support grouping.
+     * If omitted, the server will group notifications of all types it supports
+     * (4.3.0: [NotificationType.FAVOURITE], [NotificationType.FOLLOW], [NotificationType.REBLOG]).
+     * If you do not want any notification grouping, use [NotificationMethods.getUnreadCount] instead.
+     * @see <a href="https://docs.joinmastodon.org/methods/grouped_notifications/#unread-group-count">
+     *     Mastodon API documentation: methods/grouped_notifications/#unread-group-count</a>
+     * @since Mastodon 4.3.0
+     * @throws IllegalArgumentException if [limit] is set and higher than 1_000.
+     */
+    @Throws(IllegalArgumentException::class)
+    fun getNumberOfUnreadNotifications(
+        limit: Int? = null,
+        types: List<NotificationType>? = null,
+        excludeTypes: List<NotificationType>? = null,
+        accountId: String? = null,
+        groupedTypes: List<NotificationType>? = null
+    ): MastodonRequest<UnreadNotificationCount> {
+        if (limit != null) {
+            require(limit <= 1_000) { "Limit must be no larger than 1000 but was $limit" }
+        }
+
+        return client.getMastodonRequest(
+            endpoint = "$endpoint/unread_count",
+            method = MastodonClient.Method.GET,
+            parameters = Parameters().apply {
+                limit?.let { append("limit", limit) }
+                accountId?.let { append("account_id", accountId) }
+                types?.let {
+                    append("types", types.map(NotificationType::apiName))
+                }
+                excludeTypes?.let {
+                    append("exclude_types", excludeTypes.map(NotificationType::apiName))
+                }
+                groupedTypes?.let {
+                    append("types", groupedTypes.map(NotificationType::apiName))
+                }
+            }
         )
     }
 }
