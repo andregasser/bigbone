@@ -115,4 +115,19 @@ class GroupedNotificationMethods(private val client: MastodonClient) {
             method = MastodonClient.Method.GET
         )
     }
+
+    /**
+     * Dismiss a single notification group from the server.
+     * @param groupKey The group key of the notifications to discard.
+     * @see <a href="https://docs.joinmastodon.org/methods/grouped_notifications/#dismiss-group">
+     *     Mastodon API documentation: methods/grouped_notifications/#dismiss-group</a>
+     * @since Mastodon 4.3.0
+     */
+    @Throws(BigBoneRequestException::class)
+    fun dismissNotification(groupKey: String) {
+        client.performAction(
+            endpoint = "$endpoint/$groupKey/dismiss",
+            method = MastodonClient.Method.POST
+        )
+    }
 }

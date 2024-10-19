@@ -2,11 +2,15 @@ package social.bigbone.api.method
 
 import io.mockk.slot
 import io.mockk.verify
+import org.amshove.kluent.AnyException
+import org.amshove.kluent.invoking
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldContainAll
 import org.amshove.kluent.shouldHaveSize
 import org.amshove.kluent.shouldNotBeNull
+import org.amshove.kluent.shouldNotThrow
 import org.junit.jupiter.api.Test
+import social.bigbone.MastodonClient
 import social.bigbone.Parameters
 import social.bigbone.PrecisionDateTime.ValidPrecisionDateTime.ExactTime
 import social.bigbone.api.Range
@@ -135,6 +139,23 @@ class GroupedNotificationMethodsTest {
         verify {
             client.get(
                 path = "api/v2/notifications/favourite-113010503322889311-479000"
+            )
+        }
+    }
+
+    @Test
+    fun `Given a client returning success, when dismissing a specific notification, then expect no exceptions and verify correct method was called`() {
+        val client = MockClient.mock(jsonName = "notifications_dismiss_success.json")
+        val groupedNotificationMethods = GroupedNotificationMethods(client)
+
+        invoking {
+            groupedNotificationMethods.dismissNotification("favourite-113010503322889311-479000")
+        } shouldNotThrow AnyException
+
+        verify {
+            client.performAction(
+                endpoint = "api/v2/notifications/favourite-113010503322889311-479000/dismiss",
+                method = MastodonClient.Method.POST
             )
         }
     }
