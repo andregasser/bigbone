@@ -101,4 +101,18 @@ class GroupedNotificationMethods(private val client: MastodonClient) {
             }
         )
     }
+
+    /**
+     * View information about a specific notification group with a given group key.
+     * @param groupKey The group key of the notification group
+     * @see <a href="https://docs.joinmastodon.org/methods/grouped_notifications/#get-notification-group">
+     *     Mastodon API documentation: methods/grouped_notifications/#get-notification-group</a>
+     * @since Mastodon 4.3.0
+     */
+    fun getGroupedNotification(groupKey: String): MastodonRequest<GroupedNotificationsResults> {
+        return client.getMastodonRequest(
+            endpoint = "$endpoint/$groupKey",
+            method = MastodonClient.Method.GET
+        )
+    }
 }
