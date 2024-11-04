@@ -56,6 +56,11 @@ publishing {
 }
 
 signing {
+    required {
+        project.hasProperty("signingKeyId")
+        project.hasProperty("signingKey")
+        project.hasProperty("signingPassword")
+    }
     def signingKeyId = findProperty("signingKeyId")
     def signingKey = findProperty("signingKey")
     def signingPassword = findProperty("signingPassword")
