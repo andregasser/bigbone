@@ -12,7 +12,7 @@ kotlin-coroutines = "1.9.0"
 kotlinx-serialization-json = "1.7.3"
 mockk = "1.13.13"
 okhttp = "5.0.0-alpha.14"
-rxjava = "3.1.9"
+rxjava = "3.1.10"
 
 # Gradle plugins
 jacoco = "0.8.9"
