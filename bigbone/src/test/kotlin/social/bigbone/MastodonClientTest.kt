@@ -22,10 +22,12 @@ class MastodonClientTest {
     @Test
     fun `Given response body without instance version, when building MastodonClient, then fail with InstanceVersionRetrievalException`() {
         val serverUrl = "foo.bar"
+        val scheme = "https"
+        val port = 443
         val clientBuilder = spyk(MastodonClient.Builder(serverUrl)) {
             // Mock internal NodeInfoClient so that we don't open the site in unit testing
             mockkObject(NodeInfoClient)
-            every { NodeInfoClient.retrieveServerInfo(serverUrl) } throws ServerInfoRetrievalException(
+            every { NodeInfoClient.retrieveServerInfo(host = serverUrl, scheme = scheme, port = port) } throws ServerInfoRetrievalException(
                 "just for testing",
                 null
             )
@@ -47,10 +49,12 @@ class MastodonClientTest {
     @Test
     fun `Given a server that doesn't run Mastodon, when building MastodonClient, then fail with InstanceVersionRetrievalException`() {
         val serverUrl = "diasp.eu"
+        val scheme = "https"
+        val port = 443
         val clientBuilder = spyk(MastodonClient.Builder(serverUrl)) {
             // Mock internal NodeInfoClient so that we don't open the site in unit testing
             mockkObject(NodeInfoClient)
-            every { NodeInfoClient.retrieveServerInfo(serverUrl) } returns Server(
+            every { NodeInfoClient.retrieveServerInfo(host = serverUrl, scheme = scheme, port = port) } returns Server(
                 schemaVersion = "2.0",
                 software = Server.Software(name = "diaspora", version = "0.7.18.2-p84e7e411")
             )

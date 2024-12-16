@@ -959,7 +959,7 @@ class MastodonClient private constructor(
         @Throws(BigBoneClientInstantiationException::class)
         private fun getInstanceVersion(): String {
             val serverVersion: String? = NodeInfoClient
-                .retrieveServerInfo(instanceName)
+                .retrieveServerInfo(host = instanceName, scheme = scheme, port = port)
                 ?.software
                 ?.takeIf { it.name == "mastodon" }
                 ?.version
