@@ -27,7 +27,8 @@ object NodeInfoClient {
      * @return server information, including the name and version of the software running on this server
      * @throws ServerInfoRetrievalException if the request for a server info to [host] was unsuccessful
      */
-    fun retrieveServerInfo(host: String, scheme: String, port: Int): Server? {
+    @JvmOverloads
+    fun retrieveServerInfo(host: String, scheme: String = "https", port: Int = 443): Server? {
         CLIENT.newCall(
             Request.Builder()
                 .url(getServerInfoUrl(host = host, scheme = scheme, port = port))
