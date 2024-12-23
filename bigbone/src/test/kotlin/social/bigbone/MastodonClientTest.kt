@@ -22,12 +22,39 @@ class MastodonClientTest {
     @Test
     fun `Given response body without instance version, when building MastodonClient, then fail with InstanceVersionRetrievalException`() {
         val serverUrl = "foo.bar"
-        val scheme = "https"
+        val scheme = "http"
         val port = 443
         val clientBuilder = spyk(MastodonClient.Builder(serverUrl)) {
             // Mock internal NodeInfoClient so that we don't open the site in unit testing
             mockkObject(NodeInfoClient)
             every { NodeInfoClient.retrieveServerInfo(host = serverUrl, scheme = scheme, port = port) } throws ServerInfoRetrievalException(
+                "just for testing",
+                null
+            )
+
+            val responseMock = mockk<Response> {
+                val invalidResponseBody = "{ \"foo\": \"bar\" }"
+                every { body } answers { invalidResponseBody.toResponseBody("application/json".toMediaType()) }
+                every { isSuccessful } answers { true }
+                every { close() } returns Unit
+            }
+            every { executeInstanceRequest() } answers { responseMock }
+        }
+            .withHttpsDisabled()
+            .withPort(port)
+
+        invoking(clientBuilder::build)
+            .shouldThrow(ServerInfoRetrievalException::class)
+            .withMessage("just for testing")
+    }
+
+    @Test
+    fun `Given response body without instance version, when building MastodonClient with defaults, then fail with InstanceVersionRetrievalException`() {
+        val serverUrl = "foo.bar"
+        val clientBuilder = spyk(MastodonClient.Builder(serverUrl)) {
+            // Mock internal NodeInfoClient so that we don't open the site in unit testing
+            mockkObject(NodeInfoClient)
+            every { NodeInfoClient.retrieveServerInfo(host = serverUrl) } throws ServerInfoRetrievalException(
                 "just for testing",
                 null
             )
@@ -49,12 +76,38 @@ class MastodonClientTest {
     @Test
     fun `Given a server that doesn't run Mastodon, when building MastodonClient, then fail with InstanceVersionRetrievalException`() {
         val serverUrl = "diasp.eu"
-        val scheme = "https"
+        val scheme = "http"
         val port = 443
         val clientBuilder = spyk(MastodonClient.Builder(serverUrl)) {
             // Mock internal NodeInfoClient so that we don't open the site in unit testing
             mockkObject(NodeInfoClient)
             every { NodeInfoClient.retrieveServerInfo(host = serverUrl, scheme = scheme, port = port) } returns Server(
+                schemaVersion = "2.0",
+                software = Server.Software(name = "diaspora", version = "0.7.18.2-p84e7e411")
+            )
+
+            val responseMock = mockk<Response> {
+                every { code } answers { 404 }
+                every { message } answers { "Not Found" }
+                every { isSuccessful } answers { false }
+                every { close() } returns Unit
+            }
+            every { executeInstanceRequest() } answers { responseMock }
+        }
+            .withHttpsDisabled()
+            .withPort(port)
+        invoking(clientBuilder::build)
+            .shouldThrow(InstanceVersionRetrievalException::class)
+            .withMessage("Server $serverUrl doesn't appear to run Mastodon")
+    }
+
+    @Test
+    fun `Given a server that doesn't run Mastodon, when building MastodonClient with defaults, then fail with InstanceVersionRetrievalException`() {
+        val serverUrl = "diasp.eu"
+        val clientBuilder = spyk(MastodonClient.Builder(serverUrl)) {
+            // Mock internal NodeInfoClient so that we don't open the site in unit testing
+            mockkObject(NodeInfoClient)
+            every { NodeInfoClient.retrieveServerInfo(host = serverUrl) } returns Server(
                 schemaVersion = "2.0",
                 software = Server.Software(name = "diaspora", version = "0.7.18.2-p84e7e411")
             )
