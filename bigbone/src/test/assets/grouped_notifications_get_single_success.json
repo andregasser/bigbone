@@ -1,0 +1,38 @@
+{
+  "accounts": [
+    {
+      "id": "16",
+      "username": "eve",
+      "acct": "eve"
+    },
+    {
+      "id": "3547",
+      "username": "alice",
+      "acct": "alice"
+    }
+  ],
+  "statuses": [
+    {
+      "id": "113010503322889311",
+      "created_at": "2024-08-23T08:57:12.057Z",
+      "account": {
+        "id": "55911",
+        "username": "user",
+        "acct": "user"
+      }
+    }
+  ],
+  "notification_groups": [
+    {
+      "group_key": "favourite-113010503322889311-479000",
+      "notifications_count": 2,
+      "type": "favourite",
+      "most_recent_notification_id": 196014,
+      "sample_account_ids": [
+        "16",
+        "3547"
+      ],
+      "status_id": "113010503322889311"
+    }
+  ]
+}
