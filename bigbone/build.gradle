@@ -18,4 +18,5 @@ dependencies {
     testImplementation(libs.kotlin.reflect)
     testImplementation libs.mockk
     testImplementation libs.mockk.dsl
+    testImplementation libs.okhttp.mockwebserver
 }

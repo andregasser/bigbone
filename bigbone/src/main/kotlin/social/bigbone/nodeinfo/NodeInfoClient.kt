@@ -22,13 +22,16 @@ object NodeInfoClient {
     /**
      * Retrieve server information.
      * @param host hostname of the server to retrieve information from
+     * @param scheme The URL scheme
+     * @param port The URL port
      * @return server information, including the name and version of the software running on this server
      * @throws ServerInfoRetrievalException if the request for a server info to [host] was unsuccessful
      */
-    fun retrieveServerInfo(host: String): Server? {
+    @JvmOverloads
+    fun retrieveServerInfo(host: String, scheme: String = "https", port: Int = 443): Server? {
         CLIENT.newCall(
             Request.Builder()
-                .url(getServerInfoUrl(host))
+                .url(getServerInfoUrl(host = host, scheme = scheme, port = port))
                 .get()
                 .build()
         ).execute().use { response: Response ->
@@ -46,14 +49,16 @@ object NodeInfoClient {
     /**
      * Get the URL to retrieve server information from.
      * @param host the hostname of the server to request information from
+     * @param scheme The URL scheme
+     * @param port The URL port
      * @return String containing the URL holding server information
      * @throws ServerInfoUrlRetrievalException if we could not call the [host] or if the [NodeInfo] was empty
      */
     @Throws(ServerInfoUrlRetrievalException::class)
-    private fun getServerInfoUrl(host: String): String {
+    private fun getServerInfoUrl(host: String, scheme: String, port: Int): String {
         CLIENT.newCall(
             Request.Builder()
-                .url("https://$host/.well-known/nodeinfo")
+                .url("$scheme://$host:$port/.well-known/nodeinfo")
                 .get()
                 .build()
         ).execute().use { response: Response ->
