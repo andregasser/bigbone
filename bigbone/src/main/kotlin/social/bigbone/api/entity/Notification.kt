@@ -1,6 +1,5 @@
 package social.bigbone.api.entity
 
-import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import social.bigbone.DateTimeSerializer
@@ -48,45 +47,29 @@ data class Notification(
      * Report that was the object of the notification. Attached when type of the notification is admin.report.
      */
     @SerialName("report")
-    val report: Report? = null
-) {
+    val report: Report? = null,
+
     /**
-     * Specifies the notification type.
+     * Group key shared by similar notifications, to be used in the grouped notifications feature.
+     * Should be considered opaque, but ungrouped notifications can be assumed to have a group_key of the form "ungrouped-{notification_id}".
+     * @since Mastodon 4.3.0
      */
-    @Serializable
-    enum class NotificationType {
+    @SerialName("group_key")
+    val groupKey: String? = null,
 
-        @SerialName("admin.report")
-        ADMIN_REPORT,
+    /**
+     * Summary of the event that caused follow relationships to be severed.
+     * Attached when [type] of the notification is [NotificationType.SEVERED_RELATIONSHIPS].
+     * @since Mastodon 4.3.0
+     */
+    @SerialName("relationship_severance_event")
+    val relationshipSeveranceEvent: RelationshipSeveranceEvent? = null,
 
-        @SerialName("admin.sign_up")
-        ADMIN_SIGN_UP,
-
-        @SerialName("favourite")
-        FAVOURITE,
-
-        @SerialName("follow")
-        FOLLOW,
-
-        @SerialName("follow_request")
-        FOLLOW_REQUEST,
-
-        @SerialName("mention")
-        MENTION,
-
-        @SerialName("poll")
-        POLL,
-
-        @SerialName("reblog")
-        REBLOG,
-
-        @SerialName("status")
-        STATUS,
-
-        @SerialName("update")
-        UPDATE;
-
-        @OptIn(ExperimentalSerializationApi::class)
-        val apiName: String get() = serializer().descriptor.getElementName(ordinal)
-    }
-}
+    /**
+     * Moderation warning that caused the notification.
+     * Attached when [type] of the notification is [NotificationType.MODERATION_WARNING].
+     * @since Mastodon 4.3.0
+     */
+    @SerialName("moderation_warning")
+    val moderationWarning: AccountWarning? = null
+)

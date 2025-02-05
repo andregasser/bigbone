@@ -2,13 +2,14 @@ package social.bigbone.sample
 
 import social.bigbone.MastodonClient
 import social.bigbone.api.Pageable
-import social.bigbone.api.entity.Notification
+import social.bigbone.api.Range
+import social.bigbone.api.entity.GroupedNotificationsResults
 import social.bigbone.api.entity.NotificationType
 
-object GetNotifications {
+object GetGroupedNotifications {
 
     /**
-     * Get all notifications for the account having the access token supplied via [args].
+     * Get all grouped notifications for the account having the access token supplied via [args].
      *
      * Example call: "mastodon.social" "$TOKEN" "favourite,mention" "poll,reblog" "$ACCOUNT_ID"
      */
@@ -25,14 +26,24 @@ object GetNotifications {
             .accessToken(accessToken)
             .build()
 
-        // Get notifications
-        val notifications: Pageable<Notification> = client.notifications.getAllNotifications(
+        // Get grouped notifications
+        val firstPart: Pageable<GroupedNotificationsResults> = client.groupedNotifications.getAllGroupedNotifications(
             includeTypes = includeTypes.explodeToNotificationTypes(),
             excludeTypes = excludeTypes.explodeToNotificationTypes(),
-            accountId = accountId
+            accountId = accountId,
+            range = Range(limit = 2)
         ).execute()
 
-        notifications.part.forEach(::println)
+        println("Part 1: ${firstPart.part.first()}")
+
+        val secondPart: Pageable<GroupedNotificationsResults> = client.groupedNotifications.getAllGroupedNotifications(
+            includeTypes = includeTypes.explodeToNotificationTypes(),
+            excludeTypes = excludeTypes.explodeToNotificationTypes(),
+            accountId = accountId,
+            range = firstPart.nextRange(limit = 2)
+        ).execute()
+
+        println("Part 2: ${secondPart.part.first()}")
     }
 
     private fun String.explodeToNotificationTypes(): List<NotificationType>? {

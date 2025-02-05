@@ -6,6 +6,7 @@ import social.bigbone.MastodonClient
 import social.bigbone.api.Pageable
 import social.bigbone.api.Range
 import social.bigbone.api.entity.Notification
+import social.bigbone.api.entity.NotificationType
 import social.bigbone.api.method.NotificationMethods
 
 /**
@@ -27,8 +28,8 @@ class RxNotificationMethods(client: MastodonClient) {
      */
     @JvmOverloads
     fun getAllNotifications(
-        includeTypes: List<Notification.NotificationType>? = null,
-        excludeTypes: List<Notification.NotificationType>? = null,
+        includeTypes: List<NotificationType>? = null,
+        excludeTypes: List<NotificationType>? = null,
         accountId: String? = null,
         range: Range = Range()
     ): Single<Pageable<Notification>> = Single.fromCallable {
