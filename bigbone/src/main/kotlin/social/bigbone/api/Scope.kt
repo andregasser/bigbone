@@ -49,12 +49,7 @@ class Scope(private vararg val scopes: Name) {
      * @return true if this Scope is a subset of the other; false if not
      */
     fun isSubsetOf(otherScope: Scope): Boolean {
-        for (scopeName in scopes) {
-            if (!otherScope.contains(scopeName)) {
-                return false
-            }
-        }
-        return true
+        return scopes.all { scopeName -> otherScope.contains(scopeName) }
     }
 
     /**
