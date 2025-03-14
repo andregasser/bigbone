@@ -33,11 +33,10 @@ class Scope(private vararg val scopes: Name) {
 
         /*
         If the scope name indicates a child scope (i.e. contains a colon),
-        check if we contain the parent scope (currently, checking one level up is sufficient) 
+        check if we contain the parent scope (currently, checking one level up is sufficient).
          */
         val superScopeName = scopeName.name().substringBeforeLast(':')
         return scopes.any { it.name() == superScopeName }
-    }
     }
 
     /**
@@ -46,9 +45,7 @@ class Scope(private vararg val scopes: Name) {
      * @param otherScope another Scope to compare to
      * @return true if this Scope is a subset of the other; false if not
      */
-    fun isSubsetOf(otherScope: Scope): Boolean {
-        return scopes.all { scopeName -> otherScope.contains(scopeName) }
-    }
+    fun isSubsetOf(otherScope: Scope): Boolean = scopes.all { scopeName -> otherScope.contains(scopeName) }
 
     /**
      * Scopes granting access to read data are grouped here. Use [READ.ALL] to request full read access, or preferably
@@ -237,9 +234,14 @@ class Scope(private vararg val scopes: Name) {
         }
     }
 
-    override fun toString(): String = scopes.distinct().joinToString(separator = " ", transform = { it.name() })
+    override fun toString(): String = scopes.distinct().joinToString(separator = SCOPE_DELIMITER, transform = { it.name() })
 
     companion object {
+        /**
+         * The character used as delimiter between individual scopes in a scope string.
+         */
+        private const val SCOPE_DELIMITER = " "
+
         /**
          * A map of all individual scopes, with their string representations as keys.
          */
@@ -300,7 +302,7 @@ class Scope(private vararg val scopes: Name) {
          */
         fun scopeStringIsValid(scopeString: String): Boolean {
             return scopeString
-                .split(" ")
+                .split(SCOPE_DELIMITER)
                 .none { scopeName -> scopesByName[scopeName] == null }
         }
 
@@ -320,10 +322,9 @@ class Scope(private vararg val scopes: Name) {
             }
 
             val knownScopes: List<Name> = scopeString
-                .split(" ")
+                .split(SCOPE_DELIMITER)
                 .mapNotNull { scopeName -> scopesByName[scopeName] }
-            return Scope (*knownScopes.toTypedArray())
+            return Scope(*knownScopes.toTypedArray())
         }
     }
 }
-
