@@ -301,13 +301,9 @@ class Scope(private vararg val scopes: Name) {
          * @return true if all substrings of the space-delimited string are valid scopes; false if not
          */
         fun scopeStringIsValid(scopeString: String): Boolean {
-            val scopeNameList = scopeString.split(" ")
-            for (scopeName in scopeNameList) {
-                if (scopesByName[scopeName] == null) {
-                    return false
-                }
-            }
-            return true
+            return scopeString
+                .split(" ")
+                .none { scopeName -> scopesByName[scopeName] == null }
         }
 
         /**
