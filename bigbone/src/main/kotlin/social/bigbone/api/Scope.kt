@@ -319,14 +319,10 @@ class Scope(private vararg val scopes: Name) {
                 throw IllegalArgumentException("Scope string contains unknown values")
             }
 
-            val scopeList = mutableListOf<Name>()
-            val scopeNameList = scopeString.split(" ")
-            for (scopeName in scopeNameList) {
-                scopesByName[scopeName]?.let {
-                    scopeList.add(it)
-                }
-            }
-            return Scope(*scopeList.toTypedArray())
+            val knownScopes: List<Name> = scopeString
+                .split(" ")
+                .mapNotNull { scopeName -> scopesByName[scopeName] }
+            return Scope (*knownScopes.toTypedArray())
         }
     }
 }
