@@ -108,7 +108,6 @@ class MediaMethodsTest {
             url shouldBeEqualTo "https://files.mastodon.social/media_attachments/files/022/348/641/original/e96382f26c72a29c.jpeg"
             previewUrl shouldBeEqualTo "https://files.mastodon.social/media_attachments/files/022/348/641/small/e96382f26c72a29c.jpeg"
             remoteUrl.shouldBeNull()
-            textUrl shouldBeEqualTo "https://mastodon.social/media/4Zj6ewxzzzDi0g8JnZQ"
 
             with(meta) {
                 shouldNotBeNull()
@@ -207,7 +206,6 @@ class MediaMethodsTest {
         attachment.url shouldBeEqualTo "youtube"
         attachment.remoteUrl shouldNotBe null
         attachment.previewUrl shouldBeEqualTo "preview"
-        attachment.textUrl shouldNotBe null
     }
 
     @Test

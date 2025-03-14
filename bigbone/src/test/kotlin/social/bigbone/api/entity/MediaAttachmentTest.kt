@@ -10,12 +10,11 @@ class MediaAttachmentTest {
     @Test
     fun deserialize() {
         val json = AssetsUtil.readFromAssets("attachment.json")
-        val status: MediaAttachment = JSON_SERIALIZER.decodeFromString(json)
-        status.id shouldBeEqualTo "10"
-        status.url shouldBeEqualTo "youtube"
-        status.remoteUrl shouldNotBe null
-        status.previewUrl shouldBeEqualTo "preview"
-        status.textUrl shouldNotBe null
-        status.type shouldBeEqualTo MediaAttachment.MediaType.VIDEO
+        val mediaAttachment: MediaAttachment = JSON_SERIALIZER.decodeFromString(json)
+        mediaAttachment.id shouldBeEqualTo "10"
+        mediaAttachment.url shouldBeEqualTo "youtube"
+        mediaAttachment.remoteUrl shouldNotBe null
+        mediaAttachment.previewUrl shouldBeEqualTo "preview"
+        mediaAttachment.type shouldBeEqualTo MediaAttachment.MediaType.VIDEO
     }
 }
