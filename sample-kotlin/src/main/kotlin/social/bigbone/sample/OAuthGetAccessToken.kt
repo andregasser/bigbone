@@ -28,7 +28,8 @@ object OAuthGetAccessToken {
             scope = fullScope,
             state = state,
             codeChallenge = codeChallenge,
-            codeChallengeMethod = "S256" // currently no other method supported
+            // currently no other method supported
+            codeChallengeMethod = "S256"
         )
         println("Open authorization page and copy code:")
         println(url)
