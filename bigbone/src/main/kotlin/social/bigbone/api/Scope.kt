@@ -27,19 +27,17 @@ class Scope(private vararg val scopes: Name) {
         if (scopes.contains(scopeName)) {
             return true
         }
-
-        // check if the scope name is a child scope (e.g. contains a ':' character)
-        if (scopeName.name().contains(':')) {
-            // in this case, check if we contain the parent scope (currently, checking one level up is sufficient)
-            val superScopeName = scopeName.name().substringBeforeLast(':')
-            for (scope in scopes) {
-                if (scope.name() == superScopeName) {
-                    return true
-                }
-            }
+        if (!scopeName.name().contains(':')) {
+            return false
         }
 
-        return false
+        /*
+        If the scope name indicates a child scope (i.e. contains a colon),
+        check if we contain the parent scope (currently, checking one level up is sufficient) 
+         */
+        val superScopeName = scopeName.name().substringBeforeLast(':')
+        return scopes.any { it.name() == superScopeName }
+    }
     }
 
     /**
